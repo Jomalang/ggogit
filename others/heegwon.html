@@ -1,0 +1,178 @@
+<!-- @format -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <header>
+      <!--흠... h1이 없네요??-->
+      <form method="get">
+        <label
+          ><input name="search" type="text" /><button>
+            돋보기 아이콘
+          </button></label
+        >
+      </form>
+    </header>
+
+    <section>
+      <h1>나의 트리</h1>
+      <form method="post">
+        <div>
+          <a href="treeLeft" class="tree-cover"><img src="" alt="" /></a
+          ><a href="treeMain" class="tree-cover"><img src="" alt="" /></a
+          ><a href="treeRight" class="tree-cover"><img src="" alt="" /></a>
+        </div>
+        <div>
+          <div><p id="seed">시/에세이</p></div>
+          <div><p id="treeTitle">나의 첫번째 트리</p></div>
+          <div>
+            <span id="author">김민철</span> ·
+            <span id="publisher">위즈덤하우스</span>
+          </div>
+          <div id="publishDate">2024.07.15</div>
+        </div>
+      </form>
+      <article>
+        <h3>트리 설명</h3>
+        <div>
+          <p id="treeDiscription">
+            코딩 테스트 합격자 되기 자바스크립트 편의 영감 기록을 남기는 이유는
+            다음과 같습니다. 영감 기록을 작성하면 책에서 배운 내용을 정리하고
+            이해도를 높일 수 있습니다.
+          </p>
+        </div>
+        <div>
+          <span><h3>독서 진행률</h3></span><span id="readRate">80%</span>
+          <div class="progress-bar"></div>
+          <!-- 하단 바 css 블로그 https://guiyomi.tistory.com/66 -->
+          <div>
+            <span id="readPage">320</span> / <span id="totalPage">400</span>
+          </div>
+          <div id="leaf">나뭇잎 +999</div>
+          <div id="like">좋아요 +999</div>
+          <div id="view">조회수 +999</div>
+        </div>
+      </article>
+    </section>
+
+    <section>
+      <div>
+        <span><h1>트리 목록</h1></span><span id="treeCount">14그루</span>
+      </div>
+      <form method="post">
+          <span id="filter">필터아이콘</span>
+          <span id="bookFilter">도서</span>
+          <span id="inspirationFilter">영감</span>
+          <span id="videoFilter">유튜브</span>
+          <span id="finishBookFilter">완독</span>
+        </div>
+      </form>
+    </section>
+    <nav>
+      <ul>
+        <li>
+          <a href="" class="treeDetail">
+            <div id="bookCover"><img src="" alt="" /></div>
+            <div>
+              <div>
+                <span id="seed">도서</span
+                ><span id="seedCategory">정치 비평</span>
+              </div>
+              <div id="treeTitle"><h4>운명이란 무엇인가?</h4></div>
+              <div id="bookTitle">그의 운명에 대한 아주 개인적인 생각</div>
+              <div>
+                <span id="publishDate">2024</span><span id="author">유시민</span
+                ><span id="publisher">생각의길</span>
+              </div>
+              <div id="createDate">2024-07-15</div>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="" class="treeDetail">
+            <div id="bookCover"><img src="" alt="" /></div>
+            <div>
+              <div>
+                <span id="seed">영감</span><span id="seedCategory"></span>
+              </div>
+              <div id="treeTitle"><h4>운명이란 무엇인가?</h4></div>
+              <div id="bookTitle"></div>
+              <div>
+                <span id="publishDate">2024</span
+                ><span id="userName">닉네임</span><span id="publisher"></span>
+              </div>
+              <div id="createDate">2024-07-15</div>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="" class="treeDetail">
+            <div id="bookCover"><img src="" alt="" /></div>
+            <div>
+              <div>
+                <span id="seed">도서</span
+                ><span id="seedCategory">정치 비평</span>
+              </div>
+              <div id="treeTitle"><h4>돈을 벌기위한 트리</h4></div>
+              <div id="bookTitle">돈의 속성</div>
+              <div>
+                <span id="publishDate">2020</span><span id="author">김승호</span
+                ><span id="publisher">스노우폭스북스</span>
+              </div>
+              <div id="createDate">2024-07-15</div>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="" class="treeDetail">
+            <div id="bookCover"><img src="" alt="" /></div>
+            <div>
+              <div>
+                <span id="seed">영감</span><span id="seedCategory"></span>
+              </div>
+              <div id="treeTitle"><h4>운명이란 무엇인가?</h4></div>
+              <div id="bookTitle"></div>
+              <div>
+                <span id="publishDate">2024</span
+                ><span id="userName">닉네임</span><span id="publisher"></span>
+              </div>
+              <div id="createDate">2024-07-15</div>
+            </div>
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <button id="createTree">트리 생성</button>
+    <nav>
+      <span>
+        <a href="" id="mainHome">
+          <div><img src="" alt="" /></div>
+          <div>홈</div>
+        </a>
+      </span>
+      <span>
+        <a href="" id="mainSearch">
+          <div><img src="" alt="" /></div>
+          <div>탐색</div>
+        </a>
+      </span>
+      <span>
+        <a href="" id="mainComunity">
+          <div><img src="" alt="" /></div>
+          <div>커뮤니티</div>
+        </a>
+      </span>
+      <span>
+        <a href="" id="mainMyggogit">
+          <div><img src="" alt="" /></div>
+          <div>나의 꼬깃</div>
+        </a>
+      </span>
+    </nav>
+  </body>
+</html>

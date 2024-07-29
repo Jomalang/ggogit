@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="index.css" rel="stylesheet" />
+  </head>
+
+  <!-- body -->
+  <body>
+    <header class="tree-header">
+      <h1>나의 트리 목록</h1>
+      <form action="#" method="get" class="tree-header-serach">
+        <label class="tree-header-search-label"
+          ><input class="tree-header-search-input" type="text" />
+          <a class="tree-header-search-icon" alt="" href="#"></a>
+        </label>
+      </form>
+    </header>
+
+    <main class="tree-main">
+      <h1>트리 리스트 메인</h1>
+
+      <section class="tree-main-recent">
+        <h2>나의 최근 트리</h2>
+        <ul class="tree-main-recent-covers">
+          <li class="tree-main-recent-covers-left">
+            <a href="#"
+              ><img src="/resource/pictures/div.left-img-box.png"
+            /></a>
+          </li>
+          <li class="tree-main-recent-covers-main">
+            <a href="#"><img src="/resource/pictures/div.mid-img-box.png" /></a>
+          </li>
+          <li class="tree-main-recent-covers-right">
+            <a href="#"
+              ><img src="/resource/pictures/div.right-img-box.png"
+            /></a>
+          </li>
+        </ul>
+
+        <div class="tree-main-recent-detail">
+          <a href="#" class="tree-main-recent-detail-a">
+            <h2>나의 첫번째 트리</h2>
+            <div class="tag">시/에세이</div>
+            <p class="tree-main-recent-detail-name">무정형의 삶</p>
+            <p class="tree-main-recent-detail-author">김민철</p>
+            <p class="tree-main-recent-detail-publisher">위즈덤 하우스</p>
+            <p class="tree-main-recent-detail-date">2024.07.15</p>
+          </a>
+        </div>
+
+        <article class="tree-main-recent-info">
+          <h2>트리 설명</h2>
+          <p>
+            코딩 테스트 합격자 되기 자바스크립트 편의 영감 기록을 남기는 이유는
+            다음과 같습니다. 영감 기록을 작성하면 책에서 배운 내용을 정리하고
+            이해도를 높일 수 있습니다.
+          </p>
+        </article>
+
+        <section class="tree-main-recent-status">
+          <h1>최근 트리 진행률</h1>
+
+          <div class="progress">
+            <div class="header">
+              <h2>독서 진행률</h2>
+              <div>
+                <span class="progress-num">80</span
+                ><span class="progress-num-sep">%</span>
+              </div>
+            </div>
+            <div class="progress-content">
+              <div class="progress-bar-container">
+                <div class="progress-bar">80%</div>
+              </div>
+              <div class="progress-page-num">
+                <span class="progress-page-current">320</span>
+                <span class="progress-page-separator">/</span>
+                <span class="progress-page-total">400</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="tree-main-recent-status-list">
+            <p class="tree-main-recent-leaf-num">나뭇잎 <span>+999</span></p>
+            <p class="tree-main-recent-like-num">좋아요 <span>+999</span></p>
+            <p class="tree-main-recent-read-num">조회수 <span>+999</span></p>
+          </div>
+        </section>
+      </section>
+
+      <section class="tree-main-list">
+        <header class="tree-main-list-header">
+          <div class="header">
+            <h1>트리 목록</h1>
+            <p class="tree-num"><span class="total-tree-num">14</span>그루</p>
+          </div>
+          <div class="tree-main-list-filter">
+            <a href="#" class="btn btn--unchecked sortIcon">정렬 아이콘</a>
+            <a href="#" class="btn btn--unchecked">도서</a>
+            <a href="#" class="btn btn--unchecked">영감</a>
+            <a href="#" class="btn btn--unchecked">유튜브</a>
+            <a href="#" class="btn btn--unchecked">완독</a>
+          </div>
+        </header>
+
+        <div class="tree-main-list-details">
+          <a class="tree-main-list-detail">
+            <img class="book covred" src="/resource/pictures/tree-list.png" />
+            <div class="tree-main-list-detail-info">
+              <!--반복문으로 넣어야 할듯..-->
+              <div class="tree-main-list-detail-tags">
+                <span class="tree-main-list-detail-tag">도서</span>
+                <span class="tree-main-list-detail-tag">정치</span>
+                <span class="tree-main-list-detail-tag">비평</span>
+              </div>
+              <!---->
+              <p class="tree-main-list-detail-name">운명이란 무엇인가?</p>
+              <p class="tree-main-list-detail-explanation">
+                그의 운명에 대한 아주 개인적인 생각
+              </p>
+              <div class="spans">
+                <span class="tree-main-list-detail-date">2024</span>
+                <span>/</span>
+                <span class="tree-main-list-detail-author">유시민</span>
+                <span>/</span>
+                <span class="tree-main-list-detail-publisher">생각의 길</span>
+              </div>
+              <p class="tree-main-list-detail-createddate">2024-07-15</p>
+            </div>
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="tree-footer">
+      <header class="tree-footer-header">
+        <h1>공지사항</h1>
+        <p>서비스 개발 진행중</p>
+      </header>
+      <div class="membership">
+        <a href="#" class="membership-login">로그인</a>
+        <a href="#" class="membership-join">회원가입</a>
+        <a href="#" class="membership-asking">문의하기</a>
+      </div>
+      <div class="app">
+        <a href="#" class="app-info">이용약관</a>
+        <span class="app-sep">|</span>
+        <a href="#" class="app-membership-policy">개인정보처리방침</a>
+      </div>
+    </footer>
+
+    <aside class="bottom-aside">
+      <h1>하단 바</h1>
+      <a class="create-tree">트리 생성</a>
+      <nav class="bottom-bar">
+        <a href="#" class="bottom-bar-home"
+          ><img src="/resource/icons/homeicon.png"
+        /></a>
+        <a href="#" class="bottom-bar-search"
+          ><img src="/resource/icons/searchIcon.png"
+        /></a>
+        <a href="#" class="bottom-bar-community"
+          ><img src="/resource/icons/commuIcon.png"
+        /></a>
+        <a href="#" class="bottom-bar-mypage"
+          ><img src="/resource/icons/mypageIcon.png"
+        /></a>
+      </nav>
+    </aside>
+  </body>
+</html>

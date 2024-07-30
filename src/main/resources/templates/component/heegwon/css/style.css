@@ -3,21 +3,19 @@
 .search__form {
   display: flex;
   align-items: center;
-  height: 40px;
-  justify-content: space-between;
+  height: 5rem;
   padding-top: 1rem;
   margin-right: 1rem;
 }
 .search-bar {
   background: #e5eddb;
-  border-radius: 100px;
-  width: 80vw;
+  border-radius: 2rem;
   padding: 8px 16px 8px 16px;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
-.search-bar p {
+.search-bar > p {
   color: #767676;
   text-align: center;
   font-family: "Pretendard-SemiBold", sans-serif;
@@ -28,8 +26,26 @@
 .search-bar img {
   height: 1.5rem;
 }
+.search-bar-back-close {
+  display: flex;
+  background: #e5eddb;
+  border-radius: 2rem;
+  margin-left: 1rem;
+  padding: 8px 16px 8px 16px;
+  align-items: center;
+  justify-content: space-between;
+  flex: 1 0 auto;
+}
+.search-bar-back-close > p {
+  color: #767676;
+  text-align: center;
+  font-family: "Pretendard-SemiBold", sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+  position: relative;
+}
 .search-bar__button {
-  width: 7rem;
+  width: 5rem;
   display: flex;
   justify-content: space-between;
 }
@@ -55,7 +71,6 @@
   padding-left: 1rem;
   position: relative;
 }
-
 .tree-input-text-radius--complete {
   display: block;
   width: 100vw;
@@ -85,6 +100,17 @@
 .tree-input-text-rectangle {
   display: block;
   width: 100vw;
+  height: 3.5rem;
+  border: none;
+  font-size: 20px;
+  font-display: #767676;
+  background-color: #e5eddb;
+  padding-left: 1rem;
+  position: relative;
+}
+.tree-input-text-select {
+  display: block;
+  width: 10 0vw;
   height: 3.5rem;
   border: none;
   font-size: 20px;

@@ -1,4 +1,4 @@
-.root {
+:root {
   /* Color styles */
 
   /* Background Colors */
@@ -34,27 +34,4 @@
 
   --letter-spacing-main: -2.5%;
   --letter-spacing-sub: -0.25%;
-
-  ----title-32: 32px;
-  --d-s-타이틀-18: 18px;
-  --d-s-캡션-12: 12px;
-  --d-s-캡션-10: 10px;
-  --d-s-본문-18: 18px;
-  --d-s-본문-16: 16px;
-  ----title-30: 30px;
-  ----search-box-12: 12px;
-  ----main-btn: 16px;
-  ----alert-20: 20px;
-  ----section-h1-bold-28: 28px;
-  ----filter-box-12: 12px;
-  --h1: 28px;
-  --h2: 24px;
-  --h3: 18px;
-  --h4: 16px;
-  --h5: 14px;
-  --h25: 20px;
-  --input-complete: 16px;
-  --input-waiting: 16px;
-  --input-warning: 12px;
-  ----input-active-text: 16px;
 }

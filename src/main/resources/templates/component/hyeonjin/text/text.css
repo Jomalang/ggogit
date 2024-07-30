@@ -63,7 +63,7 @@ abbr, address, b, bdi,
   font-weight: var(--medium);
   line-height: var(--line-height-main);
   letter-spacing: var(--letter-spacing-main);
-  color: var(--icon-color);
+  color: var(--text-icon);
 }
 
 .text--alert {
@@ -75,4 +75,8 @@ abbr, address, b, bdi,
 
 .text--explain {
   font-size: 14px;
+  font-weight: var(--regular);
+  line-height: var(--line-height-main);
+  letter-spacing: var(--letter-spacing-main);
+  color: var(--text-sub);
 }

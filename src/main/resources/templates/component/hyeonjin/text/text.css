@@ -1,6 +1,6 @@
 /*프리텐다드*/
 @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
-@import url("../Variables/variables.css");
+@import url("../../../variables/variables.css");
 
 /* Formating */
 abbr, address, b, bdi,

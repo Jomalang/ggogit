@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="../../../static/css/reset.css" />
+    <link rel="stylesheet" href="../../../static/css/home-no-tree.css" />
+
+    <title>Document</title>
+  </head>
+  <body>
+
+    <header>
+      <h1 class="none">나의 트리 홈</h1>
+      <section class="search">
+        <h2 class="none">나의 트리 검색</h2>
+        <a href="#">
+            <div class="search__input">
+                <p class="search__placeholder">나의 트리 검색</p>
+                <img src="../../../static/svg/lens.svg" alt="lens.svg" />
+            </div>
+        </a>
+      </section>
+    </header>
+
+    <main>
+      <section class="tree-list">
+        <div class="tree-list__title">
+          <h2 class="tree-list__h">나의 트리</h2>
+        </div>
+        <div class="book-img">
+            <ul class="book-img__list">
+                <li><img src="../../../static/img/no-tree-left-book.png" alt="" /></li>
+                <li><img src="../../../static/img/no-tree-mid-book.png" alt="" /></li>
+                <li><img src="../../../static/img/no-tree-right-book.png" alt="" /></li>
+            </ul>
+        </div>
+        <div class="tree-list__bg-green">
+          <div class="tree-list__text-info">
+            <p class="tree-list__p">현재 기록중인 트리가 없습니다</p>
+            <p class="tree-list__p2">트리를 생성해 주세요</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="btn-box">
+        <h2 class="none">나의 트리</h2>
+        <a href="">
+            <div class="btn-box__button">
+                <div class="btn-box__p">트리 생성</div>
+            </div>
+        </a>
+      </section>
+    </main>
+
+    <aside class="footer-nav">
+      <ul class="nav-list">
+        <a href="">
+          <li class="nav-list__item">
+            <img src="../../../static/svg/nav-home--active.svg" alt="" />
+            <p class="nav-list__div">홈</p>
+          </li>
+        </a>
+        <a href="">
+          <li class="nav-list__item">
+            <img src="../../../static/svg/nav-search.svg" alt="" />
+            <p class="nav-list__div2">탐색</p>
+          </li>
+        </a>
+        <a href="">
+          <li class="nav-list__item">
+            <img src="../../../static/svg/nav-cummunity.svg" alt="" />
+            <p class="nav-list__div2">커뮤니티</p>
+          </li>
+        </a>
+        <a href="">
+          <li class="nav-list__item">
+            <img src="../../../static/svg/nav-mypage.svg" alt="" />
+            <p class="nav-list__div2">나의 꼬깃</p>
+          </li>
+        </a>
+      </ul>
+    </aside>
+  </body>
+</html>

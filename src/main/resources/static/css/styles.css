@@ -319,3 +319,118 @@
 .book-img__list mid-img {
   box-shadow: 400px;
 }
+
+/* 트리 정보 */
+.book-info-container,
+.book-info-container * {
+  box-sizing: border-box;
+}
+.book-info-container {
+  margin-top: 50px;
+  padding: 0px 0px 50px 0px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  row-gap: 0px;
+  align-items: center;
+  justify-content: flex-start;
+  align-self: stretch;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.book-info-container__book-category {
+  background: var(--main-1, #323a27);
+  border-radius: 4px;
+  padding: 2px 8px 2px 8px;
+  display: inline-flex;
+  flex-direction: row;
+  gap: 10px;
+  row-gap: 0px;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  height: 18px;
+  position: relative;
+}
+.book-info-container__category {
+  color: var(--icon-coler, #ffffff);
+  text-align: left;
+  font-family: "Pretendard-Medium", sans-serif;
+  font-size: 10px;
+  line-height: 140%;
+  letter-spacing: -0.0025em;
+  font-weight: 500;
+  position: relative;
+}
+.book-info-container__tree-name {
+  color: var(--main-1, #323a27);
+  text-align: left;
+  font-family: "Pretendard-SemiBold", sans-serif;
+  font-size: 18px;
+  line-height: 140%;
+  letter-spacing: -0.025em;
+  font-weight: 600;
+  position: relative;
+}
+.book-info-container__book-name {
+  color: var(--text-sub, #767676);
+  text-align: center;
+  font-family: "Pretendard-Regular", sans-serif;
+  font-size: 16px;
+  line-height: 140%;
+  letter-spacing: -0.025em;
+  font-weight: 400;
+  position: relative;
+}
+.book-info-container__book-maker-box {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  row-gap: 0px;
+  align-items: center;
+  justify-content: center;
+  align-self: stretch;
+  flex-shrink: 0;
+  position: relative;
+}
+.book-info-container__author {
+  color: var(--text-sub, #767676);
+  text-align: left;
+  font-family: "Pretendard-Regular", sans-serif;
+  font-size: 14px;
+  line-height: 140%;
+  letter-spacing: -0.025em;
+  font-weight: 400;
+  position: relative;
+}
+.book-info-container__div {
+  color: var(--text-sub, #767676);
+  text-align: left;
+  font-family: "Pretendard-Regular", sans-serif;
+  font-size: 14px;
+  line-height: 140%;
+  letter-spacing: -0.025em;
+  font-weight: 400;
+  position: relative;
+}
+.book-info-container__publisher {
+  color: var(--text-sub, #767676);
+  text-align: left;
+  font-family: "Pretendard-Regular", sans-serif;
+  font-size: 14px;
+  line-height: 140%;
+  letter-spacing: -0.025em;
+  font-weight: 400;
+  position: relative;
+}
+.book-info-container__year {
+  color: var(--text-sub, #767676);
+  text-align: center;
+  font-family: "Pretendard-SemiBold", sans-serif;
+  font-size: 14px;
+  line-height: 140%;
+  letter-spacing: -0.025em;
+  font-weight: 600;
+  position: relative;
+}

@@ -108,16 +108,31 @@
   padding-left: 1rem;
   position: relative;
 }
+.tree-input-text__subject {
+  width: 100%;
+  font-size: 2rem;
+}
 .tree-input-text-select {
-  display: block;
-  width: 10 0vw;
-  height: 3.5rem;
+  display: flex;
+  height: 4rem;
   border: none;
-  font-size: 20px;
-  font-display: #767676;
+  border-radius: 1rem;
   background-color: #e5eddb;
-  padding-left: 1rem;
-  position: relative;
+  align-content: center;
+  text-align: right;
+  justify-content: space-between;
+}
+.tree-input-text-select__tag {
+  display: flex;
+}
+.tree-input-text-select-description {
+  margin-left: 1rem;
+  color: #767676;
+  font-size: 20px;
+}
+.input-next-button {
+  border: none;
+  background-color: #e5eddb;
 }
 .delete-seed__form {
   display: block;

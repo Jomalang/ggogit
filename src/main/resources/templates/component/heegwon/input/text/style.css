@@ -1,6 +1,7 @@
 /** @format */
-@import url("../../../variables/variables.css");
-.search__form {
+@import url("../../css/reset.css");
+@import url("../../../../variables/variables.css");
+/* .search__form {
   display: flex;
   align-items: center;
   height: 5rem;
@@ -48,11 +49,14 @@
   width: 5rem;
   display: flex;
   justify-content: space-between;
+} */
+a {
+  text-decoration: none;
 }
 .tree-input-text__subject {
-  font-display: #323a27;
+  font-display: var(--filter-checked);
   font-size: 20px;
-  font-weight: 800;
+  font-weight: var(--extra-bold);
 }
 .tree-input-text__form {
   display: flex;
@@ -67,7 +71,7 @@
   border-radius: 0.5rem;
   font-size: 20px;
   font-display: #767676;
-  background-color: #e5eddb;
+  background-color: var(--main2);
   padding-left: 1rem;
   position: relative;
 }
@@ -80,7 +84,7 @@
   font-size: 20px;
   font-weight: 550;
   color: #323a27;
-  background-color: #e5eddb;
+  background-color: var(--main2);
   padding-left: 1rem;
   position: relative;
 }
@@ -93,7 +97,7 @@
   font-size: 20px;
   font-weight: 550;
   color: #ba0c0c;
-  background-color: #e5eddb;
+  background-color: var(--main2);
   padding-left: 1rem;
   position: relative;
 }
@@ -104,7 +108,7 @@
   border: none;
   font-size: 20px;
   font-display: #767676;
-  background-color: #e5eddb;
+  background-color: var(--main2);
   padding-left: 1rem;
   position: relative;
 }
@@ -115,25 +119,62 @@
 .tree-input-text-select {
   display: flex;
   height: 4rem;
+  margin-top: 1rem;
   border: none;
   border-radius: 1rem;
-  background-color: #e5eddb;
+  background-color: var(--main2);
   align-content: center;
   text-align: right;
   justify-content: space-between;
 }
 .tree-input-text-select__tag {
   display: flex;
+  align-content: center;
 }
 .tree-input-text-select-description {
+  display: grid;
+  align-content: center;
   margin-left: 1rem;
   color: #767676;
   font-size: 20px;
 }
 .input-next-button {
   border: none;
-  background-color: #e5eddb;
+  background-color: var(--main2);
 }
+
+.tree-input-text-select__tag {
+  display: flex;
+  align-content: center;
+  position: relative;
+}
+.tree-input-text-select__tag-button {
+  display: flex;
+  align-content: center;
+  height: 2rem;
+  margin-left: 1rem;
+  border-radius: 4rem;
+  background-color: var(--main1);
+}
+.tree-input-text-select__tag-button > p {
+  display: grid;
+  margin-left: 1rem;
+  margin-right: 0rem;
+  align-content: center;
+  font-size: 1rem;
+  font-weight: var(--semi-bold);
+  color: var(--text-icon);
+}
+.tree-input-text-select__tag-button > button {
+  margin-right: 1rem;
+  border-radius: 10rem;
+  border: none;
+  font-size: 1rem;
+  font-weight: var(--semi-bold);
+  background-color: var(--main1);
+  color: var(--text-icon);
+}
+
 .delete-seed__form {
   display: block;
   height: 3.5rem;

@@ -1,6 +1,4 @@
 @import url("../../../variables/variables.css");
-@import url("../reset.css");
-@import url("../text/text.css");
 
 * {
   box-sizing: border-box;
@@ -126,21 +124,21 @@
   width: 395px;
   height: 114px;
 }
-.visibility--box {
+.visibility__box {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
   align-self: stretch;
 }
-.visibility--name {
+.visibility__name {
   color: var(--main1);
   font-size: 16px;
   font-weight: var(--bold);
   line-height: var(--line-height-main);
 }
 
-.visibility--btns {
+.visibility__btns {
   border-radius: 12px;
   padding: 8px 7px 8px 7px;
   display: flex;
@@ -150,7 +148,7 @@
   justify-content: flex-start;
   align-self: stretch;
 }
-.visibility--btn {
+.visibility__btn {
   background: var(--main3);
   border-radius: 12px;
   color: var(--text-no-active);
@@ -167,11 +165,11 @@
   cursor: pointer;
 }
 
-.visibility--btn::after {
+.visibility__btn::after {
   content: attr(label);
 }
 
-.visibility--btn:checked {
+.visibility__btn:checked {
   background: var(--main1);
   color: var(--white);
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);

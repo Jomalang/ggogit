@@ -12,11 +12,11 @@
   position: relative;
 }
 
-.search a {
-  align-self: stretch;
+.search__link {
+align-self: stretch;
 }
 
-.search__input {
+.search__input-box {
   background: var(--main-2, #e5eddb);
   border-radius: 100px;
   padding: 8px 16px 8px 16px;
@@ -37,7 +37,7 @@
   font-weight: 600;
   position: relative;
 }
-.search__lens {
+.search__icon {
   flex-shrink: 0;
   width: 18px;
   height: 18px;
@@ -45,11 +45,11 @@
   overflow: visible;
 }
 
-.tree-list,
-.tree-list * {
+.my-tree-container,
+.my-tree-container * {
   box-sizing: border-box;
 }
-.tree-list {
+.my-tree-container {
   display: flex;
   flex-direction: column;
   gap: 0px;
@@ -59,7 +59,14 @@
   flex-shrink: 0;
   position: relative;
 }
-.tree-list__title {
+
+.book-tree-info-container {
+  display: flex;
+  flex-direction: column;
+  align-self: stretch;
+}
+
+.title-box {
   padding: 0px 24px 200px 24px;
   display: flex;
   flex-direction: row;
@@ -71,7 +78,7 @@
   flex-shrink: 0;
   position: relative;
 }
-.tree-list__h {
+.list__h {
   color: var(--main-1, #323a27);
   text-align: center;
   font-family: var(--h1-font-family, "Pretendard-Bold", sans-serif);
@@ -81,7 +88,14 @@
   font-weight: var(--h1-font-weight, 700);
   position: relative;
 }
-.tree-list__bg-green {
+
+.text-info-container {
+  display: flex;
+  flex-direction: column;
+  align-self: stretch;
+}
+
+.text-info {
   background: var(--bg-1, rgba(229, 237, 219, 0.4));
   padding: 70px 0px 0px 0px;
   display: flex;
@@ -94,7 +108,7 @@
   height: 463px;
   position: relative;
 }
-.tree-list__text-info {
+.text-info-box {
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -105,7 +119,7 @@
   flex-shrink: 0;
   position: relative;
 }
-.tree-list__p {
+.text-info-box__text {
   color: var(--main-1, #323a27);
   text-align: center;
   font-family: "Pretendard-Medium", sans-serif;
@@ -115,7 +129,7 @@
   font-weight: 500;
   position: relative;
 }
-.tree-list__p2 {
+.text-info-box__text--bold {
   color: var(--main-1, #323a27);
   text-align: center;
   font-family: "Pretendard-Bold", sans-serif;
@@ -127,11 +141,11 @@
 }
 
 /* 푸터 */
-.nav-list,
-.nav-list * {
+.main-nav__list,
+.main-nav__list * {
   box-sizing: border-box;
 }
-.nav-list {
+.main-nav__list {
   display: flex;
   flex-direction: row;
   row-gap: 0px;
@@ -140,7 +154,7 @@
   flex: 1;
   position: relative;
 }
-.nav-list__item {
+.main-nav__item {
   padding: 12px 0px 16px 0px;
   display: flex;
   flex-direction: column;
@@ -165,7 +179,7 @@
   position: relative;
   overflow: visible;
 }
-.nav-list__div {
+.main-nav__text--active {
   color: var(--main-1, #323a27);
   text-align: center;
   font-family: var(
@@ -192,7 +206,7 @@
   position: relative;
   overflow: visible;
 }
-.nav-list__div2 {
+.main-nav__text {
   color: var(--text-sub, #767676);
   text-align: center;
   font-family: var(
@@ -206,34 +220,8 @@
   font-weight: var(--m3-label-medium-prominent-font-weight, 600);
   position: relative;
 }
-.nav-list__state2 {
-  border-radius: 100px;
-  display: flex;
-  flex-direction: row;
-  gap: 0px;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  width: 64px;
-  height: 32px;
-  position: relative;
-  overflow: visible;
-}
-.nav-list__state3 {
-  border-radius: 100px;
-  display: flex;
-  flex-direction: row;
-  gap: 0px;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  width: 64px;
-  height: 32px;
-  position: relative;
-  overflow: visible;
-}
 
-.footer-nav {
+.main-nav {
   z-index: 10;
   box-shadow: 4px 4px 8px 4px gray;
   position: fixed;
@@ -242,6 +230,7 @@
 }
 
 /* 버튼 생성 */
+
 .btn-box,
 .btn-box * {
   box-sizing: border-box;
@@ -273,7 +262,7 @@
   height: 56px;
   position: relative;
 }
-.btn-box__p {
+.btn-box__placeholder {
   color: var(--icon-coler, #ffffff);
   text-align: center;
   font-family: var(--main-btn-font-family, "Pretendard-Bold", sans-serif);

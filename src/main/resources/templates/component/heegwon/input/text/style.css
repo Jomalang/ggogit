@@ -1,6 +1,6 @@
 /** @format */
-@import url("../../css/reset.css");
-@import url("../../../../variables/variables.css");
+@import url('../../css/reset.css');
+@import url('../../../../variables/variables.css');
 /* .search__form {
   display: flex;
   align-items: center;
@@ -127,54 +127,105 @@ a {
   text-align: right;
   justify-content: space-between;
 }
+.tree-input-text-select__selected {
+  display: flex;
+  height: 4rem;
+  margin-top: 1rem;
+  border: 1px solid;
+  border-color: var(--main1);
+  border-radius: 1rem;
+  background-color: var(--main2);
+  align-content: center;
+  text-align: right;
+  justify-content: space-between;
+}
+.tree-input-text-select__re {
+  display: flex;
+  height: 4rem;
+  margin-top: 1rem;
+  border: 1px solid;
+  border-color: var(--warning);
+  border-radius: 1rem;
+  background-color: var(--main2);
+  align-content: center;
+  text-align: right;
+  justify-content: space-between;
+}
 .tree-input-text-select__tag {
   display: flex;
   align-content: center;
 }
 .tree-input-text-select-description {
-  display: grid;
-  align-content: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin-left: 1rem;
-  color: #767676;
+  color: var(--text-sub);
   font-size: 20px;
+}
+.tree-input-text-select-description__selected {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 1rem;
+  color: var(--text-main);
+  font-weight: var(--extra-bold);
+  font-size: 20px;
+}
+.tree-input-text-select-description__re {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 1rem;
+  color: var(--warning);
+  font-weight: var(--extra-bold);
+  font-size: 20px;
+}
+.tree-input-text-select__rewrite-msg {
+  color: var(--warning);
+}
+.tree-input-large-text-label {
+  display: flex;
+  flex-direction: column;
+  font-weight: var(--semi-bold);
+}
+.tree-input-large-text-input {
+  border: none;
+  border-radius: 1rem;
+  margin-top: 0.4rem;
+  font-weight: var(--midium);
+  color: var(--main1);
+  background-color: var(--main2);
+  height: 20rem;
+  box-sizing: border-box;
+}
+input.tree-input-large-text-input::placeholder {
+  position: relative;
+  padding-left: 1rem;
+  top: -8rem;
 }
 .input-next-button {
   border: none;
+  margin-right: 1rem;
   background-color: var(--main2);
 }
 
-.tree-input-text-select__tag {
+div.tree-input-text-select__tag {
   display: flex;
-  align-content: center;
-  position: relative;
+  justify-content: center;
+  align-items: center;
 }
-.tree-input-text-select__tag-button {
-  display: flex;
-  align-content: center;
+.tree-input-text-select__tagbutton {
   height: 2rem;
   margin-left: 1rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
   border-radius: 4rem;
   background-color: var(--main1);
-}
-.tree-input-text-select__tag-button > p {
-  display: grid;
-  margin-left: 1rem;
-  margin-right: 0rem;
-  align-content: center;
   font-size: 1rem;
   font-weight: var(--semi-bold);
   color: var(--text-icon);
 }
-.tree-input-text-select__tag-button > button {
-  margin-right: 1rem;
-  border-radius: 10rem;
-  border: none;
-  font-size: 1rem;
-  font-weight: var(--semi-bold);
-  background-color: var(--main1);
-  color: var(--text-icon);
-}
-
 .delete-seed__form {
   display: block;
   height: 3.5rem;

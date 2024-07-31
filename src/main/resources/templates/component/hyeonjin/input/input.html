@@ -10,11 +10,24 @@
   <div class="visibility">
     <div class="visibility--box">
       <p class="visibility--name">공개 여부</p>
-      <div class="visibility--btn">
-        <button class="visibility--btn__public visibility--btn__select">
-          공개
-        </button>
-        <button class="visibility--btn__private">비공개</button>
+      <div class="visibility--btns">
+        <input
+          class="visibility--btn"
+          label="공개"
+          type="radio"
+          name="visibility-option"
+          id="public"
+          value="1"
+          checked
+        />
+        <input
+          class="visibility--btn"
+          label="비공개"
+          type="radio"
+          name="visibility-option"
+          id="private"
+          value="0"
+        />
       </div>
     </div>
   </div>

@@ -1,2 +1,1 @@
-# ggogit
-ggogit project by Recorders
+### 현진 브랜치

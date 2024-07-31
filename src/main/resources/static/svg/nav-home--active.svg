@@ -1,0 +1,14 @@
+<svg
+            class="nav-list__state-active"
+            width="65"
+            height="32"
+            viewBox="0 0 65 32"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect x="0.875" width="64" height="32" rx="16" fill="#E5EDDB" />
+            <path
+              d="M32.875 10.19L37.875 14.69V22.5H35.875V16.5H29.875V22.5H27.875V14.69L32.875 10.19ZM32.875 7.5L22.875 16.5H25.875V24.5H31.875V18.5H33.875V24.5H39.875V16.5H42.875L32.875 7.5Z"
+              fill="#323A27"
+            />
+          </svg>

@@ -423,3 +423,118 @@ align-self: stretch;
   font-weight: 600;
   position: relative;
 }
+
+/* 뒤로가기 검색 */
+.back-search-container {
+  margin: 30px 24px 0px 24px;
+}
+
+.back-search {
+  display: flex;
+  flex-direction: row;
+  row-gap: 0px;
+  align-items: center;
+  justify-content: space-between;
+  height: 40px;
+  position: relative;
+}
+
+.back-search__icon-box {
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  align-self: stretch;
+  position: relative;
+}
+
+.back-search__input-box {
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+  width: 100%;
+  height: 40px;
+  padding: 0 16px;
+  border-radius: 100px;
+  background-color: var(--main2, #e5eddb);
+}
+
+.back-search__input-text {
+  font-family: 'Pretendard';
+  font-size: 14px;
+  font-weight: var(--semi-bold, 600);
+
+  background-color: var(--main2, #e5eddb);
+  padding: 0px;
+  border: none;
+  outline: none;
+  width: 90%;
+  height: 100%;
+}
+
+.back-search__lens-icon {
+  width: 18px;
+}
+
+/* 뒤로가기 검색 */
+.search-filter-container {
+  display: flex;
+  gap: 8px;
+  margin: 24px 24px 0 24px;
+}
+
+.search-filter {
+  display: flex;
+  justify-content: flex-start;
+  gap: 10px;
+}
+
+.search-filter-log {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.search-filter-log__checkbox-input {
+  display: none;
+}
+
+.search-filter-log__checkbox-labal {
+  font-family: 'Pretendard';
+  font-size: 12px;
+  font-weight: var(--medium, 500);
+  color: var(--text-sub,#767676);
+  border-radius: 8px;
+  background-color: #F7F7F7;
+  padding: 12px 20px;
+  cursor: pointer;
+  user-select: none;
+  flex-shrink: 0;
+}
+
+.search-filter-log__checkbox-input:checked + 
+.search-filter-log__checkbox-labal
+ {
+  background-color: var(--main1, #323a27);
+  color: var(--white, #ffffff);
+}
+
+.search-filter-box {
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+  align-items: center;
+  border: 2px solid;
+  border-color: #DFDFDF;
+  border-radius: 8px;
+  padding: 11px 12px;
+}
+
+.search-filter-box__text {
+  font-family: 'Pretendard';
+  font-size: 12px;
+  font-weight: var(--medium, 500);
+  color: var(--text-sub,#767676);
+  flex-shrink: 0;
+}

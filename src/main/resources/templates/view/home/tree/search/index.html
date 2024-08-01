@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="../../../../../static/css/reset.css" />
+    <link rel="stylesheet" href="../../../../../static/css/styles.css" />
+
+    <title>나의 트리 검색</title>
+</head>
+
+<body>
+    <header>
+        <h1 class="none">나의 트리</h1>
+            <form class="back-search__form">
+                <section class="back-search-container">
+                    <h2 class="none">트리 검색</h2>
+                    <!-- 컴포넌트 start -->
+                    <div class="back-search">
+                        <a class="back-search__back-link" href="">
+                            <div class="back-search__icon-box">
+                                <img class="back-search__icon" src="../../../../../static/svg/back-icon.svg" alt="">
+                            </div>
+                        </a>
+                        <div class="back-search__input-box">
+                            <input class="back-search__input-text" type="text" placeholder="트리 이름을 작성해주세요">
+                            <img class="back-search__lens-icon" src="../../../../../static/svg/lens.svg" alt="">
+                        </div>
+                    </div>
+                    <!-- 컴포넌트 end -->
+                </section>
+
+                <section class="search-filter-container">
+                    <h2 class="none">트리 검색 필터</h2>
+                    <!-- 컴포넌트 start -->
+                    <div class="search-filter-log">
+                        <input class="search-filter-log__checkbox-input" type="checkbox" id="search-log-filter" name="log-filter">
+                        <label class="search-filter-log__checkbox-labal" for="search-log-filter">나뭇잎 전체 검색</label>
+                    </div>
+
+                    <div class="search-filter-box">
+                        <p class="search-filter-box__text">카테고리</p>
+                        <img class="search-filter-box__icon" src="../../../../../static/svg/filter-btn.svg" alt="">
+                    </div>
+
+                    <!-- 컴포넌트 end -->
+
+                    
+
+                </section>
+            </form>
+        
+        
+    </header>
+
+</body>
+</html>

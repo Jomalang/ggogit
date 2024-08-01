@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link rel="stylesheet" href="../../../static/css/reset.css" />
-    <link rel="stylesheet" href="../../../static/css/styles.css" />
+    <link th:href="@{/css/reset.css}" rel="stylesheet" />
+    <link th:href="@{/css/styles.css}" rel="stylesheet" />
 
     <title>나의 트리</title>
   </head>
@@ -21,7 +21,7 @@
           <a class="search__link" href="#">
             <div class="search__input-box">
               <p class="search__placeholder">나의 트리 검색</p>
-              <img class="search__icon" src="../../../static/svg/lens.svg" alt="lens.svg" />
+              <img class="search__icon" th:src="@{/svg/lens.svg}" alt="lens.svg" />
             </div>
           </a>
         </div>
@@ -47,13 +47,13 @@
             <div class="book-img">
               <ul class="book-img__list">
                   <li class="book-img__item">
-                    <img class="book-img__image" src="../../../static/img/home/no-tree-left-book.png" alt="" />
+                    <img class="book-img__image" th:src="@{/img/home/no-tree-left-book.png}" alt="" />
                   </li>
                   <li class="book-img__item">
-                    <img class="book-img__image" class="mid-img" src="../../../static/img/home/no-tree-mid-book.png" alt="" />
+                    <img class="book-img__image mid-img" th:src="@{/img/home/no-tree-mid-book.png}" alt="" />
                   </li>
                   <li class="book-img__item">
-                    <img class="book-img__image" src="../../../static/img/home/no-tree-right-book.png" alt="" />
+                    <img class="book-img__image" th:src="@{/img/home/no-tree-right-book.png}" alt="" />
                   </li>
               </ul>
             </div>
@@ -94,25 +94,25 @@
         <ul class="main-nav__list">
           <a class="main-nav__link" href="">
             <li class="main-nav__item">
-              <img class="main-nav__icon" src="../../../static/svg/nav-home--active.svg" alt="" />
+              <img class="main-nav__icon" th:src="@{/svg/nav-home--active.svg}" alt="" />
               <p class="main-nav__text--active">홈</p>
             </li>
           </a>
           <a class="main-nav__link" href="">
             <li class="main-nav__item">
-              <img class="main-nav__icon" src="../../../static/svg/nav-search.svg" alt="" />
+              <img class="main-nav__icon" th:src="@{/svg/nav-search.svg}" alt="" />
               <p class="main-nav__text">탐색</p>
             </li>
           </a>
           <a class="main-nav__link" href="">
             <li class="main-nav__item">
-              <img class="main-nav__icon" src="../../../static/svg/nav-cummunity.svg" alt="" />
+              <img class="main-nav__icon" th:src="@{/svg/nav-cummunity.svg}" alt="" />
               <p class="main-nav__text">커뮤니티</p>
             </li>
           </a>
           <a class="main-nav__link" href="">
             <li class="main-nav__item">
-              <img class="main-nav__icon" src="../../../static/svg/nav-mypage.svg" alt="" />
+              <img class="main-nav__icon" th:src="@{/svg/nav-mypage.svg}" alt="" />
               <p class="main-nav__text">나의 꼬깃</p>
             </li>
           </a>

@@ -34,7 +34,7 @@
   justify-content: flex-start;
   width: 375px;
 }
-.page-start__input--unfocused {
+.page-start__input {
   background: #f5f8f1;
   border-radius: 12px;
   border: none;
@@ -46,7 +46,11 @@
   height: 56px;
 }
 
-.page-start__input--unfocused::placeholder {
+.page-start__input:focus {
+  font-weight: var(--semi-bold);
+}
+
+.page-start__input::placeholder {
   font-size: 16px;
   font-weight: var(--regular);
   line-height: var(--line-height-main);
@@ -54,7 +58,11 @@
   color: var(--text-sub);
 }
 
-.page-last__input--unfocused {
+.page-start__input:focus::placeholder {
+  font-weight: var(--semi-bold);
+}
+
+.page-last__input {
   background: #f5f8f1;
   border-radius: 12px;
   border: none;
@@ -66,12 +74,18 @@
   width: 158px;
   height: 56px;
 }
-.page-last__input--unfocused::placeholder {
+.page-last__input:focus {
+  font-weight: var(--semi-bold);
+}
+.page-last__input::placeholder {
   font-size: 16px;
   font-weight: var(--regular);
   line-height: var(--line-height-main);
   letter-spacing: var(--letter-spacing-sub);
   color: var(--text-sub);
+}
+.page-last__input:focus::placeholder {
+  font-weight: var(--semi-bold);
 }
 .page-start__input--focused {
   background: #f5f8f1;
@@ -88,7 +102,6 @@
 
 .page-start__input--focused::placeholder {
   font-size: 16px;
-  font-weight: var(--semi-bold);
   line-height: var(--line-height-main);
   letter-spacing: var(--letter-spacing-sub);
   color: var(--text-main);

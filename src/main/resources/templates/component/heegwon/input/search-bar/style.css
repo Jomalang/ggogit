@@ -1,10 +1,14 @@
 /** @format */
-@import url("../../css/reset.css");
-@import url("../../../variables/variables.css");
+@import url('../../css/reset.css');
+@import url('../../../../variables/variables.css');
 a {
   text-decoration: none;
   color: var(--text-sub);
   font-weight: var(--extra-bold);
+}
+button {
+  border: none;
+  background-color: transparent;
 }
 p {
   color: var(--text-sub);
@@ -27,7 +31,7 @@ p {
 }
 .search-bar-p {
   text-align: center;
-  font-family: "Pretendard-SemiBold", sans-serif;
+  font-family: 'Pretendard-SemiBold', sans-serif;
   font-size: 14px;
   position: relative;
 }
@@ -45,11 +49,11 @@ p {
   flex: 1 0 auto;
 }
 .search-bar-back-close > p {
-  color: #767676;
+  color: var(--text-sub);
   text-align: center;
-  font-family: "Pretendard-SemiBold", sans-serif;
+  font-family: 'Pretendard-SemiBold', sans-serif;
   font-size: 14px;
-  font-weight: 800;
+  font-weight: var(--semi-bold);
   position: relative;
 }
 .search-bar__button {

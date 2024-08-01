@@ -1,57 +1,11 @@
 /** @format */
 @import url('../../css/reset.css');
 @import url('../../../../variables/variables.css');
-/* .search__form {
-  display: flex;
-  align-items: center;
-  height: 5rem;
-  padding-top: 1rem;
-  margin-right: 1rem;
-}
-.search-bar {
-  background: #e5eddb;
-  border-radius: 2rem;
-  padding: 8px 16px 8px 16px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.search-bar > p {
-  color: var(--text-sub);
-  text-align: center;
-  font-family: "Pretendard-SemiBold", sans-serif;
-  font-size: 14px;
-  font-weight: var(--extra-bold);
-  position: relative;
-}
-.search-bar img {
-  height: 1.5rem;
-}
-.search-bar-back-close {
-  display: flex;
-  background: #e5eddb;
-  border-radius: 2rem;
-  margin-left: 1rem;
-  padding: 8px 16px 8px 16px;
-  align-items: center;
-  justify-content: space-between;
-  flex: 1 0 auto;
-}
-.search-bar-back-close > p {
-  color: #767676;
-  text-align: center;
-  font-family: "Pretendard-SemiBold", sans-serif;
-  font-size: 14px;
-  font-weight: 800;
-  position: relative;
-}
-.search-bar__button {
-  width: 5rem;
-  display: flex;
-  justify-content: space-between;
-} */
 a {
   text-decoration: none;
+}
+button {
+  cursor: pointer;
 }
 .tree-input-text__subject {
   font-display: var(--filter-checked);
@@ -189,20 +143,35 @@ a {
   flex-direction: column;
   font-weight: var(--semi-bold);
 }
-.tree-input-large-text-input {
+.tree-input-large-textarea {
   border: none;
   border-radius: 1rem;
   margin-top: 0.4rem;
-  font-weight: var(--midium);
-  color: var(--main1);
+  padding-top: 0.5rem;
+  padding-left: 0.5rem;
   background-color: var(--main2);
   height: 20rem;
   box-sizing: border-box;
+  outline: none;
 }
-input.tree-input-large-text-input::placeholder {
-  position: relative;
-  padding-left: 1rem;
-  top: -8rem;
+.tree-input-large-textarea::placeholder {
+  font-weight: var(--midium);
+  color: var(--main1);
+}
+.tree-input-large-textarea__complate {
+  border: none;
+  border-radius: 1rem;
+  margin-top: 0.4rem;
+  padding-top: 0.5rem;
+  padding-left: 0.5rem;
+  background-color: var(--main2);
+  height: 20rem;
+  box-sizing: border-box;
+  outline: none;
+}
+.tree-input-large-textarea__complate::placeholder {
+  font-weight: var(--semi-bold);
+  color: var(--text-main);
 }
 .input-next-button {
   border: none;
@@ -230,16 +199,18 @@ div.tree-input-text-select__tag {
   display: block;
   height: 3.5rem;
   border: none;
-  position: relative;
 }
 .delete-seed__button {
+  display: flex;
+  flex-direction: row;
   border: none;
   width: 100%;
   height: 100%;
   padding-left: 2rem;
-  font-size: 20px;
-  font-display: #767676;
+  font-size: 16px;
+  color: var(--text-sub);
   text-align: left;
+  align-items: center;
   background-color: #e5eddb;
 }
 .delete-seed__button img {

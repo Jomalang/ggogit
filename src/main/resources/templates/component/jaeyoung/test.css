@@ -6,7 +6,7 @@
   font-style: normal;
 }
 
-button {
+.button {
   width: 50px;
   height: 50px;
   background-color: #323a27;
@@ -15,22 +15,74 @@ button {
   box-shadow: 0 4px
   16px rgba(0, 0, 0, 0.25);
   font-family: 'Pretendard-Regular';
-  font-size: 16px;
+  font-size: 14px;
   font-weight: bold;
   border-radius: 16px;
   transition: 1;
 }
-button:focus{
+.button:focus{
   outline: 0;
 }
-button:hover{
+.button:hover{
   background-color: #323a27;
   cursor: pointer;
   box-shadow: 0 2px
   4px rgba(0, 0, 0, 0.25);
 }
 
-.button,
+.green-booklist {
+  background-color: #ffffff;
+  border: none;
+  font-size: 14px;
+  transition: 1;
+}
+.green-booklist:focus{
+  outline: 0;
+}
+.green-booklist:hover{
+  cursor: pointer;
+}
+
+.green-bookmark {
+  background-color: #ffffff;
+  border: none;
+  font-size: 14px;
+  transition: 1;
+}
+.green-bookmark:focus{
+  outline: 0;
+}
+.green-bookmark:hover{
+  cursor: pointer;
+}
+
+.green-branch {
+  background-color: #ffffff;
+  border: none;
+  font-size: 14px;
+  transition: 1;
+}
+.green-branch:focus{
+  outline: 0;
+}
+.green-branch:hover{
+  cursor: pointer;
+}
+
+.white-check {
+  background-color: #ffffff;
+  border: none;
+  font-size: 14px;
+  transition: 1;
+}
+.white-check:focus{
+  outline: 0;
+}
+.white-check:hover{
+  cursor: pointer;
+}
+
+/* .button,
 .button * {
   box-sizing: border-box;
 }
@@ -58,9 +110,9 @@ button:hover{
     letter-spacing: var(--main-btn-letter-spacing, -0.025em);
     font-weight: var(--main-btn-font-weight, 700);
     position: relative;
-}
+} */
 
-.branch,
+/* .branch,
 .branch * {
   box-sizing: border-box;
 }
@@ -85,9 +137,32 @@ button:hover{
     height: 24px;
     position: relative;
     overflow: visible;
+} */
+.branch {
+  width: 50px;
+  height: 50px;
+  background-color: #323a27;
+  color: #ffffff;
+  border: none;
+  box-shadow: 0 4px
+  16px rgba(0, 0, 0, 0.25);
+  font-family: 'Pretendard-Regular';
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 16px;
+  transition: 1;
+}
+.branch:focus{
+  outline: 0;
+}
+.branch:hover{
+  background-color: #323a27;
+  cursor: pointer;
+  box-shadow: 0 2px
+  4px rgba(0, 0, 0, 0.25);
 }
 
-.bookmark,
+/* .bookmark,
 .bookmark * {
   box-sizing: border-box;
 }
@@ -112,9 +187,32 @@ button:hover{
   height: 24px;
   position: relative;
   overflow: visible;
+} */
+.bookmark {
+  width: 50px;
+  height: 50px;
+  background-color: #323a27;
+  color: #ffffff;
+  border: none;
+  box-shadow: 0 4px
+  16px rgba(0, 0, 0, 0.25);
+  font-family: 'Pretendard-Regular';
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 16px;
+  transition: 1;
+}
+.bookmark:focus{
+  outline: 0;
+}
+.bookmark:hover{
+  background-color: #323a27;
+  cursor: pointer;
+  box-shadow: 0 2px
+  4px rgba(0, 0, 0, 0.25);
 }
 
-.booklist,
+/* .booklist,
 .booklist * {
   box-sizing: border-box;
 }
@@ -144,9 +242,33 @@ button:hover{
   height: auto;
   position: relative;
   overflow: visible;
+} */
+
+.booklist {
+  width: 50px;
+  height: 50px;
+  background-color: #323a27;
+  color: #ffffff;
+  border: none;
+  box-shadow: 0 4px
+  16px rgba(0, 0, 0, 0.25);
+  font-family: 'Pretendard-Regular';
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 16px;
+  transition: 1;
+}
+.booklist:focus{
+  outline: 0;
+}
+.booklist:hover{
+  background-color: #323a27;
+  cursor: pointer;
+  box-shadow: 0 2px
+  4px rgba(0, 0, 0, 0.25);
 }
 
-.button-tree-green,
+/* .button-tree-green,
 .button-tree-green * {
   box-sizing: border-box;
 }
@@ -190,9 +312,33 @@ button:hover{
   display: flex;
   align-items: center;
   justify-content: center;
+} */
+
+.button-tree-create--green {
+  width: 300px;
+  height: 50px;
+  background-color: #323a27;
+  color: #ffffff;
+  border: none;
+  box-shadow: 0 4px
+  16px rgba(0, 0, 0, 0.25);
+  font-family: 'Pretendard-Regular';
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 16px;
+  transition: 1;
+}
+.button-tree-create--green:focus{
+  outline: 0;
+}
+.button-tree-create--green:hover{
+  background-color: #323a27;
+  cursor: pointer;
+  box-shadow: 0 2px
+  4px rgba(0, 0, 0, 0.25);
 }
 
-.button-tree-white,
+/* .button-tree-white,
 .button-tree-white * {
   box-sizing: border-box;
 }
@@ -236,6 +382,30 @@ button:hover{
   display: flex;
   align-items: center;
   justify-content: center;
+} */
+
+.button-tree-create--white {
+  width: 300px;
+  height: 50px;
+  background-color: #E5EDDB;
+  color: #323a27;
+  border: none;
+  box-shadow: 0 4px
+  16px rgba(0, 0, 0, 0.25);
+  font-family: 'Pretendard-Regular';
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 16px;
+  transition: 1;
+}
+.button-tree-create--white:focus{
+  outline: 0;
+}
+.button-tree-create--white:hover{
+  background-color: #E5EDDB;
+  cursor: pointer;
+  box-shadow: 0 2px
+  4px rgba(0, 0, 0, 0.25);
 }
 
 .checkbox-check,
@@ -280,3 +450,31 @@ button:hover{
   height: 24px;
   position: relative;
 }
+
+
+.hide {
+  overflow: hidden;
+  display: block;
+  position: absolute;
+  border: 0;
+  width: 1px;
+  height: 1px;
+  clip: rect(1px, 1px, 1px, 1px);
+}
+
+label.checkbox {
+  display: inline-block;
+  background-color: #323a27;
+  height: 24px;
+  width: 24px;
+  border-radius: 8px;
+
+}
+label.checkbox::before {
+  border-image: "icon/checkbox-check-icon.svg";
+}
+
+input[type="checkbox"]:checked + label {
+  content: icon;
+}
+

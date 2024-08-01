@@ -2,10 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
-    />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 
     <link rel="stylesheet" href="../../../static/css/reset.css" />
@@ -15,64 +12,85 @@
   </head>
   <body>
     <header>
-      <h1 class="none">나의 트리 홈</h1>
-      <section class="search">
-        <h2 class="none">나의 트리 검색</h2>
-        <a href="#">
-          <div class="search__input">
-            <p class="search__placeholder">나의 트리 검색</p>
-            <img src="../../../static/svg/lens.svg" alt="lens.svg" />
-          </div>
-        </a>
+      <h1 class="none">나의 트리</h1>
+      <section class="search-container">
+        <h2 class="none">나의 트리 검색 링크</h2>
+        <!-- 컴포넌트 start -->
+        <div class="search">
+          <a class="search__link" href="#">
+            <div class="search__input-box">
+              <p class="search__placeholder">나의 트리 검색</p>
+              <img class="search__icon" src="../../../static/svg/lens.svg" alt="lens.svg" />
+            </div>
+          </a>
+        </div>
+        <!-- 컴포넌트 end -->
       </section>
     </header>
 
     <main>
-      <section class="tree-list">
-        <h2 class="none">나의 최근 검색 정보</h2>
-        <section class="tree-list__title">
-          <h3 class="tree-list__h">나의 최근 트리</h3>
-        </section>
+      <section class="my-tree-container">
+        <h2 class="none">나의 트리 정보</h2>
 
-        <section class="book-img">
-          <h3 class="none">트리 이미지</h3>
-          <ul class="book-img__list">
-            <a href="">
-              <li>
-                <img src="../../../static/img/home/home-left-book.png" alt="" />
-              </li>
-            </a>
-            <a href="">
-              <li>
-                <img src="../../../static/img/home/home-mid-book.png" alt="" />
-              </li>
-            </a>
-            <a href="">
-              <li>
-                <img
-                  src="../../../static/img/home/home-right-book.png"
-                  alt=""
-                />
-              </li>
-            </a>
-          </ul>
-        </section>
-
-        <section class="book-info-container">
-          <h3 class="none">트리 정보</h3>
-          <div class="book-info-container__book-category">
-            <p class="book-info-container__category">시/에세이</p>
+        <section class="book-tree-info-container">
+          <!-- 컴포넌트 start -->
+          <div class="title-box">
+            <h3 class="list__h">나의 트리</h3>
           </div>
-          <p class="book-info-container__tree-name">나의 첫번째 트리</p>
-          <p class="book-info-container__book-name">무정형의 삶</p>
-          <p class="book-info-container__book-maker-box">
-            <span class="book-info-container__author">김민철</span>
-            ·
-            <span class="book-info-container__publisher">위즈덤하우스</span>
-          </p>
-          <p class="book-info-container__year">2024.07.15</p>
+          <!-- 컴포넌트 end -->
+
+          <section class="book-img-container">
+            <h4 class="none">트리 이미지</h4>
+            <!-- 컴포넌트 start -->
+            <div class="book-img">
+              <ul class="book-img__list">
+                  <li class="book-img__item">
+                    <img class="book-img__image" src="../../../static/img/home/home-left-book.png" alt="" />
+                  </li>
+                  <li class="book-img__item">
+                    <img class="book-img__image" class="mid-img" src="../../../static/img/home/home-mid-book.png" alt="" />
+                  </li>
+                  <li class="book-img__item">
+                    <img class="book-img__image" src="../../../static/img/home/home-right-book.png" alt="" />
+                  </li>
+              </ul>
+            </div>
+            <!-- 컴포넌트 end -->
+          </section>
+
+          <section class="tree-info-container">
+            <h4 class="none">트리 정보</h4>
+            <!-- 컴포넌트 start -->
+
+            <section class="text-info-container">
+              <h5 class="none">도서 정보</h5>
+              <!-- 컴포넌트 start -->
+
+              <div class="book-info-container">
+                <div class="book-info-container__book-category">
+                  <div class="book-info-container__category">시/에세이</div>
+                </div>
+                <div class="book-info-container__name">나의 첫번째 트리</div>
+                <div class="book-info-container__book-name">무정형의 삶</div>
+                <div class="book-info-container__book-maker-box">
+                  <div class="book-info-container__author">김민철</div>
+                  <div class="book-info-container__div">·</div>
+                  <div class="book-info-container__publisher">위즈덤하우스</div>
+                </div>
+                <div class="book-info-container__year">2024.07.15</div>
+              </div>
+              
+
+              <!-- 컴포넌트 end -->
+            </section>
+
+            <!-- 컴포넌트 end -->
+          </section>
+
         </section>
       </section>
     </main>
+
+
   </body>
 </html>

@@ -6,7 +6,83 @@
   font-style: normal;
 }
 
-.button {
+.booklist--green {
+  background-color: #ffffff;
+  border: none;
+  font-size: 14px;
+  transition: 1;
+}
+.booklist--green:focus{
+  outline: 0;
+}
+.booklist--green:hover{
+  cursor: pointer;
+}
+
+.bookmark--green {
+  background-color: #ffffff;
+  border: none;
+  font-size: 14px;
+  transition: 1;
+}
+.bookmark--green:focus{
+  outline: 0;
+}
+.bookmark--green:hover{
+  cursor: pointer;
+}
+
+.branch--green {
+  background-color: #ffffff;
+  border: none;
+  font-size: 14px;
+  transition: 1;
+}
+.branch--green:focus{
+  outline: 0;
+}
+.branch--green:hover{
+  cursor: pointer;
+}
+
+.check--white {
+  background-color: #ffffff;
+  border: none;
+  font-size: 14px;
+  transition: 1;
+}
+.check--white:focus{
+  outline: 0;
+}
+.check--white:hover{
+  cursor: pointer;
+}
+
+.__button {
+  padding: 17px,17px,17px,17px;
+  width: flex ;
+  height: 50px;
+  background-color: #323a27;
+  color: #ffffff;
+  box-shadow: 0 4px
+  16px rgba(0, 0, 0, 0.25);
+  font-family: 'Pretendard-Regular';
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 16px;
+  transition: 1;
+}
+.__button:focus{
+  outline: 0;
+}
+.__button:hover{
+  background-color: #323a27;
+  cursor: pointer;
+  box-shadow: 0 2px
+  4px rgba(0, 0, 0, 0.25);
+}
+
+.__branch {
   width: 50px;
   height: 50px;
   background-color: #323a27;
@@ -20,125 +96,18 @@
   border-radius: 16px;
   transition: 1;
 }
-.button:focus{
+.__branch:focus{
   outline: 0;
 }
-.button:hover{
+.__branch:hover{
   background-color: #323a27;
   cursor: pointer;
   box-shadow: 0 2px
   4px rgba(0, 0, 0, 0.25);
 }
 
-.green-booklist {
-  background-color: #ffffff;
-  border: none;
-  font-size: 14px;
-  transition: 1;
-}
-.green-booklist:focus{
-  outline: 0;
-}
-.green-booklist:hover{
-  cursor: pointer;
-}
 
-.green-bookmark {
-  background-color: #ffffff;
-  border: none;
-  font-size: 14px;
-  transition: 1;
-}
-.green-bookmark:focus{
-  outline: 0;
-}
-.green-bookmark:hover{
-  cursor: pointer;
-}
-
-.green-branch {
-  background-color: #ffffff;
-  border: none;
-  font-size: 14px;
-  transition: 1;
-}
-.green-branch:focus{
-  outline: 0;
-}
-.green-branch:hover{
-  cursor: pointer;
-}
-
-.white-check {
-  background-color: #ffffff;
-  border: none;
-  font-size: 14px;
-  transition: 1;
-}
-.white-check:focus{
-  outline: 0;
-}
-.white-check:hover{
-  cursor: pointer;
-}
-
-/* .button,
-.button * {
-  box-sizing: border-box;
-}
-.button {
-    background: var(--main-1, #323a27);
-    border-radius: 16px;
-    padding: 17px 20px 17px 20px;
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
-    row-gap: 0px;
-    align-items: center;
-    justify-content: center;
-    align-self: stretch;
-    flex-shrink: 0;
-    position: relative;
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-}
-.button-box {
-    color: var(--icon-coler, #ffffff);
-    text-align: right;
-    font-family: var(--main-btn-font-family, "Pretendard-Bold", sans-serif);
-    font-size: var(--main-btn-font-size, 16px);
-    line-height: var(--main-btn-line-height, 140%);
-    letter-spacing: var(--main-btn-letter-spacing, -0.025em);
-    font-weight: var(--main-btn-font-weight, 700);
-    position: relative;
-} */
-
-/* .branch,
-.branch * {
-  box-sizing: border-box;
-}
-.branch {
-    background: var(--main-1, #323a27);
-    border-radius: 16px;
-    padding: 17px;
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
-    row-gap: 0px;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    height: 56px;
-    position: relative;
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-}
-.branch-icon {
-    flex-shrink: 0;
-    width: 24px;
-    height: 24px;
-    position: relative;
-    overflow: visible;
-} */
-.branch {
+.__bookmark {
   width: 50px;
   height: 50px;
   background-color: #323a27;
@@ -152,43 +121,17 @@
   border-radius: 16px;
   transition: 1;
 }
-.branch:focus{
+.__bookmark:focus{
   outline: 0;
 }
-.branch:hover{
+.__bookmark:hover{
   background-color: #323a27;
   cursor: pointer;
   box-shadow: 0 2px
   4px rgba(0, 0, 0, 0.25);
 }
 
-/* .bookmark,
-.bookmark * {
-  box-sizing: border-box;
-}
-.bookmark {
-  background: var(--main-1, #323a27);
-  border-radius: 16px;
-  padding: 17px;
-  display: flex;
-  flex-direction: row;
-  gap: 10px;
-  row-gap: 0px;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  height: 56px;
-  position: relative;
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-}
-.bookmark-icon {
-  flex-shrink: 0;
-  width: 24px;
-  height: 24px;
-  position: relative;
-  overflow: visible;
-} */
-.bookmark {
+.__booklist {
   width: 50px;
   height: 50px;
   background-color: #323a27;
@@ -202,119 +145,18 @@
   border-radius: 16px;
   transition: 1;
 }
-.bookmark:focus{
+.__booklist:focus{
   outline: 0;
 }
-.bookmark:hover{
+.__booklist:hover{
   background-color: #323a27;
   cursor: pointer;
   box-shadow: 0 2px
   4px rgba(0, 0, 0, 0.25);
 }
 
-/* .booklist,
-.booklist * {
-  box-sizing: border-box;
-}
-.booklist {
-  background: var(--main-1, #323a27);
-  border-radius: 16px;
-  padding: 17px;
-  display: flex;
-  flex-direction: row;
-  gap: 10px;
-  row-gap: 0px;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  height: 56px;
-  position: relative;
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-}
-.bookkist-icon {
-  display: flex;
-  flex-direction: row;
-  gap: 10px;
-  row-gap: 0px;
-  align-items: center;
-  justify-content: flex-start;
-  flex-shrink: 0;
-  height: auto;
-  position: relative;
-  overflow: visible;
-} */
 
-.booklist {
-  width: 50px;
-  height: 50px;
-  background-color: #323a27;
-  color: #ffffff;
-  border: none;
-  box-shadow: 0 4px
-  16px rgba(0, 0, 0, 0.25);
-  font-family: 'Pretendard-Regular';
-  font-size: 14px;
-  font-weight: bold;
-  border-radius: 16px;
-  transition: 1;
-}
-.booklist:focus{
-  outline: 0;
-}
-.booklist:hover{
-  background-color: #323a27;
-  cursor: pointer;
-  box-shadow: 0 2px
-  4px rgba(0, 0, 0, 0.25);
-}
-
-/* .button-tree-green,
-.button-tree-green * {
-  box-sizing: border-box;
-}
-.button-tree-green {
-  border-radius: 40px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  row-gap: 0px;
-  align-items: center;
-  justify-content: center;
-  align-self: stretch;
-  flex-shrink: 0;
-  height: 56px;
-  position: relative;
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-}
-.button-tree-green-create {
-  background: var(--main-1, #323a27);
-  border-radius: 40px;
-  display: flex;
-  flex-direction: row;
-  gap: 10px;
-  row-gap: 0px;
-  align-items: center;
-  justify-content: center;
-  align-self: stretch;
-  flex-shrink: 0;
-  height: 56px;
-  position: relative;
-}
-.button-tree-green-create-text {
-  color: var(--icon-coler, #ffffff);
-  text-align: center;
-  font-family: var(--main-btn-font-family, "Pretendard-Bold", sans-serif);
-  font-size: var(--main-btn-font-size, 16px);
-  line-height: var(--main-btn-line-height, 140%);
-  letter-spacing: var(--main-btn-letter-spacing, -0.025em);
-  font-weight: var(--main-btn-font-weight, 700);
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-} */
-
-.button-tree-create--green {
+.create--green__button {
   width: 300px;
   height: 50px;
   background-color: #323a27;
@@ -328,63 +170,18 @@
   border-radius: 16px;
   transition: 1;
 }
-.button-tree-create--green:focus{
+.create--green__button:focus{
   outline: 0;
 }
-.button-tree-create--green:hover{
+.create--green__button:hover{
   background-color: #323a27;
   cursor: pointer;
   box-shadow: 0 2px
   4px rgba(0, 0, 0, 0.25);
 }
 
-/* .button-tree-white,
-.button-tree-white * {
-  box-sizing: border-box;
-}
-.button-tree-white {
-  border-radius: 40px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  row-gap: 0px;
-  align-items: center;
-  justify-content: center;
-  align-self: stretch;
-  flex-shrink: 0;
-  height: 56px;
-  position: relative;
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-}
-.button-tree-white-create {
-  background: var(--main-2, #e5eddb);
-  border-radius: 40px;
-  display: flex;
-  flex-direction: row;
-  gap: 10px;
-  row-gap: 0px;
-  align-items: center;
-  justify-content: center;
-  align-self: stretch;
-  flex-shrink: 0;
-  height: 56px;
-  position: relative;
-}
-.button-tree-white-create-text {
-  color: var(--icon-coler, #ffffff);
-  text-align: center;
-  font-family: var(--main-btn-font-family, "Pretendard-Bold", sans-serif);
-  font-size: var(--main-btn-font-size, 16px);
-  line-height: var(--main-btn-line-height, 140%);
-  letter-spacing: var(--main-btn-letter-spacing, -0.025em);
-  font-weight: var(--main-btn-font-weight, 700);
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-} */
 
-.button-tree-create--white {
+.create--white__button {
   width: 300px;
   height: 50px;
   background-color: #E5EDDB;
@@ -398,58 +195,16 @@
   border-radius: 16px;
   transition: 1;
 }
-.button-tree-create--white:focus{
+.create--white__button:focus{
   outline: 0;
 }
-.button-tree-create--white:hover{
+.create--white__button:hover{
   background-color: #E5EDDB;
   cursor: pointer;
   box-shadow: 0 2px
   4px rgba(0, 0, 0, 0.25);
 }
 
-.checkbox-check,
-.checkbox-check * {
-  box-sizing: border-box;
-}
-.checkbox-check {
-  background: var(--main-1, #323a27);
-  border-radius: 4px;
-  align-self: stretch;
-  flex-shrink: 0;
-  height: 24px;
-  position: relative;
-}
-.checkbox-check-icon {
-  width: 16px;
-  height: 11.8px;
-  position: absolute;
-  left: calc(50% - 9px);
-  top: calc(50% - 6px);
-  overflow: visible;
-}
-
-.checkbox-space,
-.checkbox-space * {
-  box-sizing: border-box;
-}
-.checkbox-space {
-  border-radius: 4px;
-  border-style: solid;
-  border-color: rgba(118, 118, 118, 0.6);
-  border-width: 1px;
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  row-gap: 0px;
-  align-items: flex-start;
-  justify-content: flex-start;
-  align-self: stretch;
-  flex-shrink: 0;
-  height: 24px;
-  position: relative;
-}
 
 
 .hide {
@@ -470,6 +225,7 @@ label.checkbox {
   border-radius: 8px;
 
 }
+
 label.checkbox::before {
   border-image: "icon/checkbox-check-icon.svg";
 }

@@ -1,4 +1,4 @@
-@import url("../../../variables/variables.css");
+@import url("../../../../static/common/variables.css");
 
 * {
   box-sizing: border-box;
@@ -17,7 +17,7 @@
 .page__name {
   display: block;
   padding: 16px 24px 4px 24px;
-  color: var(--main-1, #323a27);
+  color: var(--main1);
   text-align: center;
   font-size: 16px;
   line-height: var(--line-height-main);
@@ -124,13 +124,7 @@
   width: 395px;
   height: 114px;
 }
-.visibility__box {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-  align-self: stretch;
-}
+
 .visibility__name {
   color: var(--main1);
   font-size: 16px;

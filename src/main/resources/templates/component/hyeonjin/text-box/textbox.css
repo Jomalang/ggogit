@@ -1,4 +1,4 @@
-@import url("../../../variables/variables.css");
+@import url("../../../../static/common/variables.css");
 
 * {
   box-sizing: border-box;
@@ -36,7 +36,6 @@
   flex-direction: column;
   align-items: center;
   color: var(--text-sub);
-  height: 171px;
   text-decoration: none;
 }
 

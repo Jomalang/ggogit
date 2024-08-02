@@ -5,82 +5,121 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <link rel="stylesheet" href="../../../static/css/reset.css" />
-    <link rel="stylesheet" href="../../../static/css/home-no-tree.css" />
+    <link rel="stylesheet" href="../../../static/css/styles.css" />
 
-    <title>Document</title>
+    <title>나의 트리</title>
   </head>
   <body>
 
     <header>
-      <h1 class="none">나의 트리 홈</h1>
-      <section class="search">
-        <h2 class="none">나의 트리 검색</h2>
-        <a href="#">
-            <div class="search__input">
-                <p class="search__placeholder">나의 트리 검색</p>
-                <img src="../../../static/svg/lens.svg" alt="lens.svg" />
+      <h1 class="none">나의 트리</h1>
+
+      <section class="search-container">
+        <h2 class="none">나의 트리 검색 링크</h2>
+        <!-- 컴포넌트 start -->
+        <div class="search">
+          <a class="search__link" href="#">
+            <div class="search__input-box">
+              <p class="search__placeholder">나의 트리 검색</p>
+              <img class="search__icon" src="../../../static/svg/lens.svg" alt="lens.svg" />
             </div>
-        </a>
+          </a>
+        </div>
+        <!-- 컴포넌트 end -->
       </section>
+      
     </header>
 
     <main>
-      <section class="tree-list">
-        <div class="tree-list__title">
-          <h2 class="tree-list__h">나의 트리</h2>
-        </div>
-        <div class="book-img">
-            <ul class="book-img__list">
-                <li><img src="../../../static/img/no-tree-left-book.png" alt="" /></li>
-                <li><img src="../../../static/img/no-tree-mid-book.png" alt="" /></li>
-                <li><img src="../../../static/img/no-tree-right-book.png" alt="" /></li>
-            </ul>
-        </div>
-        <div class="tree-list__bg-green">
-          <div class="tree-list__text-info">
-            <p class="tree-list__p">현재 기록중인 트리가 없습니다</p>
-            <p class="tree-list__p2">트리를 생성해 주세요</p>
+      <section class="my-tree-container">
+        <h2 class="none">나의 트리 정보</h2>
+
+        <section class="book-tree-info-container">
+          <!-- 컴포넌트 start -->
+          <div class="title-box">
+            <h3 class="list__h">나의 트리</h3>
           </div>
-        </div>
+          <!-- 컴포넌트 end -->
+
+          <section class="book-img-container">
+            <h4 class="none">트리 이미지</h4>
+            <!-- 컴포넌트 start -->
+            <div class="book-img">
+              <ul class="book-img__list">
+                  <li class="book-img__item">
+                    <img class="book-img__image" src="../../../static/img/home/no-tree-left-book.png" alt="" />
+                  </li>
+                  <li class="book-img__item">
+                    <img class="book-img__image" class="mid-img" src="../../../static/img/home/no-tree-mid-book.png" alt="" />
+                  </li>
+                  <li class="book-img__item">
+                    <img class="book-img__image" src="../../../static/img/home/no-tree-right-book.png" alt="" />
+                  </li>
+              </ul>
+            </div>
+            <!-- 컴포넌트 end -->
+          </section>
+
+          <section class="text-info-container">
+            <h4 class="none">트리 생성 안내</h4>
+            <!-- 컴포넌트 start -->
+            <div class="text-info">
+              <div class="text-info-box">
+                <p class="text-info-box__text">현재 기록중인 트리가 없습니다</p>
+                <p class="text-info-box__text--bold">트리를 생성해 주세요</p>
+              </div>
+            </div>
+            <!-- 컴포넌트 end -->
+          </section>
+        </section>
       </section>
 
-      <section class="btn-box">
-        <h2 class="none">나의 트리</h2>
-        <a href="">
+      <section class="link-btn-container">
+        <h2 class="none">트리 생성 버튼</h2>
+        <!-- 컴포넌트 start -->
+        <div class="btn-box">
+          <a class="btn-box__link" href="">
             <div class="btn-box__button">
-                <div class="btn-box__p">트리 생성</div>
+                <p class="btn-box__placeholder">트리 생성</p>
             </div>
-        </a>
+          </a>
+        </div>
+        <!-- 컴포넌트 end -->
       </section>
     </main>
 
-    <aside class="footer-nav">
-      <ul class="nav-list">
-        <a href="">
-          <li class="nav-list__item">
-            <img src="../../../static/svg/nav-home--active.svg" alt="" />
-            <p class="nav-list__div">홈</p>
-          </li>
-        </a>
-        <a href="">
-          <li class="nav-list__item">
-            <img src="../../../static/svg/nav-search.svg" alt="" />
-            <p class="nav-list__div2">탐색</p>
-          </li>
-        </a>
-        <a href="">
-          <li class="nav-list__item">
-            <img src="../../../static/svg/nav-cummunity.svg" alt="" />
-            <p class="nav-list__div2">커뮤니티</p>
-          </li>
-        </a>
-        <a href="">
-          <li class="nav-list__item">
-            <img src="../../../static/svg/nav-mypage.svg" alt="" />
-            <p class="nav-list__div2">나의 꼬깃</p>
-          </li>
-        </a>
-      </ul>
+    <aside>
+      <!-- 컴포넌트 start -->
+      <nav class="main-nav">
+        <ul class="main-nav__list">
+          <a class="main-nav__link" href="">
+            <li class="main-nav__item">
+              <img class="main-nav__icon" src="../../../static/svg/nav-home--active.svg" alt="" />
+              <p class="main-nav__text--active">홈</p>
+            </li>
+          </a>
+          <a class="main-nav__link" href="">
+            <li class="main-nav__item">
+              <img class="main-nav__icon" src="../../../static/svg/nav-search.svg" alt="" />
+              <p class="main-nav__text">탐색</p>
+            </li>
+          </a>
+          <a class="main-nav__link" href="">
+            <li class="main-nav__item">
+              <img class="main-nav__icon" src="../../../static/svg/nav-cummunity.svg" alt="" />
+              <p class="main-nav__text">커뮤니티</p>
+            </li>
+          </a>
+          <a class="main-nav__link" href="">
+            <li class="main-nav__item">
+              <img class="main-nav__icon" src="../../../static/svg/nav-mypage.svg" alt="" />
+              <p class="main-nav__text">나의 꼬깃</p>
+            </li>
+          </a>
+        </ul>
+      </nav>
+      <!-- 컴포넌트 end -->
     </aside>
+
   </body>
 </html>

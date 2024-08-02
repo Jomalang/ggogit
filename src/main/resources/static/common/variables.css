@@ -1,3 +1,6 @@
+@import url("reset.css");
+@import url("text.css");
+
 :root {
   /* Color styles */
 
@@ -23,15 +26,19 @@
 
   /* Text-weight styles */
   --extra-bold: 800;
-  --Bold: 700;
+  --bold: 700;
   --semi-bold: 600;
   --medium: 500;
   --regular: 400;
   --light: 300;
   --thin: 100;
 
+  /*  */
   --line-height-main: 140%;
 
   --letter-spacing-main: -2.5%;
-  --letter-spacing-sub: -0.25%;
+  --letter-spacing-sub: -2.5%;
+
+  --margin-left-main: 24px;
+  --margin-right-main: 24px;
 }

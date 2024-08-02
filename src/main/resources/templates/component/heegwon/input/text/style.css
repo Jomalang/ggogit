@@ -1,6 +1,6 @@
 /** @format */
-@import url('../../css/reset.css');
-@import url('../../../../variables/variables.css');
+@import url('../../../../../static/common/reset.css');
+@import url('../../../../../static/common/variables.css');
 a {
   text-decoration: none;
 }

@@ -6,19 +6,36 @@
     <link href="input.css" rel="stylesheet" />
   </head>
 
-  <div class="page">
-    <p class="page__name">페이지</p>
-    <div class="page__inputs">
-      <input class="page-start__input--unfocused" placeholder="시작 페이지" />
-      <input class="page-last__input--unfocused" placeholder="마지막 페이지" />
+  <!-- input-visibility -->
+  <div class="visibility">
+    <p class="visibility__name">공개 여부</p>
+    <div class="visibility__btns">
+      <input
+        class="visibility__btn"
+        label="공개"
+        type="radio"
+        name="visibility-option"
+        id="public"
+        value="1"
+        checked
+      />
+      <input
+        class="visibility__btn"
+        label="비공개"
+        type="radio"
+        name="visibility-option"
+        id="private"
+        value="0"
+      />
     </div>
   </div>
 
+  <!-- input-page--unfocused -->
   <div class="page">
     <p class="page__name">페이지</p>
     <div class="page__inputs">
-      <input class="page-start__input--focused" placeholder="시작 페이지" />
-      <input class="page-last__input--focused" placeholder="마지막 페이지" />
+      <input class="page-start__input" placeholder="시작 페이지" />
+      <input class="page-last__input" placeholder="마지막 페이지" />
     </div>
   </div>
 </html>

@@ -1,6 +1,5 @@
 /*프리텐다드*/
 @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
-@import url("../../../variables/variables.css");
 
 /* Formating */
 abbr, address, b, bdi,
@@ -13,7 +12,7 @@ abbr, address, b, bdi,
   thead, tbody, tfoot, col, colgroup, /* Styles and Semantics */ div, span,
   header, footer, main, section, article, aside, details, dialog, summary, data {
   /* 자간 -2.5괜찮은지? em사용하지 않아도 될지?*/
-  letter-spacing: -2.5%;
+  letter-spacing: var(--letter-spacing-main);
   font-family: "Pretendard", sans-serif;
   color: var(--main1);
 }
@@ -60,10 +59,10 @@ abbr, address, b, bdi,
 
 .text--tag {
   font-size: 10px;
+  color: var(--text-icon);
   font-weight: var(--medium);
   line-height: var(--line-height-main);
   letter-spacing: var(--letter-spacing-main);
-  color: var(--text-icon);
 }
 
 .text--alert {

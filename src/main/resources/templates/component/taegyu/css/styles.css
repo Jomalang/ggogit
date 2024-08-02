@@ -1,0 +1,86 @@
+/* START > 컴포넌트: 트리 없음 이미지 */
+.no-tree-book-bg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.no-tree-book-bg__list {
+    display: flex;
+    align-items:last baseline;
+    list-style-type: none;
+    justify-content: space-between;
+    align-self: stretch;
+    gap: 10px;
+    padding: 0;
+    margin: 0;
+}
+/* 컴포넌트: 트리 없음 이미지 < END */
+
+/* START > 컴포넌트: 트리 도서 이미지 */
+.tree-book-bg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tree-book-bg__list {
+    display: flex;
+    align-items:last baseline;
+    list-style-type: none;
+    justify-content: space-between;
+    align-self: stretch;
+    overflow-x: auto; /* 가로 스크롤 자동 */
+    gap: 10px;
+    padding: 0;
+    margin: 0;
+}
+
+.tree-book-bg__list::-webkit-scrollbar {
+    display: none;
+}
+
+.mid__item {
+    margin: 0 20px 0 20px;
+}
+
+.mid__img {
+    height: auto;
+    width: 128px;
+    box-shadow: 4px 4px 8px 4px gray;
+}
+
+/* 컴포넌트: 트리 없음 이미지 < END */
+
+/* START > 컴포넌트: 블러 박스 */
+
+.blur-box {
+    position: fixed; /* 화면에 고정 */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    background-color: var(--bg-blur, #666666);
+}
+
+/* 컴포넌트: 블러 박스 < END */
+
+/* START > 컴포넌트: 도서 디테일 배경 */
+.book-bg {
+    height: 400px;
+    overflow: hidden;
+}
+
+.book-bg__img {
+    width: 100%;
+    transform: scale(1.5);
+    transform-origin: center;
+    height: auto;
+    filter: blur(5px)  brightness(40%); 
+}
+
+/* 컴포넌트: 도서 디테일 배경 < END */
+
+
+

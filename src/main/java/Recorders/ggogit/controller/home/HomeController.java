@@ -8,8 +8,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/home")
 public class HomeController {
     
+    // 임시 경로
     @GetMapping
     public String index() {
         return "view/home/no-tree";
     }
+
+    // 임시 경로
+    @GetMapping("/tree/search")
+    public String treeSearch() {
+        return "view/home/tree/search/index";
+    }
+
 }

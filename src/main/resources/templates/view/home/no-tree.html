@@ -10,7 +10,6 @@
     <title>나의 트리</title>
   </head>
   <body>
-
     <header>
       <h1 class="none">나의 트리</h1>
 
@@ -18,16 +17,19 @@
         <h2 class="none">나의 트리 검색 링크</h2>
         <!-- 컴포넌트 start -->
         <div class="search">
-          <a class="search__link" href="#">
+          <a class="search__link" th:href="@{/home/tree/search}">
             <div class="search__input-box">
               <p class="search__placeholder">나의 트리 검색</p>
-              <img class="search__icon" th:src="@{/svg/lens.svg}" alt="lens.svg" />
+              <img
+                class="search__icon"
+                th:src="@{/svg/lens.svg}"
+                alt="lens.svg"
+              />
             </div>
           </a>
         </div>
         <!-- 컴포넌트 end -->
       </section>
-      
     </header>
 
     <main>
@@ -46,15 +48,27 @@
             <!-- 컴포넌트 start -->
             <div class="book-img">
               <ul class="book-img__list">
-                  <li class="book-img__item">
-                    <img class="book-img__image" th:src="@{/img/home/no-tree-left-book.png}" alt="" />
-                  </li>
-                  <li class="book-img__item">
-                    <img class="book-img__image mid-img" th:src="@{/img/home/no-tree-mid-book.png}" alt="" />
-                  </li>
-                  <li class="book-img__item">
-                    <img class="book-img__image" th:src="@{/img/home/no-tree-right-book.png}" alt="" />
-                  </li>
+                <li class="book-img__item">
+                  <img
+                    class="book-img__image"
+                    th:src="@{/img/home/no-tree-left-book.png}"
+                    alt=""
+                  />
+                </li>
+                <li class="book-img__item">
+                  <img
+                    class="book-img__image mid-img"
+                    th:src="@{/img/home/no-tree-mid-book.png}"
+                    alt=""
+                  />
+                </li>
+                <li class="book-img__item">
+                  <img
+                    class="book-img__image"
+                    th:src="@{/img/home/no-tree-right-book.png}"
+                    alt=""
+                  />
+                </li>
               </ul>
             </div>
             <!-- 컴포넌트 end -->
@@ -80,7 +94,7 @@
         <div class="btn-box">
           <a class="btn-box__link" href="">
             <div class="btn-box__button">
-                <p class="btn-box__placeholder">트리 생성</p>
+              <p class="btn-box__placeholder">트리 생성</p>
             </div>
           </a>
         </div>
@@ -94,25 +108,41 @@
         <ul class="main-nav__list">
           <a class="main-nav__link" href="">
             <li class="main-nav__item">
-              <img class="main-nav__icon" th:src="@{/svg/nav-home--active.svg}" alt="" />
+              <img
+                class="main-nav__icon"
+                th:src="@{/svg/nav-home--active.svg}"
+                alt=""
+              />
               <p class="main-nav__text--active">홈</p>
             </li>
           </a>
           <a class="main-nav__link" href="">
             <li class="main-nav__item">
-              <img class="main-nav__icon" th:src="@{/svg/nav-search.svg}" alt="" />
+              <img
+                class="main-nav__icon"
+                th:src="@{/svg/nav-search.svg}"
+                alt=""
+              />
               <p class="main-nav__text">탐색</p>
             </li>
           </a>
           <a class="main-nav__link" href="">
             <li class="main-nav__item">
-              <img class="main-nav__icon" th:src="@{/svg/nav-cummunity.svg}" alt="" />
+              <img
+                class="main-nav__icon"
+                th:src="@{/svg/nav-cummunity.svg}"
+                alt=""
+              />
               <p class="main-nav__text">커뮤니티</p>
             </li>
           </a>
           <a class="main-nav__link" href="">
             <li class="main-nav__item">
-              <img class="main-nav__icon" th:src="@{/svg/nav-mypage.svg}" alt="" />
+              <img
+                class="main-nav__icon"
+                th:src="@{/svg/nav-mypage.svg}"
+                alt=""
+              />
               <p class="main-nav__text">나의 꼬깃</p>
             </li>
           </a>
@@ -120,6 +150,5 @@
       </nav>
       <!-- 컴포넌트 end -->
     </aside>
-
   </body>
 </html>

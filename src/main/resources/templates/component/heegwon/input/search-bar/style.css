@@ -1,11 +1,6 @@
 /** @format */
-<<<<<<< HEAD
-@import url('../../css/reset.css');
-@import url('../../../../variables/variables.css');
-=======
 @import url('../../../../../static/common/reset.css');
 @import url('../../../../../static/common/variables.css');
->>>>>>> c7196d41f7db10969985428d91ee358838a921ba
 a {
   text-decoration: none;
   color: var(--text-sub);
@@ -40,15 +35,9 @@ button:active {
   justify-content: space-between;
   flex-grow: 1;
 }
-<<<<<<< HEAD
-.search-bar-p {
-  text-align: center;
-  font-family: 'Pretendard-SemiBold', sans-serif;
-=======
 .search-bar-input {
   flex-grow: 1;
   font-weight: var(--semi-bold);
->>>>>>> c7196d41f7db10969985428d91ee358838a921ba
   font-size: 14px;
   background-color: var(--main2);
   border: none;
@@ -70,32 +59,5 @@ button:active {
 }
 /*  */
 .search-bar-img {
-<<<<<<< HEAD
-  height: 1.5rem;
-}
-.search-bar-back-close {
-  display: flex;
-  background: #e5eddb;
-  border-radius: 2rem;
-  margin-left: 1rem;
-  padding: 8px 16px 8px 16px;
-  align-items: center;
-  justify-content: space-between;
-  flex: 1 0 auto;
-}
-.search-bar-back-close > p {
-  color: var(--text-sub);
-  text-align: center;
-  font-family: 'Pretendard-SemiBold', sans-serif;
-  font-size: 14px;
-  font-weight: var(--semi-bold);
-  position: relative;
-}
-.search-bar__button {
-  width: 5rem;
-  display: flex;
-  justify-content: space-between;
-=======
   height: 18px;
->>>>>>> c7196d41f7db10969985428d91ee358838a921ba
 }

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="topbar.css" rel="stylesheet" />
+  </head>
+
+  <!-- topbar-comment -->
+  <div class="topbar-comment">
+    <div class="topbar-comment__btn">
+      <img
+        src="../../../../static/svg/topbar-comment__btn.svg"
+        alt="comment-control-bar"
+      />
+    </div>
+    <div class="topbar-comment-header">
+      <div class="topbar-comment__title">댓글</div>
+      <div class="topbar-comment__cancel-icon" onclick="">
+        <img src="../../../../static/svg/topbar-comment__cancel-icon.svg" />
+      </div>
+    </div>
+
+    <div class="topbar-comment__filters">
+      <div class="topbar-comment__popfilter">
+        <input
+          class="topbar-comment__input"
+          label="인기순"
+          type="radio"
+          id="comment-popfilter"
+          name="comment-filter"
+          value="popular"
+          checked
+        />
+      </div>
+      <div class="topbar-comment__recfilter">
+        <input
+          class="topbar-comment__input"
+          label="최신순"
+          type="radio"
+          id="comment-recfilter"
+          name="comment-filter"
+          value="recent"
+        />
+      </div>
+    </div>
+  </div>
+
+  <!-- footer -->
+
+  <!-- user-bar -->
+  <div class="topbar-user-bar">
+    <div class="topbar-user-bar__profile">
+      <div class="topbar-user-bar__image">
+        <img
+          src="../../../../static/svg/topbar-user-bar__image.svg"
+          alt="user-bar"
+        />
+      </div>
+      <div class="topbar-user-bar-info">
+        <p class="topbar-user-bar-name">빵형</p>
+        <p class="topbar-user-bar-id">@BreadFit</p>
+      </div>
+    </div>
+    <form action="#" method="post">
+      <button class="topbar-user-bar__followbtn">팔로우</button>
+    </form>
+  </div>
+</html>

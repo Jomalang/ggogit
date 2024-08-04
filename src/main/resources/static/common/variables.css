@@ -1,0 +1,44 @@
+@import url("reset.css");
+@import url("text.css");
+
+:root {
+  /* Color styles */
+
+  /* Background Colors */
+  --white: #ffffff;
+  --main1: #323a27;
+  --main2: #e5eddb;
+  --main3: #f5f8f1;
+
+  --filter-unchecked: #f2f2f2;
+  --filter-checked: #323a27;
+  --btn-no-active: #f5f5f5;
+  --btn-active: #323a27;
+  --warning: #ba0c0c;
+  --bg: #e5eddb;
+  --bg-blur: #666666;
+
+  /* Colors */
+  --text-main: #323a27;
+  --text-sub: #767676;
+  --text-no-active: #b2b2b2;
+  --text-icon: #ffffff;
+
+  /* Text-weight styles */
+  --extra-bold: 800;
+  --bold: 700;
+  --semi-bold: 600;
+  --medium: 500;
+  --regular: 400;
+  --light: 300;
+  --thin: 100;
+
+  /*  */
+  --line-height-main: 140%;
+
+  --letter-spacing-main: -2.5%;
+  --letter-spacing-sub: -2.5%;
+
+  --margin-left-main: 24px;
+  --margin-right-main: 24px;
+}

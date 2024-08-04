@@ -1,6 +1,11 @@
 /** @format */
+<<<<<<< HEAD
 @import url('../../css/reset.css');
 @import url('../../../../variables/variables.css');
+=======
+@import url('../../../../../static/common/reset.css');
+@import url('../../../../../static/common/variables.css');
+>>>>>>> c7196d41f7db10969985428d91ee358838a921ba
 a {
   text-decoration: none;
   color: var(--text-sub);
@@ -13,29 +18,59 @@ button {
 p {
   color: var(--text-sub);
 }
+button {
+  border: none;
+  cursor: pointer;
+  background-color: transparent;
+}
+button:active {
+  border: none;
+  cursor: pointer;
+}
 .search__form {
   display: flex;
   align-items: center;
-  height: 5rem;
-  padding-top: 1rem;
-  margin-right: 1rem;
 }
 .search-bar {
-  background: #e5eddb;
-  border-radius: 2rem;
+  background: var(--main2);
+  border-radius: 20px;
   padding: 8px 16px 8px 16px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-grow: 1;
 }
+<<<<<<< HEAD
 .search-bar-p {
   text-align: center;
   font-family: 'Pretendard-SemiBold', sans-serif;
+=======
+.search-bar-input {
+  flex-grow: 1;
+  font-weight: var(--semi-bold);
+>>>>>>> c7196d41f7db10969985428d91ee358838a921ba
   font-size: 14px;
-  position: relative;
+  background-color: var(--main2);
+  border: none;
 }
+/*  */
+.search-bar-input + .search-bar-close {
+  display: none;
+}
+/*  */
+.search-bar-input:not(:placeholder-shown) {
+  font-weight: var(--semi-bold);
+  font-size: 14px;
+  background-color: var(--main2);
+}
+/*  */
+.search-bar-input:not(:placeholder-shown) + .search-bar-close {
+  display: inline;
+  height: 18px;
+}
+/*  */
 .search-bar-img {
+<<<<<<< HEAD
   height: 1.5rem;
 }
 .search-bar-back-close {
@@ -60,4 +95,7 @@ p {
   width: 5rem;
   display: flex;
   justify-content: space-between;
+=======
+  height: 18px;
+>>>>>>> c7196d41f7db10969985428d91ee358838a921ba
 }

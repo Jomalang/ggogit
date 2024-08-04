@@ -2,17 +2,26 @@
 
 <link href="./style.css" type="text/css" rel="stylesheet" />
 <div class="search__form">
-  <button style="border: none">
-    <img
-      src="/src/main/resources/templates/component/heegwon/res/icons/back.svg"
-      alt=""
+  <img
+    src="/src/main/resources/templates/component/heegwon/res/icons/back.svg"
+    alt="back button"
+  />
+
+  <form class="search-bar" action="#" method="get">
+    <input
+      class="search-bar-input"
+      type="text"
+      placeholder="그의 운명에 대한 아주 개인적인 생각"
     />
-  </button>
-  <a class="search-bar" href="">
-    <p>그의 운명에 대한 아주 개인적인 생각</p>
-    <img
-      class="icon"
-      src="/src/main/resources/templates/component/heegwon/res/icons/lens.svg"
-    />
-  </a>
+    <button class="search-bar-close" type="reset">
+      <img
+        src="/src/main/resources/templates/component/heegwon/res/icons/close-button.svg"
+      />
+    </button>
+    <button>
+      <img
+        src="/src/main/resources/templates/component/heegwon/res/icons/lens.svg"
+      />
+    </button>
+  </form>
 </div>

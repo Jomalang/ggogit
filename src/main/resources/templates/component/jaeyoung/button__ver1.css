@@ -1,4 +1,4 @@
-@import url("../../../../static/common/variables.css");
+@import url("../../../static/common/variables.css");
 
 /* 책 아이콘 버튼 */
 .booklist__button {
@@ -57,7 +57,7 @@
   outline: 0;
 }
 .text__button--green:hover{
-  background-color: #323a27;
+  background-color: var(--main1);
   cursor: pointer;
   box-shadow: 0 2px
   4px rgba(0, 0, 0, 0.25);

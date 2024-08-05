@@ -9,82 +9,79 @@ button {
   padding: 0;
   border: none;
 }
-.cards-felt-logs {
+.cards-felt--logs {
   display: flex;
   flex-direction: column;
 }
-.cards-felt-logs-lists {
+.cards-felt--loglists {
   display: flex;
   justify-content: center;
 }
-.card-felt-loglist {
+.card-felt--log-lists {
   display: flex;
   flex-direction: column;
 }
-.card-tree-list {
+.card-felt--book__details {
   display: flex;
   padding-bottom: 8px;
 }
-.card-tree-cover > img {
+.card-felt--book__cover {
   height: 120px;
   border-radius: 5px;
-  padding-right: 8px;
-  filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 1));
+  border: 1px solid var(--main1);
 }
-.card-tree-info {
+.card-felt--book__info {
+  padding-left: 8px;
   height: 68;
   color: var(--text-sub);
 }
-.card-tree-category {
+.card-felt__book-bedge-case {
+  display: flex;
+  width: 40px;
+  height: 40px;
+  justify-content: right;
+  align-items: center;
+}
+.card-felt__book-bedge {
+  top: 10.5px;
+  height: 19px;
+}
+.card-felt--book__category {
   display: flex;
   font-size: 10px;
   color: var(--text-sub);
   font-weight: var(--medium);
   line-height: var(--line-height-main);
   letter-spacing: var(--letter-spacing-main);
-}
-.card-tree-category > p {
   padding-right: 4px;
 }
-.card-tree-treetitle {
+.card-felt--book__content-title {
   font-size: 14px;
   color: var(--main);
   font-weight: var(--bold);
   line-height: var(--line-height-main);
   letter-spacing: var(--letter-spacing-main);
 }
-.card-tree-contenttitle {
-  margin: 0;
-  padding: 0;
-  font-size: 12px;
-  color: var(--text-sub);
-  font-weight: var(--medium);
-  line-height: var(--line-height-main);
-  letter-spacing: var(--letter-spacing-main);
-}
-.card-tree-contentinfo {
+.card-felt--book__content-info {
   display: flex;
   font-size: 12px;
   color: var(--text-sub);
   font-weight: var(--medium);
   line-height: var(--line-height-main);
   letter-spacing: var(--letter-spacing-main);
-}
-
-.card-tree-contentinfo > p {
   padding-right: 4px;
 }
-.card-tree-comment {
+.card-felt__tree {
   display: flex;
   flex-direction: column;
   border-bottom: 1px dotted rgba(0, 0, 0, 0.1);
 }
-.card-tree-comment-title {
+.card-felt__tree-info {
   display: flex;
   justify-content: space-between;
   padding-bottom: 4px;
 }
-.card-tree-comment-title > p {
+.card-felt__tree-title {
   align-content: center;
   color: var(--text-main);
   font-size: 18px;
@@ -92,7 +89,7 @@ button {
   line-height: var(--line-height-main);
   letter-spacing: var(--letter-spacing-main);
 }
-.card-tree-comment-title > p + p {
+.card-felt__tree-date {
   align-content: center;
   color: var(--text-sub);
   font-size: 14px;
@@ -101,38 +98,67 @@ button {
   letter-spacing: var(--letter-spacing-main);
 }
 
-.card-tree-comment-input > label {
-  width: 100%;
-}
-
-.card-tree-comment-input > label > input {
-  width: 100%;
-  border: none;
+.card-felt__tree-description {
   color: var(--text-sub);
   font-size: 14px;
   font-weight: var(--reguler);
   line-height: var(--line-height-main);
   letter-spacing: var(--letter-spacing-main);
 }
-.card-tree-comment-reacttab {
+.card-felt__memoir {
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px dotted rgba(0, 0, 0, 0.1);
+}
+.card-felt__memoir-info {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 4px;
+}
+.card-felt__memoir-title {
+  align-content: center;
+  color: var(--text-main);
+  font-size: 18px;
+  font-weight: var(--bold);
+  line-height: var(--line-height-main);
+  letter-spacing: var(--letter-spacing-main);
+}
+.card-felt__memoir-date {
+  align-content: center;
+  color: var(--text-sub);
+  font-size: 14px;
+  font-weight: var(--medium);
+  line-height: var(--line-height-main);
+  letter-spacing: var(--letter-spacing-main);
+}
+
+.card-felt__memoir-description {
+  color: var(--text-sub);
+  font-size: 14px;
+  font-weight: var(--reguler);
+  line-height: var(--line-height-main);
+  letter-spacing: var(--letter-spacing-main);
+}
+.card-felt__react-tab {
   display: flex;
   justify-content: space-between;
 }
-.card-tree-comment-reacticon {
+.card-felt__comment-reacticon {
   display: flex;
   padding-bottom: 10px;
 }
-.card-tree-comment-reacticon > button {
+.card-felt__react-icon {
+  display: flex;
   border: none;
   background-color: transparent;
   cursor: pointer;
-  margin-right: 8px;
+  padding-right: 8px;
   width: 21px;
   height: 21px;
   justify-items: center;
   align-items: center;
 }
-.card-tree-comment-reactviews {
+.card-felt__react-views {
   display: flex;
   font-size: 12px;
   color: var(--text-sub);
@@ -141,7 +167,7 @@ button {
   letter-spacing: var(--letter-spacing-main);
   align-items: center;
 }
-.card-tree-comment-reactviews > p + p {
+.card-felt__react-views-static {
   padding-left: 5px;
   font-size: 8px;
   color: var(--text-sub);
@@ -149,24 +175,24 @@ button {
   line-height: var(--line-height-main);
   letter-spacing: var(--letter-spacing-main);
 }
-.card-tree-author-info {
+.card-felt__author-info {
   display: flex;
   align-items: center;
   padding-top: 8px;
   margin-bottom: 16px;
 }
-.card-tree-author-img {
+.card-felt__author-img-frame {
   width: 24px;
   height: 24px;
   border-radius: 70%;
   overflow: hidden;
 }
 
-.card-tree-author-img > img {
+.card-felt__author-img {
   height: 24px;
   object-fit: cover;
 }
-.card-tree-author-name {
+.card-felt__author-name {
   padding-left: 10px;
   font-size: 14px;
   color: var(--text-sub);
@@ -175,7 +201,7 @@ button {
   letter-spacing: var(--letter-spacing-main);
 }
 
-.card-book-title {
+.card-felt--book__title {
   margin: 0;
   padding: 0;
   font-size: 14px;
@@ -184,7 +210,7 @@ button {
   line-height: var(--line-height-main);
   letter-spacing: var(--letter-spacing-main);
 }
-.card-book-contentinfo {
+.card-felt--book__contentinfo {
   display: flex;
   font-size: 12px;
   color: var(--text-sub);
@@ -193,82 +219,6 @@ button {
   letter-spacing: var(--letter-spacing-main);
 }
 
-.card-book-contentinfo > p {
+.card-felt--book__contentinfo > p {
   padding-right: 4px;
-}
-.card-commentary {
-  display: flex;
-  flex-direction: column;
-  border-bottom: 1px dotted rgba(0, 0, 0, 0.1);
-}
-
-.card-commentary-title {
-  display: flex;
-  padding-bottom: 4px;
-  justify-content: space-between;
-}
-.card-commentary-title > p {
-  align-content: center;
-  color: var(--text-main);
-  font-size: 18px;
-  font-weight: var(--bold);
-  line-height: var(--line-height-main);
-  letter-spacing: var(--letter-spacing-main);
-}
-.card-commentary-title > p + p {
-  align-content: center;
-  color: var(--text-sub);
-  font-size: 14px;
-  font-weight: var(--medium);
-  line-height: var(--line-height-main);
-  letter-spacing: var(--letter-spacing-main);
-}
-
-.card-commentary-input > label {
-  width: 100%;
-}
-
-.card-commentary-input > label > input {
-  width: 100%;
-  border: none;
-  color: var(--text-sub);
-  font-size: 14px;
-  font-weight: var(--reguler);
-  line-height: var(--line-height-main);
-  letter-spacing: var(--letter-spacing-main);
-}
-.card-commentary-reacttab {
-  display: flex;
-  justify-content: space-between;
-}
-.card-commentary-reacticon {
-  display: flex;
-  padding-bottom: 10px;
-}
-.card-commentary-reacticon > button {
-  border: none;
-  background-color: transparent;
-  cursor: pointer;
-  margin-right: 8px;
-  width: 21px;
-  height: 21px;
-  justify-items: center;
-  align-items: center;
-}
-.card-commentary-reactviews {
-  display: flex;
-  font-size: 12px;
-  color: var(--text-sub);
-  font-weight: var(--medium);
-  line-height: var(--line-height-main);
-  letter-spacing: var(--letter-spacing-main);
-  align-items: center;
-}
-.card-commentary-reactviews > p + p {
-  padding-left: 5px;
-  font-size: 8px;
-  color: var(--text-sub);
-  font-weight: var(--reguler);
-  line-height: var(--line-height-main);
-  letter-spacing: var(--letter-spacing-main);
 }

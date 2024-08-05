@@ -19,7 +19,7 @@ button {
   font-size: 16px;
   font-weight: var(--extra-bold);
 }
-.tree-input-text-radius {
+.tree-input-text__radius {
   display: flex;
   flex-grow: 1;
   height: 56px;
@@ -31,11 +31,15 @@ button {
   background-color: rgba(229, 237, 219, 0.6);
   padding-left: 16px;
 }
-.tree-input-text-radius:not(:placeholder-shown) {
+.tree-input-text__radius:focus {
+  outline: none;
+}
+.tree-input-text__radius:not(:placeholder-shown) {
   color: var(--text-main);
   border: 2px solid var(--filter-checked);
+  outline: none;
 }
-.tree-input-text-radius__reenter {
+.tree-input-text__radius__re-enter {
   display: block;
   height: 56px;
   border-color: var(--warning);
@@ -47,7 +51,7 @@ button {
   padding-left: 16px;
 }
 
-.tree-input-text-rectangle {
+.tree-input-text__rectangle {
   display: flex;
   flex-grow: 1;
   height: 56px;
@@ -58,11 +62,15 @@ button {
   background-color: rgba(229, 237, 219, 0.6);
   padding-left: 16px;
 }
-.tree-input-text-rectangle:not(:placeholder-shown) {
+.tree-input-text__rectangle:focus {
+  outline: none;
+}
+.tree-input-text__rectangle:not(:placeholder-shown) {
   color: var(--text-main);
   border: 2px solid var(--filter-checked);
+  outline: none;
 }
-.tree-input-text-rectangle__reenter {
+.tree-input-text__rectangle__re-enter {
   display: block;
   height: 56px;
   border-color: var(--warning);
@@ -72,7 +80,7 @@ button {
   background-color: rgba(229, 237, 219, 0.6);
   padding-left: 16px;
 }
-.tree-input-text-select__reenter-p {
+.tree-input-text--select__re-enter-msg {
   display: inline;
   margin-top: 4px;
   font-size: 12px;
@@ -81,7 +89,7 @@ button {
 }
 
 /*  */
-.tree-input-text-select {
+.tree-input-text--select {
   display: flex;
   height: 56px;
   margin-top: 10px;
@@ -92,7 +100,7 @@ button {
   text-align: right;
   justify-content: space-between;
 }
-.tree-input-text-select-description {
+.tree-input-text--select-description {
   display: flex;
   flex: 1 1 auto;
   align-items: center;
@@ -106,7 +114,7 @@ button {
   background-color: var(--main2);
 }
 
-.tree-input-text-select__selected {
+.tree-input-text--select__selected {
   display: flex;
   height: 56px;
   margin-top: 10px;
@@ -118,7 +126,7 @@ button {
   justify-content: space-between;
   border: 1px solid;
 }
-.tree-input-text-select-description__selected {
+.tree-input-text--select__selected-description {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -127,7 +135,7 @@ button {
   font-weight: var(--extra-bold);
   font-size: 20px;
 }
-.tree-input-text-select__reenter {
+.tree-input-text--select__re-enter {
   display: flex;
   height: 56px;
   margin-top: 10px;
@@ -139,7 +147,7 @@ button {
   text-align: right;
   justify-content: space-between;
 }
-.tree-input-text-select-description__reenter {
+.tree-input-text--select__re-enter-description {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -148,18 +156,18 @@ button {
   font-weight: var(--extra-bold);
   font-size: 20px;
 }
-.tree-input-text-select__tag {
+.tree-input-text--select__tag {
   display: flex;
   flex-wrap: wrap;
   align-content: center;
 }
-div.tree-input-text-select__tag {
+div.tree-input-text--select__tag {
   display: flex;
   justify-content: center;
   align-items: center;
   padding-left: 16px;
 }
-.tree-input-text-select__tagbutton {
+.tree-input-text--select__tag-button-form {
   display: flex;
   flex: 0 0 auto;
   align-items: center;
@@ -173,7 +181,7 @@ div.tree-input-text-select__tag {
   font-weight: var(--semi-bold);
   color: var(--text-icon);
 }
-.tree-input-text-select__tagbutton > label {
+.tree-input-text--select__tag-button-name {
   align-self: c;
   border: none;
   background-color: var(--main1);
@@ -181,7 +189,7 @@ div.tree-input-text-select__tag {
   font-weight: var(--semi-bold);
   color: var(--text-icon);
 }
-.tree-input-text-select__tagbutton > label > button {
+.tree-input-text--select__tag-button-cancle {
   align-self: c;
   border: none;
   background-color: var(--main1);
@@ -193,41 +201,49 @@ div.tree-input-text-select__tag {
   display: flex;
   height: 58px;
   border: none;
+  background-color: var(--main2);
+  align-items: center;
 }
 .delete-seed__button {
   display: flex;
   border: none;
-  width: 100%;
   height: 100%;
-  padding-left: 16px;
-  margin-left: 16px;
-  align-items: center;
-  background-color: #e5eddb;
-}
-.delete-seed__button > img {
   height: 24px;
-  padding-right: 16px;
+  padding-left: 16px;
+  background-color: var(--main2);
 }
-.delete-seed__button > p {
+.delete-seed__button-msg {
+  padding-left: 16px;
   font-size: 16px;
   font-weight: var(--regular);
   color: var(--text-sub);
 }
 
-.tree-input-large-text-label {
+.tree-input--large-text-label {
   display: flex;
   flex-direction: column;
   font-weight: var(--semi-bold);
 }
-.tree-input-large-text-textarea {
+.tree-input--large-text-textarea {
   padding-left: 16px;
   padding-right: 16px;
   padding-top: 17px;
   padding-bottom: 17px;
   border: none;
   border-radius: 20px;
+  font-size: 16px;
   font-weight: var(--midium);
   color: var(--main1);
   background-color: var(--main2);
   height: 230px;
+}
+
+.tree-input--large-text-textarea:focus {
+  outline: none;
+}
+
+.tree-input--large-text-textarea:not(:placeholder-shown) {
+  font-size: 16px;
+  font-weight: var(--semi-bold);
+  color: var(--main1);
 }

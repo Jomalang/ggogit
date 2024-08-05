@@ -47,6 +47,10 @@ button:active {
   display: none;
 }
 /*  */
+.search-bar-input:not(:placeholder-shown):focus {
+  border: none;
+}
+
 .search-bar-input:not(:placeholder-shown) {
   font-weight: var(--semi-bold);
   font-size: 14px;

@@ -46,15 +46,7 @@ button {
   background-color: rgba(229, 237, 219, 0.6);
   padding-left: 16px;
 }
-.tree-input-text-select__reenter-p {
-  display: none;
-}
-.tree-input-text-radius__reenter + .tree-input-text-select__reenter-p {
-  display: inline;
-  font-size: 12px;
-  font-weight: var(--light);
-  color: var(--warning);
-}
+
 .tree-input-text-rectangle {
   display: flex;
   flex-grow: 1;
@@ -81,10 +73,8 @@ button {
   padding-left: 16px;
 }
 .tree-input-text-select__reenter-p {
-  display: none;
-}
-.tree-input-text-rectangle__reenter + .tree-input-text-select__reenter-p {
   display: inline;
+  margin-top: 4px;
   font-size: 12px;
   font-weight: var(--light);
   color: var(--warning);
@@ -157,9 +147,6 @@ button {
   color: var(--warning);
   font-weight: var(--extra-bold);
   font-size: 20px;
-}
-.tree-input-text-select__reenter-p {
-  color: var(--warning);
 }
 .tree-input-text-select__tag {
   display: flex;

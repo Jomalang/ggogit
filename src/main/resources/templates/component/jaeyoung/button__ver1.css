@@ -162,13 +162,13 @@
   font-size: 16px;
   font-weight: var(--bold);
   border-radius: 16px;
-  transition: 1;
+  transition: all 1s;
 }
 .create__button--green:focus{
   outline: 0;
 }
 .create__button--green:hover{
-  background-color: var(--main1);
+  background-color: var(--main2); /* var(--main1)으로 바꾸면 원래설정 */
   cursor: pointer;
   box-shadow: 0 2px
   4px rgba(0, 0, 0, 0.25);
@@ -185,10 +185,10 @@
   box-shadow: 0 4px
   16px rgba(0, 0, 0, 0.25);
   font-family: "pretendard", sans-serif;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: var(--bold);
   border-radius: 16px;
-  transition: 1;
+  transition: all 1s;
 }
 .create__button--white:focus{
   outline: 0;

@@ -117,7 +117,7 @@
   height: 32px;
 }
 
-.nav-box__svg--active {
+.nav-box__icon-obj .nav-box__svg-path {
   fill: var(--main-1, #323a27);
 }
 

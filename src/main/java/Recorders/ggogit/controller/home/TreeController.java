@@ -5,11 +5,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/home")
-public class HomeController {
+@RequestMapping("/home/tree")
+public class TreeController {
 
-    @GetMapping
-    public String index() {
-        return "view/home/no-tree";
+    @GetMapping("/search")
+    public String treeSearch() {
+        return "view/home/tree/search/index";
     }
 }

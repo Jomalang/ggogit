@@ -1,25 +1,13 @@
 /** @format */
 @import url('../../../../../static/common/reset.css');
 @import url('../../../../../static/common/variables.css');
+
 a {
   text-decoration: none;
-  color: var(--text-sub);
-  font-weight: var(--extra-bold);
 }
 button {
   border: none;
   background-color: transparent;
-}
-p {
-  color: var(--text-sub);
-}
-button {
-  border: none;
-  cursor: pointer;
-  background-color: transparent;
-}
-button:active {
-  border: none;
   cursor: pointer;
 }
 .search__form {
@@ -35,29 +23,27 @@ button:active {
   justify-content: space-between;
   flex-grow: 1;
 }
-.search-bar-input {
+.search-bar--input {
   flex-grow: 1;
   font-weight: var(--semi-bold);
   font-size: 14px;
   background-color: var(--main2);
   border: none;
 }
+.search-bar--input:focus {
+  outline: none;
+}
 /*  */
-.search-bar-input + .search-bar-close {
+.search-bar--close {
   display: none;
 }
-/*  */
-.search-bar-input:not(:placeholder-shown):focus {
-  border: none;
-}
-
-.search-bar-input:not(:placeholder-shown) {
+.search-bar--input:not(:placeholder-shown) {
   font-weight: var(--semi-bold);
   font-size: 14px;
   background-color: var(--main2);
 }
 /*  */
-.search-bar-input:not(:placeholder-shown) + .search-bar-close {
+.search-bar--input:not(:placeholder-shown) + .search-bar--close {
   display: inline;
   height: 18px;
 }

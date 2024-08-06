@@ -219,12 +219,20 @@ div.tree-input-text--select__tag {
   color: var(--text-sub);
 }
 
+<<<<<<< HEAD
 .tree-input__large-text-label {
+=======
+.tree-input--large-text-label {
+>>>>>>> 2abe4df4731a2d5dd7368ba162fdb1ef3425ac8e
   display: flex;
   flex-direction: column;
   font-weight: var(--semi-bold);
 }
+<<<<<<< HEAD
 .tree-input__large-textarea {
+=======
+.tree-input--large-text-textarea {
+>>>>>>> 2abe4df4731a2d5dd7368ba162fdb1ef3425ac8e
   padding-left: 16px;
   padding-right: 16px;
   padding-top: 17px;

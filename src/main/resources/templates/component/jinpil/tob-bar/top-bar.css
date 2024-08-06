@@ -12,6 +12,16 @@
   padding: 0 24px;
 }
 
+.top-bar__nobackground {
+  display: flex;
+  flex-direction: row;
+  align-items: center;      
+  height: 76px;
+  position: relative;
+  justify-content: space-between;
+  padding: 0 24px;
+}
+
 .top-bar__title {
   color: var(--main-1, #323a27);  
   font-family: "Pretendard-Bold", sans-serif;

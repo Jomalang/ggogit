@@ -1,0 +1,39 @@
+.tob-bar {
+  background: var(--main-2, #e5eddb);
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
+  align-items: center;
+  justify-content: center;
+  align-self: stretch;  
+  height: 76px;
+  position: relative;
+}
+
+.tob-bar__text {
+  color: var(--main-1, #323a27);
+  text-align: right;
+  font-family: "Pretendard-Bold", sans-serif;
+  font-size: 20px;
+  line-height: var(--line-height-main);
+  letter-spacing: var(--letter-spacing-main);
+  font-weight: var(--bold);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.tob-bar__icon {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  row-gap: 0px;
+  align-items: center;
+  justify-content: center;  
+  width: 36px;
+  height: 36px;
+  position: absolute;
+  left: 24px;
+  top: 20px; 
+ }

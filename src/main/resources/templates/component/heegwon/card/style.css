@@ -9,6 +9,10 @@ button {
   padding: 0;
   border: none;
 }
+ul,
+li {
+  list-style-type: none;
+}
 .cards-felt__logs {
   display: flex;
   flex-direction: column;
@@ -221,4 +225,221 @@ button {
 
 .card-felt__book-contentinfo > p {
   padding-right: 4px;
+}
+
+.card-felt__author {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
+.card-felt__author-frame {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 24px;
+  background-color: var(--white);
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+.card__author-img-frame {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  width: 150px;
+  height: 150px;
+  border-radius: 70%;
+  overflow: hidden;
+}
+
+.card__author-img {
+  height: 150px;
+  object-fit: cover;
+}
+.card__author-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+.card__author-name {
+  padding-top: 26px;
+  color: var(--main1);
+  font-size: 14px;
+  font-weight: var(--bold);
+  line-height: var(--line-height-main);
+  letter-spacing: var(--letter-spacing-main);
+}
+.card__author-niciname {
+  padding-bottom: 6px;
+  color: var(--main1);
+  font-size: 10px;
+  font-weight: var(--reguler);
+  line-height: var(--line-height-main);
+  letter-spacing: var(--letter-spacing-main);
+}
+.card__author-tree-num {
+  padding-left: 2px;
+  color: var(--main1);
+  font-size: 14px;
+  font-weight: var(--medium);
+  line-height: var(--line-height-main);
+  letter-spacing: var(--letter-spacing-main);
+}
+.card__author-leaf-num {
+  padding-left: 2px;
+  color: var(--main1);
+  font-size: 14px;
+  font-weight: var(--medium);
+  line-height: var(--line-height-main);
+  letter-spacing: var(--letter-spacing-main);
+}
+.card-felt__cover {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+.card-felt__cover-frame {
+  width: 160px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  padding-bottom: 8px;
+}
+.card-felt__cover-img-frame {
+  height: 240px;
+  padding-bottom: 8px;
+}
+.card-felt__cover-category {
+  display: inline-block;
+  padding-right: 4px;
+  color: var(--text-sub);
+  font-size: 10px;
+  font-weight: var(--medium);
+  line-height: var(--line-height-main);
+  letter-spacing: var(--letter-spacing-main);
+}
+.card-felt_cover-title {
+  color: var(--main1);
+  font-size: 14px;
+  font-weight: var(--bold);
+  line-height: var(--line-height-main);
+  letter-spacing: var(--letter-spacing-main);
+}
+.card-log__info {
+  width: 133;
+}
+.card-felt__cover-create {
+  padding-right: 4px;
+  color: var(--text-sub);
+  font-size: 14px;
+  font-weight: var(--medium);
+  line-height: var(--line-height-main);
+  letter-spacing: var(--letter-spacing-main);
+}
+.card-felt__cover-update-time {
+  color: var(--text-sub);
+  font-size: 14px;
+  font-weight: var(--medium);
+  line-height: var(--line-height-main);
+  letter-spacing: var(--letter-spacing-main);
+}
+.card-log__list {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+.card-log__author-img-frame {
+  display: flex;
+  padding-right: 13px;
+  justify-content: center;
+  text-align: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 70%;
+  overflow: hidden;
+}
+
+.card-log__author-img {
+  object-fit: cover;
+}
+.card-log__create-info {
+  padding-right: 2px;
+  color: var(--text-sub);
+  font-size: 12px;
+  font-weight: var(--reguler);
+  line-height: var(--line-height-main);
+  letter-spacing: var(--letter-spacing-main);
+}
+.card-log__content-form {
+  display: flex;
+  flex-direction: column;
+}
+.card-log__content-detail-show {
+  order: 2;
+  display: none;
+}
+.card-log__content-detail {
+  order: 3;
+  color: var(--text-sub);
+  font-size: 12px;
+  font-weight: var(--semi-bold);
+  line-height: var(--line-height-main);
+  letter-spacing: var(--letter-spacing-main);
+  height: 14px;
+  cursor: pointer;
+}
+.card-log__content-detail-show:not(:checked) ~ .card-log__content {
+  order: 1;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  color: var(--main1);
+  font-size: 14px;
+  font-weight: var(--semi-bold);
+  line-height: var(--line-height-main);
+  letter-spacing: var(--letter-spacing-main);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+}
+.card-log__content-detail-show:checked + .card-log__content-detail {
+  display: none;
+}
+.card-log__content-detail-show:checked ~ .card-log__content {
+  order: 1;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  color: var(--main1);
+  font-size: 14px;
+  font-weight: var(--semi-bold);
+  line-height: var(--line-height-main);
+  letter-spacing: var(--letter-spacing-main);
+}
+.card-log__like-info {
+  padding-top: 14px;
+  display: flex;
+}
+.card-log__like {
+  display: none;
+}
+.card-log__like:disabled + .card-log__like-frame {
+  background-image: url('/src/main/resources/static/svg/tumbsup-off.svg');
+}
+.card-log__like:checked + .card-log__like-frame {
+  background-image: url('/src/main/resources/static/svg/tumbsup-on.svg');
+}
+
+.card-log__like-frame {
+  padding-left: 23px;
+  background-repeat: no-repeat;
+  display: block;
+  height: 14px;
+  cursor: pointer;
+  background-image: url('/src/main/resources/static/svg/tumbsup-off.svg');
+}
+.card-log__detail-frame {
+  height: 24px;
+  width: 24px;
+  padding-left: 13px;
 }

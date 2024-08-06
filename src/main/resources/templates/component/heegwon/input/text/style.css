@@ -219,12 +219,12 @@ div.tree-input-text--select__tag {
   color: var(--text-sub);
 }
 
-.tree-input--large-text-label {
+.tree-input__large-text-label {
   display: flex;
   flex-direction: column;
   font-weight: var(--semi-bold);
 }
-.tree-input--large-text-textarea {
+.tree-input__large-textarea {
   padding-left: 16px;
   padding-right: 16px;
   padding-top: 17px;

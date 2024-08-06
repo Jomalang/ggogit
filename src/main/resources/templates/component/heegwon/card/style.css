@@ -9,11 +9,11 @@ button {
   padding: 0;
   border: none;
 }
-.cards-felt--logs {
+.cards-felt__logs {
   display: flex;
   flex-direction: column;
 }
-.cards-felt--loglists {
+.cards-felt--log-list {
   display: flex;
   justify-content: center;
 }
@@ -21,16 +21,16 @@ button {
   display: flex;
   flex-direction: column;
 }
-.card-felt--book__details {
+.card-felt__book-details {
   display: flex;
   padding-bottom: 8px;
 }
-.card-felt--book__cover {
+.card-felt__book-cover {
   height: 120px;
   border-radius: 5px;
   border: 1px solid var(--main1);
 }
-.card-felt--book__info {
+.card-felt__book-info {
   padding-left: 8px;
   height: 68;
   color: var(--text-sub);
@@ -46,7 +46,7 @@ button {
   top: 10.5px;
   height: 19px;
 }
-.card-felt--book__category {
+.card-felt__book-category {
   display: flex;
   font-size: 10px;
   color: var(--text-sub);
@@ -55,14 +55,14 @@ button {
   letter-spacing: var(--letter-spacing-main);
   padding-right: 4px;
 }
-.card-felt--book__content-title {
+.card-felt__book-content-title {
   font-size: 14px;
   color: var(--main);
   font-weight: var(--bold);
   line-height: var(--line-height-main);
   letter-spacing: var(--letter-spacing-main);
 }
-.card-felt--book__content-info {
+.card-felt__book-content-info {
   display: flex;
   font-size: 12px;
   color: var(--text-sub);
@@ -201,7 +201,7 @@ button {
   letter-spacing: var(--letter-spacing-main);
 }
 
-.card-felt--book__title {
+.card-felt__book-title {
   margin: 0;
   padding: 0;
   font-size: 14px;
@@ -210,7 +210,7 @@ button {
   line-height: var(--line-height-main);
   letter-spacing: var(--letter-spacing-main);
 }
-.card-felt--book__contentinfo {
+.card-felt__book-contentinfo {
   display: flex;
   font-size: 12px;
   color: var(--text-sub);
@@ -219,6 +219,6 @@ button {
   letter-spacing: var(--letter-spacing-main);
 }
 
-.card-felt--book__contentinfo > p {
+.card-felt__book-contentinfo > p {
   padding-right: 4px;
 }

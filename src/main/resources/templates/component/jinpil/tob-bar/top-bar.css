@@ -1,0 +1,33 @@
+@import url(../../../../static/common/variables.css);
+@import url(../../../../static/common/reset.css);
+
+.top-bar {
+  background: var(--main-2, #e5eddb);
+  display: flex;
+  flex-direction: row;
+  align-items: center;      
+  height: 76px;
+  position: relative;
+  justify-content: space-between;
+  padding: 0 24px;
+}
+
+.top-bar__title {
+  color: var(--main-1, #323a27);  
+  font-family: "Pretendard-Bold", sans-serif;
+  font-size: 20px;
+  line-height: var(--line-height-main);
+  letter-spacing: var(--letter-spacing-main);
+  font-weight: var(--bold);
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);         
+}
+
+.top-bar__text {
+  color: var(--main-1, #323a27);  
+  font-family: "Pretendard-Bold", sans-serif;
+  font-size: 16px;  
+  letter-spacing: var(--letter-spacing-main);
+  font-weight: var(--bold);
+}

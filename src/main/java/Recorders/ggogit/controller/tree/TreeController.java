@@ -1,15 +1,15 @@
-package Recorders.ggogit.controller.home;
+package Recorders.ggogit.controller.tree;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@Controller("homeTreeController")
-@RequestMapping("/home/tree")
+@Controller
+@RequestMapping("/tree")
 public class TreeController {
 
-    @GetMapping("/search")
+    @GetMapping("/book/reg")
     public String treeSearch() {
-        return "view/home/tree/search/index";
+        return "view/tree/book/reg";
     }
 }

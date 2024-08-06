@@ -37,76 +37,156 @@
     </header>
 
     <main>
-      <section class="book-input-form-container">
+      <section class="book-tree-input-form-container">
         <h1 class="none">도서 정보 입력</h1>
-        <!-- 컴포넌트 -->
 
         <section class="select-title-container">
           <h1 class="text-main-title">도서 직접 입력</h1>
         </section>
 
         <form
-          class="book-input-form"
+          class="book-tree-input-form"
           action="/upload"
           method="post"
           enctype="multipart/form-data"
         >
-          <section class="book-input-form__photo-container">
+          <section class="book-tree-input-form__photo-container">
             <h1 class="none">도서 이미지 입력</h1>
-            <label class="book-input-form__photo-label">
+            <label class="book-tree-input-form__photo-label">
               <input
                 type="file"
                 name="file"
-                class="book-input-form__photo-input"
+                class="book-tree-input-form__photo-input"
                 accept="image/*"
                 required
               />
               <img
                 src="../../../../static/svg/book-photo-form.svg"
                 alt="Upload Image"
-                class="book-input-form__photo-img"
+                class="book-tree-input-form__photo-img"
               />
             </label>
           </section>
 
-          <section>
+          <section class="book-tree-input-form__input-container">
             <h1 class="none">책 이름 입력</h1>
-            <!-- 컴포넌트 -->
+            <div class="input-text__box">
+              <label class="input-text__label"
+                >책 이름
+                <input
+                  class="input-text__input"
+                  placeholder="트리 이름을 입력해 주세요"
+              /></label>
+              <p class="input-text__input-wrong none">
+                텍스트 입력을 다시 입력해주세요.
+              </p>
+            </div>
           </section>
 
-          <section>
+          <section class="book-tree-input-form__input-container">
             <h1 class="none">지은이 입력</h1>
-            <!-- 컴포넌트 -->
+            <div class="input-text__box">
+              <label class="input-text__label"
+                >지은이
+                <input
+                  class="input-text__input"
+                  placeholder="지은이 이름을 입력해 주세요"
+              /></label>
+              <p class="input-text__input-wrong none">
+                텍스트 입력을 다시 입력해주세요.
+              </p>
+            </div>
           </section>
 
-          <section>
+          <section class="book-tree-input-form__input-container">
             <h1 class="none">출판사 입력</h1>
-            <!-- 컴포넌트 -->
+            <div class="input-text__box">
+              <label class="input-text__label"
+                >출판사
+                <input
+                  class="input-text__input"
+                  placeholder="출판사를 입력해 주세요"
+              /></label>
+              <p class="input-text__input-wrong none">
+                텍스트 입력을 다시 입력해주세요.
+              </p>
+            </div>
           </section>
 
-          <section>
+          <section class="book-tree-input-form__input-container">
             <h1 class="none">페이지 수 입력</h1>
-            <!-- 컴포넌트 -->
+            <div class="input-text__box">
+              <label class="input-text__label"
+                >총 페이지 수
+                <input
+                  class="input-text__input"
+                  placeholder="페이지 수를 입력해주세요"
+              /></label>
+              <p class="input-text__input-wrong none">
+                텍스트 입력을 다시 입력해주세요.
+              </p>
+            </div>
           </section>
 
-          <section>
+          <section class="book-tree-input-form__input-container">
             <h1 class="none">카테고리 선택</h1>
-            <!-- 컴포넌트 -->
+            <div class="input-text__box">
+              <label class="input-text__label"
+                >총 페이지 수
+                <input
+                  class="input-text__input"
+                  placeholder="페이지 수를 입력해주세요"
+              /></label>
+              <p class="input-text__input-wrong none">
+                텍스트 입력을 다시 입력해주세요.
+              </p>
+            </div>
           </section>
 
-          <section>
+          <section class="book-tree-input-form__large-input-container">
             <h1 class="none">설명글 작성</h1>
-            <!-- 컴포넌트 -->
+            <div class="tree-input__large-text__form">
+              <label class="tree-input__large-text-label"
+                >많은 텍스트<textarea
+                  class="tree-input__large-textarea"
+                  type="text"
+                  placeholder="트리 이름을 입력해 주세요"
+                ></textarea>
+              </label>
+            </div>
           </section>
 
-          <section>
+          <section class="book-tree-input-form__input-container">
             <h1 class="none">공개성 선택</h1>
-            <!-- 컴포넌트 -->
+            <div class="visibility">
+              <p class="visibility__name">공개 여부</p>
+              <div class="visibility__btns">
+                <input
+                  class="visibility__btn"
+                  label="공개"
+                  type="radio"
+                  name="visibility-option"
+                  id="public"
+                  value="1"
+                  checked
+                />
+                <input
+                  class="visibility__btn"
+                  label="비공개"
+                  type="radio"
+                  name="visibility-option"
+                  id="private"
+                  value="0"
+                />
+              </div>
+            </div>
           </section>
 
-          <section>
-            <h1 class="none">트리 생성하기 버튼</h1>
-            <!-- 컴포넌트 -->
+          <section class="btn-full-width-link-container">
+            <h1 class="none">트리 생성 버튼</h1>
+            <div
+              th:replace="fragments/button-link :: full-width(link='#', text='트리 생성')"
+            ></div>
           </section>
         </form>
       </section>

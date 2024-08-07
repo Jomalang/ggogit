@@ -1,5 +1,6 @@
 @import url("reset.css");
 @import url("text.css");
+@import url("effects.css");
 
 :root {
   /* Color styles */
@@ -7,6 +8,7 @@
   /* Background Colors */
   --white: #ffffff;
   --main1: #323a27;
+  --main1--opacity10: #323a271a;
   --main2: #e5eddb;
   --main3: #f5f8f1;
 
@@ -33,7 +35,7 @@
   --light: 300;
   --thin: 100;
 
-  /*  */
+  /* Text-others */
   --line-height-main: 140%;
 
   --letter-spacing-main: -2.5%;
@@ -41,4 +43,8 @@
 
   --margin-left-main: 24px;
   --margin-right-main: 24px;
+
+  /* shadows */
+  --shadow-basic: 0 4px 16px rgba(0, 0, 0, 0.25);
+  --shadow-active: 0 2px 4px rgba(0, 0, 0, 0.25);
 }

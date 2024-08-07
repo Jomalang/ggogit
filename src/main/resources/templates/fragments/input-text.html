@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"  lang="ko">
+<body>
+
+<!-- START -->
+<div class="input-text__box" th:fragment="text-box(label, placeholder, name)">
+    <label class="input-text__label-box">
+        <span class="input-text__label-text" th:text="${label}">지은이</span>
+        <input
+           class="input-text__input"
+           th:name="${name}"
+           th:placeholder="${placeholder}"
+        />
+    </label>
+    <p class="input-text__input-wrong none">
+        텍스트 입력을 다시 입력해주세요.
+    </p>
+</div>
+<!-- END -->
+
+<!--START-->
+<div class="tree-input__large-text__form" th:fragment="textarea-box(label, placeholder, name)">
+    <label class="tree-input__large-text-label">
+        <span th:text="${label}">트리 설명</span>
+        <textarea
+            class="tree-input__large-textarea"
+            type="text"
+            th:name="${name}"
+            th:placeholder="${placeholder}">
+        </textarea>
+    </label>
+</div>
+<!--END-->
+
+</body>
+</html>

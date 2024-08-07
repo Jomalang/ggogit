@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<body>
+
+<!-- START 배열 데이터로 적용해야함 -->
+<div id="filter-tab" class="filter-tab__box" th:fragment="filter-tab(title, name, values)">
+
+    <header class="filter-tab__header">
+        <button id="filter-tab-close-btn" class="filter-tab__btn--back" type="button">
+            <img th:src="@{/svg/tab-back.svg}" alt="뒤로가기 버튼" />
+        </button>
+        <h1 class="filter-tab__header--title" th:text="${title}">
+            필터명
+        </h1>
+    </header>
+
+    <ul class="filter-tab__list">
+        <li th:each="v : ${values}" class="filter-tab__item">
+            <label class="filter-tab__item-label">
+                <input
+                        class="filter-tab__item-radio"
+                        type="radio"
+                        th:name="${name}"
+                        th:value="${v.value}"
+                        checked
+                />
+                <span class="filter-tab__item--label-text" th:text="${v.description}">필터 정보</span>
+                <div class="filter-tab__icon-box">
+                    <img class="filter-tab__icon-img" th:src="@{/svg/tab-check-btn.svg}" alt="필터 버튼"/>
+                </div>
+            </label>
+        </li>
+    </ul>
+</div>
+<!-- END -->
+
+</body>
+</html>

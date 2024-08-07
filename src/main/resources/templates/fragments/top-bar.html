@@ -6,11 +6,13 @@
 <body>
 
 <!-- START: 뒤로가기 상단바-->
-<div class="tob-bar-back">
-    <a class="tob-bar-back__link"href="">
-        <div class="tob-bar-back__icon-box"><img class="tob-bar-back__icon" src="svgs/icon.svg" /></div>
+<div class="tob-bar-back" th:fragment="tob-bar-back(title, link)">
+    <a class="tob-bar-back__link" th:href="${link}">
+        <div class="tob-bar-back__icon-box">
+            <img class="tob-bar-back__icon" th:src="@{/svg/back-arrow-icon.svg}" alt="back-arrow-icon.svg"/>
+        </div>
     </a>
-    <p class="tob-bar-back__text">트리 생성</p>
+    <p class="tob-bar-back__title" th:text="${title}">상단바 주제</p>
 </div>
 <!-- END: 뒤로가기 상단바-->
 

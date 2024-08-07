@@ -267,7 +267,7 @@
   fill: var(--main1, #323a27);
 }
 
-.community-tab-bar__filter-tab-box {
+.filter-tab-box {
   top: 0;
   right: 0;
   bottom: 0;

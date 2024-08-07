@@ -45,8 +45,32 @@
   display: flex;
   justify-content: space-between;
 }
-
 .branch-stats {
   display: flex;
-  gap: 10px;
+  gap: 6px;
+  font-size: 14px;
+  color: var(--text-sub, #767676);
+  font-family: "Pretendard-Bold", sans-serif;
+}
+.branch-date {
+  font-size: 12px;
+}
+
+.branch-name {
+  display: flex;
+  gap: 8px;
+}
+
+.branch-name__name {
+  color: var(--main-1, #323a27);
+  font-family: "Pretendard-Bold", sans-serif;
+  font-size: 18px;
+  letter-spacing: var(--letter-spacing-main);
+  font-weight: var(--bold);
+}
+
+.branch-state-main {
+  display: flex;
+  flex-direction: column;
+  padding: 10 24px;
 }

@@ -1,0 +1,131 @@
+@import url("../../../../static/common/variables.css");
+
+/* reading progress */
+.card-reading-progress {
+  margin-left: 24px;
+  margin-right: 24px;
+  background-color: var(--main2);
+  border-radius: 8px;
+  padding: 16px;
+  line-height: 140%;
+  letter-spacing: var(--letter-spacint-main);
+  height: 143px;
+  box-shadow: var(--shadow-basic);
+}
+
+.card-reading-progress__title {
+  display: flex;
+  justify-content: space-between;
+}
+
+.card-reading-progress-content {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: end;
+}
+
+.card-reading-progress__title {
+  color: var(--main1);
+  font-size: 16px;
+  font-weight: var(--semi-bold);
+}
+
+.card-reading-progress__bar-container {
+  border-radius: 100px;
+  background-color: var(--gray);
+  height: 4px;
+  width: 100%;
+  margin-bottom: 2px;
+}
+
+.card-reading-progress__bar {
+  border-radius: 100px;
+  background-color: var(--main1);
+  width: 80%;
+  height: 4px;
+  content-visibility: hidden;
+}
+
+.card-reading-progress__num {
+  font-size: 16px;
+  font-weight: var(--semi-bold);
+  color: var(--main1);
+}
+
+.card-reading-progress__sep {
+  font-size: 14px;
+  color: var(--main1);
+}
+
+.card-progress-page__num {
+  font-size: 12px;
+  font-weight: var(--semi-bold);
+  color: var(--main1);
+}
+
+.card-reading-progress-status-list {
+  font-size: 14px;
+  line-height: var(--line-height-main);
+  color: var(--text-sub);
+  transform: translate(0px, -8.8px);
+}
+
+.card-reading-progress-status__num {
+  font-weight: var(--bold);
+}
+
+/* tree card */
+.card-tree-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.card-tree-detail {
+  display: flex;
+  flex-direction: row;
+  align-items: start;
+  margin-bottom: 40px;
+}
+
+.card-tree-detail > .book {
+  width: 80px;
+  height: 120px;
+  margin-right: 8px;
+}
+
+.card-tree-detail__info {
+  width: 100%;
+  letter-spacing: -0.25%;
+}
+
+.tree-main-list-detail-tag {
+  color: #767676;
+  font-size: 10px;
+  margin-right: 2px;
+}
+
+.tree-main-list-detail-name {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.tree-main-list-detail-explanation {
+  font-size: 14px;
+  font-weight: 500;
+  color: #767676;
+}
+
+.card-tree-detail__info > .spans {
+  font-size: 14px;
+  font-weight: 500;
+  color: #767676;
+}
+
+.tree-main-list-detail-createddate {
+  font-size: 14px;
+  font-weight: 500;
+  color: #767676;
+  display: flex;
+  justify-content: end;
+}

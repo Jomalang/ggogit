@@ -5,7 +5,7 @@
   background: var(--main-2, #e5eddb);
   display: flex;
   flex-direction: row;
-  align-items: center;      
+  align-items: center;
   height: 76px;
   position: relative;
   justify-content: space-between;
@@ -15,7 +15,7 @@
 .top-bar__nobackground {
   display: flex;
   flex-direction: row;
-  align-items: center;      
+  align-items: center;
   height: 76px;
   position: relative;
   justify-content: space-between;
@@ -23,7 +23,7 @@
 }
 
 .top-bar__title {
-  color: var(--main-1, #323a27);  
+  color: var(--main-1, #323a27);
   font-family: "Pretendard-Bold", sans-serif;
   font-size: 20px;
   line-height: var(--line-height-main);
@@ -31,13 +31,21 @@
   font-weight: var(--bold);
   position: absolute;
   left: 50%;
-  transform: translateX(-50%);         
+  transform: translateX(-50%);
 }
 
 .top-bar__text {
-  color: var(--main-1, #323a27);  
+  color: var(--main-1, #323a27);
   font-family: "Pretendard-Bold", sans-serif;
-  font-size: 16px;  
+  font-size: 16px;
   letter-spacing: var(--letter-spacing-main);
   font-weight: var(--bold);
+}
+.branch-state {
+  display: flex;
+  justify-content: space-between;
+}
+
+.branch-stat {
+  display: flex;
 }

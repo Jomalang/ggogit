@@ -1,43 +1,43 @@
 @import url("../../../static/common/variables.css");
 
 /* 책 아이콘 버튼 */
-.booklist__button {
+.booklist__btn {
   background-color: var(--white);
   border: none;
 }
-.booklist__button:hover{
+.booklist__btn:hover{
   cursor: pointer;
 }
 
 /* 북마크 아이콘 버튼 */
-.bookmark__button {
+.bookmark__btn {
   background-color: var(--white);
   border: none;
 }
-.bookmark-__button:hover{
+.bookmark-__btn:hover{
   cursor: pointer;
 }
 
 /* 가지뻗기 아이콘 버튼 */
-.branch__button {
+.branch__btn {
   background-color: var(--white);
   border: none;
 }
-.branch__button:hover{
+.branch__btn:hover{
   cursor: pointer;
 }
 
 /* 체크 아이콘 버튼 */
-.check__button {
+.check__btn {
   background-color: var(--white);
   border: none;
 }
-.check__button:hover{
+.check__btn:hover{
   cursor: pointer;
 }
 
 /* 녹색배경 텍스트 아이콘 버튼 */
-.text__button--green {
+.text__btn--green {
   width: fit-content;
   min-width: 56px;
   height: 62px;
@@ -49,13 +49,13 @@
   font-size: 16px;
   font-weight: var(--bold);
   border-radius: 16px;
-  transition: all 1s;
+  transition: all 0.2s linear;
   padding: 20px;
 }
-.text__button--green:focus{
+.text__btn--green:focus{
   outline: 0;
 }
-.text__button--green:hover{
+.text__btn--green:hover{
   background-color: var(--main1);
   cursor: pointer;
   box-shadow: 0 2px
@@ -64,7 +64,7 @@
 
 
 /* 녹색배경 가지뻗기 아이콘 버튼 */
-.branch__button--green {
+.branch__btn--green {
   width: 56px;
   height: 56px;
   background: var(--main1);
@@ -73,7 +73,7 @@
   box-shadow: 0 4px
   16px rgba(0, 0, 0, 0.25);
   border-radius: 16px;
-  transition: all 1s;
+  transition: all 0.2s linear;
   padding: 17px;
   display: flex; /* 플렉스 박스 레이아웃 활성화 */
   flex-direction: row; /* 가로 방향으로 아이템 배치 */
@@ -81,10 +81,10 @@
   justify-content: center; /* 가로 방향 중앙 정렬 */
   position: relative; /* 상대 위치 설정 */
 }
-.branch__button--green:focus{
+.branch__btn--green:focus{
   outline: 0;
 }
-.branch__button--green:hover{
+.branch__btn--green:hover{
   background-color: var(--main1);
   cursor: pointer;
   box-shadow: 0 2px
@@ -92,7 +92,7 @@
 }
 
 /* 녹색배경 북마크 아이콘 버튼 */
-.bookmark__button--green {
+.bookmark__btn--green {
   width: 56px;
   height: 56px;
   background: var(--main1);
@@ -101,7 +101,7 @@
   box-shadow: 0 4px
   16px rgba(0, 0, 0, 0.25);
   border-radius: 16px;
-  transition: all 1s;
+  transition: all 0.2s linear;
   padding: 17px;
   display: flex; 
   flex-direction: row; 
@@ -109,10 +109,10 @@
   justify-content: center; 
   position: relative; 
 }
-.bookmark__button--green:focus{
+.bookmark__btn--green:focus{
   outline: 0;
 }
-.bookmark__button--green:hover{
+.bookmark__btn--green:hover{
   background-color: var(--main1);
   cursor: pointer;
   box-shadow: 0 2px
@@ -120,7 +120,7 @@
 }
 
 /* 녹색배경 책 아이콘 버튼 */
-.booklist__button--green {
+.booklist__btn--green {
   width: 56px;
   height: 56px;
   background: var(--main1);
@@ -129,7 +129,7 @@
   box-shadow: 0 4px
   16px rgba(0, 0, 0, 0.25);
   border-radius: 16px;
-  transition: all 1s;
+  transition: all 0.2s linear;
   padding: 17px;
   display: flex; 
   flex-direction: row; 
@@ -137,10 +137,10 @@
   justify-content: center; 
   position: relative; 
 }
-.booklist__button--green:focus{
+.booklist__btn--green:focus{
   outline: 0;
 }
-.booklist__button--green:hover{
+.booklist__btn--green:hover{
   background-color: var(--main1);
   cursor: pointer;
   box-shadow: 0 2px
@@ -148,7 +148,7 @@
 }
 
 /* 녹색배경 트리 생성하기 버튼 */
-.create__button--green {
+.create__btn--green {
   width: fit-content;
   min-width: 327px;
   height: 56px;
@@ -160,12 +160,12 @@
   font-size: 16px;
   font-weight: var(--bold);
   border-radius: 16px;
-  transition: all 1s;
+  transition: all 0.2s linear;
 }
-.create__button--green:focus{
+.create__btn--green:focus{
   outline: 0;
 }
-.create__button--green:hover{
+.create__btn--green:hover{
   background-color: var(--main1);
   cursor: pointer;
   box-shadow: 0 2px
@@ -173,7 +173,7 @@
 }
 
 /* 흰색배경 트리 생성하기 버튼 */
-.create__button--white {
+.create__btn--white {
   width: fit-content;
   min-width: 327px;
   height: 56px;
@@ -185,12 +185,12 @@
   font-size: 16px;
   font-weight: var(--bold);
   border-radius: 16px;
-  transition: all 1s;
+  transition: all 0.2s linear;
 }
-.create__button--white:focus{
+.create__btn--white:focus{
   outline: 0;
 }
-.create__button--white:hover{
+.create__btn--white:hover{
   background-color: var(--main2);
   cursor: pointer;
   box-shadow: 0 2px

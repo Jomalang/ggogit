@@ -14,7 +14,7 @@
   background-color: var(--white);
   border: none;
 }
-.bookmark-__btn:hover{
+.bookmark__btn:hover{
   cursor: pointer;
 }
 
@@ -147,8 +147,12 @@
   4px rgba(0, 0, 0, 0.25);
 }
 
+.tree-create__link-btn {
+  text-decoration: none;
+} 
+
 /* 녹색배경 트리 생성하기 버튼 */
-.create__btn--green {
+.tree-create__link-btn--green {
   width: fit-content;
   min-width: 327px;
   height: 56px;
@@ -161,19 +165,27 @@
   font-weight: var(--bold);
   border-radius: 16px;
   transition: all 0.2s linear;
+  display: flex; 
+  flex-direction: row; 
+  align-items: center; 
+  justify-content: center; 
+  position: relative; 
 }
-.create__btn--green:focus{
+.tree-create__link-btn--green:focus{
   outline: 0;
 }
-.create__btn--green:hover{
+.tree-create__link-btn--green:hover{
   background-color: var(--main1);
   cursor: pointer;
   box-shadow: 0 2px
   4px rgba(0, 0, 0, 0.25);
 }
+.tree-create__link-btn {
+  text-decoration: none;
+} 
 
 /* 흰색배경 트리 생성하기 버튼 */
-.create__btn--white {
+.tree-create__link-btn--white {
   width: fit-content;
   min-width: 327px;
   height: 56px;
@@ -186,16 +198,24 @@
   font-weight: var(--bold);
   border-radius: 16px;
   transition: all 0.2s linear;
+  display: flex; 
+  flex-direction: row; 
+  align-items: center; 
+  justify-content: center; 
+  position: relative; 
 }
-.create__btn--white:focus{
+.tree-create__link-btn--white:focus{
   outline: 0;
 }
-.create__btn--white:hover{
+.tree-create__link-btn--white:hover{
   background-color: var(--main2);
   cursor: pointer;
   box-shadow: 0 2px
   4px rgba(0, 0, 0, 0.25);
 }
+.tree-create__link-btn {
+  text-decoration: none;
+} 
 
 /* 체크박스 */
 .checkbox {

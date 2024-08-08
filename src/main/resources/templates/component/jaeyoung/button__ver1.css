@@ -46,7 +46,6 @@
   box-shadow: 0 4px
   16px rgba(0, 0, 0, 0.25);
   text-align: center;
-  font-family: "pretendard", sans-serif;
   font-size: 16px;
   font-weight: var(--bold);
   border-radius: 16px;
@@ -158,7 +157,6 @@
   border: none;
   box-shadow: 0 4px
   16px rgba(0, 0, 0, 0.25);
-  font-family: "pretendard", sans-serif;
   font-size: 16px;
   font-weight: var(--bold);
   border-radius: 16px;
@@ -168,7 +166,7 @@
   outline: 0;
 }
 .create__button--green:hover{
-  background-color: var(--main2); /* var(--main1)으로 바꾸면 원래설정 */
+  background-color: var(--main1);
   cursor: pointer;
   box-shadow: 0 2px
   4px rgba(0, 0, 0, 0.25);
@@ -184,7 +182,6 @@
   border: none;
   box-shadow: 0 4px
   16px rgba(0, 0, 0, 0.25);
-  font-family: "pretendard", sans-serif;
   font-size: 16px;
   font-weight: var(--bold);
   border-radius: 16px;
@@ -203,7 +200,6 @@
 /* 체크박스 */
 .checkbox {
   position: relative;
-  font-family: "pretendard", sans-serif;
   font-size: 24px;
   font-weight: var(--bold);
   color: var(--main1);

@@ -1,0 +1,18 @@
+.box {
+  background-color: #323a27;
+  display: flex;
+  width: 40px;
+  height: 40px;
+  border-radius: 4px;
+  justify-content: center;
+  align-items: center;
+  padding: 8px;
+}
+
+.box-image {
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  width: 24px;
+  height: 24px;
+}

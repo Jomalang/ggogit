@@ -1,7 +1,7 @@
 @import url(../../../../static/common/variables.css);
 @import url(../../../../static/common/reset.css);
 
-.top-bar {
+.top-bar--green {
   background: var(--main-2, #e5eddb);
   display: flex;
   flex-direction: row;
@@ -12,7 +12,7 @@
   padding: 0 24px;
 }
 
-.top-bar__nobackground {
+.top-bar--white {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -58,21 +58,22 @@
 
 .branch-name {
   display: flex;
-  gap: 8px;
+  gap: 8px;  
+  align-items: center;
 }
 
-.branch-name__name {
+.branch-name--name {
   color: var(--main-1, #323a27);
   font-family: "Pretendard-Bold", sans-serif;
   font-size: 18px;
   letter-spacing: var(--letter-spacing-main);
-  font-weight: var(--bold);
+  font-weight: var(--bold);  
 }
 
 .branch-state-main {
   display: flex;
   flex-direction: column;
-  padding: 10 24px;
+  padding: 10px 24px;
 }
 
 .branch-icon-box {
@@ -92,4 +93,11 @@
   justify-items: center;
   width: 24px;
   height: 24px;
+}
+
+#data-XXX {
+  font-weight: var(--bold);
+  font-size: 14px;  
+  line-height: var(--line-height-main);
+  letter-spacing: var(--letter-spacing-main);
 }

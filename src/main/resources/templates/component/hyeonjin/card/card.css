@@ -2,8 +2,6 @@
 
 /* reading progress */
 .card-reading-progress {
-  margin-left: 24px;
-  margin-right: 24px;
   background-color: var(--main2);
   border-radius: 8px;
   padding: 16px;
@@ -115,7 +113,7 @@
   font-weight: var(--bold);
   display: flex;
   align-items: center;
-  gap: 50%;
+  justify-content: space-between;
 }
 
 .card-tree-detail__explanation {

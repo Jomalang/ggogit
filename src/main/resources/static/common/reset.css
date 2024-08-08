@@ -130,8 +130,18 @@ table {
 
 a {
   text-decoration: none;
+  cursor: pointer;
+}
+
+button {
+  cursor: pointer;
 }
 
 input:focus {
-  border: none;
+  outline: none;
+}
+
+ul,
+li {
+  list-style-type: none;
 }

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko" xmlns:th="www.https://thymeleaf.org">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../../../static/css/reset.css" />
+    <link rel="stylesheet" href="../../../../static/common/variables.css" />
     <title>Document</title>
   </head>
   <body>
@@ -17,6 +17,9 @@
     <main>
       <section>
         <h2 class="none">트리 생성 안내</h2>
+        <div
+          th:replace="~{templates/component/hyeonjin/text-box/textbox::textbox-no-seed}"
+        ></div>
         <!-- 트리 생성하기 위한 컴포넌트 -->
       </section>
 

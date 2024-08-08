@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="www.https://thymeleaf.org">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -10,6 +10,12 @@
   <div class="textbox-no-tree">
     <p class="textbox-no-tree__text-top">현재 기록중인 트리가 없습니다</p>
     <p class="textbox-no-tree__text-bottom">트리를 검색해주세요</p>
+  </div>
+
+  <!-- no-seed -->
+  <div class="textbox-no-tree" th:fragment="textbox-no-seed">
+    <p class="textbox-no-tree__text-top">트리를 생성하기 위한</p>
+    <p class="textbox-no-tree__text-bottom">씨앗을 선택해주세요</p>
   </div>
 
   <!-- recent-tree-info -->

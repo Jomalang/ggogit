@@ -2,9 +2,11 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>card</title>
     <link href="./card.css" rel="stylesheet" />
   </head>
+
   <!-- reading progress-->
   <div class="card-reading-progress">
     <div class="card-reading-progress__header">
@@ -20,51 +22,65 @@
           <div class="card-reading-progress__bar" id="dataXXX">80%</div>
         </div>
         <div class="card-reading-progress__page-num">
-          <span class="card-progresspage__current" id="dataXXX">320</span>
+          <span class="card-progress-page__current" id="dataXXX">320</span>
           <span class="card-progress-page__sep">/</span>
           <span class="card-progress-page__total" id="dataXXX">400</span>
         </div>
       </div>
     </div>
-
-    <div class="card-reading-progress-status-list">
+    <div class="card-reading-progress-status__list">
       <p class="card-reading-progress-status__leaf">
-        나뭇잎 <span class="card-reading-progress-status__num id="dataXXX">+999</span>
+        나뭇잎
+        <span class="card-reading-progress-status__num" id="dataXXX">+999</span>
       </p>
       <p class="card-reading-progress-status__like">
-        좋아요 <span class="card-reading-progress-status__num id="dataXXX">+999</span>
+        좋아요
+        <span class="card-reading-progress-status__num" id="dataXXX">+999</span>
       </p>
       <p class="card-reading-progress-status__views">
-        조회수 <span class="card-reading-progress-status__num id="dataXXX">+999</span>
+        조회수
+        <span class="card-reading-progress-status__num" id="dataXXX">+999</span>
       </p>
     </div>
   </div>
-</html>
 
-<!-- tree card -->
-<div class="card-tree-details">
-          <a class="card-tree-detail">
-            <img class="book covred" src="/resource/pictures/tree-list.png" />
-            <div class="card-tree-detail__info">
-              <!--반복문으로 넣어야 할듯..-->
-              <div class="tree-main-list-detail-tags">
-                <span class="tree-main-list-detail-tag">도서</span>
-                <span class="tree-main-list-detail-tag">정치</span>
-                <span class="tree-main-list-detail-tag">비평</span>
-              </div>
-              <!---->
-              <p class="tree-main-list-detail-name">운명이란 무엇인가?</p>
-              <p class="tree-main-list-detail-explanation">
-                그의 운명에 대한 아주 개인적인 생각
-              </p>
-              <div class="spans">
-                <span class="tree-main-list-detail-date">2024</span>
-                <span>/</span>
-                <span class="tree-main-list-detail-author">유시민</span>
-                <span>/</span>
-                <span class="tree-main-list-detail-publisher">생각의 길</span>
-              </div>
-              <p class="tree-main-list-detail-createddate">2024-07-15</p>
-            </div>
-          </a>
+  <!-- tree card -->
+  <div class="card-tree-details">
+    <a class="card-tree-detail">
+      <img
+        class="card-tree__book-cover"
+        src="../../../../static/svg/card-tree-book-cover.svg"
+      />
+      <div class="card-tree-detail__box">
+        <!--반복문으로 넣어야 할듯..-->
+        <div class="card-tree-detail__tags">
+          <span class="card-tree-detail__tag" id="dataXXX">도서</span>
+          <span class="card-tree-detail__tag" id="dataXXX">정치비평</span>
         </div>
+        <!---->
+        <p class="card-tree-detail__name" id="dataXXX">
+          운명이란 무엇인가?
+          <!-- 아이콘 클래스에 hidden을 넣으면 없어집니다.. -->
+          <img
+            class="card-tree-detail__complete-icon"
+            src="../../../../static/svg/card-tree-details-complete.svg"
+            alt="완독"
+          />
+        </p>
+        <p class="card-tree-detail__explanation" id="dataXXX">
+          그의 운명에 대한 아주 개인적인 생각
+        </p>
+        <div class="card-tree-detail__info">
+          <span class="card-tree-detail__info" id="dataXXX">2024</span>
+          <span class="card-tree-detail__info">/</span>
+          <span class="card-tree-detail__info" id="dataXXX">유시민</span>
+          <span class="card-tree-detail__info">/</span>
+          <span class="card-tree-detail__info" id="dataXXX">생각의 길</span>
+        </div>
+        <span class="card-tree-detail__info-created-date" id="dataXXX"
+          >2024-07-15</span
+        >
+      </div>
+    </a>
+  </div>
+</html>

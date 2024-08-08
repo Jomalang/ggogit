@@ -1,6 +1,6 @@
 @import url("reset.css");
 @import url("text.css");
-@import url("effects.css");
+@import url("effect.css");
 
 :root {
   /* Color styles */
@@ -38,6 +38,7 @@
 
   /* Text-others */
   --line-height-main: 140%;
+  --line-height-sub: 120%;
 
   --letter-spacing-main: -2.5%;
   --letter-spacing-sub: -2.5%;

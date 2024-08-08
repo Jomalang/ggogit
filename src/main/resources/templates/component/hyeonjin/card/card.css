@@ -7,8 +7,8 @@
   background-color: var(--main2);
   border-radius: 8px;
   padding: 16px;
-  line-height: 140%;
-  letter-spacing: var(--letter-spacint-main);
+  line-height: var(--line-height-main);
+  letter-spacing: var(--letter-spacing-main);
   height: 143px;
   box-shadow: var(--shadow-basic);
 }
@@ -16,6 +16,9 @@
 .card-reading-progress__title {
   display: flex;
   justify-content: space-between;
+  color: var(--main1);
+  font-size: 16px;
+  font-weight: var(--semi-bold);
 }
 
 .card-reading-progress-content {
@@ -23,12 +26,6 @@
   flex-wrap: wrap;
   flex-direction: row;
   justify-content: end;
-}
-
-.card-reading-progress__title {
-  color: var(--main1);
-  font-size: 16px;
-  font-weight: var(--semi-bold);
 }
 
 .card-reading-progress__bar-container {
@@ -64,7 +61,7 @@
   color: var(--main1);
 }
 
-.card-reading-progress-status-list {
+.card-reading-progress-status__list {
   font-size: 14px;
   line-height: var(--line-height-main);
   color: var(--text-sub);
@@ -79,53 +76,65 @@
 .card-tree-details {
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
 }
 
 .card-tree-detail {
   display: flex;
   flex-direction: row;
-  align-items: start;
   margin-bottom: 40px;
 }
 
-.card-tree-detail > .book {
+.card-tree__book-cover {
   width: 80px;
   height: 120px;
   margin-right: 8px;
 }
 
-.card-tree-detail__info {
+.card-tree-detail__box {
+  display: flex;
+  flex-direction: column;
   width: 100%;
-  letter-spacing: -0.25%;
+  line-height: var(--line-height-main);
+  letter-spacing: var(--letter-spacing-main);
+  transform: translateY(-8px);
 }
 
-.tree-main-list-detail-tag {
-  color: #767676;
+.card-tree-detail__tags {
+  line-height: var(--line-height-sub);
+}
+
+.card-tree-detail__tag {
+  color: var(--text-sub);
   font-size: 10px;
   margin-right: 2px;
 }
 
-.tree-main-list-detail-name {
+.card-tree-detail__name {
   font-size: 18px;
-  font-weight: 700;
+  font-weight: var(--bold);
+  display: flex;
+  align-items: center;
+  gap: 50%;
 }
 
-.tree-main-list-detail-explanation {
+.card-tree-detail__explanation {
   font-size: 14px;
-  font-weight: 500;
-  color: #767676;
+  font-weight: var(--regular);
+  color: var(--text-sub);
 }
 
-.card-tree-detail__info > .spans {
+.card-tree-detail__info {
   font-size: 14px;
-  font-weight: 500;
-  color: #767676;
+  font-weight: var(--regular);
+  color: var(--text-sub);
 }
 
-.tree-main-list-detail-createddate {
+.card-tree-detail__info-created-date {
   font-size: 14px;
-  font-weight: 500;
-  color: #767676;
+  font-weight: var(--regular);
+  color: var(--text-sub);
   display: flex;
   justify-content: end;
+  transform: translateY(8px);
 }

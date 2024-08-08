@@ -128,10 +128,6 @@ table {
   border-spacing: 0;
 }
 
-a {
-  text-decoration: none;
-}
-
-input:focus {
-  border: none;
+.none {
+    display: none;
 }

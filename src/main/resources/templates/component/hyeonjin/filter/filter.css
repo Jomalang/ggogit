@@ -1,0 +1,39 @@
+@import url(../.././../../static/common/variables.css);
+
+/* tree-filter */
+.tree-main-list-filter {
+  margin-bottom: 30px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+}
+.btn {
+  display: block;
+  border-radius: 8px;
+  height: 36px;
+  padding: 9.5px 20px;
+}
+.btn--unchecked {
+  background-color: #f2f2f2;
+}
+
+.btn--unchecked {
+}
+
+.tree-main-list-filter > * {
+  color: #767676;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: -2.5%;
+  line-height: 140%;
+}
+
+.sortIcon {
+  width: 36px;
+  content-visibility: hidden;
+  background-image: url("../../../../static/svg/sort.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  padding: 10.8px;
+}

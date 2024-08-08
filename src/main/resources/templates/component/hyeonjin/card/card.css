@@ -136,3 +136,184 @@
   justify-content: end;
   transform: translateY(8px);
 }
+
+/* branch represent */
+.branch-rep,
+.branch-rep * {
+  box-sizing: border-box;
+}
+.branch-rep {
+  background: rgba(229, 237, 219, 0.4);
+  border-radius: 8px;
+  padding: 14px 16px 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  row-gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  align-self: stretch;
+  flex-shrink: 0;
+  position: relative;
+}
+.branch-rep-frame {
+  display: flex;
+  flex-direction: row;
+  row-gap: 0px;
+  align-items: center;
+  justify-content: space-between;
+  align-self: stretch;
+  flex-shrink: 0;
+  position: relative;
+}
+.branch-rep-header {
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+  row-gap: 0px;
+  align-items: center;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  position: relative;
+}
+.branch-rep-img {
+  background: var(--main-1, #323a27);
+  border-radius: 4px;
+  padding: 8px;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  row-gap: 0px;
+  align-items: center;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  position: relative;
+}
+.git-branch-01 {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  position: relative;
+  overflow: visible;
+}
+.branch-rep-titlebox {
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  width: 82px;
+  position: relative;
+}
+.branch-rep-date {
+  color: var(--text-sub, #767676);
+  text-align: left;
+  font-family: "Pretendard-Regular", sans-serif;
+  font-size: 12px;
+  line-height: 100%;
+  letter-spacing: -0.025em;
+  font-weight: 400;
+  position: relative;
+  align-self: stretch;
+}
+.branch-rep-title {
+  color: #000000;
+  text-align: left;
+  font-family: "Pretendard-Bold", sans-serif;
+  font-size: 18px;
+  line-height: 140%;
+  letter-spacing: -0.025em;
+  font-weight: 700;
+  position: relative;
+  align-self: stretch;
+}
+.branch-rep-content {
+  display: flex;
+  flex-direction: row;
+  row-gap: 0px;
+  align-items: center;
+  justify-content: space-between;
+  align-self: stretch;
+  flex-shrink: 0;
+  position: relative;
+}
+.branch-rep-info {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  row-gap: 0px;
+  align-items: center;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  position: relative;
+}
+.branch-rep-leaf {
+  display: flex;
+  flex-direction: row;
+  gap: 1px;
+  row-gap: 0px;
+  align-items: center;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  position: relative;
+}
+.branch-rep-leaf-name {
+  color: var(--text-sub, #767676);
+  text-align: left;
+  font-family: "Pretendard-Regular", sans-serif;
+  font-size: 14px;
+  line-height: 140%;
+  letter-spacing: -0.025em;
+  font-weight: 400;
+  position: relative;
+}
+.branch-rep-leaf-num {
+  color: var(--text-sub, #767676);
+  text-align: left;
+  font-family: "Pretendard-Bold", sans-serif;
+  font-size: 14px;
+  line-height: 140%;
+  letter-spacing: -0.025em;
+  font-weight: 700;
+  position: relative;
+}
+.branch-rep-views {
+  display: flex;
+  flex-direction: row;
+  gap: 1px;
+  row-gap: 0px;
+  align-items: center;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  position: relative;
+}
+.branch-rep-views-name {
+  color: var(--text-sub, #767676);
+  text-align: left;
+  font-family: "Pretendard-Regular", sans-serif;
+  font-size: 14px;
+  line-height: 140%;
+  letter-spacing: -0.025em;
+  font-weight: 400;
+  position: relative;
+}
+.branch-rep-views-num {
+  color: var(--text-sub, #767676);
+  text-align: left;
+  font-family: "Pretendard-Bold", sans-serif;
+  font-size: 14px;
+  line-height: 140%;
+  letter-spacing: -0.025em;
+  font-weight: 700;
+  position: relative;
+}
+.favorite-24-dp-5-f-6368-fill-0-wght-400-grad-0-opsz-24-1 {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  position: relative;
+  overflow: visible;
+}

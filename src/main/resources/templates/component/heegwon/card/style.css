@@ -1,19 +1,10 @@
 @import url('../../../../static/common/reset.css');
 @import url('../../../../static/common/variables.css');
 
-a {
-    text-decoration: none;
-}
 
 button {
     margin: 0;
     padding: 0;
-    border: none;
-}
-
-ul,
-li {
-    list-style-type: none;
 }
 
 .cards-felt__logs {

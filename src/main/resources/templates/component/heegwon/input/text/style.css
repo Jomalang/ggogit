@@ -108,7 +108,7 @@ button {
   color: var(--text-sub);
   font-size: 20px;
 }
-.input-next-button {
+.input-next-btn {
   border: none;
   margin-right: 16px;
   background-color: var(--main2);
@@ -167,7 +167,7 @@ div.tree-input-text--select__tag {
   align-items: center;
   padding-left: 16px;
 }
-.tree-input-text--select__tag-button-form {
+.tree-input-text--select__tag-btn-form {
   display: flex;
   flex: 0 0 auto;
   align-items: center;
@@ -181,7 +181,7 @@ div.tree-input-text--select__tag {
   font-weight: var(--semi-bold);
   color: var(--text-icon);
 }
-.tree-input-text--select__tag-button-name {
+.tree-input-text--select__tag-btn-name {
   align-self: c;
   border: none;
   background-color: var(--main1);
@@ -189,7 +189,7 @@ div.tree-input-text--select__tag {
   font-weight: var(--semi-bold);
   color: var(--text-icon);
 }
-.tree-input-text--select__tag-button-cancle {
+.tree-input-text--select__tag-btn-cancle {
   align-self: c;
   border: none;
   background-color: var(--main1);

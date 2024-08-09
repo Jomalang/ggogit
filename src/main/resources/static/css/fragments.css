@@ -1,0 +1,204 @@
+@import "../common/variables.css";
+
+.header-search-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-self: stretch;
+    position: relative;
+}
+
+.header-search-link__link {
+    align-self: stretch;
+}
+
+.header-search-link__input-box {
+    background: var(--main2, #e5eddb);
+    border-radius: 100px;
+    padding: 0 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    align-self: stretch;
+    height: 40px;
+    position: relative;
+}
+.header-search-link__placeholder {
+    color: #767676;
+    text-align: center;
+    font-family: "Pretendard-SemiBold", sans-serif;
+    font-size: 14px;
+    line-height: 140%;
+    letter-spacing: -0.0025em;
+    font-weight: 600;
+    position: relative;
+}
+.header-search-link__icon {
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+    position: relative;
+    overflow: visible;
+}
+
+.no-tree-bg-book {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: row;
+    gap: 21px;
+    align-items: center;
+    justify-content: center;
+}
+.no-tree-bg-book__list {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: flex-end;
+    justify-content: center;
+    align-self: stretch;
+    flex: 1;
+    position: relative;
+}
+
+.btn-full-width {
+    border-radius: 40px;
+    box-shadow: 4px 4px 4px 0 rgba(0, 0, 0, 0.25);
+}
+
+.btn-full-width__button {
+    background: #323a27;
+    border-radius: 40px;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    row-gap: 0;
+    align-items: center;
+    justify-content: center;
+    align-self: stretch;
+    flex-shrink: 0;
+    height: 56px;
+    position: relative;
+}
+.btn-full-width__placeholder {
+    color: var(--white, #ffffff);
+    text-align: center;
+    font-family: "Pretendard-Bold", sans-serif;
+    font-size: 16px;
+    line-height: var(--line-height-main, 140%);
+    letter-spacing: var(--letter-spacing-main, -0.025em);
+    font-weight: var(--bold, 700);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav-box {
+    box-shadow: 0 -5px 10px -5px rgba(0, 0, 0, 0.3);
+}
+
+.nav-box__list {
+    display: flex;
+    width: 100%;
+}
+
+.nav-box__link {
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.nav-box__item {
+    display: flex;
+    justify-content: center;
+    padding: 12px 16px;
+    align-items: center;
+    flex: 1;
+}
+
+.nav-box__img-box {
+    margin: 4px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 64px;
+    height: 32px;
+}
+
+.nav-box__icon-obj .nav-box__svg-path {
+    fill: var(--main1, #323a27);
+}
+
+.nav-box__img-box--active {
+    margin-bottom: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 64px;
+    height: 32px;
+    border-radius: 100px;
+    background-color: var(--main2, #e5eddb);
+}
+
+.nav-box__text {
+    font-weight: var(--semi-bold);
+    line-height: var(--line-height-main);
+    letter-spacing: var(--letter-spacing-main);
+    font-size: 12px;
+    color: var(--text-sub, #767676);
+}
+
+.nav-box__text--active {
+    font-weight: var(--semi-bold);
+    line-height: var(--line-height-main);
+    letter-spacing: var(--letter-spacing-main);
+    font-size: 12px;
+    color: var(--main1, #323a27);
+}
+
+.text-main-title {
+    color: var(--main1, #323a27);
+    text-align: center;
+    font-family: "Pretendard-Bold", sans-serif;
+    font-size: 28px;
+    line-height: var(--line-height-main, 140%);
+    letter-spacing: var(--letter-spacing-main, -0.025em);
+    font-weight: var(--bold, 700);
+}
+
+.text-info {
+    background: var(--white, #ffffff);
+}
+.text-info-box {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    row-gap: 0;
+    align-items: center;
+    justify-content: flex-start;
+    align-self: stretch;
+    flex-shrink: 0;
+    position: relative;
+}
+.text-info-box__text {
+    color: var(--main1, #323a27);
+    text-align: center;
+    font-family: "Pretendard-Medium", sans-serif;
+    font-size: 20px;
+    line-height: 140%;
+    letter-spacing: -0.025em;
+    font-weight: 500;
+    position: relative;
+}
+.text-info-box__text--bold {
+    color: var(--main1, #323a27);
+    text-align: center;
+    font-family: "Pretendard-Bold", sans-serif;
+    font-size: 20px;
+    line-height: 140%;
+    letter-spacing: -0.025em;
+    font-weight: 700;
+    position: relative;
+}

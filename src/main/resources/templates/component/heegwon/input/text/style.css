@@ -15,7 +15,6 @@ button {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  font-display: var(--filter-checked);
   font-size: 16px;
   font-weight: var(--extra-bold);
 }
@@ -118,7 +117,6 @@ button {
   display: flex;
   height: 56px;
   margin-top: 10px;
-  border: none;
   border-radius: 20px;
   background-color: var(--main2);
   align-content: center;
@@ -182,7 +180,6 @@ div.tree-input-text--select__tag {
   color: var(--text-icon);
 }
 .tree-input-text--select__tag-btn-name {
-  align-self: c;
   border: none;
   background-color: var(--main1);
   font-size: 14px;
@@ -190,7 +187,6 @@ div.tree-input-text--select__tag {
   color: var(--text-icon);
 }
 .tree-input-text--select__tag-btn-cancle {
-  align-self: c;
   border: none;
   background-color: var(--main1);
   font-size: 14px;
@@ -204,15 +200,14 @@ div.tree-input-text--select__tag {
   background-color: var(--main2);
   align-items: center;
 }
-.delete-seed__button {
+.delete-seed__btn {
   display: flex;
   border: none;
-  height: 100%;
   height: 24px;
   padding-left: 16px;
   background-color: var(--main2);
 }
-.delete-seed__button-msg {
+.delete-seed__btn-msg {
   padding-left: 16px;
   font-size: 16px;
   font-weight: var(--regular);
@@ -225,14 +220,11 @@ div.tree-input-text--select__tag {
   font-weight: var(--semi-bold);
 }
 .tree-input__large-textarea {
-  padding-left: 16px;
-  padding-right: 16px;
-  padding-top: 17px;
-  padding-bottom: 17px;
+  padding: 17px 16px;
   border: none;
   border-radius: 20px;
   font-size: 16px;
-  font-weight: var(--midium);
+  font-weight: var(--medium);
   color: var(--main1);
   background-color: var(--main2);
   height: 230px;

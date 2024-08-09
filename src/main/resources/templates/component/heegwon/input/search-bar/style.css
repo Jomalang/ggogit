@@ -23,8 +23,13 @@ button {
   justify-content: space-between;
   flex-grow: 1;
 }
-.search-bar--input {
+.search-bar--label{
+  display: flex;
   flex-grow: 1;
+  font-size: 14px;
+}
+.search-bar--input {
+  width: 100%;
   font-weight: var(--semi-bold);
   font-size: 14px;
   background-color: var(--main2);

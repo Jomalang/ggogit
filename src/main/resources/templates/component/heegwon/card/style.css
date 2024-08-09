@@ -1,5 +1,5 @@
-@import url('../../../../static/common/reset.css');
-@import url('../../../../static/common/variables.css');
+@import url("../../../../static/common/reset.css");
+@import url("../../../../static/common/variables.css");
 
 a {
   text-decoration: none;
@@ -219,6 +219,6 @@ button {
   letter-spacing: var(--letter-spacing-main);
 }
 
-.card-felt__book-contentinfo > p {
+.card-felt__book-contentinfo {
   padding-right: 4px;
 }

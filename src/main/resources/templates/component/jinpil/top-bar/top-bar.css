@@ -58,7 +58,7 @@
 
 .branch-name {
   display: flex;
-  gap: 8px;  
+  gap: 8px;
   align-items: center;
 }
 
@@ -67,7 +67,7 @@
   font-family: "Pretendard-Bold", sans-serif;
   font-size: 18px;
   letter-spacing: var(--letter-spacing-main);
-  font-weight: var(--bold);  
+  font-weight: var(--bold);
 }
 
 .branch-state-main {
@@ -95,9 +95,9 @@
   height: 24px;
 }
 
-#data-XXX {
+.data-XXX {
   font-weight: var(--bold);
-  font-size: 14px;  
+  font-size: 14px;
   line-height: var(--line-height-main);
   letter-spacing: var(--letter-spacing-main);
 }

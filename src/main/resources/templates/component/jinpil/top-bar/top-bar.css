@@ -2,7 +2,7 @@
 @import url(../../../../static/common/reset.css);
 
 .top-bar--green {
-  background: var(--main-2, #e5eddb);
+  background: var(--main2, #e5eddb);
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -23,7 +23,7 @@
 }
 
 .top-bar__title {
-  color: var(--main-1, #323a27);
+  color: var(--main1, #323a27);
   font-family: "Pretendard-Bold", sans-serif;
   font-size: 20px;
   line-height: var(--line-height-main);
@@ -35,7 +35,7 @@
 }
 
 .top-bar__text {
-  color: var(--main-1, #323a27);
+  color: var(--main1, #323a27);
   font-family: "Pretendard-Bold", sans-serif;
   font-size: 16px;
   letter-spacing: var(--letter-spacing-main);
@@ -63,7 +63,7 @@
 }
 
 .branch-name--name {
-  color: var(--main-1, #323a27);
+  color: var(--main1, #323a27);
   font-family: "Pretendard-Bold", sans-serif;
   font-size: 18px;
   letter-spacing: var(--letter-spacing-main);
@@ -118,7 +118,7 @@
 }
 
 .tree-input-text--select__tag-button-name {
-  align-self: c;
+  align-self: center;
   border: none;
   background-color: var(--main1);
   font-size: 14px;
@@ -127,7 +127,7 @@
 }
 
 .tree-input-text--select__tag-button-cancle {
-  align-self: c;
+  align-self: center;
   border: none;
   background-color: var(--main1);
   font-size: 14px;

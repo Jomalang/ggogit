@@ -5,3 +5,12 @@
 .hidden {
   visibility: hidden;
 }
+
+.filter--unchecked {
+  background-color: var(--filter-unchecked);
+  color: var(--text-sub);
+}
+.filter--checked {
+  background-color: var(--filter-checked);
+  color: var(--white);
+}

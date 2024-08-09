@@ -3,15 +3,25 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="filter.css" />
+    <link
+      rel="stylesheet"
+      href="filter.css"
+      th:href="~{component/hyeonjin/filter/filter.css}"
+    />
     <title>filter</title>
   </head>
-  <!-- tree-filter -->
-  <div class="tree-main-list-filter">
-    <a href="#" class="btn btn--unchecked sortIcon">정렬 아이콘</a>
-    <a href="#" class="btn btn--unchecked">도서</a>
-    <a href="#" class="btn btn--unchecked">영감</a>
-    <a href="#" class="btn btn--unchecked">유튜브</a>
-    <a href="#" class="btn btn--unchecked">완독</a>
+  <!-- tree-sort -->
+  <div class="filter-tree-sort">
+    <div class="filter-tree-sort__icon">정렬</div>
+    <div th:each="treeFilter : ${treeFilters}">
+      <label
+        ><input
+          class="filter-tree-sort__btn"
+          th:type="checkbox"
+          th:value="${treeFilter.value}"
+          th:field="${treeFilters}"
+          th:label="${treeFilter.value}"
+      /></label>
+    </div>
   </div>
 </html>

@@ -34,9 +34,17 @@
         <div th:replace="fragments/background :: no-tree-bg-book"></div>
       </section>
 
-      <section class="text-info-container">
-        <h1 class="none">트리 생성 안내</h1>
-        <div th:replace="fragments/text :: text-info(text='현재 기록중인 트리가 없습니다', boldText='트리를 생성해 주세요')"></div>
+      <section class="link-btn-container">
+        <h2 class="none">트리 생성 버튼</h2>
+        <!-- 컴포넌트 start -->
+        <div class="btn-box">
+          <a class="btn-box__link" href="">
+            <div class="btn-box__btn">
+                <p class="btn-box__placeholder">트리 생성</p>
+            </div>
+          </a>
+        </div>
+        <!-- 컴포넌트 end -->
       </section>
 
     </section>

@@ -64,8 +64,15 @@ button {
 
 .card-felt__book-content-title {
     font-size: 14px;
-    color: var(--main1);
+    color: var(--text-main);
     font-weight: var(--bold);
+    line-height: var(--line-height-main);
+    letter-spacing: var(--letter-spacing-main);
+}
+.card-felt__book-content-title--color-sub {
+    font-size: 12px;
+    color: var(--text-sub);
+    font-weight: var(--medium);
     line-height: var(--line-height-main);
     letter-spacing: var(--letter-spacing-main);
 }
@@ -80,11 +87,20 @@ button {
     gap: 4px;
 }
 
-.card-felt__tree {
+.card-felt__bottom-frame {
     display: flex;
     flex-direction: column;
+    padding-bottom: 8px;
+    margin-bottom:  8px;
     border-bottom: 1px dotted rgba(0, 0, 0, 0.1);
 }
+.card-felt__bottom-frame--margin {
+     display: flex;
+     flex-direction: column;
+     padding-bottom: 8px;
+     margin-bottom:  16px;
+     border-bottom: 1px dotted rgba(0, 0, 0, 0.1);
+ }
 
 .card-felt__tree-info {
     display: flex;
@@ -100,7 +116,14 @@ button {
     line-height: var(--line-height-main);
     letter-spacing: var(--letter-spacing-main);
 }
-
+.card-felt__tree-title--color-sub {
+    align-content: center;
+    color: var(--text-sub);
+    font-size: 14px;
+    font-weight: var(--bold);
+    line-height: var(--line-height-main);
+    letter-spacing: var(--letter-spacing-main);
+}
 .card-felt__tree-date {
     align-content: center;
     color: var(--text-sub);
@@ -118,16 +141,9 @@ button {
     letter-spacing: var(--letter-spacing-main);
 }
 
-.card-felt__memoir {
-    display: flex;
-    flex-direction: column;
-    border-bottom: 1px dotted rgba(0, 0, 0, 0.1);
-}
-
 .card-felt__memoir-info {
     display: flex;
     justify-content: space-between;
-    padding-bottom: 4px;
 }
 
 .card-felt__memoir-title {
@@ -149,6 +165,53 @@ button {
 }
 
 .card-felt__memoir-description {
+    padding-top: 6px;
+    padding-bottom: 6px;
+    color: var(--text-sub);
+    font-size: 14px;
+    font-weight: var(--regular);
+    line-height: var(--line-height-main);
+    letter-spacing: var(--letter-spacing-main);
+}
+
+.card-felt__leaf-info {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 4px;
+}
+
+.card-felt__leaf-title {
+    align-content: center;
+    color: var(--text-main);
+    font-size: 18px;
+    font-weight: var(--bold);
+    line-height: var(--line-height-main);
+    letter-spacing: var(--letter-spacing-main);
+}
+.card-felt__leaf-title--color-sub {
+    align-content: center;
+    color: var(--text-sub);
+    font-size: 14px;
+    font-weight: var(--bold);
+    line-height: var(--line-height-main);
+    letter-spacing: var(--letter-spacing-main);
+}
+.card-felt__leaf-date {
+    align-content: center;
+    color: var(--text-sub);
+    font-size: 14px;
+    font-weight: var(--medium);
+    line-height: var(--line-height-main);
+    letter-spacing: var(--letter-spacing-main);
+}
+
+.card-felt__leaf-description {
+    margin-bottom: 6px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    width: 443px;
     color: var(--text-sub);
     font-size: 14px;
     font-weight: var(--regular);
@@ -198,9 +261,9 @@ button {
 }
 
 .card-felt__author-info {
+    padding-top: -8px;
     display: flex;
     align-items: center;
-    padding-top: 8px;
     margin-bottom: 16px;
 }
 
@@ -462,7 +525,7 @@ button {
 .card-log__content-detail-show:not(:checked) ~ .card-log__content {
     order: 1;
     padding-top: 4px;
-    padding-bottom: 4px;
+    margin-bottom: 4px;
     color: var(--main1);
     font-size: 14px;
     font-weight: var(--semi-bold);
@@ -489,7 +552,7 @@ button {
 .card-log__content-detail-show:checked ~ .card-log__content {
     order: 1;
     padding-top: 4px;
-    padding-bottom: 4px;
+    margin-bottom: 4px;
     color: var(--main1);
     font-size: 14px;
     font-weight: var(--semi-bold);
@@ -572,17 +635,30 @@ button {
     letter-spacing: var(--letter-spacing-main);
 }
 
-.card-book__info-tree-title {
+.card-book__lon-info-tree-title {
     color: var(--text-sub);
     font-size: 14px;
     font-weight: var(--bold);
     line-height: var(--line-height-main);
     letter-spacing: var(--letter-spacing-main);
-}
+}.card-book__info-tree-title {
+     color: var(--text-main);
+     font-size: 18px;
+     font-weight: var(--bold);
+     line-height: var(--line-height-main);
+     letter-spacing: var(--letter-spacing-main);
+ }
 
-.card-book__info-book-title {
+.card-book__log--info-book-title {
     color: var(--text-sub);
     font-size: 12px;
+    font-weight: var(--medium);
+    line-height: var(--line-height-main);
+    letter-spacing: var(--letter-spacing-main);
+}
+.card-book__info-book-title {
+    color: var(--text-sub);
+    font-size: 14px;
     font-weight: var(--medium);
     line-height: var(--line-height-main);
     letter-spacing: var(--letter-spacing-main);
@@ -594,7 +670,7 @@ button {
 }
 .card-book__info-publish {
     color: var(--text-sub);
-    font-size: 12px;
+    font-size: 14px;
     font-weight: var(--medium);
     line-height: var(--line-height-main);
     letter-spacing: var(--letter-spacing-main);
@@ -605,6 +681,7 @@ button {
     display: flex;
     justify-content: center;
     align-items: center;
+    gap: 4px;
 }
 
 .card-book__react-icon {
@@ -616,7 +693,6 @@ button {
     cursor: pointer;
     justify-content: center;
     align-items: center;
-    gap: 4px;
 }
 
 .card-book__react-icon-img {
@@ -649,29 +725,35 @@ button {
     -webkit-line-clamp: 2;
 }
 
-.card-book__leaf-regdate {
+.card-book__meta-data {
     padding-top: 10px;
     display: flex;
     justify-content: space-between;
 }
-
-.card-book__update-time {
+.card-book__meta-update{
+    display: flex;
+    align-items: flex-end;
+}
+.card-book__meta-update-time {
     color: var(--text-sub);
-    font-size: 14px;
-    font-weight: var(--medium);
+    font-size: 12px;
+    font-weight: var(--regular);
     line-height: var(--line-height-main);
     letter-spacing: var(--letter-spacing-main);
 }
 
-.card-book__view-num {
+.card-book__meta-view-num {
     color: var(--main1);
     font-size: 12px;
     font-weight: var(--medium);
     line-height: var(--line-height-main);
     letter-spacing: var(--letter-spacing-main);
 }
-
-.card-book__view {
+.card-book__meta-views{
+    display: flex;
+    flex-direction: column;
+}
+.card-book__meta-view {
     color: var(--text-sub);
     font-size: 8px;
     font-weight: var(--regular);

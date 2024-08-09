@@ -1,0 +1,54 @@
+.header-search-container {
+    padding: 30px 24px 40px 24px;
+}
+
+.my-tree-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    align-items: flex-start;
+    justify-content: flex-start;
+    align-self: stretch;
+    flex-shrink: 0;
+    position: relative;
+}
+
+.my-tree-title-container {
+    padding: 0 24px 200px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    align-self: stretch;
+    flex-shrink: 0;
+    position: relative;
+}
+
+.text-info-container {
+    display: flex;
+    flex-direction: row;
+    align-self: stretch;
+    margin: 70px 0 300px 0;
+    align-items: self-start;
+    justify-content: center;
+    flex-shrink: 0;
+    position: relative;
+}
+
+.book-img-container {
+    z-index: 10;
+    margin: 0 auto;
+    top: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    position: absolute;
+}
+
+.btn-full-width-link-container {
+    margin: 0 5% 28px 5%;
+    width: 90%;
+    top: 550px;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    position: absolute;
+}

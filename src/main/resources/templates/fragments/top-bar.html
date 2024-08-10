@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
-<head>
-    <meta charset="UTF-8" />
-</head>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
 <body>
 
-<!-- START: 뒤로가기 상단바-->
+<!-- ==========================================
+     FRAGMENT: 뒤로가기 상단바
+     ========================================== -->
 <div class="tob-bar-back" th:fragment="tob-bar-back(title, link)">
     <a class="tob-bar-back__link" th:href="${link}">
         <div class="tob-bar-back__icon-box">
@@ -14,7 +13,6 @@
     </a>
     <p class="tob-bar-back__title" th:text="${title}">상단바 주제</p>
 </div>
-<!-- END: 뒤로가기 상단바-->
 
 </body>
 </html>

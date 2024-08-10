@@ -2,18 +2,27 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <body>
 
-<!-- START: 메인 Title-->
-    <h1 class="text-main-title" th:fragment="text-main-title(title)" th:text="${title}">Default Title</h1>
-<!-- END: 메인 Title-->
+<!-- ==========================================
+     FRAGMENT: 메인 Title
+     ========================================== -->
+    <div th:fragment="text-main-title(title, size)">
+        <h1 class="text-main-title text--title28" th:if="${size == '28'}" th:text="${title}">Default Title</h1>
+        <h1 class="text-main-title text--title24" th:if="${size == '24'}" th:text="${title}">Default Title</h1>
+        <h1 class="text-main-title text--title20" th:if="${size == '20'}" th:text="${title}">Default Title</h1>
+        <h1 class="text-main-title text--title18" th:if="${size == '18'}" th:text="${title}">Default Title</h1>
+        <h1 class="text-main-title text--title16" th:if="${size == '16'}" th:text="${title}">Default Title</h1>
+        <h1 class="text-main-title text--title14" th:if="${size == '14'}" th:text="${title}">Default Title</h1>
+    </div>
 
-<!-- START: 설명 글-->
+<!-- ==========================================
+     FRAGMENT: 화면 설명글
+     ========================================== -->
     <div class="text-info" th:fragment="text-info(text, boldText)">
         <div class="text-info-box">
             <p class="text-info-box__text" th:text="${text}">얇은 글</p>
             <p class="text-info-box__text--bold" th:text="${boldText}">굵은 글</p>
         </div>
     </div>
-<!-- END: 설명 글-->
 
 </body>
 </html>

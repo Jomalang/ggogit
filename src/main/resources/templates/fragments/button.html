@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<body>
+
+<!-- ==========================================
+     FRAGMENT: FUll 가로 버튼 - link 버전
+     ========================================== -->
+<div class="btn-full-width" th:fragment="link-full-width(link, text)">
+    <a class="btn-full-width__link" th:href="${link}">
+        <div class="btn-full-width__button">
+            <p class="btn-full-width__placeholder" th:text="${text}">버튼 이름</p>
+        </div>
+    </a>
+</div>
+
+<!-- ==========================================
+     FRAGMENT: FUll 가로 버튼 - button 버전
+     ========================================== -->
+<div class="btn-full-bar" th:fragment="submit-btn-full-bar(text)">
+    <button class="btn-full-bar__btn" type="submit" th:text="${text}"></button>
+</div>
+
+</body>
+</html>

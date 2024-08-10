@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>card</title>
+    <link href="./card.css" rel="stylesheet" />
+  </head>
+
+  <!-- ================ -->
+  <!-- reading progress-->
+  <!-- ================ -->
+  <div class="card-reading-progress">
+    <div class="card-reading-progress__header">
+      <div class="card-reading-progress__title">
+        <h2>독서 진행률</h2>
+        <div>
+          <span class="card-reading-progress__num" id="data-XXX">80</span
+          ><span class="card-reading-progress__sep">%</span>
+        </div>
+      </div>
+      <div class="card-reading-progress-content">
+        <div class="card-reading-progress__bar-container">
+          <div class="card-reading-progress__bar" id="data-XXX">80%</div>
+        </div>
+        <div class="card-reading-progress__page-num">
+          <span class="card-progress-page__current" id="data-XXX">320</span>
+          <span class="card-progress-page__sep">/</span>
+          <span class="card-progress-page__total" id="data-XXX">400</span>
+        </div>
+      </div>
+    </div>
+    <div class="card-reading-progress-status__list">
+      <p class="card-reading-progress-status__leaf">
+        나뭇잎
+        <span class="card-reading-progress-status__num" id="data-XXX"
+          >+999</span
+        >
+      </p>
+      <p class="card-reading-progress-status__like">
+        좋아요
+        <span class="card-reading-progress-status__num" id="data-XXX"
+          >+999</span
+        >
+      </p>
+      <p class="card-reading-progress-status__views">
+        조회수
+        <span class="card-reading-progress-status__num" id="data-XXX"
+          >+999</span
+        >
+      </p>
+    </div>
+  </div>
+
+  <!-- ================ -->
+  <!-- tree card -->
+  <!-- ================ -->
+  <div class="card-tree-details">
+    <a class="card-tree-detail">
+      <img
+        class="card-tree__book-cover"
+        src="/src/main/resources/static/svg/card-felt__cover.svg"
+      />
+      <div class="card-tree-detail__box">
+        <!--반복문으로 넣어야 할듯..-->
+        <div class="card-tree-detail__tags">
+          <span class="card-tree-detail__tag" id="data-XXX">도서</span>
+          <span class="card-tree-detail__tag" id="data-XXX">정치비평</span>
+        </div>
+        <!---->
+        <p class="card-tree-detail__name" id="data-XXX">
+          운명이란 무엇인가?
+          <!-- 아이콘 클래스에 hidden을 넣으면 없어집니다.. -->
+          <img
+            class="card-tree-detail__complete-icon"
+            src="/src/main/resources/static/svg/card-tree-details-complete.svg"
+            alt="완독"
+          />
+        </p>
+        <p class="card-tree-detail__explanation" id="data-XXX">
+          그의 운명에 대한 아주 개인적인 생각
+        </p>
+        <div class="card-tree-detail__info">
+          <span class="card-tree-detail__info" id="data-XXX">2024</span>
+          <span class="card-tree-detail__info">/</span>
+          <span class="card-tree-detail__info" id="data-XXX">유시민</span>
+          <span class="card-tree-detail__info">/</span>
+          <span class="card-tree-detail__info" id="data-XXX">생각의 길</span>
+        </div>
+        <span class="card-tree-detail__info-created-date" id="data-XXX"
+          >2024-07-15</span
+        >
+      </div>
+    </a>
+  </div>
+
+  <!-- ================ -->
+  <!-- branch represent -->
+  <!-- ================ -->
+  <div class="branch-rep">
+    <div class="branch-rep-frame">
+      <a href="#">
+        <div class="branch-rep-header">
+          <div class="branch-rep-img">
+            <img
+              class="branch-rep__branch-icon"
+              src="/src/main/resources/static/svg/card-branch-represent-icon.svg"
+            />
+          </div>
+          <div class="branch-rep-titlebox">
+            <div class="branch-rep-date" id="data-XXX">2024-07-18</div>
+            <div class="branch-rep-title" id="data-XXX">브랜치 이름</div>
+          </div>
+        </div>
+      </a>
+    </div>
+    <div class="branch-rep-content">
+      <div class="branch-rep-info">
+        <div class="branch-rep-leaf">
+          <div class="branch-rep-leaf-name">나뭇잎</div>
+          <div class="branch-rep-leaf-num">999</div>
+        </div>
+        <div class="branch-rep-views">
+          <div class="branch-rep-views-name">조회수</div>
+          <div class="branch-rep-views-num">999</div>
+        </div>
+      </div>
+      <form action="">
+        <input
+          class="branch-rep__like-btn"
+          type="checkbox"
+          name=""
+          id="data-XXX"
+        />
+      </form>
+    </div>
+  </div>
+
+  <!-- ================================
+                card-felt__log 
+      =================================-->
+  <div class="cards-felt__logs">
+    <ul class="cards-felt--log-list">
+      <li>
+        <a class="card-felt__book-details" href="#">
+          <div>
+            <img
+              id="data-xxx"
+              class="card-felt__book-cover"
+              src="/src/main/resources/static/img/card/card-felt-log-bookcover.png"
+              alt="표지"
+            />
+          </div>
+          <div class="card-felt__book-info">
+            <div class="card-felt__book-category">
+              <p class="card-felt__book-category" id="data-xxx">도서</p>
+              <p class="card-felt__book-category" id="data-xxx">자기 개발</p>
+            </div>
+            <p id="data-xxx" class="card-felt__book-content-title">
+              우리가 운명이라고 불렀던 것들
+            </p>
+            <div class="card-felt__book-content-info">
+              <p class="card-felt__book-content-info">
+                <span class="card-felt__book-content-info" id="data-xxx"
+                  >2023</span
+                ><span class="card-felt__book-content-info">·</span
+                ><span class="card-felt__book-content-info" id="data-xxx"
+                  >슈페판 클라인</span
+                ><span class="card-felt__book-content-info">·</span
+                ><span class="card-felt__book-content-info" id="data-xxx"
+                  >포레스트북스</span
+                >
+              </p>
+            </div>
+          </div>
+        </a>
+        <div class="card-felt__bottom-frame">
+          <div class="card-felt__tree-info">
+            <p class="card-felt__tree-title" id="data-xxx">
+              이것은 우연인가 운명인가
+            </p>
+            <p class="card-felt__tree-date" id="data-xxx">2024-07-14</p>
+          </div>
+          <div>
+            <p class="card-felt__tree-description" id="data-xxx">
+              그 모든 우연이 모여 오늘이 탄생했다.
+            </p>
+          </div>
+          <div class="card-felt__react-tab">
+            <div class="card-felt__react-icon">
+              <a class="card-felt__react-icon" href="#">
+                <img
+                  src="/src/main/resources/static/svg/comment.svg"
+                  alt="comment_icon"
+                />
+              </a>
+              <div class="card-felt__react-icon">
+                <img
+                  src="/src/main/resources/static/svg/like.svg"
+                  alt="like_icon"
+                />
+              </div>
+            </div>
+            <div class="card-felt__react-views">
+              <p id="data-xxx">999+</p>
+              <p class="card-felt__react-views-static">조회수</p>
+            </div>
+          </div>
+        </div>
+        <a class="card-felt__author-info" href="#">
+          <div class="card-felt__author-img-frame">
+            <img
+              class="card-felt__author-img"
+              id="data-xxx"
+              src="/src/main/resources/static/img/card/card-tree-author.png"
+              alt="author-img"
+            />
+          </div>
+          <div class="card-felt__author-name">
+            <p id="data-xxx">군만두</p>
+          </div>
+        </a>
+      </li>
+    </ul>
+  </div>
+  <!--  -->
+  <!--  -->
+
+  <div class="cards-felt--logs">
+    <ul class="cards-felt--log-list">
+      <li>
+        <a class="card-felt__book-details" href="#">
+          <div>
+            <img
+              id="data-xxx"
+              class="card-felt__book-cover"
+              src="/src/main/resources/static/img/card/card-felt-log-bookcover.png"
+              alt="표지"
+            />
+          </div>
+          <div class="card-felt__book-info">
+            <div class="card-felt__book-category">
+              <p class="card-felt__book-category" id="data-xxx">도서</p>
+              <p class="card-felt__book-category" id="data-xxx">자기 개발</p>
+            </div>
+            <p id="data-xxx" class="card-felt__book-content-title">
+              우리가 운명이라고 불렀던 것들
+            </p>
+            <div class="card-felt__book-content-info">
+              <p class="card-felt__book-content-info">
+                <span class="card-felt__book-content-info" id="data-xxx"
+                  >2023</span
+                ><span class="card-felt__book-content-info">·</span
+                ><span class="card-felt__book-content-info" id="data-xxx"
+                  >슈페판 클라인</span
+                ><span class="card-felt__book-content-info">·</span
+                ><span class="card-felt__book-content-info" id="data-xxx"
+                  >포레스트북스</span
+                >
+              </p>
+            </div>
+          </div>
+          <div class="card-felt__book-badge-case">
+            <img
+              class="card-felt__book-badge"
+              id="data-xxx"
+              src="/src/main/resources/static/svg/badge.svg"
+              alt="badge"
+            />
+          </div>
+        </a>
+        <div class="card-felt__bottom-frame">
+          <div class="card-felt__memoir-info">
+            <p class="card-felt__memoir-title" id="data-xxx">회고록 제목</p>
+            <p class="card-felt__memoir-date" id="data-xxx">2024-07-14</p>
+          </div>
+          <div>
+            <p class="card-felt__memoir-description" id="data-xxx">
+              회고록 내용 회고록 내용 회고록 내용 회고록 내용
+            </p>
+          </div>
+          <div class="card-felt__react-tab">
+            <div class="card-felt__react-icon">
+              <a class="card-felt__react-icon" href="#">
+                <img
+                  src="/src/main/resources/static/svg/comment.svg"
+                  alt="comment_icon"
+                />
+              </a>
+              <div class="card-felt__react-icon">
+                <img
+                  src="/src/main/resources/static/svg/like.svg"
+                  alt="like_icon"
+                />
+              </div>
+            </div>
+            <div class="card-felt__react-views">
+              <p id="data-xxx">999+</p>
+              <p class="card-felt__react-views-static">조회수</p>
+            </div>
+          </div>
+        </div>
+        <a class="card-felt__author-info" href="#">
+          <div class="card-felt__author-img-frame">
+            <img
+              class="card-felt__author-img"
+              id="data-xxx"
+              src="/src/main/resources/static/img/card/card-tree-author.png"
+              alt="author-img"
+            />
+          </div>
+          <div class="card-felt__author-name">
+            <p id="data-xxx">군만두</p>
+          </div>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <!--  -->
+  <!--  -->
+  <div class="cards-felt__logs">
+    <ul class="cards-felt--log-list">
+      <li>
+        <a class="card-felt__book-details" href="#">
+          <div>
+            <img
+              id="data-xxx"
+              class="card-felt__book-cover"
+              src="/src/main/resources/static/img/card/card-felt-log-bookcover.png"
+              alt="표지"
+            />
+          </div>
+          <div class="card-felt__book-info">
+            <div class="card-felt__book-category">
+              <p class="card-felt__book-category" id="data-xxx">도서</p>
+              <p class="card-felt__book-category" id="data-xxx">정치 비평</p>
+            </div>
+            <p class="card-felt__tree-title--color-sub">운명이란 무엇인가?</p>
+            <p class="card-felt__book-content-title--color-sub" id="data-xxx">
+              그의 운명에 대한 아주 개인적인 생각
+            </p>
+            <div class="card-felt__book-content-info">
+              <p class="card-felt__book-content-info">
+                <span class="card-felt__book-content-info" id="data-xxx"
+                  >2024</span
+                ><span class="card-felt__book-content-info">·</span
+                ><span class="card-felt__book-content-info" id="data-xxx"
+                  >유시민</span
+                ><span class="card-felt__book-content-info">·</span
+                ><span class="card-felt__book-content-info" id="data-xxx"
+                  >생각의길</span
+                >
+              </p>
+            </div>
+          </div>
+        </a>
+        <div class="card-felt__bottom-frame--margin">
+          <div class="card-felt__leaf-info">
+            <p class="card-felt__leaf-title" id="data-xxx">
+              나뭇잎 제목 입니다.
+            </p>
+            <p class="card-felt__leaf-date" id="data-xxx">2024-07-14</p>
+          </div>
+          <div>
+            <p class="card-felt__leaf-description" id="data-xxx">
+              코딩 테스트 합격자 되기 자바스크립트 편의 영감 기록을 남기는
+              이유는 다음과 같습니다. 영감 기록을 작성하면 책에서 배운 내용을
+              정리하고 이해도를 높일 수 있습니다.
+            </p>
+          </div>
+          <div class="card-felt__react-tab">
+            <div class="card-felt__react-icon">
+              <a class="card-felt__react-icon" href="#">
+                <img
+                  src="/src/main/resources/static/svg/comment.svg"
+                  alt="comment_icon"
+                />
+              </a>
+              <div class="card-felt__react-icon">
+                <img
+                  src="/src/main/resources/static/svg/like.svg"
+                  alt="like_icon"
+                />
+              </div>
+            </div>
+            <div class="card-felt__react-views">
+              <p id="data-xxx">999+</p>
+              <p class="card-felt__react-views-static">조회수</p>
+            </div>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- =====================================
+                card-book__log-info 
+      ====================================== -->
+  <div class="card-book__info">
+    <div class="card-book__info-frame">
+      <div class="card-book__info-detail">
+        <div>
+          <img
+            class="card-book__info-cover"
+            src="/src/main/resources/static/img/card/card-book__log-info-cover.svg"
+            alt="cover"
+          />
+        </div>
+        <div class="card-book__info-text">
+          <div>
+            <span class="card-book__info-category" id="data-xxx">도서</span>
+            <span class="card-book__info-category" id="data-xxx">문학</span>
+          </div>
+          <div class="card-book__log-info-tree-title" id="data-xxx">
+            그 남자 과연 나의 운명일까
+          </div>
+          <div class="card-book__info-log-book-title" id="data-xxx">
+            그 남자, 운명이니까
+          </div>
+          <div class="card-book__info-publish-frame">
+            <span class="card-book__info-publish" id="data-xxx">2020</span>
+            <span class="card-book__info-publish">·</span>
+            <span class="card-book__info-publish" id="data-xxx"
+              >Kitagawa Miyuki</span
+            >
+            <span class="card-book__info-publish">·</span>
+            <span class="card-book__info-publish" id="data-xxx">DCW</span>
+          </div>
+        </div>
+        <div class="card-book__react-icons">
+          <a class="card-book__react-icon" href="#">
+            <img
+              class="card-book__react-icon-img"
+              src="/src/main/resources/static/svg/comment.svg"
+              alt="comment_icon"
+            />
+          </a>
+          <div class="card-book__react-icon">
+            <img
+              class="card-book__react-icon-img"
+              src="/src/main/resources/static/svg/like.svg"
+              alt="like_icon"
+            />
+          </div>
+        </div>
+      </div>
+      <div>
+        <p class="card-book__leaf-title" id="data-xxx">웹툰이지만 로깅합니다</p>
+      </div>
+      <a href="#"
+        ><p class="card-book__leaf-content" id="data-xxx">
+          무뚝꾸하고 너무나 평범한 회사원인 시오리. 하지만 그녀의 밤의 얼굴은
+          유명한 손금술사?! 피치 못할 사정으로 시작하게 된 적ㄹ대 비밀의 부업
+          생활
+        </p></a
+      >
+      <div class="card-book__meta-data">
+        <span class="card-book__meta-update-time" id="data-xxx"
+          >2024-07-13</span
+        >
+        <span>
+          <span class="card-book__meta-view-num" id="data-xxx">999+</span>
+          <span class="card-book__meta-view">조회수</span>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- =======================================
+              card-comment_log
+      ======================================== -->
+  <ul>
+    <li class="card-log__list">
+      <div>
+        <a href="#">
+          <div class="card-log__author-img-frame">
+            <img
+              class="card-log__author-img"
+              id="data-xxx"
+              src="/src/main/resources/static/svg/card-commet-author.svg"
+              alt="author-img"
+            />
+          </div>
+        </a>
+      </div>
+      <div class="card-log__info">
+        <a href="#">
+          <div class="card-log__create">
+            <span class="card-log__create-info" id="data-xxx">@SeaDragon</span
+            ><span class="card-log__create-info">·</span
+            ><span class="card-log__create-info" id="data-xxx">3분전</span>
+          </div>
+        </a>
+        <div class="card-log__content-form">
+          <input
+            class="card-log__content-detail-show"
+            type="checkbox"
+            id="card-log__content-detail"
+          />
+          <label
+            class="card-log__content-detail"
+            for="card-log__content-detail"
+          ></label>
+          <div class="card-log__content">
+            돈의 속성은 현대 사회에서 중요한 역할을 한다. 돈은 교환 수단이자
+            가치 저장의 수단이며, 경제적 자유와 선택을 가능하게 한다. 그러나
+            돈의 추구가 삶의 목적이 되어선 안 되며, 균형 있는 경제적 목표와
+            윤리적 가치가 중요하다.
+          </div>
+        </div>
+        <div class="card-log__like-info">
+          <input class="card-log__like" type="checkbox" id="card-log__like" />
+          <label class="card-log__like-frame" for="card-log__like"></label>
+          <p class="card-log__like-num" id="data-XXX">26</p>
+        </div>
+      </div>
+      <div class="card-log__detail-frame">
+        <a href="#">
+          <img
+            src="/src/main/resources/static/svg/card-detail.svg"
+            alt="detail"
+          />
+        </a>
+      </div>
+    </li>
+  </ul>
+
+  <!-- =================================
+            card-felt__author 
+       ================================= -->
+  <div class="card-felt__author">
+    <div class="card-felt__author-frame">
+      <div class="card__author-img-frame">
+        <img
+          class="card__author-img"
+          src="/src/main/resources/static/img/card/card-tree-author.png"
+          alt="author-img"
+        />
+      </div>
+      <div class="card__author-info">
+        <p class="card__author-name" id="data-xxx">군만두</p>
+        <p class="card__author-niciname" id="data-xxx">@HotDumpling</p>
+        <div>
+          <span class="card__author-tree-text">트리</span
+          ><span class="card__author-tree-num" id="data-xxx">1,000</span>
+        </div>
+        <div>
+          <span class="card__author-leaf-text">나뭇잎</span
+          ><span class="card__author-leaf-num" id="data-xxx">1,000</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================================
+              card-felt_info
+      =============================== -->
+  <div class="card-felt__cover">
+    <div class="card-felt__cover-frame">
+      <div class="card-felt__cover-img-frame">
+        <img
+          id="data-xxx"
+          src="/src/main/resources/static/svg/card-felt__cover.svg"
+          alt="cover_img"
+        />
+      </div>
+      <div>
+        <div class="card-felt__cover-category-frame">
+          <span class="card-felt__cover-category" id="data-xxx">도서</span>
+          <span class="card-felt__cover-category" id="data-xxx">정치 비평</span>
+        </div>
+        <p class="card-felt_cover-title">그의 운명에 대한 아주 개인...</p>
+        <div class="card-felt__cover-create-frame">
+          <span class="card-felt__cover-create" id="data-xxx">유시민</span
+          ><span class="card-felt__cover-create">·</span
+          ><span class="card-felt__cover-create" id="data-xxx">생각의길</span>
+        </div>
+        <p class="card-felt__cover-update-time" id="data-xxx">1분전</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- =======================
+         card-book-info 
+       ======================= -->
+  <div class="card-book__info">
+    <div class="card-book__info-frame">
+      <div class="card-book__info-detail">
+        <div>
+          <img
+            class="card-book__info-cover"
+            src="/src/main/resources/static/img/card/card-book__info-cover.svg"
+            alt="cover"
+          />
+        </div>
+        <div class="card-book__info-text">
+          <div>
+            <span class="card-book__info-category" id="data-xxx">도서</span>
+            <span class="card-book__info-category" id="data-xxx">문학</span>
+          </div>
+          <div class="card-book__info-tree-title" id="data-xxx">테크트리</div>
+          <div class="card-book__info-book-title" id="data-xxx">
+            트리갭의 샘물
+          </div>
+          <div class="card-book__info-publish-frame">
+            <span class="card-book__info-publish" id="data-xxx">2022</span>
+            <span class="card-book__info-publish">·</span>
+            <span class="card-book__info-publish" id="data-xxx"
+              >나탈리 배비트</span
+            >
+            <span class="card-book__info-publish">·</span>
+            <span class="card-book__info-publish" id="data-xxx">오늘책</span>
+          </div>
+        </div>
+        <div class="card-book__react-icons">
+          <a class="card-book__react-icon" href="#">
+            <img
+              class="card-book__react-icon-img"
+              src="/src/main/resources/static/svg/comment.svg"
+              alt="comment_icon"
+            />
+          </a>
+          <div class="card-book__react-icon">
+            <img
+              class="card-book__react-icon-img"
+              src="/src/main/resources/static/svg/like.svg"
+              alt="like_icon"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="card-book__meta-data">
+        <div class="card-book__meta-update">
+          <span class="card-book__meta-update-time" id="data-xxx"
+            >2024-07-13</span
+          >
+        </div>
+        <div class="card-book__meta-views">
+          <span>
+            <span class="card-book__meta-view-num" id="data-xxx">999+</span>
+            <span class="card-book__meta-view">나뭇잎</span>
+          </span>
+          <span>
+            <span class="card-book__meta-view-num" id="data-xxx">999+</span>
+            <span class="card-book__meta-view">조회수</span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</html>

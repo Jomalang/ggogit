@@ -3,7 +3,7 @@
 <body>
 
 <!-- ==========================================
-     FRAGMENT: 필터 선택 박스
+     FRAGMENT: 카테고리 선택 박스
      ========================================== -->
 <div class="input-select-box" th:fragment="input-select-box(label, id)">
     <label class="input-select__subject">
@@ -75,16 +75,15 @@
      ========================================== -->
 <div class="input-text__bar" th:fragment="text-box(label, placeholder, name)">
     <label class="input-text__label">
-        <span class="input-text__label-text" th:text="${label}">지은이</span>
-        <input
-                class="input-text__input"
+        <span class="input-text__label-text" th:text="${label}">라벨명</span>
+        <input  class="input-text__input"
+                type="text"
+                th:id="${name}"
                 th:name="${name}"
                 th:placeholder="${placeholder}"
         />
+        <span class="input-text__input-wrong none" th:text="${label + ' 정보를 입력해주세요.'}">경고 문구</span>
     </label>
-    <p class="input-text__input-wrong none">
-        텍스트 입력을 다시 입력해주세요.
-    </p>
 </div>
 
 
@@ -95,7 +94,12 @@
     <label class="input-textarea__label tree-input__large-text-label">
         <span th:text="${label}">트리 설명</span>
         <!-- textarea  태그 사이에 공백 X > placeholder 동작안함-->
-        <textarea class="input-textarea__textarea tree-input__large-textarea" type="text" th:name="${name}" th:placeholder="${placeholder}"></textarea>
+        <textarea class="input-textarea__textarea tree-input__large-textarea"
+                  type="text"
+                  th:id="${name}"
+                  th:name="${name}"
+                  th:placeholder="${placeholder}"
+        ></textarea>
     </label>
 </div>
 

@@ -16,8 +16,8 @@
 <!-- ==========================================
      FRAGMENT: FUll 가로 버튼 - button 버전
      ========================================== -->
-<div class="btn-full-bar" th:fragment="submit-btn-full-bar(text)">
-    <button class="btn-full-bar__btn" type="submit" th:text="${text}"></button>
+<div class="btn-full-bar" th:fragment="submit-btn-full-bar(text, id)">
+    <button class="btn-full-bar__btn" type="submit" th:id="${id}" th:text="${text}"></button>
 </div>
 
 </body>

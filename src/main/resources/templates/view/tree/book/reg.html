@@ -28,7 +28,7 @@
           <div th:replace="~{fragments/text :: text-main-title(title='도서 직접 입력', size='28')}"></div>
         </section>
 
-        <form class="book-tree-input-form" action="/upload" method="post" enctype="multipart/form-data" >
+        <form id="book-tree-input-form-id" class="book-tree-input-form" th:action="@{/tree/book/reg}" method="post" enctype="multipart/form-data">
 
           <section class="book-tree-input-form__photo-container">
             <h1 class="none">도서 이미지 입력</h1>
@@ -72,17 +72,17 @@
 
           <section class="book-tree-input-form__large-input-container">
             <h1 class="none">설명글 작성</h1>
-            <div th:replace="~{fragments/input :: textarea-box(label='트리설명', placeholder='트리를 설명할 글을 작성해 주세요', name='treeDescription')}"></div>
+            <div th:replace="~{fragments/input :: textarea-box(label='트리설명', placeholder='트리를 설명할 글을 작성해 주세요', name='description')}"></div>
           </section>
 
           <section class="book-tree-input-form__input-container">
             <h1 class="none">공개성 선택</h1>
-            <div th:replace="~{fragments/input :: input-visibility(name='visibility-option')}"></div>
+            <div th:replace="~{fragments/input :: input-visibility(name='visibility')}"></div>
           </section>
 
           <section class="book-tree-submit-container">
             <h1 class="none">트리 생성 버튼</h1>
-            <div th:replace="~{fragments/button :: submit-btn-full-bar(text='트리 생성')}"></div>
+            <div th:replace="~{fragments/button :: submit-btn-full-bar(text='트리 생성', id='submit-btn')}"></div>
           </section>
 
         </form>
@@ -91,6 +91,66 @@
 
   <script th:src="@{/js/filter-tab.js}"></script>
   <script th:src="@{/js/input-img-book-change.js}"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const form = document.getElementById("book-tree-input-form-id");
+      form.addEventListener("submit",  (event) => {
+        validateFrom();
+        event.preventDefault();
+      });
+
+      function validateFrom() {
+
+        const bookNameTag = document.getElementById("bookName");
+        const authorTag = document.getElementById("author");
+        const publisherTag = document.getElementById("publisher");
+        const totalPageTag = document.getElementById("totalPage");
+        const treeNameTag = document.getElementById("treeName");
+        const descriptionTag = document.getElementById("description");
+
+        const isVisibility = radioInputValidate("visibility");
+        const isDescription = textInputBarValidate(descriptionTag);
+        const isTreeName = textInputBarValidate(treeNameTag);
+        const isBookCategory = radioInputValidate("bookCategory");
+        const isTotalPage = textInputBarValidate(totalPageTag);
+        const isPublisher = textInputBarValidate(publisherTag);
+        const isAuthor = textInputBarValidate(authorTag);
+        const isBookName = textInputBarValidate(bookNameTag);
+
+        console.log(isBookName);
+        console.log(isAuthor);
+        console.log(isPublisher);
+        console.log(isTotalPage);
+        console.log(isBookCategory);
+        console.log(isTreeName);
+        console.log(isDescription);
+        console.log(isVisibility);
+
+      }
+    });
+
+    function radioInputValidate(name) {
+      const selectTag = document.querySelector('input[name=' + name + ']:checked');
+      return selectTag !== null;
+    }
+
+    function textInputBarValidate(inputTag) {
+      const wrongTag = inputTag.offsetParent.querySelector(".input-text__input-wrong");
+
+      if (inputTag.value.trim() !== "") {
+        wrongTag.classList.add("none");
+        inputTag.classList.remove("input-text__input--warning");
+        return true;
+      }
+      
+      inputTag.value = "";
+      wrongTag.classList.remove("none");
+      inputTag.classList.add("input-text__input--warning");
+      inputTag.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return false;
+    }
+  </script>
 
   </body>
 </html>

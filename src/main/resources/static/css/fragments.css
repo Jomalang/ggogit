@@ -299,6 +299,10 @@
     background-color: var(--main3, #e5eddb);
 }
 
+.input-text__input--warning {
+    outline: 2px solid var(--warning);
+}
+
 .input-text__input:focus {
     outline: 2px solid var(--filter-checked);
 }

@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="input.css" rel="stylesheet" />
+  </head>
+
+  <!-- =========================
+           input-visibility 
+      ==========================-->
+  <div class="visibility">
+    <p class="visibility__name">공개 여부</p>
+    <div class="visibility__btns">
+      <input
+        class="visibility__btn"
+        label="공개"
+        type="radio"
+        id="visibility-public"
+        name="visibility-option"
+        value="1"
+        checked
+      />
+      <input
+        class="visibility__btn"
+        label="비공개"
+        type="radio"
+        id="visibility-private"
+        name="visibility-option"
+        value="0"
+      />
+    </div>
+  </div>
+
+  <!-- ===========================
+              input-page
+    ============================= -->
+  <div class="page">
+    <p class="page__name">페이지</p>
+    <div class="page__inputs">
+      <input
+        class="page-start__input"
+        type="number"
+        placeholder="시작 페이지"
+      />
+      <input
+        class="page-last__input"
+        type="number"
+        placeholder="마지막 페이지"
+      />
+    </div>
+  </div>
+
+  <!-- ===================================
+            back-normal-search-bar 
+      ==================================== -->
+  <div class="search__form">
+    <div>
+      <a href="#">
+        <img src="/src/main/resources/static/svg/back.svg" alt="back button" />
+      </a>
+    </div>
+    <form class="search-bar" action="#" method="get">
+      <label class="search-bar--label">
+        <input
+          class="search-bar--input"
+          type="text"
+          placeholder="그의 운명에 대한 아주 개인적인 생각"
+        />
+        <button class="search-bar--close" type="reset">
+          <img
+            src="/src/main/resources/static/svg/close-button.svg"
+            alt="close-btn"
+          />
+        </button>
+      </label>
+      <button>
+        <img src="/src/main/resources/static/svg/lens.svg" alt="lens" />
+      </button>
+    </form>
+  </div>
+
+  <!-- ====================================
+              normal-search-bar 
+      ===================================== -->
+  <form class="search-bar" action="#" method="get">
+    <label class="search-bar--label">
+      <input
+        class="search-bar--input"
+        type="text"
+        placeholder="그의 운명에 대한 아주 개인적인 생각"
+      />
+      <button class="search-bar--close" type="reset">
+        <img
+          src="/src/main/resources/static/svg/close-button.svg"
+          alt="cloes-btn"
+        />
+      </button>
+    </label>
+    <button>
+      <img
+        class="search-bar-img"
+        src="/src/main/resources/static/svg/lens.svg"
+        alt="lens"
+      />
+    </button>
+  </form>
+
+  <!-- ===================================
+                 delete-btn
+      =================================== -->
+  <form class="delete-seed__form">
+    <button class="delete-seed__btn">
+      <img src="/src/main/resources/static/svg/delete.svg" alt="delete" />
+      <p class="delete-seed__btn-msg">삭제</p>
+    </button>
+  </form>
+
+  <!-- ======================================
+              input-large-text
+    ======================================= -->
+  <div class="tree-input__large-text__form">
+    <label class="tree-input__large-text-label"
+      >많은 텍스트<textarea
+        class="tree-input__large-textarea"
+        placeholder="내용을 입력해 주세요"
+      ></textarea>
+    </label>
+  </div>
+
+  <!-- =======================================
+          tree-input-text__form
+    ======================================= -->
+  <div class="tree-input-text__form">
+    <label class="tree-input-text__subject"
+      >선택
+      <div class="tree-input-text--select">
+        <p class="tree-input-text--select-description">선택해주세요</p>
+        <button class="input-next-btn">
+          <img src="/src/main/resources/static/svg/next.svg" alt="next-btn" />
+        </button></div
+    ></label>
+  </div>
+
+  <div class="tree-input-text__form">
+    <label class="tree-input-text__subject"
+      >선택
+      <div class="tree-input-text--select__selected">
+        <p class="tree-input-text--select__selected-description">
+          선택해주세요
+        </p>
+        <button class="input-next-btn">
+          <img src="/src/main/resources/static/svg/next.svg" alt="next-btn" />
+        </button></div
+    ></label>
+  </div>
+
+  <div class="tree-input-text__form">
+    <label class="tree-input-text__subject"
+      >선택
+      <div class="tree-input-text--select__re-enter">
+        <p class="tree-input-text--select__re-enter-description">
+          선택해주세요
+        </p>
+        <button class="input-next-btn">
+          <img src="/src/main/resources/static/svg/next.svg" alt="next-btn" />
+        </button></div
+    ></label>
+  </div>
+  <p class="tree-input-text--select__re-enter-msg">선택</p>
+
+  <div class="tree-input-text__form">
+    <label class="tree-input-text__subject"
+      >선택
+      <div class="tree-input-text--select">
+        <div class="tree-input-text--select__tag">
+          <form
+            class="tree-input-text--select__tag-btn-form"
+            action="#"
+            method="post"
+          >
+            <label class="tree-input-text--select__tag-btn-name"
+              >태그 1
+              <button class="tree-input-text--select__tag-btn-cancle">
+                <img
+                  src="/src/main/resources/static/svg/x-button.svg"
+                  alt="x-button"
+                /></button
+            ></label>
+          </form>
+          <form
+            class="tree-input-text--select__tag-btn-form"
+            action="#"
+            method="post"
+          >
+            <label class="tree-input-text--select__tag-btn-name"
+              >태그 2
+              <button class="tree-input-text--select__tag-btn-cancle">
+                <img
+                  src="/src/main/resources/static/svg/x-button.svg"
+                  alt="x-button"
+                /></button
+            ></label>
+          </form>
+          <form
+            class="tree-input-text--select__tag-btn-form"
+            action="#"
+            method="post"
+          >
+            <label class="tree-input-text--select__tag-btn-name"
+              >태그 3
+              <button class="tree-input-text--select__tag-btn-cancle">
+                <img
+                  src="/src/main/resources/static/svg/x-button.svg"
+                  alt="x-button"
+                /></button
+            ></label>
+          </form>
+          <p class="tree-input-text--select-description">선택해주세요</p>
+        </div>
+        <button class="input-next-btn">
+          <img src="/src/main/resources/static/svg/next.svg" alt="next-btn" />
+        </button></div
+    ></label>
+  </div>
+
+  <div class="tree-input-text__form">
+    <label class="tree-input-text__subject"
+      >선택
+      <div class="tree-input-text--select">
+        <div class="tree-input-text--select__tag">
+          <form
+            class="tree-input-text--select__tag-btn-form"
+            action="#"
+            method="post"
+          >
+            <label class="tree-input-text--select__tag-btn-name"
+              >태그 1
+              <button class="tree-input-text--select__tag-btn-cancle">
+                <img
+                  src="/src/main/resources/static/svg/x-button.svg"
+                  alt="x-button"
+                /></button
+            ></label>
+          </form>
+          <p class="tree-input-text--select-description">선택해주세요</p>
+        </div>
+        <button class="input-next-btn">
+          <img src="/src/main/resources/static/svg/next.svg" alt="next-btn" />
+        </button></div
+    ></label>
+  </div>
+
+  <!-- ===================================
+            input-textbox_noraml 
+  ========================================-->
+  <div class="tree-input-text__form">
+    <label class="tree-input-text__subject"
+      >텍스트
+      <input
+        class="tree-input-text__radius"
+        placeholder="트리 이름을 입력해 주세요"
+    /></label>
+  </div>
+  <p class="tree-input-text--select__re-enter-msg">
+    텍스트 입력을 다시 입력해주세요.
+  </p>
+
+  <div class="tree-input-text__form">
+    <label class="tree-input-text__subject"
+      >텍스트 <input class="tree-input-text__radius__re-enter" value="다시입력"
+    /></label>
+  </div>
+  <p class="tree-input-text--select__re-enter-msg">
+    텍스트 입력을 다시 입력해주세요.
+  </p>
+
+  <div class="tree-input-text__form">
+    <label class="tree-input-text__subject"
+      >텍스트
+      <input
+        class="tree-input-text__rectangle"
+        placeholder="트리 이름을 입력해 주세요"
+    /></label>
+  </div>
+  <p class="tree-input-text--select__re-enter-msg">
+    텍스트 입력을 다시 입력해주세요.
+  </p>
+  <div class="tree-input-text__form">
+    <label class="tree-input-text__subject"
+      >텍스트
+      <input class="tree-input-text__rectangle__re-enter" value="다시입력"
+    /></label>
+  </div>
+  <p class="tree-input-text--select__re-enter-msg">
+    텍스트 입력을 다시 입력해주세요.
+  </p>
+</html>

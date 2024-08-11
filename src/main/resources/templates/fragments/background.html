@@ -20,5 +20,31 @@
     </ul>
 </div>
 
+<!-- ==========================================
+     FRAGMENT: 도서 1개, 배경 반반(흰/초)
+     설명: 트리 생성 시 검색된 도서 정보 표현 화면
+     ========================================== -->
+<div class="bg-book-info--half__bg-frame" th:fragment="bg-book-info--half--one-book">
+    <div class="bg-book-info--half__bg-book-img">
+        <a class="bg-book-info--half__bg-book-img-anker" href="#">
+            <img th:src="@{/img/home/home-mid-book.png}" alt="표지">
+            <p class="bg-book-info--half__bg-book-img-p">자세히 보기</p>
+        </a>
+    </div>
+    <div class="bg-book-info--half__bg-book-info-frame">
+        <div class="bg-book-info--half__bg-book-info-empty-space"></div>
+        <div class="bg-book-info--half__bg-book-info__category">
+            <p class="bg-book-info--half__bg-book-info__seed">시/에세이</p>
+        </div>
+        <div class="bg-book-info--half__bg-book-info__category">
+            <p class="bg-book-info--half__bg-book-info__title">무정형의 삶</p>
+        </div>
+        <div class="bg-book-info--half__bg-book-info__create">
+            <span class="bg-book-info--half__bg-book-info-create-info">김민철</span>
+            <span class="bg-book-info--half__bg-book-info-create-info">·</span>
+            <span class="bg-book-info--half__bg-book-info-create-info">위즈덤하우스</span></div>
+    </div>
+
+</div>
 </body>
 </html>

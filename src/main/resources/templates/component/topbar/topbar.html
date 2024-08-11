@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="topbar.css" rel="stylesheet" />
+  </head>
+
+  <!-- =========================
+            topbar-comment 
+      ========================== -->
+  <div class="topbar-comment">
+    <div class="topbar-comment__btn">
+      <img
+        src="/src/main/resources/static/svg/topbar-comment__btn.svg"
+        alt="comment-control-bar"
+      />
+    </div>
+    <div class="topbar-comment-header">
+      <div class="topbar-comment__title">댓글</div>
+      <div class="topbar-comment__cancel-icon" onclick="">
+        <img
+          src="/src/main/resources/static/svg/topbar-comment__cancel-icon.svg"
+        />
+      </div>
+    </div>
+
+    <div class="topbar-comment__filters">
+      <div class="topbar-comment__popfilter">
+        <input
+          class="topbar-comment__input"
+          label="인기순"
+          type="radio"
+          id="comment-popfilter"
+          name="comment-filter"
+          value="popular"
+          checked
+        />
+      </div>
+      <div class="topbar-comment__recfilter">
+        <input
+          class="topbar-comment__input"
+          label="최신순"
+          type="radio"
+          id="comment-recfilter"
+          name="comment-filter"
+          value="recent"
+        />
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================
+              user-bar
+      ============================== -->
+  <!-- 팔로우 된 사람이면 팔로잉으로 버튼 스타일 변경해야 함 -->
+
+  <div class="topbar-user-bar">
+    <div class="topbar-user-bar__profile">
+      <div class="topbar-user-bar__image">
+        <img
+          src="/src/main/resources/static/svg/topbar-user-bar__image.svg"
+          alt="user-bar"
+        />
+      </div>
+      <div class="topbar-user-bar-info">
+        <p class="topbar-user-bar-name">빵형</p>
+        <p class="topbar-user-bar-id">@BreadFit</p>
+      </div>
+    </div>
+    <div class="topbar-user-bar__followbtn" onclick="">팔로우</div>
+  </div>
+
+  <!-- ===========================
+           comment-box-button
+      ===========================  -->
+  <div class="topbar-comment-box">
+    <div class="topbar-comment-box-info">
+      <div class="topbar-comment-box-title">댓글</div>
+      <span class="topbar-comment-box-cnt">0</span>
+    </div>
+    <div class="topbar-comment-box__field">
+      <img
+        class="topbar-comment-box__user-img"
+        src="/src/main/resources/static/svg/topbar-comment-box__user-img.svg"
+      />
+      <div class="topbar-comment-box__popup-btn" label="댓글 추가..."></div>
+    </div>
+  </div>
+
+  <!-- ======================== 
+          comment-box-input
+        ======================= -->
+  <div class="topbar-comment-box">
+    <form class="topbar-comment-box__form" action="#" method="">
+      <img
+        class="topbar-comment-box__user-img"
+        src="/src/main/resources/static/svg/topbar-comment-box__user-img.svg"
+      />
+      <input
+        class="topbar-comment__input"
+        placeholder="댓글 추가..."
+        name="comment-content"
+        id="commentXXX"
+      />
+      <button class="topbar-comment-box__submit-btn" type="submit">
+        <img
+          class="topbar-comment-box__submit-img"
+          src="/src/main/resources/static/svg/topbar-comment-box__submit.svg"
+        />
+      </button>
+    </form>
+  </div>
+
+  <!-- =======================
+             breadcrumbs
+      ========================  -->
+  <div class="topbar-breadcrumbs">
+    <div class="topbar-breadcrumbs-box">
+      <div class="topbar-breadcrumbs-title">
+        <div class="topbar-breadcrumbs-tree" id="topbar-breadcrumbs-tree">
+          자바 공부를 위한 트리
+        </div>
+        <div class="topbar-breadcrumbs-sep">/</div>
+        <div class="topbar-breadcrumbs-branch" id="topbar-breadcrumbs-branch">
+          브랜치명
+        </div>
+        <div class="topbar-breadcrumbs-sep">/</div>
+        <div class="topbar-breadcrumbs-log" id="topbar-breadcrumbs-log">
+          로그명
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================
+            option or create
+      ===========================  -->
+  <div class="topbar-option-or-create">
+    <p class="topbar-option-or-create-text">옵션 선택 또는 생성</p>
+  </div>
+
+  <!-- =================================
+                  top-bar
+          ============================== -->
+  <div class="top-bar--green">
+    <div class="top-bar__frame">
+      <p class="top-bar__title">트리 생성</p>
+      <a class="tob-bar--a" href="#">
+        <img
+          src="/src/main/resources/static/svg/back-arrow-icon.svg"
+          alt="top-bar--backarrow.svg"
+        />
+      </a>
+      <div class="top-bar__text">초기화</div>
+    </div>
+  </div>
+
+  <div class="top-bar--green">
+    <div class="top-bar__frame">
+      <p class="top-bar__title">트리 생성</p>
+      <a class="tob-bar--a" href="#">
+        <img
+          src="/src/main/resources/static/svg/back-arrow-icon.svg"
+          alt="top-bar--backarrow.svg"
+        />
+      </a>
+      <div class="top-bar__text">초기화</div>
+    </div>
+  </div>
+
+  <div class="top-bar--green">
+    <div class="top-bar__frame">
+      <p class="top-bar__title">트리 생성</p>
+      <a class="tob-bar--a" href="#">
+        <img
+          src="/src/main/resources/static/svg/back-arrow-icon.svg"
+          alt="top-bar--backarrow.svg"
+        />
+      </a>
+      <form class="top-bar__form" action="" method="post">
+        <button class="top-bar__text" href="#">완료&nbsp;&nbsp;</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="top-bar--green">
+    <div class="top-bar__frame">
+      <a class="tob-bar--a">
+        <img
+          src="/src/main/resources/static/svg/back-arrow-icon.svg"
+          alt="top-bar--backarrow.svg"
+        />
+      </a>
+      <div class="tree-input-text--select__tag">태그 1</div>
+      <form class="top-bar__form" action="" method="post">
+        <button class="top-bar__text" type="submit">완료&nbsp;&nbsp;</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="top-bar--white">
+    <div class="top-bar__frame">
+      <p class="top-bar__title">필터 이름</p>
+      <div class="top-bar--btn">
+        <img
+          src="/src/main/resources/static/svg/back-arrow-icon.svg"
+          alt="top-bar--backarrow.svg"
+        />
+      </div>
+      <div class="top-bar__text">초기화</div>
+    </div>
+  </div>
+
+  <div class="top-bar--white">
+    <div class="top-bar__frame">
+      <p class="top-bar__title">필터 이름</p>
+      <div class="tob-bar--btn">
+        <img
+          src="/src/main/resources/static/svg/back-arrow-icon.svg"
+          alt="top-bar--backarrow.svg"
+        />
+      </div>
+      <div class="top-bar__text">초기화</div>
+    </div>
+  </div>
+
+  <!-- =========================
+              branch-state
+        ========================== -->
+
+  <div class="branch-state-main">
+    <div class="branch-state__header">
+      <div class="branch-state__icon-box">
+        <div>
+          <img
+            class="branch-state__box-image"
+            src="/src/main/resources/static/svg/branch-box--icon.svg"
+            alt="브랜치 아이콘"
+          />
+        </div>
+      </div>
+      <p class="branch-state__name">브랜치 이름</p>
+    </div>
+    <div class="branch-state__info">
+      <div class="branch-state__stats">
+        <p>로그<span class="branch-state__nums" id="data-XXX">999+</span></p>
+        <p>좋아요<span class="branch-state__nums" id="data-XXX">32</span></p>
+        <p>조회<span class="branch-state__nums" id="data-XXX">32</span></p>
+      </div>
+      <p class="branch-state__date" id="data-XXX">2024-07-18</p>
+    </div>
+  </div>
+</html>

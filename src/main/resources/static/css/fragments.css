@@ -1,5 +1,8 @@
 @import "../common/variables.css";
 
+/*  ========================================== /
+    FRAGMENT: 헤더 검색 링크
+/   ========================================== */
 .header-search-link {
     display: flex;
     flex-direction: column;
@@ -41,7 +44,10 @@
     overflow: visible;
 }
 
-.no-tree-bg-book {
+/*  ========================================== /
+     FRAGMENT: 3개의 임시 도서 이미지
+/   ========================================== */
+.bg-no-tree-book {
     flex-grow: 1;
     display: flex;
     flex-direction: row;
@@ -49,7 +55,7 @@
     align-items: center;
     justify-content: center;
 }
-.no-tree-bg-book__list {
+.bg-no-tree-book__list {
     display: flex;
     flex-direction: row;
     gap: 10px;
@@ -60,6 +66,9 @@
     position: relative;
 }
 
+/*  ========================================== /
+     FRAGMENT: FUll 가로 버튼 - link 버전
+/   ========================================== */
 .btn-full-width {
     border-radius: 40px;
     box-shadow: 4px 4px 4px 0 rgba(0, 0, 0, 0.25);
@@ -93,6 +102,9 @@
     justify-content: center;
 }
 
+/*  ========================================== /
+    FRAGMENT: 네비게이션바
+/   ========================================== */
 .nav-box {
     box-shadow: 0 -5px 10px -5px rgba(0, 0, 0, 0.3);
 }
@@ -158,19 +170,23 @@
     color: var(--main1, #323a27);
 }
 
+/*  ==========================================
+    FRAGMENT: 메인 Title
+    ========================================== */
 .text-main-title {
     color: var(--main1, #323a27);
     text-align: center;
-    font-family: "Pretendard-Bold", sans-serif;
-    font-size: 28px;
-    line-height: var(--line-height-main, 140%);
-    letter-spacing: var(--letter-spacing-main, -0.025em);
     font-weight: var(--bold, 700);
 }
 
+
+/*  ==========================================
+    FRAGMENT: 화면 설명글
+    ========================================== */
 .text-info {
     background: var(--white, #ffffff);
 }
+
 .text-info-box {
     display: flex;
     flex-direction: column;
@@ -182,6 +198,7 @@
     flex-shrink: 0;
     position: relative;
 }
+
 .text-info-box__text {
     color: var(--main1, #323a27);
     text-align: center;
@@ -192,6 +209,7 @@
     font-weight: 500;
     position: relative;
 }
+
 .text-info-box__text--bold {
     color: var(--main1, #323a27);
     text-align: center;
@@ -201,4 +219,346 @@
     letter-spacing: -0.025em;
     font-weight: 700;
     position: relative;
+}
+
+/* ========================================== /
+   FRAGMENT: 뒤로가기 상단바
+/ ========================================== */
+.tob-bar-back {
+    background: var(--main2, #e5eddb);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 76px;
+    position: relative;
+    justify-content: space-between;
+    padding: 0 24px;
+}
+
+.tob-bar-back__icon-box {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.tob-bar-back__title {
+    color: var(--main1, #323a27);
+    font-family: "Pretendard-Bold", sans-serif;
+    font-size: 20px;
+    line-height: var(--line-height-main);
+    letter-spacing: var(--letter-spacing-main);
+    font-weight: var(--bold);
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/*  ========================================== /
+    FRAGMENT: 트리 직접 입력 도서 이미지 받기
+/   ========================================== */
+.input-book-img-box__input {
+    display: none;
+}
+
+.input-book-img-box__img {
+    width: 135px;
+    height: 198px;
+    border-radius: 12px;
+    object-fit: cover;
+    cursor: pointer;
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+}
+
+/*  ========================================== /
+    FRAGMENT: 텍스트 입력 바
+/   ========================================== */
+.input-text__label {
+    display: flex;
+    gap: 8px;
+    flex-direction: column;
+    width: 100%;
+    position: relative;
+}
+
+.input-text__label-text {
+    font-weight: var(--semi-bold);
+}
+
+.input-text__input {
+    width: auto;
+    height: 56px;
+    display: flex;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: var(--regular);
+    color: var(--text-sub);
+    padding-left: 16px;
+    background-color: var(--main3, #e5eddb);
+}
+
+.input-text__input:focus {
+    outline: 2px solid var(--filter-checked);
+}
+.input-text__input:not(:placeholder-shown) {
+    color: var(--text-main);
+}
+
+.input-text__input-wrong {
+    margin: 12px 0 0 12px;
+    color: var(--warning, #ba0c0c);
+}
+
+/*  ========================================== /
+     FRAGMENT: 필터 선택 박스
+/   ========================================== */
+.input-select__subject {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    font-size: 16px;
+    font-weight: var(--extra-bold);
+}
+
+.input-select--select__selected {
+    display: flex;
+    height: 56px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 12px;
+    background-color: var(--main3, #f5f8f1);
+    align-content: center;
+    text-align: right;
+    justify-content: space-between;
+}
+
+.input-select--select__selected-description {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 16px;
+    color: var(--text-sub);
+    font-weight: var(--regular, 400);
+    font-size: 16px;
+}
+
+.input-next-button {
+    border: none;
+    margin-right: 16px;
+    background-color: var(--main3, #f5f8f1);
+}
+
+/*  ========================================== /
+     FRAGMENT: 공개성 여부 체크
+/   ========================================== */
+.input-visibility {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 100%;
+    height: 114px;
+}
+
+.input-visibility__name {
+    color: var(--main1);
+    font-size: 16px;
+    font-weight: var(--bold);
+    line-height: var(--line-height-main);
+}
+
+.input-visibility__btns {
+    border-radius: 12px;
+    padding: 8px 7px 8px 7px;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+    justify-content: flex-start;
+    align-self: stretch;
+}
+
+.input-visibility__label {
+    flex: 1;
+}
+
+.input-visibility__btn {
+    background: var(--main3);
+    border-radius: 12px;
+    color: var(--text-no-active);
+    font-weight: var(--bold);
+    border: none;
+    padding: 0 46px 0 46px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: 56px;
+    width: 100%;
+    appearance: none;
+    cursor: pointer;
+}
+
+.input-visibility__btn::after {
+    content: attr(label);
+}
+
+.input-visibility__btn:checked {
+    background: var(--main1);
+    color: var(--white);
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+}
+
+
+/*  ========================================== /
+    FRAGMENT: FUll 가로 버튼 - button 버전
+/   ========================================== */
+.btn-full-bar {
+    width: 100%;
+    height: 56px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-full-bar__btn {
+    color: var(--white, #ffffff);
+    background-color: var(--main1, #323a27);
+    height: 56px;
+    width: 100%;
+    border-radius: 40px;
+    box-shadow: 4px 4px 4px 0 rgba(0, 0, 0, 0.25);
+    font-weight: var(--bold, 700);
+}
+
+
+/*  ========================================== /
+    FRAGMENT: 많은 텍스트 입력
+/   ========================================== */
+.input-textarea__label {
+    display: flex;
+    gap: 8px;
+    flex-direction: column;
+    font-weight: var(--semi-bold);
+}
+
+.input-textarea__textarea {
+    padding: 17px 16px;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: var(--medium, 500);
+    color: var(--main1);
+    background-color: var(--main3);
+    height: 230px;
+}
+
+.input-textarea__textarea:not(:placeholder-shown) {
+    font-size: 16px;
+    font-weight: var(--semi-bold);
+    color: var(--main1);
+}
+
+/*  ========================================== /
+    FRAGMENT: 슬라이드 상당 필터 탭
+/   ========================================== */
+.filter-tab__box {
+    background-color: var(--white, #ffffff);
+    margin-top: 52px;
+    border-radius: 18px;
+    height: 100%;
+    transition-property: height;
+    transform: translateY(100%); /* 리스트가 아래로 숨겨짐 */
+    transition: transform 0.3s ease-in-out;
+}
+
+.filter-tab__box.up {
+    transform: translateY(0); /* 리스트가 위로 슬라이드됨 */
+}
+
+.filter-tab__header {
+    width: auto;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 0 24px;
+    position: relative;
+}
+
+.filter-tab__btn--back {
+    background-color: var(--white, #ffffff);
+    padding: 10px;
+    border: none;
+    margin: 5px 0;
+}
+
+.filter-tab__header--title {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-size: 20px;
+    transform: translate(-50%, -50%);
+    color: var(--main1, #323a27);
+    white-space: nowrap;
+    font-weight: var(--bold);
+    line-height: var(--line-height-main);
+    letter-spacing: var(--letter-spacing-main);
+}
+
+.filter-tab__item {
+    margin: 12px 24px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.filter-tab__item-label {
+    padding: 5px 0;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.filter-tab__item-radio {
+    display: none;
+}
+
+.filter-tab__item--label-text {
+    font-size: 16px;
+    color: var(--text-sub, #767676);
+    font-weight: var(--medium, 500);
+    line-height: var(--line-height-main);
+    letter-spacing: var(--letter-spacing-main);
+}
+
+.filter-tab__item--label-text--active {
+    font-size: 16px;
+    color: var(--main1, #323a27);
+    font-weight: var(--bold);
+    line-height: var(--line-height-main);
+    letter-spacing: var(--letter-spacing-main);
+}
+
+.filter-tab__item--radio:checked + .filter-tab__item--label-text {
+    font-size: 16px;
+    color: var(--main1, #323a27);
+    font-weight: var(--bold);
+    line-height: var(--line-height-main);
+    letter-spacing: var(--letter-spacing-main);
+}
+
+.filter-tab__icon-box {
+    height: 36px;
+    width: 36px;
+}
+
+.filter-tab__icon-img {
+    display: none;
+}
+
+.filter-tab__item-radio:checked ~ .filter-tab__icon-box .filter-tab__icon-img {
+    display: block;
 }

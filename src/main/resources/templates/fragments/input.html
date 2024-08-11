@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<body>
+
+<!-- ==========================================
+     FRAGMENT: 필터 선택 박스
+     ========================================== -->
+<div class="input-select-box" th:fragment="input-select-box(label, id)">
+    <label class="input-select__subject">
+        <span th:text="${label}">label</span>
+        <div class="input-select--select__selected">
+            <p class="input-select--select__selected-description">선택해주세요</p>
+            <button class="input-next-button" th:id="${id}" type="button">
+                <img th:src="@{/svg/next.svg}" alt="next-button" />
+            </button>
+        </div>
+    </label>
+</div>
+
+<!-- ==========================================
+     FRAGMENT: 트리 직접 입력 도서 이미지 받기
+     ========================================== -->
+<div class="input-book-img-box" th:fragment="book-input-img">
+    <label class="input-book-img-box__label">
+        <input
+                type="file"
+                name="bookImage"
+                id="input-book-img-box__input-id"
+                class="input-book-img-box__input"
+                accept="image/*"
+        />
+        <img
+                id="input-book-img-box__img-id"
+                th:src="@{/svg/book-photo-form.svg}"
+                alt="Upload Image"
+                class="input-book-img-box__img"
+        />
+    </label>
+</div>
+
+
+<!-- ==========================================
+     FRAGMENT: 공개성 여부 체크
+     ========================================== -->
+<div class="input-visibility" th:fragment="input-visibility(name)">
+    <p class="input-visibility__name">공개 여부</p>
+    <div class="input-visibility__btns">
+        <label class="input-visibility__label">
+            <input
+                    class="input-visibility__btn"
+                    label="공개"
+                    type="radio"
+                    th:name="${name}"
+                    id="public"
+                    value="1"
+                    checked
+            />
+        </label>
+        <label class="input-visibility__label">
+            <input
+                    class="input-visibility__btn"
+                    label="비공개"
+                    type="radio"
+                    th:name="${name}"
+                    id="private"
+                    value="0"
+            />
+        </label>
+    </div>
+</div>
+
+
+<!-- ==========================================
+     FRAGMENT: 텍스트 입력 바
+     ========================================== -->
+<div class="input-text__bar" th:fragment="text-box(label, placeholder, name)">
+    <label class="input-text__label">
+        <span class="input-text__label-text" th:text="${label}">지은이</span>
+        <input
+                class="input-text__input"
+                th:name="${name}"
+                th:placeholder="${placeholder}"
+        />
+    </label>
+    <p class="input-text__input-wrong none">
+        텍스트 입력을 다시 입력해주세요.
+    </p>
+</div>
+
+
+<!-- ==========================================
+     FRAGMENT: 많은 텍스트 입력
+     ========================================== -->
+<div class="input-textarea__box" th:fragment="textarea-box(label, placeholder, name)">
+    <label class="input-textarea__label tree-input__large-text-label">
+        <span th:text="${label}">트리 설명</span>
+        <!-- textarea  태그 사이에 공백 X > placeholder 동작안함-->
+        <textarea class="input-textarea__textarea tree-input__large-textarea" type="text" th:name="${name}" th:placeholder="${placeholder}"></textarea>
+    </label>
+</div>
+
+</body>
+</html>

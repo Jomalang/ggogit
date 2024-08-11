@@ -1,4 +1,4 @@
-@import url(../../../static/common/variables.css);
+@import url(/src/main/resources/static/common/variables.css);
 
 /* START > 컴포넌트: 트리 없음 이미지 */
 .no-tree-book-bg {

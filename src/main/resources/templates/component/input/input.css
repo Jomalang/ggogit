@@ -223,7 +223,7 @@ button {
   flex-direction: column;
   flex-grow: 1;
   font-size: 16px;
-  font-weight: var(--extra-bold);
+  font-weight: var(--semi-bold);
 }
 .tree-input-text__radius {
   display: flex;
@@ -234,7 +234,7 @@ button {
   font-size: 16px;
   font-weight: var(--regular);
   color: var(--text-sub);
-  background-color: rgba(229, 237, 219, 0.6);
+  background-color: var(--main3);
   padding-left: 16px;
 }
 .tree-input-text__radius:focus {
@@ -242,7 +242,7 @@ button {
 }
 .tree-input-text__radius:not(:placeholder-shown) {
   color: var(--text-main);
-  border: 2px solid var(--filter-checked);
+  border: 1px solid var(--filter-checked);
   outline: none;
 }
 .tree-input-text__radius__re-enter {
@@ -253,7 +253,7 @@ button {
   font-size: 16px;
   font-weight: var(--regular);
   color: var(--warning);
-  background-color: rgba(229, 237, 219, 0.6);
+  background-color: var(--main3);
   padding-left: 16px;
 }
 
@@ -265,7 +265,7 @@ button {
   font-size: 16px;
   font-weight: var(--regular);
   color: var(--text-sub);
-  background-color: rgba(229, 237, 219, 0.6);
+  background-color: var(--main3);
   padding-left: 16px;
 }
 .tree-input-text__rectangle:focus {
@@ -273,7 +273,7 @@ button {
 }
 .tree-input-text__rectangle:not(:placeholder-shown) {
   color: var(--text-main);
-  border: 2px solid var(--filter-checked);
+  border: 1px solid var(--filter-checked);
   outline: none;
 }
 .tree-input-text__rectangle__re-enter {
@@ -283,7 +283,7 @@ button {
   font-size: 16px;
   font-weight: var(--regular);
   color: var(--warning);
-  background-color: rgba(229, 237, 219, 0.6);
+  background-color: var(--main3);
   padding-left: 16px;
 }
 .tree-input-text--select__re-enter-msg {
@@ -301,7 +301,7 @@ button {
   margin-top: 10px;
   border: none;
   border-radius: 20px;
-  background-color: var(--main2);
+  background-color: var(--main3);
   align-content: center;
   text-align: right;
   justify-content: space-between;
@@ -312,12 +312,12 @@ button {
   align-items: center;
   margin-left: 16px;
   color: var(--text-sub);
-  font-size: 20px;
+  font-size: 16px;
 }
 .input-next-btn {
   border: none;
   margin-right: 16px;
-  background-color: var(--main2);
+  background-color: var(--main3);
 }
 
 .tree-input-text--select__selected {
@@ -325,7 +325,7 @@ button {
   height: 56px;
   margin-top: 10px;
   border-radius: 20px;
-  background-color: var(--main2);
+  background-color: var(--main3);
   align-content: center;
   text-align: right;
   justify-content: space-between;
@@ -337,8 +337,8 @@ button {
   align-items: center;
   margin-left: 16px;
   color: var(--text-main);
-  font-weight: var(--extra-bold);
-  font-size: 20px;
+  font-weight: var(--semi-bold);
+  font-size: 16px;
 }
 .tree-input-text--select__re-enter {
   display: flex;
@@ -347,7 +347,7 @@ button {
   border: 1px solid;
   border-color: var(--warning);
   border-radius: 20px;
-  background-color: var(--main2);
+  background-color: var(--main3);
   align-content: center;
   text-align: right;
   justify-content: space-between;
@@ -358,8 +358,8 @@ button {
   align-items: center;
   margin-left: 16px;
   color: var(--warning);
-  font-weight: var(--extra-bold);
-  font-size: 20px;
+  font-weight: var(--semi-bold);
+  font-size: 16px;
 }
 .tree-input-text--select__tag {
   display: flex;

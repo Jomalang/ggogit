@@ -1,6 +1,8 @@
 @import url(../../../static/common/variables.css);
 
-/* topbar-comment */
+/* ==========================
+        topbar-comment
+  ===========================  */
 * {
   box-sizing: border-box;
 }
@@ -75,94 +77,9 @@
   color: var(--white);
 }
 
-/* footer */
-.tree-footer::after {
-  content: "by RECODERS";
-  text-align: center;
-  align-self: center;
-  width: 100%;
-  height: 89px;
-  display: block;
-  bottom: 0;
-}
-
-.tree-footer-header {
-  background-color: var(--main3);
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 30px;
-  padding: 10px 24px;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-.tree-footer-header__title {
-  font-size: 16px;
-  font-weight: var(--bold);
-}
-
-.tree-footer-header__added {
-  font-size: 14px;
-  font-weight: 300;
-  text-decoration: underline;
-}
-
-.tree-footer__membership {
-  margin-top: 20px;
-  padding: 0px 24px;
-  font-size: 14px;
-}
-.membership-login {
-  font-size: 14px;
-  font-weight: var(--bold);
-  color: var(--text-sub);
-  margin-right: 10px;
-}
-
-.membership-join {
-  font-size: 14px;
-  font-weight: var(--bold);
-  color: var(--text-sub);
-  margin-right: 10px;
-}
-
-.membership-asking {
-  font-size: 14px;
-  font-weight: var(--bold);
-  color: var(--text-sub);
-  margin-right: 10px;
-}
-
-.tree-footer__app {
-  margin-top: 20px;
-  margin-bottom: 20px;
-  padding: 0px 24px;
-}
-
-.app-info {
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--text-sub);
-}
-
-.app-sep {
-  font-size: 12px;
-  color: var(--text-sub);
-}
-
-.app-membership-policy {
-  font-size: 12px;
-  font-weight: var(--bold);
-  color: var(--text-sub);
-}
-
-.tree-footer__logo {
-  display: flex;
-  justify-content: end;
-  padding-right: 24px;
-}
-
-/* user-bar */
+/* =============================
+              user-bar
+  ==============================  */
 .topbar-user-bar {
   display: flex;
   flex-direction: row;
@@ -231,7 +148,9 @@
   box-shadow: var(--shadow-active);
 }
 
-/* comment-box */
+/* ====================== 
+        comment-box
+  =======================  */
 .topbar-comment-box {
   background: var(--main3, #f5f8f1);
   padding: 16px 16px 24px 16px;
@@ -304,7 +223,9 @@
   content: attr(label);
 }
 
-/* comment-box-input */
+/* ============================
+        comment-box-input
+  =============================  */
 
 .topbar-comment-box {
   background: var(--main3, #f5f8f1);
@@ -376,7 +297,9 @@
   overflow: visible;
 }
 
-/* breadcrumbs */
+/* ==========================
+          breadcrumbs
+  ===========================  */
 .topbar-breadcrumbs,
 .topbar-breadcrumbs * {
   box-sizing: border-box;
@@ -441,7 +364,9 @@
   font-weight: var(--semi-bold);
 }
 
-/* option or create */
+/* ===========================
+        option or create
+  =============================  */
 
 .topbar-option-or-create {
   padding: 10px;
@@ -460,4 +385,164 @@
   line-height: var(--line-height-main);
   letter-spacing: var(--letter-spacing-main);
   font-weight: var(--regular);
+}
+/* =================================
+            top-bar
+  ================================== */
+.top-bar--green {
+  background: var(--main2, #e5eddb);
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  height: 76px;
+  position: relative;
+  border-bottom: 1px solid var(--gray);
+  padding: 0 24px 0 24px;
+}
+
+.top-bar--white {
+  background-color: var(--white);
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  height: 76px;
+  position: relative;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--gray);
+  padding: 0 24px;
+}
+
+.top-bar__frame {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 13.5px;
+}
+
+.top-bar__title {
+  color: var(--main1, #323a27);
+  font-size: 20px;
+  line-height: var(--line-height-main);
+  letter-spacing: var(--letter-spacing-main);
+  font-weight: var(--bold);
+  order: 1;
+}
+
+.top-bar__form {
+  order: 2;
+}
+
+.top-bar__text {
+  color: var(--main1, #323a27);
+  font-size: 16px;
+  letter-spacing: var(--letter-spacing-main);
+  font-weight: var(--bold);
+  align-self: flex-end;
+  background: transparent;
+  border: none;
+  padding: 0;
+  order: 2;
+}
+.tree-input-text--select__tag {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  height: 30px;
+  padding-left: 20px;
+  padding-right: 20px;
+  border-radius: 12px;
+  background-color: var(--main1);
+  font-size: 14px;
+  font-weight: var(--semi-bold);
+  color: var(--text-icon);
+}
+
+.tree-input-text--select__tag-button-name {
+  align-self: center;
+  border: none;
+  background-color: var(--main1);
+  font-size: 14px;
+  font-weight: var(--semi-bold);
+  color: var(--text-icon);
+}
+
+.tree-input-text--select__tag-button-cancle {
+  align-self: center;
+  border: none;
+  background-color: var(--main1);
+  font-size: 14px;
+  font-weight: var(--semi-bold);
+  color: var(--text-icon);
+}
+
+/* ==================================
+              branch-state
+  ===================================*/
+
+.branch-state-main {
+  box-shadow: var(--shadow-basic);
+  transition: all 0.2s linear;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px 24px;
+}
+
+.branch-state-main:hover {
+  box-shadow: var(--shadow-active);
+}
+
+.branch-state__header {
+  display: flex;
+  gap: 8px;
+}
+
+.branch-state__icon-box {
+  box-sizing: border-box;
+  background-color: var(--main1);
+  display: flex;
+  width: 40px;
+  height: 40px;
+  border-radius: 4px;
+  justify-content: center;
+  align-items: center;
+  padding: 8px;
+}
+
+.branch-state__box-image {
+  display: flex;
+  align-items: center;
+  justify-items: center;
+}
+
+.branch-state__name {
+  display: flex;
+  align-items: center;
+  color: var(--main1, #323a27);
+  font-size: 18px;
+  letter-spacing: var(--letter-spacing-main);
+  font-weight: var(--bold);
+}
+
+.branch-state__info {
+  display: flex;
+  justify-content: space-between;
+}
+
+.branch-state__stats {
+  display: flex;
+  gap: 6px;
+  font-size: 14px;
+  color: var(--text-sub, #767676);
+  font-weight: var(--regular);
+}
+
+.branch-state__nums {
+  color: var(--text-sub);
+  font-weight: var(--bold);
+}
+
+.branch-state__date {
+  color: var(--text-sub);
+  font-size: 12px;
 }

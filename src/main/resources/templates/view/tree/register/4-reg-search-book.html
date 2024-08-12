@@ -13,6 +13,7 @@
   <body>
     <header>
       <h1 class="none">도서 선택 후 트리 생성</h1>
+
       <section>
         <h2 class="none">트리 생성</h2>
         <!-- 컴포넌트 -->
@@ -22,8 +23,13 @@
     </header>
 
     <main>
-      <h2 class="home-tree__reg-4--search-book">선택한 도서</h2>
-
+      <h2 class="none">선택한 도서</h2>
+      <section class="tree-book-reg-search-book__title-container">
+        <div th:replace="~{fragments/text :: text-main-title(title='선택한 도서', size='28')}"></div>
+      </section>
+      <section class="bg-book-info--half__bg-book-img">
+        <div th:replace="~{fragments/link :: link__one-image-detail(src=@{/img/home/home-mid-book.png}, href='#')}"></div>
+      </section>
       <section>
         <div th:replace="~{fragments/background :: bg-book-info--half--one-book}">
         </div>

@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<body>
+
+<div th:fragment="link__one-image-detail(src, href)">
+    <a class="bg-book-info--half__bg-book-img-anker" th:href="${href}" >
+        <img th:src="${src}" alt="표지">
+        <p class="bg-book-info--half__bg-book-img-p">자세히 보기</p>
+    </a>
+</div>
+</body>
+</html>

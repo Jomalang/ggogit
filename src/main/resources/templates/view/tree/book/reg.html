@@ -16,7 +16,7 @@
       <h1 class="none">도서 트리 생성 페이지</h1>
       <section class="tob-bar-back-container">
         <h1 class="none">트리 생성 상단 바</h1>
-        <div th:replace="~{fragments/top-bar :: tob-bar-back(title='트리 생성', link='#')}"></div>
+        <div th:replace="~{fragments/top-bar :: top-bar-back(title='트리 생성', link='#')}"></div>
       </section>
     </header>
 
@@ -150,6 +150,12 @@
       inputTag.scrollIntoView({ behavior: 'smooth', block: 'center' });
       return false;
     }
+  </script>
+
+  <script>
+    // const selectTag = document.getElementsByClassName("input-select-box");
+    const selectTags = document.getElementsByClassName("filter-tab__item");
+
   </script>
 
   </body>

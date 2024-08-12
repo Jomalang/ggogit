@@ -14,33 +14,10 @@
     <header>
       <h1 class="none">나의 트리</h1>
       <form class="back-search__form">
-        <section class="back-search-container">
+
+        <section class="input-back-search-container">
           <h1 class="none">트리 검색</h1>
-          <!-- 컴포넌트 start -->
-          <div class="back-search">
-            <a class="back-search__back-link" th:href="@{/home}">
-              <div class="back-search__icon-box">
-                <img
-                  class="back-search__icon"
-                  th:src="@{/svg/back-icon.svg}"
-                  alt=""
-                />
-              </div>
-            </a>
-            <div class="back-search__input-box">
-              <input
-                class="back-search__input-text"
-                type="text"
-                placeholder="트리 이름을 작성해주세요"
-              />
-              <img
-                class="back-search__lens-icon"
-                th:src="@{/svg/lens.svg}"
-                alt=""
-              />
-            </div>
-          </div>
-          <!-- 컴포넌트 end -->
+          <div th:replace="~{/fragments/input :: back-search(link='#')}"></div>
         </section>
 
         <section class="search-filter-container">

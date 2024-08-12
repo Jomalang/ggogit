@@ -99,5 +99,35 @@
     </label>
 </div>
 
+
+<!-- ==========================================
+     FRAGMENT: 뒤로가기 검색 바
+     ========================================== -->
+<div class="input-back-search" th:fragment="back-search(link)">
+    <a class="input-back-search__back-link" th:href="${link}">
+        <div class="input-back-search__icon-box">
+            <img
+                    class="input-back-search__icon"
+                    th:src="@{/svg/back-icon.svg}"
+                    alt="back-icon.svg"
+            />
+        </div>
+    </a>
+    <div class="input-back-search__input-box">
+        <label class="input-back-search__label">
+            <input
+                    class="input-back-search__input-text"
+                    type="text"
+                    placeholder="트리 이름을 작성해주세요"
+            />
+        </label>
+        <img
+                class="input-back-search__lens-icon"
+                th:src="@{/svg/lens.svg}"
+                alt="lens.svg"
+        />
+    </div>
+</div>
+
 </body>
 </html>

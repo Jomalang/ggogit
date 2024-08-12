@@ -6,7 +6,7 @@
     <link th:href="@{/css/fragments.css}" rel="stylesheet" />
     <link th:href="@{/css/layout.css}" rel="stylesheet" />
 
-    <title>0-index</title>
+    <title>tree-index</title>
   </head>
   <body>
     <header class="top-bar-back-container">
@@ -30,7 +30,14 @@
         <h2 class="none">씨앗 선택 버튼</h2>
         <!-- 씨앗 선택 컴포넌트 -->
         <div
-          th:replace="~{fragments/button :: link-full-width(link='#', text='씨앗 선택')}"
+          th:replace="~{fragments/button :: filter-full-width(text='씨앗 선택', id='filter-tab-btn')}"
+        ></div>
+      </section>
+
+      <section class="filter-tab-container none" id="filter-bg-blur">
+        <h2 class="none">씨앗 선택</h2>
+        <div
+          th:replace="~{fragments/tab-filter::filter-tab-get(title='씨앗 선택', name='seed', values=${seeds}, source='register')}"
         ></div>
       </section>
     </main>
@@ -43,4 +50,5 @@
       </section>
     </aside>
   </body>
+  <script th:src="@{/js/filter-tab.js}"></script>
 </html>

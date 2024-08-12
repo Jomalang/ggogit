@@ -1,16 +1,16 @@
 package Recorders.ggogit.entity;
 
-public enum BookCategory {
-    FICTION("fiction", "소설"),
-    NON_FICTION("nonFiction", "논픽션"),
-    MYSTERY("mystery", "미스터리"),
-    SCIENCE_FICTION("scienceFiction", "과학 소설"),
-    BIOGRAPHY("biography", "전기");
+public enum SeedCategory {
+    BOOK("book", "도서"),
+    IDEA("idea", "생각"),
+    PHRASE("phrase", "문장"),
+    STUDY("study", "공부"),
+    YOUTUBE("youtube", "유튜브");
 
     private final String value;
     private final String description;
 
-    BookCategory(String value, String description) {
+    SeedCategory(String value, String description) {
         this.value = value;
         this.description = description;
     }

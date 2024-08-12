@@ -106,6 +106,14 @@
   margin: 0 24px 200px 24px;
 }
 
+/* /tree/register/3-book-search-no-data.html */
+.reg-book-search-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 30px 26px 24px 24px;
+}
+
 /*트리 생성 이미지 input 뒤에 초록색 배경*/
 .book-tree-input-form::before {
   content: "";
@@ -117,4 +125,19 @@
 
 .btn-select-container {
   margin-bottom: 28px;
+}
+
+.btn-select-container--right {
+  display: flex;
+  flex-direction: row-reverse;
+  padding-right: 28px;
+  margin-bottom: 28px;
+}
+
+.margin-bottom24 {
+  margin-bottom: 24px;
+}
+
+.margin-bottom160 {
+  margin-bottom: 160px;
 }

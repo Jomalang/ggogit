@@ -13,6 +13,7 @@
   <body>
     <header>
       <h1 class="none">도서 선택 후 트리 생성</h1>
+
       <section>
         <h2 class="none">트리 생성</h2>
         <!-- 컴포넌트 -->
@@ -22,8 +23,13 @@
     </header>
 
     <main>
-      <h2 class="none">선택 도서 정보</h2>
-
+      <h2 class="none">선택한 도서</h2>
+      <section class="tree-book-reg-search-book__title-container">
+        <div th:replace="~{fragments/text :: text-main-title(title='선택한 도서', size='28')}"></div>
+      </section>
+      <section class="bg-book-info--half__bg-book-img">
+        <div th:replace="~{fragments/link :: link__one-image-detail(src=@{/img/home/home-mid-book.png}, href='#')}"></div>
+      </section>
       <section>
         <div th:replace="~{fragments/background :: bg-book-info--half--one-book}">
         </div>
@@ -41,21 +47,30 @@
         <h3 class="none">선택 도서 기본 정보</h3>
         <!-- 컴포넌트-->
       </section>
-      <section>
+      <section class="home-tree__reg-4--search-book__input-container ">
         <h3 class="none">트리 이름 입력</h3>
         <!-- 컴포넌트 -->
+        <div th:replace="~{fragments/input :: text-box(label='이름', placeholder='트리 이름을 입력해 주세요.', name='')}">
+        </div>
+
       </section>
-      <section>
+      <section class="home-tree__reg-4--search-book__input-container ">
         <h3 class="none">카테고리 선택</h3>
         <!-- 컴포넌트 -->
+        <div th:replace="~{fragments/input :: input-select-box(label='카테고리', id='')}">
+        </div>
       </section>
-      <section>
+      <section class="home-tree__reg-4--search-book__input-container ">
         <h3 class="none">트리 설명글</h3>
         <!-- 컴포넌트 -->
+        <div th:replace="~{fragments/input :: textarea-box(label='설명글', placeholder='트리를 설명하는 글을 작성해 주세요', name='')}">
+        </div>
       </section>
-      <section>
+      <section class="home-tree__reg-4--search-book__input-container ">
         <h3 class="none">공개성 선택</h3>
         <!-- 컴포넌트 -->
+        <div th:replace="~{fragments/input :: input-visibility(name='설명글')}">
+        </div>
       </section>
       <section>
         <h3 class="none">트리 생성 버튼</h3>

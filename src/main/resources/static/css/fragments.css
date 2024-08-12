@@ -46,6 +46,7 @@
 
 /*  ========================================== /
      FRAGMENT: 3개의 임시 도서 이미지
+     FILE: background.html
 /   ========================================== */
 .bg-no-tree-book {
     flex-grow: 1;
@@ -66,9 +67,9 @@
     position: relative;
 }
 
-
 /*  ========================================== /
      FRAGMENT: 배경 반반(흰/초), 도서 중앙 1개
+     FILE: background.html
 /   ========================================== */
 
 .bg-book-info--half__bg-frame{
@@ -104,9 +105,14 @@
     background: var(--main2--opacity40);
 }
 .bg-book-info--half__bg-book-info-empty-space{
-    height: 53px;
+    width: 100%;
+    height: 70px;
+}
+.bg-book-info--half__bg-book-info-empty-space + .bg-book-info--half__bg-book-info__category{
+    padding-top: 24px;
 }
 .bg-book-info--half__bg-book-info__category{
+    padding-left: 48px;
     width: 100%;
     display: flex;
     justify-content: left;
@@ -130,6 +136,8 @@
     color: var(--main1);
 }
 .bg-book-info--half__bg-book-info__create{
+    padding-left: 48px;
+    padding-bottom: 20px;
     width: 100%;
     display: flex;
     justify-content: left;

@@ -4,19 +4,20 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=300, initial-scale=1.0" />
 
-      <link th:href="@{/css/reset.css}" rel="stylesheet" />
-      <link th:href="@{/css/fragments.css}" rel="stylesheet" />
-      <link th:href="@{/css/layout.css}" rel="stylesheet" />
+    <link th:href="@{/css/reset.css}" rel="stylesheet" />
+    <link th:href="@{/css/fragments.css}" rel="stylesheet" />
+    <link th:href="@{/css/layout.css}" rel="stylesheet" />
 
     <title>도서 트리 생성</title>
   </head>
   <body>
-
     <header>
       <h1 class="none">도서 트리 생성 페이지</h1>
-      <section class="tob-bar-back-container">
+      <section class="top-bar-back-container">
         <h1 class="none">트리 생성 상단 바</h1>
-        <div th:replace="~{fragments/top-bar :: tob-bar-back(title='트리 생성', link='#')}"></div>
+        <div
+          th:replace="~{fragments/top-bar :: top-bar-back(title='트리 생성', link='#')}"
+        ></div>
       </section>
     </header>
 
@@ -25,11 +26,17 @@
         <h1 class="none">도서 정보 입력</h1>
 
         <section class="select-title-container">
-          <div th:replace="~{fragments/text :: text-main-title(title='도서 직접 입력', size='28')}"></div>
+          <div
+            th:replace="~{fragments/text :: text-main-title(title='도서 직접 입력', size='28')}"
+          ></div>
         </section>
 
-        <form class="book-tree-input-form" action="/upload" method="post" enctype="multipart/form-data" >
-
+        <form
+          class="book-tree-input-form"
+          action="/upload"
+          method="post"
+          enctype="multipart/form-data"
+        >
           <section class="book-tree-input-form__photo-container">
             <h1 class="none">도서 이미지 입력</h1>
             <div th:replace="~{fragments/input :: book-input-img}"></div>
@@ -37,60 +44,78 @@
 
           <section class="book-tree-input-form__input-container">
             <h1 class="none">도서 이름 입력</h1>
-            <div th:replace="~{fragments/input :: text-box(label='도서 이름', placeholder='도서 이름을 입력해주세요', name='bookName')}"></div>
+            <div
+              th:replace="~{fragments/input :: text-box(label='도서 이름', placeholder='도서 이름을 입력해주세요', name='bookName')}"
+            ></div>
           </section>
 
           <section class="book-tree-input-form__input-container">
             <h1 class="none">지은이 입력</h1>
-            <div th:replace="~{fragments/input :: text-box(label='지은이', placeholder='지은이를 입력해주세요', name='author')}"></div>
+            <div
+              th:replace="~{fragments/input :: text-box(label='지은이', placeholder='지은이를 입력해주세요', name='author')}"
+            ></div>
           </section>
 
           <section class="book-tree-input-form__input-container">
             <h1 class="none">출판사 입력</h1>
-            <div th:replace="~{fragments/input :: text-box(label='출판사', placeholder='출판사를 입력해주세요', name='publisher')}"></div>
+            <div
+              th:replace="~{fragments/input :: text-box(label='출판사', placeholder='출판사를 입력해주세요', name='publisher')}"
+            ></div>
           </section>
 
           <section class="book-tree-input-form__input-container">
             <h1 class="none">총페이지 입력</h1>
-            <div th:replace="~{fragments/input :: text-box(label='총 페이지 수', placeholder='총 페이지를 입력해주세요', name='totalPage')}"></div>
+            <div
+              th:replace="~{fragments/input :: text-box(label='총 페이지 수', placeholder='총 페이지를 입력해주세요', name='totalPage')}"
+            ></div>
           </section>
 
           <section class="book-tree-input-form__input-container">
             <h1 class="none">카테고리 선택</h1>
-            <div th:replace="~{fragments/input :: input-select-box(label='카테고리 선택', id='filter-tab-btn')}"></div>
+            <div
+              th:replace="~{fragments/input :: input-select-box(label='카테고리 선택', id='filter-tab-btn')}"
+            ></div>
 
             <section id="filter-bg-blur" class="filter-tab-container none">
               <h1 class="none">카테고리 언더바 필터</h1>
-              <div th:replace="~{fragments/tab-filter :: filter-tab(title='카테고리', name='bookCategory', values=${categories})}"></div>
+              <div
+                th:replace="~{fragments/tab-filter :: filter-tab(title='카테고리', name='bookCategory', values=${categories})}"
+              ></div>
             </section>
           </section>
 
           <section class="book-tree-input-form__input-container">
             <h1 class="none">트리이름 입력</h1>
-            <div th:replace="~{fragments/input :: text-box(label='트리 이름', placeholder='트리 이름을 입력해주세요', name='treeName')}"></div>
+            <div
+              th:replace="~{fragments/input :: text-box(label='트리 이름', placeholder='트리 이름을 입력해주세요', name='treeName')}"
+            ></div>
           </section>
 
           <section class="book-tree-input-form__large-input-container">
             <h1 class="none">설명글 작성</h1>
-            <div th:replace="~{fragments/input :: textarea-box(label='트리설명', placeholder='트리를 설명할 글을 작성해 주세요', name='treeDescription')}"></div>
+            <div
+              th:replace="~{fragments/input :: textarea-box(label='트리설명', placeholder='트리를 설명할 글을 작성해 주세요', name='treeDescription')}"
+            ></div>
           </section>
 
           <section class="book-tree-input-form__input-container">
             <h1 class="none">공개성 선택</h1>
-            <div th:replace="~{fragments/input :: input-visibility(name='visibility-option')}"></div>
+            <div
+              th:replace="~{fragments/input :: input-visibility(name='visibility-option')}"
+            ></div>
           </section>
 
           <section class="book-tree-submit-container">
             <h1 class="none">트리 생성 버튼</h1>
-            <div th:replace="~{fragments/button :: submit-btn-full-bar(text='트리 생성')}"></div>
+            <div
+              th:replace="~{fragments/button :: submit-btn-full-bar(text='트리 생성')}"
+            ></div>
           </section>
-
         </form>
       </section>
     </main>
 
-  <script th:src="@{/js/filter-tab.js}"></script>
-  <script th:src="@{/js/input-img-book-change.js}"></script>
-
+    <script th:src="@{/js/filter-tab.js}"></script>
+    <script th:src="@{/js/input-img-book-change.js}"></script>
   </body>
 </html>

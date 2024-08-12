@@ -3,29 +3,35 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../../../../static/common/variables.css" />
+    <link th:href="@{/css/fragments.css}" rel="stylesheet" />
+    <link th:href="@{/css/layout.css}" rel="stylesheet" />
+
     <title>0-index</title>
   </head>
   <body>
-    <header>
+    <header class="top-bar-back-container">
       <h1 class="none">트리 생성</h1>
-      <section>
-        <!-- 트리 생성 컴포넌트 -->
-      </section>
+      <!-- 트리 생성 컴포넌트 -->
+      <div
+        th:replace="~{fragments/top-bar :: top-bar-back('트리 생성', '#')}"
+      ></div>
     </header>
 
     <main>
-      <section>
+      <section class="text-info-container">
         <h2 class="none">트리 생성 안내</h2>
         <div
-          th:replace="~{component/hyeonjin/textbox/textbox::textbox-no-seed}"
+          th:replace="~{fragments/text :: text-info('트리를 생성하기 위한',
+        '씨앗을 선택해주세요')}"
         ></div>
-        <!-- 트리 생성하기 위한 컴포넌트 -->
       </section>
 
-      <section>
+      <section class="btn-select-container">
         <h2 class="none">씨앗 선택 버튼</h2>
         <!-- 씨앗 선택 컴포넌트 -->
+        <div
+          th:replace="~{fragments/button :: link-full-width(link='#', text='씨앗 선택')}"
+        ></div>
       </section>
     </main>
 
@@ -33,6 +39,7 @@
       <section>
         <h2 class="none">네비게이션 바</h2>
         <!-- aside 컴포넌트 -->
+        <div th:replace="~{fragments/nav :: navigation-bar(home)}"></div>
       </section>
     </aside>
   </body>

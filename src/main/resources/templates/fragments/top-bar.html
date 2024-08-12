@@ -1,18 +1,20 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="ko">
-<body>
-
-<!-- ==========================================
-     FRAGMENT: 뒤로가기 상단바
+<html xmlns:th="https://www.thymeleaf.org" lang="ko">
+  <body>
+    <!-- ==========================================
+     FRAGMENT: 뒤로가기 상단바 -- 오른쪽 버튼 없음
      ========================================== -->
-<div class="tob-bar-back" th:fragment="tob-bar-back(title, link)">
-    <a class="tob-bar-back__link" th:href="${link}">
-        <div class="tob-bar-back__icon-box">
-            <img class="tob-bar-back__icon" th:src="@{/svg/back-arrow-icon.svg}" alt="back-arrow-icon.svg"/>
-        </div>
-    </a>
-    <p class="tob-bar-back__title" th:text="${title}">상단바 주제</p>
-</div>
-
-</body>
+    <div class="top-bar--green" th:fragment="top-bar-back(title, link)">
+      <div class="top-bar__frame">
+        <p class="top-bar__title" th:text="${title}">트리 생성</p>
+        <a class="tob-bar--a" href="#" th:href="${link}">
+          <img
+            th:src="@{/svg/back-arrow-icon.svg}"
+            alt="top-bar--backarrow.svg"
+          />
+        </a>
+        <div class="top-bar__text"></div>
+      </div>
+    </div>
+  </body>
 </html>

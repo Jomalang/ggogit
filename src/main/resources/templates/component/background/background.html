@@ -3,8 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
+    <link rel="stylesheet" href="./styles.css" />
     <link rel="stylesheet" href="/css/styles.css" />
+    <link rel="stylesheet" href="/css/reset.css" />
 
     <title>Document</title>
   </head>
@@ -15,21 +16,21 @@
         <li class="no-tree-book-bg__item">
           <img
             class="no-tree-book-bg__img"
-            src="../img/no-tree-left-book.png"
+            src="../../../static/img/home/no-tree-left-book.png"
             alt="도서 예시 이미지"
           />
         </li>
         <li class="no-tree-book-bg__item">
           <img
             class="no-tree-book-bg__img"
-            src="../img/no-tree-mid-book.png"
+            src="../../../static/img/home/no-tree-mid-book.png"
             alt="도서 예시 이미지"
           />
         </li>
         <li class="no-tree-book-bg__item">
           <img
             class="no-tree-book-bg__img"
-            src="../img/no-tree-right-book.png"
+            src="../../../static/img/home/no-tree-right-book.png"
             alt="도서 예시 이미지"
           />
         </li>
@@ -43,7 +44,7 @@
         <li class="tree-book-bg__item">
           <img
             class="tree-book-bg__img"
-            src="../img/home-book.png"
+            src="../../../static/img/home/home-left-book.png"
             alt="도서 예시 이미지"
           />
         </li>
@@ -51,7 +52,7 @@
           <li class="tree-book-bg__item mid__item">
             <img
               class="tree-book-bg__img mid__img"
-              src="../img/home-book.png"
+              src="../../../static/img/home/home-mid-book.png"
               alt="도서 예시 이미지"
             />
           </li>
@@ -59,7 +60,7 @@
         <li class="tree-book-bg__item">
           <img
             class="tree-book-bg__img"
-            src="../img/home-book.png"
+            src="../../../static/img/home/home-right-book.png"
             alt="도서 예시 이미지"
           />
         </li>
@@ -73,8 +74,33 @@
 
     <!-- 컴포넌트 시작: 도서 디테일 배경 -->
     <div class="book-bg">
-      <img class="book-bg__img" src="../img/bg-book.png" alt="" />
+      <img class="book-bg__img" src="../../../static/img/home/bg-book.png" alt="" />
     </div>
+    <!-- 컴포넌트 끝-->
+
+  <!-- 컴포넌트 시작: 배경 반반(흰/초), 도서 중앙 1개-->
+  <div class="text-book-info-frame">
+    <div class="text-book-info-book-img">
+      <a class="text-book-info-book-img-anker" href="#">
+      <img src="../../../static/img/home/home-mid-book.png" alt="표지">
+      <p class="text-book-info-book-img-p">자세히 보기</p>
+      </a>
+    </div>
+    <div class="text-book-info-frame">
+      <div class="text-book-info-empty-space"></div>
+      <div class="text-book-info__category">
+        <p class="text-book-info__seed">시/에세이</p>
+      </div>
+      <div class="text-book-info__category">
+      <p class="text-book-info__title">무정형의 삶</p>
+    </div>
+      <div class="text-book-info__create">
+        <span class="text-book-info-create-info">김민철</span>
+        <span class="text-book-info-create-info">·</span>
+        <span class="text-book-info-create-info">위즈덤하우스</span></div>
+    </div>
+
+  </div>
     <!-- 컴포넌트 끝-->
   </body>
 </html>

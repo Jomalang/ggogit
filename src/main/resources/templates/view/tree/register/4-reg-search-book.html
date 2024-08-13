@@ -3,51 +3,80 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link th:href="@{/css/fragments.css}" rel="stylesheet" />
+    <link th:href="@{/css/layout.css}" rel="stylesheet" />
+
     <title>Document</title>
   </head>
   <body>
     <header>
       <h1 class="none">도서 선택 후 트리 생성</h1>
+
       <section>
-        <h2>트리 생성</h2>
+        <h2 class="none">트리 생성</h2>
         <!-- 컴포넌트 -->
+        <div th:replace="~{fragments/top-bar :: top-bar-back(title='트리 생성', link='#')}">
+        </div>
       </section>
     </header>
 
     <main>
-      <h2 class="none">선택 도서 정보</h2>
-      <!-- 컴포넌트 -->
-      <section>
-        <h3 class="none">선택 도서 이미지</h3>
-        <!-- 컴포넌트 -->
+      <h2 class="none">선택한 도서</h2>
+      <section class="tree-book-reg-search-book__title-container">
+        <h3 class="none">도서 TEXT 컨테이너</h3>
+        <div th:replace="~{fragments/text :: text-main-title(title='선택한 도서', size='28')}"></div>
       </section>
-      <section>
-        <h3 class="none">선택 도서 메인 정보</h3>
-        <!-- 컴포넌트 -->
+      <section class="tree-reg-cover-info__container">
+        <h3 class="none">도서 커버 및 도서 정보</h3>
+        <section class="tree-reg-cover__container">
+          <h4 class="none">도서 커버</h4>
+        <div th:replace="~{fragments/link :: link__one-image-detail(src=@{'/img/home/home-mid-book.png'}, href='#')}">
+        </div>
+        </section>
+        <section class="tree-reg-book-info__container">
+         <h4 class="none">도서 정보</h4>
+          <div th:replace="~{fragments/text :: text-book-info('시/에세이','무정형의 삶','김민철','위즈덤하우스')}">
+          </div>
+        </section>
       </section>
-      <section>
+      <section class="tree-info-card__container">
         <h3 class="none">선택 도서 기본 정보</h3>
         <!-- 컴포넌트-->
+        <div th:replace="~{fragments/card :: tree-info-card('2024년 07월 10일', '336쪽')}">
+
+        </div>
       </section>
-      <section>
+      <section class="home-tree__reg-4--search-book__input-container">
         <h3 class="none">트리 이름 입력</h3>
         <!-- 컴포넌트 -->
+        <div th:replace="~{fragments/input :: text-box(label='*트리 이름', placeholder='트리 이름을 입력해 주세요.', name='')}">
+        </div>
+
       </section>
-      <section>
+      <section class="home-tree__reg-4--search-book__input-container">
         <h3 class="none">카테고리 선택</h3>
         <!-- 컴포넌트 -->
+        <div th:replace="~{fragments/input :: input-select-box(label='*카테고리', id='')}">
+        </div>
       </section>
-      <section>
+      <section class="home-tree__reg-4--search-book__input-container">
         <h3 class="none">트리 설명글</h3>
         <!-- 컴포넌트 -->
+        <div th:replace="~{fragments/input :: textarea-box(label='*설명글', placeholder='트리를 설명하는 글을 작성해 주세요', name='')}">
+        </div>
       </section>
-      <section>
+      <section class="home-tree__reg-4--search-book__input-container">
         <h3 class="none">공개성 선택</h3>
         <!-- 컴포넌트 -->
+        <div th:replace="~{fragments/input :: input-visibility(name='공개성')}">
+        </div>
       </section>
-      <section>
+      <section class="home-tree__reg-4--search-book__input-container">
         <h3 class="none">트리 생성 버튼</h3>
         <!-- 컴포넌트 -->
+        <div th:replace="~{fragments/button :: submit-btn-full-bar('트리 생성하기')}">
+        </div>
       </section>
     </main>
 
@@ -55,6 +84,7 @@
       <section>
         <h2 class="none">네비게이션 바</h2>
         <!-- aside 컴포넌트 -->
+        <div th:replace="~{fragments/nav :: navigation-bar('home')}"></div>
       </section>
     </aside>
   </body>

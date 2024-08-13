@@ -15,6 +15,16 @@ public class TreeController {
         model.addAttribute("categories", BookCategory.values());
         return "view/tree/book/reg";
     }
+    @GetMapping("/memoir/register/index")
+    public String getmemoirindex(Model model) {
+        model.addAttribute("categories", BookCategory.values());
+        return "view/tree/memoir/register/index";
+    }
+    @GetMapping("/book/reg4-search-book")
+    public String getReg4SearchBook(Model model) {
+        model.addAttribute("categories", BookCategory.values());
+        return "view/tree/register/4-reg-search-book";
+    }
 //    @PostMapping("/book/reg")
 //    public String postReg(
 //    ) {

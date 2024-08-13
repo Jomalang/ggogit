@@ -1,109 +1,101 @@
-@import url(/src/main/resources/static/common/variables.css);
-
 .header-search-container {
-  padding: 30px 24px 40px 24px;
+    padding: 30px 24px 40px 24px;
 }
 
 .my-tree-container {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-  align-items: flex-start;
-  justify-content: flex-start;
-  align-self: stretch;
-  flex-shrink: 0;
-  position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    align-items: flex-start;
+    justify-content: flex-start;
+    align-self: stretch;
+    flex-shrink: 0;
+    position: relative;
 }
 
 .my-tree-title-container {
-  padding: 0 24px 200px 24px;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  align-self: stretch;
-  flex-shrink: 0;
-  position: relative;
+    padding: 0 24px 200px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    align-self: stretch;
+    flex-shrink: 0;
+    position: relative;
 }
 
 .text-info-container {
-  display: flex;
-  flex-direction: row;
-  align-self: stretch;
-  margin: 70px 0 328px 0;
-  align-items: self-start;
-  justify-content: center;
-  flex-shrink: 0;
-  position: relative;
+    display: flex;
+    flex-direction: row;
+    align-self: stretch;
+    margin: 70px 0 300px 0;
+    align-items: self-start;
+    justify-content: center;
+    flex-shrink: 0;
+    position: relative;
 }
 
 .book-img-container {
-  z-index: 10;
-  margin: 0 auto;
-  top: 80px;
-  left: 50%;
-  transform: translateX(-50%);
-  position: absolute;
+    z-index: 10;
+    margin: 0 auto;
+    top: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    position: absolute;
 }
 
 .btn-full-width-link-container {
-  margin: 0 5% 28px 5%;
-  width: 90%;
-  top: 550px;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  position: absolute;
+    margin: 0 5% 28px 5%;
+    width: 90%;
+    top: 550px;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    position: absolute;
 }
 
 .book-tree-input-form-container {
-  display: flex;
-  flex-direction: column;
-}
-
-.top-bar-back-container {
-  width: 100%;
-  display: block;
-  margin-bottom: 180px;
+    display: flex;
+    flex-direction: column;
 }
 
 .select-title-container {
-  margin: 28px 24px 200px 24px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+    margin: 28px 24px 200px 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 }
 
 .book-tree-input-form__photo-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  top: 230px;
-  left: 50%;
-  transform: translateX(-50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 230px;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 .book-tree-input-form__large-input-container {
-  margin: 60px 24px 30px 24px;
+    margin: 60px 24px 30px 24px;
 }
 
 .book-tree-input-form__input-container {
-  margin: 60px 24px 30px 24px;
-  height: 110px;
+    margin: 60px 24px 30px 24px;
+    height: 110px;
 }
 
 .filter-tab-container {
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background-color: rgba(0, 0, 0, 0.6);
-  z-index: 10;
-  position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 10;
+    position: fixed;
 }
 
 .book-tree-submit-container {
-  margin: 0 24px 200px 24px;
+    margin: 0 24px 200px 24px;
 }
 
 /* /tree/register/3-book-search-no-data.html */
@@ -116,11 +108,11 @@
 
 /*트리 생성 이미지 input 뒤에 초록색 배경*/
 .book-tree-input-form::before {
-  content: "";
-  display: block;
-  background-color: var(--main3, #e5eddb);
-  width: 100%;
-  height: 136px;
+    content: "";
+    display: block;
+    background-color: var(--main3, #e5eddb);
+    width: 100%;
+    height: 136px;
 }
 
 .btn-select-container {
@@ -141,3 +133,55 @@
 .margin-bottom160 {
   margin-bottom: 160px;
 }
+
+/*
+home-tree__reg-4--search-book__input
+*/
+.home-tree__reg-4--search-book{
+    padding-top: 28px;
+    padding-left: 24px;
+    padding-bottom: 48px;
+    font-size: 28px;
+    color: var(--main1, #323a27);
+    font-weight: var(--bold);
+    line-height: var(--line-height-main);
+    letter-spacing: var(--letter-spacing-main);
+
+}
+.home-tree__reg-4--search-book__input-container{
+    padding-top: 60px;
+    padding-left: 24px;
+    padding-right: 24px;
+}
+.tree-book-reg-search-book__title-container {
+    width: 100%;
+    margin-top: 28px;
+    margin-left: 24px;
+    margin-bottom: 48px;
+    display: flex;
+    justify-content: left;
+}
+.tree-reg-cover-info__container{
+    width: 100%;
+    height: 326px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+.tree-reg-cover__container{
+    position: absolute;
+    height: 167px;
+    top: 0;
+}.tree-reg-book-info__container{
+    margin-top: 167px;
+    padding-top: 70px;
+    padding-left: 24px;
+    width: 100%;
+    height: 100px;
+    background: var(--main2--opacity40);
+ }
+ .tree-info-card__container{
+     padding-top: 40px;
+     padding-left: 24px;
+ }

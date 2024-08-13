@@ -1,32 +1,54 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="https://www.thyemleaf.org">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>book-search</title>
+    <link th:href="@{/css/fragments.css}" rel="stylesheet" />
+    <link th:href="@{/css/layout.css}" rel="stylesheet" />
   </head>
+
   <body>
-    <header>
-      <h1 class="none">자바 검색 결과</h1>
+    <header class="reg-book-search-container">
+      <h1 class="none">검색 결과</h1>
       <section>
-        <h2 class="none">자바 검색 바</h2>
-        <!-- 컴포넌트 -->
-        <section>
-          <h3>검색 필터</h3>
-          <!-- 컴포넌트 -->
-        </section>
+        <h2 class="none">검색 바</h2>
+        <!-- fragment -->
+        <div
+          th:replace="fragments/input::input-back-search('개발 중입니다.', '/register/seed')"
+        ></div>
+      </section>
+
+      <section>
+        <h3 class="none">검색 결과 개수</h3>
+        <!-- fragment -->
+        <div
+          th:replace="fragments/top-bar::topbar-search-result-num(${resultCnt})"
+        ></div>
       </section>
     </header>
 
-    <main>
-      <h2>자바 검색 결과 리스트</h2>
-      <!-- 컴포넌트 -->
+    <main class="text-info-container">
+      <h2 class="none">검색 시작 안내</h2>
+      <!-- fragment -->
+      <div
+        th:replace="~{fragments/text :: text-info('현재 검색중인 도서가 없습니다',
+        '도서를 검색하거나 직접 등록해주세요')}"
+      ></div>
     </main>
+
+    <section class="btn-select-container--right">
+      <h2 class="none">도서 직접 등록 버튼</h2>
+      <div
+        th:replace="~{fragments/button::btn-short-a--green(href='/register/book/direct', text='도서 직접 등록하기')}"
+      ></div>
+    </section>
 
     <aside>
       <section>
         <h2 class="none">네비게이션 바</h2>
         <!-- aside 컴포넌트 -->
+        <div th:replace="~{fragments/nav :: navigation-bar(home)}"></div>
       </section>
     </aside>
   </body>

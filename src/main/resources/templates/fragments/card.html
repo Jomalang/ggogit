@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<body>
+
+<div th:fragment="tree-info-card(date, pagecount)">
+    <div class="card-tree-info">기본 정보</div>
+    <div class="card-tree-info__frame">
+        <div>
+            <p class="card-tree-info__title">발행(출시)일자</p>
+            <p class="card-tree-info__title">쪽수</p>
+        </div>
+        <div>
+            <p class="card-tree-info__content" th:text="${date}"></p>
+            <p class="card-tree-info__content" th:text="${pagecount}"></p>
+        </div>
+    </div>
+</div>
+</body>
+</html>

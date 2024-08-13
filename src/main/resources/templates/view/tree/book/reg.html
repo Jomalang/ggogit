@@ -37,7 +37,7 @@
 
           <section class="book-tree-input-form__input-container">
             <h1 class="none">도서 이름 입력</h1>
-            <div th:replace="~{fragments/input :: text-box(label='도서 이름', placeholder='도서 이름을 입력해주세요', name='bookName')}"></div>
+            <div th:replace="~{fragments/input :: text-box(label='*도서 이름', placeholder='도서 이름을 입력해주세요', name='bookName')}"></div>
           </section>
 
           <section class="book-tree-input-form__input-container">
@@ -52,27 +52,27 @@
 
           <section class="book-tree-input-form__input-container">
             <h1 class="none">총페이지 입력</h1>
-            <div th:replace="~{fragments/input :: text-box(label='총 페이지 수', placeholder='총 페이지를 입력해주세요', name='totalPage')}"></div>
+            <div th:replace="~{fragments/input :: text-box(label='*총 페이지 수', placeholder='총 페이지를 입력해주세요', name='totalPage')}"></div>
           </section>
 
           <section class="book-tree-input-form__input-container">
             <h1 class="none">카테고리 선택</h1>
-            <div th:replace="~{fragments/input :: input-select-box(label='카테고리 선택', id='filter-tab-btn')}"></div>
+            <div th:replace="~{fragments/input :: input-select-box(label='*카테고리 선택', id='filter-tab-btn')}"></div>
 
             <section id="filter-bg-blur" class="filter-tab-container none">
               <h1 class="none">카테고리 언더바 필터</h1>
-              <div th:replace="~{fragments/tab-filter :: filter-tab(title='카테고리', name='bookCategory', values=${categories})}"></div>
+              <div th:replace="~{fragments/tab-filter :: filter-tab(label='*카테고리', name='bookCategory', values=${categories})}"></div>
             </section>
           </section>
 
           <section class="book-tree-input-form__input-container">
             <h1 class="none">트리이름 입력</h1>
-            <div th:replace="~{fragments/input :: text-box(label='트리 이름', placeholder='트리 이름을 입력해주세요', name='treeName')}"></div>
+            <div th:replace="~{fragments/input :: text-box(label='*트리 이름', placeholder='트리 이름을 입력해주세요', name='treeName')}"></div>
           </section>
 
           <section class="book-tree-input-form__large-input-container">
             <h1 class="none">설명글 작성</h1>
-            <div th:replace="~{fragments/input :: textarea-box(label='트리설명', placeholder='트리를 설명할 글을 작성해 주세요', name='description')}"></div>
+            <div th:replace="~{fragments/input :: textarea-box(label='*트리설명', placeholder='트리를 설명할 글을 작성해 주세요', name='description')}"></div>
           </section>
 
           <section class="book-tree-input-form__input-container">
@@ -89,74 +89,13 @@
       </section>
     </main>
 
+    <aside class="nav-container">
+      <h1 class="none">네비게이션 하단</h1>
+      <nav th:replace="fragments/nav :: navigation-bar(active='home')"></nav>
+    </aside>
+
   <script th:src="@{/js/filter-tab.js}"></script>
   <script th:src="@{/js/input-img-book-change.js}"></script>
-
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const form = document.getElementById("book-tree-input-form-id");
-      form.addEventListener("submit",  (event) => {
-        validateFrom();
-        event.preventDefault();
-      });
-
-      function validateFrom() {
-
-        const bookNameTag = document.getElementById("bookName");
-        const authorTag = document.getElementById("author");
-        const publisherTag = document.getElementById("publisher");
-        const totalPageTag = document.getElementById("totalPage");
-        const treeNameTag = document.getElementById("treeName");
-        const descriptionTag = document.getElementById("description");
-
-        const isVisibility = radioInputValidate("visibility");
-        const isDescription = textInputBarValidate(descriptionTag);
-        const isTreeName = textInputBarValidate(treeNameTag);
-        const isBookCategory = radioInputValidate("bookCategory");
-        const isTotalPage = textInputBarValidate(totalPageTag);
-        const isPublisher = textInputBarValidate(publisherTag);
-        const isAuthor = textInputBarValidate(authorTag);
-        const isBookName = textInputBarValidate(bookNameTag);
-
-        console.log(isBookName);
-        console.log(isAuthor);
-        console.log(isPublisher);
-        console.log(isTotalPage);
-        console.log(isBookCategory);
-        console.log(isTreeName);
-        console.log(isDescription);
-        console.log(isVisibility);
-
-      }
-    });
-
-    function radioInputValidate(name) {
-      const selectTag = document.querySelector('input[name=' + name + ']:checked');
-      return selectTag !== null;
-    }
-
-    function textInputBarValidate(inputTag) {
-      const wrongTag = inputTag.offsetParent.querySelector(".input-text__input-wrong");
-
-      if (inputTag.value.trim() !== "") {
-        wrongTag.classList.add("none");
-        inputTag.classList.remove("input-text__input--warning");
-        return true;
-      }
-      
-      inputTag.value = "";
-      wrongTag.classList.remove("none");
-      inputTag.classList.add("input-text__input--warning");
-      inputTag.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      return false;
-    }
-  </script>
-
-  <script>
-    // const selectTag = document.getElementsByClassName("input-select-box");
-    const selectTags = document.getElementsByClassName("filter-tab__item");
-
-  </script>
 
   </body>
 </html>

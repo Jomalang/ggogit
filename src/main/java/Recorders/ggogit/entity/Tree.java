@@ -10,9 +10,9 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class RegistrationBookTree {
+public class Tree {
     private Long id;
-    private TreeType treeType;
+    private SeedCategoryType treeType;
     private String imgUrl;
     private String bookName;
     private String author;
@@ -25,11 +25,11 @@ public class RegistrationBookTree {
     private Timestamp createdAt;
     private Timestamp updatedAt;
 
-    public void setTreeType(String treeType) {
-        this.treeType = TreeType.of(treeType);
+    public void setSeedCategoryType(String treeType) {
+        this.treeType = SeedCategoryType.of(treeType);
     }
 
-    public void setBookCategory(String bookCategory) {
+    public void setBookCategoryType(String bookCategory) {
         this.bookCategory = BookCategoryType.of(bookCategory);
     }
 }

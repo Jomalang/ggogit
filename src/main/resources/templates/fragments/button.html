@@ -1,24 +1,60 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="ko">
-<body>
-
-<!-- ==========================================
+  <body>
+    <!-- ==========================================
      FRAGMENT: FUll 가로 버튼 - link 버전
      ========================================== -->
-<div class="btn-full-width" th:fragment="link-full-width(link, text)">
-    <a class="btn-full-width__link" th:href="${link}">
+    <div class="btn-full-width" th:fragment="link-full-width(link, text)">
+      <a class="btn-full-width__link" th:href="${link}">
         <div class="btn-full-width__button">
-            <p class="btn-full-width__placeholder" th:text="${text}">버튼 이름</p>
+          <p class="btn-full-width__placeholder" th:text="${text}">버튼 이름</p>
         </div>
-    </a>
-</div>
+      </a>
+    </div>
 
-<!-- ==========================================
+    <!-- ==========================================
+     FRAGMENT: FUll 가로 버튼 - 팝업 버전 
+     ========================================== -->
+    <div class="btn-full-width" th:fragment="filter-full-width(text, id)">
+      <a class="btn-full-width__link" th:id="${id}">
+        <div class="btn-full-width__button">
+          <p class="btn-full-width__placeholder" th:text="${text}">버튼 이름</p>
+        </div>
+      </a>
+    </div>
+
+    <!-- ==========================================
      FRAGMENT: FUll 가로 버튼 - button 버전
      ========================================== -->
-<div class="btn-full-bar" th:fragment="submit-btn-full-bar(text, id)">
-    <button class="btn-full-bar__btn" type="submit" th:id="${id}" th:text="${text}"></button>
-</div>
+    <div class="btn-full-bar" th:fragment="submit-btn-full-bar(text)">
+      <button
+        class="btn-full-bar__btn"
+        type="submit"
+        th:text="${text}"
+      ></button>
+    </div>
 
-</body>
+    <!-- ==========================================
+     FRAGMENT: 짧은 녹색 텍스트 버튼 
+     ========================================== -->
+    <button
+      class="text__btn--green"
+      th:fragment="btn-short--green(type, text)"
+      th:text="${text}"
+      th:type="${type}"
+    >
+      버튼
+    </button>
+
+    <!-- ==========================================
+     FRAGMENT: 짧은 녹색 텍스트 버튼 - a태그
+     ========================================== -->
+    <a
+      class="text__btn--green"
+      th:fragment="btn-short-a--green(href, text)"
+      th:text="${text}"
+      th:href="${href}"
+      >버튼</a
+    >
+  </body>
 </html>

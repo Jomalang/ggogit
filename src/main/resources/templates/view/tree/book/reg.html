@@ -30,6 +30,11 @@
 
         <form id="book-tree-input-form-id" class="book-tree-input-form" th:action="@{/tree/book/reg}" method="post" enctype="multipart/form-data">
 
+          <section>
+            <h1 class="none">씨앗 카테고리</h1>
+            <div th:replace="~{fragments/input :: default-data(name='seedCategoryType', value=${seed.value})}"></div>
+          </section>
+
           <section class="book-tree-input-form__photo-container">
             <h1 class="none">도서 이미지 입력</h1>
             <div th:replace="~{fragments/input :: book-input-img}"></div>
@@ -61,7 +66,7 @@
 
             <section id="filter-bg-blur" class="filter-tab-container none">
               <h1 class="none">카테고리 언더바 필터</h1>
-              <div th:replace="~{fragments/tab-filter :: filter-tab(label='*카테고리', name='bookCategory', values=${categories})}"></div>
+              <div th:replace="~{fragments/tab-filter :: filter-tab(label='*카테고리', name='bookCategoryType', values=${categories})}"></div>
             </section>
           </section>
 

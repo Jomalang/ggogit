@@ -18,6 +18,14 @@ public enum SeedCategoryType {
         this.description = description;
     }
 
+    public static boolean contains(String value) {
+        for (SeedCategoryType type : SeedCategoryType.values()) {
+            if (type.value.equals(value))
+                return true;
+        }
+        return false;
+    }
+
     public static SeedCategoryType of(String value) {
         for (SeedCategoryType type : SeedCategoryType.values()) {
             if (type.value.equals(value))

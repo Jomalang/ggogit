@@ -188,6 +188,7 @@ home-tree__reg-4--search-book__input
 
  .nav-container {
      position: fixed;
+     width: 100%;
      bottom: 0;
      z-index: 10;
  }

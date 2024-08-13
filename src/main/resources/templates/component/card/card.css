@@ -1074,3 +1074,75 @@ button {
   line-height: var(--line-height-main);
   letter-spacing: var(--letter-spacing-main);
 }
+
+/* ==================================
+branch-state
+===================================*/
+
+.branch-state-main {
+  box-shadow: var(--shadow-basic);
+  transition: all 0.2s linear;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px 24px;
+}
+
+.branch-state-main:hover {
+  box-shadow: var(--shadow-active);
+}
+
+.branch-state__header {
+  display: flex;
+  gap: 8px;
+}
+
+.branch-state__icon-box {
+  box-sizing: border-box;
+  background-color: var(--main1);
+  display: flex;
+  width: 40px;
+  height: 40px;
+  border-radius: 4px;
+  justify-content: center;
+  align-items: center;
+  padding: 8px;
+}
+
+.branch-state__box-image {
+  display: flex;
+  align-items: center;
+  justify-items: center;
+}
+
+.branch-state__name {
+  display: flex;
+  align-items: center;
+  color: var(--main1, #323a27);
+  font-size: 18px;
+  letter-spacing: var(--letter-spacing-main);
+  font-weight: var(--bold);
+}
+
+.branch-state__info {
+  display: flex;
+  justify-content: space-between;
+}
+
+.branch-state__stats {
+  display: flex;
+  gap: 6px;
+  font-size: 14px;
+  color: var(--text-sub, #767676);
+  font-weight: var(--regular);
+}
+
+.branch-state__nums {
+  color: var(--text-sub);
+  font-weight: var(--bold);
+}
+
+.branch-state__date {
+  color: var(--text-sub);
+  font-size: 12px;
+}

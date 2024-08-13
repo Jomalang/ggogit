@@ -66,16 +66,23 @@
      FRAGMENT: 도서 정보
      설명: 트리 생성 시 검색된 도서 정보 표현 화면
      ========================================== -->
-<div class="text-book-info" th:fragment="text-book-info(seed, title, author, publisher)">
+<div class="text-book-info" th:fragment="text-book-info(seed, title, authors,translators, publisher)">
   <div class="text-book-info__frame">
-    <p class="text-book-info__seed" th:text="${seed}">시/에세이</p>
+    <p class="text-book-info__seed" th:text="${seed}"></p>
   </div>
   <div class="text-book-info__category">
-    <p class="text-book-info__title" th:text="${title}">무정형의 삶</p>
+    <p class="text-book-info__title" th:text="${title}"></p>
   </div>
   <div class="text-book-info__create">
-    <span class="text-book-info-create-info" th:text="${author}">김민철</span>
+    <div class="text-book-info__create" th:each="author :${authors}">
+    <span class="text-book-info-create-info" th:text="${author}" ></span>
     <span class="text-book-info-create-info">·</span>
-    <span class="text-book-info-create-info" th:text="${publisher}">위즈덤 하우스</span>
+    </div>
+    <div class="text-book-info__create" th:if="${translators}" th:each="translator :${translators}">
+      <span class="text-book-info-create-info" th:text="${translator}" ></span>
+      <span class="text-book-info-create-info">·</span>
+    </div>
+
+    <span class="text-book-info-create-info" th:text="${publisher}"></span>
   </div>
 </div>

@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="ko">
 <body>
-
+<!--====================================
+tree 기본 정보
+========================================-->
 <div th:fragment="tree-info-card(date, pagecount)">
     <div class="card-tree-info">기본 정보</div>
     <div class="card-tree-info__frame">
@@ -15,5 +17,33 @@
         </div>
     </div>
 </div>
+
+<!-- =========================
+            branch-state
+      ========================== -->
+
+<div class="branch-state-main">
+    <div class="branch-state__header">
+        <div class="branch-state__icon-box">
+            <div>
+                <img
+                        class="branch-state__box-image"
+                        src="/src/main/resources/static/svg/branch-box--icon.svg"
+                        alt="브랜치 아이콘"
+                />
+            </div>
+        </div>
+        <p class="branch-state__name">브랜치 이름</p>
+    </div>
+    <div class="branch-state__info">
+        <div class="branch-state__stats">
+            <p>로그<span class="branch-state__nums" id="data-XXX">999+</span></p>
+            <p>좋아요<span class="branch-state__nums" id="data-XXX">32</span></p>
+            <p>조회<span class="branch-state__nums" id="data-XXX">32</span></p>
+        </div>
+        <p class="branch-state__date" id="data-XXX">2024-07-18</p>
+    </div>
+</div>
+
 </body>
 </html>

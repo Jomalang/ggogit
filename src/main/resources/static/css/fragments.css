@@ -103,7 +103,6 @@
     color: var(--main1);
 }
 .text-book-info__create{
-    width: 100%;
     display: flex;
     justify-content: left;
     gap: 2px;
@@ -834,4 +833,22 @@ button {
   line-height: var(--line-height-main);
   letter-spacing: var(--letter-spacing-main);
 
+}
+/* =========================
+    topbar-search-result-num
+          검색 결과 개수
+  ========================== */
+.link-cover-img{
+box-shadow: var(--shadow-basic);
+}
+.link-cover-img-anker{
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 126px;
+  background: transparent;
+}
+.link-cover-img-p {
+  display: flex;
+  justify-content: center;
 }

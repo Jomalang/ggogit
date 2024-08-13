@@ -1,6 +1,7 @@
 package Recorders.ggogit.controller.tree;
 
 import Recorders.ggogit.entity.BookCategoryType;
+import Recorders.ggogit.entity.SeedCategoryType;
 import Recorders.ggogit.entity.Tree;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,6 +29,27 @@ public class TreeController {
         }
         System.out.println(tree.toString());
         return tree;
+    }
+
+    @GetMapping("/etc/reg")
+    public String getEtcReg(
+            @RequestParam(value = "type", required = false) String type,
+            Model model
+    ) {
+        // hack type 데이터 로직 어디에 넣을지
+        SeedCategoryType seedCategoryType;
+        if (!SeedCategoryType.contains(type)) {
+            seedCategoryType = SeedCategoryType.IDEA;
+        } else {
+            seedCategoryType = SeedCategoryType.of(type);
+        }
+
+        if (seedCategoryType == SeedCategoryType.BOOK) {
+            seedCategoryType = SeedCategoryType.IDEA;
+        }
+
+        model.addAttribute("seed", seedCategoryType);
+        return "view/tree/etc/reg";
     }
 
     @GetMapping("/memoir/register/index")

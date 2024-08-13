@@ -150,5 +150,86 @@
         </label>
       </div>
 
+
+<!--  ==========================================
+      FRAGMENT: 로그 페이지 구간 기록
+      ========================================== -->
+    <div class="input-page-number-box" th:fragment="page-number">
+      <p class="input-page-number__title">페이지</p>
+      <div class="input-page-number__frame">
+        <label class="input-page-number__label">
+          <input
+                  class="input-page-number__input--start"
+                  name="startPage"
+                  type="number"
+                  placeholder="시작 페이지"
+                  min="0"
+          />
+        </label>
+        <label class="input-page-number__label">
+          <input
+                  class="input-page-number__input--end"
+                    name="endPage"
+                  type="number"
+                  placeholder="마지막 페이지"
+                  min="0"
+          />
+        </label>
+      </div>
+    </div>
+
+<!--  ==========================================
+      FRAGMENT: 태그 선택 입력 박스
+      ========================================== -->
+    <div class="input-tag-select-box" th:fragment="tag-select">
+        <p class="input-tag-select__label-text">선택</p>
+        <label class="input-tag-select__bg">
+            <div class="input-tag-select__button-box">
+              <!-- start 태그 리스트 3개 -->
+
+              <div class="input-tag-select__tag-box">
+                <ul class="input-tag-select__tags">
+                  <li class="input-tag-select__tag">
+                    <label class="input-tag-select__tag-label">
+                      <span class="input-tag-select__tag-text">태그sfasdfasdfasdfasdf 1</span>
+                      <button class="input-tag-select__tag-delete-btn">
+                        <img th:src="@{/svg/x-button.svg}" alt="next-button" />
+                      </button>
+                      <input class="none" name="tag" value="1" disabled />
+                    </label>
+                  </li>
+
+                  <li class="input-tag-select__tag">
+                    <label class="input-tag-select__tag-label">
+                      <span class="input-tag-select__tag-text">태그sadfsdfasdf 1</span>
+                      <button class="input-tag-select__tag-delete-btn">
+                        <img th:src="@{/svg/x-button.svg}" alt="next-button" />
+                      </button>
+                      <input class="none" name="tag" value="1" disabled />
+                    </label>
+                  </li>
+
+                  <li class="input-tag-select__tag">
+                    <label class="input-tag-select__tag-label">
+                      <span class="input-tag-select__tag-text">태그asdfasdfasdfasdfasdf 1</span>
+                      <button class="input-tag-select__tag-delete-btn">
+                        <img th:src="@{/svg/x-button.svg}" alt="next-button" />
+                      </button>
+                      <input class="none" name="tag" value="1" disabled />
+                    </label>
+                  </li>
+                </ul>
+
+                <!-- end 태그 리스트 3개 -->
+                <p class="input-tag-select__placeholder">선택해주세요</p>
+              </div>
+
+              <button class="input-tag-select__button" type="button">
+                <img th:src="@{/svg/next.svg}" alt="next-button" />
+              </button>
+            </div>
+        </label>
+    </div>
+
   </body>
 </html>

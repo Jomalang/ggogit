@@ -79,7 +79,7 @@
     margin: 60px 24px 30px 24px;
 }
 
-.book-tree-input-form__input-container {
+.input-form__input-container {
     margin: 60px 24px 30px 24px;
     height: 110px;
 }
@@ -192,3 +192,11 @@ home-tree__reg-4--search-book__input
      bottom: 0;
      z-index: 10;
  }
+
+.first-log-title-container {
+    margin: 30px 26px 40px 24px;
+}
+
+.first-log_page-input-container {
+    margin: 0 24px 34px 24px;
+}

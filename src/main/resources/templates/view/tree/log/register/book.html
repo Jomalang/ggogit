@@ -1,50 +1,66 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../../static/css/reset.css" />
+
+    <link th:href="@{/css/reset.css}" rel="stylesheet" />
+    <link th:href="@{/css/fragments.css}" rel="stylesheet" />
+    <link th:href="@{/css/layout.css}" rel="stylesheet" />
+
     <title>Document</title>
 </head>
 <body>
-    <header>
-        <h1 class="none">로그 생성</h1>
-        <!-- 컨포넌트 -->
-        <section>
-            <h2 class="none">이전 로그 정보</h2>
-            <!-- 컨포넌트 -->
-        </section>
 
+    <header>
+        <h1 class="none">나뭇잎 생성 페이지</h1>
+        <section class="tob-bar-back-container">
+            <h1 class="none">나뭇잎 생성 상단 바</h1>
+            <div th:replace="~{fragments/top-bar :: top-bar-back(title='나뭇잎 생성', link='#')}"></div>
+        </section>
     </header>
 
     <main>
+        <section class="first-log-img-container">
+            <h1 class="none">이전 로그 생성 이미지</h1>
+            <div th:replace="~{fragments/log :: frist-log}"></div>
+        </section>
+
+        <section class="first-log-title-container">
+            <h1 class="none"></h1>
+            <div th:replace="~{fragments/text :: text-main-title-center(title='트리 첫번째 기록', size='28')}"></div>
+        </section>
+
         <section>
-            <h2 class="none">로그 생성 데이터 입력</h2>
-            <!-- 컨포넌트 -->
-
-            <section>
-                <h3 class="none">로그 페이지</h3>
-                <!-- 컨포넌트 -->
+            <h1 class="none">로그 생성 데이터 입력</h1>
+            <section class="first-log_page-input-container">
+                <h1 class="none">로그 페이지</h1>
+                <div th:replace="~{fragments/input :: page-number}"></div>
             </section>
 
-            <section>
-                <h3 class="none">로그 태그</h3>
-                <!-- 컨포넌트 -->
+            <section class="input-form__input-container">
+                <h1 class="none">로그 태그 입력</h1>
+                <div th:replace="~{fragments/input :: tag-select}"></div>
             </section>
 
-            <section>
-                <h3 class="none">로그 제목</h3>
-                <!-- 컨포넌트 -->
+            <section class="input-form__input-container">
+                <h1 class="none">로그이름 입력</h1>
+                <div th:replace="~{fragments/input :: text-box(label='*제목', placeholder='로그 제목을 읿력해 주세요', name='title')}"></div>
             </section>
 
-            <section>
-                <h3 class="none">로그 내용</h3>
-                <!-- 컨포넌트 -->
+            <section class="book-tree-input-form__large-input-container">
+                <h1 class="none">로그 제목 입력</h1>
+                <div th:replace="~{fragments/input :: textarea-box(label='*내용', placeholder='로그 내용을 입력해 주세요', name='content')}"></div>
             </section>
 
-            <section>
-                <h3 class="none">로그 생성 버튼</h3>
-                <!-- 컨포넌트 -->
+            <section class="input-form__input-container">
+                <h1 class="none">공개성 선택</h1>
+                <div th:replace="~{fragments/input :: input-visibility(name='visibility')}"></div>
+            </section>
+
+            <section class="book-tree-submit-container">
+                <h1 class="none">로그 생성 버튼</h1>
+                <div th:replace="~{fragments/button :: submit-btn-full-bar(text='로그 생성 완료', id='submit-btn')}"></div>
             </section>
         </section>
     </main>

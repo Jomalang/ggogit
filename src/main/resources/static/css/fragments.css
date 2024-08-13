@@ -852,3 +852,79 @@ box-shadow: var(--shadow-basic);
   display: flex;
   justify-content: center;
 }
+/*==============================
+
+===============================*/
+.card-tree-info-cover-frame{
+  display: flex;
+  padding-left: 64px;
+  height: 70px;
+  align-items: flex-end;
+  position: relative;
+}
+.card-tree-info-cover{
+  width: 60px;
+  height: 90px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.card-tree-title{
+  font-size: 16px;
+  font-weight: var(--bold);
+  line-height: var(--line-height-main);
+  letter-spacing: var(--letter-spacing-main);
+}
+.card-book-title{
+  font-size: 14px;
+  font-weight: var(--medium);
+  line-height: var(--line-height-main);
+  letter-spacing: var(--letter-spacing-main);
+}
+.card-tree-info__detail-frame{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+.card-tree-info__detail-input{
+  display: none;
+  cursor: none;
+}
+.card-tree-info__detail{
+  padding-top: 7px;
+  margin-left: auto;
+  content: "자세히";
+  font-size: 10px;
+  cursor: pointer;
+}
+.card-tree-info__detail::after{
+  width: 7px;
+  height: 7px;
+  content: '';
+  display: inline-block;
+  align-items: center;
+  background-image: url('/svg/hidden-on.svg');
+  background-repeat: no-repeat;
+  background-size: auto;
+}
+
+.card-tree-info__detail-content{
+  display: none;
+}
+
+.card-tree-info__detail-input:checked + .card-tree-info__detail::after{
+  width: 7px;
+  height: 7px;
+  content: '';
+  align-items: center;
+  display: inline-block;
+  background-image: url('/svg/hidden-off.svg');
+  background-size: auto;
+}
+
+.card-tree-info__detail-input:checked ~ .card-tree-info__detail-content{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

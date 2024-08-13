@@ -62,4 +62,9 @@ public class TreeController {
         model.addAttribute("categories", BookCategoryType.values());
         return "view/tree/register/4-reg-search-book";
     }
+    @GetMapping("/branch/list")
+    public String getBranchList(Model model) {
+        model.addAttribute("categories", BookCategoryType.values());
+        return "view/tree/branch/list";
+    }
 }

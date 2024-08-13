@@ -135,9 +135,9 @@
 }
 
 /*
-home-tree__reg-4--search-book__input
+register__input
 */
-.home-tree__reg-4--search-book{
+.register{
     padding-top: 28px;
     padding-left: 24px;
     padding-bottom: 48px;
@@ -148,10 +148,14 @@ home-tree__reg-4--search-book__input
     letter-spacing: var(--letter-spacing-main);
 
 }
-.home-tree__reg-4--search-book__input-container{
+.register__input-container{
     padding-top: 60px;
     padding-left: 24px;
     padding-right: 24px;
+}
+.register__input-container--last{
+    padding: 60px 24px;
+
 }
 .tree-book-reg-search-book__title-container {
     width: 100%;
@@ -193,3 +197,20 @@ home-tree__reg-4--search-book__input
      bottom: 0;
      z-index: 10;
  }
+ .back-search-bar-container{
+     padding-top: 50px;
+     padding-left: 24px;
+     padding-right: 24px;
+ }
+.branch-tree-info-container{
+    height: 70px;
+    padding-top: 39px;
+    padding-left: 24px;
+    padding-right: 24px;
+}
+
+.branch-tree-detail-container{
+    padding-left: 24px;
+    padding-right: 24px;
+    background: var(--main2--opacity40);
+}

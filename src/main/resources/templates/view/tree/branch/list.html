@@ -3,19 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../../static/css/reset.css" />
+
+    <link th:href="@{/css/fragments.css}" rel="stylesheet" />
+    <link th:href="@{/css/layout.css}" rel="stylesheet" />
     <title>Document</title>
 </head>
 <body>
-    <header>
+    <header >
         <h1 class="none">트리 브랜지 세부 정보</h1>
+        <section class="back-search-bar-container">
         <!-- 컴포넌트 -->
+            <div th:replace="~{fragments/input :: input-back-search(placeholder='그의 운명에 대한 아주 개인적인 생각',
+                                href='#')}">
+            </div>
+        </section>
     </header>
 
     <main>
-        <section>
+        <section class="branch-tree-info-container">
             <h2 class="none">트리 세부 정보</h2>
             <!-- 컴포넌트 -->
+            <div class="card-tree-info-cover-frame">
+                <div class="card-tree-info-cover">
+                    <img src="/svg/card-tree-cover.svg" alt="cover">
+                </div>
+                <div>
+                    <p class="card-tree-title">자바 공부를 위한 트리</p>
+                    <p class="card-book-title">혼자 공부하는 자바</p>
+                </div>
+            </div>
+        </section>
+        <section class="branch-tree-detail-container">
+            <div class="card-tree-info__detail-frame">
+                <input
+                        class="card-tree-info__detail-input"
+                        type="checkbox"
+                        id="card-tree-info__detail"
+                />
+                <label
+                        class="card-tree-info__detail"
+                        for="card-tree-info__detail"
+                >자세히</label>
+                <section class="card-tree-info__detail-content">
+                    <section>
+                        <div>
+                            dddd
+                        </div>
+                    </section>
+                    <section>
+
+                    </section>
+                    <section></section>
+                    <section></section>
+                </section>
+            </div>
         </section>
 
         <section>

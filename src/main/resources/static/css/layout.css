@@ -95,7 +95,7 @@
 }
 
 .book-tree-submit-container {
-    margin: 0 24px 200px 24px;
+    margin: 120px 24px 200px 24px;
 }
 
 /* /tree/register/3-book-search-no-data.html */
@@ -184,4 +184,10 @@ home-tree__reg-4--search-book__input
  .tree-info-card__container{
      padding-top: 40px;
      padding-left: 24px;
+ }
+
+ .nav-container {
+     position: fixed;
+     bottom: 0;
+     z-index: 10;
  }

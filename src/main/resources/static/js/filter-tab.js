@@ -5,7 +5,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const filterBg = document.getElementById("filter-bg-blur");
     const filterTab = document.getElementById("filter-tab");
 
-    // 논리 해결
     filterTabBtn.addEventListener("click", () => {
         filterBg.classList.remove("none");
         setTimeout(() => filterTab.classList.add("up"), 10);

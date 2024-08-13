@@ -7,7 +7,7 @@
     <div
       id="filter-tab"
       class="filter-tab__box"
-      th:fragment="filter-tab(title, name, values)"
+      th:fragment="filter-tab(label, name, values)"
     >
       <header class="filter-tab__header">
         <button
@@ -17,7 +17,7 @@
         >
           <img th:src="@{/svg/tab-back.svg}" alt="뒤로가기 버튼" />
         </button>
-        <h1 class="filter-tab__header--title" th:text="${title}">필터명</h1>
+        <h1 class="filter-tab__header--title" th:text="${label}">필터명</h1>
       </header>
 
       <ul class="filter-tab__list">

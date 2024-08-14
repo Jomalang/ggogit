@@ -38,7 +38,7 @@
                 <div th:replace="~{fragments/input :: page-number}"></div>
             </section>
 
-            <section class="input-form__input-container">
+            <section class="input-form__select-tag-input-container">
                 <h1 class="none">로그 태그 입력</h1>
                 <div th:replace="~{fragments/input :: tag-select}"></div>
             </section>
@@ -64,6 +64,11 @@
             </section>
         </section>
     </main>
-    <footer></footer>
+
+    <aside class="nav-container">
+        <h1 class="none">네비게이션 하단</h1>
+        <nav th:replace="fragments/nav :: navigation-bar(active='home')"></nav>
+    </aside>
+
 </body>
 </html>

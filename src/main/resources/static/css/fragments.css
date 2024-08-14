@@ -987,7 +987,6 @@ button {
   width: 100%;
   display: flex;
   flex-direction: column;
-  background-color: red;
 }
 
 .input-tag-select__bg {
@@ -1006,10 +1005,10 @@ button {
 .input-tag-select__button-box {
   display: flex;
   width: 100%;
-  flex-wrap: wrap;
   flex-direction: row;
   border-radius: 12px;
   align-items: center;
+  padding: 16px;
   justify-content: space-between;
   background-color: var(--main3, #f5f8f1);
 }
@@ -1020,7 +1019,7 @@ button {
 }
 
 .input-tag-select__placeholder {
-  margin-left: 16px;
+  margin: 8px 16px 4px 16px;
 }
 
 .input-tag-select__button {
@@ -1028,19 +1027,30 @@ button {
   width: 56px;
 }
 
+.input-tag-select__tag-label {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
 .input-tag-select__tags {
   margin: 0 0 0 16px;
-  display: flex;
+  display: inline-block;
   flex-direction: row;
 }
 
 .input-tag-select__tag-text {
+  display: block;
   font-size: 14px;
   color: var(--white, #ffffff);
 }
 
 .input-tag-select__tag {
+  display: inline-block;
+  flex-direction: row;
   border-radius: 12px;
+  margin: 4px 0 4px 0;
   padding: 6px 12px 6px 12px;
   background-color: var(--main1, #323a27);
 }

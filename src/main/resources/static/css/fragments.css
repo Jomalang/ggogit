@@ -72,49 +72,49 @@
      FILE: background.html
 /   ========================================== */
 
-.text-book-info{
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    width: 100%;
-    height: 137px;
+.text-book-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 100%;
+  height: 137px;
 }
-.text-book-info-frame{
+.text-book-info-frame {
   width: 100%;
   display: flex;
   background: var(--white);
 }
-.text-book-info__seed{
-    display: inline;
-    padding: 2px 8px;
-    border-radius: 4px;
-    font-size: 10px;
-    font-weight: var(--medium);
-    line-height: var(--line-height-main);
-    letter-spacing: var(--letter-spacing-main);
-    color: var(--white);
-    background: var(--main1);
+.text-book-info__seed {
+  display: inline;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: var(--medium);
+  line-height: var(--line-height-main);
+  letter-spacing: var(--letter-spacing-main);
+  color: var(--white);
+  background: var(--main1);
 }
-.text-book-info__title{
-    font-size: 24px;
-    font-weight: var(--bold);
-    line-height: var(--line-height-main);
-    letter-spacing: var(--letter-spacing-main);
-    color: var(--main1);
+.text-book-info__title {
+  font-size: 24px;
+  font-weight: var(--bold);
+  line-height: var(--line-height-main);
+  letter-spacing: var(--letter-spacing-main);
+  color: var(--main1);
 }
-.text-book-info__create{
-    width: 100%;
-    display: flex;
-    justify-content: left;
-    gap: 2px;
+.text-book-info__create {
+  width: 100%;
+  display: flex;
+  justify-content: left;
+  gap: 2px;
 }
-.text-book-info-create-info{
-    display: flex;
-    font-size: 14px;
-    font-weight: var(--regular);
-    line-height: var(--line-height-main);
-    letter-spacing: var(--letter-spacing-main);
-    color: var(--text-sub);
+.text-book-info-create-info {
+  display: flex;
+  font-size: 14px;
+  font-weight: var(--regular);
+  line-height: var(--line-height-main);
+  letter-spacing: var(--letter-spacing-main);
+  color: var(--text-sub);
 }
 /*  ========================================== /
      FRAGMENT: FUll 가로 버튼 - link 버전
@@ -720,6 +720,7 @@ button {
 .search__form {
   display: flex;
   align-items: center;
+  gap: 18px;
 }
 .search-bar {
   background: var(--main2);
@@ -803,8 +804,8 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
-}/*card- 기본정보 */
-.card-tree-info{
+} /*card- 기본정보 */
+.card-tree-info {
   height: 41px;
   border-bottom: 1px solid var(--main1);
   font-size: 20px;
@@ -813,25 +814,24 @@ button {
   line-height: var(--line-height-main);
   letter-spacing: var(--letter-spacing-main);
 }
-.card-tree-info__frame{
+.card-tree-info__frame {
   width: 245px;
   height: 75px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.card-tree-info__title{
+.card-tree-info__title {
   font-size: 14px;
   color: var(--main1, #323a27);
   font-weight: var(--medium);
   line-height: var(--line-height-main);
   letter-spacing: var(--letter-spacing-main);
 }
-.card-tree-info__content{
+.card-tree-info__content {
   font-size: 14px;
   color: var(--text-sub, #767676);
   font-weight: var(--regular);
   line-height: var(--line-height-main);
   letter-spacing: var(--letter-spacing-main);
-
 }

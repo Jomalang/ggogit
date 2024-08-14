@@ -108,8 +108,8 @@
     </div>
 
     <!-- ===================================
-                input-back-search
-            검색버튼 - 뒤로 가기 버튼 있음. 
+                input-back-search - anchor
+            검색버튼 - 뒤로 가기 버튼 있음. - 앵커버전
       ==================================== -->
     <div
       class="search__form"
@@ -141,14 +141,63 @@
       </form>
     </div>
 
-<!--  ==========================================
+    <!-- ===================================
+                input-back-search - input
+            검색버튼 - 뒤로 가기 버튼 있음. - text input(post)버전
+      ==================================== -->
+    <div
+      class="search__form"
+      th:fragment="input-back-search-text(placeholder, action, name)"
+    >
+      <div>
+        <a href="#">
+          <img
+            src="/src/main/resources/static/svg/back.svg"
+            th:src="@{/svg/back.svg}"
+            alt="back button"
+          />
+        </a>
+      </div>
+      <form class="search-bar" action="" th:action="${action}" method="post">
+        <label class="search-bar--label">
+          <input
+            class="search-bar--input"
+            type="text"
+            th:name="${name}"
+            th:id="${name}"
+            th:placeholder="${placeholder}"
+            autocomplete="off"
+          />
+          <button class="search-bar--close" type="reset">
+            <img
+              src="/src/main/resources/static/svg/close-button.svg"
+              th:src="@{/svg/close-button.svg}"
+              alt="close-btn"
+            />
+          </button>
+        </label>
+        <button type="submit">
+          <img
+            src="/src/main/resources/static/svg/lens.svg"
+            th:src="@{/svg/lens.svg}"
+            alt="lens"
+          />
+        </button>
+      </form>
+    </div>
+
+    <!--  ==========================================
       FRAGMENT: 고정 데이터 화면에 안보임
       ========================================== -->
-      <div class="input-none none" th:fragment="default-data(name, value)">
-        <label class="input-none__label">
-          <input class="input-none__input" type="text" th:name="${name}" th:value="${value}" />
-        </label>
-      </div>
-
+    <div class="input-none none" th:fragment="default-data(name, value)">
+      <label class="input-none__label">
+        <input
+          class="input-none__input"
+          type="text"
+          th:name="${name}"
+          th:value="${value}"
+        />
+      </label>
+    </div>
   </body>
 </html>

@@ -4,8 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link th:href="@{/css/reset.css}" rel="stylesheet" />
-    <link th:href="@{/css/styles.css}" rel="stylesheet" />
+    <link th:href="@{/common/variables.css}" rel="stylesheet" />
+    <link th:href="@{/css/fragments.css}" rel="stylesheet" />
+    <link th:href="@{/css/layout.css}" rel="stylesheet" />
 
     <title>나의 트리 검색</title>
   </head>
@@ -13,235 +14,33 @@
   <body>
     <header>
       <h1 class="none">나의 트리</h1>
-      <form class="back-search__form">
-        <section class="back-search-container">
-          <h1 class="none">트리 검색</h1>
-          <!-- 컴포넌트 start -->
-          <div class="back-search">
-            <a class="back-search__back-link" th:href="@{/home}">
-              <div class="back-search__icon-box">
-                <img
-                  class="back-search__icon"
-                  th:src="@{/svg/back-icon.svg}"
-                  alt=""
-                />
-              </div>
-            </a>
-            <div class="back-search__input-box">
-              <input
-                class="back-search__input-text"
-                type="text"
-                placeholder="트리 이름을 작성해주세요"
-              />
-              <img
-                class="back-search__lens-icon"
-                th:src="@{/svg/lens.svg}"
-                alt=""
-              />
-            </div>
-          </div>
-          <!-- 컴포넌트 end -->
-        </section>
+      <section class="reg-book-search-container">
+        <h2 class="none">트리 검색</h2>
+        <!-- 컴포넌트 start -->
+        <div
+          th:replace="~{fragments/input::input-back-search-text(placeholder='검색할 트리를 입력해주세요', action='', name='treeSearchText')}"
+        ></div>
+      </section>
 
-        <section class="search-filter-container">
-          <h1 class="none">트리 검색 필터</h1>
+      <section>
+        <h2 class="none">검색 필터 리스트</h2>
+        <!-- 컴포넌트 start -->
+      </section>
 
-          <section class="search-check-box-container">
-            <h1 class="none">검색 범위 체크박스</h1>
-            <!-- 컴포넌트 start -->
-            <div class="search-filter-log">
-              <label
-                class="search-filter-log__checkbox-labal"
-                for="search-log-filter"
-                ><input
-                  class="search-filter-log__checkbox-input"
-                  type="checkbox"
-                  id="search-log-filter"
-                  name="log-filter"
-                />
-                <span class="search-filter-log__checkbox-input-text"
-                  >나뭇잎 전체 검색</span
-                >
-              </label>
-            </div>
-            <!-- 컴포넌트 end -->
-          </section>
-
-          <section class="community-tab-bar__filter-btn-box">
-            <h1 class="none">필터 리스트</h1>
-            <!-- 컴포넌트 start -->
-            <ul class="community-tab-bar__filter-btn-list">
-              <li class="community-tab-bar__filter-btn-item">
-                <button class="community-tab-bar__filter-btn--white">
-                  카테고리
-                  <svg
-                    width="12"
-                    height="7"
-                    viewBox="0 0 12 7"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M0.799805 1.2998L5.80062 5.8798L10.7998 1.2998"
-                      stroke="#767676"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    />
-                  </svg>
-                </button>
-
-                <section class="community-tab-bar__filter-tab-box none">
-                  <div class="community-tab-bar__filter-tab-list">
-                    <header class="community-tab-bar__filter-tab-header">
-                      <button class="community-tab-bar__filter-tab-back-btn">
-                        <img src="@{/svg/tab-back.svg}" alt="뒤로가기 버튼" />
-                      </button>
-                      <h1 class="community-tab-bar__filter-tab-title">
-                        카테고리 필터
-                      </h1>
-                    </header>
-                    <ul class="community-tab-bar__filter-list">
-                      <li class="community-tab-bar__filter-item">
-                        <label class="community-tab-bar__filter-item-label">
-                          <input
-                            class="community-tab-bar__filter-item-radio"
-                            type="radio"
-                            name="filter"
-                            value="logs"
-                            checked
-                          />
-                          <span
-                            class="community-tab-bar__filter-item-label-text"
-                            >필터 정보</span
-                          >
-                          <div class="community-tab-bar__filter-icon">
-                            <img
-                              class="community-tab-bar__filter-icon-img"
-                              src="@{/svg/tab-check-btn.svg}"
-                              alt="필터 버튼"
-                            />
-                          </div>
-                        </label>
-                      </li>
-                      <li class="community-tab-bar__filter-item">
-                        <label class="community-tab-bar__filter-item-label">
-                          <input
-                            class="community-tab-bar__filter-item-radio"
-                            type="radio"
-                            name="filter"
-                            value="logs"
-                          />
-                          <span
-                            class="community-tab-bar__filter-item-label-text"
-                            >필터 정보</span
-                          >
-                          <div class="community-tab-bar__filter-icon">
-                            <img
-                              class="community-tab-bar__filter-icon-img"
-                              src="@{/svg/tab-check-btn.svg}"
-                              alt="필터 버튼"
-                            />
-                          </div>
-                        </label>
-                      </li>
-                    </ul>
-                  </div>
-                </section>
-              </li>
-            </ul>
-            <!-- 컴포넌트 end -->
-          </section>
-        </section>
-
-        <section class="filter-statistics-container">
-          <h1 class="none">리스트 결과 페이지</h1>
-          <!-- 컴포넌트 start -->
-          <div class="filter-statistics-bar">
-            <p class="filter-statistics-bar__list-count">
-              <span class="filter-statistics-bar__list-count-num">0</span>개의
-              검색결과
-            </p>
-            <button class="filter-statistics-bar__list-sort-btn">
-              최근 수정한 순
-              <svg
-                width="5"
-                height="8"
-                viewBox="0 0 5 8"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M1 0.5L4 4L1 7.5"
-                  stroke="#767676"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-              </svg>
-            </button>
-          </div>
-          <!-- 컴포넌트 end -->
-
-          <section class="정렬 필터 리스트 none">
-            <!-- 컴포넌트 start -->
-            <!-- 컴포넌트 end -->
-          </section>
-        </section>
-      </form>
+      <section>
+        <h1 class="none">검색 결과 및 최근 수정한 순</h1>
+        <!-- 컴포넌트 start -->
+      </section>
     </header>
 
     <main>
       <section class="search-tree-list-container">
-        <h1 class="none">트리 검색 목록</h1>
+        <h1 class="none">트리 검색 결과</h1>
       </section>
     </main>
 
     <aside>
       <!-- 컴포넌트 start -->
-      <nav class="main-nav">
-        <ul class="main-nav__list">
-          <a class="main-nav__link" href="">
-            <li class="main-nav__item">
-              <img
-                class="main-nav__icon"
-                th:src="@{/svg/nav-home--active.svg}"
-                alt=""
-              />
-              <p class="main-nav__text--active">홈</p>
-            </li>
-          </a>
-          <a class="main-nav__link" href="">
-            <li class="main-nav__item">
-              <img
-                class="main-nav__icon"
-                th:src="@{/svg/nav-search.svg}"
-                alt=""
-              />
-              <p class="main-nav__text">탐색</p>
-            </li>
-          </a>
-          <a class="main-nav__link" href="">
-            <li class="main-nav__item">
-              <img
-                class="main-nav__icon"
-                th:src="@{/svg/nav-cummunity.svg}"
-                alt=""
-              />
-              <p class="main-nav__text">커뮤니티</p>
-            </li>
-          </a>
-          <a class="main-nav__link" href="">
-            <li class="main-nav__item">
-              <img
-                class="main-nav__icon"
-                th:src="@{/svg/nav-mypage.svg}"
-                alt=""
-              />
-              <p class="main-nav__text">나의 꼬깃</p>
-            </li>
-          </a>
-        </ul>
-      </nav>
-      <!-- 컴포넌트 end -->
     </aside>
   </body>
 </html>

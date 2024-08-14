@@ -8,6 +8,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/tree/log")
 public class LogController {
 
+    @GetMapping("/register/first/book")
+    public String getBookFirstBranch() {
+        return "view/tree/log/register/first/book";
+    }
+
+    @GetMapping("/register/first/etc")
+    public String getEtcFirstBranch() {
+        return "view/tree/log/register/first/etc";
+    }
+
     @GetMapping("/register/book")
     public String getBookBranch() {
         return "view/tree/log/register/book";

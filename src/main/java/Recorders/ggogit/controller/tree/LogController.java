@@ -12,4 +12,9 @@ public class LogController {
     public String getBookBranch() {
         return "view/tree/log/register/book";
     }
+
+    @GetMapping("/register/etc")
+    public String getEtcBranch() {
+        return "view/tree/log/register/etc";
+    }
 }

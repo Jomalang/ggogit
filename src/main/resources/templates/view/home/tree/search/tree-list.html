@@ -11,7 +11,7 @@
     <title>나의 트리 검색</title>
   </head>
 
-  <body>
+  <body th:object="${resultMap}">
     <header class="reg-book-search-container">
       <h1 class="none">나의 트리</h1>
       <section>
@@ -32,14 +32,19 @@
       <section>
         <h1 class="none">검색 결과 및 최근 수정한 순서</h1>
         <div
-          th:replace="~{fragments/top-bar::topbar-search-result-num(0)}"
+          th:replace="~{fragments/top-bar::topbar-search-result-num(*{size})}"
         ></div>
       </section>
     </header>
 
     <main>
-      <section class="margin-bottom500">
+      <section class="tree-card-list">
         <h1 class="none">트리 검색 결과</h1>
+        <div th:each="tree : *{values}">
+          <div
+            th:replace="~{fragments/card::card-tree-details(tree = ${tree})}"
+          ></div>
+        </div>
       </section>
     </main>
 

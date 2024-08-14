@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="https://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>filter</title>
+  </head>
+  <body>
+    <!-- =============================
+                나뭇잎 전체 검색
+                filter-search-log 
+        ============================== -->
+    <div class="search-filter-log" th:fragment="search-filter-log(text)">
+      <label class="search-filter-log__checkbox-labal" for="search-log-filter"
+        ><input
+          class="search-filter-log__checkbox-input"
+          type="checkbox"
+          id="search-log-filter"
+          name="log-filter"
+        />
+        <span class="search-filter-log__checkbox-input-text" th:text="${text}"
+          >나뭇잎 전체 검색</span
+        >
+      </label>
+    </div>
+  </body>
+</html>

@@ -161,8 +161,11 @@
     FRAGMENT: 네비게이션바
 /   ========================================== */
 .nav-box {
+  width: 100%;
   box-shadow: 0 -5px 10px -5px rgba(0, 0, 0, 0.3);
   background-color: var(--white, #ffffff);
+  position: fixed;
+  bottom: 0px;
 }
 
 .nav-box__list {
@@ -834,4 +837,106 @@ button {
   font-weight: var(--regular);
   line-height: var(--line-height-main);
   letter-spacing: var(--letter-spacing-main);
+}
+/* =============================
+        나뭇잎 전체 검색
+         search-filter-log 
+    ============================== */
+
+.search-filter {
+  display: flex;
+  justify-content: flex-start;
+  gap: 10px;
+}
+
+.search-filter-log__checkbox-input {
+  display: none;
+}
+
+.search-filter-log__checkbox-input-text {
+  display: block;
+  width: fit-content;
+  font-size: 12px;
+  font-weight: var(--medium, 500);
+  color: var(--text-sub, #767676);
+  border-radius: 8px;
+  background-color: var(--btn-no-active);
+  padding: 12px 20px;
+  cursor: pointer;
+  user-select: none;
+  flex-shrink: 0;
+}
+
+.search-filter-log__checkbox-input:checked
+  + .search-filter-log__checkbox-input-text {
+  background-color: var(--main1, #323a27);
+  color: var(--white, #ffffff);
+}
+/* ================ */
+/* tree card */
+/* ================ */
+.card-tree-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.card-tree-detail {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 40px;
+}
+
+.card-tree__book-cover {
+  width: 80px;
+  height: 120px;
+  margin-right: 8px;
+}
+
+.card-tree-detail__box {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  line-height: var(--line-height-main);
+  letter-spacing: var(--letter-spacing-main);
+  transform: translateY(-8px);
+}
+
+.card-tree-detail__tags {
+  line-height: var(--line-height-sub);
+}
+
+.card-tree-detail__tag {
+  color: var(--text-sub);
+  font-size: 10px;
+  margin-right: 2px;
+}
+
+.card-tree-detail__name {
+  font-size: 18px;
+  font-weight: var(--bold);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.card-tree-detail__explanation {
+  font-size: 14px;
+  font-weight: var(--regular);
+  color: var(--text-sub);
+}
+
+.card-tree-detail__info {
+  font-size: 14px;
+  font-weight: var(--regular);
+  color: var(--text-sub);
+}
+
+.card-tree-detail__info-created-date {
+  font-size: 14px;
+  font-weight: var(--regular);
+  color: var(--text-sub);
+  display: flex;
+  justify-content: end;
+  transform: translateY(8px);
 }

@@ -3,6 +3,7 @@ package Recorders.ggogit.entity;
 import lombok.*;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -24,6 +25,7 @@ public class Tree {
     private Boolean visibility;
     private Timestamp createdAt;
     private Timestamp updatedAt;
+    private Boolean complete;
 
     public void setSeedCategoryType(String seedCategory) {
         this.seedCategoryType = SeedCategoryType.of(seedCategory);
@@ -31,5 +33,26 @@ public class Tree {
 
     public void setBookCategoryType(String bookCategory) {
         this.bookCategoryType = BookCategoryType.of(bookCategory);
+    }
+
+    public static Tree createTestTree() {
+        Tree testTree = new Tree();
+        testTree.setId(1L);
+        testTree.setSeedCategoryType("book");
+        testTree.setImgUrl("card-felt__cover.svg");
+        testTree.setBookName("testBook");
+        testTree.setAuthor("testAuthor");
+        testTree.setPublisher("testPub");
+        testTree.setTotalPage(100);
+        testTree.setBookCategoryType("nonFiction");
+        testTree.setTreeName("testTreeName");
+        testTree.setDescription("testDes");
+        testTree.setVisibility(true);
+        testTree.setCreatedAt(Timestamp.valueOf(LocalDateTime.now()));
+        testTree.setUpdatedAt(Timestamp.valueOf(LocalDateTime.now()));
+        testTree.setComplete(true);
+
+        return testTree;
+
     }
 }

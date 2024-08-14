@@ -212,5 +212,6 @@ register__input
 .branch-tree-detail-container{
     padding-left: 24px;
     padding-right: 24px;
+
     background: var(--main2--opacity40);
 }

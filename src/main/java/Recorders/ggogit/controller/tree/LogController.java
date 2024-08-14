@@ -27,4 +27,9 @@ public class LogController {
     public String getEtcBranch() {
         return "view/tree/log/register/etc";
     }
+
+    @GetMapping("/list")
+    public String getLogList() {
+        return "view/tree/log/list";
+    }
 }

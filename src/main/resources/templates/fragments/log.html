@@ -30,5 +30,144 @@
     </div>
 </div>
 
+<!-- ==========================================
+     FRAGMENT: 로그
+     ========================================== -->
+<div class="log-item" th:fragment="log-item(type, title, date, link, tags)">
+
+    <section class="log-item__type--1" th:if="${type == '1'}">
+        <div class="log-item__branch-img--1">
+            <div class="log-item__circle--1"></div>
+            <div class="log-item__line--1"></div>
+        </div>
+        <a class="log-item__link" href="">
+            <div class="log-item__text-box">
+                <p class="log-item__title" th:text="${title}">로그 제목입니다.</p>
+                <p class="log-item__date" th:text="${date}">2024-07-18</p>
+                <ul class="log-item__tags">
+                    <li class="log-item__tag">태그</li>
+                    <li class="log-item__tag">태그</li>
+                    <li class="log-item__tag">태그</li>
+                </ul>
+            </div>
+        </a>
+    </section>
+
+    <section class="log-item__type--2" th:if="${type == '2'}">
+        <div class="log-item__branch-img--2">
+            <div class="log-item__line-top--2"></div>
+            <div class="log-item__circle--2"></div>
+            <div class="log-item__line-bot--2"></div>
+        </div>
+        <div class="log-item__info-box">
+            <div class="log-item__right-branch-img--2">
+                <div class="log-item__line-right--2"></div>
+            </div>
+            <a class="log-item__link" href="">
+                <div class="log-item__text-box--2">
+                    <p class="log-item__title" th:text="${title}">로그 제목입니다.</p>
+                    <p class="log-item__date" th:text="${date}">2024-07-18</p>
+                    <ul class="log-item__tags">
+                        <li class="log-item__tag">태그</li>
+                        <li class="log-item__tag">태그</li>
+                        <li class="log-item__tag">태그</li>
+                    </ul>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <section class="log-item__type--3" th:if="${type == '3'}">
+
+        <div class="log-item__left-branch-img--3">
+            <div class="log-item__line-left--3"></div>
+        </div>
+
+        <div class="log-item__branch-img--3">
+            <div class="log-item__line-top--3"></div>
+            <div class="log-item__circle--3"></div>
+            <div class="log-item__line-bot--3"></div>
+        </div>
+        <div class="log-item__info-box">
+            <div class="log-item__right-branch-img--3">
+                <div class="log-item__line-right--3"></div>
+            </div>
+            <a class="log-item__link" href="">
+                <div class="log-item__text-box--3">
+                    <p class="log-item__title" th:text="${title}">로그 제목입니다.</p>
+                    <p class="log-item__date" th:text="${date}">2024-07-18</p>
+                    <ul class="log-item__tags">
+                        <li class="log-item__tag">태그</li>
+                        <li class="log-item__tag">태그</li>
+                        <li class="log-item__tag">태그</li>
+                    </ul>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <section class="log-item__type--4" th:if="${type == '4'}">
+        <div class="log-item__branch-img--3">
+            <div class="log-item__line-top--3"></div>
+            <div class="log-item__circle--3"></div>
+            <div class="log-item__line-bot--3"></div>
+        </div>
+        <a class="log-item__link" href="">
+            <div class="log-item__text-box--4">
+                <p class="log-item__title" th:text="${title}">로그 제목입니다.</p>
+                <p class="log-item__date" th:text="${date}">2024-07-18</p>
+                <ul class="log-item__tags">
+                    <li class="log-item__tag">태그</li>
+                    <li class="log-item__tag">태그</li>
+                    <li class="log-item__tag">태그</li>
+                </ul>
+            </div>
+        </a>
+    </section>
+
+    <section class="log-item__type--3" th:if="${type == '5'}">
+
+        <div class="log-item__left-branch-img--3">
+            <div class="log-item__line-left--3"></div>
+        </div>
+
+        <div class="log-item__branch-img--3">
+            <div class="log-item__line-top--3"></div>
+            <div class="log-item__circle--3"></div>
+            <div class="log-item__line-bot--3"></div>
+        </div>
+        <a class="log-item__link" href="">
+            <div class="log-item__text-box--5">
+                <p class="log-item__title" th:text="${title}">로그 제목입니다.</p>
+                <p class="log-item__date" th:text="${date}">2024-07-18</p>
+                <ul class="log-item__tags">
+                    <li class="log-item__tag">태그</li>
+                    <li class="log-item__tag">태그</li>
+                    <li class="log-item__tag">태그</li>
+                </ul>
+            </div>
+        </a>
+    </section>
+
+    <section class="log-item__type--6" th:if="${type == '6'}">
+        <div class="log-item__branch-img--3">
+            <div class="log-item__line-top--3"></div>
+            <div class="log-item__circle--3 log-item__circle--check"></div>
+        </div>
+        <a class="log-item__link" href="">
+            <div class="log-item__text-box--4">
+                <p class="log-item__title" th:text="${title}">로그 제목입니다.</p>
+                <p class="log-item__date" th:text="${date}">2024-07-18</p>
+                <ul class="log-item__tags">
+                    <li class="log-item__tag">태그</li>
+                    <li class="log-item__tag">태그</li>
+                    <li class="log-item__tag">태그</li>
+                </ul>
+            </div>
+        </a>
+    </section>
+
+</div>
+
 </body>
 </html>

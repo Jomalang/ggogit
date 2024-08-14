@@ -22,6 +22,9 @@
   --bg: #e5eddb;
   --bg-blur: #666666;
 
+  /* Log */
+  --branch-left: #D6D8D4;
+
   /* Colors */
   --text-main: #323a27;
   --text-sub: #767676;

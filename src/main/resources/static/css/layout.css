@@ -204,3 +204,53 @@ home-tree__reg-4--search-book__input
 .input-form__select-tag-input-container {
     margin: 0 24px 34px 24px;
 }
+
+.before-log-img-container {
+    margin: 0 24px;
+}
+
+.before-log-title-container {
+    margin: 60px 26px 56px 24px;
+}
+
+.before-log_page-input-container {
+    margin: 0 24px 24px 24px;
+}
+
+.log-list-header-container {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    z-index: 10;
+}
+
+.log-path-container {
+    width: auto;
+    padding: 0 24px 0 24px;
+    background-color: var(--main2, #e5eddb);
+}
+
+.log-list-date-title-container {
+    margin: 14px 24px 0 24px;
+    position: absolute;
+    right: 0;
+    z-index: 20;
+}
+
+.log-list-bot-bar-container {
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    z-index: 10;
+}
+
+.log-list-bot-btn-container {
+    margin: 0 24px 16px 24px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.log-list-bot-bar-info-container {
+    z-index: 10;
+}

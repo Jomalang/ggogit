@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<body>
+
+<!-- ==========================================
+     FRAGMENT: 로그 경로 바
+     ========================================== -->
+<div class="log-path-box" th:fragment="log-path(tree, branch, log)">
+    <p class="log-path-box__frame">
+        <span class="log-path-box__tree-name">트리 이름</span>
+        /
+        <span class="log-path-box__branch-name">브랜치 이름</span>
+        /
+        <span class="log-path-box__log-name">로그 제목</span>
+    </p>
+</div>
+
+</body>
+</html>

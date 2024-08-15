@@ -27,14 +27,13 @@
   position: relative;
 }
 .header-search-link__placeholder {
-  color: #767676;
-  text-align: center;
-  font-family: "Pretendard-SemiBold", sans-serif;
+  color: var(--text-sub);
   font-size: 14px;
-  line-height: 140%;
-  letter-spacing: -0.0025em;
-  font-weight: 600;
+  line-height: var(--line-height-main);
+  letter-spacing: var(--letter-spacing-main);
+  font-weight: var(--medium);
   position: relative;
+  transform: translateY(8%);
 }
 .header-search-link__icon {
   flex-shrink: 0;
@@ -72,28 +71,28 @@
      FILE: background.html
 /   ========================================== */
 
-.text-book-info{
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    width: 100%;
-    height: 137px;
+.text-book-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 100%;
+  height: 137px;
 }
-.text-book-info-frame{
+.text-book-info-frame {
   width: 100%;
   display: flex;
   background: var(--white);
 }
-.text-book-info__seed{
-    display: inline;
-    padding: 2px 8px;
-    border-radius: 4px;
-    font-size: 10px;
-    font-weight: var(--medium);
-    line-height: var(--line-height-main);
-    letter-spacing: var(--letter-spacing-main);
-    color: var(--white);
-    background: var(--main1);
+.text-book-info__seed {
+  display: inline;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: var(--medium);
+  line-height: var(--line-height-main);
+  letter-spacing: var(--letter-spacing-main);
+  color: var(--white);
+  background: var(--main1);
 }
 .text-book-info__title{
     font-size: 24px;
@@ -231,7 +230,6 @@
     ========================================== */
 .text-main-title {
   color: var(--main1, #323a27);
-  text-align: center;
   font-weight: var(--bold, 700);
 }
 
@@ -689,6 +687,7 @@
     FRAGMENT: 짧은 녹색 버튼 - submit
 /   ========================================== */
 .text__btn--green {
+  display: inline-block;
   background-color: var(--main1);
   color: var(--white);
   box-shadow: var(--shadow-basic);
@@ -831,13 +830,114 @@ button {
   line-height: var(--line-height-main);
   letter-spacing: var(--letter-spacing-main);
 }
-.card-tree-info__content{
+.card-tree-info__content {
   font-size: 14px;
   color: var(--text-sub, #767676);
   font-weight: var(--regular);
   line-height: var(--line-height-main);
   letter-spacing: var(--letter-spacing-main);
-v
+}
+/* =============================
+        나뭇잎 전체 검색
+         search-filter-log
+    ============================== */
+
+.search-filter {
+  display: flex;
+  justify-content: flex-start;
+  gap: 10px;
+}
+
+.search-filter-log__checkbox-input {
+  display: none;
+}
+
+.search-filter-log__checkbox-input-text {
+  display: block;
+  width: fit-content;
+  font-size: 12px;
+  font-weight: var(--medium, 500);
+  color: var(--text-sub, #767676);
+  border-radius: 8px;
+  background-color: var(--btn-no-active);
+  padding: 12px 20px;
+  cursor: pointer;
+  user-select: none;
+  flex-shrink: 0;
+}
+
+.search-filter-log__checkbox-input:checked
+  + .search-filter-log__checkbox-input-text {
+  background-color: var(--main1, #323a27);
+  color: var(--white, #ffffff);
+}
+/* ================ */
+/* tree card */
+/* ================ */
+.card-tree-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.card-tree-detail {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 40px;
+}
+
+.card-tree__book-cover {
+  width: 80px;
+  height: 120px;
+  margin-right: 8px;
+}
+
+.card-tree-detail__box {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  line-height: var(--line-height-main);
+  letter-spacing: var(--letter-spacing-main);
+  transform: translateY(-8px);
+}
+
+.card-tree-detail__tags {
+  line-height: var(--line-height-sub);
+}
+
+.card-tree-detail__tag {
+  color: var(--text-sub);
+  font-size: 10px;
+  margin-right: 2px;
+}
+
+.card-tree-detail__name {
+  font-size: 18px;
+  font-weight: var(--bold);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.card-tree-detail__explanation {
+  font-size: 14px;
+  font-weight: var(--regular);
+  color: var(--text-sub);
+}
+
+.card-tree-detail__info {
+  font-size: 14px;
+  font-weight: var(--regular);
+  color: var(--text-sub);
+}
+
+.card-tree-detail__info-created-date {
+  font-size: 14px;
+  font-weight: var(--regular);
+  color: var(--text-sub);
+  display: flex;
+  justify-content: end;
+  transform: translateY(8px);
 }
 
 /* =========================
@@ -887,7 +987,6 @@ v
     ========================================== */
 .input-page-number-box {
   display: flex;
-  height: 131px;
   max-width: 1280px;
   padding-bottom: 23px;
   flex-direction: column;
@@ -996,6 +1095,7 @@ v
 }
 
 .input-tag-select__label-text {
+  margin-bottom: 4px;
   font-weight: var(--bold);
   line-height: var(--line-height-main);
   letter-spacing: var(--letter-spacing-sub);

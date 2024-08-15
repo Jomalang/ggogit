@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="ko">
-<body>
-<!--====================================
-tree 기본 정보
-========================================-->
-<div th:fragment="tree-info-card(date, pagecount)">
-    <div class="card-tree-info">기본 정보</div>
-    <div class="card-tree-info__frame">
+  <body>
+    <!-- ================ -->
+    <!-- tree-info-card -->
+    <!-- ================ -->
+    <div th:fragment="tree-info-card(date, pagecount)">
+      <div class="card-tree-info">기본 정보</div>
+      <div class="card-tree-info__frame">
         <div>
             <p class="card-tree-info__title">발행(출시)일자</p>
             <p class="card-tree-info__title">쪽수</p>
@@ -16,6 +16,77 @@ tree 기본 정보
             <p class="card-tree-info__content" th:text="${pagecount}"></p>
         </div>
     </div>
+
+    <!-- ================ -->
+    <!-- tree card -->
+    <!-- ================ -->
+    <div
+      class="card-tree-details"
+      th:fragment="card-tree-details(tree)"
+      th:object="${tree}"
+    >
+      <a class="card-tree-detail">
+        <img
+          class="card-tree__book-cover"
+          src="/src/main/resources/static/svg/card-felt__cover.svg"
+          th:with="url = *{imgUrl}"
+          th:src="@{/svg/card-felt__cover.svg}"
+        />
+        <div class="card-tree-detail__box">
+          <!--반복문으로 넣어야 할듯..-->
+          <div class="card-tree-detail__tags">
+            <span class="card-tree-detail__tag" id="data-XXX">도서</span>
+            <span class="card-tree-detail__tag" id="data-XXX">정치비평</span>
+          </div>
+          <!---->
+          <p class="card-tree-detail__name" id="data-XXX" th:text="*{bookName}">
+            운명이란 무엇인가?
+            <img
+              class="card-tree-detail__complete-icon"
+              th:if="{*{complete} == true}"
+              src="/src/main/resources/static/svg/card-tree-details-complete.svg"
+              alt="완독"
+            />
+          </p>
+          <p
+            class="card-tree-detail__explanation"
+            id="data-XXX"
+            th:text="*{description}"
+          >
+            그의 운명에 대한 아주 개인적인 생각
+          </p>
+          <div class="card-tree-detail__info">
+            <span
+              class="card-tree-detail__info"
+              id="data-XXX"
+              th:text="*{createdAt}"
+              >2024</span
+            >
+            <span class="card-tree-detail__info">/</span>
+            <span
+              class="card-tree-detail__info"
+              id="data-XXX"
+              th:text="*{author}"
+              >유시민</span
+            >
+            <span class="card-tree-detail__info">/</span>
+            <span
+              class="card-tree-detail__info"
+              id="data-XXX"
+              th:text="*{publisher}"
+              >생각의 길</span
+            >
+          </div>
+          <span
+            class="card-tree-detail__info-created-date"
+            id="data-XXX"
+            th:text="*{updatedAt}"
+            >2024-07-15</span
+          >
+        </div>
+      </a>
+    </div>
+  </body>
 </div>
 
 <!-- =========================

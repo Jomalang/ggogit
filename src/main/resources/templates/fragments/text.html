@@ -5,12 +5,48 @@
      FRAGMENT: 메인 Title
      ========================================== -->
     <div th:fragment="text-main-title(title, size)">
-      <h1 class="text-main-title text--title28" th:if="${size == '28'}" th:text="${title}">Default Title</h1>
-      <h1 class="text-main-title text--title24" th:if="${size == '24'}" th:text="${title}">Default Title</h1>
-      <h1 class="text-main-title text--title20" th:if="${size == '20'}" th:text="${title}">Default Title</h1>
-      <h1 class="text-main-title text--title18" th:if="${size == '18'}" th:text="${title}">Default Title</h1>
-      <h1 class="text-main-title text--title16" th:if="${size == '16'}" th:text="${title}">Default Title</h1>
-      <h1 class="text-main-title text--title14" th:if="${size == '14'}" th:text="${title}">Default Title</h1>
+      <h1
+        class="text-main-title text--title28"
+        th:if="${size == '28'}"
+        th:text="${title}"
+      >
+        Default Title
+      </h1>
+      <h1
+        class="text-main-title text--title24"
+        th:if="${size == '24'}"
+        th:text="${title}"
+      >
+        Default Title
+      </h1>
+      <h1
+        class="text-main-title text--title20"
+        th:if="${size == '20'}"
+        th:text="${title}"
+      >
+        Default Title
+      </h1>
+      <h1
+        class="text-main-title text--title18"
+        th:if="${size == '18'}"
+        th:text="${title}"
+      >
+        Default Title
+      </h1>
+      <h1
+        class="text-main-title text--title16"
+        th:if="${size == '16'}"
+        th:text="${title}"
+      >
+        Default Title
+      </h1>
+      <h1
+        class="text-main-title text--title14"
+        th:if="${size == '14'}"
+        th:text="${title}"
+      >
+        Default Title
+      </h1>
     </div>
 
     <!-- ==========================================
@@ -73,4 +109,28 @@
   <h1 class="text-main-title--right text--title18" th:if="${size == '18'}" th:text="${title}">Default Title</h1>
   <h1 class="text-main-title--right text--title16" th:if="${size == '16'}" th:text="${title}">Default Title</h1>
   <h1 class="text-main-title--right text--title14" th:if="${size == '14'}" th:text="${title}">Default Title</h1>
+</div>
+<!-- ==========================================
+     FRAGMENT: 도서 정보
+     설명: 트리 생성 시 검색된 도서 정보 표현 화면
+     ========================================== -->
+<div class="text-book-info--no-title" th:fragment="text-book-info--no-title(authors,translators, publisher, page,seed)">
+  <div class="text-book-info__creaters">
+    <div class="text-book-info__creaters" th:each="author :${authors}">
+      <span class="text-book-info-create-info" th:text="${author}" ></span>
+      <span class="text-book-info-create-info">|</span>
+    </div>
+    <div class="text-book-info__creaters" th:if="${translators}" th:each="translator :${translators}">
+      <span class="text-book-info-create-info" th:text="${translator}" ></span>
+      <span class="text-book-info-create-info">|</span>
+    </div>
+
+    <span class="text-book-info__creaters" th:text="${publisher}"></span>
+  </div>
+  <div class="text-book-info--no-title__page-frame">
+    <span>총 페이지 수:</span>
+    <span th:text="${page}"></span>
+  </div>
+  <div class="text-book-info--no-title__seed" th:text="${seed}">
+  </div>
 </div>

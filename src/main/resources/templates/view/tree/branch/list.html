@@ -34,6 +34,7 @@
             </div>
         </section>
         <section class="branch-tree-detail-container">
+            <h2 class="none">트리 상세 설명 </h2>
             <div class="card-tree-info__detail-frame">
                 <input
                         class="card-tree-info__detail-input"
@@ -45,9 +46,10 @@
                         for="card-tree-info__detail"
                 >자세히</label>
                 <section class="card-tree-info__detail-content">
+                    <h3 class="none">트리 상세 설명 보기</h3>
                     <section>
-                        <div>
-                            dddd
+                        <h4 class="none">트리 정보</h4>
+                        <div th:replace="~{fragments/text :: text-book-info--no-title('김문철','김문철','위즈덤 하우스','400','도서 카테고리')}">
                         </div>
                     </section>
                     <section>

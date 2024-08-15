@@ -27,20 +27,20 @@ public class HomeController {
         // 테스트 위한 트리 리스트(나중에 리포지로 빠짐)
         List<Tree> trees = new ArrayList<>();
         long id = 1L;
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 5; i++) {
             Tree t1 = Tree.createTestTree();
             t1.setImgUrl("book-cover-dummy1.svg");
             t1.setId(id++);
             trees.add(t1);
         }
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 5; i++) {
             Tree t1 = Tree.createTestTree();
             t1.setId(id++);
             t1.setBookName("testBook2");
             t1.setImgUrl("book-cover-dummy2.svg");
             trees.add(t1);
         }
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 5; i++) {
             Tree t1 = Tree.createTestTree();
             t1.setId(id++);
             t1.setBookName("testBook3");

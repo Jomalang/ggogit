@@ -1568,39 +1568,29 @@ button {
 /*  ==========================================
     FRAGMENT: 배경 도서 이미지 캐러셀
     ========================================== */
-.tree-book-bg {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
-}
 
+.tree-book-bg {
+  /* 캐러셀 위해 80vw로 고정 */
+  width: 90vw;
+  overflow: hidden;
+}
 .tree-book-bg__list {
   display: flex;
   align-items: last baseline;
-  list-style-type: none;
   justify-content: space-between;
-  align-self: stretch;
-  overflow-x: auto; /* 가로 스크롤 자동 */
-  gap: 20px;
+  gap: 5vw;
   padding: 0;
   margin: 0;
 }
-
-.tree-book-bg__list::-webkit-scrollbar {
-  display: none;
-}
-
 .mid__item {
+  width: fit-content;
 }
 
 .mid__img {
-  height: auto;
-  width: 128px;
-  filter: drop-shadow(var(--shadow-basic));
+  width: 25vw;
+  box-shadow: var(--shadow-basic);
 }
-.side__item {
-}
+
 .side__img {
   height: auto;
   width: 128px;

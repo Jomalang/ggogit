@@ -7,11 +7,7 @@
 .my-tree-container {
   display: flex;
   flex-direction: column;
-  gap: 0;
-  align-items: flex-start;
-  justify-content: flex-start;
   align-self: stretch;
-  flex-shrink: 0;
   position: relative;
   padding: 0 24px 0px 24px;
 }
@@ -23,6 +19,7 @@
   align-self: stretch;
   flex-shrink: 0;
   position: relative;
+  margin-bottom: 40px;
 }
 
 .text-info-container {
@@ -36,16 +33,14 @@
   position: relative;
 }
 .book-tree-info-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   margin: 0 24px 0 24px;
 }
 
 .book-img-container {
-  z-index: 10;
   margin: 0 auto;
-  top: 80px;
-  left: 50%;
-  transform: translateX(-50%);
-  position: absolute;
 }
 
 .btn-full-width-link-container {
@@ -55,7 +50,6 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  position: absolute;
 }
 /*아래는 트리 생성 버튼이 nav에 가려지는거 방지용 */
 .btn-full-width-link-container::after {

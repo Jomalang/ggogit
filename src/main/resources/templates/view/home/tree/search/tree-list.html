@@ -30,7 +30,7 @@
       </section>
 
       <section>
-        <h1 class="none">검색 결과 및 최근 수정한 순서</h1>
+        <h2 class="none">검색 결과 개수 및 최근 수정한 순서</h2>
         <div
           th:replace="~{fragments/top-bar::topbar-search-result-num(*{size})}"
         ></div>
@@ -38,16 +38,27 @@
     </header>
 
     <main>
+      <h2 class="none">트리 검색 결과</h2>
       <section class="tree-card-list">
-        <h1 class="none">트리 검색 결과</h1>
+        <h3 class="none">트리 검색 리스트</h3>
         <div th:each="tree : *{values}">
           <div
             th:replace="~{fragments/card::card-tree-details(tree = ${tree})}"
           ></div>
         </div>
       </section>
+      <section>
+        <h3 class="none">검색 결과 없음</h3>
+        <div
+          class="margin-bottom500"
+          th:if="*{size} eq 0"
+          th:insert="~{fragments/text::text-info(text = '검색 결과가 없습니다.', boldText='다시 검색해 주세요' )}"
+        ></div>
+      </section>
     </main>
 
-    <aside><div th:replace="~{fragments/nav :: navigation-bar(home)}"</aside>
+    <aside class="nav-container">
+      <div th:replace="~{fragments/nav :: navigation-bar(home)}"
+    </aside>
   </body>
 </html>

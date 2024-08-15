@@ -27,14 +27,13 @@
   position: relative;
 }
 .header-search-link__placeholder {
-  color: #767676;
-  text-align: center;
-  font-family: "Pretendard-SemiBold", sans-serif;
+  color: var(--text-sub);
   font-size: 14px;
-  line-height: 140%;
-  letter-spacing: -0.0025em;
-  font-weight: 600;
+  line-height: var(--line-height-main);
+  letter-spacing: var(--letter-spacing-main);
+  font-weight: var(--medium);
   position: relative;
+  transform: translateY(8%);
 }
 .header-search-link__icon {
   flex-shrink: 0;
@@ -164,8 +163,6 @@
   width: 100%;
   box-shadow: 0 -5px 10px -5px rgba(0, 0, 0, 0.3);
   background-color: var(--white, #ffffff);
-  position: fixed;
-  bottom: 0px;
 }
 
 .nav-box__list {

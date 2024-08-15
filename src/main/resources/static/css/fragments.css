@@ -983,7 +983,6 @@ button {
   font-weight: var(--bold, 700);
 }
 
-
 /*  ==========================================
     FRAGMENT: 로그 페이지 구간 기록
     ========================================== */
@@ -1195,38 +1194,38 @@ button {
 }
 
 .before-log__title {
-    font-size: 16px;
-    color: var(--text-sub, #767676);
-    font-weight: var(--bold, 700);
-    line-height: var(--line-height-main);
-    letter-spacing: var(--letter-spacing-main);
+  font-size: 16px;
+  color: var(--text-sub, #767676);
+  font-weight: var(--bold, 700);
+  line-height: var(--line-height-main);
+  letter-spacing: var(--letter-spacing-main);
 }
 
 .before-log__date {
-    font-size: 14px;
-    color: var(--text-sub, #767676);
-    font-weight: var(--regular, 400);
-    line-height: var(--line-height-main);
-    letter-spacing: var(--letter-spacing-main);
+  font-size: 14px;
+  color: var(--text-sub, #767676);
+  font-weight: var(--regular, 400);
+  line-height: var(--line-height-main);
+  letter-spacing: var(--letter-spacing-main);
 }
 
 .before-log__tags {
-    display: flex;
-    flex-direction: row;
-    gap: 4px;
-    margin-top: 2px;
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+  margin-top: 2px;
 }
 
 .before-log__tag {
-    display: inline-block;
-    border-radius: 4px;
-    padding: 2px 8px;
-    background-color: var(--main1, #323a27);
-    font-size: 14px;
-    font-weight: var(--medium, 500);
-    line-height: var(--line-height-main);
-    letter-spacing: var(--letter-spacing-main);
-    color: var(--white, #ffffff);
+  display: inline-block;
+  border-radius: 4px;
+  padding: 2px 8px;
+  background-color: var(--main1, #323a27);
+  font-size: 14px;
+  font-weight: var(--medium, 500);
+  line-height: var(--line-height-main);
+  letter-spacing: var(--letter-spacing-main);
+  color: var(--white, #ffffff);
 }
 
 /*  ==========================================
@@ -1244,21 +1243,20 @@ button {
   text-align: center;
 }
 
-
 /*  ==========================================
     FRAGMENT: 로그 경로 바
     ========================================== */
 .log-path-box {
-    width: 100%;
-    border-top: 1px solid var(--gray, #d9d9d9);
-    padding: 13px 0;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
-    background-color: var(--main2, #e5eddb);
-    font-size: 14px;
-    font-weight: var(--bold, 700);
+  width: 100%;
+  border-top: 1px solid var(--gray, #d9d9d9);
+  padding: 13px 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  background-color: var(--main2, #e5eddb);
+  font-size: 14px;
+  font-weight: var(--bold, 700);
 }
 
 /*  ==========================================
@@ -1309,27 +1307,27 @@ button {
     ========================================== */
 
 .log-item__type--1 {
-    margin: 300px 24px 0 24px;
-    padding-top: 26px;
-    display: flex;
-    flex-direction: row;
+  margin: 300px 24px 0 24px;
+  padding-top: 26px;
+  display: flex;
+  flex-direction: row;
 }
 
 .log-item__branch-img--1 {
-    background-color: white;
-    width: 12px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 4px;
-    margin-bottom: 2px;
+  background-color: white;
+  width: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 4px;
+  margin-bottom: 2px;
 }
 
 .log-item__line--1 {
-    width: 2px;
-    height: 70px;
-    background: var(--main1, #323a27);
+  width: 2px;
+  height: 70px;
+  background: var(--main1, #323a27);
 }
 
 .log-item__circle--1 {
@@ -1363,10 +1361,10 @@ button {
 }
 
 .log-item__circle--2 {
-    width: 12px;
-    height: 12px;
-    border-radius: 100px;
-    background-color: var(--main1, #323a27);
+  width: 12px;
+  height: 12px;
+  border-radius: 100px;
+  background-color: var(--main1, #323a27);
 }
 
 .log-item__line-bot--2 {
@@ -1381,13 +1379,13 @@ button {
 
 .log-item__right-branch-img--2 {
   width: 100%;
-  margin: 29px 0 0 0 ;
+  margin: 29px 0 0 0;
 }
 
 .log-item__line-right--2 {
   height: 2px;
   width: 100%;
-  background-color: var(--branch-left, #D6D8D4);
+  background-color: var(--branch-left, #d6d8d4);
 }
 
 .log-item__text-box--2 {
@@ -1432,13 +1430,13 @@ button {
 
 .log-item__right-branch-img--3 {
   width: 100%;
-  margin: 29px 0 0 0 ;
+  margin: 29px 0 0 0;
 }
 
 .log-item__line-right--3 {
   height: 2px;
   width: 100%;
-  background-color: var(--branch-left, #D6D8D4);
+  background-color: var(--branch-left, #d6d8d4);
 }
 
 .log-item__text-box--3 {
@@ -1450,10 +1448,10 @@ button {
 }
 
 .log-item__line-left--3 {
-    margin-right: 4px;
-    height: 2px;
-    width: 20px;
-    background-color: var(--main1, #323a27);
+  margin-right: 4px;
+  height: 2px;
+  width: 20px;
+  background-color: var(--main1, #323a27);
 }
 
 /*  ==========================================
@@ -1566,4 +1564,45 @@ button {
 .branch-state__date {
   color: var(--text-sub);
   font-size: 12px;
+}
+/*  ==========================================
+    FRAGMENT: 배경 도서 이미지 캐러셀
+    ========================================== */
+.tree-book-bg {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.tree-book-bg__list {
+  display: flex;
+  align-items: last baseline;
+  list-style-type: none;
+  justify-content: space-between;
+  align-self: stretch;
+  overflow-x: auto; /* 가로 스크롤 자동 */
+  gap: 20px;
+  padding: 0;
+  margin: 0;
+}
+
+.tree-book-bg__list::-webkit-scrollbar {
+  display: none;
+}
+
+.mid__item {
+}
+
+.mid__img {
+  height: auto;
+  width: 128px;
+  filter: drop-shadow(var(--shadow-basic));
+}
+.side__item {
+}
+.side__img {
+  height: auto;
+  width: 128px;
+  filter: drop-shadow(var(--shadow-basic));
 }

@@ -1,25 +1,78 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="ko">
-<body>
-
-<!-- ==========================================
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" th:href="@{/css/fragments.css}" />
+  </head>
+  <body>
+    <!-- ==========================================
      FRAGMENT: 3개의 임시 도서 이미지
      설명: 나의 트리 홈 - 트리 없는 경우 배경 3개의 초록생 도서 이미지
      ========================================== -->
-<div class="bg-no-tree-book" th:fragment="bg-no-tree-book">
-    <ul class="bg-no-tree-book__list">
+    <div class="bg-no-tree-book" th:fragment="bg-no-tree-book">
+      <ul class="bg-no-tree-book__list">
         <li class="bg-no-tree-book__item">
-            <img  class="bg-no-tree-book__image" th:src="@{/img/home/no-tree-left-book.png}" alt="트리 없음 왼쪽 이미지" />
+          <img
+            class="bg-no-tree-book__image"
+            th:src="@{/img/home/no-tree-left-book.png}"
+            alt="트리 없음 왼쪽 이미지"
+          />
         </li>
         <li class="bg-no-tree-book__item">
-            <img class="bg-no-tree-book__image" th:src="@{/img/home/no-tree-mid-book.png}" alt="트리 없음 중앙 이미지" />
+          <img
+            class="bg-no-tree-book__image"
+            th:src="@{/img/home/no-tree-mid-book.png}"
+            alt="트리 없음 중앙 이미지"
+          />
         </li>
         <li class="bg-no-tree-book__item">
-            <img  class="bg-no-tree-book__image" th:src="@{/img/home/no-tree-right-book.png}"  alt="트리 없음 오른쪽 이미지" />
+          <img
+            class="bg-no-tree-book__image"
+            th:src="@{/img/home/no-tree-right-book.png}"
+            alt="트리 없음 오른쪽 이미지"
+          />
         </li>
-    </ul>
-</div>
+      </ul>
+    </div>
 
-
-</body>
+    <!-- ==========================================
+            FRAGMENT:  도서 이미지
+            bg-tree-book-covers
+            설명 : 인자인 trees는 List<tree>를 아규먼트로 받습니다.
+                캐러셀을 의도했습니다. js파일과 함께 사용해야 합니다.
+     ========================================== -->
+    <div class="tree-book-bg" th:fragment="bg-tree-book-covers(trees)">
+      <ul
+        class="tree-book-bg__list"
+        th:each="tree : ${trees}"
+        th:object="${tree}"
+      >
+        <li class="side__item">
+          <!-- 나중에 book cover 경로 정해지면 경로 수정해야 함!! -->
+          <img
+            class="side__img"
+            th:src="@{/svg/{img}(img=*{imgUrl})}"
+            alt="도서 예시 이미지"
+          />
+        </li>
+        <a href="#">
+          <li class="mid__item">
+            <img
+              class="mid__img"
+              th:src="@{/svg/{img}(img=*{imgUrl})}"
+              alt="도서 예시 이미지"
+            />
+          </li>
+        </a>
+        <li class="side__item">
+          <img
+            class="side__img"
+            th:src="@{/svg/{img}(img=*{imgUrl})}"
+            alt="도서 예시 이미지"
+          />
+        </li>
+      </ul>
+    </div>
+  </body>
 </html>

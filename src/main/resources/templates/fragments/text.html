@@ -62,3 +62,15 @@
   <h1 class="text-main-title--center text--title16" th:if="${size == '16'}" th:text="${title}">Default Title</h1>
   <h1 class="text-main-title--center text--title14" th:if="${size == '14'}" th:text="${title}">Default Title</h1>
 </div>
+
+<!-- ==========================================
+     FRAGMENT: 메인 오른족 Title
+     ========================================== -->
+<div class="text-main-title-box--right" th:fragment="text-main-title-right(title, size)">
+  <h1 class="text-main-title--right text--title28" th:if="${size == '28'}" th:text="${title}">Default Title</h1>
+  <h1 class="text-main-title--right text--title24" th:if="${size == '24'}" th:text="${title}">Default Title</h1>
+  <h1 class="text-main-title--right text--title20" th:if="${size == '20'}" th:text="${title}">Default Title</h1>
+  <h1 class="text-main-title--right text--title18" th:if="${size == '18'}" th:text="${title}">Default Title</h1>
+  <h1 class="text-main-title--right text--title16" th:if="${size == '16'}" th:text="${title}">Default Title</h1>
+  <h1 class="text-main-title--right text--title14" th:if="${size == '14'}" th:text="${title}">Default Title</h1>
+</div>

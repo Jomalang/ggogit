@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="ko">
-  <body>
-    <!-- ================ -->
-    <!-- tree-info-card -->
-    <!-- ================ -->
-    <div th:fragment="tree-info-card(date, pagecount)">
-      <div class="card-tree-info">기본 정보</div>
-      <div class="card-tree-info__frame">
+<body>
+<!-- ================ -->
+<!-- tree-info-card -->
+<!-- ================ -->
+<div th:fragment="tree-info-card(date, pagecount)">
+    <div class="card-tree-info">기본 정보</div>
+    <div class="card-tree-info__frame">
         <div>
             <p class="card-tree-info__title">발행(출시)일자</p>
             <p class="card-tree-info__title">쪽수</p>
@@ -21,72 +21,72 @@
     <!-- tree card -->
     <!-- ================ -->
     <div
-      class="card-tree-details"
-      th:fragment="card-tree-details(tree)"
-      th:object="${tree}"
+            class="card-tree-details"
+            th:fragment="card-tree-details(tree)"
+            th:object="${tree}"
     >
-      <a class="card-tree-detail">
-        <img
-          class="card-tree__book-cover"
-          src="/src/main/resources/static/svg/card-felt__cover.svg"
-          th:with="url = *{imgUrl}"
-          th:src="@{/svg/card-felt__cover.svg}"
-        />
-        <div class="card-tree-detail__box">
-          <!--반복문으로 넣어야 할듯..-->
-          <div class="card-tree-detail__tags">
-            <span class="card-tree-detail__tag" id="data-XXX">도서</span>
-            <span class="card-tree-detail__tag" id="data-XXX">정치비평</span>
-          </div>
-          <!---->
-          <p class="card-tree-detail__name" id="data-XXX" th:text="*{bookName}">
-            운명이란 무엇인가?
+        <a class="card-tree-detail">
             <img
-              class="card-tree-detail__complete-icon"
-              th:if="{*{complete} == true}"
-              src="/src/main/resources/static/svg/card-tree-details-complete.svg"
-              alt="완독"
+                    class="card-tree__book-cover"
+                    src="/src/main/resources/static/svg/card-felt__cover.svg"
+                    th:with="url = *{imgUrl}"
+                    th:src="@{/svg/card-felt__cover.svg}"
             />
-          </p>
-          <p
-            class="card-tree-detail__explanation"
-            id="data-XXX"
-            th:text="*{description}"
-          >
-            그의 운명에 대한 아주 개인적인 생각
-          </p>
-          <div class="card-tree-detail__info">
+            <div class="card-tree-detail__box">
+                <!--반복문으로 넣어야 할듯..-->
+                <div class="card-tree-detail__tags">
+                    <span class="card-tree-detail__tag" id="data-XXX">도서</span>
+                    <span class="card-tree-detail__tag" id="data-XXX">정치비평</span>
+                </div>
+                <!---->
+                <p class="card-tree-detail__name" id="data-XXX" th:text="*{bookName}">
+                    운명이란 무엇인가?
+                    <img
+                            class="card-tree-detail__complete-icon"
+                            th:if="{*{complete} == true}"
+                            src="/src/main/resources/static/svg/card-tree-details-complete.svg"
+                            alt="완독"
+                    />
+                </p>
+                <p
+                        class="card-tree-detail__explanation"
+                        id="data-XXX"
+                        th:text="*{description}"
+                >
+                    그의 운명에 대한 아주 개인적인 생각
+                </p>
+                <div class="card-tree-detail__info">
             <span
-              class="card-tree-detail__info"
-              id="data-XXX"
-              th:text="*{createdAt}"
-              >2024</span
+                    class="card-tree-detail__info"
+                    id="data-XXX"
+                    th:text="*{createdAt}"
+            >2024</span
             >
-            <span class="card-tree-detail__info">/</span>
-            <span
-              class="card-tree-detail__info"
-              id="data-XXX"
-              th:text="*{author}"
-              >유시민</span
-            >
-            <span class="card-tree-detail__info">/</span>
-            <span
-              class="card-tree-detail__info"
-              id="data-XXX"
-              th:text="*{publisher}"
-              >생각의 길</span
-            >
-          </div>
-          <span
-            class="card-tree-detail__info-created-date"
-            id="data-XXX"
-            th:text="*{updatedAt}"
-            >2024-07-15</span
-          >
-        </div>
-      </a>
+                    <span class="card-tree-detail__info">/</span>
+                    <span
+                            class="card-tree-detail__info"
+                            id="data-XXX"
+                            th:text="*{author}"
+                    >유시민</span
+                    >
+                    <span class="card-tree-detail__info">/</span>
+                    <span
+                            class="card-tree-detail__info"
+                            id="data-XXX"
+                            th:text="*{publisher}"
+                    >생각의 길</span
+                    >
+                </div>
+                <span
+                        class="card-tree-detail__info-created-date"
+                        id="data-XXX"
+                        th:text="*{updatedAt}"
+                >2024-07-15</span
+                >
+            </div>
+        </a>
     </div>
-  </body>
+</body>
 </div>
 
 <!-- =========================
@@ -116,5 +116,130 @@
     </div>
 </div>
 
+<!-- ================ -->
+<!-- reading progress--->
+<!-- ================ -->
+<div class="card-reading-progress" >
+    <div class="card-reading-progress__header" th:fragment="card-progress-bar(progress,readpage,fullpage)">
+        <div class="card-reading-progress__title">
+            <h2>독서 진행률</h2>
+            <div>
+          <span class="card-reading-progress__num" id="data-XXX" th:text="${progress}"></span
+          ><span class="card-reading-progress__sep">%</span>
+            </div>
+        </div>
+        <div class="card-reading-progress-content">
+            <div class="card-reading-progress__bar-container">
+                <div class="card-reading-progress__bar" id="data-XXX" th:text="${progress} + '%'"></div>
+            </div>
+            <div class="card-reading-progress__page-num">
+                <span class="card-progress-page__current" id="data-XXX" th:text="${readpage}"></span>
+                <span class="card-progress-page__sep">/</span>
+                <span class="card-progress-page__total" id="data-XXX" th:text="${fullpage}"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-reading-progress-status__list" th:fragment="card-react-numbers(leaf,like,view)">
+        <p class="card-reading-progress-status__leaf">
+            나뭇잎
+            <span class="card-reading-progress-status__num" id="data-XXX"
+                  th:text="'+' + ${leaf}"
+            ></span
+            >
+        </p>
+        <p class="card-reading-progress-status__like">
+            좋아요
+            <span class="card-reading-progress-status__num" id="data-XXX" th:text="'+' + ${like}"
+            >+</span
+            >
+        </p>
+        <p class="card-reading-progress-status__views">
+            조회수
+            <span class="card-reading-progress-status__num" id="data-XXX" th:text="'+' + ${view}"
+            ></span
+            >
+        </p>
+    </div>
+</div>
+<!--
+card : img - treeTitle, bookTitle
+Branch List 사용
+-->
+<div class="card-tree-info-cover-frame" th:fragment="card-tree-info-cover(src,treetitle,booktitle)">
+    <div class="card-tree-info-cover">
+        <img th:src="${src}" alt="cover">
+    </div>
+    <div>
+        <p class="card-tree-title" th:text="${treetitle}"></p>
+        <p class="card-book-title" th:text="${booktitle}"></p>
+    </div>
+</div>
+<!---->
+<div class="card-tree-info__detail-frame"
+     th:fragment="card-hidden-info(hiddentext,
+     authors,translators,publisher,page,seed,
+     treedescription,
+     progress,readpage,fullpage,
+     leaf,like,view)">
+    <input
+            class="card-tree-info__detail-input"
+            type="checkbox"
+            id="card-tree-info__detail"
+    />
+    <label
+            class="card-tree-info__detail"
+            for="card-tree-info__detail"
+    >자세히</label>
+    <section class="card-tree-info__detail-content">
+        <h3 class="none">트리 상세 설명 보기</h3>
+        <section class="card-tree-info__detail-tree-container">
+            <h4 class="none">트리 정보</h4>
+            <div th:replace="~{fragments/text :: text-book-info--no-title(${authors},${translators},${publisher},${page},${seed})}">
+            </div>
+        </section>
+        <section class="card-tree__description-title__container">
+            <h3 th:replace="~{fragments/text :: text-main-title(title='트리설명', size='18')}"></h3>
+            <p class="card-tree__description-content" name="data-XXX" th:text="${treedescription}"></p>
+        </section>
+        <section class="card-progress__container" >
+            <div class="card-reading-progress-no-background">
+                <div th:replace="~{fragments/card :: card-progress-bar(${progress},${readpage},${fullpage})}"></div>
+                <div th:replace="~{fragments/card :: card-react-numbers(${leaf},${like},${view})}"></div>
+            </div>
+        </section>
+        <section class="card-tree-memoir-create-btn-container none">
+            <div th:replace="~{fragments/button :: link-full-width(link='#', text='회고록 작성')}"></div></section>
+    </section>
+</div>
+
+<!---->
+<div class="card-branch__list-frame" th:fragment="card-branch__list(lists)" th:each="lists : ${lists}">
+    <a class="branch-info-frame" href="#">
+        <div class="branch-img-frame">
+            <img th:src="@{'/svg/' + ${lists.src}}" alt="브랜치 이미지">
+        </div>
+        <div class="branch-detail-info">
+            <p class="branch-detail-info--regdate" th:text="${lists.regDate}"></p>
+            <p class="branch-detail-info--name" th:text="${lists.name}"></p>
+        </div>
+    </a>
+    <div class="branch-card-bottom-info-frame">
+        <div class="branch-card-bottom-info">
+            <span>나뭇잎<p th:text="${lists.leaf}"></p></span>
+            <span>조회수<p th:text="${lists.view}"></p></span></div>
+        <div class="branch-card-bottom__like-frame">
+            <input
+                    class="branch-card-bottom__like-input"
+                    type="checkbox"
+                    th:id="${lists.id}"
+            />
+            <label
+                    class="branch-card-bottom__like"
+                    th:for="${lists.id}"
+            ></label>
+        </div>
+    </div>
+</div>
 </body>
 </html>

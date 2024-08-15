@@ -209,18 +209,6 @@ home-tree__reg-4--search-book__input
      bottom: 0;
      z-index: 10;
  }
- .back-search-bar-container{
-     padding-top: 50px;
-     padding-left: 24px;
-     padding-right: 24px;
- }
-.branch-tree-info-container{
-    height: 70px;
-    padding-top: 39px;
-    padding-left: 24px;
-    padding-right: 24px;
-}
-
 /* /home/tree/search/list.html */
 .tree-card-list {
   display: flex;
@@ -298,11 +286,54 @@ home-tree__reg-4--search-book__input
 .log-list-bot-bar-info-container {
     z-index: 10;
 }
+
+/*================================
+    tree/branch/list.html
+================================*/
+.back-search-bar__container{
+    padding-top: 50px;
+    padding-left: 24px;
+    padding-right: 24px;
+}
+.branch-tree-info__container{
+    height: 70px;
+    padding-top: 39px;
+    padding-left: 24px;
+    padding-right: 24px;
+}
 .branch-tree-detail-container{
     padding-left: 24px;
     padding-right: 24px;
     background: var(--main2--opacity40);
 }
 .card-tree__description-title__container{
+    padding-top: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
 
+}
+.card-progress__container{
+    padding-top: 48px;
+}
+.card-tree-memoir-create-btn-container{
+    padding-top: 30px;
+    padding-bottom: 32px;
+}
+
+.branch-list__container{
+    padding-top: 34px;
+    padding-left: 24px;
+    padding-right: 24px;
+ }
+.branch-filter__container{
+    padding-top: 12px;
+}
+.branch-filter-search__container{
+    padding-top: 24px;
+    padding-bottom: 10px;
+}
+.branch-filter-result-list__container{
+    padding-top: 10px;
+    padding-bottom: 10px;
 }

@@ -23,5 +23,60 @@
         >
       </label>
     </div>
+
+    <!-- =============================
+              씨앗 필터
+              text - btn- btn- btn
+              filter-seed-text-3btn
+      ============================== -->
+  <div class="filter-text-3btn-frame" th:fragment="filter-seed-text-3btn(bookmark,seed1,seed2)">
+    <span><label><input  class="filter-seed__text" type="text" placeholder="로그 검색하기"></label></span>
+    <ul class="filter-category-frame">
+      <li>
+        <input
+                class="filter-category__bookmark"
+                type="checkbox"
+                id="filter-category__bookmark"
+        />
+        <label
+                class="filter-category__bookmark__detail"
+                for="filter-category__bookmark"
+        >책갈피</label>
+
+        <ul class="filter-category__bookmark__list">
+          <li th:each="bm : ${bookmark}" th:text="${bm}"></li>
+        </ul>
+      </li>
+      <li>
+        <input
+                class="filter-category__seed1"
+                type="checkbox"
+                id="filter-category__seed1"
+        />
+        <label
+                class="filter-category__seed1__detail"
+                for="filter-category__seed1"
+        >씨앗</label>
+
+        <ul class="filter-category__seed1__list">
+          <li th:each="s1 : ${seed1}" th:text="${s1}"></li>
+        </ul>
+      </li><li>
+      <input
+              class="filter-category__seed2"
+              type="checkbox"
+              id="filter-category__seed2"
+      />
+      <label
+              class="filter-category__seed2__detail"
+              for="filter-category__seed2"
+      >씨앗</label>
+
+      <ul class="filter-category__seed2__list">
+        <li th:each="s2 : ${seed2}" th:text="${s2}"></li>
+      </ul>
+    </li>
+    </ul>
+  </div>
   </body>
 </html>

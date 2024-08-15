@@ -837,7 +837,7 @@ button {
   font-weight: var(--regular);
   line-height: var(--line-height-main);
   letter-spacing: var(--letter-spacing-main);
-
+v
 }
 
 /* =========================
@@ -1515,11 +1515,10 @@ card.html
   letter-spacing: var(--letter-spacing-main);
 }
 .card-tree-info__detail-frame{
+  width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  position: relative;
+
 }
 .card-tree-info__detail-input{
   display: none;
@@ -1546,6 +1545,7 @@ card.html
 }
 
 .card-tree-info__detail-content{
+  width: 100%;
   display: none;
 }
 
@@ -1561,7 +1561,33 @@ card.html
 }
 
 .card-tree-info__detail-input:checked ~ .card-tree-info__detail-content{
+  width: 100%;
   display: flex;
-  justify-content: center;
-  align-items: center;
+}
+.text-book-info--no-title{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.text-book-info--no-title__creaters{
+  display: flex;
+}
+.text-book-info--no-title__page{
+  font-size: 14px;
+  font-weight: var(--regular);
+  color: var(--text-sub);
+  line-height: var(--line-height-main);
+  letter-spacing: var(--letter-spacing-main);
+}
+.text-book-info--no-title__seed{
+  display: inline-block;
+  padding: 2px 8px;
+  font-size: 10px;
+  font-weight: var(--medium);
+  color: var(--white);
+  line-height: var(--line-height-main);
+  letter-spacing: var(--letter-spacing-main);
+  border-radius: 4px;
+  background: var(--main1);
 }

@@ -1,5 +1,12 @@
 @import "../common/variables.css";
 
+/* 모바일 가로 스크롤 금지 */
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
 .header-search-container {
   padding: 30px 24px 40px 24px;
 }

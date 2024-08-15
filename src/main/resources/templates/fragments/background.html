@@ -53,6 +53,24 @@
             />
           </a>
         </li>
+        <li class="mid__item" th:each="tree : ${trees}" th:object="${tree}">
+          <a href="#">
+            <img
+              class="mid__img"
+              th:src="@{/svg/{img}(img=*{imgUrl})}"
+              alt="도서 예시 이미지"
+            />
+          </a>
+        </li>
+        <li class="mid__item" th:each="tree : ${trees}" th:object="${tree}">
+          <a href="#">
+            <img
+              class="mid__img"
+              th:src="@{/svg/{img}(img=*{imgUrl})}"
+              alt="도서 예시 이미지"
+            />
+          </a>
+        </li>
       </ul>
     </div>
   </body>

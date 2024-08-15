@@ -1,9 +1,8 @@
-const carouselList = document.querySelector("#carousel-list");
+const carouselList = document.querySelector(".tree-book-bg__list");
 // carousel item 너비
-const width = document.querySelector(".carousel-item").clientWidth;
+const width = document.querySelector(".mid__item").clientWidth;
 // carousel item 전체 갯수
-const carouselItemCount =
-  document.querySelectorAll(".carousel-item").length / 3;
+const carouselItemCount = document.querySelectorAll(".mid__item").length / 3;
 
 // drag에 의해 움직인 X값
 let moveTranslateX = 0;
@@ -26,7 +25,7 @@ const dragStart = (clientX) => {
   moveStartX = clientX;
 
   // carousel list transition 제거
-  carouselList.classList.remove("carousel-list-transition");
+  carouselList.classList.remove("tree-book-bg__list--transition");
 
   // drag 종료시점으로부터 transition 시간이 지났는지 확인
   const dragEndStartGapTime = new Date().getTime() - dragEndTime; // drag 종료부터 다시 시작하기까지 걸린 시간 (단위 ms)
@@ -73,7 +72,7 @@ const dragEnd = () => {
     // 초기화
     isMove = false;
     moveStartX = 0;
-    carouselList.classList.add("carousel-list-transition");
+    carouselList.classList.add("tree-book-bg__list--transition");
     dragEndTime = new Date().getTime();
 
     // 오른쪽으로 이동한 경우

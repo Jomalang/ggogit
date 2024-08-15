@@ -30,5 +30,19 @@
       <span class="top-bar-search-result-number">개</span>
       <p class="top-bar-search-result-text">의 검색 결과</p>
     </div>
+    <!-- =========================
+       topbar-search-result-num
+            검색 결과 개수  - 최신순 정렬 버튼
+    ========================== -->
+    <div
+      class="top-bar-search-result-num"
+      th:fragment="topbar-search-result-num-recent(num)"
+    >
+      <p class="top-bar-search-result-number" id="data-XXX" th:text="${num}">
+        10
+      </p>
+      <span class="top-bar-search-result-number">개</span>
+      <p class="top-bar-search-result-text">의 검색 결과</p>
+    </div>
   </body>
 </html>

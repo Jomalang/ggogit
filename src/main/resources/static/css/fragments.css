@@ -1563,6 +1563,7 @@ card.html
 .card-tree-info__detail-input:checked ~ .card-tree-info__detail-content{
   width: 100%;
   display: flex;
+  flex-direction: column;
 }
 .text-book-info--no-title{
   width: 100%;

@@ -1830,7 +1830,7 @@ card.html
     filter : text - 3 btn
     use : 브랜치 리스트 필터
 =======================================*/
-.filter-text-3btn-frame{
+.filter-text-btn-frame{
     display: flex;
     justify-content: space-between;
     gap: 8px;

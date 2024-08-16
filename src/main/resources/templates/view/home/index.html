@@ -29,28 +29,51 @@
 
         <section class="book-tree-info-container">
           <section class="book-img-container">
-            <h3 class="none">트리 이미지</h3>
+            <h3 class="none">최근 트리</h3>
             <div
               th:replace="~{fragments/background :: bg-tree-book-covers(trees=${treeList})}"
             ></div>
           </section>
+        </section>
+      </section>
 
-          <section class="tree-info-container">
-            <h4 class="none">트리 정보</h4>
-            <!-- 컴포넌트 start -->
+      <section class="my-tree-list" th:object="${treeList}">
+        <h2 class="none">나의 트리 목록</h2>
+        <div th:replace="~{fragments/text::tree-count(*{size})}"></div>
+      </section>
+      <section>
+        <h2 class="none">트리 버튼</h2>
+        <!-- 프레그먼트 -->
+      </section>
 
-            <section class="text-info-container">
-              <h5 class="none">도서 정보</h5>
-              <!-- 컴포넌트 start -->
-
-              <!-- 컴포넌트 end -->
-            </section>
-
-            <!-- 컴포넌트 end -->
-          </section>
+      <section>
+        <h2 class="none">트리 검색 결과</h2>
+        <section class="tree-card-list">
+          <h3 class="none">트리 검색 리스트</h3>
+          <div th:each="tree : *{treeList}">
+            <div
+              th:replace="~{fragments/card::card-tree-details(tree = ${tree})}"
+            ></div>
+          </div>
+        </section>
+        <section>
+          <h3 class="none">검색 결과 없음</h3>
+          <div
+            class="margin-bottom500"
+            th:if="*{size} eq 0"
+            th:insert="~{fragments/text::text-info(text = '트리가 없습니다.', boldText='트리를 생성해 주세요' )}"
+          ></div>
         </section>
       </section>
     </main>
+
+    <footer>
+      <div></div>
+    </footer>
+
+    <aside class="nav-container">
+      <div th:replace="~{fragments/nav :: navigation-bar(home)}"></div>
+    </aside>
   </body>
   <script th:src="@{/js/home-tree-index-carousel.js}"></script>
 </html>

@@ -186,3 +186,58 @@
     Default Title
   </h1>
 </div>
+
+<!-- ==========================================
+     FRAGMENT: 최근 트리 정보 
+     ========================================== -->
+<div
+  class="textbox-recent-tree-info"
+  th:fragment="recent-tree-info(tree)"
+  th:object="${tree}"
+>
+  <a href="#" class="textbox-recent-tree-info__a">
+    <h2 class="textbox-recent-tree-info__tree-title" th:text="*{treeName}">
+      나의 첫번째 트리
+    </h2>
+    <div
+      class="textbox-recent-tree-info__tag tag"
+      th:text="*{bookCategoryType}"
+    >
+      시/에세이
+    </div>
+    <p class="textbox-recent-tree-info__book-title" th:text="*{bookName}">
+      무정형의 삶
+    </p>
+    <div class="textbox-recent-tree-info__items">
+      <p class="textbox-recent-tree-info__author" th:text="*{author}">김민철</p>
+      <p class="textbox-recent-tree-info__publisher" th:text="*{publisher}">
+        위즈덤 하우스
+      </p>
+    </div>
+    <p class="textbox-recent-tree-info__date" th:text="*{createdAt}">
+      2024.07.15
+    </p>
+  </a>
+</div>
+
+<!-- ==========================================
+     FRAGMENT: 최근 트리 설명
+     ========================================== -->
+<div class="textbox-recent-tree-ex" th:fragment="recent-tree-ex(text)">
+  <h2 class="textbox-recent-tree-ex__h2">트리 설명</h2>
+  <p class="textbox-recent-tree-ex__p" th:text="${text}">
+    코딩 테스트 합격자 되기 자바스크립트 편의 영감 기록을 남기는 이유는 다음과
+    같습니다. 영감 기록을 작성하면 책에서 배운 내용을 정리하고 이해도를 높일 수
+    있습니다.
+  </p>
+</div>
+
+<!-- ==========================================
+     FRAGMENT: 트리 리스트 트리 개수
+     ========================================== -->
+<div class="textbox-tree-count" th:fragment="tree-count(num)">
+  <h2 class="textbox-tree-count__h2">트리 목록</h2>
+  <p class="textbox-tree-count__p">
+    <span class="textbox-tree-count__num" th:text="${num}">14</span>그루
+  </p>
+</div>

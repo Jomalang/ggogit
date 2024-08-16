@@ -4,19 +4,19 @@ const width = document.querySelector(".mid__item").clientWidth;
 // carousel item 전체 갯수
 const carouselItemCount = document.querySelectorAll(".mid__item").length / 3;
 
-// drag에 의해 움직인 X값
-let moveTranslateX = 0;
-// 현재 X값
+// 현재 X값, 무엇의?
 let currentTranslateX = 0;
-// drag에 의해 변경될 X값
-let nextTranslateX = 0;
 // drag 시작여부
 let isMove = false;
 // drag 시작위치 X값
 let moveStartX = 0;
+// drag에 의해 움직인 X값
+let moveTranslateX = 0;
+// drag에 의해 변경될 X값
+let nextTranslateX = 0;
 // item 이동을 위한 gap 기준값
-const moveGap = 22;
-// drag 종료시간
+const moveGap = 30;
+// drag 종료시간을 얻기 위한 기준 시간 획득
 let dragEndTime = new Date().getTime();
 
 // drag 시작 이벤트
@@ -24,12 +24,14 @@ const dragStart = (clientX) => {
   isMove = true;
   moveStartX = clientX;
 
-  // carousel list transition 제거
+  // carousel list transition 제거, 왜 제거?
   carouselList.classList.remove("tree-book-bg__list--transition");
 
   // drag 종료시점으로부터 transition 시간이 지났는지 확인
   const dragEndStartGapTime = new Date().getTime() - dragEndTime; // drag 종료부터 다시 시작하기까지 걸린 시간 (단위 ms)
+
   let dragEndStartGapTranslateX = 0; // drag 종료부터 다시 시작하기까지 이동하지 못한 translateX
+
   if (dragEndStartGapTime <= 600) {
     // transition 시간보다 적은 경우
     dragEndStartGapTranslateX =
@@ -124,3 +126,22 @@ window.addEventListener("touchmove", (e) =>
   dragging(e.targetTouches[0].clientX)
 );
 window.addEventListener("touchend", dragEnd);
+
+const container = document.querySelector(".tree-book-bg");
+
+const observer = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("selected");
+      } else {
+        entry.target.classList.remove("selected");
+      }
+    });
+  },
+  { root: container, threshold: 0.3 }
+);
+
+document.querySelectorAll(".mid__item").forEach((item) => {
+  observer.observe(item);
+});

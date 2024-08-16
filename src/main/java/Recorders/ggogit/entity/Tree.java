@@ -46,7 +46,8 @@ public class Tree {
         testTree.setTotalPage(100);
         testTree.setBookCategoryType("nonFiction");
         testTree.setTreeName("testTreeName");
-        testTree.setDescription("testDes");
+        testTree.setDescription(
+                "testDes");
         testTree.setVisibility(true);
         testTree.setCreatedAt(Timestamp.valueOf(LocalDateTime.now()));
         testTree.setUpdatedAt(Timestamp.valueOf(LocalDateTime.now()));

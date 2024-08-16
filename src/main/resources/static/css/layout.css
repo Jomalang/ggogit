@@ -29,6 +29,10 @@ body {
   margin-bottom: 40px;
 }
 
+.my-tree-list {
+  margin: 50px 24px 100px 24px;
+}
+
 .text-info-container {
   display: flex;
   flex-direction: row;

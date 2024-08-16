@@ -78,12 +78,10 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    width: 100%;
     height: 137px;
 }
 
 .text-book-info-frame {
-    width: 100%;
     display: flex;
     background: var(--white);
 }
@@ -108,11 +106,13 @@
     color: var(--main1);
 }
 
-.text-book-info__create {
-    width: 100%;
+.text-book-info__create-frame{
     display: flex;
-    justify-content: left;
     gap: 2px;
+}
+
+.text-book-info__create {
+    display: flex;
 }
 
 .text-book-info-create-info {

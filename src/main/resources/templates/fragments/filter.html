@@ -26,10 +26,10 @@
 
     <!-- =============================
               씨앗 필터
-              text - btn- btn- btn
+              text - btn- btn- btn -btn - btn
               filter-seed-text-3btn
       ============================== -->
-  <div class="filter-text-3btn-frame" th:fragment="filter-seed-text-3btn(bookmark,seed1,seed2)">
+  <div class="filter-text-3btn-frame" th:fragment="filter-seed-text-btns(bookmark,seed1,seed2)">
     <span><label><input  class="filter-seed__text" type="text" placeholder="로그 검색하기"></label></span>
     <ul class="filter-category-frame">
       <li>
@@ -49,31 +49,59 @@
       </li>
       <li>
         <input
-                class="filter-category__seed1"
+                class="filter-category__seed"
                 type="checkbox"
                 id="filter-category__seed1"
         />
         <label
-                class="filter-category__seed1__detail"
+                class="filter-category__seed__detail"
                 for="filter-category__seed1"
         >씨앗</label>
 
-        <ul class="filter-category__seed1__list">
+        <ul class="filter-category__seed__list">
           <li th:each="s1 : ${seed1}" th:text="${s1}"></li>
         </ul>
       </li><li>
       <input
-              class="filter-category__seed2"
+              class="filter-category__seed"
               type="checkbox"
               id="filter-category__seed2"
       />
       <label
-              class="filter-category__seed2__detail"
+              class="filter-category__seed__detail"
               for="filter-category__seed2"
       >씨앗</label>
 
-      <ul class="filter-category__seed2__list">
+      <ul class="filter-category__seed__list">
         <li th:each="s2 : ${seed2}" th:text="${s2}"></li>
+      </ul>
+    </li><li>
+      <input
+              class="filter-category__seed"
+              type="checkbox"
+              id="filter-category__seed3"
+      />
+      <label
+              class="filter-category__seed__detail"
+              for="filter-category__seed3"
+      >씨앗</label>
+
+      <ul class="filter-category__seed__list">
+        <li th:each="s3 : ${seed3}" th:text="${s3}"></li>
+      </ul>
+    </li><li>
+      <input
+              class="filter-category__seed"
+              type="checkbox"
+              id="filter-category__seed4"
+      />
+      <label
+              class="filter-category__seed__detail"
+              for="filter-category__seed4"
+      >씨앗</label>
+
+      <ul class="filter-category__seed__list">
+        <li th:each="s4 : ${seed4}" th:text="${s4}"></li>
       </ul>
     </li>
     </ul>

@@ -1836,30 +1836,44 @@ card.html
     gap: 8px;
 
 }
-.filter-seed__text{
+.filter-seed__text:not(:focus){
     width: 9ch;
     display: inline;
     padding: 10px 20px;
     border-radius: 8px;
-    background: var(--main1);
-    color: var(--main3);
+    background: var(--main3);
+    color: var(--main1);
     font-size: 12px;
     font-weight: var(--medium);
     line-height: var(--line-height-sub);
     letter-spacing: var(--letter-spacing-sub);
-}
+}.filter-seed__text:focus{
+     width: 9ch;
+     display: inline;
+     padding: 10px 20px;
+     border-radius: 8px;
+     background: var(--main1);
+     color: var(--main3);
+     font-size: 12px;
+     font-weight: var(--medium);
+     line-height: var(--line-height-sub);
+     letter-spacing: var(--letter-spacing-sub);
+ }
 .filter-category-frame{
     margin-top: 10px;
     display: flex;
+    overflow-x: auto;
+    white-space: nowrap;
+    scrollbar-width: none;
     gap: 8px;
 }
 
-.filter-category__bookmark, .filter-category__seed1, .filter-category__seed2 {
+.filter-category__bookmark, .filter-category__seed {
     display: none;
     cursor: none;
 }
 
-.filter-category__bookmark__detail, .filter-category__seed1__detail, .filter-category__seed2__detail {
+.filter-category__bookmark__detail, .filter-category__seed__detail{
     padding: 10px 12px;
     cursor: pointer;
     border-radius: 8px;
@@ -1871,7 +1885,7 @@ card.html
     letter-spacing: var(--letter-spacing-main);
 }
 
-.filter-category__bookmark__detail::after, .filter-category__seed1__detail::after, .filter-category__seed2__detail::after {
+.filter-category__bookmark__detail::after, .filter-category__seed__detail::after {
     width: 7px;
     height: 7px;
     content: '';
@@ -1883,7 +1897,7 @@ card.html
     background-size: contain;
 }
 
-.filter-category__bookmark__list, .filter-category__seed1__list, .filter-category__seed2__list{
+.filter-category__bookmark__list, .filter-category__seed__list{
     padding: 10px 12px;
     cursor: pointer;
     display: none;
@@ -1895,8 +1909,9 @@ card.html
     letter-spacing: var(--letter-spacing-main);
     z-index: 1;
 }
-.filter-category__bookmark:checked ~.filter-category__bookmark__list, .filter-category__seed1:checked ~.filter-category__seed1__list, .filter-category__seed2:checked ~.filter-category__seed2__list{
+.filter-category__bookmark:checked ~.filter-category__bookmark__list, .filter-category__seed:checked ~.filter-category__seed__list {
     display: block;
+    position: absolute;
 }
 /*===============================================
     bar: class="bar-search-result-frame"
@@ -1981,8 +1996,18 @@ card.html
 /*======================================
 
 =======================================*/
-.branch-info-frame{
+.card-branch__list-frame{
     padding: 16px 14px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 4px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    background: var(--main2--opacity40);
+}
+.branch-info-frame{
     display: flex;
     gap: 4px;
 }
@@ -2014,8 +2039,6 @@ card.html
     letter-spacing: var(--letter-spacing-main);
 }
 .branch-card-bottom-info-frame{
-    padding-left: 16px;
-    padding-right: 16px;
     display: flex;
     justify-content: space-between;
 }

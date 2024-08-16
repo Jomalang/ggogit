@@ -229,14 +229,14 @@ Branch List 사용
         <div class="branch-card-bottom-info">
             <span>나뭇잎<p th:text="${lists.leaf}"></p></span>
             <span>조회수<p th:text="${lists.view}"></p></span></div>
-        <div class="branch-card-bottom__like-frame">
+        <div class="__like-frame">
             <input
-                    class="branch-card-bottom__like-input"
+                    class="__like-input"
                     type="checkbox"
                     th:id="${lists.id}"
             />
             <label
-                    class="branch-card-bottom__like"
+                    class="__like"
                     th:for="${lists.id}"
             ></label>
         </div>

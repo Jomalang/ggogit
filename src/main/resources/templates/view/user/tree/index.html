@@ -11,17 +11,15 @@
   <body>
     <header>
       <h1 class="none">사용자 트리 세부정보</h1>
-      <section class="user-tree-user-info-container">
+      <section class="user-tree-user-info-container" th:replace="~{fragments/background :: user-info-back-header
+        (src='#',backimgpath='user-tree-index-user-background-img.svg',userimg='card-tree-author.png',username='빵형',userid='@BreadFitt',userurl='#')}">
         <h2 class="none">브랜치 검색</h2>
         <!-- 컴포넌트 -->
-        <div th:replace="~{fragments/background :: user-info-back-header(src,userinfos)}"></div>
-        <div th:replace="~{fragments/input :: input-back-search(placeholder='그의 운명에 대한 아주 개인적인 생각',
-                                href='#')}">
-        </div>
+        <div ></div>
       </section>
     </header>
     <main>
-      <section>
+      <section class="user-tree-info__container">
       <h2 class="none">트리 정보</h2>
       <div th:replace="~{fragments/card :: card-tree-info-cover(src='/svg/card-tree-cover.svg',treetitle='자바 공부를 위한 트리',booktitle='혼자 공부하는 자바')}">
       </div>
@@ -38,6 +36,7 @@
       <section>
         <h3 class="none">도서 댓글</h3>
         <!-- 컴포넌트 -->
+<!--        <div th:replace="~{fragments/bar :: bar-comment-}"-->
       </section>
 
       <section class="branch-list__container">

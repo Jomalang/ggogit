@@ -32,12 +32,36 @@
                 class="bar-search-current__detail"
                 for="bar-search-current__detail"
         >최근 수정한 수</label>
-        <div class="bar-search-current__filter-frame">
-            <form action="#" method="post">
-                <input ></input>
-            </form>
-        </div>
     </div>
 </div>
+
+<!--==========================================
+    user info bar
+    user tree index 사용
+==========================================-->
+<div class="bar-user-info-frame" th:fragment="bar-user-info(userimg,username,userid,userurl)">
+    <div class="bar-user-info__left-content">
+        <div class="bar-user-info__img-wrapper">
+            <img th:src="@{'/img/card/' + ${userimg}}" alt="user-profile">
+        </div>
+        <div >
+            <div class="bar-user-info__user-name" th:text="${username}"></div>
+            <div class="bar-user-info__user-id" th:text="${userid}"></div>
+        </div>
+    </div>
+    <div class="bar-user-info__right-btns">
+        <input
+                class="__like-bold-input"
+                type="checkbox"
+                th:id="bar-user-info__like"
+        />
+        <label
+                class="__like-bold"
+                th:for="bar-user-info__like"
+        ></label>
+        <a class="bar-user-info__set-btn" th:href="${userurl}"></a>
+    </div>
+</div>
+
 </body>
 </html>

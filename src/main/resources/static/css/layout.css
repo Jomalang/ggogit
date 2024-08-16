@@ -337,13 +337,6 @@ home-tree__reg-4--search-book__input
     padding-top: 10px;
     padding-bottom: 10px;
 }
-.user-tree-user-info-container{
-    width: 100%;
-    height: 244px;
-    padding-top: 35px;
-    padding-left: 24px;
-    padding-right: 24px;
-}
 .register__input-container {
     padding-top: 60px;
     padding-left: 24px;
@@ -352,4 +345,21 @@ home-tree__reg-4--search-book__input
 
 .register__input-container--last{
     padding: 120px 24px 60px;
+}
+
+.user-tree-user-info-container{
+    padding: 35px 24px 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 200px;
+}
+.user-info__top-bar-container{
+    display: flex;
+  }
+.user-tree-info__container{
+    height: 70px;
+    padding-top: 15px;
+    padding-left: 24px;
+    padding-right: 24px;
 }

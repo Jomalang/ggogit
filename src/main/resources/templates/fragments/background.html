@@ -6,7 +6,7 @@
      FRAGMENT: 3개의 임시 도서 이미지
      설명: 나의 트리 홈 - 트리 없는 경우 배경 3개의 초록생 도서 이미지
      ========================================== -->
-<div class="bg-no-tree-book" th:fragment="bg-no-tree-book">
+<div class="bg-no-tree-book" th:fragment="bg-no-tree-book" >
     <ul class="bg-no-tree-book__list">
         <li class="bg-no-tree-book__item">
             <img  class="bg-no-tree-book__image" th:src="@{/img/home/no-tree-left-book.png}" alt="트리 없음 왼쪽 이미지" />
@@ -24,8 +24,13 @@
      FRAGMENT: 사용자 정보 화면 - 사용자 설정 대표 이미지 배경 + 산단바 + 바
      설명: 사용자 트리 정보 user/tree/index
      ========================================== -->
-<div class="" th:fragment="user-info-back-header(src,userinfos)">
-
+<div class="user-tree-user-info-container" th:fragment="user-info-back-header(src,backimgpath,userimg,username,userid,userurl)" th:style="'background-image: url(' + @{'/svg/'+${backimgpath}} + ');'">
+    <section class="user-info__top-bar-container">
+        <div th:replace="~{fragments/top-bar :: top-bar__transparent(src='${src}')}"></div>
+    </section>
+    <section class="user-info__user-info-bar-container">
+        <div th:replace="~{fragments/bar :: bar-user-info(${userimg},${username},${userid},${userurl})}"></div>
+    </section>
 </div>
 </body>
 </html>

@@ -1,12 +1,16 @@
 package Recorders.ggogit.controller.tree;
 
 import Recorders.ggogit.entity.BookCategoryType;
+import Recorders.ggogit.entity.Branch;
 import Recorders.ggogit.entity.SeedCategoryType;
 import Recorders.ggogit.entity.Tree;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("/tree")
@@ -61,5 +65,16 @@ public class TreeController {
     public String getReg4SearchBook(Model model) {
         model.addAttribute("categories", BookCategoryType.values());
         return "view/tree/register/4-reg-search-book";
+    }
+    @GetMapping("/branch/list")
+    public String getBranchList(Model model) {
+        List<Branch> lists = new ArrayList<>();
+        lists.add(new Branch("heegwon-branch","card-bookmark-icon.svg","2024-07-18","브랜치 이름",999,90));
+        lists.add(new Branch("taegyu-branch","card-bookmark-icon.svg","2024-07-18","브랜치 이름",999,90));
+        lists.add(new Branch("hyeonjin-branch","card-tree-icon.svg","2024-07-18","브랜치 이름",999,90));
+        lists.add(new Branch("jinpeal-branch","card-bookmark-icon.svg","2024-07-18","브랜치 이름",999,90));
+        lists.add(new Branch("jaeyoung-branch","card-bookmark-icon.svg","2024-07-18","브랜치 이름",999,90));
+        model.addAttribute("lists", lists);
+        return "view/tree/branch/list";
     }
 }

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link th:href="@{/css/reset.css}" rel="stylesheet" />
+    <link th:href="@{/css/fragments.css}" rel="stylesheet" />
+    <link th:href="@{/css/layout.css}" rel="stylesheet" />
+
+    <title>Document</title>
+  </head>
+  <body>
+
+    <header>
+      <h1 class="none">도서 세부 정보</h1>
+      <section class="book-detail-top-bar-container">
+        <h1 class="none">뒤로가기 상단바</h1>
+        <div th:replace="fragments/top-bar :: clear-back"></div>
+      </section>
+    </header>
+
+    <main>
+      <section class="book-detail-bg-container">
+        <h1 class="none">도서 배경 이미지</h1>
+        <div th:replace="~{fragments/background :: book-detail(imgSrc=@{/img/book/detail/book.jpg})}"></div>
+
+        <section class="book-detail-like-bar-container">
+          <h1 class="none">좋아요 및 공유</h1>
+          <div th:replace="~{fragments/bar :: like-share(likeLink='#', shareLink='#')}"></div>
+        </section>
+      </section>
+
+      <section class="book-detail-book-info-container">
+        <h1 class="none">도서 제목 및 저자 정보</h1>
+        <div th:replace="~{fragments/text :: text-book-info('시/에세이','무정형의 삶','올라프',null,'위즈덤하우스')}">
+        </div>
+      </section>
+
+      <section class="book-detail-book-info-container">
+        <h1 class="none">도서 기본 정보</h1>
+        <div th:replace="~{fragments/card :: tree-info-card('2024년 07월 10일', '336쪽')}">
+        </div>
+      </section>
+
+      <section class="book-detail-comment-container">
+        <h1 class="none">댓글</h1>
+        <div th:replace="~{fragments/bar :: comment(profileImg=@{/svg/comment-profile.svg}, commentCount='199')}"></div>
+      </section>
+
+      <section class="book-detail-my-tree-container">
+        <h1 class="none">도서의 나의 트리 정보</h1>
+        <section class="book-detail-my-tree-title-container">
+          <h1 th:replace="~{fragments/text :: text-main-title(title='나의 트리', size='28')}"></h1>
+        </section>
+
+        <section class="book-detail-my-tree-list-container">
+            <h1 class="none">나의 트리 리스트</h1>
+            <section class="book-detail-my-tree-card-container">
+              <div th:replace="~{fragments/card :: card-tree-list(list)}"></div>
+            </section>
+        </section>
+      </section>
+
+      <section class="book-detail-other-recode-container">
+        <h1 class="none">도서의 다른 기록 보기</h1>
+        <section class="book-detail-other-recode-title-container">
+          <h1 th:replace="~{fragments/text :: text-main-title(title='다른 기록 보기', size='28')}"></h1>
+        </section>
+
+        <section class="book-detail-other-recode-sub-title-container">
+          <h1 th:replace="~{fragments/text :: text-main-title(title='트리 리스트', size='24')}"></h1>
+        </section>
+
+        <section class="book-detail-other-tree-list-container">
+          <h1 class="none">트리 리스트</h1>
+            <section class="book-detail-other-tree-card-container">
+                <div th:replace="~{fragments/card :: sns-card-tree-list(list=${type1})}"></div>
+            </section>
+        </section>
+
+        <section class="book-detail-other-recode-sub-title-container">
+          <h1 th:replace="~{fragments/text :: text-main-title(title='회고록', size='24')}"></h1>
+        </section>
+
+        <section class="book-detail-other-tree-list-container">
+          <h1 class="none">회고록 리스트</h1>
+          <section class="book-detail-other-tree-card-container">
+            <div th:replace="~{fragments/card :: sns-card-tree-list(list=${type2})}"></div>
+          </section>
+        </section>
+
+        <section class="book-detail-other-recode-sub-title-container">
+          <h1 th:replace="~{fragments/text :: text-main-title(title='나뭇잎', size='24')}"></h1>
+        </section>
+
+        <section class="book-detail-other-tree-list-container">
+          <h1 class="none">나뭇잎 리스트</h1>
+          <section class="book-detail-other-tree-card-container">
+            <div th:replace="~{fragments/card :: sns-card-tree-list(list=${type3})}"></div>
+          </section>
+        </section>
+
+      </section>
+
+    </main>
+
+    <aside class="book-detail-bot-aside-container">
+      <h1 class="none">트리 생성 하단 바</h1>
+      <div th:replace="fragments/bot-bar :: create-tree"></div>
+    </aside>
+
+    <footer th:replace="~{fragments/footer :: footer}"></footer>
+
+  </body>
+</html>

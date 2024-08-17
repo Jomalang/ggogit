@@ -44,5 +44,31 @@
       <span class="top-bar-search-result-number">개</span>
       <p class="top-bar-search-result-text">의 검색 결과</p>
     </div>
+
+<!-- ==========================================
+     FRAGMENT: 투명 뒤로가기 상단 바
+     ========================================== -->
+<div class="top-bar-clear-back-box" th:fragment="clear-back">
+  <div class="top-bar-clear-back__left-box">
+    <a href="#">
+      <div class="top-bar-clear-back__icon-box">
+        <img th:src="@{/svg/back--white.svg}" alt="">
+      </div>
+    </a>
+    <a href="#">
+      <div class="top-bar-clear-back__icon-box">
+        <img th:src="@{/svg/home--white.svg}" alt="">
+      </div>
+    </a>
+  </div>
+  <div class="top-bar-clear-back__right-box">
+    <a href="#">
+      <div class="top-bar-clear-back__icon-box">
+        <img th:src="@{/svg/search--white.svg}" alt="">
+      </div>
+    </a>
+  </div>
+</div>
+
   </body>
 </html>

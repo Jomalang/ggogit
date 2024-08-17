@@ -4,7 +4,6 @@
       <meta charset="UTF-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-      <link th:href="@{/css/reset.css}" rel="stylesheet" />
       <link th:href="@{/css/fragments.css}" rel="stylesheet" />
       <link th:href="@{/css/layout.css}" rel="stylesheet" />
 
@@ -37,34 +36,36 @@
     </section>
     <section class="tree-reg-book-info__container">
       <h4 class="none">도서 정보</h4>
-      <div th:replace="~{fragments/text :: text-book-info('시/에세이','무정형의 삶','김민철','위즈덤하우스')}">
+      <div th:replace="~{fragments/text :: text-book-info('시/에세이','무정형의 삶','올라프',null,'위즈덤하우스')}">
       </div>
     </section>
   </section>
-  <section class="home-tree__reg-4--search-book__input-container">
+  <form action="#" method="POST">
+  <section class="register__input-container">
     <h3 class="none">회고록 제목 입력</h3>
     <!-- 컴포넌트 -->
     <div th:replace="~{fragments/input :: text-box(label='*회고록 제목', placeholder='회고록 제목을 입력해 주세요.', name='')}">
     </div>
   </section>
-  <section class="home-tree__reg-4--search-book__input-container">
+  <section class="register__input-container">
     <h3 class="none">회고록 설명글</h3>
     <!-- 컴포넌트 -->
     <div th:replace="~{fragments/input :: textarea-box(label='*내용', placeholder='회고록 내용을 입력해 주세요', name='')}">
     </div>
   </section>
-  <section class="home-tree__reg-4--search-book__input-container">
+  <section class="register__input-container">
     <h3 class="none">공개성 완독</h3>
     <!-- 컴포넌트 -->
     <div th:replace="~{fragments/input :: input-visibility(name='*공개성')}">
     </div>
   </section>
-  <section class="home-tree__reg-4--search-book__input-container">
+  <section class="register__input-container--last">
     <h3 class="none">회고록 생성 버튼</h3>
     <!-- 컴포넌트 -->
     <div th:replace="~{fragments/button :: submit-btn-full-bar('회고록 생성하기')}">
     </div>
   </section>
+  </form>
 </main>
 
 <aside>

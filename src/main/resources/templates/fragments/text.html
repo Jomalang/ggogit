@@ -68,20 +68,24 @@
      ========================================== -->
 <div
   class="text-book-info"
-  th:fragment="text-book-info(seed, title, author, publisher)"
+  th:fragment="text-book-info(seed, title, authors,translators, publisher)"
 >
   <div class="text-book-info__frame">
-    <p class="text-book-info__seed" th:text="${seed}">시/에세이</p>
+    <p class="text-book-info__seed" th:text="${seed}"></p>
   </div>
   <div class="text-book-info__category">
-    <p class="text-book-info__title" th:text="${title}">무정형의 삶</p>
+    <p class="text-book-info__title" th:text="${title}"></p>
   </div>
-  <div class="text-book-info__create">
+  <div class="text-book-info__create" th:each="author :${authors}">
     <span class="text-book-info-create-info" th:text="${author}">김민철</span>
     <span class="text-book-info-create-info">·</span>
-    <span class="text-book-info-create-info" th:text="${publisher}"
-      >위즈덤 하우스</span
-    >
+    </div>
+    <div class="text-book-info__create" th:if="${translators}" th:each="translator :${translators}">
+      <span class="text-book-info-create-info" th:text="${translator}" ></span>
+      <span class="text-book-info-create-info">·</span>
+    </div>
+
+    <span class="text-book-info-create-info" th:text="${publisher}"></span>
   </div>
 </div>
 
@@ -145,42 +149,42 @@
 >
   <h1
     class="text-main-title--right text--title28"
-    th:if="${size == '28'}"
+    th:if="${size eq 28}"
     th:text="${title}"
   >
     Default Title
   </h1>
   <h1
     class="text-main-title--right text--title24"
-    th:if="${size == '24'}"
+    th:if="${size eq 24}"
     th:text="${title}"
   >
     Default Title
   </h1>
   <h1
     class="text-main-title--right text--title20"
-    th:if="${size == '20'}"
+    th:if="${size eq 20}"
     th:text="${title}"
   >
     Default Title
   </h1>
   <h1
     class="text-main-title--right text--title18"
-    th:if="${size == '18'}"
+    th:if="${size eq 18}"
     th:text="${title}"
   >
     Default Title
   </h1>
   <h1
     class="text-main-title--right text--title16"
-    th:if="${size == '16'}"
+    th:if="${size eq 16}"
     th:text="${title}"
   >
     Default Title
   </h1>
   <h1
     class="text-main-title--right text--title14"
-    th:if="${size == '14'}"
+    th:if="${size eq 14}"
     th:text="${title}"
   >
     Default Title
@@ -240,4 +244,39 @@
   <p class="textbox-tree-count__p">
     <span class="textbox-tree-count__num" th:text="${num}">14</span>그루
   </p>
+</div>
+<!-- ==========================================
+     FRAGMENT: 도서 정보
+     설명: 트리 생성 시 검색된 도서 정보 표현 화면
+     ========================================== -->
+<div
+  class="text-book-info--no-title"
+  th:fragment="text-book-info--no-title(authors,translators, publisher, page,seed)"
+>
+  <div class="text-book-info--no-title__creaters">
+    <div
+      class="text-book-info--no-title__creaters"
+      th:each="author :${authors}"
+    >
+      <span class="text-book-info-create-info" th:text="${author}"></span>
+      <span class="text-book-info-create-info">|</span>
+    </div>
+    <div
+      class="text-book-info--no-title__creaters"
+      th:if="${translators}"
+      th:each="translator :${translators}"
+    >
+      <span class="text-book-info-create-info" th:text="${translator}"></span>
+      <span class="text-book-info-create-info">|</span>
+    </div>
+
+    <span class="text-book-info-create-info" th:text="${publisher}"></span>
+  </div>
+  <div>
+    <span class="text-book-info--no-title__page">총 페이지 수:</span>
+    <span class="text-book-info--no-title__page" th:text="${page}"></span>
+  </div>
+  <div>
+    <p class="text-book-info--no-title__seed" th:text="${seed}"></p>
+  </div>
 </div>

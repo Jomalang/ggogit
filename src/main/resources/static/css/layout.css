@@ -169,7 +169,6 @@ home-tree__reg-4--search-book__input
     padding-right: 24px;
 }
 .tree-book-reg-search-book__title-container {
-    width: 100%;
     margin-top: 28px;
     margin-left: 24px;
     margin-bottom: 48px;
@@ -193,6 +192,7 @@ home-tree__reg-4--search-book__input
   margin-top: 167px;
   padding-top: 70px;
   padding-left: 24px;
+    padding-right: 24px;
   width: 100%;
   height: 100px;
   background: var(--main2--opacity40);
@@ -336,4 +336,20 @@ home-tree__reg-4--search-book__input
 .branch-filter-result-list__container{
     padding-top: 10px;
     padding-bottom: 10px;
+}
+.user-tree-user-info-container{
+    width: 100%;
+    height: 244px;
+    padding-top: 35px;
+    padding-left: 24px;
+    padding-right: 24px;
+}
+.register__input-container {
+    padding-top: 60px;
+    padding-left: 24px;
+    padding-right: 24px;
+}
+
+.register__input-container--last{
+    padding: 120px 24px 60px;
 }

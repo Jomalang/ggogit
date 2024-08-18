@@ -41,7 +41,7 @@
           <section>
             <h1 class="none">씨앗 카테고리</h1>
             <div
-              th:replace="~{fragments/input :: default-data(name='seedCategoryType', value=${seed.value})}"
+              th:replace="~{fragments/input :: default-data(name='seedCategoryType', values=${categories})}"
             ></div>
           </section>
 

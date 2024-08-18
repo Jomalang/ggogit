@@ -188,11 +188,12 @@
     <!--  ==========================================
       FRAGMENT: 고정 데이터 화면에 안보임
       ========================================== -->
-    <div class="input-none none" th:fragment="default-data(name, value)">
+    <div class="input-none none" th:fragment="default-data(name, values)">
       <label class="input-none__label">
         <input
           class="input-none__input"
           type="text"
+          th:each="value:${values}"
           th:name="${name}"
           th:value="${value}"
         />

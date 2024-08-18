@@ -445,3 +445,31 @@ home-tree__reg-4--search-book__input
 .tree-memoir-user-bar-container{
     padding: 16px 24px;
 }
+.tree-index-comment-container{
+    padding-top: 30px;
+}
+.user-another-records{
+    margin-top: 22px;
+    padding-top: 38px;
+    background: var(--main2--opacity40);
+}
+.user-another-records-title-container{
+    padding-left: 24px;
+    padding-right: 24px;
+}
+.branch-tree-other-recode-sub-title-container {
+    margin-top: 70px;
+    margin-bottom: 16px;
+    padding-left: 24px;
+    padding-right: 24px;
+}
+.branch-tree-another-record-list-container{
+    margin-left: 12px;
+    margin-right: 12px;
+}
+.branch-tree-aside-container {
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    z-index: 10;
+}

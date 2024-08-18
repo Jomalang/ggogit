@@ -33,10 +33,14 @@
             progress='80',readpage='320',fullpage='400',
             leaf='99',like='99',view='99')}"></div>
       </section>
-      <section>
-        <h3 class="none">도서 댓글</h3>
-        <!-- 컴포넌트 -->
-<!--        <div th:replace="~{fragments/bar :: bar-comment-}"-->
+      <section class="tree-index-comment-container">
+        <h1 class="none">댓글</h1>
+        <div th:replace="~{fragments/bar :: comment(profileImg=@{/svg/comment-profile.svg}, commentCount='199')}"></div>
+
+        <section id="comment-filter-tab-id" class="book-detail-comment-tab-container book-detail-comment-tab-container--active">
+          <h1 class="none">댓글 탭</h1>
+          <div th:replace="~{fragments/tab-comment :: tab-comment}"></div>
+          </section>
       </section>
 
       <section class="branch-list__container">
@@ -69,5 +73,41 @@
       </section>
     </aside>
 
+
+    <script>
+      function commentTabActive() {
+        const commentTab = document.getElementById("comment-filter-tab-id");
+
+        commentTab.classList.add("book-detail-comment-tab-container--active");
+
+        document.body.classList.add("no-scroll");
+        window.scrollTo({top: 0, behavior: "smooth"});
+      }
+
+      function commentTabInactive() {
+        const commentTab = document.getElementById("comment-filter-tab-id");
+
+        commentTab.classList.remove("book-detail-comment-tab-container--active");
+        document.body.classList.remove("no-scroll");
+      }
+
+      document.getElementById("bar-comment-id").addEventListener("click", commentTabActive);
+      document.getElementById("top-bar-comment__back-icon-box-id").addEventListener("click", commentTabInactive);
+      document.getElementById("bg-book-detail-box-id").addEventListener("click", commentTabInactive);
+    </script>
+
+    <script>
+      document.getElementById("input-comment-input__input-id").addEventListener("focus", function() {
+        const submitBtn = document.getElementById("input-comment-input__submit-id");
+        setTimeout(() => {
+          submitBtn.classList.add("input-comment-input__submit--active")
+        }, 100);
+      });
+
+      document.getElementById("input-comment-input__input-id").addEventListener("focusout", function() {
+        const submitBtn = document.getElementById("input-comment-input__submit-id");
+        submitBtn.classList.remove("input-comment-input__submit--active");
+      });
+    </script>
   </body>
 </html>

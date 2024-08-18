@@ -1,3 +1,10 @@
+/* 모바일 가로 스크롤 방지 */
+html,
+body {
+  width: 100%;
+  overflow-x: hidden;
+}
+
 .header-search-container {
   padding: 30px 24px 40px 24px;
 }
@@ -8,6 +15,8 @@
   justify-content: flex-start;
   align-self: stretch;
   position: relative;
+  gap: 39px;
+  margin-bottom: 50px;
 }
 
 .my-tree-title-container {
@@ -38,12 +47,18 @@
 
 .book-tree-info-container {
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  gap: 50px;
 }
 
 .book-img-container {
   display: flex;
   justify-content: center;
+}
+
+.book-tree-explanation-container {
+  margin: 0 24px 0 24px;
 }
 
 .btn-full-width-link-container {
@@ -54,13 +69,6 @@
   justify-content: center;
   flex-shrink: 0;
   position: absolute;
-}
-/*아래는 트리 생성 버튼이 nav에 가려지는거 방지용 */
-.btn-full-width-link-container::after {
-  content: " ";
-  display: block;
-  width: 100%;
-  height: 100px;
 }
 
 .book-tree-input-form-container {
@@ -131,7 +139,7 @@
 }
 
 .btn-select-container {
-  margin-bottom: 28px;
+  margin: 28px 24px 24px 28px;
 }
 
 .btn-select-container--right {
@@ -139,6 +147,12 @@
   flex-direction: row-reverse;
   padding-right: 28px;
   margin-bottom: 28px;
+}
+
+.nav-back-container {
+  display: block;
+  width: 100%;
+  height: 85px;
 }
 
 .margin-bottom24 {
@@ -211,6 +225,7 @@ home-tree__reg-4--search-book__input
   bottom: 0;
   z-index: 10;
 }
+
 /* /home/tree/search/list.html */
 .tree-card-list {
   display: flex;
@@ -316,6 +331,11 @@ home-tree__reg-4--search-book__input
 }
 .card-progress__container {
   padding-top: 48px;
+}
+.card-progress-home-container {
+  background-color: var(--main2);
+  box-shadow: var(--shadow-basic);
+  padding: 16px;
 }
 .card-tree-memoir-create-btn-container {
   padding-top: 30px;

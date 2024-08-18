@@ -914,7 +914,7 @@ button {
 .card-tree-detail {
   display: flex;
   flex-direction: row;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
 }
 
 .card-tree__book-cover {
@@ -930,6 +930,7 @@ button {
   line-height: var(--line-height-main);
   letter-spacing: var(--letter-spacing-main);
   transform: translateY(-8px);
+  width: 250px;
 }
 
 .card-tree-detail__tags {
@@ -954,6 +955,9 @@ button {
   font-size: 14px;
   font-weight: var(--regular);
   color: var(--text-sub);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .card-tree-detail__info {
@@ -1784,7 +1788,8 @@ card.html
   background-color: var(--gray);
   height: 4px;
   width: 100%;
-  margin-bottom: 2px;
+  margin-bottom: 4px;
+  margin-top: 4px;
 }
 
 .card-reading-progress__bar {
@@ -2145,7 +2150,6 @@ card.html
 
 .mid__img {
   width: 40vw;
-  box-shadow: var(--shadow-basic);
 }
 
 /*  ==========================================
@@ -2223,14 +2227,14 @@ card.html
   font-size: 14px;
   font-weight: var(--semi-bold);
 }
+
+.book-tree-explanation-item {
+  transition: all, 0.3s, linear;
+}
+
 /* ==========================================
      FRAGMENT: 최근 트리 설명
      ========================================== */
-.textbox-recent-tree-ex {
-  height: 119px;
-  margin-left: var(--margin-left-main);
-  margin-right: var(--margin-right-main);
-}
 
 .textbox-recent-tree-ex__h2 {
   color: var(--main1);
@@ -2281,15 +2285,18 @@ card.html
 .filter-tree-list {
   margin-bottom: 30px;
   display: flex;
-  gap: 13px;
+  gap: 5px;
   flex-direction: row;
 }
 
 .filter-tree-list-btn {
   display: flex;
+  padding: 20px 12px;
+  white-space: nowrap;
+  width: fit-content;
   align-items: center;
+  justify-content: center;
   border-radius: 8px;
-  padding: 9px 20px;
   background-color: var(--btn-no-active);
   color: var(--text-sub);
   font-weight: var(--medium);
@@ -2300,7 +2307,9 @@ card.html
 }
 
 .filter-tree-list-btn::after {
+  display: block;
   content: attr(label);
+  font-size: 16px;
 }
 
 .filter-tree-list-btn:checked {
@@ -2311,23 +2320,17 @@ card.html
 .sortIcon {
   display: flex;
   align-items: center;
-  padding: 9px;
+  align-self: center;
+  height: fit-content;
+  padding: 12px;
   border-radius: 8px;
   background-color: var(--btn-no-active);
+  margin-right: 3px;
 }
 
 /* ================================
                 footer
     ===============================  */
-.tree-footer::after {
-  content: "by RECODERS";
-  text-align: center;
-  width: 100%;
-  height: 100px;
-  display: block;
-  bottom: 0;
-}
-
 .tree-footer-header {
   background-color: var(--main3);
   display: flex;
@@ -2402,4 +2405,14 @@ card.html
   display: flex;
   justify-content: end;
   padding-right: 24px;
+}
+
+/* 태블릿 사이즈 768 */
+@media screen and (min-width: 768px) {
+  .filter-tree-list-btn {
+    padding: 9px 12px;
+  }
+  .card-tree-detail__box {
+    width: 600px;
+  }
 }

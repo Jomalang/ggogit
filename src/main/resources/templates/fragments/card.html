@@ -129,7 +129,7 @@
         </div>
         <div class="card-reading-progress-content">
             <div class="card-reading-progress__bar-container">
-                <div class="card-reading-progress__bar" id="data-XXX" th:text="${progress} + '%'"></div>
+                <div class="card-reading-progress__bar" th:style="'width:'+ ${progress}+'%;'" id="data-XXX"></div>
             </div>
             <div class="card-reading-progress__page-num">
                 <span class="card-progress-page__current" id="data-XXX" th:text="${readpage}"></span>
@@ -140,22 +140,27 @@
     </div>
 
     <div class="card-reading-progress-status__list" th:fragment="card-react-numbers(leaf,like,view)">
-        <p class="card-reading-progress-status__leaf">
+        <p class="card-reading-progress-status__leaf" th:with="varLeaf=${leaf}">
             나뭇잎
-            <span class="card-reading-progress-status__num" id="data-XXX"
-                  th:text="'+' + ${leaf}"
+            <span class="card-reading-progress-status__num"  th:if="${varLeaf gt 999}">+999</span>
+            <span class="card-reading-progress-status__num" th:if="${varLeaf le 999}" id="data-XXX"
+                  th:text="${leaf}"
             ></span
             >
         </p>
-        <p class="card-reading-progress-status__like">
+        <p class="card-reading-progress-status__like" th:with="varLike=${like}">
             좋아요
-            <span class="card-reading-progress-status__num" id="data-XXX" th:text="'+' + ${like}"
-            >+</span
+            <span class="card-reading-progress-status__num" th:if="${varLike gt 999}">+999</span>
+            <span class="card-reading-progress-status__num" th:if="${varLike le 999}" id="data-XXX"
+                  th:text="${like}"
+            ></span
             >
         </p>
-        <p class="card-reading-progress-status__views">
+        <p class="card-reading-progress-status__views" th:with="varView=${view}">
             조회수
-            <span class="card-reading-progress-status__num" id="data-XXX" th:text="'+' + ${view}"
+            <span class="card-reading-progress-status__num" th:if="${varView gt 999}">+999</span>
+            <span class="card-reading-progress-status__num" th:if="${varView le 999}" id="data-XXX"
+                  th:text="${view}"
             ></span
             >
         </p>

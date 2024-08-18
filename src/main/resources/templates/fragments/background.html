@@ -44,7 +44,49 @@
      ========================================== -->
     <div class="tree-book-bg" th:fragment="bg-tree-book-covers(trees)">
       <ul class="tree-book-bg__list">
-        <li class="mid__item" th:each="tree : ${trees}" th:object="${tree}">
+        <li
+          class="mid__item"
+          th:each="tree : ${trees}"
+          th:object="${tree}"
+          th:with="coverIdx=${treeStat.index}"
+          th:classappend="${coverIdx}"
+        >
+          <a href="#">
+            <img
+              class="mid__img"
+              th:src="@{/svg/{img}(img=*{imgUrl})}"
+              alt="도서 예시 이미지"
+            />
+          </a>
+          <div
+            th:replace="~{fragments/text::recent-tree-info(tree=${tree})}"
+          ></div>
+        </li>
+        <li
+          class="mid__item"
+          th:each="tree : ${trees}"
+          th:object="${tree}"
+          th:with="coverIdx=${treeStat.index}"
+          th:classappend="${coverIdx}"
+        >
+          <a href="#">
+            <img
+              class="mid__img"
+              th:src="@{/svg/{img}(img=*{imgUrl})}"
+              alt="도서 예시 이미지"
+            />
+          </a>
+          <div
+            th:replace="~{fragments/text::recent-tree-info(tree=${tree})}"
+          ></div>
+        </li>
+        <li
+          class="mid__item"
+          th:each="tree : ${trees}"
+          th:object="${tree}"
+          th:with="coverIdx=${treeStat.index}"
+          th:classappend="${coverIdx}"
+        >
           <a href="#">
             <img
               class="mid__img"

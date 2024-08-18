@@ -28,11 +28,40 @@
         </section>
 
         <section class="book-tree-info-container">
-          <h3 class="none">최근 트리</h3>
+          <h3 class="none">최근 트리 이미지 캐러셀</h3>
           <section class="book-img-container">
             <div
               th:replace="~{fragments/background :: bg-tree-book-covers(trees=${treeList})}"
             ></div>
+          </section>
+
+          <section class="book-tree-explanation-container">
+            <h3 class="none">트리 설명</h3>
+            <ul class="book-tree-explanation-list">
+              <li
+                class="book-tree-explanation-item none"
+                th:each="tree: ${treeList}"
+                th:with="exIdx=${treeStat.index}"
+                th:classappend="${exIdx}"
+              >
+                <div
+                  th:replace="~{fragments/text::recent-tree-ex(text=${tree.description})}"
+                ></div>
+                <section
+                  class="card-progress-home-container"
+                  th:with="readingPage=${tree.readingPage}, totalPage=${tree.totalPage}, progress=${T(java.lang.String).format('%.1f',(readingPage*100.0)/totalPage)},
+            leaf=${tree.leaf}, like=${tree.like}, view=${tree.view}"
+                >
+                  <h4 class="none">트리 진행률</h4>
+                  <div
+                    th:replace="~{fragments/card::card-progress-bar(${progress}, ${readingPage}, ${totalPage})}"
+                  ></div>
+                  <div
+                    th:replace="~{fragments/card::card-react-numbers(${leaf},${like},${view})}"
+                  ></div>
+                </section>
+              </li>
+            </ul>
           </section>
         </section>
       </section>
@@ -71,6 +100,10 @@
       <div th:replace="~{fragments/footer::footer('개발 중입니다~')}"></div>
     </footer>
 
+    <section class="nav-back-container">
+      <h3 class="none">네비 바 뒤 공백</h3>
+    </section>
+
     <aside class="nav-container">
       <section class="short-btn-container">
         <h4 class="none">트리 생성 버튼</h4>
@@ -82,4 +115,5 @@
     </aside>
   </body>
   <script th:src="@{/js/home-tree-index-carousel.js}"></script>
+  <script th:src="@{/js/home-tree-explanation.js}"></script>
 </html>

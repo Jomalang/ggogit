@@ -12,37 +12,41 @@
     <title>Document</title>
 </head>
 <body>
-    <header>
-        <h1 class="none">로그인 이메일 입력</h1>
-        <!-- 컴포넌트 -->
-
-        <section>
-            <h2 class="none">뒤로가기 버튼</h2>
-        <!-- 컴포넌트 -->
-        </section>
-    </header>
-    <main>
-        <section>
-            <h2 class="none">로그인</h2>
-            <!-- 컴포넌트 -->
-
-            <section>
-                <h3 class="none">로그인 정보 입력</h3>
-            <!-- 컴포넌트 -->
-            </section>
-
-            <section>
-                <h3 class="none">SNS 로그인</h3>
-            <!-- 컴포넌트 -->
-            </section>
-
-        </section>
-    </main>
-    <footer>
-        <section>
-            <h2 class="none">회원 가입 버튼</h2>
-        <!-- 컴포넌트 -->
-        </section>
-    </footer>
+<header>
+    <h1 class="none">뒤로가기</h1>
+    <div>
+        <a><img src="/svg/back.svg" alt="back-button"></a>
+    </div>
+</header>
+<section>
+    <h1 class="none">로그인 화면 안내</h1>
+    <p>로그인</p>
+    <p>사용하는 이메일을 입력해주세요</p>
+</section>
+<section>
+    <h1 class="none">로그인</h1>
+    <div th:replace="~{/fragments/input::text-box(label='이메일', placeholder='이메일을 입력하세요', name='email')}">
+    </div>
+</section>
+<a class="tree-create__link-btn" href="#">
+    <div class="tree-create__link-btn--green">로그인</div>
+</a>
+<section class="social-login">
+    <h1 class="none">소셜 로그인</h1>
+    <div>
+        <ul>
+            <li class="social-login__icons"><div><a href="#"><img src="/svg/naver-circle.svg"></a></div></li>
+            <li class="social-login__icons"><div><a href="#"><img src="/svg/google-circle.svg"></a></div></li>
+            <li class="social-login__icons"><div><a href="#"><img src="/svg/kakao-circle.svg"></a></div></li>
+        </ul>
+    </div>
+</section>
+<footer>
+    <h1 class="none">회원가입 안내</h1>
+    <div>
+        <p>계정이 없으신가요?</p>
+        <p>회원가입</p>
+    </div>
+</footer>
 </body>
 </html>

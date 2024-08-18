@@ -278,5 +278,21 @@
             </div>
         </label>
     </div>
+
+<!--  ==========================================
+      FRAGMENT: 댓글 입력 박스
+      ========================================== -->
+<div class="input-comment-input-box" th:fragment="comment-input">
+  <form class="input-comment-input__form" action="">
+    <label class="input-comment-input__label">
+      <img class="input-comment-input__profile-img" th:src="@{/svg/comment-profile.svg}" alt="프로필 이미지">
+      <textarea id="input-comment-input__input-id" rows="1" class="input-comment-input__input" placeholder="댓글 추가..." type="text"></textarea>
+    </label>
+    <button id="input-comment-input__submit-id" class="input-comment-input__submit" type="submit">
+      <img th:src="@{/svg/comment-send.svg}" alt="send-button">
+    </button>
+  </form>
+</div>
+
   </body>
 </html>

@@ -28,8 +28,8 @@
         </section>
 
         <section class="book-tree-info-container">
+          <h3 class="none">최근 트리</h3>
           <section class="book-img-container">
-            <h3 class="none">최근 트리</h3>
             <div
               th:replace="~{fragments/background :: bg-tree-book-covers(trees=${treeList})}"
             ></div>
@@ -40,10 +40,10 @@
       <section class="my-tree-list" th:object="${treeList}">
         <h2 class="none">나의 트리 목록</h2>
         <div th:replace="~{fragments/text::tree-count(*{size})}"></div>
-      </section>
-      <section>
-        <h2 class="none">트리 버튼</h2>
-        <!-- 프레그먼트 -->
+        <section>
+          <h2 class="none">트리 정렬 필터 버튼</h2>
+          <div th:replace="~{fragments/filter::filter-tree-list}"></div>
+        </section>
       </section>
 
       <section>
@@ -68,10 +68,16 @@
     </main>
 
     <footer>
-      <div></div>
+      <div th:replace="~{fragments/footer::footer('개발 중입니다~')}"></div>
     </footer>
 
     <aside class="nav-container">
+      <section class="short-btn-container">
+        <h4 class="none">트리 생성 버튼</h4>
+        <div
+          th:replace="~{fragments/button::btn-short-a--green(href= '/register/seed', text='트리 생성')}"
+        ></div>
+      </section>
       <div th:replace="~{fragments/nav :: navigation-bar(home)}"></div>
     </aside>
   </body>

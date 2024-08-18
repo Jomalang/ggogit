@@ -29,82 +29,144 @@
               text - btn- btn- btn -btn - btn
               filter-seed-text-3btn
       ============================== -->
-  <div class="filter-text-3btn-frame" th:fragment="filter-seed-text-btns(bookmark,seed1,seed2)">
-    <span><label><input  class="filter-seed__text" type="text" placeholder="로그 검색하기"></label></span>
-    <ul class="filter-category-frame">
-      <li>
+    <div
+      class="filter-text-3btn-frame"
+      th:fragment="filter-seed-text-btns(bookmark,seed1,seed2)"
+    >
+      <span
+        ><label
+          ><input
+            class="filter-seed__text"
+            type="text"
+            placeholder="로그 검색하기" /></label
+      ></span>
+      <ul class="filter-category-frame">
+        <li>
+          <input
+            class="filter-category__bookmark"
+            type="checkbox"
+            id="filter-category__bookmark"
+          />
+          <label
+            class="filter-category__bookmark__detail"
+            for="filter-category__bookmark"
+            >책갈피</label
+          >
+
+          <ul class="filter-category__bookmark__list">
+            <li th:each="bm : ${bookmark}" th:text="${bm}"></li>
+          </ul>
+        </li>
+        <li>
+          <input
+            class="filter-category__seed"
+            type="checkbox"
+            id="filter-category__seed1"
+          />
+          <label
+            class="filter-category__seed__detail"
+            for="filter-category__seed1"
+            >씨앗</label
+          >
+
+          <ul class="filter-category__seed__list">
+            <li th:each="s1 : ${seed1}" th:text="${s1}"></li>
+          </ul>
+        </li>
+        <li>
+          <input
+            class="filter-category__seed"
+            type="checkbox"
+            id="filter-category__seed2"
+          />
+          <label
+            class="filter-category__seed__detail"
+            for="filter-category__seed2"
+            >씨앗</label
+          >
+
+          <ul class="filter-category__seed__list">
+            <li th:each="s2 : ${seed2}" th:text="${s2}"></li>
+          </ul>
+        </li>
+        <li>
+          <input
+            class="filter-category__seed"
+            type="checkbox"
+            id="filter-category__seed3"
+          />
+          <label
+            class="filter-category__seed__detail"
+            for="filter-category__seed3"
+            >씨앗</label
+          >
+
+          <ul class="filter-category__seed__list">
+            <li th:each="s3 : ${seed3}" th:text="${s3}"></li>
+          </ul>
+        </li>
+        <li>
+          <input
+            class="filter-category__seed"
+            type="checkbox"
+            id="filter-category__seed4"
+          />
+          <label
+            class="filter-category__seed__detail"
+            for="filter-category__seed4"
+            >씨앗</label
+          >
+
+          <ul class="filter-category__seed__list">
+            <li th:each="s4 : ${seed4}" th:text="${s4}"></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <!-- =============================
+              메인 페이지 트리 필터
+              고정된 seed로 정렬합니다.
+      ============================== -->
+    <div class="filter-tree-list" th:fragment="filter-tree-list">
+      <div class="sortIcon">
+        <img th:src="@{/svg/sort.svg}" alt="sort-buttons" />
+      </div>
+      <label>
         <input
-                class="filter-category__bookmark"
-                type="checkbox"
-                id="filter-category__bookmark"
-        />
-        <label
-                class="filter-category__bookmark__detail"
-                for="filter-category__bookmark"
-        >책갈피</label>
-
-        <ul class="filter-category__bookmark__list">
-          <li th:each="bm : ${bookmark}" th:text="${bm}"></li>
-        </ul>
-      </li>
-      <li>
+          class="filter-tree-list-btn"
+          type="radio"
+          name="treeList"
+          label="도서"
+      /></label>
+      <label>
         <input
-                class="filter-category__seed"
-                type="checkbox"
-                id="filter-category__seed1"
-        />
-        <label
-                class="filter-category__seed__detail"
-                for="filter-category__seed1"
-        >씨앗</label>
-
-        <ul class="filter-category__seed__list">
-          <li th:each="s1 : ${seed1}" th:text="${s1}"></li>
-        </ul>
-      </li><li>
-      <input
-              class="filter-category__seed"
-              type="checkbox"
-              id="filter-category__seed2"
-      />
-      <label
-              class="filter-category__seed__detail"
-              for="filter-category__seed2"
-      >씨앗</label>
-
-      <ul class="filter-category__seed__list">
-        <li th:each="s2 : ${seed2}" th:text="${s2}"></li>
-      </ul>
-    </li><li>
-      <input
-              class="filter-category__seed"
-              type="checkbox"
-              id="filter-category__seed3"
-      />
-      <label
-              class="filter-category__seed__detail"
-              for="filter-category__seed3"
-      >씨앗</label>
-
-      <ul class="filter-category__seed__list">
-        <li th:each="s3 : ${seed3}" th:text="${s3}"></li>
-      </ul>
-    </li><li>
-      <input
-              class="filter-category__seed"
-              type="checkbox"
-              id="filter-category__seed4"
-      />
-      <label
-              class="filter-category__seed__detail"
-              for="filter-category__seed4"
-      >씨앗</label>
-
-      <ul class="filter-category__seed__list">
-        <li th:each="s4 : ${seed4}" th:text="${s4}"></li>
-      </ul>
-    </li>
-    </ul>
-  </div>
+          class="filter-tree-list-btn"
+          type="radio"
+          name="treeList"
+          label="생각"
+      /></label>
+      <label>
+        <input
+          class="filter-tree-list-btn"
+          type="radio"
+          name="treeList"
+          label="문장"
+      /></label>
+      <label>
+        <input
+          class="filter-tree-list-btn"
+          type="radio"
+          name="treeList"
+          label="공부"
+      /></label>
+      <label>
+        <input
+          class="filter-tree-list-btn"
+          type="radio"
+          name="treeList"
+          label="유튜브"
+      /></label>
+    </div>
   </body>
 </html>

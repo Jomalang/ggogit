@@ -23,4 +23,15 @@ public class UserController {
         model.addAttribute("lists", lists2);
         return "view/user/tree/index";
     }
+    @GetMapping("/tree/memoir/index")
+    public String getTreeMemoir(Model model) {
+        List<Branch> lists2 = new ArrayList<>();
+        lists2.add(new Branch("heegwon-branch","card-bookmark-icon.svg","2024-07-18","브랜치 이름",999,90));
+        lists2.add(new Branch("taegyu-branch","card-bookmark-icon.svg","2024-07-18","브랜치 이름",999,90));
+        lists2.add(new Branch("hyeonjin-branch","card-tree-icon.svg","2024-07-18","브랜치 이름",999,90));
+        lists2.add(new Branch("jinpeal-branch","card-bookmark-icon.svg","2024-07-18","브랜치 이름",999,90));
+        lists2.add(new Branch("jaeyoung-branch","card-bookmark-icon.svg","2024-07-18","브랜치 이름",999,90));
+        model.addAttribute("lists", lists2);
+        return "view/user/tree/memoir/index";
+    }
 }

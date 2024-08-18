@@ -26,11 +26,26 @@
      ========================================== -->
 <div class="user-tree-user-info-container" th:fragment="user-info-back-header(src,backimgpath,userimg,username,userid,userurl)" th:style="'background-image: url(' + @{'/svg/'+${backimgpath}} + ');'">
     <section class="user-info__top-bar-container">
-        <div th:replace="~{fragments/top-bar :: top-bar__transparent(src='${src}')}"></div>
+        <div th:replace="~{fragments/top-bar :: top-bar__transparent(${src})}"></div>
     </section>
     <section class="user-info__user-info-bar-container">
         <div th:replace="~{fragments/bar :: bar-user-info(${userimg},${username},${userid},${userurl})}"></div>
     </section>
+</div>
+
+<!-- ==========================================
+     FRAGMENT: 사용자 정보, 회고록 제목 화면 - 상단바 + 바 / 회고록 제목
+     설명: 사용자 트리 정보 user/memoir/index
+     ========================================== -->
+<div class="user-tree-user-info-container" th:fragment="user-info-back-header-memoir-title(src,backimgpath,username,userid,memoirtitle,userurl)" th:style="'background-image: url(' + @{'/svg/'+${backimgpath}} + ');'">
+    <section class="user-info__top-bar-container">
+        <div th:replace="~{fragments/top-bar :: top-bar__transparent(src='${src}')}"></div>
+    </section>
+    <section class="user-info__user-info-bar-container">
+        <div th:replace="~{fragments/bar :: bar-user-info-no-profile-btn(${username},${userid})}"></div>
+        <div th:replace="~{fragments/bar :: bar-memoir-title-btn(${memoirtitle},${userurl})}"></div>
+    </section>
+
 </div>
 </body>
 </html>

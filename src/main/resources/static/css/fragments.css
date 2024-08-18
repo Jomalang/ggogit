@@ -2225,3 +2225,78 @@ card.html
     gap : 6px;
     align-items: center;
 }
+.bar-memoir-title{
+    color: var(--white);
+    font-size: 24px;
+    font-weight: var(--bold);
+    line-height: var(--line-height-main);
+    letter-spacing: var(--letter-spacing-main);
+}
+.text-memoir-content{
+    color: var(--main1);
+    font-size: 14px;
+    font-weight: var(--regular);
+    line-height: var(--line-height-sub);
+    letter-spacing: var(--letter-spacing-sub);
+    white-space: pre-line;
+}
+
+.bar-user-info-follow-btn-frame{
+    display: flex;
+    justify-content: space-between;
+}
+.bar-user-info__user-name--color-main1{
+    color: var(--main1);
+    font-size: 14px;
+    font-weight: var(--medium);
+    line-height: var(--line-height-main);
+    letter-spacing: var(--letter-spacing-main);
+}
+.bar-user-info__user-id--color-main1{
+    color: var(--main1);
+    font-size: 10px;
+    font-weight: var(--regular);
+    line-height: var(--line-height-main);
+    letter-spacing: var(--letter-spacing-main);
+}
+.bar-user-info__right-btns{
+    display: flex;
+    gap : 6px;
+    align-items: center;
+}
+
+.__follow-btn {
+    display: none;
+    cursor: none;
+}
+
+.__follow-btn-msg {
+    width: 60px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--main1);
+    border-radius: 12px;
+    color: var(--main1);
+    justify-content: center;
+    font-size: 14px;
+    font-weight: var(--semi-bold);
+    line-height: var(--line-height-main);
+    letter-spacing: var(--letter-spacing-main);
+    background: var(--white);
+}
+
+.__follow-btn:checked + .__follow-btn-msg {
+    width: 60px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    border-radius: 12px;
+    color: var(--white);
+    text-align: center;
+    font-size: 14px;
+    font-weight: var(--semi-bold);
+    line-height: var(--line-height-main);
+    letter-spacing: var(--letter-spacing-main);
+    background: var(--main1);
+}

@@ -32,9 +32,44 @@
                 class="bar-search-current__detail"
                 for="bar-search-current__detail"
         >최근 수정한 수</label>
+        <div class="bar-search-current__filter-frame">
+            <form action="#" method="post">
+                <label>
+                    <input/>
+                </label>
+            </form>
+        </div>
     </div>
 </div>
 
+<!-- ==========================================
+     FRAGMENT: 좋아요 및 공유
+     ==========================================-->
+<div id="bar-like-share-id" class="bar-like-share-box" th:fragment="like-share(likeLink, shareLink)">
+    <div class="bar-like-share__like-frame">
+        <div class="bar-like-share__like-link" th:href="@{${likeLink}}">
+            <img class="bar-like-share__like-icon" th:src="@{/svg/detail-like.svg}" alt="좋아요 아이콘" />
+        </div>
+    </div>
+    <div class="bar-like-share__share-frame">
+        <a class="bar-like-share__share-link" th:href="@{${shareLink}}">
+            <img class="bar-like-share__share-icon" th:src="@{/svg/detail-share.svg}" alt="공유 아이콘" />
+        </a>
+    </div>
+</div>
+
+<!-- ==========================================
+     FRAGMENT: 댓글 탭 활성화 박스
+     ==========================================-->
+<div id="bar-comment-id" class="bar-comment-box" th:fragment="comment(profileImg, commentCount)">
+    <p class="bar-comment__text">댓글
+        <span class="bar-comment__count">105</span>
+    </p>
+    <div class="bar-comment__profile-frame">
+        <img class="bar-comment__profile-img" th:src="@{${profileImg}}" alt="프로필 이미지" />
+        <p class="bar-comment__placeholder">댓글 추가...</p>
+    </div>
+</div>
 <!--==========================================
     user info bar
     user tree index 사용

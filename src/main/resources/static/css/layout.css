@@ -346,6 +346,76 @@ home-tree__reg-4--search-book__input
 .register__input-container--last{
     padding: 120px 24px 60px;
 }
+
+.book-detail-top-bar-container {
+    width: 100%;
+    margin: 30px 0 40px 0;
+    position: absolute;
+    top: 0;
+    z-index: 10;
+}
+
+.book-detail-bg-container {
+    position: relative;
+}
+
+.book-detail-like-bar-container {
+    width: 100%;
+    position: absolute;
+    bottom: 18px;
+}
+
+.book-detail-book-info-container {
+    padding: 30px 24px 30px 24px;
+}
+
+.book-detail-my-tree-container {
+    margin: 64px 0 0 0;
+}
+
+.book-detail-my-tree-list-container {
+    margin: 0 0 60px 0;
+}
+
+.book-detail-my-tree-title-container {
+    margin: 0 24px 24px 24px;
+}
+
+.book-detail-other-recode-container {
+    background-color: var(--main3, #f5f8f1);
+    padding: 40px 0 300px 0;
+}
+
+.book-detail-other-recode-title-container {
+    margin: 0 24px 0 24px;
+}
+
+.book-detail-other-recode-sub-title-container {
+    margin: 70px 24px 16px 24px;
+}
+
+.book-detail-bot-aside-container {
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    z-index: 10;
+}
+
+.book-detail-comment-tab-container {
+    position: fixed;
+    top: 100%;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 20;
+    overflow: hidden;
+    transition: all 0.5s ease;
+}
+
+.book-detail-comment-tab-container--active {
+    top: 265px; /* 최종 위치 */
+    transform: translateY(0); /* 원래 위치로 이동 */
+}
 .user-tree-user-info-container{
     padding: 35px 24px 10px;
     display: flex;
@@ -355,7 +425,7 @@ home-tree__reg-4--search-book__input
 }
 .user-info__top-bar-container{
     display: flex;
-  }
+}
 .user-tree-info__container{
     height: 70px;
     padding-top: 15px;
@@ -365,7 +435,6 @@ home-tree__reg-4--search-book__input
 .memoir-tree-detail-contrainer{
     padding-top: 15px;
 }
-
 .tree-memoir-content-container{
     padding: 41px 24px 31px;
     display: flex;

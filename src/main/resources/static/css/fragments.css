@@ -833,6 +833,11 @@ button {
 }
 
 /*card- 기본정보 */
+
+.card-tree-info-box {
+    border-bottom: 1px solid var(--branch-left, #D6D8D4);
+}
+
 .card-tree-info {
     height: 41px;
     border-bottom: 1px solid var(--main1);
@@ -896,8 +901,7 @@ button {
     flex-shrink: 0;
 }
 
-.search-filter-log__checkbox-input:checked
-+ .search-filter-log__checkbox-input-text {
+.search-filter-log__checkbox-input:checked + .search-filter-log__checkbox-input-text {
     background-color: var(--main1, #323a27);
     color: var(--white, #ffffff);
 }
@@ -1819,7 +1823,7 @@ card.html
     font-size: 14px;
     line-height: var(--line-height-main);
     color: var(--text-sub);
-    transform: translate(0px, -8.8px);
+    transform: translate(0, -8.8px);
 }
 
 .card-reading-progress-status__num {
@@ -2109,6 +2113,850 @@ card.html
     width: 100%;
     display: flex;
     flex-direction: column;
+}
+
+/*  ========================================== /
+     FRAGMENT: 도서 디테일 배경
+/   ========================================== */
+.bg-book-detail-box {
+    width: 100%;
+    height: 404px;
+    position: relative;
+    overflow: hidden;
+}
+
+.bg-book-detail__image {
+    width: 100%;
+    object-fit: cover;
+    object-position: top;
+    filter:blur(10px) brightness(0.8);
+    transform: scale(1.5);
+}
+
+.bg-book-detail__front-img-box {
+    position: absolute;
+    width: 170px;
+    left: 50%;
+    bottom: 50px;
+    transform: translateX(-50%);
+    transition: all 0.5s ease;
+}
+
+.bg-book-detail__front-img-box--comment-active {
+    position: absolute;
+    width: 120px;
+    left: 50%;
+    top: 40px;
+    bottom: auto;
+    transform: translateX(-50%);
+}
+
+.bg-book-detail__front-img {
+    width: 100%;
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.25);
+}
+
+/*  ========================================== /
+     FRAGMENT: 투명 뒤로가기 상단 바
+/   ========================================== */
+.top-bar-clear-back-box {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.top-bar-clear-back-box--none {
+    display: none;
+}
+
+.top-bar-clear-back__left-box {
+    display: flex;
+    align-items: center;
+    margin-left: 24px;
+    gap: 8px;
+}
+
+.top-bar-clear-back__right-box {
+    margin-right: 24px;
+}
+
+.top-bar-clear-back__icon-box {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/*  ========================================== /
+     FRAGMENT: 좋아요 및 공유
+/   ========================================== */
+.bar-like-share-box {
+    padding: 0 24px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.bar-like-share-box--none {
+    display: none;
+}
+
+.bar-like-share__like-frame, .bar-like-share__share-frame {
+    display: flex;
+    width: 36px;
+    height: 36px;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+/*  ========================================== /
+    FRAGMENT: 댓글 탭 활성화 박스
+/   ========================================== */
+.bar-comment-box {
+    padding: 0 24px;
+    background-color: var(--main3, #f5f8f1);
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+
+.bar-comment__text {
+    margin-top: 16px;
+    font-weight: var(--bold, 700);
+    font-size: 14px;
+    line-height: var(--line-height-main);
+    letter-spacing: var(--letter-spacing-main);
+    color: var(--main1, #323a27);
+}
+
+.bar-comment__count {
+    font-size: 12px;
+    font-weight: var(--regular, 400);
+}
+
+.bar-comment__profile-frame {
+    margin-bottom: 24px;
+    display: flex;
+    gap: 12px;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.bar-comment__profile-img {
+    width: 25px;
+    height: 25px;
+}
+
+.bar-comment__placeholder {
+    width: 100%;
+    padding: 8px 0 8px 16px;
+    background-color: var(--main2, #e5eddb);
+    border-radius: 16px;
+    font-size: 12px;
+    color: var(--text-sub, #767676);
+    font-weight: var(--regular, 400);
+}
+
+/*  ========================================== /
+    FRAGMENT: 나의 트리 카드
+/   ========================================== */
+.card-tree__item {
+    background-color: var(--main3, #f5f8f1);
+    width: 290px;
+    margin: 0 0 0 10px;
+    padding: 16px;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 auto;
+    gap:8px;
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.25);
+}
+
+.card-tree__top-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 8px;
+}
+
+.card-tree__top-tree-icon-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--main1, #323a27);
+    border-radius: 10px;
+    width: 40px;
+    height: 40px;
+}
+
+.card-tree__top-sns-icon-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+.card-tree__bot-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.card-tree__bot-info-box {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.card-tree__bot-title {
+    font-size: 18px;
+    width: 200px;
+    font-weight: var(--bold, 700);
+    color: var(--main1, #323a27);
+    margin-right: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.card-tree__bot-date {
+    font-size: 12px;
+    font-weight: var(--regular, 400);
+    color: var(--text-sub, #767676);
+}
+
+.card-tree__bot-statistics-box {
+    display: flex;
+    flex-direction: column;
+    font-size: 12px;
+    font-weight: var(--regular, 400);
+    color: var(--text-sub, #767676);
+}
+
+.card-tree__bot-leaf-text, .card-tree__bot-view-text {
+    white-space: nowrap;
+}
+
+.card-tree__bot-leaf-count, .card-tree__bot-view-count {
+    font-size: 14px;
+    font-weight: var(--bold, 700);
+    color: var(--main1, #323a27);
+}
+
+/*  ========================================== /
+    FRAGMENT: 나의 트리 카드 리스트
+/   ========================================== */
+
+.card-tree-list-box {
+    display: flex;
+    overflow-x: auto;
+    padding-bottom: 10px;
+    margin: 0;
+    list-style: none;
+}
+
+.card-tree-list-box::-webkit-scrollbar {
+    display: none;
+}
+
+.card-tree__list {
+    display: flex;
+}
+
+.card-tree__list li:last-child {
+    margin-right: 60px; /* 마지막 아이템의 오른쪽에 공백 추가 */
+}
+
+/*  ========================================== /
+    FRAGMENT: SNS 트리 카드 리스트
+/   ========================================== */
+.sns-card-tree-list-box {
+    display: flex;
+    overflow-x: auto;
+    padding-bottom: 10px;
+    margin: 0;
+    list-style: none;
+}
+
+.sns-card-tree-list-box::-webkit-scrollbar {
+    display: none;
+}
+
+.sns-card-tree__list {
+    display: flex;
+}
+
+.sns-card-tree__list li:last-child {
+    margin-right: 60px; /* 마지막 아이템의 오른쪽에 공백 추가 */
+}
+
+/*  ========================================== /
+    FRAGMENT: SNS 트리 카드
+/   ========================================== */
+
+.sns-card-tree__item {
+    background-color: var(--white, #ffffff);
+    width: 290px;
+    padding: 16px;
+    margin-left: 10px;
+    border-radius: 16px;
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.25);
+}
+
+.sns-card-tree-box {
+    display: flex;
+    flex-direction: column;
+}
+
+.sns-card-tree__top-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 16px;
+}
+
+.sns-card-tree__top-tree-icon-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--main1, #323a27);
+    border-radius: 10px;
+    width: 40px;
+    height: 40px;
+}
+
+.sns-card-tree__top-memoir-icon-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #FF6240;
+    border-radius: 10px;
+    width: 40px;
+    height: 40px;
+}
+
+ .sns-card-tree__top-leaf-icon-box {
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     background-color: #57CC20;
+     border-radius: 10px;
+     width: 40px;
+     height: 40px;
+ }
+
+.sns-card-tree__top-sns-icon-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+.sns-card-tree__mid-box {
+    display: flex;
+    margin-right: 45px;
+    gap: 4px;
+    flex-direction: column;
+    justify-content: center;
+    margin-bottom: 14px;
+}
+
+.sns-card-tree__mid-title {
+    font-size: 18px;
+    font-weight: var(--bold, 700);
+    color: var(--main1, #323a27);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.sns-card-tree__mid-date {
+    font-size: 12px;
+    font-weight: var(--regular, 400);
+    color: var(--text-sub, #767676);
+}
+
+.sms-card-tree__memoir-text-box {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 20px;
+}
+
+.sms-card-tree-memoir-text {
+    font-size: 14px;
+    font-weight: var(--regular, 400);
+    color: var(--text-sub, #767676);
+}
+
+.sns-card-tree__bot-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sns-card-tree__bot-nickname-text {
+    font-size: 14px;
+    font-weight: var(--bold, 700);
+    color: var(--main1, #323a27);
+}
+
+.sns-card-tree__bot-nickname-id {
+    font-size: 10px;
+    font-weight: var(--regular, 400);
+    color: var(--text-sub, #767676);
+}
+
+.sns-card-tree__bot-statistics-box {
+    font-size: 12px;
+    font-weight: var(--regular, 400);
+    color: var(--text-sub, #767676);
+}
+
+.sns-card-tree__bot-leaf-count, .sns-card-tree__bot-view-count {
+    font-size: 14px;
+    font-weight: var(--bold, 700);
+    color: var(--main1, #323a27);
+}
+
+/*  ========================================== /
+    FRAGMENT: Footer
+/   ========================================== */
+.tree-footer::after {
+    content: "by RECODERS";
+    text-align: center;
+    align-self: center;
+    width: 100%;
+    height: 89px;
+    display: block;
+    bottom: 0;
+}
+
+.tree-footer-header {
+    background-color: var(--main3);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 30px;
+    padding: 10px 24px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.tree-footer-header__title {
+    font-size: 16px;
+    font-weight: var(--bold);
+}
+
+.tree-footer-header__added {
+    font-size: 14px;
+    font-weight: 300;
+    text-decoration: underline;
+}
+
+.tree-footer__membership {
+    margin-top: 20px;
+    padding: 0 24px;
+    font-size: 14px;
+}
+.membership-login {
+    font-size: 14px;
+    font-weight: var(--bold);
+    color: var(--text-sub);
+    margin-right: 10px;
+}
+
+.membership-join {
+    font-size: 14px;
+    font-weight: var(--bold);
+    color: var(--text-sub);
+    margin-right: 10px;
+}
+
+.membership-asking {
+    font-size: 14px;
+    font-weight: var(--bold);
+    color: var(--text-sub);
+    margin-right: 10px;
+}
+
+.tree-footer__app {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 0 24px;
+}
+
+.app-info {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-sub);
+}
+
+.app-sep {
+    font-size: 12px;
+    color: var(--text-sub);
+}
+
+.app-membership-policy {
+    font-size: 12px;
+    font-weight: var(--bold);
+    color: var(--text-sub);
+}
+
+.tree-footer__logo {
+    display: flex;
+    justify-content: end;
+    padding-right: 24px;
+}
+
+/*  ========================================== /
+    FRAGMENT: 댓글 탭 상단 바
+/   ========================================== */
+.top-bar-comment-box {
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0 16px;
+}
+
+.top-bar-comment__line-box {
+    height: 13px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.top-bar-comment__line {
+    width: 40px;
+    height: 3px;
+    background-color: #D6D6D6;
+}
+
+.top-bar-comment__back-box {
+    width: 100%;
+    height: 34px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.top-bar-comment__back-text {
+    height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    font-weight: var(--bold, 700);
+    color: var(--main1, #323a27);
+}
+
+.top-bar-comment__back-icon-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 24px;
+    height: 24px;
+}
+
+.top-bar-comment__check-box {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    padding: 10px;
+}
+
+.top-bar-comment__label {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #f7f7f7;
+    font-size: 12px;
+    border-radius: 8px;
+}
+
+.top-bar-comment__input {
+    display: none;
+}
+
+.top-bar-comment__input:checked + .top-bar-comment__label {
+    background-color: var(--main1, #323a27);
+    color: var(--white, #ffffff);
+    font-weight: var(--regular, 400);
+    font-size: 12px;
+}
+
+/*  ========================================== /
+    FRAGMENT: 트리생성 하단바
+/   ========================================== */
+.bot-bar-create-tree-box {
+    background-color: var(--white, #ffffff);
+    display: flex;
+    padding: 12px 24px;
+    gap: 12px;
+    box-shadow: 0 -5px 10px -5px rgba(0, 0, 0, 0.3);
+}
+
+.bot-bar-create-tree__icon-box {
+    background-color: var(--main1, #323a27);
+    width: 56px;
+    height: 56px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+}
+
+.bot-bar-create-tree__link {
+    flex-grow: 1;
+}
+
+.bot-bar-create-tree__tree-create-btn {
+    display: flex;
+    border-radius: 4px;
+    justify-content: center;
+    align-items: center;
+    color: var(--white, #ffffff);
+    background-color: var(--main1, #323a27);
+    height: 56px;
+}
+
+.tab-comment-box {
+    position: relative;
+    background-color: var(--white, #ffffff);
+    width: 100%;
+    height: 100%;
+    margin-top: 10px;
+    border-radius: 18px 18px 0 0;
+    box-shadow: 0 -20px 10px -20px rgba(0, 0, 0, 0.8);
+}
+
+/*  ========================================== /
+    FRAGMENT: 댓글 리스트
+/   ========================================== */
+.tab-comment-list-box {
+    display: flex;
+    position: absolute;
+    width: auto;
+    top: 103px;
+    bottom: 0;
+    gap: 16px;
+    padding: 12px 16px;
+    overflow: hidden;
+    overflow-y: auto;
+}
+
+.tab-comment__list {
+    display: flex;
+    width: auto;
+    gap: 24px;
+    flex-direction: column;
+}
+
+.tab-comment__item {
+    width: auto;
+    display: flex;
+    justify-content: flex-start;
+    align-content: center;
+}
+
+.tab-comment__item:last-child {
+    padding-bottom: 150px;
+}
+
+.card-log__author-img-frame {
+    display: flex;
+    padding-right: 13px;
+    justify-content: center;
+    text-align: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 70%;
+    overflow: hidden;
+}
+
+.card-log__author-img {
+    object-fit: cover;
+}
+.card-log__create {
+    display: flex;
+    gap: 2px;
+}
+.card-log__create-info {
+    color: var(--text-sub);
+    font-size: 12px;
+    font-weight: var(--regular);
+    line-height: var(--line-height-main);
+    letter-spacing: var(--letter-spacing-main);
+}
+
+.card-log__content-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.card-log__content-detail-show {
+    order: 2;
+    display: none;
+}
+
+.card-log__content-detail {
+    order: 3;
+}
+
+.card-log__content-detail-show:not(:checked) + .card-log__content-detail:after {
+    color: var(--text-sub);
+    font-size: 12px;
+    font-weight: var(--semi-bold);
+    line-height: var(--line-height-main);
+    letter-spacing: var(--letter-spacing-main);
+    height: 14px;
+    cursor: pointer;
+    content: "자세히 보기";
+}
+
+.card-log__content-detail-show:not(:checked) ~ .card-log__content {
+    order: 1;
+    padding-top: 4px;
+    margin-bottom: 4px;
+    color: var(--main1);
+    font-size: 14px;
+    font-weight: var(--semi-bold);
+    line-height: var(--line-height-main);
+    letter-spacing: var(--letter-spacing-main);
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+}
+
+.card-log__content-detail-show:checked + .card-log__content-detail:after {
+    color: var(--text-sub);
+    font-size: 12px;
+    font-weight: var(--semi-bold);
+    line-height: var(--line-height-main);
+    letter-spacing: var(--letter-spacing-main);
+    height: 14px;
+    cursor: pointer;
+    content: "간략히 보기";
+}
+
+.card-log__content-detail-show:checked ~ .card-log__content {
+    order: 1;
+    padding-top: 4px;
+    margin-bottom: 4px;
+    color: var(--main1);
+    font-size: 14px;
+    font-weight: var(--semi-bold);
+    line-height: var(--line-height-main);
+    letter-spacing: var(--letter-spacing-main);
+}
+
+.card-log__like-info {
+    padding-top: 14px;
+    display: flex;
+    gap: 4px;
+    align-items: center;
+}
+
+.card-log__like-num {
+    font-size: 10px;
+}
+
+.card-log__like {
+    display: none;
+}
+
+.card-log__like:disabled + .card-log__like-frame {
+    background-image: url("/src/main/resources/static/svg/tumbsup-on.svg");
+}
+
+.card-log__like:checked + .card-log__like-frame {
+    background-image: url("/src/main/resources/static/svg/tumbsup-on.svg");
+}
+
+.card-log__like-frame {
+    display: flex;
+    height: 14px;
+    width: 14px;
+    cursor: pointer;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.card-log__detail-frame-link {
+    height: 24px;
+}
+
+.card-log__detail-frame {
+    height: 24px;
+    width: 24px;
+    padding-left: 13px;
+}
+
+/*  ========================================== /
+    FRAGMENT: 댓글 입력 박스
+/   ========================================== */
+.input-comment-input-box {
+    display: flex;
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    background-color: var(--main3, #f5f8f1);
+    z-index: 30;
+    margin-bottom: 10px;
+    padding-bottom: 4px;
+    justify-content: center;
+    align-items: center;
+}
+
+.input-comment-input__form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 12px;
+    width: 100%;
+}
+
+.input-comment-input__label {
+    display: flex;
+    flex: 1;
+    width: auto;
+    gap: 12px;
+}
+
+.input-comment-input__input {
+    flex: 1;
+    position: relative;
+    background-color: var(--main2, #e5eddb);
+    font-size: 12px;
+    border-radius: 16px;
+    border: none;
+    outline: none;
+    overflow: hidden;
+    padding: 12px 16px;
+    transition: all 0.5s ease;
+}
+
+.input-comment-input__input:focus {
+    border-radius: 4px;
+    font-size: 16px;
+    color: var(--main1, #323a27);
+}
+
+.input-comment-input__submit {
+    display: none;
+    transition: all 1s ease;
+}
+
+.input-comment-input__submit--active {
+    display: block;
 }
 
 .__like-bold-input {

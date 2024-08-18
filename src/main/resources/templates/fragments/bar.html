@@ -45,7 +45,7 @@
 <!-- ==========================================
      FRAGMENT: 좋아요 및 공유
      ==========================================-->
-<div class="bar-like-share-box" th:fragment="like-share(likeLink, shareLink)">
+<div id="bar-like-share-id" class="bar-like-share-box" th:fragment="like-share(likeLink, shareLink)">
     <div class="bar-like-share__like-frame">
         <div class="bar-like-share__like-link" th:href="@{${likeLink}}">
             <img class="bar-like-share__like-icon" th:src="@{/svg/detail-like.svg}" alt="좋아요 아이콘" />
@@ -61,7 +61,7 @@
 <!-- ==========================================
      FRAGMENT: 댓글 탭 활성화 박스
      ==========================================-->
-<div class="bar-comment-box" th:fragment="comment(profileImg, commentCount)">
+<div id="bar-comment-id" class="bar-comment-box" th:fragment="comment(profileImg, commentCount)">
     <p class="bar-comment__text">댓글
         <span class="bar-comment__count">105</span>
     </p>

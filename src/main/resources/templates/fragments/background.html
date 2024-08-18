@@ -24,9 +24,9 @@
 <!-- ==========================================
      FRAGMENT: 도서 디테일 배경
      ========================================== -->
-<div class="bg-book-detail-box" th:fragment="book-detail(imgSrc)">
+<div id="bg-book-detail-box-id" class="bg-book-detail-box" th:fragment="book-detail(imgSrc)">
     <img class="bg-book-detail__image" th:src="@{${imgSrc}}" alt="도서 이미지" />
-    <div class="bg-book-detail__front-img-box">
+    <div id="bg-book-detail__front-img-box-id" class="bg-book-detail__front-img-box">
         <img class="bg-book-detail__front-img" th:src="@{${imgSrc}}" alt="도서 이미지" />
     </div>
 </div>

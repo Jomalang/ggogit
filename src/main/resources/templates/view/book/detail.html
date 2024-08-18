@@ -16,7 +16,7 @@
       <h1 class="none">도서 세부 정보</h1>
       <section class="book-detail-top-bar-container">
         <h1 class="none">뒤로가기 상단바</h1>
-        <div th:replace="fragments/top-bar :: clear-back"></div>
+        <div th:replace="~{fragments/top-bar :: clear-back}"></div>
       </section>
     </header>
 
@@ -46,6 +46,12 @@
       <section class="book-detail-comment-container">
         <h1 class="none">댓글</h1>
         <div th:replace="~{fragments/bar :: comment(profileImg=@{/svg/comment-profile.svg}, commentCount='199')}"></div>
+
+        <section id="comment-filter-tab-id" class="book-detail-comment-tab-container book-detail-comment-tab-container--active">
+          <h1 class="none">댓글 탭</h1>
+          <div th:replace="~{fragments/tab-comment :: tab-comment}"></div>
+        </section>
+
       </section>
 
       <section class="book-detail-my-tree-container">
@@ -111,6 +117,56 @@
     </aside>
 
     <footer th:replace="~{fragments/footer :: footer}"></footer>
+
+
+  <script>
+    function commentTabActive() {
+      const topBar = document.getElementById("top-bar-clear-back-id");
+      const likeShareBar = document.getElementById("bar-like-share-id");
+      const bookImage = document.getElementById("bg-book-detail__front-img-box-id");
+      const commentTab = document.getElementById("comment-filter-tab-id");
+
+      topBar.classList.add("top-bar-clear-back-box--none");
+      likeShareBar.classList.add("bar-like-share-box--none");
+      bookImage.classList.add("bg-book-detail__front-img-box--comment-active");
+      commentTab.classList.add("book-detail-comment-tab-container--active");
+
+      document.body.classList.add("no-scroll");
+      window.scrollTo({top: 0, behavior: "smooth"});
+    }
+
+    function commentTabInactive() {
+        const topBar = document.getElementById("top-bar-clear-back-id");
+        const likeShareBar = document.getElementById("bar-like-share-id");
+        const bookImage = document.getElementById("bg-book-detail__front-img-box-id");
+        const commentTab = document.getElementById("comment-filter-tab-id");
+
+        topBar.classList.remove("top-bar-clear-back-box--none");
+        likeShareBar.classList.remove("bar-like-share-box--none");
+        bookImage.classList.remove("bg-book-detail__front-img-box--comment-active");
+        commentTab.classList.remove("book-detail-comment-tab-container--active");
+        document.body.classList.remove("no-scroll");
+    }
+
+    document.getElementById("bar-comment-id").addEventListener("click", commentTabActive);
+    document.getElementById("bot-bar-create-tree__icon-box-id").addEventListener("click", commentTabActive);
+    document.getElementById("top-bar-comment__back-icon-box-id").addEventListener("click", commentTabInactive);
+    document.getElementById("bg-book-detail-box-id").addEventListener("click", commentTabInactive);
+  </script>
+
+  <script>
+    document.getElementById("input-comment-input__input-id").addEventListener("focus", function() {
+      const submitBtn = document.getElementById("input-comment-input__submit-id");
+      setTimeout(() => {
+        submitBtn.classList.add("input-comment-input__submit--active")
+      }, 100);
+    });
+
+    document.getElementById("input-comment-input__input-id").addEventListener("focusout", function() {
+      const submitBtn = document.getElementById("input-comment-input__submit-id");
+      submitBtn.classList.remove("input-comment-input__submit--active");
+    });
+  </script>
 
   </body>
 </html>

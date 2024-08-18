@@ -36,7 +36,7 @@
 
 .tree-footer__membership {
   margin-top: 20px;
-  padding: 0px 24px;
+  padding: 0 24px;
   font-size: 14px;
 }
 .membership-login {
@@ -63,7 +63,7 @@
 .tree-footer__app {
   margin-top: 20px;
   margin-bottom: 20px;
-  padding: 0px 24px;
+  padding: 0 24px;
 }
 
 .app-info {

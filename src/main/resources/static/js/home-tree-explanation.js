@@ -1,6 +1,12 @@
 const bookExRemoveNone = () => {
   const bookShowing = document.querySelector(".selected");
-  const id = bookShowing.classList[1];
+  console.log(bookShowing);
+  let id = 0;
+  if (bookShowing !== null) {
+    id = bookShowing.classList[1];
+  }
+
+  console.log(id);
 
   document.querySelectorAll(".book-tree-explanation-item").forEach((item) => {
     if (item.classList.contains(id)) {
@@ -10,6 +16,6 @@ const bookExRemoveNone = () => {
     }
   });
 };
-window.addEventListener("load", bookExRemoveNone);
+window.addEventListener("pageshow", bookExRemoveNone);
 carouselList.addEventListener("touchend", bookExRemoveNone);
 carouselList.addEventListener("mousedown", bookExRemoveNone);

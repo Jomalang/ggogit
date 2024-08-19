@@ -41,29 +41,6 @@
     padding-left: 16px;
 }
 
-.tree-create__link-btn {
-    text-decoration: none;
-}
-
-/* 녹색배경 트리 생성하기 버튼 */
-.tree-create__link-btn--green {
-    width: fit-content;
-    min-width: 327px;
-    height: 56px;
-    background-color: var(--main1);
-    color: var(--white);
-    border: none;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
-    font-size: 16px;
-    font-weight: var(--bold);
-    border-radius: 16px;
-    transition: all 0.2s linear;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-}
 .tree-create__link-btn--green:focus {
     outline: 0;
 }
@@ -74,14 +51,13 @@
 }
 
 .social-login {
+    width: 100%;
     display: flex;
     justify-content: center;
-    padding-top: 30px;
-    padding-left: 64px;
-    padding-right: 64px;
 }
 
 .social-login__icons {
-    display: inline-block;
-    margin-right: 48px;
+    display: flex;
+    justify-content: center;
+    gap: 48px;
 }

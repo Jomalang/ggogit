@@ -20,27 +20,28 @@
 </header>
 <section>
     <h1 class="none">로그인 화면 안내</h1>
-    <p>로그인</p>
-    <p>사용하는 이메일을 입력해주세요</p>
+    <div>
+        <p>로그인</p>
+        <p>사용하는 이메일을 입력해주세요</p>
+    </div>
 </section>
 <section>
     <h1 class="none">로그인</h1>
-    <div th:replace="~{/fragments/input::text-box(label='이메일', placeholder='이메일을 입력하세요', name='email')}">
-    </div>
+    <div th:replace="~{/fragments/input::text-box(label='이메일', placeholder='이메일을 입력하세요', name='email')}"></div>
 </section>
-<a class="tree-create__link-btn" href="#">
-    <div class="tree-create__link-btn--green">로그인</div>
-</a>
-<section class="social-login">
-    <h1 class="none">소셜 로그인</h1>
-    <div>
-        <ul>
-            <li class="social-login__icons"><div><a href="#"><img src="/svg/naver-circle.svg"></a></div></li>
-            <li class="social-login__icons"><div><a href="#"><img src="/svg/google-circle.svg"></a></div></li>
-            <li class="social-login__icons"><div><a href="#"><img src="/svg/kakao-circle.svg"></a></div></li>
-        </ul>
-    </div>
+
+<form method="POST" action="#">
+    <section>
+        <h1 class="none">로그인 버튼</h1>
+        <div th:replace="~{/fragments/input::green-wide-btn(label='로그인')}"></div>
+    </section>
+</form>
+
+<section class="social-login-container">
+    <h1 class="none">소셜 로그인 버튼</h1>
+    <div th:replace="~{/fragments/link::social-login}"></div>
 </section>
+
 <footer>
     <h1 class="none">회원가입 안내</h1>
     <div>

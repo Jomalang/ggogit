@@ -353,3 +353,7 @@ home-tree__reg-4--search-book__input
 .register__input-container--last{
     padding: 120px 24px 60px;
 }
+
+.social-login-container {
+    padding: 30px 0;
+}

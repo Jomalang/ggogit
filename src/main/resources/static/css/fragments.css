@@ -2110,3 +2110,39 @@ card.html
     display: flex;
     flex-direction: column;
 }
+
+/*===============================================
+    FRAGMENT: 초록색 긴 버튼
+===============================================*/
+.tree-create__link-btn {
+    text-decoration: none;
+}
+
+.tree-create__link-btn--green {
+    width: 100%;
+    height: 56px;
+    background-color: var(--main1);
+    color: var(--white);
+    border: none;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+    font-size: 16px;
+    font-weight: var(--bold);
+    border-radius: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+/*===============================================
+    FRAGMENT: 소셜 로그인
+===============================================*/
+.social-login {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.social-login__icons {
+    display: flex;
+    justify-content: center;
+    gap: 48px;
+}

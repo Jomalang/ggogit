@@ -3358,3 +3358,11 @@ card.html
     flex-direction: column;
     align-items: flex-start;
 }
+.text-memoir-content{
+    color: var(--text-main);
+    font-size: 14px;
+    font-weight: var(--regular);
+    line-height: var(--line-height-high);
+    letter-spacing: var(--letter-spacing-main);
+
+}

@@ -44,5 +44,67 @@
       <span class="top-bar-search-result-number">개</span>
       <p class="top-bar-search-result-text">의 검색 결과</p>
     </div>
+
+<!-- ==========================================
+     FRAGMENT: 투명 뒤로가기 상단 바
+     ========================================== -->
+<div id="top-bar-clear-back-id" class="top-bar-clear-back-box" th:fragment="clear-back">
+  <div class="top-bar-clear-back__left-box">
+    <a href="#">
+      <div class="top-bar-clear-back__icon-box">
+        <img th:src="@{/svg/back--white.svg}" alt="">
+      </div>
+    </a>
+    <a href="#">
+      <div class="top-bar-clear-back__icon-box">
+        <img th:src="@{/svg/home--white.svg}" alt="">
+      </div>
+    </a>
+  </div>
+  <div class="top-bar-clear-back__right-box">
+    <a href="#">
+      <div class="top-bar-clear-back__icon-box">
+        <img th:src="@{/svg/search--white.svg}" alt="">
+      </div>
+    </a>
+  </div>
+</div>
+
+<!-- ==========================================
+     FRAGMENT: 댓글 탭 상단 바
+     ==========================================-->
+<header class="top-bar-comment-box" th:fragment="top-bar-comment">
+
+  <h1 class="none">댓글 상단 바</h1>
+
+  <div class="top-bar-comment__line-box">
+    <div class="top-bar-comment__line"></div>
+  </div>
+
+  <div class="top-bar-comment__back-box">
+    <p class="top-bar-comment__back-text">댓글</p>
+    <div id="top-bar-comment__back-icon-box-id" class="top-bar-comment__back-icon-box">
+      <img th:src="@{/svg/tab-back-icon.svg}" alt="탭 뒤로가기 아이콘">
+    </div>
+  </div>
+
+  <div class="top-bar-comment__check-box">
+    <input id="sort-popular" class="top-bar-comment__input" type="radio" name="commentSort" checked>
+    <label for="sort-popular" class="top-bar-comment__label">인기순</label>
+    <input id="sort-latest" class="top-bar-comment__input" type="radio" name="commentSort">
+    <label for="sort-latest" class="top-bar-comment__label">최신순</label>
+  </div>
+
+</header>
+
+    <!-- =========================
+       top-bar__transparent
+      사용자 정보 상단 바
+    ========================== -->
+<div class="top-bar__transparent-frame" th:fragment="top-bar__transparent(src)">
+  <a th:href="${src}" class="top-bar__transparent-back-btn"></a>
+  <a class="top-bar__transparent-setting-btn" href='#'></a>
+</div>
+
   </body>
 </html>

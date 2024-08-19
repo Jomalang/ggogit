@@ -29,30 +29,19 @@
               text - btn- btn- btn -btn - btn
               filter-seed-text-3btn
       ============================== -->
-    <div
-      class="filter-text-3btn-frame"
-      th:fragment="filter-seed-text-btns(bookmark,seed1,seed2)"
-    >
-      <span
-        ><label
-          ><input
-            class="filter-seed__text"
-            type="text"
-            placeholder="로그 검색하기" /></label
-      ></span>
-      <ul class="filter-category-frame">
-        <li>
-          <input
-            class="filter-category__bookmark"
-            type="checkbox"
-            id="filter-category__bookmark"
-          />
-          <label
-            class="filter-category__bookmark__detail"
-            for="filter-category__bookmark"
-            >책갈피</label
-          >
-
+  <div class="filter-text-btn-frame" th:fragment="filter-seed-text-btns(bookmark,seed1,seed2)">
+    <span><label><input  class="filter-seed__text" type="text" placeholder="로그 검색하기"></label></span>
+    <ul class="filter-category-frame">
+      <li>
+        <input
+                class="filter-category__bookmark"
+                type="checkbox"
+                id="filter-category__bookmark"
+        />
+        <label
+                class="filter-category__bookmark__detail"
+                for="filter-category__bookmark"
+        >책갈피</label>
           <ul class="filter-category__bookmark__list">
             <li th:each="bm : ${bookmark}" th:text="${bm}"></li>
           </ul>

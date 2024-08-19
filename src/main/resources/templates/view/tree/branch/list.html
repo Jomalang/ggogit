@@ -10,7 +10,7 @@
 </head>
 <body>
     <header >
-        <h1 class="none">트리 브랜지 세부 정보</h1>
+        <h1 class="none">트리 브랜치 세부 정보</h1>
         <section class="back-search-bar__container">
         <!-- 컴포넌트 -->
             <div th:replace="~{fragments/input :: input-back-search(placeholder='그의 운명에 대한 아주 개인적인 생각',
@@ -57,8 +57,11 @@
         </section>
     </main>
 
+    <section class="nav-back-container">
+        <h2 class="none">네비바 뒤 공백</h2>
+    </section>
     <aside>
-        <section>
+        <section class="nav-container">
           <h2 class="none">네비게이션</h2>
           <!-- 트리 생성 언더바  -->
             <div th:replace="~{fragments/nav :: navigation-bar(active='home')}"></div>

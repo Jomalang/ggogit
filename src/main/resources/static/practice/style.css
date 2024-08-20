@@ -1,3 +1,5 @@
+@import "static/common/text.css";
+
 .tree-input-text__form {
     display: flex;
     justify-content: center;
@@ -60,4 +62,28 @@
     display: flex;
     justify-content: center;
     gap: 48px;
+}
+
+.text-login__page-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.login-screen-container {
+    padding-top: 60px;
+}
+
+.join-guide {
+    display: flex;
+    gap: 4px;
+    white-space: nowrap;
+}
+
+.join-guide-container {
+    padding: 277px 24px 40px 185px;
+}
+
+.login-memeber__join-page-container {
+    padding: 50px 24px 0 24px
 }

@@ -11,19 +11,16 @@
 
     <title>Document</title>
 </head>
-<body>
+<body class="login-memeber__join-page-container">
 <header>
     <h1 class="none">뒤로가기</h1>
     <div>
         <a><img src="/svg/back.svg" alt="back-button"></a>
     </div>
 </header>
-<section>
+<section class="login-screen-container">
     <h1 class="none">로그인 화면 안내</h1>
-    <div>
-        <p>로그인</p>
-        <p>사용하는 이메일을 입력해주세요</p>
-    </div>
+    <div th:replace="~{/fragments/text::text-login__page-info}"></div>
 </section>
 <section class="social-login-container">
     <h1 class="none">로그인</h1>
@@ -42,12 +39,12 @@
     <div th:replace="~{/fragments/link::social-login}"></div>
 </section>
 
-<footer>
+<footer class="join-guide-container">
     <h1 class="none">회원가입 안내</h1>
-    <div>
-        <p>계정이 없으신가요?</p>
-        <p>회원가입</p>
-    </div>
+        <div class="join-guide">
+            <p class="text--title14">계정이 없으신가요?</p>
+            <a href="#"><p class="text--title16">회원가입</p></a>
+        </div>
 </footer>
 </body>
 </html>

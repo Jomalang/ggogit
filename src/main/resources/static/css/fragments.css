@@ -2146,3 +2146,16 @@ card.html
     justify-content: center;
     gap: 48px;
 }
+
+/*===============================================
+    FRAGMENT: 로그인 메인 페이지
+===============================================*/
+.text-login__page-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.login-screen-container {
+    padding-top: 60px;
+}

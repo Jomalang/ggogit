@@ -26,37 +26,36 @@
             th:fragment="card-tree-details(tree)"
             th:object="${tree}"
     >
-        <a class="card-tree-detail">
+      <a class="card-tree-detail">
+        <img
+          class="card-tree__book-cover"
+          src="/src/main/resources/static/svg/card-felt__cover.svg"
+          th:src="@{/svg/{img}(img=*{imgUrl})}"
+        />
+        <div class="card-tree-detail__box">
+          <!--반복문으로 넣어야 할듯..-->
+          <div class="card-tree-detail__tags">
+            <span class="card-tree-detail__tag" id="data-XXX">도서</span>
+            <span class="card-tree-detail__tag" id="data-XXX">정치비평</span>
+          </div>
+          <!---->
+          <p class="card-tree-detail__name" id="data-XXX" th:text="*{bookName}">
+            운명이란 무엇인가?
             <img
-                    class="card-tree__book-cover"
-                    src="/src/main/resources/static/svg/card-felt__cover.svg"
-                    th:with="url = *{imgUrl}"
-                    th:src="@{/svg/card-felt__cover.svg}"
+              class="card-tree-detail__complete-icon"
+              th:if="{*{complete} == true}"
+              src="/src/main/resources/static/svg/card-tree-details-complete.svg"
+              alt="완독"
             />
-            <div class="card-tree-detail__box">
-                <!--반복문으로 넣어야 할듯..-->
-                <div class="card-tree-detail__tags">
-                    <span class="card-tree-detail__tag" id="data-XXX">도서</span>
-                    <span class="card-tree-detail__tag" id="data-XXX">정치비평</span>
-                </div>
-                <!---->
-                <p class="card-tree-detail__name" id="data-XXX" th:text="*{bookName}">
-                    운명이란 무엇인가?
-                    <img
-                            class="card-tree-detail__complete-icon"
-                            th:if="{*{complete} == true}"
-                            src="/src/main/resources/static/svg/card-tree-details-complete.svg"
-                            alt="완독"
-                    />
-                </p>
-                <p
-                        class="card-tree-detail__explanation"
-                        id="data-XXX"
-                        th:text="*{description}"
-                >
-                    그의 운명에 대한 아주 개인적인 생각
-                </p>
-                <div class="card-tree-detail__info">
+          </p>
+          <p
+            class="card-tree-detail__explanation"
+            id="data-XXX"
+            th:text="*{description}"
+          >
+            그의 운명에 대한 아주 개인적인 생각
+          </p>
+          <div class="card-tree-detail__info">
             <span
                     class="card-tree-detail__info"
                     id="data-XXX"
@@ -130,7 +129,7 @@
         </div>
         <div class="card-reading-progress-content">
             <div class="card-reading-progress__bar-container">
-                <div class="card-reading-progress__bar" id="data-XXX" th:text="${progress} + '%'"></div>
+                <div class="card-reading-progress__bar" th:style="'width:'+ ${progress}+'%;'" id="data-XXX"></div>
             </div>
             <div class="card-reading-progress__page-num">
                 <span class="card-progress-page__current" id="data-XXX" th:text="${readpage}"></span>
@@ -141,22 +140,27 @@
     </div>
 
     <div class="card-reading-progress-status__list" th:fragment="card-react-numbers(leaf,like,view)">
-        <p class="card-reading-progress-status__leaf">
+        <p class="card-reading-progress-status__leaf" th:with="varLeaf=${leaf}">
             나뭇잎
-            <span class="card-reading-progress-status__num" id="data-XXX"
-                  th:text="'+' + ${leaf}"
+            <span class="card-reading-progress-status__num"  th:if="${varLeaf gt 999}">+999</span>
+            <span class="card-reading-progress-status__num" th:if="${varLeaf le 999}" id="data-XXX"
+                  th:text="${leaf}"
             ></span
             >
         </p>
-        <p class="card-reading-progress-status__like">
+        <p class="card-reading-progress-status__like" th:with="varLike=${like}">
             좋아요
-            <span class="card-reading-progress-status__num" id="data-XXX" th:text="'+' + ${like}"
-            >+</span
+            <span class="card-reading-progress-status__num" th:if="${varLike gt 999}">+999</span>
+            <span class="card-reading-progress-status__num" th:if="${varLike le 999}" id="data-XXX"
+                  th:text="${like}"
+            ></span
             >
         </p>
-        <p class="card-reading-progress-status__views">
+        <p class="card-reading-progress-status__views" th:with="varView=${view}">
             조회수
-            <span class="card-reading-progress-status__num" id="data-XXX" th:text="'+' + ${view}"
+            <span class="card-reading-progress-status__num" th:if="${varView gt 999}">+999</span>
+            <span class="card-reading-progress-status__num" th:if="${varView le 999}" id="data-XXX"
+                  th:text="${view}"
             ></span
             >
         </p>

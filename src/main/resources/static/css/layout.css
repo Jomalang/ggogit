@@ -220,7 +220,7 @@ home-tree__reg-4--search-book__input
   margin-top: 167px;
   padding-top: 70px;
   padding-left: 24px;
-    padding-right: 24px;
+  padding-right: 24px;
   width: 100%;
   height: 100px;
   background: var(--main2--opacity40);
@@ -319,52 +319,60 @@ home-tree__reg-4--search-book__input
 /*================================
     tree/branch/list.html
 ================================*/
-.back-search-bar__container{
-    padding-top: 50px;
-    padding-left: 24px;
-    padding-right: 24px;
+.back-search-bar__container {
+  padding-top: 50px;
+  padding-left: 24px;
+  padding-right: 24px;
 }
-.branch-tree-info__container{
-    height: 70px;
-    padding-top: 39px;
-    padding-left: 24px;
-    padding-right: 24px;
+.branch-tree-info__container {
+  height: 70px;
+  padding-top: 39px;
+  padding-left: 24px;
+  padding-right: 24px;
 }
-.branch-tree-detail-container{
-    padding-left: 24px;
-    padding-right: 24px;
-    background: var(--main2--opacity40);
+.branch-tree-detail-container {
+  padding-left: 24px;
+  padding-right: 24px;
+  background: var(--main2--opacity40);
 }
-.card-tree__description-title__container{
-    padding-top: 30px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-
+.card-tree__description-title__container {
+  padding-top: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 }
-.card-progress__container{
-    padding-top: 48px;
-}
-.card-tree-memoir-create-btn-container{
-    padding-top: 30px;
-    padding-bottom: 32px;
+.card-progress__container {
+  padding-top: 48px;
 }
 
-.branch-list__container{
-    padding-top: 34px;
-    padding-left: 24px;
-    padding-right: 24px;
- }
-.branch-filter__container{
-    padding-top: 12px;
+.card-progress-home-container {
+  background-color: var(--main2);
+  padding: 18px 16px 18px 16px;
+  box-shadow: var(--shadow-basic);
+  border-radius: 8px;
+  margin-bottom: 20px;
 }
-.branch-filter-search__container{
-    padding-top: 24px;
-    padding-bottom: 10px;
+
+.card-tree-memoir-create-btn-container {
+  padding-top: 30px;
+  padding-bottom: 32px;
 }
-.branch-filter-result-list__container{
-    padding-top: 10px;
-    padding-bottom: 10px;
+
+.branch-list__container {
+  padding-top: 34px;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+.branch-filter__container {
+  padding-top: 12px;
+}
+.branch-filter-search__container {
+  padding-top: 24px;
+  padding-bottom: 10px;
+}
+.branch-filter-result-list__container {
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 .short-btn-container {
   display: flex;
@@ -372,138 +380,138 @@ home-tree__reg-4--search-book__input
   margin: 24px;
 }
 .register__input-container {
-    padding-top: 60px;
-    padding-left: 24px;
-    padding-right: 24px;
+  padding-top: 60px;
+  padding-left: 24px;
+  padding-right: 24px;
 }
 
-.register__input-container--last{
-    padding: 120px 24px 60px;
+.register__input-container--last {
+  padding: 120px 24px 60px;
 }
 
 .book-detail-top-bar-container {
-    width: 100%;
-    margin: 30px 0 40px 0;
-    position: absolute;
-    top: 0;
-    z-index: 10;
+  width: 100%;
+  margin: 30px 0 40px 0;
+  position: absolute;
+  top: 0;
+  z-index: 10;
 }
 
 .book-detail-bg-container {
-    position: relative;
+  position: relative;
 }
 
 .book-detail-like-bar-container {
-    width: 100%;
-    position: absolute;
-    bottom: 18px;
+  width: 100%;
+  position: absolute;
+  bottom: 18px;
 }
 
 .book-detail-book-info-container {
-    padding: 30px 24px 30px 24px;
+  padding: 30px 24px 30px 24px;
 }
 
 .book-detail-my-tree-container {
-    margin: 64px 0 0 0;
+  margin: 64px 0 0 0;
 }
 
 .book-detail-my-tree-list-container {
-    margin: 0 0 60px 0;
+  margin: 0 0 60px 0;
 }
 
 .book-detail-my-tree-title-container {
-    margin: 0 24px 24px 24px;
+  margin: 0 24px 24px 24px;
 }
 
 .book-detail-other-recode-container {
-    background-color: var(--main3, #f5f8f1);
-    padding: 40px 0 300px 0;
+  background-color: var(--main3, #f5f8f1);
+  padding: 40px 0 300px 0;
 }
 
 .book-detail-other-recode-title-container {
-    margin: 0 24px 0 24px;
+  margin: 0 24px 0 24px;
 }
 
 .book-detail-other-recode-sub-title-container {
-    margin: 70px 24px 16px 24px;
+  margin: 70px 24px 16px 24px;
 }
 
 .book-detail-bot-aside-container {
-    width: 100%;
-    position: fixed;
-    bottom: 0;
-    z-index: 10;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  z-index: 10;
 }
 
 .book-detail-comment-tab-container {
-    position: fixed;
-    top: 100%;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 20;
-    overflow: hidden;
-    transition: all 0.5s ease;
+  position: fixed;
+  top: 100%;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 20;
+  overflow: hidden;
+  transition: all 0.5s ease;
 }
 
 .book-detail-comment-tab-container--active {
-    top: 265px; /* 최종 위치 */
-    transform: translateY(0); /* 원래 위치로 이동 */
+  top: 265px; /* 최종 위치 */
+  transform: translateY(0); /* 원래 위치로 이동 */
 }
-.user-tree-user-info-container{
-    padding: 35px 24px 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 200px;
+.user-tree-user-info-container {
+  padding: 35px 24px 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 200px;
 }
-.user-info__top-bar-container{
-    display: flex;
+.user-info__top-bar-container {
+  display: flex;
 }
-.user-tree-info__container{
-    height: 70px;
-    padding-top: 15px;
-    padding-left: 24px;
-    padding-right: 24px;
+.user-tree-info__container {
+  height: 70px;
+  padding-top: 15px;
+  padding-left: 24px;
+  padding-right: 24px;
 }
-.memoir-tree-detail-contrainer{
-    padding-top: 15px;
+.memoir-tree-detail-contrainer {
+  padding-top: 15px;
 }
-.tree-memoir-content-container{
-    padding: 41px 24px 31px;
-    display: flex;
-    border-bottom: 1px dotted var(--main1);
-    flex-direction: column;
-    gap: 10px;
+.tree-memoir-content-container {
+  padding: 41px 24px 31px;
+  display: flex;
+  border-bottom: 1px dotted var(--main1);
+  flex-direction: column;
+  gap: 10px;
 }
-.tree-memoir-user-bar-container{
-    padding: 16px 24px;
+.tree-memoir-user-bar-container {
+  padding: 16px 24px;
 }
-.tree-index-comment-container{
-    padding-top: 30px;
+.tree-index-comment-container {
+  padding-top: 30px;
 }
-.user-another-records{
-    margin-top: 22px;
-    padding-top: 38px;
-    background: var(--main2--opacity40);
+.user-another-records {
+  margin-top: 22px;
+  padding-top: 38px;
+  background: var(--main2--opacity40);
 }
-.user-another-records-title-container{
-    padding-left: 24px;
-    padding-right: 24px;
+.user-another-records-title-container {
+  padding-left: 24px;
+  padding-right: 24px;
 }
 .branch-tree-other-recode-sub-title-container {
-    margin-top: 70px;
-    margin-bottom: 16px;
-    padding-left: 24px;
-    padding-right: 24px;
+  margin-top: 70px;
+  margin-bottom: 16px;
+  padding-left: 24px;
+  padding-right: 24px;
 }
-.branch-tree-another-record-list-container{
-    margin-left: 12px;
-    margin-right: 12px;
+.branch-tree-another-record-list-container {
+  margin-left: 12px;
+  margin-right: 12px;
 }
 .branch-tree-aside-container {
-    width: 100%;
-    position: fixed;
-    bottom: 0;
-    z-index: 10;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  z-index: 10;
 }

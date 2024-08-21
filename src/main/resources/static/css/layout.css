@@ -354,6 +354,18 @@ home-tree__reg-4--search-book__input
     padding: 120px 24px 60px;
 }
 
+/*================================
+    login.html
+================================*/
+
 .social-login-container {
     padding: 30px 0 0 0;
+}
+
+.join-guide-container {
+    padding: 277px 24px 40px 185px;
+}
+
+.login-memeber__join-page-container {
+    padding: 50px 24px 0 24px
 }

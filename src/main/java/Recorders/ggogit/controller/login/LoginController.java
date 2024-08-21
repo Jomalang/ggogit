@@ -13,4 +13,9 @@ public class LoginController {
     public String login() {
         return "view/login/index";
     }
+
+    @GetMapping("join")
+    public String join() {
+        return "view/login/join";
+    }
 }

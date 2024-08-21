@@ -192,7 +192,7 @@
 </div>
 
 <!-- ==========================================
-     FRAGMENT: 최근 트리 정보 
+     FRAGMENT: 최근 트리 정보
      ========================================== -->
 <div
   class="textbox-recent-tree-info"
@@ -279,4 +279,22 @@
   <div>
     <p class="text-book-info--no-title__seed" th:text="${seed}"></p>
   </div>
+</div>
+
+<!-- ==========================================
+     FRAGMENT: 로그인 페이지 안내 텍스트
+     설명 : 로그인 메인 페이지, 이메일 입력하라는 안내 텍스트
+     ========================================== -->
+<div class="text-login__page-info" th:fragment="text-login__page-info(label, infoText)">
+  <p class="text--title28" th:text="${label}">로그인</p>
+  <p th:text="${infoText}">사용하는 이메일을 입력해주세요</p>
+</div>
+
+<!-- ==========================================
+     FRAGMENT: 로그인 페이지 안내 텍스트
+     설명 : 로그인 메인 페이지, 계정 없다면 회원가입하라는 텍스트
+     ========================================== -->
+<div class="join-guide" th:fragment="join-guide(infoText, label)">
+  <p class="text--title14" th:text="${infoText}">계정이 없으신가요?</p>
+  <a href="#"><p class="text--title16" th:text="${label}">회원가입</p></a>
 </div>

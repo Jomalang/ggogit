@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link th:href="@{/css/reset.css}" rel="stylesheet" />
+    <link th:href="@{/css/fragments.css}" rel="stylesheet" />
+    <link th:href="@{/css/layout.css}" rel="stylesheet" />
+
+    <title>home</title>
+</head>
+<body>
+
+<div th:replace="~{/fragments/top-bar::top-bar-tag__edit}"></div>
+
+<div th:replace="~{/fragments/input::tag-create--joy}"></div>
+
+<div th:replace="~{/fragments/top-bar::top-bar__option-or-create}"></div>
+
+<div th:replace="~{/fragments/input::delete__form-btn}"></div>
+
+
+</body>
+</html>

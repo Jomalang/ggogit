@@ -82,7 +82,7 @@ a {
 }
 
 .tree-main-recent > * {
-  transform: translate(0px, -240px);
+  transform: translate(0, -240px);
 }
 
 .tree-main-recent > h2 {
@@ -277,7 +277,7 @@ a {
   line-height: 140%;
   color: #767676;
   /*임시 방편*/
-  transform: translate(0px, -8.8px);
+  transform: translate(0, -8.8px);
 }
 
 .tree-main-recent-status-list > p > span {
@@ -433,7 +433,7 @@ a {
 
 .membership {
   margin-top: 15px;
-  padding: 0px 24px;
+  padding: 0 24px;
 }
 
 .membership > * {
@@ -452,7 +452,7 @@ a {
 
 .app {
   margin-top: 15px;
-  padding: 0px 24px;
+  padding: 0 24px;
 }
 
 .app-info {
@@ -475,7 +475,7 @@ a {
 
 .bottom-aside {
   position: fixed;
-  bottom: 0px;
+  bottom: 0;
   width: 100%;
 }
 
@@ -488,7 +488,7 @@ a {
   font-size: 15px;
   display: flex;
   position: absolute;
-  right: 0px;
+  right: 0;
   bottom: 80px;
   flex-direction: row;
   align-items: center;

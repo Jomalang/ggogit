@@ -4,7 +4,7 @@
 <!-- ================ -->
 <!-- tree-info-card -->
 <!-- ================ -->
-<div th:fragment="tree-info-card(date, pagecount)">
+<div class="card-tree-info-box" th:fragment="tree-info-card(date, pagecount)">
     <div class="card-tree-info">기본 정보</div>
     <div class="card-tree-info__frame">
         <div>
@@ -26,37 +26,36 @@
             th:fragment="card-tree-details(tree)"
             th:object="${tree}"
     >
-        <a class="card-tree-detail">
+      <a class="card-tree-detail">
+        <img
+          class="card-tree__book-cover"
+          src="/src/main/resources/static/svg/card-felt__cover.svg"
+          th:src="@{/svg/{img}(img=*{imgUrl})}"
+        />
+        <div class="card-tree-detail__box">
+          <!--반복문으로 넣어야 할듯..-->
+          <div class="card-tree-detail__tags">
+            <span class="card-tree-detail__tag" id="data-XXX">도서</span>
+            <span class="card-tree-detail__tag" id="data-XXX">정치비평</span>
+          </div>
+          <!---->
+          <p class="card-tree-detail__name" id="data-XXX" th:text="*{bookName}">
+            운명이란 무엇인가?
             <img
-                    class="card-tree__book-cover"
-                    src="/src/main/resources/static/svg/card-felt__cover.svg"
-                    th:with="url = *{imgUrl}"
-                    th:src="@{/svg/card-felt__cover.svg}"
+              class="card-tree-detail__complete-icon"
+              th:if="{*{complete} == true}"
+              src="/src/main/resources/static/svg/card-tree-details-complete.svg"
+              alt="완독"
             />
-            <div class="card-tree-detail__box">
-                <!--반복문으로 넣어야 할듯..-->
-                <div class="card-tree-detail__tags">
-                    <span class="card-tree-detail__tag" id="data-XXX">도서</span>
-                    <span class="card-tree-detail__tag" id="data-XXX">정치비평</span>
-                </div>
-                <!---->
-                <p class="card-tree-detail__name" id="data-XXX" th:text="*{bookName}">
-                    운명이란 무엇인가?
-                    <img
-                            class="card-tree-detail__complete-icon"
-                            th:if="{*{complete} == true}"
-                            src="/src/main/resources/static/svg/card-tree-details-complete.svg"
-                            alt="완독"
-                    />
-                </p>
-                <p
-                        class="card-tree-detail__explanation"
-                        id="data-XXX"
-                        th:text="*{description}"
-                >
-                    그의 운명에 대한 아주 개인적인 생각
-                </p>
-                <div class="card-tree-detail__info">
+          </p>
+          <p
+            class="card-tree-detail__explanation"
+            id="data-XXX"
+            th:text="*{description}"
+          >
+            그의 운명에 대한 아주 개인적인 생각
+          </p>
+          <div class="card-tree-detail__info">
             <span
                     class="card-tree-detail__info"
                     id="data-XXX"
@@ -87,7 +86,6 @@
             </div>
         </a>
     </div>
-</body>
 </div>
 
 <!-- =========================
@@ -131,7 +129,7 @@
         </div>
         <div class="card-reading-progress-content">
             <div class="card-reading-progress__bar-container">
-                <div class="card-reading-progress__bar" id="data-XXX" th:text="${progress} + '%'"></div>
+                <div class="card-reading-progress__bar" th:style="'width:'+ ${progress}+'%;'" id="data-XXX"></div>
             </div>
             <div class="card-reading-progress__page-num">
                 <span class="card-progress-page__current" id="data-XXX" th:text="${readpage}"></span>
@@ -142,22 +140,27 @@
     </div>
 
     <div class="card-reading-progress-status__list" th:fragment="card-react-numbers(leaf,like,view)">
-        <p class="card-reading-progress-status__leaf">
+        <p class="card-reading-progress-status__leaf" th:with="varLeaf=${leaf}">
             나뭇잎
-            <span class="card-reading-progress-status__num" id="data-XXX"
-                  th:text="'+' + ${leaf}"
+            <span class="card-reading-progress-status__num"  th:if="${varLeaf gt 999}">+999</span>
+            <span class="card-reading-progress-status__num" th:if="${varLeaf le 999}" id="data-XXX"
+                  th:text="${leaf}"
             ></span
             >
         </p>
-        <p class="card-reading-progress-status__like">
+        <p class="card-reading-progress-status__like" th:with="varLike=${like}">
             좋아요
-            <span class="card-reading-progress-status__num" id="data-XXX" th:text="'+' + ${like}"
-            >+</span
+            <span class="card-reading-progress-status__num" th:if="${varLike gt 999}">+999</span>
+            <span class="card-reading-progress-status__num" th:if="${varLike le 999}" id="data-XXX"
+                  th:text="${like}"
+            ></span
             >
         </p>
-        <p class="card-reading-progress-status__views">
+        <p class="card-reading-progress-status__views" th:with="varView=${view}">
             조회수
-            <span class="card-reading-progress-status__num" id="data-XXX" th:text="'+' + ${view}"
+            <span class="card-reading-progress-status__num" th:if="${varView gt 999}">+999</span>
+            <span class="card-reading-progress-status__num" th:if="${varView le 999}" id="data-XXX"
+                  th:text="${view}"
             ></span
             >
         </p>
@@ -229,18 +232,235 @@ Branch List 사용
         <div class="branch-card-bottom-info">
             <span>나뭇잎<p th:text="${lists.leaf}"></p></span>
             <span>조회수<p th:text="${lists.view}"></p></span></div>
-        <div class="branch-card-bottom__like-frame">
+        <div class="__like-frame">
             <input
-                    class="branch-card-bottom__like-input"
+                    class="__like-input"
                     type="checkbox"
                     th:id="${lists.id}"
             />
             <label
-                    class="branch-card-bottom__like"
+                    class="__like"
                     th:for="${lists.id}"
             ></label>
         </div>
     </div>
 </div>
+
+<!-- ==========================================
+     FRAGMENT: 나의 트리 카드
+     ========================================== -->
+<div class="card-tree-box" th:fragment="card-tree">
+    <div class="card-tree__top-box">
+        <a href="">
+            <div class="card-tree__top-tree-icon-box">
+                <img class="card-tree__top-tree-img" th:src="@{/svg/tree-icon--white.svg}" alt="트리 아이콘">
+            </div>
+        </a>
+        <div class="card-tree__top-sns-icon-box">
+            <div class="card-tree__top-share-icon-box">
+                <img th:src="@{/svg/comment.svg}" alt="댓글 아이콘">
+            </div>
+            <div class="card-tree__top-like-icon-box">
+                <img th:src="@{/svg/like.svg}" alt="좋아요 아이콘">
+            </div>
+        </div>
+    </div>
+    <a href="">
+        <div class="card-tree__bot-box">
+            <div class="card-tree__bot-info-box">
+                <p class="card-tree__bot-title">트리 이름트리 이름트리 이름트리 이름트리 이름트리 이름</p>
+                <p class="card-tree__bot-date">2024-07-10</p>
+            </div>
+            <div class="card-tree__bot-statistics-box">
+                <p class="card-tree__bot-leaf-text">
+                    <span class="card-tree__bot-leaf-count">999+</span> 나뭇잎
+                </p>
+                <p class="card-tree__bot-view-text">
+                    <span class="card-tree__bot-view-count">999+</span> 조회수
+                </p>
+            </div>
+        </div>
+    </a>
+</div>
+
+
+<!-- ==========================================
+     FRAGMENT: 나의 트리 카드 리스트
+     ========================================== -->
+<div class="card-tree-list-box" th:fragment="card-tree-list(list)">
+    <ul class="card-tree__list">
+        <li class="card-tree__item">
+            <div th:replace="~{fragments/card :: card-tree}"></div>
+        </li>
+        <li class="card-tree__item">
+            <div th:replace="~{fragments/card :: card-tree}"></div>
+        </li>
+    </ul>
+</div>
+
+<!-- ==========================================
+     FRAGMENT: SNS 트리 카드 리스트
+     ========================================== -->
+<div class="sns-card-tree-box" th:fragment="sns-card-tree(type)">
+    <div class="sns-card-tree__top-box">
+        <a href="">
+            <div class="sns-card-tree__top-tree-icon-box" th:if="${type eq 1}">
+                <img class="sns-card-tree__top-tree-img" th:src="@{/svg/tree-icon--white.svg}" alt="트리 아이콘">
+            </div>
+            <div class="sns-card-tree__top-memoir-icon-box" th:if="${type eq 2}">
+                <img class="sns-card-tree__top-tree-img" th:src="@{/svg/memoir-icon--white.svg}" alt="회고록 아이콘">
+            </div>
+            <div class="sns-card-tree__top-leaf-icon-box" th:if="${type eq 3}">
+                <img class="sns-card-tree__top-tree-img" th:src="@{/svg/leaf-icon--white.svg}" alt="나뭇잎 아이콘">
+            </div>
+        </a>
+        <div class="sns-card-tree__top-sns-icon-box">
+            <div class="sns-card-tree__top-share-icon-box">
+                <img th:src="@{/svg/comment.svg}" alt="댓글 아이콘">
+            </div>
+            <div class="sns-card-tree__top-like-icon-box">
+                <img th:src="@{/svg/like.svg}" alt="좋아요 아이콘">
+            </div>
+        </div>
+    </div>
+    <a href="">
+        <div class="sns-card-tree__mid-box">
+            <p class="sns-card-tree__mid-title">트리제목트리제목트리제목트리제목트리제목</p>
+            <p class="sns-card-tree__mid-date">2024-08-18</p>
+        </div>
+
+        <div class="sms-card-tree__memoir-text-box" th:if="${type eq 3}">
+            <q class="sms-card-tree-memoir-text">코딩 테스트 합격자 되기 자바스크립트 편의 영감 기록을 남기는 이유는 다음과 같습니다. 영감 기록을 작성하면 책에서 배운 내용을 정리하고 이해도를 높일 수 있습니다.</q>
+        </div>
+    </a>
+    <div class="sns-card-tree__bot-box">
+        <div class="sns-card-tree__bot-nickname-box">
+            <a href="">
+                <p class="sns-card-tree__bot-nickname">
+                    <span class="sns-card-tree__bot-nickname-text">한태규짱</span>
+                    <span class="sns-card-tree__bot-nickname-id">@gksxorb147</span>
+                </p>
+            </a>
+        </div>
+        <a href="">
+            <div class="sns-card-tree__bot-statistics-box">
+                <p class="sns-card-tree__bot-leaf-text">
+                    <span class="sns-card-tree__bot-leaf-count">999+</span> 나뭇잎
+                </p>
+                <p class="sns-card-tree__bot-view-text">
+                    <span class="sns-card-tree__bot-view-count">999+</span> 조회수
+                </p>
+            </div>
+        </a>
+    </div>
+</div>
+
+<!-- ==========================================
+     FRAGMENT: SNS 트리 카드 리스트
+     ========================================== -->
+<div class="sns-card-tree-list-box" th:fragment="sns-card-tree-list(list)">
+    <ul class="sns-card-tree__list">
+        <li class="sns-card-tree__item" th:each="type : ${list}">
+            <div th:replace="~{fragments/card :: sns-card-tree(type=${type})}"></div>
+        </li>
+    </ul>
+</div>
+
+
+<!-- ==========================================
+     FRAGMENT: another records 리스트
+     ========================================== -->
+<div class="card-another-records-box" th:fragment="card-another-records(type)">
+    <div class="card-another-records__top-box">
+        <a class="card-another-records__top-anker" href="">
+<!--            표지-->
+            <div th:if="${type eq 1}">
+                <img class="card-another-records__top-cover-box" th:src="@{/img/card/card-book__info-cover.svg}" alt="트리 아이콘">
+            </div>
+            <div  th:if="${type eq 2}">
+                <img class="card-another-records__top-cover-box" th:src="@{/img/card/detail-book.png}" alt="회고록 아이콘">
+            </div>
+            <div th:if="${type eq 3}">
+                <img class="card-another-records__top-cover-box" th:src="@{/img/card/card-book__log-info-cover.svg}" alt="나뭇잎 아이콘">
+            </div>
+
+
+            <div class="card-another-records__mid-box">
+                <div class="card-another-records__mid-seed-frame"  name="data-xxx">
+                    <span class="card-another-records__mid-seed" name="data-xxx">도서</span>
+                    <span class="card-another-records__mid-seed" name="data-xxx">문학</span>
+                </div>
+                <p class="card-another-records__mid-another--title" name="data-xxx" th:if="${type eq 1}">테크트리</p>
+                <p class="card-another-records__mid-another--title" name="data-xxx" th:if="${type eq 2}">HTML이란 무엇인가?</p>
+                <p class="card-another-records__mid-another--title--sub" name="data-xxx" th:if="${type eq 3}">그 남자 과연 나의 운명일까</p>
+                <p class="card-another-records__mid-work-title" name="data-xxx">트리갭의 샘물</p>
+                <div class="card-another-records__info">
+                    <span class="card-another-records__info" name="data-XXX">2024</span>
+                    <span class="card-another-records__info" name="data-XXX">/</span>
+                    <span class="card-another-records__info" name="data-XXX">유시민</span>
+                    <span class="card-another-records__info" name="data-XXX">/</span>
+                    <span class="card-another-records__info" name="data-XXX">생각의 길</span>
+                </div>
+            </div>
+
+        </a>
+        <div class="card-another-records__icon-box">
+            <div class="card-another-records__share-icon-box">
+                <img th:src="@{/svg/comment.svg}" alt="댓글 아이콘">
+            </div>
+            <div class="card-another-records__like-icon-box" name="data-xxx">
+                <input
+                        class="card-another-records__like-bold-input"
+                        type="checkbox"
+                        th:id="like"
+                />
+                <label
+                        class="card-another-records__like-bold"
+                        th:for="like"
+                ></label>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-another-records__bot-box">
+        <div class="card-another-records__bot-nickname-box" th:if="${type eq 3}">
+            <a href="">
+                <div class="card-another-records__log-text-box">
+                    <q class="card-another-records-log-title">웹툰이지만 로깅합니다</q>
+                    <q class="card-another-records-log-content">코딩 테스트 합격자 되기 자바스크립트 편의 영감 기록을 남기는 이유는 다음과 같습니다. 영감 기록을 작성하면 책에서 배운 내용을 정리하고 이해도를 높일 수 있습니다.</q>
+                </div>
+            </a>
+        </div>
+        <div class="card-another-records__bot-box-etc-info">
+            <div class="card-another-records__bot-box-etc-date">2024-07-18</div>
+            <div class="card-another-records__bot-statistics-box">
+                <a href="">
+                <p th:if="${type eq 1}" class="card-another-records__bot-leaf-text">
+                    <span class="card-another-records__bot-leaf-count">999+</span> 나뭇잎
+                </p>
+                <p th:if="${type eq 2}" class="card-another-records__bot-leaf-text">
+                    <span class="card-another-records__bot-leaf-count">999+</span> 나뭇잎
+                </p>
+                <p class="card-another-records__bot-view-text">
+                    <span class="card-another-records__bot-view-count">999+</span> 조회수
+                </p>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==========================================
+     FRAGMENT: another records 리스트
+     ========================================== -->
+<div class="card-another-records-list-box" th:fragment="card-another-records-list(list)">
+    <ul class="card-another-records__list">
+        <li class="card-another-records__item" th:each="type : ${list}">
+            <div th:replace="~{fragments/card :: card-another-records(type=${type})}"></div>
+            <div class="card-another-records__list-empty-space" th:if="${type eq 3}"></div>
+        </li>
+    </ul>
+</div>
+
 </body>
 </html>

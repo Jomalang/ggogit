@@ -40,11 +40,15 @@
     <section class="btn-select-container--right">
       <h2 class="none">도서 직접 등록 버튼</h2>
       <div
-        th:replace="~{fragments/button::btn-short-a--green(href='/register/book/direct', text='도서 직접 등록하기')}"
+        th:replace="~{fragments/button::btn-short-a--green(href='/tree/book/reg', text='도서 직접 등록하기')}"
       ></div>
     </section>
 
-    <aside>
+    <section class="nav-back-container">
+      <h2 class="hidden">네비 바 뒤 공백 공간</h2>
+    </section>
+
+    <aside class="nav-container">
       <section>
         <h2 class="none">네비게이션 바</h2>
         <!-- aside 컴포넌트 -->

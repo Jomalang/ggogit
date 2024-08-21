@@ -32,12 +32,125 @@
                 class="bar-search-current__detail"
                 for="bar-search-current__detail"
         >최근 수정한 수</label>
-        <div class="bar-search-current__filter-frame">
-            <form action="#" method="post">
-                <input ></input>
-            </form>
+    </div>
+</div>
+
+<!-- ==========================================
+     FRAGMENT: 좋아요 및 공유
+     ==========================================-->
+<div id="bar-like-share-id" class="bar-like-share-box" th:fragment="like-share(likeLink, shareLink)">
+    <div class="bar-like-share__like-frame">
+        <div class="bar-like-share__like-link" th:href="@{${likeLink}}">
+            <img class="bar-like-share__like-icon" th:src="@{/svg/detail-like.svg}" alt="좋아요 아이콘" />
+        </div>
+    </div>
+    <div class="bar-like-share__share-frame">
+        <a class="bar-like-share__share-link" th:href="@{${shareLink}}">
+            <img class="bar-like-share__share-icon" th:src="@{/svg/detail-share.svg}" alt="공유 아이콘" />
+        </a>
+    </div>
+</div>
+
+<!-- ==========================================
+     FRAGMENT: 댓글 탭 활성화 박스
+     ==========================================-->
+<div id="bar-comment-id" class="bar-comment-box" th:fragment="comment(profileImg, commentCount)">
+    <p class="bar-comment__text">댓글
+        <span class="bar-comment__count">105</span>
+    </p>
+    <div class="bar-comment__profile-frame">
+        <img class="bar-comment__profile-img" th:src="@{${profileImg}}" alt="프로필 이미지" />
+        <p class="bar-comment__placeholder">댓글 추가...</p>
+    </div>
+</div>
+<!--==========================================
+    user info bar
+    user tree index 사용
+==========================================-->
+<div class="bar-user-info-frame" th:fragment="bar-user-info(userimg,username,userid,userurl)">
+    <div class="bar-user-info__left-content">
+        <div class="bar-user-info__img-wrapper">
+            <img th:src="@{'/img/card/' + ${userimg}}" alt="user-profile">
+        </div>
+        <div>
+            <div class="bar-user-info__user-name" th:text="${username}"></div>
+            <div class="bar-user-info__user-id" th:text="${userid}"></div>
+        </div>
+    </div>
+    <div class="bar-user-info__right-btns">
+        <input
+                class="__like-bold-input"
+                type="checkbox"
+                th:id="bar-user-info__like"
+        />
+        <label
+                class="__like-bold"
+                th:for="bar-user-info__like"
+        ></label>
+        <a class="bar-user-info__set-btn" th:href="${userurl}"></a>
+    </div>
+</div>
+<!--==========================================
+    user info bar - no profile, btn
+    user tree memoir index 사용
+==========================================-->
+<div class="bar-user-info-frame" th:fragment="bar-user-info-no-profile-btn(username,userid)">
+    <div class="bar-user-info__left-content">
+        <div>
+            <div class="bar-user-info__user-name" th:text="${username}"></div>
+            <div class="bar-user-info__user-id" th:text="${userid}"></div>
         </div>
     </div>
 </div>
+<!--==========================================
+    memoir title + btns
+    user tree memoir index 사용
+==========================================-->
+<div class="bar-user-info-frame" th:fragment="bar-memoir-title-btn(memoirtitle,userurl)">
+    <div class="bar-user-info__left-content">
+        <p class="bar-memoir-title" th:text="${memoirtitle}"></p>
+    </div>
+    <div class="bar-user-info__right-btns">
+        <input
+                class="__like-bold-input"
+                type="checkbox"
+                th:id="bar-user-info__like"
+        />
+        <label
+                class="__like-bold"
+                th:for="bar-user-info__like"
+        ></label>
+        <a class="bar-user-info__set-btn" th:href="${userurl}"></a>
+    </div>
+</div>
+<!--==========================================
+    user info - follow btn
+    user tree memoir index 사용
+==========================================-->
+<div class="bar-user-info-follow-btn-frame" th:fragment="bar-user-info-follow-btn(userimg,username,userid)">
+    <div class="bar-user-info__left-content">
+        <div class="bar-user-info__img-wrapper">
+            <img th:src="@{'/img/card/' + ${userimg}}" alt="user-profile">
+        </div>
+        <div>
+            <div class="bar-user-info__user-name--color-main1" th:text="${username}"></div>
+            <div class="bar-user-info__user-id--color-main1" th:text="${userid}"></div>
+        </div>
+    </div>
+    <div>
+        <form class="bar-user-info__right-btns" action="#" method="post">
+            <input
+                    class="__follow-btn"
+                    type="checkbox"
+                    id="bar-user-info__follow"
+            />
+            <label
+                    class="__follow-btn-msg"
+                    for="bar-user-info__follow"
+            >팔로우</label>
+        </form>
+    </div>
+</div>
+
 </body>
 </html>

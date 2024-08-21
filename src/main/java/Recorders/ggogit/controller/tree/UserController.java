@@ -23,4 +23,12 @@ public class UserController {
         model.addAttribute("lists", lists2);
         return "view/user/tree/index";
     }
+    @GetMapping("/tree/memoir/index")
+    public String getTreeMemoir(Model model) {
+
+        model.addAttribute("type1", new int[]{1, 1, 1});
+        model.addAttribute("type2", new int[]{2, 2, 2});
+        model.addAttribute("type3", new int[]{3, 3, 3});
+        return "view/user/tree/memoir/index";
+    }
 }

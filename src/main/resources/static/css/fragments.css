@@ -3701,3 +3701,93 @@ card.html
   line-height: var(--line-height-high);
   letter-spacing: var(--letter-spacing-main);
 }
+
+/* ======================================
+            tree-input-text__form
+    ==================================== */
+.tree-input-text__form {
+  display: flex;
+  justify-content: center;
+}
+.tree-input-text__subject {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  font-size: 16px;
+  font-weight: var(--semi-bold);
+}
+.tree-input-text__rectangle {
+  display: flex;
+  flex-grow: 1;
+  height: 56px;
+  border: none;
+  font-size: 16px;
+  font-weight: var(--regular);
+  color: var(--text-sub);
+  background-color: var(--main3);
+  padding-left: 16px;
+}
+.tree-input-text__rectangle:focus {
+  outline: none;
+}
+.tree-input-text__rectangle:not(:placeholder-shown) {
+  color: var(--text-main);
+  border: 1px solid var(--filter-checked);
+  outline: none;
+}
+.tree-input-text__rectangle__re-enter {
+  display: block;
+  height: 56px;
+  border-color: var(--warning);
+  font-size: 16px;
+  font-weight: var(--regular);
+  color: var(--warning);
+  background-color: var(--main3);
+  padding-left: 16px;
+}
+/* ===========================
+        option or create
+  =============================  */
+.topbar-option-or-create {
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  row-gap: 0;
+  align-items: center;
+  justify-content: flex-start;
+  flex-shrink: 0;
+}
+.topbar-option-or-create-text {
+  color: var(--main1);
+  text-align: left;
+  font-size: 10px;
+  line-height: var(--line-height-main);
+  letter-spacing: var(--letter-spacing-main);
+  font-weight: var(--regular);
+}
+/* ===================================
+            delete-btn
+  ===================================  */
+.delete-seed__form {
+  display: flex;
+  height: 58px;
+  border: none;
+  background-color: var(--main3);
+  align-items: center;
+  border-top: 1px solid var(--gray);
+  border-bottom: 1px solid var(--gray);
+}
+.delete-seed__btn {
+  display: flex;
+  border: none;
+  height: 24px;
+  padding-left: 16px;
+  background-color: var(--main3);
+}
+.delete-seed__btn-msg {
+  padding-left: 16px;
+  font-size: 16px;
+  font-weight: var(--regular);
+  color: var(--text-sub);
+}

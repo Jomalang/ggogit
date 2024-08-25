@@ -32,4 +32,9 @@ public class LogController {
     public String getLogList() {
         return "view/tree/log/list";
     }
+
+    @GetMapping("/register/tag/edit")
+    public String getTagEdit() {
+        return "view/tree/log/register/tag-edit";
+    }
 }

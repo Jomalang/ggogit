@@ -106,5 +106,30 @@
   <a class="top-bar__transparent-setting-btn" href='#'></a>
 </div>
 
+  <!-- ===================================
+    FRAGMENT: 나뭇잎 태그 선택 디테일 상단 바
+  =================================== -->
+    <div class="top-bar--green" th:fragment="top-bar-tag__edit">
+      <div class="top-bar__frame">
+        <a class="tob-bar--a">
+          <img
+                  th:src="@{/svg/back-arrow-icon.svg}"
+                  alt="top-bar--backarrow.svg"
+          />
+        </a>
+        <div class="tree-input-text--select__tag">즐거움</div>
+        <form class="top-bar__form" action="" method="post">
+          <button class="top-bar__text" type="submit">완료&nbsp;&nbsp;</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- =========================
+       FRAGMENT: 옵션 선택 및 생성 상단 박스
+    ===========================  -->
+    <div class="topbar-option-or-create" th:fragment="top-bar__option-or-create">
+      <p class="topbar-option-or-create-text">옵션 선택 또는 생성</p>
+    </div>
+
   </body>
 </html>

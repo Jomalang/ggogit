@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link th:href="@{/css/reset.css}" rel="stylesheet" />
+    <link th:href="@{/css/fragments.css}" rel="stylesheet" />
+    <link th:href="@{/css/layout.css}" rel="stylesheet" />
+
+    <link href="tag-edit.css" rel="stylesheet"/>
+
+    <title>home</title>
+</head>
+<body>
+
+    <!-- ===================================
+               delete-btn
+    =================================== -->
+    <div class="top-bar--green">
+        <div class="top-bar__frame">
+            <a class="tob-bar--a">
+                <img
+                        src="/src/main/resources/static/svg/back-arrow-icon.svg"
+                        alt="top-bar--backarrow.svg"
+                />
+            </a>
+            <div class="tree-input-text--select__tag">즐거움</div>
+            <form class="top-bar__form" action="" method="post">
+                <button class="top-bar__text" type="submit">완료&nbsp;&nbsp;</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ===================================
+              즐거움 입력
+    =================================== -->
+    <div class="tree-input-text__form">
+        <label class="tree-input-text__subject"
+        >
+            <input
+                    class="tree-input-text__rectangle"
+                    placeholder="옵션 검색"
+                    value="즐거움"
+            /></label>
+    </div>
+
+    <!-- =========================
+              option or create
+        ===========================  -->
+    <div class="topbar-option-or-create">
+        <p class="topbar-option-or-create-text">옵션 선택 또는 생성</p>
+    </div>
+
+    <!-- ===================================
+               delete-btn
+    =================================== -->
+    <form class="delete-seed__form">
+        <button class="delete-seed__btn">
+            <img src="/src/main/resources/static/svg/delete.svg" alt="delete" />
+            <p class="delete-seed__btn-msg">삭제</p>
+        </button>
+    </form>
+
+</body>
+</html>

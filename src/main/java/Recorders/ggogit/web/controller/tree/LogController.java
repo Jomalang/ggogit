@@ -18,17 +18,17 @@ public class LogController {
         return "view/tree/log/register/first/etc";
     }
 
-    @GetMapping("/register/book")
-    public String getBookBranch() {
-        return "view/tree/log/register/book";
-    }
+//    @GetMapping("/register/book")
+//    public String getBookBranch() {
+//        return "view/tree/log/register/book";
+//    }
 
     @GetMapping("/register/etc")
     public String getEtcBranch() {
         return "view/tree/log/register/etc";
     }
 
-    @GetMapping("/list")
+    @GetMapping("/lis1t")
     public String getLogList() {
         return "view/tree/log/list";
     }

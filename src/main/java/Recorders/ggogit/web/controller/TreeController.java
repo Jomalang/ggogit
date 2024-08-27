@@ -16,7 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import Recorders.ggogit.entity.Tree;
 
-@Controller("homeTreeController")
+@Controller()
 @RequestMapping("/tree")
 public class TreeController {
 
@@ -76,14 +76,44 @@ public class TreeController {
     }
 
     @GetMapping("/book/reg")
-    public String getReg(Model model) {
-        model.addAttribute("categories", BookCategoryType.values());
-        return "view/tree/book/reg";
+    public String getBookReg(
+            @RequestParam(value = "auto", required = false) boolean auto,
+            @RequestParam(value = "id", required = false) Long id,
+            Model model
+    ) {
+        if (auto) {
+            return  "view/tree/book/reg-auto";
+        }else{
+            model.addAttribute("categories", BookCategoryType.values());
+            return "view/tree/book/reg";
+        }
     }
 
     @PostMapping("/book/reg")
     @ResponseBody
-    public Object postReg(
+    public Object postBookReg(
+            @RequestParam(value = "bookImage", required = false) MultipartFile bookImage,
+            @ModelAttribute("tree") Tree tree
+    ) {
+        if (bookImage.isEmpty()) {
+            System.out.println("이미지가 없습니다.");
+        }
+        System.out.println(tree.toString());
+        return tree;
+    }
+    @GetMapping("/book/edit")
+    public String getBookEdit(
+            @RequestParam(value = "auto", required = false) boolean auto,
+            @RequestParam(value = "id", required = false) Long id,
+            Model model
+    ) {
+        model.addAttribute("categories", BookCategoryType.values());
+        return "view/tree/book/edit";
+    }
+
+    @PostMapping("/book/edit")
+    @ResponseBody
+    public Object postBookEdit(
             @RequestParam(value = "bookImage", required = false) MultipartFile bookImage,
             @ModelAttribute("tree") Tree tree
     ) {
@@ -94,17 +124,7 @@ public class TreeController {
         return tree;
     }
 
-    @GetMapping("/memoir/register/index")
-    public String getmemoirindex(Model model) {
-        model.addAttribute("categories", BookCategoryType.values());
-        return "view/tree/memoir/register/index";
-    }
-    @GetMapping("/book/reg4-search-book")
-    public String getReg4SearchBook(Model model) {
-        model.addAttribute("categories", BookCategoryType.values());
-        return "view/tree/register/4-reg-search-book";
-    }
-    @GetMapping("/branch/list")
+    @GetMapping("/list")
     public String getBranchList(Model model) {
         List<Branch> lists = new ArrayList<>();
         lists.add(new Branch("heegwon-branch","card-bookmark-icon.svg","2024-07-18","브랜치 이름",999,90));
@@ -113,17 +133,8 @@ public class TreeController {
         lists.add(new Branch("jinpeal-branch","card-bookmark-icon.svg","2024-07-18","브랜치 이름",999,90));
         lists.add(new Branch("jaeyoung-branch","card-bookmark-icon.svg","2024-07-18","브랜치 이름",999,90));
         model.addAttribute("lists", lists);
-        return "view/tree/branch/list";
+        return "view/tree/list";
     }
-    @GetMapping("/reg-inspiration")
-    public String getTreeInspirationReg() {
-        return "view/tree/reg-inspiration";
-    }
-    @GetMapping("/reg-video")
-    public String getTreeVideoReg() {
-        return "view/tree/reg-video";
-    }
-
     @GetMapping("/reg-etc")
     public String getTreeEtcReg(
             @RequestParam(value = "type", required = false) String type,
@@ -143,5 +154,36 @@ public class TreeController {
 
         model.addAttribute("seed", seedCategoryType);
         return "view/tree/reg-etc";
+    }
+    @PostMapping("/reg-etc")
+    public String postTreeEtcReg(){
+        return "redirect:/leaf/reg?first=true&seed=seed_id";
+    }
+
+    @GetMapping("/book/select")
+    public String searchBook(Model model) {
+        int resultCnt = 0;
+        model.addAttribute("resultCnt", resultCnt);
+        return "view/tree/book/select";
+    }
+
+    @RequestMapping("/detail")
+    public String getTreeDetail(
+            Model model
+    ){
+        List<Branch> lists2 = new ArrayList<>();
+        lists2.add(new Branch("heegwon-branch","card-bookmark-icon.svg","2024-07-18","브랜치 이름",999,90));
+        lists2.add(new Branch("taegyu-branch","card-bookmark-icon.svg","2024-07-18","브랜치 이름",999,90));
+        lists2.add(new Branch("hyeonjin-branch","card-tree-icon.svg","2024-07-18","브랜치 이름",999,90));
+        lists2.add(new Branch("jinpeal-branch","card-bookmark-icon.svg","2024-07-18","브랜치 이름",999,90));
+        lists2.add(new Branch("jaeyoung-branch","card-bookmark-icon.svg","2024-07-18","브랜치 이름",999,90));
+        model.addAttribute("lists", lists2);
+        return "view/tree/index";
+    }
+
+    @GetMapping("/memoir/register/index")
+    public String getmemoirindex(Model model) {
+        model.addAttribute("categories", BookCategoryType.values());
+        return "view/tree/memoir/register/index";
     }
 }

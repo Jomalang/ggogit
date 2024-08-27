@@ -1,4 +1,4 @@
-package Recorders.ggogit.controller.home;
+package Recorders.ggogit.web.controller;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,15 +10,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import Recorders.ggogit.entity.Tree;
 
 @Controller
-@RequestMapping("/home")
-public class HomeController {
+@RequestMapping()
+public class MainController {
 
-    @GetMapping("/no")
+    @GetMapping("/home/no-index")
     public String indexNoTree() {
         return "view/home/no-tree";
     }
 
-    @GetMapping
+    @GetMapping("/home/index")
     public String index(Model model) {
         // 더미 데이터
         // 테스트 위한 트리 리스트(나중에 리포지로 빠짐)
@@ -66,5 +66,4 @@ public class HomeController {
         model.addAttribute("treeList", trees);
         return "view/home/index";
     }
-
 }

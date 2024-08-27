@@ -1,4 +1,4 @@
-package Recorders.ggogit.controller.tree;
+package Recorders.ggogit.web.controller.tree;
 
 import Recorders.ggogit.entity.Branch;
 import org.springframework.stereotype.Controller;

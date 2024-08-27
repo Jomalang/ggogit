@@ -1,4 +1,4 @@
-package Recorders.ggogit.controller.tree;
+package Recorders.ggogit.web.controller.tree;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

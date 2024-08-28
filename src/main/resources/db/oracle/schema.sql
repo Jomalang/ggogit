@@ -1,6 +1,7 @@
+-- database: oracle
 -- admin 사용자 정보
--- ID : system
--- PW : 1234
+-- ID: system
+-- PW: 1234
 
 -- 사용자 아이디 C## 제거 설정
 -- ALTER SESSION SET "_ORACLE_SCRIPT"=true;
@@ -101,9 +102,10 @@ COMMENT ON COLUMN "FOLLOW"."CREATE_TIME" IS '데이터 생성 시각';
 CREATE TABLE "BOOK" (
     "ID"	         NUMBER		            PRIMARY KEY, -- 도서 PK
     "MEMBER_ID"      NUMBER		            NOT NULL, -- 회원 FK
-    "NAME"           NVARCHAR2(1024)	    NOT NULL, -- 도서 제목
+    "TITLE"           NVARCHAR2(1024)	    NOT NULL, -- 도서 제목
     "AUTHOR"         NVARCHAR2(1024)	    NOT NULL, -- 도서 저자
     "PUBLISHER"      NVARCHAR2(1024)	    NOT NULL, -- 도서 출판사
+    "PUBLIC_DATE"    DATE		            NULL, -- 도서 출판일
     "TOTAL_PAGE"     NUMBER		            NOT NULL, -- 도서 총 페이지 수
     "IMAGE_FILE"     VARCHAR2(1024)	        NULL, -- 도서 이미지 파일
     "UPDATE_TIME"    TIMESTAMP	            NOT NULL, -- 데이터 수정 시각
@@ -165,7 +167,7 @@ CREATE TABLE "BOOK_COMMENT" (
     "MEMBER_ID"	    NUMBER		                    NOT NULL, -- 회원 FK
     "BOOK_ID"	    NUMBER		                    NOT NULL, -- 도서 FK
     "LIKE_COUNT"	NUMBER	            DEFAULT 0	NOT NULL, -- 도서 댓글 좋아요 수
-    "COMMENT"	    NVARCHAR2(2000)		            NOT NULL, -- 도서 댓글 내용
+    "CONTENT"	    NVARCHAR2(2000)		            NOT NULL, -- 도서 댓글 내용
     "UPDATE_TIME"	TIMESTAMP		                NOT NULL, -- 데이터 수정 시각
     "CREATE_TIME"	TIMESTAMP		                NOT NULL, -- 데이터 생성 시각
     -- FK 정의
@@ -582,7 +584,7 @@ CREATE TABLE "LEAF_COMMENT" (
     "MEMBER_ID"	        NUMBER		            NOT NULL, -- 회원 FK
     "LEAF_ID"	        NUMBER		            NOT NULL, -- 리프 FK
     "LIKE_COUNT"	    NUMBER	DEFAULT 0	    NOT NULL, -- 리프 댓글 좋아요 수
-    "COMMENT"	        NVARCHAR2(2000)		    NOT NULL, -- 리프 댓글 내용
+    "CONTENT"	        NVARCHAR2(2000)		    NOT NULL, -- 리프 댓글 내용
     "UPDATE_TIME"	    TIMESTAMP		        NOT NULL, -- 데이터 수정 시각
     "CREATE_TIME"	    TIMESTAMP		        NOT NULL, -- 데이터 생성 시각
     -- FK 정의

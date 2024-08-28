@@ -109,12 +109,12 @@ BEGIN
         INSERT INTO BOOK (
               "ID" -- NUMBER
             , "MEMBER_ID" -- NUMBER
-            , "NAME" -- VARCHAR2(100)
+            , "TITLE" -- VARCHAR2(100)
             , "AUTHOR" -- VARCHAR2(100)
             , "PUBLISHER" -- VARCHAR2(100)
-            , "REG_METHOD" -- NUMBER(1)
+            , "RESOURCE_FROM" -- NUMBER(1)
             , "TOTAL_PAGE" -- NUMBER
-            , "IMAGE" -- VARCHAR2(255)
+            , "IMAGE_FILE" -- VARCHAR2(255)
             , "UPDATE_TIME" -- TIMESTAMP
             , "CREATE_TIME" -- TIMESTAMP
         ) VALUES (

@@ -67,30 +67,30 @@ COMMENT ON COLUMN "MEMBER"."CREATE_TIME" IS '데이터 생성 시각';
 -- 회원 프로필 이미지 생성
 -- ============================================ --
 CREATE TABLE "MEMBER_PROFILE_IMAGE" (
-    "ID"	        NUMBER		    NOT NULL, -- 회원 프로필 이미지 PK
+    "MEMBER_ID"	        NUMBER		    NOT NULL, -- 회원 프로필 이미지 PK
     "NAME"	        VARCHAR2(255)	NOT NULL, -- 회원 프로필 이미지 이름
     -- PK 정의
-    CONSTRAINT "PK_MEMBER_PROFILE_IMAGE" PRIMARY KEY ("ID"),
+    CONSTRAINT "PK_MEMBER_PROFILE_IMAGE" PRIMARY KEY ("MEMBER_ID"),
     -- FK 정의
-    CONSTRAINT "FK_MEMBER_PROFILE_IMAGE_MEMBER" FOREIGN KEY ("ID") REFERENCES "MEMBER" ("ID")
+    CONSTRAINT "FK_MEMBER_PROFILE_IMAGE_MEMBER" FOREIGN KEY ("MEMBER_ID") REFERENCES "MEMBER" ("ID")
 );
 
-COMMENT ON COLUMN "MEMBER_PROFILE_IMAGE"."ID" IS '회원 프로필 이미지 PK';
+COMMENT ON COLUMN "MEMBER_PROFILE_IMAGE"."MEMBER_ID" IS '회원 프로필 이미지 PK';
 COMMENT ON COLUMN "MEMBER_PROFILE_IMAGE"."NAME" IS '회원 프로필 이미지 이름';
 
 -- ============================================ --
 -- 회원 배경 이미지 테이블
 -- ============================================ --
 CREATE TABLE "MEMBER_BACKGROUND_IMAGE" (
-    "ID"	        NUMBER		    NOT NULL, -- 회원 배경 이미지 PK
+    "MEMBER_ID"	        NUMBER		    NOT NULL, -- 회원 배경 이미지 PK
     "NAME"	        VARCHAR2(255)	NOT NULL, -- 회원 배경 이미지 이름
     -- PK 정의
-    CONSTRAINT "PK_MEMBER_BACKGROUND_IMAGE" PRIMARY KEY ("ID"),
+    CONSTRAINT "PK_MEMBER_BACKGROUND_IMAGE" PRIMARY KEY ("MEMBER_ID"),
     -- FK 정의
-    CONSTRAINT "FK_MEMBER_BACKGROUND_IMAGE_MEMBER" FOREIGN KEY ("ID") REFERENCES "MEMBER" ("ID")
+    CONSTRAINT "FK_MEMBER_BACKGROUND_IMAGE_MEMBER" FOREIGN KEY ("MEMBER_ID") REFERENCES "MEMBER" ("ID")
 );
 
-COMMENT ON COLUMN "MEMBER_BACKGROUND_IMAGE"."ID" IS '회원 배경 이미지 PK';
+COMMENT ON COLUMN "MEMBER_BACKGROUND_IMAGE"."MEMBER_ID" IS '회원 배경 이미지 PK';
 COMMENT ON COLUMN "MEMBER_BACKGROUND_IMAGE"."NAME" IS '회원 배경 이미지 이름';
 
 -- ============================================ --
@@ -329,15 +329,15 @@ COMMENT ON COLUMN "TREE_BOOK"."PROGRESS" IS '책 트리 진행률';
 -- 트리 이미지 테이블
 -- ============================================ --
 CREATE TABLE "TREE_IMAGE" (
-    "ID"	NUMBER		    NOT NULL, -- 트리 FK
+    "TREE_ID"	NUMBER		    NOT NULL, -- 트리 FK
     "NAME"	VARCHAR2(255)	NOT NULL, -- 트리 이미지 이름
     -- PK 정의
-    CONSTRAINT "PK_TREE_IMAGE" PRIMARY KEY ("ID"),
+    CONSTRAINT "PK_TREE_IMAGE" PRIMARY KEY ("TREE_ID"),
     -- FK 정의
-    CONSTRAINT "FK_TREE_IMAGE_TREE" FOREIGN KEY ("ID") REFERENCES "TREE" ("ID")
+    CONSTRAINT "FK_TREE_IMAGE_TREE" FOREIGN KEY ("TREE_ID") REFERENCES "TREE" ("ID")
 );
 
-COMMENT ON COLUMN "TREE_IMAGE"."ID" IS '트리 이미지 PK';
+COMMENT ON COLUMN "TREE_IMAGE"."TREE_ID" IS '트리 이미지 PK';
 COMMENT ON COLUMN "TREE_IMAGE"."NAME" IS '트리 이미지 이름';
 
 -- ============================================ --

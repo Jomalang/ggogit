@@ -2,8 +2,8 @@ spring:
   datasource:
     driver-class-name: oracle.jdbc.driver.OracleDriver
     url: jdbc:oracle:thin@///hi.newlecture.com:1521/XEPDB1
-    username: GGOGIT
-    password: qmfoscl0809
+    username:
+    password: 
 mybatis:
   configuration:
     map-underscore-to-camel-case: true

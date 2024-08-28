@@ -4,7 +4,7 @@ import lombok.Getter;
 
 @Getter
 public enum BookCategoryType {
-    FICTION("fiction","소설"),
+    FICTION("fiction", "소설"),
     NON_FICTION("nonFiction", "논픽션"),
     MYSTERY("mystery", "미스터리"),
     SCIENCE_FICTION("scienceFiction", "과학 소설"),

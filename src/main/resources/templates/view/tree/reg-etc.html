@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=300, initial-scale=1.0" />
+
+  <link th:href="@{/css/reset.css}" rel="stylesheet" />
+  <link th:href="@{/css/fragments.css}" rel="stylesheet" />
+  <link th:href="@{/css/layout.css}" rel="stylesheet" />
+
+  <title>도서 트리 생성</title>
+</head>
+<body>
+
+<header>
+  <h1 class="none">도서 트리 생성 페이지</h1>
+  <section class="tob-bar-back-container">
+    <h1 class="none">트리 생성 상단 바</h1>
+    <div th:replace="~{fragments/top-bar :: top-bar-back(title='트리 생성', link='#')}"></div>
+  </section>
+</header>
+
+<main>
+  <section class="book-tree-input-form-container">
+    <h1 class="none">도서 정보 입력</h1>
+
+    <section class="select-title-container">
+      <div th:replace="~{fragments/text :: text-main-title(title=${seed.description}, size=28)}"></div>
+    </section>
+
+    <form id="book-tree-input-form-id" class="book-tree-input-form" th:action="@{/tree/book/reg}" method="post" enctype="multipart/form-data">
+
+<!--      <section>-->
+<!--        <h1 class="none">씨앗 카테고리</h1>-->
+<!--        <div th:replace="~{fragments/input :: default-data(name='seedCategoryType', value=${seed.value})}"></div>-->
+<!--      </section>-->
+
+      <section class="book-tree-input-form__photo-container">
+        <h1 class="none">도서 이미지 입력</h1>
+        <div th:replace="~{fragments/input :: book-input-img}"></div>
+      </section>
+
+      <section class="input-form__input-container">
+        <h1 class="none">트리이름 입력</h1>
+        <div th:replace="~{fragments/input :: text-box(label='*트리 이름', placeholder='트리 이름을 입력해주세요', name='treeName')}"></div>
+      </section>
+
+      <section class="book-tree-input-form__large-input-container">
+        <h1 class="none">설명글 작성</h1>
+        <div th:replace="~{fragments/input :: textarea-box(label='*트리설명', placeholder='트리를 설명할 글을 작성해 주세요', name='description')}"></div>
+      </section>
+
+      <section class="input-form__input-container">
+        <h1 class="none">공개성 선택</h1>
+        <div th:replace="~{fragments/input :: input-visibility(name='visibility')}"></div>
+      </section>
+
+      <section class="book-tree-submit-container">
+        <h1 class="none">트리 생성 버튼</h1>
+        <div th:replace="~{fragments/button :: submit-btn-full-bar(text='트리 생성', id='submit-btn')}"></div>
+      </section>
+
+    </form>
+  </section>
+</main>
+
+<aside class="nav-container">
+  <h1 class="none">네비게이션 하단</h1>
+  <nav th:replace="fragments/nav :: navigation-bar(active='home')"></nav>
+</aside>
+
+<script th:src="@{/js/filter-tab.js}"></script>
+<script th:src="@{/js/input-img-book-change.js}"></script>
+
+</body>
+</html>

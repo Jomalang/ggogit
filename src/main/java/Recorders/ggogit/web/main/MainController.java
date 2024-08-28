@@ -1,25 +1,27 @@
-package Recorders.ggogit.web.controller;
+package Recorders.ggogit.web.main;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import Recorders.ggogit.entity.Tree;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping()
 public class MainController {
 
     @GetMapping("/home")
-    public String index(Model model) {
+    public String index(Model model,
+                        @RequestParam(name = "tree", required = false, defaultValue = "true") Boolean memberHasTree) {
 
-        boolean memberHasTree = true;
-        if(memberHasTree){
+        if (!memberHasTree) {
             return "view/home/no-tree";
-        }else {
+        } else {
             // 더미 데이터
             // 테스트 위한 트리 리스트(나중에 리포지로 빠짐)
             List<Tree> trees = new ArrayList<>();

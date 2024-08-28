@@ -1,4 +1,4 @@
-package Recorders.ggogit.web.controller;
+package Recorders.ggogit.web.leaf;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,12 +13,14 @@ public class TagController {
     public String getTagList() {
         return "/view/tag/list";
     }
+
     @RequestMapping("/edit")
     public String getTagEdit(
             @RequestParam(value = "id", required = false) Integer id
     ) {
         return "/view/tag/edit";
     }
+
     @PostMapping("/edit")
     public String postTagEdit(
             @RequestParam(value = "id", required = false) Integer id

@@ -1,4 +1,4 @@
-package Recorders.ggogit.web.controller;
+package Recorders.ggogit.web.leaf;
 
 import ch.qos.logback.core.model.Model;
 import org.springframework.stereotype.Controller;
@@ -17,22 +17,21 @@ public class LeafController {
             @RequestParam(value = "seed", required = false) Integer seed,
             Model model
     ) {
-        if(first) {
-            if(seed == 1) {
+        if (first) {
+            if (seed == 1) {
                 return "/view/leaf/1st-reg-book";
-            }
-            else {
+            } else {
                 return "/view/leaf/1st-reg-etc";
             }
-        }else{
-            if(seed == 1) {
+        } else {
+            if (seed == 1) {
                 return "/view/leaf/reg-book";
-            }
-            else {
+            } else {
                 return "/view/leaf/reg-etc";
             }
         }
     }
+
     @PostMapping("/reg")
     public String PostLeafReg() {
         return "redirect:/leaf/reg";
@@ -43,22 +42,21 @@ public class LeafController {
             @RequestParam(value = "seed", required = false) Integer seed,
             @RequestParam(value = "id", required = false) Integer id,
             Model model
-    ){
-        if(seed == 1) {
+    ) {
+        if (seed == 1) {
             return "/view/leaf/edit-book";
-        }
-        else {
+        } else {
             return "/view/leaf/edit-etc";
         }
     }
 
     @GetMapping("/list")
-    public String getLeafList(){
+    public String getLeafList() {
         return "/view/leaf/list";
     }
 
     @GetMapping("/detail")
-    public String getLeafDetail(){
+    public String getLeafDetail() {
         return "/view/leaf/list";
     }
 

@@ -1,4 +1,4 @@
-package Recorders.ggogit.web.controller;
+package Recorders.ggogit.web.book;
 
 
 import org.springframework.stereotype.Controller;

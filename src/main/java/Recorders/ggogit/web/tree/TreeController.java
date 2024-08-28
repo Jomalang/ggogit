@@ -1,4 +1,4 @@
-package Recorders.ggogit.web.controller;
+package Recorders.ggogit.web.tree;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,7 +27,7 @@ public class TreeController {
 
     @PostMapping("/search")
     public String treeSearch(@RequestParam("treeSearchText") String treeSearchText,
-            RedirectAttributes redirectAttributes) {
+                             RedirectAttributes redirectAttributes) {
         System.out.println(treeSearchText);
         redirectAttributes.addAttribute("treeSearchText", treeSearchText);
         return "redirect:/tree/search/result/{treeSearchText}";
@@ -35,7 +35,7 @@ public class TreeController {
 
     @GetMapping("/search/result/{treeSearchText}")
     public String treeSearchResult(@PathVariable String treeSearchText,
-            Model model) {
+                                   Model model) {
         // 더미 데이터
         // 검색 결과 담는 map
         Map<Long, Tree> map = new HashMap<>();
@@ -69,7 +69,7 @@ public class TreeController {
 
     @PostMapping("/search/result/{treeSearchText}")
     public String treeSearchResult(@RequestParam("treeSearchText") String treeSearchText,
-            RedirectAttributes redirectAttributes) {
+                                   RedirectAttributes redirectAttributes) {
         System.out.println(treeSearchText);
         redirectAttributes.addAttribute("treeSearchText", treeSearchText);
         return "redirect:/tree/search/result/{treeSearchText}";
@@ -82,8 +82,8 @@ public class TreeController {
             Model model
     ) {
         if (auto) {
-            return  "view/tree/book/reg-auto";
-        }else{
+            return "view/tree/book/reg-auto";
+        } else {
             model.addAttribute("categories", BookCategoryType.values());
             return "view/tree/book/reg";
         }
@@ -101,6 +101,7 @@ public class TreeController {
         System.out.println(tree.toString());
         return tree;
     }
+
     @GetMapping("/book/edit")
     public String getBookEdit(
             @RequestParam(value = "auto", required = false) boolean auto,
@@ -127,14 +128,15 @@ public class TreeController {
     @GetMapping("/list")
     public String getBranchList(Model model) {
         List<Branch> lists = new ArrayList<>();
-        lists.add(new Branch("heegwon-branch","card-bookmark-icon.svg","2024-07-18","브랜치 이름",999,90));
-        lists.add(new Branch("taegyu-branch","card-bookmark-icon.svg","2024-07-18","브랜치 이름",999,90));
-        lists.add(new Branch("hyeonjin-branch","card-tree-icon.svg","2024-07-18","브랜치 이름",999,90));
-        lists.add(new Branch("jinpeal-branch","card-bookmark-icon.svg","2024-07-18","브랜치 이름",999,90));
-        lists.add(new Branch("jaeyoung-branch","card-bookmark-icon.svg","2024-07-18","브랜치 이름",999,90));
+        lists.add(new Branch("heegwon-branch", "card-bookmark-icon.svg", "2024-07-18", "브랜치 이름", 999, 90));
+        lists.add(new Branch("taegyu-branch", "card-bookmark-icon.svg", "2024-07-18", "브랜치 이름", 999, 90));
+        lists.add(new Branch("hyeonjin-branch", "card-tree-icon.svg", "2024-07-18", "브랜치 이름", 999, 90));
+        lists.add(new Branch("jinpeal-branch", "card-bookmark-icon.svg", "2024-07-18", "브랜치 이름", 999, 90));
+        lists.add(new Branch("jaeyoung-branch", "card-bookmark-icon.svg", "2024-07-18", "브랜치 이름", 999, 90));
         model.addAttribute("lists", lists);
         return "view/tree/list";
     }
+
     @GetMapping("/reg-etc")
     public String getTreeEtcReg(
             @RequestParam(value = "type", required = false) String type,
@@ -155,8 +157,9 @@ public class TreeController {
         model.addAttribute("seed", seedCategoryType);
         return "view/tree/reg-etc";
     }
+
     @PostMapping("/reg-etc")
-    public String postTreeEtcReg(){
+    public String postTreeEtcReg() {
         return "redirect:/leaf/reg?first=true&seed=seed_id";
     }
 
@@ -170,13 +173,13 @@ public class TreeController {
     @RequestMapping("/detail")
     public String getTreeDetail(
             Model model
-    ){
+    ) {
         List<Branch> lists2 = new ArrayList<>();
-        lists2.add(new Branch("heegwon-branch","card-bookmark-icon.svg","2024-07-18","브랜치 이름",999,90));
-        lists2.add(new Branch("taegyu-branch","card-bookmark-icon.svg","2024-07-18","브랜치 이름",999,90));
-        lists2.add(new Branch("hyeonjin-branch","card-tree-icon.svg","2024-07-18","브랜치 이름",999,90));
-        lists2.add(new Branch("jinpeal-branch","card-bookmark-icon.svg","2024-07-18","브랜치 이름",999,90));
-        lists2.add(new Branch("jaeyoung-branch","card-bookmark-icon.svg","2024-07-18","브랜치 이름",999,90));
+        lists2.add(new Branch("heegwon-branch", "card-bookmark-icon.svg", "2024-07-18", "브랜치 이름", 999, 90));
+        lists2.add(new Branch("taegyu-branch", "card-bookmark-icon.svg", "2024-07-18", "브랜치 이름", 999, 90));
+        lists2.add(new Branch("hyeonjin-branch", "card-tree-icon.svg", "2024-07-18", "브랜치 이름", 999, 90));
+        lists2.add(new Branch("jinpeal-branch", "card-bookmark-icon.svg", "2024-07-18", "브랜치 이름", 999, 90));
+        lists2.add(new Branch("jaeyoung-branch", "card-bookmark-icon.svg", "2024-07-18", "브랜치 이름", 999, 90));
         model.addAttribute("lists", lists2);
         return "view/tree/index";
     }

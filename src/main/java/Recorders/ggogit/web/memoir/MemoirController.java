@@ -1,4 +1,4 @@
-package Recorders.ggogit.web.controller;
+package Recorders.ggogit.web.memoir;
 
 
 import org.springframework.stereotype.Controller;
@@ -21,6 +21,8 @@ public class MemoirController {
     }
 
     @GetMapping("/reg")
-    public String getMemoirReg() { return "view/memoir/reg"; }
+    public String getMemoirReg() {
+        return "view/memoir/reg";
+    }
 
 }

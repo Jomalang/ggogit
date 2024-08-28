@@ -1,4 +1,4 @@
-package Recorders.ggogit.web.controller;
+package Recorders.ggogit.web.member;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,7 +15,9 @@ public class MemberController {
     }
 
     @PostMapping("/login")
-    public String postMemberLogin(){ return "redirect:/member/login"; }
+    public String postMemberLogin() {
+        return "redirect:/member/login";
+    }
 
     @GetMapping("/join")
     public String getMemberJoin() {
@@ -28,7 +30,12 @@ public class MemberController {
     }
 
     @GetMapping("/pw/rst")
-    public String getMemberPwRst() { return "view/member/pw/rst"; }
+    public String getMemberPwRst() {
+        return "view/member/pw/rst";
+    }
+
     @PostMapping("/pw/rst")
-    public String postMemberPwRst() { return "view/member/pw/rst"; }
+    public String postMemberPwRst() {
+        return "view/member/pw/rst";
+    }
 }

@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: demo
+  datasource:
+    driver-class-name: oracle.jdbc.OracleDriver
+    url: jdbc:oracle:thin:@//localhost:1521/XE
+    username: ROOT
+    password: 1234
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+  mapper-locations: classpath:/mappers/**/*Mapper.xml
+  type-aliases-package: com.example.boot3.demo.entity # Entity ???? ?? ???
+
+logging:
+  level:
+    com.example.boot3.demo.repository: trace
+
+
+server:
+  port: 80

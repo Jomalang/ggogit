@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.boot3.demo.repository.menu.MenuRepository">
+
+    <insert id="save" parameterType="Leaf">
+        INSERT INTO LEAF (ID, NAME, PARENT_ID, SORT_ORDER)
+        VALUES (#{id}, #{name}, #{parentId}, #{sortOrder})
+    </insert>
+
+</mapper>

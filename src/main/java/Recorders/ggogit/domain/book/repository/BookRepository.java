@@ -7,8 +7,15 @@ import java.util.List;
 
 @Mapper
 public interface BookRepository {
-
     void save(Book book);
 
+    void update(Book book);
+
     List<Book> findAll();
+
+    Book findByTitle(String title);
+
+    void deleteById(Long id);
+
+    void delete(Book book);
 }

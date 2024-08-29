@@ -3,6 +3,7 @@ package Recorders.ggogit.domain.book.entity;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
@@ -17,7 +18,7 @@ public class Book {
     private String publisher;
     private String imageFile;
     private Boolean resourceFrom;
-    private LocalDate publicDate;
-    private LocalDate updateTime;
-    private LocalDate createTime;
+    private LocalDateTime publicDate;
+    private LocalDateTime updateTime;
+    private LocalDateTime createTime;
 }

@@ -4,9 +4,35 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="Recorders.ggogit.domain.member.repository.SeedRepository">
+
     <insert id="save" parameterType="Seed">
         INSERT INTO SEED(NAME)
         VALUES(#{name})
     </insert>
+
+    <update id="update" parameterType="Seed">
+        UPDATE SEED
+        SET NAME = #{name}
+        WHERE ID = #{id}
+    </update>
+
+    <delete id="delete" parameterType="Seed">
+        DELETE SEED
+        WHERE ID = #{id}
+    </delete>
+
+    <select id="findAll" resultType="Seed">
+        SELECT * FROM SEED
+    </select>
+
+    <select id="findById" resultType="Long">
+        SELECT * FROM SEED
+        WHERE ID = #{id}
+    </select>
+
+    <select id="findByName" resultType="String">
+        SELECT * FROM SEED
+        WHERE NAME LIKE '%${name}%'
+    </select>
 
 </mapper>

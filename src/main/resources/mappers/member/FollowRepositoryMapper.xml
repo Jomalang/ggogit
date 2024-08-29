@@ -4,8 +4,24 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="Recorders.ggogit.domain.member.repository.FollowRepository">
+
     <insert id="save" parameterType="Follow">
         INSERT INTO FOLLOW(MEMBER_ID, FOLLOW_ID)
         VALUES(#{memberId}, #{followId})
     </insert>
+
+    <delete id="delete" parameterType="Follow">
+        DELETE FROM FOLLOW
+        WHERE MEMBER_ID = #{memberId}
+    </delete>
+
+    <select id="findAll" resultType="Follow">
+        SELECT * FROM FOLLOW
+    </select>
+
+    <select id="findByMemberId" resultType="String">
+        SELECT * FROM FOLLOW
+        WHERE MEMBER_ID LIKE '%${memberId}%'
+    </select>
+
 </mapper>

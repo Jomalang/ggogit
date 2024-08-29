@@ -1,4 +1,4 @@
-package Recorders.ggogit.domain.book;
+package Recorders.ggogit.domain.book.entity;
 
 import lombok.*;
 

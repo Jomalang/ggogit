@@ -1,22 +1,20 @@
 spring:
-  application:
-    name: demo
   datasource:
-    driver-class-name: oracle.jdbc.OracleDriver
-    url: jdbc:oracle:thin:@//localhost:1521/XE
-    username: ROOT
-    password: 1234
-
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+    url: jdbc:oracle:thin:@//hi.newlecture.com:1521/XEPDB1
+    username: GGOGIT
+    password: qmfoscl0809
 mybatis:
   configuration:
     map-underscore-to-camel-case: true
-  mapper-locations: classpath:/mappers/**/*Mapper.xml
-  type-aliases-package: com.example.boot3.demo.entity # Entity ???? ?? ???
-
+  # 반환타입 패키지 여러개 적을 수 있는지?
+  type-aliases-package: Recorders.ggogit.domain.memoir
+  # 공용 핸들러 패키지 경로 추가 -----------------------------
+  type-handlers-package: Recorders.ggogit.web.CommonTypeHandler
+  # -----------------------------------------------------
+  mapper-locations: mappers/*Mapper.xml
 logging:
   level:
-    com.example.boot3.demo.repository: trace
+    Recorders.ggogit.domain: trace
 
 
-server:
-  port: 80

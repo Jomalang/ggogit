@@ -16,7 +16,7 @@ public class LeafBookDomain {
     private Long parentLeafId;
     private Long startPage;
     private Long endPage;
-    private List<TagDomain> tags;
+    private List<LeafTagDomain> tags;
     private String title;
     private String content;
     private Boolean visibility;

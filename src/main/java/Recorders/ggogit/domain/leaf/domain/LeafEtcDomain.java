@@ -6,6 +6,7 @@ import lombok.*;
 import java.util.List;
 
 @Setter
+
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
@@ -15,7 +16,7 @@ public class LeafEtcDomain {
     private Long id;
     private Long treeId;
     private Long parentLeafId;
-    private List<TagDomain> tags;
+    private List<LeafTagDomain> tags;
     private String title;
     private String content;
     private Boolean visibility;

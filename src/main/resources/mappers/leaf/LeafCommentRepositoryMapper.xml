@@ -4,4 +4,7 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="Recorders.ggogit.domain.leaf.entity.LeafComment">
+
+    <insert id="save" parameterType="LeafComment">
+
 </mapper>

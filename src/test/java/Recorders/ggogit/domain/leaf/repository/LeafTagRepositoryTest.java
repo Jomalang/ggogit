@@ -1,32 +1,81 @@
 package Recorders.ggogit.domain.leaf.repository;
 
-import org.junit.jupiter.api.BeforeAll;
+import Recorders.ggogit.domain.leaf.entity.LeafTag;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.test.annotation.Rollback;
+import org.springframework.test.context.jdbc.Sql;
+
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @MybatisTest
-@DisplayName("LeafTagRepository 테스트")
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@Rollback
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE) // 실제 DB 사용
+@Sql("/domain/leaf/repository/leaf-tag-repository-test.sql")
 class LeafTagRepositoryTest {
 
     @Autowired
     private LeafTagRepository leafTagRepository;
 
-    @BeforeAll
-    public static void setUp() {
+    @Test
+    @DisplayName("저장 테스트 | LeafTag | save")
+    void saveTest() {
+        // given
+        LeafTag leafTag = LeafTag.builder()
+                .memberId(999L)
+                .name("TagTest")
+                .build();
+
+        // when
+        Long savedId = leafTagRepository.save(leafTag);
+
+        // then
+        assertThat(savedId).isNotNull();
     }
 
     @Test
-    @DisplayName("저장 테스트 | LeafTag")
-    void saveTest() {
-        // given
-
+    @DisplayName("조회 테스트 | LeafTag | findAll")
+    void findAllTest() {
         // when
+        List<LeafTag> leafTags = leafTagRepository.findAll();
 
         // then
+        assertThat(leafTags.isEmpty()).isFalse();
     }
 
+    @Test
+    @DisplayName("조회 테스트 | LeafTag | findById")
+    void findByIdTest() {
+        // given
+        Long id = 1L;
+
+        // when
+        LeafTag leafTag = leafTagRepository.findById(id);
+
+        // then
+        assertThat(leafTag).isNotNull();
+    }
+
+    @Test
+    @DisplayName("수정 테스트 | LeafTag | update")
+    void updateTest() {
+        // given
+        Long id = 1L;
+        LeafTag leafTag = LeafTag.builder()
+                .id(id)
+                .memberId(999L)
+                .name("TagTest")
+                .build();
+
+        // when
+        int updatedCount = leafTagRepository.update(leafTag);
+
+        // then
+        assertThat(updatedCount).isEqualTo(1);
+    }
 }

@@ -5,5 +5,6 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface LeafTagMapRepository {
-    void save(LeafTagMap leaf);
+    Long save(LeafTagMap leaf);
+    Long update(LeafTagMap leaf);
 }

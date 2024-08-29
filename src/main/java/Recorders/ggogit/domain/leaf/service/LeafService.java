@@ -14,7 +14,7 @@ public class LeafService {
 //    private TreeRepository treeRepository;
 
     @Autowired
-    private LeafRepository leafRepository;
+    private LeafRepository repository;
 
     @Autowired
     private LeafBookRepository leafBookRepository;

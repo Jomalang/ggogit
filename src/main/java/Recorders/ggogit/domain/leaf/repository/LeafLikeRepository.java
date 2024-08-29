@@ -7,5 +7,8 @@ import java.util.List;
 
 @Mapper
 public interface LeafLikeRepository {
-    void save(LeafLike leafLike);
+    Long save(LeafLike leafLike);
+    List<LeafLike> findByLeafId(Long leafId);
+    List<LeafLike> findAll();
+    Long update(LeafLike leafLike);
 }

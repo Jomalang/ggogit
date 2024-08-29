@@ -6,4 +6,5 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface LeafBookRepository {
     void save(LeafBook leafBook);
+    Long update(LeafBook leafBook);
 }

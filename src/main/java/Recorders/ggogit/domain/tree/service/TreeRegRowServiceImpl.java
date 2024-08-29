@@ -1,17 +1,11 @@
 package Recorders.ggogit.domain.tree.service;
 
 import Recorders.ggogit.domain.tree.entity.Tree;
-import Recorders.ggogit.domain.tree.repository.TreeRegRepository;
+import Recorders.ggogit.domain.tree.repository.TreeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service
-public class TreeRegRowServiceImpl implements TreeRegRowService {
-    @Autowired
-    private TreeRegRepository repo;
 
-    @Override
-    public void addTreeRow(Tree tree) {
-        repo.addTreeRow(tree);
-    }
+public class TreeRegRowServiceImpl{
+
 }

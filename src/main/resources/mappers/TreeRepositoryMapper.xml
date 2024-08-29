@@ -1,11 +1,59 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="Recorders.ggogit.domain.tree.repository.TreeRegRepository">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-    <insert id="addTreeRow" parameterType="Tree">
-        INSERT INTO TREE(MEMBER_ID,SEED_ID,TITLE,DESCRIPTION,BOOK_MARK_COUNT,VISIBILITY)
-        VALUES
-            (#{memberId},#{seedId},#{title},#{description},#{bookMarkCountNum},#{visibility})
+<mapper namespace="Recorders.ggogit.domain.tree.repository.TreeRepository">
+<!--트리 생성-->
+    <insert id="saveTree" parameterType="Tree" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO TREE(MEMBER_ID, SEED_ID, TITLE, DESCRIPTION, BOOK_MARK_COUNT, VISIBILITY)
+        VALUES(#{memberId}, #{seedId}, #{title}, #{description}, #{bookMarkCountNum}, #{visibility})
     </insert>
 
+
+
+<!--트리 리스트 전체 조회-->
+    <select id="findTreeListAll" parameterType="Tree">
+        SELECT * FROM TREE ORDER BY TREE.UPDATE_TIME
+    </select>
+<!--트리 ID별 조회-->
+    <select id="findTreeByTreeId" parameterType="Tree">
+        SELECT * FROM TREE WHERE ID=#{id}
+    </select>
+    <!--회원 ID별 조회-->
+    <select id="findTreeByMemberId" parameterType="Tree">
+        SELECT * FROM TREE WHERE MEMBER_ID=#{memberId}
+    </select>
+    <!--제목 별 조회-->
+    <select id="findTreeByTitle" parameterType="Tree">
+        SELECT * FROM TREE WHERE TITLE LIKE #{title}
+    </select>
+    <!--설명글 별 조회-->
+    <select id="findTreeByDescription" parameterType="Tree">
+        SELECT * FROM TREE WHERE DESCRIPTION LIKE #{description}
+    </select>
+    <!--설명글 별 조회-->
+    <select id="findTreeByVisibility" parameterType="Tree">
+        SELECT * FROM TREE WHERE VISIBILITY = #{visibility}
+    </select>
+
+
+    <!--트리 제목 수정-->
+    <update id="updateTreeTitle" parameterType="Tree">
+        UPDATE TREE SET TITLE = #{title}
+        WHERE ID = #{id}
+    </update>
+    <!--트리 설명문 수정-->
+    <update id="updateTreeDescription" parameterType="Tree">
+        UPDATE TREE SET DESCRIPTION = #{description}
+        WHERE ID = #{id}
+    </update>
+    <!--트리 공개성 수정-->
+    <update id="updateTreeVisibility" parameterType="Tree">
+        UPDATE TREE SET VISIBILITY = #{visibility}
+        WHERE ID = #{id}
+    </update>
+
+    <delete id="deleteTree" parameterType="Tree">
+        DELETE FROM TREE WHERE ID = #{id}
+    </delete>
 </mapper>

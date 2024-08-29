@@ -14,7 +14,7 @@ import java.time.LocalDate;
 public class BookCommentLike {
     private Long memberId;
     private Long bookCommentId;
-    private Long activate;
+    private Boolean activate;
     private LocalDate updateTime;
     private LocalDate createTime;
 }

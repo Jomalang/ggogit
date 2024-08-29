@@ -1,10 +1,7 @@
 package Recorders.ggogit.domain.memoir;
 
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 
@@ -12,6 +9,7 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class Memoir {
 
     private long id;
@@ -20,7 +18,8 @@ public class Memoir {
     @NotNull
     private String title;
     private String text;
-    private LocalDate updateDate;
-    private LocalDate createDate;
+    private Boolean visibility;
+    private LocalDate updateTime;
+    private LocalDate createTime;
 
 }

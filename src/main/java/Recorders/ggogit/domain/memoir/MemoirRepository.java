@@ -6,13 +6,24 @@ import java.util.List;
 
 @Mapper
 public interface MemoirRepository {
+    //INSERT문은 삽입된 행의 수를 반환한다.
+    int save(Memoir memoir);
+
+    Memoir findById(long id);
+
+    //삭제한 회고록의 id 반환
+    Long delete(long id);
+
+    int update(Memoir memoir);
+
     List<Memoir> findAll();
 
-    Memoir findById(int id);
+    Memoir findByTreeId(long treeId);
 
-    Memoir save(Memoir memoir);
+    Memoir findByTitle(String title);
 
-    void delete(Memoir memoir);
 
-    Memoir update(Memoir memoir);
+    //고려해보기
+    //Memoir findByBookId(long bookId);
+
 }

@@ -4,8 +4,38 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="Recorders.ggogit.domain.memoir.MemoirRepository">
+    <insert id="save" parameterType="Memoir">
+        INSERT INTO MEMOIR(TREE_ID, TITLE, TEXT, VISIBILITY)
+        VALUES(#{treeId}, #{title}, #{text}, #{visibility})
+    </insert>
+    <select id="findById" resultType="Memoir">
+        SELECT *
+        FROM MEMOIR
+        WHERE ID = #{id}
+    </select>
+    <delete id="delete">
+        DELETE MEMOIR
+        WHERE ID = #{id}
+    </delete>
+    <update id="update" parameterType="Memoir">
+        UPDATE MEMOIR
+        SET TITLE = #{title}, TEXT = #{text}, VISIBILITY = #{visibility}
+        WHERE ID = #{id}
+    </update>
     <select id="findAll" resultType="Memoir">
         SELECT *
         FROM MEMOIR
     </select>
+    <select id="findByTreeId" resultType="Memoir">
+        SELECT *
+        FROM MEMOIR
+        WHERE TREE_ID = #{treeId}
+    </select>
+    <select id="findByTitle" resultType="Memoir">
+        SELECT *
+        FROM MEMOIR
+        WHERE TITLE LIKE '%${title}%'
+    </select>
+
+
 </mapper>

@@ -3,5 +3,14 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="Recorders.ggogit.domain.leaf.entity.LeafTag">
+<mapper namespace="Recorders.ggogit.domain.leaf.repository.LeafTagRepository">
+    <insert id="save" parameterType="LeafTag">
+        INSERT INTO LEAF_TAG (MEMBER_ID , NAME , UPDATE_TIME , CREATE_TIME)
+        VALUES (#{memberId}, #{name}, SYSDATE, SYSDATE)
+    </insert>
+
+    <select id="findById" resultType="LeafTag">
+        SELECT * FROM LEAF_TAG
+        WHERE ID = #{id}
+    </select>
 </mapper>

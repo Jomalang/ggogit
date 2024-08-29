@@ -1,5 +1,6 @@
-package Recorders.ggogit.domain.memoir;
+package Recorders.ggogit.domain.memoir.repository;
 
+import Recorders.ggogit.domain.memoir.entity.Memoir;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

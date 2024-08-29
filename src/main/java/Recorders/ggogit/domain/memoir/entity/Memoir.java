@@ -1,4 +1,4 @@
-package Recorders.ggogit.domain.memoir;
+package Recorders.ggogit.domain.memoir.entity;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.*;

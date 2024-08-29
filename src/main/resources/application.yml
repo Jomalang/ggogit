@@ -1,14 +1,11 @@
 spring:
   datasource:
     driver-class-name: oracle.jdbc.driver.OracleDriver
-    url: jdbc:oracle:thin@///hi.newlecture.com:1521/XEPDB1
-    username:
-    password: 
+    url: jdbc:oracle:thin:@//hi.newlecture.com:1521/XEPDB1
+    username: GGOGIT
+    password: qmfoscl0809
 mybatis:
   configuration:
     map-underscore-to-camel-case: true
-  mapper-locations: mappers/**/*.yml
+  mapper-locations: mappers/*Mapper.xml
   type-aliases-package: Recorders.ggogit.domain
-logging:
-  level:
-    Recorders.ggogit.domain:trace

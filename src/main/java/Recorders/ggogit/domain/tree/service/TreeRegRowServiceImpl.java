@@ -11,7 +11,7 @@ public class TreeRegRowServiceImpl implements TreeRegRowService {
     private TreeRegRepository repo;
 
     @Override
-    public void addTreeRegRow(Tree tree) {
+    public void addTreeRow(Tree tree) {
         repo.addTreeRow(tree);
     }
 }

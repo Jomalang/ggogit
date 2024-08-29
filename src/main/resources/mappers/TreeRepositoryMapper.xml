@@ -3,8 +3,9 @@
 <mapper namespace="Recorders.ggogit.domain.tree.repository.TreeRegRepository">
 
     <insert id="addTreeRow" parameterType="Tree">
-        INSERT INTO TREE VALUES
-            (#{id},#{memberId},#{seedId},#{title},#{description},#{bookMarkCountNum},#{visivility},#{updateTime},#{createTime})
+        INSERT INTO TREE(MEMBER_ID,SEED_ID,TITLE,DESCRIPTION,BOOK_MARK_COUNT,VISIBILITY)
+        VALUES
+            (#{memberId},#{seedId},#{title},#{description},#{bookMarkCountNum},#{visibility})
     </insert>
 
 </mapper>

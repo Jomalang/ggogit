@@ -7,5 +7,8 @@ import java.util.List;
 
 @Mapper
 public interface BookCommentLikeRepository {
+
+    void save(BookCommentLike bookCommentLike);
+
     List<BookCommentLike> findAll();
 }

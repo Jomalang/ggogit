@@ -7,5 +7,8 @@ import java.util.List;
 
 @Mapper
 public interface BookRepository {
+
+    void save(Book book);
+
     List<Book> findAll();
 }

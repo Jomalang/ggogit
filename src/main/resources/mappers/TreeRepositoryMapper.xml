@@ -4,7 +4,7 @@
 
 <mapper namespace="Recorders.ggogit.domain.tree.repository.TreeRepository">
 <!--트리 생성-->
-    <insert id="saveTree" parameterType="Tree" useGeneratedKeys="true" keyProperty="id">
+    <insert id="save" parameterType="Tree">
         INSERT INTO TREE(MEMBER_ID, SEED_ID, TITLE, DESCRIPTION, BOOK_MARK_COUNT, VISIBILITY)
         VALUES(#{memberId}, #{seedId}, #{title}, #{description}, #{bookMarkCountNum}, #{visibility})
     </insert>
@@ -12,48 +12,64 @@
 
 
 <!--트리 리스트 전체 조회-->
-    <select id="findTreeListAll" parameterType="Tree">
+    <select id="findListAll" parameterType="Tree">
         SELECT * FROM TREE ORDER BY TREE.UPDATE_TIME
     </select>
-<!--트리 ID별 조회-->
-    <select id="findTreeByTreeId" parameterType="Tree">
+    <!--트리 ID별 조회-->
+    <select id="findByTreeId" parameterType="Tree">
         SELECT * FROM TREE WHERE ID=#{id}
     </select>
     <!--회원 ID별 조회-->
-    <select id="findTreeByMemberId" parameterType="Tree">
+    <select id="findByMemberId" parameterType="Tree">
         SELECT * FROM TREE WHERE MEMBER_ID=#{memberId}
     </select>
     <!--제목 별 조회-->
-    <select id="findTreeByTitle" parameterType="Tree">
+    <select id="findByTitle" parameterType="Tree">
         SELECT * FROM TREE WHERE TITLE LIKE #{title}
     </select>
     <!--설명글 별 조회-->
-    <select id="findTreeByDescription" parameterType="Tree">
+    <select id="findByDescription" parameterType="Tree">
         SELECT * FROM TREE WHERE DESCRIPTION LIKE #{description}
     </select>
-    <!--설명글 별 조회-->
-    <select id="findTreeByVisibility" parameterType="Tree">
+    <!--공개성 별 조회-->
+    <select id="findByVisibility" parameterType="Tree">
         SELECT * FROM TREE WHERE VISIBILITY = #{visibility}
+    </select>
+    <!--일치하는 트리 ID 회원 ID 조회-->
+    <select id="findMemberIdById" parameterType="Tree">
+        SELECT TREE.MEMBER_ID FROM TREE WHERE ID = #{id}
+    </select>
+    <!--일치하는 트리 ID 제목 조회-->
+    <select id="findTitleById" parameterType="Tree">
+        SELECT TREE.TITLE FROM TREE WHERE ID = #{id}
+    </select>
+    <!--일치하는 트리 ID 설명글 조회-->
+    <select id="findDescriptionById" parameterType="Tree">
+        SELECT TREE.DESCRIPTION FROM TREE WHERE ID = #{id}
+    </select>
+    <!--일치하는 트리 ID 공개성 조회-->
+    <select id="findVisibilityById" parameterType="Tree">
+        SELECT TREE.VISIBILITY FROM TREE WHERE ID = #{id}
     </select>
 
 
     <!--트리 제목 수정-->
-    <update id="updateTreeTitle" parameterType="Tree">
+    <update id="updateByTitle" parameterType="Tree">
         UPDATE TREE SET TITLE = #{title}
         WHERE ID = #{id}
     </update>
     <!--트리 설명문 수정-->
-    <update id="updateTreeDescription" parameterType="Tree">
+    <update id="updateByDescription" parameterType="Tree">
         UPDATE TREE SET DESCRIPTION = #{description}
         WHERE ID = #{id}
     </update>
     <!--트리 공개성 수정-->
-    <update id="updateTreeVisibility" parameterType="Tree">
+    <update id="updateByVisibility" parameterType="Tree">
         UPDATE TREE SET VISIBILITY = #{visibility}
         WHERE ID = #{id}
     </update>
 
-    <delete id="deleteTree" parameterType="Tree">
+    <delete id="delete" parameterType="Tree">
         DELETE FROM TREE WHERE ID = #{id}
     </delete>
 </mapper>

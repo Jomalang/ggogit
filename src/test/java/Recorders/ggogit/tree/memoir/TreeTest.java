@@ -27,7 +27,7 @@ public class TreeTest {
     private TreeRepository repo;
 
     @Test
-    void saveTree() {
+    void save() {
         Tree tree;
         for (int i = 1; i < 11; ++i) {
 
@@ -39,66 +39,90 @@ public class TreeTest {
                     .bookMarkCountNum(0)
                     .visibility(true)
                     .build();
-            repo.saveTree(tree);
+            repo.save(tree);
         }
     }
 
     @Test
-    void findTreeListAll(){
-        List<Tree> treeList = repo.findTreeListAll();
+    void findByListAll() {
+        List<Tree> treeList = repo.findListAll();
         assertThat(treeList).isNotNull();
     }
+
     @Test
-    void findTreeByTreeId() {
-        long i = 2;
-        assertThat(repo.findTreeByTreeId(i)).isNotNull();
+    void findByTreeId() {
+        Long i = 2;
+        assertThat(repo.findByTreeId(i)).isNotNull();
     }
+
     @Test
-    void findTreeByMemberId() {
-        long i = 1;
-        assertThat(repo.findTreeByMemberId(i)).isNotNull();
+    void findByMemberId() {
+        Long i = 1;
+        assertThat(repo.findByMemberId(i)).isNotNull();
     }
+
     @Test
-    void findTreeByTitle() {
+    void findByTitle() {
         String title = "tree";
-        assertThat(repo.findTreeByTitle(title)).isNotNull();
+        assertThat(repo.findByTitle(title)).isNotNull();
     }
+
     @Test
-    void findTreeByDescription() {
+    void findByDescription() {
         String description = "test";
-        assertThat(repo.findTreeByDescription(description)).isNotNull();
+        assertThat(repo.findByDescription(description)).isNotNull();
     }
     @Test
-    void findTreeByVisibility() {
+    void findByVisibility() {
         boolean visibility = true;
-        assertThat(repo.findTreeByVisibility(visibility)).isNotNull();
+        assertThat(repo.findByVisibility(visibility)).isNotNull();
+    }
+    @Test
+    void findMemberIdById() {
+        Long i = 71;
+        assertThat(repo.findMemberIdById(i)).isNotNull();
+    }
+    @Test
+    void findTitleById() {
+        Long i = 71;
+        assertThat(repo.findTitleById(i)).isNotNull();
+    }
+    @Test
+    void findDescriptionById() {
+        Long i = 71;
+        assertThat(repo.findDescriptionById(i)).isNotNull();
+    }
+    @Test
+    void findVisibilityById() {
+        Long i = 71;
+        assertThat(repo.findVisibilityById(i)).isNotNull();
     }
 
     @Test
     void updateTreeTitle() {
-        long id = 2;
+        Long id = 71;
         String title = "test title";
-        repo.updateTreeTitle(id, title);
-        assertThat(repo.findTreeByTitle(title)).isEqualTo(title);
+        repo.updateByTitle(id, title);
+        assertThat(repo.findTitleById(id)).isEqualTo(title);
     }
     @Test
     void updateTreeDescription() {
-        long id = 2;
+        Long id = 71;
         String description = "test description";
-        repo.updateTreeDescription(id, description);
-        assertThat(repo.findTreeByDescription(description)).isEqualTo(description);
+        repo.updateByDescription(id, description);
+        assertThat(repo.findDescriptionById(id)).isEqualTo(description);
     }
     @Test
     void updateTreeVisibility() {
-        long id = 2;
+        Long id = 71;
         boolean visibility = true;
-        repo.updateTreeVisibility(id, visibility);
-        assertThat(repo.findTreeByVisibility(visibility)).isEqualTo(visibility);
+        repo.updateByVisibility(id, visibility);
+        assertThat(repo.findVisibilityById(id)).isEqualTo(visibility);
     }
 
     @Test
     void deleteTree() {
-        long id = 43;
-        repo.deleteTree(id);
+        Long id = 43;
+        repo.delete(id);
     }
 }

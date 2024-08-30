@@ -9,28 +9,36 @@ import java.util.List;
 public interface TreeRepository {
 
     //Create:  트리 입력
-    void saveTree(Tree tree);
+    void save(Tree tree);
 
     //Read:  트리 리스트 출력
-    List<Tree> findTreeListAll();
+    List<Tree> findListAll();
     //Read:  트리id로 트리 조회
-    Tree findTreeByTreeId(long id);
+    Tree findByTreeId(long id);
     //Read:  회원id로 트리 조회
-    List<Tree> findTreeByMemberId(long memberId);
+    List<Tree> findByMemberId(long memberId);
     //Read:  트리제목으로 트리 조회
-    List<Tree> findTreeByTitle(String title);
+    List<Tree> findByTitle(String title);
     //Read:  설명글으로 트리 조회
-    List<Tree> findTreeByDescription(String description);
+    List<Tree> findByDescription(String description);
     //Read:  공개성으로 트리 조회
-    List<Tree> findTreeByVisibility(boolean visibility);
+    List<Tree> findByVisibility(boolean visibility);
+    //Read:  id로 회원id 조회
+    Long findMemberIdById(long id);
+    //Read:  id로 트리제목 조회
+    String  findTitleById(long id);
+    //Read:  id로 설명글 조회
+    String  findDescriptionById(long id);
+    //Read:  id로 공개성 조회
+    Boolean findVisibilityById(long id);
 
     //Update: 제목수정
-    void updateTreeTitle(long id, String title);
+    void updateByTitle(Long id, String title);
     //Update: 설명문 수정
-    void updateTreeDescription(long id, String description);
+    void updateByDescription(Long id, String description);
     //Update: 공개성 수정
-    void updateTreeVisibility(long id, boolean visibility);
+    void updateByVisibility(Long id, boolean visibility);
 
     //Delete: 트리 삭제
-    void deleteTree(long id);
+    void delete(Long id);
 }

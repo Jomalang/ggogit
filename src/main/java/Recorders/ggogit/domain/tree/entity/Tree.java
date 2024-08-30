@@ -12,13 +12,13 @@ import java.util.Date;
 @AllArgsConstructor
 @Builder
 public class Tree {
-    private long id;
-    private long memberId ;
-    private long seedId;
+    private Long id;
+    private Long memberId ;
+    private Long seedId;
     private String title;
     private String description;
-    private int bookMarkCountNum;
-    private boolean visibility;
+    private Integer bookMarkCountNum;
+    private Boolean visibility;
     private Date updateTime;
     private Date createTime;
 }

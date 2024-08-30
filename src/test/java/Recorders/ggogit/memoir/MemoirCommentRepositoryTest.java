@@ -65,17 +65,6 @@ public class MemoirCommentRepositoryTest {
         }
     }
 
-    @Test
-    public void increasingLikeTest() {
-        MemoirComment testComment = createTestComment();
-        memoirCommentRepository.save(testComment);
-        memoirCommentRepository.increaseLike(testComment.getId());
-        memoirCommentRepository.increaseLike(testComment.getId());
-        memoirCommentRepository.increaseLike(testComment.getId());
-
-        assertThat(memoirCommentRepository.findById(testComment.getId()).getLikeCount()).isEqualTo(3);
-    }
-
     private static MemoirComment createTestComment() {
         MemoirComment comment = new MemoirComment();
         comment.setMemberId(1);

@@ -15,7 +15,5 @@ public interface MemoirCommentRepository {
 
     List<MemoirComment> findAllByMemoirId(long memoirId);
 
-    void increaseLike(long id);
-
     MemoirComment findById(long id);
 }

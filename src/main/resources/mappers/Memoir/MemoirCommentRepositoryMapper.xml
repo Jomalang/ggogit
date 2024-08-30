@@ -18,6 +18,7 @@
     <update id="update" parameterType="MemoirComment">
         UPDATE MEMOIR_COMMENT
         SET CONTENT = #{content}
+        WHERE MEMOIR_ID = #{memoirId}
     </update>
 
     <select id="findAllByMemoirId" resultType="MemoirComment">
@@ -31,11 +32,4 @@
         FROM MEMOIR_COMMENT
         WHERE ID = #{id}
     </select>
-
-    <update id="increaseLike">
-        UPDATE MEMOIR_COMMENT
-        SET LIKE_COUNT = LIKE_COUNT+1
-        WHERE ID = #{id}
-    </update>
-
 </mapper>

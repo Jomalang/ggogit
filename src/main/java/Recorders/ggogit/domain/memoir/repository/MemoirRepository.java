@@ -23,7 +23,6 @@ public interface MemoirRepository {
 
     Memoir findByTitle(String title);
 
-
     //고려해보기
     //Memoir findByBookId(long bookId);
 

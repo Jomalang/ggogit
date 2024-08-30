@@ -10,5 +10,7 @@ public interface BookCommentRepository {
 
     void save(BookComment bookComment);
 
+    void update(BookComment bookComment);
+
     List<BookComment> findAll();
 }

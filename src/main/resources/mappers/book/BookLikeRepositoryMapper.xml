@@ -7,6 +7,15 @@
         INSERT INTO BOOK_LIKE (MEMBER_ID, BOOK_ID, ACTIVATE)
         VALUES (#{memberId}, #{bookId}, #{activate})
     </insert>
+
+    <update id="update" parameterType="BookLike">
+        UPDATE BOOK_LIKE
+        SET
+            MEMBER_ID = #{memberId},
+            BOOK_ID = #{bookId},
+            ACTIVATE = #{activate}
+        WHERE ID = #{id}
+    </update>
 </mapper>
 
 

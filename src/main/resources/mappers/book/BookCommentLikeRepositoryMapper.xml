@@ -7,4 +7,13 @@
         INSERT INTO BOOK_COMMENT_LIKE (MEMBER_ID, BOOK_COMMENT_ID, ACTIVATE)
         VALUES (#{memberId}, #{bookCommentId}, #{activate})
     </insert>
+
+    <update id="udpate" parameterType="BookCommentLike">
+        UPDATE BOOK_COMMENT_LIKE
+        SET
+            MEMBER_ID = #{memberId},
+            BOOK_COMMENT_ID = #{bookCommentId},
+            ACTIVATE = #{activate}
+        WHERE ID = #{id}
+    </update>
 </mapper>

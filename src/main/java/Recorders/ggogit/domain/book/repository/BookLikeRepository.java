@@ -10,5 +10,7 @@ public interface BookLikeRepository {
 
     void save(BookLike bookLike);
 
+    void update(BookLike bookLike);
+
     List<BookLike> findAll();
 }

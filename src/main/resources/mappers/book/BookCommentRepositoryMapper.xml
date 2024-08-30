@@ -5,6 +5,16 @@
 <mapper namespace="Recorders.ggogit.domain.book.repository.BookCommentRepositoryk">
     <insert id="save" parameterType="Recorders.ggogit.domain.book.entity.BookComment">
         INSERT INTO BOOK_COMMENT (MEMBER_ID, BOOK_ID, LIKE_COUNT, CONTENT)
-        VALUSE (#{memberId}, #{bookId}, #{likeCount}, #{content})
+        VALUES (#{memberId}, #{bookId}, #{likeCount}, #{content})
     </insert>
+
+    <update id="update" parameterType="BookComment">
+        UPDATE BOOK_COMMENT
+        SET
+            MEMBER_ID = #{memberId},
+            BOOK_ID = #{bookId},
+            LIKE_COUNT = #{likeCount},
+            CONTENT = #{content}
+        WHERE ID = #{id}
+    </update>
 </mapper>

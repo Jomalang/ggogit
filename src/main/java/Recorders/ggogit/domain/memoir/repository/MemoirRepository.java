@@ -1,7 +1,7 @@
 package Recorders.ggogit.domain.memoir.repository;
 
 import Recorders.ggogit.domain.memoir.entity.Memoir;
-import Recorders.ggogit.domain.memoir.entity.MemoirCommentLikeView;
+import Recorders.ggogit.domain.memoir.vIew.MemoirCommentLikeView;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

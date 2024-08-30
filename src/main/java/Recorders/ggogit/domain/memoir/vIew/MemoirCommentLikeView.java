@@ -1,4 +1,4 @@
-package Recorders.ggogit.domain.memoir.entity;
+package Recorders.ggogit.domain.memoir.vIew;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

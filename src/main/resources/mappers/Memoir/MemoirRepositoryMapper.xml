@@ -39,7 +39,7 @@
     </select>
 
     <select id="findCntById" resultType="MemoirCommentLikeView" parameterType="MemoirCommentLikeView">
-        SELECT NVR(*,0)
+        SELECT *
         FROM MEMOIR_CL_CNT
         WHERE ID = #{id}
     </select>

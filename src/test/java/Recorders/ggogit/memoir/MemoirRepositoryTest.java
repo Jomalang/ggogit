@@ -1,22 +1,18 @@
 package Recorders.ggogit.memoir;
 
 import Recorders.ggogit.domain.memoir.entity.Memoir;
-import Recorders.ggogit.domain.memoir.entity.MemoirCommentLikeView;
 import Recorders.ggogit.domain.memoir.repository.MemoirRepository;
-import jakarta.transaction.Transactional;
-import org.junit.jupiter.api.BeforeAll;
+import Recorders.ggogit.domain.memoir.vIew.MemoirCommentLikeView;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.test.annotation.Rollback;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @MybatisTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)

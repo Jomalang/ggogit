@@ -14,6 +14,7 @@
 -- ============================================ --
 -- 모든 테이블 제거
 -- ============================================ --
+
 BEGIN
     -- 테이블 제거
     FOR i IN (SELECT table_name FROM user_tables) LOOP
@@ -35,13 +36,13 @@ PURGE RECYCLEBIN;
 -- 회원 테이블
 -- ============================================ --
 CREATE TABLE "MEMBER" (
-    "ID"	            NUMBER		            PRIMARY KEY, -- 회원 PK
-    "EMAIL"	            VARCHAR2(255)	        NOT NULL, -- 회원 이메일
-    "PASSWORD"	        VARCHAR2(64)	        NOT NULL, -- 회원 비밀번호
-    "NICKNAME"	        VARCHAR2(255)		    NOT NULL, -- 회원 닉네임
-    "INTRODUCTION"	    NVARCHAR2(2000) 	    NULL, -- 회원 소개글
-    "UPDATE_TIME"	    TIMESTAMP		        NOT NULL, -- 데이터 수정 시각
-    "CREATE_TIME"	    TIMESTAMP		        NOT NULL -- 데이터 생성 시각
+    "ID"	            NUMBER		                            PRIMARY KEY, -- 회원 PK
+    "EMAIL"	            VARCHAR2(255)	                        NOT NULL, -- 회원 이메일
+    "PASSWORD"	        VARCHAR2(64)	                        NOT NULL, -- 회원 비밀번호
+    "NICKNAME"	        VARCHAR2(255)		                    NOT NULL, -- 회원 닉네임
+    "INTRODUCTION"	    NVARCHAR2(2000) 	                    NULL, -- 회원 소개글
+    "UPDATE_TIME"	    TIMESTAMP       DEFAULT SYSTIMESTAMP    NOT NULL, -- 데이터 수정 시각
+    "CREATE_TIME"	    TIMESTAMP       DEFAULT SYSTIMESTAMP    NOT NULL -- 데이터 생성 시각
 );
 
 -- 시퀀스 생성
@@ -53,6 +54,14 @@ CREATE SEQUENCE SEQ_MEMBER
 
 -- 시퀀스 등록
 ALTER TABLE "MEMBER" MODIFY ("ID" DEFAULT SEQ_MEMBER.NEXTVAL);
+
+-- 수정 시각 자동 업데이트 트리거
+CREATE OR REPLACE TRIGGER TRG_MEMBER_UPDATE_TIME
+BEFORE UPDATE ON MEMBER
+FOR EACH ROW
+BEGIN
+    :NEW.UPDATE_TIME := SYSTIMESTAMP;
+END;
 
 -- 코맨트
 COMMENT ON COLUMN "MEMBER"."ID" IS '회원 PK';
@@ -97,16 +106,24 @@ COMMENT ON COLUMN "MEMBER_BACKGROUND_IMAGE"."NAME" IS '회원 배경 이미지 �
 -- 팔로우 테이블
 -- ============================================ --
 CREATE TABLE "FOLLOW" (
-    "MEMBER_ID"	    NUMBER		            NOT NULL, -- 회원 FK
-    "FOLLOW_ID"	    NUMBER		            NOT NULL, -- 팔로우 대상 회원 FK
-    "UPDATE_TIME"	TIMESTAMP		        NOT NULL, -- 데이터 수정 시각
-    "CREATE_TIME"	TIMESTAMP		        NOT NULL, -- 데이터 생성 시각
+    "MEMBER_ID"	        NUMBER		                            NOT NULL, -- 회원 FK
+    "FOLLOW_ID"	        NUMBER		                            NOT NULL, -- 팔로우 대상 회원 FK
+    "UPDATE_TIME"	    TIMESTAMP       DEFAULT SYSTIMESTAMP    NOT NULL, -- 데이터 수정 시각
+    "CREATE_TIME"	    TIMESTAMP       DEFAULT SYSTIMESTAMP    NOT NULL, -- 데이터 생성 시각
     -- PK 정의
     CONSTRAINT "PK_FOLLOW" PRIMARY KEY ("MEMBER_ID", "FOLLOW_ID"),
     -- FK 정의
     CONSTRAINT "FK_FOLLOW_MEMBER" FOREIGN KEY ("MEMBER_ID") REFERENCES "MEMBER" ("ID"),
     CONSTRAINT "FK_FOLLOW_FOLLOW" FOREIGN KEY ("FOLLOW_ID") REFERENCES "MEMBER" ("ID")
 );
+
+-- 수정 시각 자동 업데이트 트리거
+CREATE OR REPLACE TRIGGER TRG_FOLLOW_UPDATE_TIME
+BEFORE UPDATE ON FOLLOW
+FOR EACH ROW
+BEGIN
+    :NEW.UPDATE_TIME := SYSTIMESTAMP;
+END;
 
 COMMENT ON COLUMN "FOLLOW"."MEMBER_ID" IS '회원 FK';
 COMMENT ON COLUMN "FOLLOW"."FOLLOW_ID" IS '팔로우 대상 회원 FK';
@@ -117,17 +134,17 @@ COMMENT ON COLUMN "FOLLOW"."CREATE_TIME" IS '데이터 생성 시각';
 -- 도서 테이블
 -- ============================================ --
 CREATE TABLE "BOOK" (
-    "ID"	         NUMBER		            PRIMARY KEY, -- 도서 PK
-    "MEMBER_ID"      NUMBER		            NOT NULL, -- 회원 FK
-    "TITLE"           NVARCHAR2(1024)	    NOT NULL, -- 도서 제목
-    "AUTHOR"         NVARCHAR2(1024)	    NOT NULL, -- 도서 저자
-    "PUBLISHER"      NVARCHAR2(1024)	    NOT NULL, -- 도서 출판사
-    "PUBLIC_DATE"    DATE		            NULL, -- 도서 출판일
-    "TOTAL_PAGE"     NUMBER		            NOT NULL, -- 도서 총 페이지 수
-    "IMAGE_FILE"     VARCHAR2(1024)	        NULL, -- 도서 이미지 파일
-    "UPDATE_TIME"    TIMESTAMP	            NOT NULL, -- 데이터 수정 시각
-    "CREATE_TIME"    TIMESTAMP	            NOT NULL, -- 데이터 생성 시각
-    "RESOURCE_FROM"  NUMBER(1)	            NOT NULL, -- 도서 출처
+    "ID"	            NUMBER		                            PRIMARY KEY, -- 도서 PK
+    "MEMBER_ID"         NUMBER		                            NOT NULL, -- 회원 FK
+    "TITLE"             NVARCHAR2(1024)	                        NOT NULL, -- 도서 제목
+    "AUTHOR"            NVARCHAR2(1024)	                        NOT NULL, -- 도서 저자
+    "PUBLISHER"         NVARCHAR2(1024)	                        NOT NULL, -- 도서 출판사
+    "PUBLIC_DATE"       DATE		                            NULL, -- 도서 출판일
+    "TOTAL_PAGE"        NUMBER		                            NOT NULL, -- 도서 총 페이지 수
+    "IMAGE_FILE"        VARCHAR2(1024)	                        NULL, -- 도서 이미지 파일
+    "RESOURCE_FROM"     NUMBER(1)	                            NOT NULL, -- 도서 출처
+    "UPDATE_TIME"	    TIMESTAMP       DEFAULT SYSTIMESTAMP    NOT NULL, -- 데이터 수정 시각
+    "CREATE_TIME"	    TIMESTAMP       DEFAULT SYSTIMESTAMP    NOT NULL, -- 데이터 생성 시각
     -- FK 정의
     CONSTRAINT "FK_BOOK_MEMBER" FOREIGN KEY ("MEMBER_ID") REFERENCES "MEMBER" ("ID")
 );
@@ -141,6 +158,14 @@ CREATE SEQUENCE SEQ_BOOK
 
 -- 시퀀스 등록
 ALTER TABLE "BOOK" MODIFY ("ID" DEFAULT SEQ_BOOK.NEXTVAL);
+
+-- 수정 시각 자동 업데이트 트리거
+CREATE OR REPLACE TRIGGER TRG_BOOK_UPDATE_TIME
+BEFORE UPDATE ON BOOK
+FOR EACH ROW
+BEGIN
+    :NEW.UPDATE_TIME := SYSTIMESTAMP;
+END;
 
 COMMENT ON COLUMN "BOOK"."ID" IS '도서 PK';
 COMMENT ON COLUMN "BOOK"."MEMBER_ID" IS '회원 FK';
@@ -157,11 +182,11 @@ COMMENT ON COLUMN "BOOK"."RESOURCE_FROM" IS '도서 출처';
 -- 도서 좋아요 테이블
 -- ============================================ --
 CREATE TABLE "BOOK_LIKE" (
-    "MEMBER_ID"     NUMBER		            NOT NULL, -- 회원 FK
-    "BOOK_ID"	    NUMBER		            NOT NULL, -- 도서 FK
-    "ACTIVATE"	    NUMBER(1)	DEFAULT 1	NOT NULL, -- 도서 좋아요 활성화 여부
-    "UPDATE_TIME"	TIMESTAMP		        NOT NULL, -- 데이터 수정 시각
-    "CREATE_TIME"	TIMESTAMP		        NOT NULL, -- 데이터 생성 시각
+    "MEMBER_ID"         NUMBER		                            NOT NULL, -- 회원 FK
+    "BOOK_ID"	        NUMBER		                            NOT NULL, -- 도서 FK
+    "ACTIVATE"	        NUMBER(1)	    DEFAULT 1	            NOT NULL, -- 도서 좋아요 활성화 여부
+    "UPDATE_TIME"	    TIMESTAMP       DEFAULT SYSTIMESTAMP    NOT NULL, -- 데이터 수정 시각
+    "CREATE_TIME"	    TIMESTAMP       DEFAULT SYSTIMESTAMP    NOT NULL, -- 데이터 생성 시각
     -- PK 정의
     CONSTRAINT "PK_BOOK_LIKE" PRIMARY KEY ("MEMBER_ID", "BOOK_ID"),
     -- FK 정의
@@ -173,6 +198,14 @@ CREATE TABLE "BOOK_LIKE" (
 CREATE INDEX "IDX_BOOK_LIKE_MEMBER_ID" ON "BOOK_LIKE" ("MEMBER_ID");
 CREATE INDEX "IDX_BOOK_LIKE_BOOK_ID" ON "BOOK_LIKE" ("BOOK_ID");
 
+-- 수정 시각 자동 업데이트 트리거
+CREATE OR REPLACE TRIGGER TRG_BOOK_LIKE_UPDATE_TIME
+BEFORE UPDATE ON BOOK_LIKE
+FOR EACH ROW
+BEGIN
+    :NEW.UPDATE_TIME := SYSTIMESTAMP;
+END;
+
 COMMENT ON COLUMN "BOOK_LIKE"."MEMBER_ID" IS '회원 FK';
 COMMENT ON COLUMN "BOOK_LIKE"."BOOK_ID" IS '도서 FK';
 COMMENT ON COLUMN "BOOK_LIKE"."ACTIVATE" IS '도서 좋아요 활성화 여부';
@@ -183,13 +216,13 @@ COMMENT ON COLUMN "BOOK_LIKE"."CREATE_TIME" IS '데이터 생성 시각';
 -- 도서 댓글 테이블
 -- ============================================ --
 CREATE TABLE "BOOK_COMMENT" (
-    "ID"	        NUMBER		                    PRIMARY KEY, -- 도서 댓글 PK
-    "MEMBER_ID"	    NUMBER		                    NOT NULL, -- 회원 FK
-    "BOOK_ID"	    NUMBER		                    NOT NULL, -- 도서 FK
-    "LIKE_COUNT"	NUMBER	            DEFAULT 0	NOT NULL, -- 도서 댓글 좋아요 수
-    "CONTENT"	    NVARCHAR2(2000)		            NOT NULL, -- 도서 댓글 내용
-    "UPDATE_TIME"	TIMESTAMP		                NOT NULL, -- 데이터 수정 시각
-    "CREATE_TIME"	TIMESTAMP		                NOT NULL, -- 데이터 생성 시각
+    "ID"	            NUMBER		                            PRIMARY KEY, -- 도서 댓글 PK
+    "MEMBER_ID"	        NUMBER		                            NOT NULL, -- 회원 FK
+    "BOOK_ID"	        NUMBER		                            NOT NULL, -- 도서 FK
+    "LIKE_COUNT"	    NUMBER	        DEFAULT 0	            NOT NULL, -- 도서 댓글 좋아요 수
+    "CONTENT"	        NVARCHAR2(2000)		                    NOT NULL, -- 도서 댓글 내용
+    "UPDATE_TIME"	    TIMESTAMP       DEFAULT SYSTIMESTAMP    NOT NULL, -- 데이터 수정 시각
+    "CREATE_TIME"	    TIMESTAMP       DEFAULT SYSTIMESTAMP    NOT NULL, -- 데이터 생성 시각
     -- FK 정의
     CONSTRAINT "FK_BOOK_COMMENT_MEMBER" FOREIGN KEY ("MEMBER_ID") REFERENCES "MEMBER" ("ID"),
     CONSTRAINT "FK_BOOK_COMMENT_BOOK" FOREIGN KEY ("BOOK_ID") REFERENCES "BOOK" ("ID")
@@ -209,6 +242,14 @@ ALTER TABLE "BOOK_COMMENT" MODIFY ("ID" DEFAULT SEQ_BOOK_COMMENT.NEXTVAL);
 CREATE INDEX "IDX_BOOK_COMMENT_MEMBER_ID" ON "BOOK_COMMENT" ("MEMBER_ID");
 CREATE INDEX "IDX_BOOK_COMMENT_BOOK_ID" ON "BOOK_COMMENT" ("BOOK_ID");
 
+-- 수정 시각 자동 업데이트 트리거
+CREATE OR REPLACE TRIGGER TRG_BOOK_COMMENT_UPDATE_TIME
+BEFORE UPDATE ON BOOK_COMMENT
+FOR EACH ROW
+BEGIN
+    :NEW.UPDATE_TIME := SYSTIMESTAMP;
+END;
+
 COMMENT ON COLUMN "BOOK_COMMENT"."ID" IS '도서 댓글 PK';
 COMMENT ON COLUMN "BOOK_COMMENT"."MEMBER_ID" IS '회원 FK';
 COMMENT ON COLUMN "BOOK_COMMENT"."BOOK_ID" IS '도서 FK';
@@ -221,11 +262,11 @@ COMMENT ON COLUMN "BOOK_COMMENT"."CREATE_TIME" IS '데이터 생성 시각';
 -- 도서 댓글 좋아요 테이블
 -- ============================================ --
 CREATE TABLE "BOOK_COMMENT_LIKE" (
-    "MEMBER_ID"	        NUMBER		            NOT NULL, -- 회원 FK
-    "BOOK_COMMENT_ID"   NUMBER		            NOT NULL, -- 도서 댓글 FK
-    "ACTIVATE"	        NUMBER(1)	DEFAULT 1	NOT NULL, -- 도서 댓글 좋아요 활성화 여부
-    "UPDATE_TIME"	    TIMESTAMP		        NOT NULL, -- 데이터 수정 시각
-    "CREATE_TIME"	    TIMESTAMP		        NOT NULL, -- 데이터 생성 시각
+    "MEMBER_ID"	        NUMBER		                            NOT NULL, -- 회원 FK
+    "BOOK_COMMENT_ID"   NUMBER		                            NOT NULL, -- 도서 댓글 FK
+    "ACTIVATE"	        NUMBER(1)	    DEFAULT 1	            NOT NULL, -- 도서 댓글 좋아요 활성화 여부
+    "UPDATE_TIME"	    TIMESTAMP       DEFAULT SYSTIMESTAMP    NOT NULL, -- 데이터 수정 시각
+    "CREATE_TIME"	    TIMESTAMP       DEFAULT SYSTIMESTAMP    NOT NULL, -- 데이터 생성 시각
     -- PK 정의
     CONSTRAINT "PK_BOOK_COMMENT_LIKE" PRIMARY KEY ("MEMBER_ID", "BOOK_COMMENT_ID"),
     -- FK 정의
@@ -236,6 +277,14 @@ CREATE TABLE "BOOK_COMMENT_LIKE" (
 -- 인덱스 정의
 CREATE INDEX "IDX_BOOK_COMMENT_LIKE_MEMBER_ID" ON "BOOK_COMMENT_LIKE" ("MEMBER_ID");
 CREATE INDEX "IDX_BOOK_COMMENT_LIKE_BOOK_COMMENT_ID" ON "BOOK_COMMENT_LIKE" ("BOOK_COMMENT_ID");
+
+-- 수정 시각 자동 업데이트 트리거
+CREATE OR REPLACE TRIGGER TRG_BOOK_COMMENT_LIKE_UPDATE_TIME
+BEFORE UPDATE ON BOOK_COMMENT_LIKE
+FOR EACH ROW
+BEGIN
+    :NEW.UPDATE_TIME := SYSTIMESTAMP;
+END;
 
 COMMENT ON COLUMN "BOOK_COMMENT_LIKE"."MEMBER_ID" IS '회원 FK';
 COMMENT ON COLUMN "BOOK_COMMENT_LIKE"."BOOK_COMMENT_ID" IS '도서 댓글 FK';
@@ -268,15 +317,15 @@ COMMENT ON COLUMN "SEED"."NAME" IS '씨앗 제목';
 -- 트리 테이블
 -- ============================================ --
 CREATE TABLE "TREE" (
-    "ID"	            NUMBER		        PRIMARY KEY,
-    "MEMBER_ID"	        NUMBER		        NOT NULL,
-    "SEED_ID"	        NUMBER		        NOT NULL,
-    "TITLE"	            NVARCHAR2(300)		NOT NULL,
-	"DESCRIPTION"	    NVARCHAR2(2000)		NOT NULL,
-	"BOOK_MARK_COUNT"   NUMBER(1)	        DEFAULT 0	NOT NULL,
-	"VISIBILITY"	    NUMBER(1)	        DEFAULT 1	NOT NULL,
-	"UPDATE_TIME"	    TIMESTAMP           DEFAULT CURRENT_TIMESTAMP	NOT NULL,
-	"CREATE_TIME"	    TIMESTAMP	        DEFAULT CURRENT_TIMESTAMP	NOT NULL,
+    "ID"	            NUMBER		                            PRIMARY KEY,
+    "MEMBER_ID"	        NUMBER		                            NOT NULL,
+    "SEED_ID"	        NUMBER		                            NOT NULL,
+    "TITLE"	            NVARCHAR2(300)		                    NOT NULL,
+	"DESCRIPTION"	    NVARCHAR2(2000)		                    NOT NULL,
+	"BOOK_MARK_COUNT"   NUMBER(1)	    DEFAULT 0	            NOT NULL,
+	"VISIBILITY"	    NUMBER(1)	    DEFAULT 1	            NOT NULL,
+    "UPDATE_TIME"	    TIMESTAMP       DEFAULT SYSTIMESTAMP    NOT NULL, -- 데이터 수정 시각
+    "CREATE_TIME"	    TIMESTAMP       DEFAULT SYSTIMESTAMP    NOT NULL, -- 데이터 생성 시각
     -- FK 정의
     CONSTRAINT "FK_TREE_MEMBER" FOREIGN KEY ("MEMBER_ID") REFERENCES "MEMBER" ("ID"),
     CONSTRAINT "FK_TREE_SEED" FOREIGN KEY ("SEED_ID") REFERENCES "SEED" ("ID")
@@ -295,6 +344,14 @@ ALTER TABLE "TREE" MODIFY ("ID" DEFAULT SEQ_TREE.NEXTVAL);
 -- 인덱스 정의
 CREATE INDEX "IDX_TREE_MEMBER_ID" ON "TREE" ("MEMBER_ID");
 CREATE INDEX "IDX_TREE_SEED_ID" ON "TREE" ("SEED_ID");
+
+-- 수정 시각 자동 업데이트 트리거
+CREATE OR REPLACE TRIGGER TRG_TREE_UPDATE_TIME
+BEFORE UPDATE ON TREE
+FOR EACH ROW
+BEGIN
+    :NEW.UPDATE_TIME := SYSTIMESTAMP;
+END;
 
 COMMENT ON COLUMN "TREE"."ID" IS '트리 PK';
 COMMENT ON COLUMN "TREE"."MEMBER_ID" IS '회원 FK';
@@ -344,11 +401,11 @@ COMMENT ON COLUMN "TREE_IMAGE"."NAME" IS '트리 이미지 이름';
 -- 트리 좋아요 테이블
 -- ============================================ --
 CREATE TABLE "TREE_LIKE" (
-    "MEMBER_ID"	    NUMBER		            NOT NULL, -- 회원 FK
-    "TREE_ID"	    NUMBER		            NOT NULL, -- 트리 FK
-    "ACTIVATE"	    NUMBER(1)	DEFAULT 1	NOT NULL, -- 트리 좋아요 활성화 여부
-    "UPDATE_TIME"	TIMESTAMP		        NOT NULL, -- 데이터 수정 시각
-    "CREATE_TIME"	TIMESTAMP		        NOT NULL, -- 데이터 생성 시각
+    "MEMBER_ID"	        NUMBER		                            NOT NULL, -- 회원 FK
+    "TREE_ID"	        NUMBER		                            NOT NULL, -- 트리 FK
+    "ACTIVATE"	        NUMBER(1)	    DEFAULT 1	            NOT NULL, -- 트리 좋아요 활성화 여부
+    "UPDATE_TIME"	    TIMESTAMP       DEFAULT SYSTIMESTAMP    NOT NULL, -- 데이터 수정 시각
+    "CREATE_TIME"	    TIMESTAMP       DEFAULT SYSTIMESTAMP    NOT NULL, -- 데이터 생성 시각
     -- PK 정의
     CONSTRAINT "PK_TREE_LIKE" PRIMARY KEY ("MEMBER_ID", "TREE_ID"),
     -- FK 정의
@@ -360,6 +417,14 @@ CREATE TABLE "TREE_LIKE" (
 CREATE INDEX "IDX_TREE_LIKE_MEMBER_ID" ON "TREE_LIKE" ("MEMBER_ID");
 CREATE INDEX "IDX_TREE_LIKE_TREE_ID" ON "TREE_LIKE" ("TREE_ID");
 
+-- 수정 시각 자동 업데이트 트리거
+CREATE OR REPLACE TRIGGER TRG_TREE_LIKE_UPDATE_TIME
+BEFORE UPDATE ON TREE_LIKE
+FOR EACH ROW
+BEGIN
+    :NEW.UPDATE_TIME := SYSTIMESTAMP;
+END;
+
 COMMENT ON COLUMN "TREE_LIKE"."MEMBER_ID" IS '회원 FK';
 COMMENT ON COLUMN "TREE_LIKE"."TREE_ID" IS '트리 FK';
 COMMENT ON COLUMN "TREE_LIKE"."ACTIVATE" IS '트리 좋아요 활성화 여부';
@@ -370,13 +435,13 @@ COMMENT ON COLUMN "TREE_LIKE"."CREATE_TIME" IS '데이터 생성 시각';
 -- 회고록 테이블
 -- ============================================ --
 CREATE TABLE "MEMOIR" (
-    "ID"	            NUMBER		            PRIMARY KEY, -- 회고록 PK
-    "TREE_ID"	        NUMBER		            NOT NULL, -- 트리 FK
-    "TITLE"	            VARCHAR(255)		    NOT NULL, -- 회고록 제목
-    "TEXT"	            CLOB		            NOT NULL, -- 회고록 내용
-    "VISIBILITY"	    NUMBER(1)	DEFAULT 1	NOT NULL, -- 사용자 공개 여부
-    "UPDATE_TIME"	    TIMESTAMP		        NOT NULL, -- 데이터 수정 시각
-    "CREATE_TIME"	    TIMESTAMP		        NOT NULL, -- 데이터 생성 시각
+    "ID"	            NUMBER		                            PRIMARY KEY, -- 회고록 PK
+    "TREE_ID"	        NUMBER		                            NOT NULL, -- 트리 FK
+    "TITLE"	            VARCHAR(255)		                    NOT NULL, -- 회고록 제목
+    "TEXT"	            CLOB		                            NOT NULL, -- 회고록 내용
+    "VISIBILITY"	    NUMBER(1)	    DEFAULT 1	            NOT NULL, -- 사용자 공개 여부
+    "UPDATE_TIME"	    TIMESTAMP       DEFAULT SYSTIMESTAMP    NOT NULL, -- 데이터 수정 시각
+    "CREATE_TIME"	    TIMESTAMP       DEFAULT SYSTIMESTAMP    NOT NULL, -- 데이터 생성 시각
     -- FK 정의
     CONSTRAINT "FK_MEMOIR_TREE" FOREIGN KEY ("TREE_ID") REFERENCES "TREE" ("ID")
 );
@@ -394,6 +459,14 @@ ALTER TABLE "MEMOIR" MODIFY ("ID" DEFAULT SEQ_MEMOIR.NEXTVAL);
 -- 인덱스 정의
 CREATE INDEX "IDX_MEMOIR_TREE_ID" ON "MEMOIR" ("TREE_ID");
 
+-- 수정 시각 자동 업데이트 트리거
+CREATE OR REPLACE TRIGGER TRG_MEMOIR_UPDATE_TIME
+BEFORE UPDATE ON MEMOIR
+FOR EACH ROW
+BEGIN
+    :NEW.UPDATE_TIME := SYSTIMESTAMP;
+END;
+
 COMMENT ON COLUMN "MEMOIR"."ID" IS '회고록 PK';
 COMMENT ON COLUMN "MEMOIR"."TREE_ID" IS '트리 FK';
 COMMENT ON COLUMN "MEMOIR"."TITLE" IS '회고록 제목';
@@ -406,17 +479,25 @@ COMMENT ON COLUMN "MEMOIR"."CREATE_TIME" IS '데이터 생성 시각';
 -- 회고록 좋아요 테이블
 -- ============================================ --
 CREATE TABLE "MEMOIR_LIKE" (
-    "MEMBER_ID"	    NUMBER		            NOT NULL, -- 회원 FK
-    "MEMOIR_ID"	    NUMBER		            NOT NULL, -- 회고록 FK
-    "ACTIVATE"	    NUMBER(1)	DEFAULT 1	NOT NULL, -- 회고록 좋아요 활성화 여부
-    "UPDATE_TIME"	TIMESTAMP		        NOT NULL, -- 데이터 수정 시각
-    "CREATE_TIME"	TIMESTAMP		        NOT NULL, -- 데이터 생성 시각
+    "MEMBER_ID"	        NUMBER		                            NOT NULL, -- 회원 FK
+    "MEMOIR_ID"	        NUMBER		                            NOT NULL, -- 회고록 FK
+    "ACTIVATE"	        NUMBER(1)	    DEFAULT 1	            NOT NULL, -- 회고록 좋아요 활성화 여부
+    "UPDATE_TIME"	    TIMESTAMP       DEFAULT SYSTIMESTAMP    NOT NULL, -- 데이터 수정 시각
+    "CREATE_TIME"	    TIMESTAMP       DEFAULT SYSTIMESTAMP    NOT NULL, -- 데이터 생성 시각
     -- PK 정의
     CONSTRAINT "PK_MEMOIR_LIKE" PRIMARY KEY ("MEMBER_ID", "MEMOIR_ID"),
     -- FK 정의
     CONSTRAINT "FK_MEMOIR_LIKE_MEMBER" FOREIGN KEY ("MEMBER_ID") REFERENCES "MEMBER" ("ID"),
     CONSTRAINT "FK_MEMOIR_LIKE_MEMOIR" FOREIGN KEY ("MEMOIR_ID") REFERENCES "MEMOIR" ("ID")
 );
+
+-- 수정 시각 자동 업데이트 트리거
+CREATE OR REPLACE TRIGGER TRG_MEMOIR_LIKE_UPDATE_TIME
+BEFORE UPDATE ON MEMOIR_LIKE
+FOR EACH ROW
+BEGIN
+    :NEW.UPDATE_TIME := SYSTIMESTAMP;
+END;
 
 COMMENT ON COLUMN "MEMOIR_LIKE"."MEMBER_ID" IS '회원 FK';
 COMMENT ON COLUMN "MEMOIR_LIKE"."MEMOIR_ID" IS '회고록 FK';
@@ -428,13 +509,13 @@ COMMENT ON COLUMN "MEMOIR_LIKE"."CREATE_TIME" IS '데이터 생성 시각';
 -- 회고록 댓글 테이블
 -- ============================================ --
 CREATE TABLE "MEMOIR_COMMENT" (
-    "ID"	            NUMBER		            PRIMARY KEY, -- 회고록 댓글 PK
-    "MEMBER_ID"	        NUMBER		            NOT NULL, -- 회원 FK
-    "MEMOIR_ID"	        NUMBER		            NOT NULL, -- 회고록 FK
-    "LIKE_COUNT"	    NUMBER	DEFAULT 0	NOT NULL, -- 회고록 댓글 좋아요 수
-    "COMMENT"	        NVARCHAR2(2000)		    NOT NULL, -- 회고록 댓글 내용
-    "UPDATE_TIME"	    TIMESTAMP		        NOT NULL, -- 데이터 수정 시각
-    "CREATE_TIME"	    TIMESTAMP		        NOT NULL, -- 데이터 생성 시각
+    "ID"	            NUMBER		                            PRIMARY KEY, -- 회고록 댓글 PK
+    "MEMBER_ID"	        NUMBER		                            NOT NULL, -- 회원 FK
+    "MEMOIR_ID"	        NUMBER		                            NOT NULL, -- 회고록 FK
+    "LIKE_COUNT"	    NUMBER	        DEFAULT 0	            NOT NULL, -- 회고록 댓글 좋아요 수
+    "CONTENT"	        NVARCHAR2(2000)		                    NOT NULL, -- 회고록 댓글 내용
+    "UPDATE_TIME"	    TIMESTAMP       DEFAULT SYSTIMESTAMP    NOT NULL, -- 데이터 수정 시각
+    "CREATE_TIME"	    TIMESTAMP       DEFAULT SYSTIMESTAMP    NOT NULL, -- 데이터 생성 시각
     -- FK 정의
     CONSTRAINT "FK_MEMOIR_COMMENT_MEMBER" FOREIGN KEY ("MEMBER_ID") REFERENCES "MEMBER" ("ID"),
     CONSTRAINT "FK_MEMOIR_COMMENT_MEMOIR" FOREIGN KEY ("MEMOIR_ID") REFERENCES "MEMOIR" ("ID")
@@ -454,6 +535,14 @@ ALTER TABLE "MEMOIR_COMMENT" MODIFY ("ID" DEFAULT SEQ_MEMOIR_COMMENT.NEXTVAL);
 CREATE INDEX "IDX_MEMOIR_COMMENT_MEMBER_ID" ON "MEMOIR_COMMENT" ("MEMBER_ID");
 CREATE INDEX "IDX_MEMOIR_COMMENT_MEMOIR_ID" ON "MEMOIR_COMMENT" ("MEMOIR_ID");
 
+-- 수정 시각 자동 업데이트 트리거
+CREATE OR REPLACE TRIGGER TRG_MEMOIR_COMMENT_UPDATE_TIME
+BEFORE UPDATE ON MEMOIR_COMMENT
+FOR EACH ROW
+BEGIN
+    :NEW.UPDATE_TIME := SYSTIMESTAMP;
+END;
+
 COMMENT ON COLUMN "MEMOIR_COMMENT"."ID" IS '회고록 댓글 PK';
 COMMENT ON COLUMN "MEMOIR_COMMENT"."MEMBER_ID" IS '회원 FK';
 COMMENT ON COLUMN "MEMOIR_COMMENT"."MEMOIR_ID" IS '회고록 FK';
@@ -466,17 +555,25 @@ COMMENT ON COLUMN "MEMOIR_COMMENT"."CREATE_TIME" IS '데이터 생성 시각';
 -- 회고록 댓글 좋아요 테이블
 -- ============================================ --
 CREATE TABLE "MEMOIR_COMMENT_LIKE" (
-    "MEMBER_ID"	        NUMBER		            NOT NULL, -- 회원 FK
-    "MEMOIR_COMMENT_ID"	NUMBER		            NOT NULL, -- 회고록 댓글 FK
-    "ACTIVATE"	        NUMBER(1)	DEFAULT 1	NOT NULL, -- 회고록 댓글 좋아요 활성화 여부
-    "UPDATE_TIME"	    TIMESTAMP		        NOT NULL, -- 데이터 수정 시각
-    "CREATE_TIME"	    TIMESTAMP		        NOT NULL, -- 데이터 생성 시각
+    "MEMBER_ID"	        NUMBER		                            NOT NULL, -- 회원 FK
+    "MEMOIR_COMMENT_ID"	NUMBER		                            NOT NULL, -- 회고록 댓글 FK
+    "ACTIVATE"	        NUMBER(1)	    DEFAULT 1	            NOT NULL, -- 회고록 댓글 좋아요 활성화 여부
+    "UPDATE_TIME"	    TIMESTAMP       DEFAULT SYSTIMESTAMP    NOT NULL, -- 데이터 수정 시각
+    "CREATE_TIME"	    TIMESTAMP       DEFAULT SYSTIMESTAMP    NOT NULL, -- 데이터 생성 시각
     -- PK 정의
     CONSTRAINT "PK_MEMOIR_COMMENT_LIKE" PRIMARY KEY ("MEMBER_ID", "MEMOIR_COMMENT_ID"),
     -- FK 정의
     CONSTRAINT "FK_MEMOIR_COMMENT_LIKE_MEMBER" FOREIGN KEY ("MEMBER_ID") REFERENCES "MEMBER" ("ID"),
     CONSTRAINT "FK_MEMOIR_COMMENT_LIKE_MEMOIR_COMMENT" FOREIGN KEY ("MEMOIR_COMMENT_ID") REFERENCES "MEMOIR_COMMENT" ("ID")
 );
+
+-- 수정 시각 자동 업데이트 트리거
+CREATE OR REPLACE TRIGGER TRG_MEMOIR_COMMENT_LIKE_UPDATE_TIME
+BEFORE UPDATE ON MEMOIR_COMMENT_LIKE
+FOR EACH ROW
+BEGIN
+    :NEW.UPDATE_TIME := SYSTIMESTAMP;
+END;
 
 COMMENT ON COLUMN "MEMOIR_COMMENT_LIKE"."MEMBER_ID" IS '회원 FK';
 COMMENT ON COLUMN "MEMOIR_COMMENT_LIKE"."MEMOIR_COMMENT_ID" IS '회고록 댓글 FK';
@@ -488,11 +585,11 @@ COMMENT ON COLUMN "MEMOIR_COMMENT_LIKE"."CREATE_TIME" IS '데이터 생성 시�
 -- 리프 태그 테이블
 -- ============================================ --
 CREATE TABLE "LEAF_TAG" (
-    "ID"	        NUMBER		    PRIMARY KEY, -- 리프 태그 PK
-    "MEMBER_ID"	    NUMBER		    NOT NULL, -- 회원 FK
-    "NAME"	        NVARCHAR2(20)	NOT NULL, -- 리프 태그 이름
-    "UPDATE_TIME"	TIMESTAMP		NOT NULL, -- 데이터 수정 시각
-    "CREATE_TIME"	TIMESTAMP 		NOT NULL, -- 데이터 생성 시각
+    "ID"	            NUMBER		                            PRIMARY KEY, -- 리프 태그 PK
+    "MEMBER_ID"	        NUMBER		                            NOT NULL, -- 회원 FK
+    "NAME"	            NVARCHAR2(20)	                        NOT NULL, -- 리프 태그 이름
+    "UPDATE_TIME"	    TIMESTAMP       DEFAULT SYSTIMESTAMP    NOT NULL, -- 데이터 수정 시각
+    "CREATE_TIME"	    TIMESTAMP       DEFAULT SYSTIMESTAMP    NOT NULL, -- 데이터 생성 시각
     -- FK 정의
     CONSTRAINT "FK_LEAF_TAG_MEMBER" FOREIGN KEY ("MEMBER_ID") REFERENCES "MEMBER" ("ID")
 );
@@ -510,6 +607,14 @@ ALTER TABLE "LEAF_TAG" MODIFY ("ID" DEFAULT SEQ_LEAF_TAG.NEXTVAL);
 -- 인덱스 정의
 CREATE INDEX "IDX_LEAF_TAG_MEMBER_ID" ON "LEAF_TAG" ("MEMBER_ID");
 
+-- 수정 시각 자동 업데이트 트리거
+CREATE OR REPLACE TRIGGER TRG_LEAF_TAG_UPDATE_TIME
+BEFORE UPDATE ON LEAF_TAG
+FOR EACH ROW
+BEGIN
+    :NEW.UPDATE_TIME := SYSTIMESTAMP;
+END;
+
 COMMENT ON COLUMN "LEAF_TAG"."ID" IS '리프 태그 PK';
 COMMENT ON COLUMN "LEAF_TAG"."MEMBER_ID" IS '회원 FK';
 COMMENT ON COLUMN "LEAF_TAG"."NAME" IS '리프 태그 이름';
@@ -520,18 +625,18 @@ COMMENT ON COLUMN "LEAF_TAG"."CREATE_TIME" IS '데이터 생성 시각';
 -- 리프 테이블
 -- ============================================ --
 CREATE TABLE "LEAF" (
-    "ID"	                NUMBER		                        PRIMARY KEY,
-    "TREE_ID"	            NUMBER		                        NOT NULL,
-    "PARENT_LEAF_ID"	    NUMBER		                        NULL,
-    "VISIBILITY"	        NUMBER(1)	    DEFAULT 1	        NOT NULL,
-    "VIEW_COUNT"	        NUMBER		                        NOT NULL,
-    "LIKE_COUNT"	        NUMBER	        DEFAULT 0	        NOT NULL,
-    "TITLE"	                NVARCHAR2(100)		                NOT NULL,
-    "TEXT"	                NVARCHAR2(2000)		                NOT NULL,
-	"CHILD_LEAF_COUNT"	    NUMBER(1)	    DEFAULT 0	        NOT NULL,
-	"UPDATE_TIME"	        TIMESTAMP		                    NOT NULL,
-	"CREATE_TIME"	        TIMESTAMP		                    NOT NULL,
-	"BOOK_MARK"	            NUMBER(1)	    DEFAULT 0	        NOT NULL,
+    "ID"	            NUMBER		                            PRIMARY KEY,
+    "TREE_ID"	        NUMBER		                            NOT NULL,
+    "PARENT_LEAF_ID"	NUMBER		                            NULL,
+    "VISIBILITY"	    NUMBER(1)	    DEFAULT 1	            NOT NULL,
+    "VIEW_COUNT"	    NUMBER		                            NOT NULL,
+    "LIKE_COUNT"	    NUMBER	        DEFAULT 0	            NOT NULL,
+    "TITLE"	            NVARCHAR2(100)		                    NOT NULL,
+    "TEXT"	            NVARCHAR2(2000)		                    NOT NULL,
+	"CHILD_LEAF_COUNT"	NUMBER(1)	    DEFAULT 0	            NOT NULL,
+    "BOOK_MARK"	        NUMBER(1)	    DEFAULT 0	            NOT NULL,
+    "UPDATE_TIME"	    TIMESTAMP       DEFAULT SYSTIMESTAMP    NOT NULL, -- 데이터 수정 시각
+    "CREATE_TIME"	    TIMESTAMP       DEFAULT SYSTIMESTAMP    NOT NULL, -- 데이터 생성 시각
     -- FK 정의
     CONSTRAINT "FK_LEAF_TREE" FOREIGN KEY ("TREE_ID") REFERENCES "TREE" ("ID"),
     CONSTRAINT "FK_LEAF_PARENT_LEAF" FOREIGN KEY ("PARENT_LEAF_ID") REFERENCES "LEAF" ("ID")
@@ -546,6 +651,14 @@ CREATE SEQUENCE SEQ_LEAF
 
 -- 시퀀스 등록
 ALTER TABLE "LEAF" MODIFY ("ID" DEFAULT SEQ_LEAF.NEXTVAL);
+
+-- 수정 시각 자동 업데이트 트리거
+CREATE OR REPLACE TRIGGER TRG_LEAF_UPDATE_TIME
+BEFORE UPDATE ON LEAF
+FOR EACH ROW
+BEGIN
+    :NEW.UPDATE_TIME := SYSTIMESTAMP;
+END;
 
 COMMENT ON COLUMN "LEAF"."ID" IS '리프 PK';
 COMMENT ON COLUMN "LEAF"."TREE_ID" IS '트리 FK';
@@ -596,11 +709,11 @@ COMMENT ON COLUMN "LEAF_BOOK"."END_PAGE" IS '리프 도서 종료 페이지';
 -- 리프 좋아요 테이블
 -- ============================================ --
 CREATE TABLE "LEAF_LIKE" (
-    "MEMBER_ID"	    NUMBER		            NOT NULL, -- 회원 FK
-    "LEAF_ID"	    NUMBER		            NOT NULL, -- 리프 FK
-    "ACTIVATE"	    NUMBER(1)	DEFAULT 1	NOT NULL, -- 리프 좋아요 활성화 여부
-    "UPDATE_TIME"	TIMESTAMP		        NOT NULL, -- 데이터 수정 시각
-    "CREATE_TIME"	TIMESTAMP		        NOT NULL, -- 데이터 생성 시각
+    "MEMBER_ID"	        NUMBER		                            NOT NULL, -- 회원 FK
+    "LEAF_ID"	        NUMBER		                            NOT NULL, -- 리프 FK
+    "ACTIVATE"	        NUMBER(1)	    DEFAULT 1	            NOT NULL, -- 리프 좋아요 활성화 여부
+    "UPDATE_TIME"	    TIMESTAMP       DEFAULT SYSTIMESTAMP    NOT NULL, -- 데이터 수정 시각
+    "CREATE_TIME"	    TIMESTAMP       DEFAULT SYSTIMESTAMP    NOT NULL, -- 데이터 생성 시각
     -- PK 정의
     CONSTRAINT "PK_LEAF_LIKE" PRIMARY KEY ("MEMBER_ID", "LEAF_ID"),
     -- FK 정의
@@ -610,6 +723,14 @@ CREATE TABLE "LEAF_LIKE" (
 
 -- 인덱스 정의
 CREATE INDEX "IDX_LEAF_LIKE_MEMBER_ID" ON "LEAF_LIKE" ("MEMBER_ID");
+
+-- 수정 시각 자동 업데이트 트리거
+CREATE OR REPLACE TRIGGER TRG_LEAF_LIKE_UPDATE_TIME
+BEFORE UPDATE ON LEAF_LIKE
+FOR EACH ROW
+BEGIN
+    :NEW.UPDATE_TIME := SYSTIMESTAMP;
+END;
 
 COMMENT ON COLUMN "LEAF_LIKE"."MEMBER_ID" IS '회원 FK';
 COMMENT ON COLUMN "LEAF_LIKE"."LEAF_ID" IS '리프 FK';
@@ -621,13 +742,13 @@ COMMENT ON COLUMN "LEAF_LIKE"."CREATE_TIME" IS '데이터 생성 시각';
 -- 리프 댓글 테이블
 -- ============================================ --
 CREATE TABLE "LEAF_COMMENT" (
-    "ID"	            NUMBER		            PRIMARY KEY, -- 리프 댓글 PK
-    "MEMBER_ID"	        NUMBER		            NOT NULL, -- 회원 FK
-    "LEAF_ID"	        NUMBER		            NOT NULL, -- 리프 FK
-    "LIKE_COUNT"	    NUMBER	DEFAULT 0	    NOT NULL, -- 리프 댓글 좋아요 수
-    "CONTENT"	        NVARCHAR2(2000)		    NOT NULL, -- 리프 댓글 내용
-    "UPDATE_TIME"	    TIMESTAMP		        NOT NULL, -- 데이터 수정 시각
-    "CREATE_TIME"	    TIMESTAMP		        NOT NULL, -- 데이터 생성 시각
+    "ID"	            NUMBER		                            PRIMARY KEY, -- 리프 댓글 PK
+    "MEMBER_ID"	        NUMBER		                            NOT NULL, -- 회원 FK
+    "LEAF_ID"	        NUMBER		                            NOT NULL, -- 리프 FK
+    "LIKE_COUNT"	    NUMBER	        DEFAULT 0	            NOT NULL, -- 리프 댓글 좋아요 수
+    "CONTENT"	        NVARCHAR2(2000)		                    NOT NULL, -- 리프 댓글 내용
+    "UPDATE_TIME"	    TIMESTAMP       DEFAULT SYSTIMESTAMP    NOT NULL, -- 데이터 수정 시각
+    "CREATE_TIME"	    TIMESTAMP       DEFAULT SYSTIMESTAMP    NOT NULL, -- 데이터 생성 시각
     -- FK 정의
     CONSTRAINT "FK_LEAF_COMMENT_MEMBER" FOREIGN KEY ("MEMBER_ID") REFERENCES "MEMBER" ("ID"),
     CONSTRAINT "FK_LEAF_COMMENT_LEAF" FOREIGN KEY ("LEAF_ID") REFERENCES "LEAF" ("ID")
@@ -647,6 +768,14 @@ ALTER TABLE "LEAF_COMMENT" MODIFY ("ID" DEFAULT SEQ_LEAF_COMMENT.NEXTVAL);
 CREATE INDEX "IDX_LEAF_COMMENT_MEMBER_ID" ON "LEAF_COMMENT" ("MEMBER_ID");
 CREATE INDEX "IDX_LEAF_COMMENT_LEAF_ID" ON "LEAF_COMMENT" ("LEAF_ID");
 
+-- 수정 시각 자동 업데이트 트리거
+CREATE OR REPLACE TRIGGER TRG_LEAF_COMMENT_UPDATE_TIME
+BEFORE UPDATE ON LEAF_COMMENT
+FOR EACH ROW
+BEGIN
+    :NEW.UPDATE_TIME := SYSTIMESTAMP;
+END;
+
 COMMENT ON COLUMN "LEAF_COMMENT"."ID" IS '리프 댓글 PK';
 COMMENT ON COLUMN "LEAF_COMMENT"."MEMBER_ID" IS '회원 FK';
 COMMENT ON COLUMN "LEAF_COMMENT"."LEAF_ID" IS '리프 FK';
@@ -659,11 +788,11 @@ COMMENT ON COLUMN "LEAF_COMMENT"."CREATE_TIME" IS '데이터 생성 시각';
 -- 리프 댓글 좋아요 테이블
 -- ============================================ --
 CREATE TABLE "LEAF_COMMENT_LIKE" (
-    "MEMBER_ID"	        NUMBER		            NOT NULL, -- 회원 FK
-    "LEAF_COMMENT_ID"	NUMBER		            NOT NULL, -- 리프 댓글 FK
-    "ACTIVATE"	        NUMBER(1)	DEFAULT 1	NOT NULL, -- 리프 댓글 좋아요 활성화 여부
-    "UPDATE_TIME"	    TIMESTAMP		        NOT NULL, -- 데이터 수정 시각
-    "CREATE_TIME"	    TIMESTAMP		        NOT NULL, -- 데이터 생성 시각
+    "MEMBER_ID"	        NUMBER		                            NOT NULL, -- 회원 FK
+    "LEAF_COMMENT_ID"	NUMBER		                            NOT NULL, -- 리프 댓글 FK
+    "ACTIVATE"	        NUMBER(1)	    DEFAULT 1	            NOT NULL, -- 리프 댓글 좋아요 활성화 여부
+    "UPDATE_TIME"	    TIMESTAMP       DEFAULT SYSTIMESTAMP    NOT NULL, -- 데이터 수정 시각
+    "CREATE_TIME"	    TIMESTAMP       DEFAULT SYSTIMESTAMP    NOT NULL, -- 데이터 생성 시각
     -- PK 정의
     CONSTRAINT "PK_LEAF_COMMENT_LIKE" PRIMARY KEY ("MEMBER_ID", "LEAF_COMMENT_ID"),
     -- FK 정의
@@ -675,8 +804,21 @@ CREATE TABLE "LEAF_COMMENT_LIKE" (
 CREATE INDEX "IDX_LEAF_COMMENT_LIKE_MEMBER_ID" ON "LEAF_COMMENT_LIKE" ("MEMBER_ID");
 CREATE INDEX "IDX_LEAF_COMMENT_LIKE_LEAF_COMMENT_ID" ON "LEAF_COMMENT_LIKE" ("LEAF_COMMENT_ID");
 
+-- 수정 시각 자동 업데이트 트리거
+CREATE OR REPLACE TRIGGER TRG_LEAF_COMMENT_LIKE_UPDATE_TIME
+BEFORE UPDATE ON LEAF_COMMENT_LIKE
+FOR EACH ROW
+BEGIN
+    :NEW.UPDATE_TIME := SYSTIMESTAMP;
+END;
+
 COMMENT ON COLUMN "LEAF_COMMENT_LIKE"."MEMBER_ID" IS '회원 FK';
 COMMENT ON COLUMN "LEAF_COMMENT_LIKE"."LEAF_COMMENT_ID" IS '리프 댓글 FK';
 COMMENT ON COLUMN "LEAF_COMMENT_LIKE"."ACTIVATE" IS '리프 댓글 좋아요 활성화 여부';
 COMMENT ON COLUMN "LEAF_COMMENT_LIKE"."UPDATE_TIME" IS '데이터 수정 시각';
 COMMENT ON COLUMN "LEAF_COMMENT_LIKE"."CREATE_TIME" IS '데이터 생성 시각';
+
+
+-- 트리거 확인
+SELECT TRIGGER_NAME, TRIGGER_TYPE, TRIGGERING_EVENT, TABLE_NAME, STATUS
+FROM USER_TRIGGERS;

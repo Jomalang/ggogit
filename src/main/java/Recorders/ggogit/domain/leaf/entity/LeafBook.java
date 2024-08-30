@@ -2,11 +2,9 @@ package Recorders.ggogit.domain.leaf.entity;
 
 import lombok.*;
 
-@Setter
-@Getter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 @Builder
 public class LeafBook {
     private Long leafId; // TODO: entity 수정

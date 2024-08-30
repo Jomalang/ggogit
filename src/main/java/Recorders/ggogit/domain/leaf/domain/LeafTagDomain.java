@@ -4,11 +4,10 @@ package Recorders.ggogit.domain.leaf.domain;
 import Recorders.ggogit.domain.leaf.entity.LeafTag;
 import lombok.*;
 
-@Setter
-@Getter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
+
 @Builder
 public class LeafTagDomain {
     private Long id;

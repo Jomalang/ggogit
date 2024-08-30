@@ -5,6 +5,5 @@
 
 <mapper namespace="Recorders.ggogit.domain.leaf.entity.LeafComment">
 
-    <insert id="save" parameterType="LeafComment">
 
 </mapper>

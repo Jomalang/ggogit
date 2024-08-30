@@ -632,7 +632,7 @@ CREATE TABLE "LEAF" (
     "VIEW_COUNT"	    NUMBER		                            NOT NULL,
     "LIKE_COUNT"	    NUMBER	        DEFAULT 0	            NOT NULL,
     "TITLE"	            NVARCHAR2(100)		                    NOT NULL,
-    "TEXT"	            NVARCHAR2(2000)		                    NOT NULL,
+    "CONTENT"	            NVARCHAR2(2000)		                    NOT NULL,
 	"CHILD_LEAF_COUNT"	NUMBER(1)	    DEFAULT 0	            NOT NULL,
     "BOOK_MARK"	        NUMBER(1)	    DEFAULT 0	            NOT NULL,
     "UPDATE_TIME"	    TIMESTAMP       DEFAULT SYSTIMESTAMP    NOT NULL, -- 데이터 수정 시각
@@ -667,7 +667,7 @@ COMMENT ON COLUMN "LEAF"."VISIBILITY" IS '사용자 공개 여부';
 COMMENT ON COLUMN "LEAF"."VIEW_COUNT" IS '리프 조회수';
 COMMENT ON COLUMN "LEAF"."LIKE_COUNT" IS '리프 좋아요 수';
 COMMENT ON COLUMN "LEAF"."TITLE" IS '리프 제목';
-COMMENT ON COLUMN "LEAF"."TEXT" IS '리프 내용';
+COMMENT ON COLUMN "LEAF".CONTENT IS '리프 내용';
 COMMENT ON COLUMN "LEAF"."CHILD_LEAF_COUNT" IS '자식 리프 수';
 COMMENT ON COLUMN "LEAF"."UPDATE_TIME" IS '데이터 수정 시각';
 COMMENT ON COLUMN "LEAF"."CREATE_TIME" IS '데이터 생성 시각';

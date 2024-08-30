@@ -4,11 +4,9 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 
-@Setter
-@Getter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 @Builder
 public class Leaf {
     private Long id;
@@ -18,7 +16,7 @@ public class Leaf {
     private Integer viewCount;
     private Integer likeCount;
     private String title;
-    private Long text;
+    private String content;
     private Integer childLeafCount;
     private Long bookMark;
     private LocalDateTime updateTime;

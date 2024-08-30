@@ -8,7 +8,7 @@ import java.util.List;
 @Mapper
 public interface LeafTagRepository {
     Long save(LeafTag leafTag);
-    List<LeafTag> findAll();
     LeafTag findById(Long id);
+    List<LeafTag> findAll();
     int update(LeafTag leafTag);
 }

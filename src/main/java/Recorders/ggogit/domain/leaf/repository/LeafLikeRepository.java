@@ -9,6 +9,7 @@ import java.util.List;
 public interface LeafLikeRepository {
     Long save(LeafLike leafLike);
     List<LeafLike> findByLeafId(Long leafId);
+    List<LeafLike> findByMemberId(Long memberId);
     List<LeafLike> findAll();
     Long update(LeafLike leafLike);
 }

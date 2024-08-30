@@ -67,4 +67,13 @@ class BookRepositoryTest {
     @Test
     void delete() {
     }
+
+    @DisplayName("테스트 코드 작동")
+    @Test
+    public void testExample() {
+        String actual = "Hello, World!";
+        assertThat(actual).isEqualTo("Hello, World!");
+
+    }
+
 }

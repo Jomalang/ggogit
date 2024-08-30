@@ -1,6 +1,7 @@
 package Recorders.ggogit.memoir;
 
 import Recorders.ggogit.domain.memoir.entity.Memoir;
+import Recorders.ggogit.domain.memoir.entity.MemoirCommentLikeView;
 import Recorders.ggogit.domain.memoir.repository.MemoirRepository;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.BeforeAll;
@@ -68,6 +69,16 @@ public class MemoirRepositoryTest {
 
         List<Memoir> memoirList = memoirRepository.findAll();
         assertThat(memoirList.size()).isEqualTo(1);
+    }
+
+    @Test
+    public void obtainCntTest() {
+        Memoir testMemoir = createTestMemoir();
+        memoirRepository.save(testMemoir);
+
+        MemoirCommentLikeView memoirCntView = memoirRepository.findCntById(testMemoir.getId());
+        assertThat(memoirCntView.getCommentCnt()).isEqualTo(0);
+        assertThat(memoirCntView.getLikeCnt()).isEqualTo(0);
     }
 
     private static Memoir createTestMemoir() {

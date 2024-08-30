@@ -38,5 +38,11 @@
         WHERE TITLE LIKE '%${title}%'
     </select>
 
+    <select id="findCntById" resultType="MemoirCommentLikeView" parameterType="MemoirCommentLikeView">
+        SELECT NVR(*,0)
+        FROM MEMOIR_CL_CNT
+        WHERE ID = #{id}
+    </select>
+
 
 </mapper>

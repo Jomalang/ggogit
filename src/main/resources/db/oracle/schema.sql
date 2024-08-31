@@ -367,20 +367,16 @@ COMMENT ON COLUMN "TREE"."CREATE_TIME" IS '데이터 생성 시각';
 -- 트리 책 추가 정보 테이블
 -- ============================================ --
 CREATE TABLE "TREE_BOOK" (
-    "ID"	        NUMBER		    NOT NULL, -- 트리 FK
-    "TOTAL_PAGE"	NUMBER(5)		NOT NULL, -- 책 트리 총 페이지 수
+    "TREE_ID"	        NUMBER		    NOT NULL, -- 트리 FK
     "READING_PAGE"	NUMBER(5)		NOT NULL, -- 책 트리 읽은 페이지 수
-    "PROGRESS"	    NUMBER(3)		NOT NULL, -- 책 트리 진행률
     -- PK 정의
-    CONSTRAINT "PK_TREE_BOOK" PRIMARY KEY ("ID"),
+    CONSTRAINT "PK_TREE_BOOK" PRIMARY KEY ("TREE_ID"),
     -- FK 정의
-    CONSTRAINT "FK_TREE_BOOK_TREE" FOREIGN KEY ("ID") REFERENCES "TREE" ("ID")
+    CONSTRAINT "FK_TREE_BOOK_TREE" FOREIGN KEY ("TREE_ID") REFERENCES "TREE" ("ID")
 );
 
-COMMENT ON COLUMN "TREE_BOOK"."ID" IS '책 트리 PK';
-COMMENT ON COLUMN "TREE_BOOK"."TOTAL_PAGE" IS '책 트리 총 페이지 수';
+COMMENT ON COLUMN "TREE_BOOK"."TREE_ID" IS '책 트리 PK';
 COMMENT ON COLUMN "TREE_BOOK"."READING_PAGE" IS '책 트리 읽은 페이지 수';
-COMMENT ON COLUMN "TREE_BOOK"."PROGRESS" IS '책 트리 진행률';
 
 -- ============================================ --
 -- 트리 이미지 테이블

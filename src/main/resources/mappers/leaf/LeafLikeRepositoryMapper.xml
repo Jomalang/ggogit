@@ -3,5 +3,43 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="Recorders.ggogit.domain.leaf.entity.LeafLike">
+<mapper namespace="Recorders.ggogit.domain.leaf.repository.LeafLikeRepository">
+
+    <insert id="save" parameterType="LeafLike">
+        INSERT INTO LEAF_LIKE (MEMBER_ID, LEAF_ID)
+        VALUES (#{memberId}, #{leafId})
+    </insert>
+
+    <select id="findByMemberIdAndLeafId" resultType="LeafLike">
+        SELECT *
+        FROM LEAF_LIKE
+        WHERE MEMBER_ID = #{memberId} AND LEAF_ID = #{leafId}
+    </select>
+
+    <select id="findByMemberId" parameterType="Long" resultType="LeafLike">
+        SELECT *
+        FROM LEAF_LIKE
+        WHERE MEMBER_ID = #{memberId}
+    </select>
+
+    <select id="findByLeafId" parameterType="Long" resultType="LeafLike">
+        SELECT *
+        FROM LEAF_LIKE
+        WHERE LEAF_ID = #{leafId}
+    </select>
+
+    <select id="findAll" resultType="LeafLike">
+        SELECT *
+        FROM LEAF_LIKE
+    </select>
+
+    <update id="update" parameterType="LeafLike">
+        UPDATE LEAF_LIKE
+        SET
+            MEMBER_ID = #{memberId},
+            LEAF_ID = #{leafId},
+            ACTIVATE = #{activate}
+        WHERE MEMBER_ID = #{memberId} AND LEAF_ID = #{leafId}
+    </update>
+
 </mapper>

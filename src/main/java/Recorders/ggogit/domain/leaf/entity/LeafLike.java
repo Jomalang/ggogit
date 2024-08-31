@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 public class LeafLike {
     private Long memberId; // TODO: entity 수정
     private Long leafId; // TODO: entity 수정
-    private Boolean activate;
+    private boolean activate;
     private LocalDateTime updateTime;
     private LocalDateTime createTime;
 }

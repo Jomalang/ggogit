@@ -10,5 +10,5 @@ public interface LeafTagRepository {
     Long save(LeafTag leafTag);
     LeafTag findById(Long id);
     List<LeafTag> findAll();
-    int update(LeafTag leafTag);
+    Long update(LeafTag leafTag);
 }

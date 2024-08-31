@@ -2,7 +2,6 @@ package Recorders.ggogit.domain.leaf.repository;
 
 import Recorders.ggogit.domain.leaf.entity.Leaf;
 import Recorders.ggogit.domain.leaf.repository.filter.LeafRepositoryFilter;
-import org.hibernate.tool.schema.internal.exec.ScriptTargetOutputToFile;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
@@ -30,7 +29,7 @@ class LeafRepositoryTest {
         // given
         Leaf leaf = Leaf.builder()
                 .treeId(997L)
-                .parentLeafId(997L)
+                .parentLeafId(9970L)
                 .visibility(true)
                 .viewCount(0)
                 .likeCount(0)
@@ -54,7 +53,7 @@ class LeafRepositoryTest {
         // 977L이라는 id를 가진 Leaf가 존재함 (leaf-repository-test.sql 참고)
 
         // when
-        Leaf leaf = leafRepository.findById(997L);
+        Leaf leaf = leafRepository.findById(9970L);
 
         // then
         System.out.println(leaf);
@@ -90,10 +89,10 @@ class LeafRepositoryTest {
         leaf.setBookMark(1L);
 
         // when
-        Long updatedId = leafRepository.update(leaf);
+        leafRepository.update(leaf);
 
         // then
-        Leaf updatedLeaf = leafRepository.findById(updatedId);
+        Leaf updatedLeaf = leafRepository.findById(9971L);
         assertEquals(updatedLeaf.getTitle(), "UpdatedTitle");
         assertEquals(updatedLeaf.getContent(), "UpdatedContent");
         assertFalse(updatedLeaf.getVisibility());

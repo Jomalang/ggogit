@@ -4,4 +4,20 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="Recorders.ggogit.domain.leaf.entity.LeafTagMap">
+
+        <insert id="save" parameterType="LeafTagMap">
+            INSERT INTO LEAF_TAG_MAP (LEAF_ID, TAG_ID)
+            VALUES (#{leafId}, #{tagId})
+        </insert>
+
+        <select id="findByLeafId" parameterType="Long" resultType="LeafTagMap">
+            SELECT * FROM LEAF_TAG_MAP
+            WHERE LEAF_ID = #{leafId}
+        </select>
+
+        <select id="findByTagId" parameterType="Long" resultType="LeafTagMap">
+            SELECT * FROM LEAF_TAG_MAP
+            WHERE TAG_ID = #{tagId}
+        </select>
+
 </mapper>

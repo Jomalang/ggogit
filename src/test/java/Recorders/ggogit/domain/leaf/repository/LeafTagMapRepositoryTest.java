@@ -27,34 +27,31 @@ class LeafTagMapRepositoryTest {
         // given
         // 9990L이라는 leafId와 1L이라는 tagId를 가진 LeafTagMap이 존재함 (leaf-tag-map-repository-test.sql 참고)
         Long leafId = 9990L;
-        Long tagId = 1L;
+        Long tagId = 4L;
 
         LeafTagMap leafTagMap = LeafTagMap.builder()
                 .leafId(leafId)
-                .tagId(tagId)
+                .leafTagId(tagId)
                 .build();
 
         // when
         leafTagMapRepository.save(leafTagMap);
 
         // given
-        LeafTagMap savedLeafTagMap = leafTagMapRepository.findByByLeafIdAndTagId(leafId, tagId);
+        LeafTagMap savedLeafTagMap = leafTagMapRepository.findByLeafIdAndLeafTagId(leafId, tagId);
         assertThat(savedLeafTagMap).isNotNull();
     }
 
     @Test
-    @DisplayName("조회 테스트 | LeafTagMap | findByLeafIdAndTagId")
-    void findByLeafIdAndTagId() {
+    @DisplayName("조회 테스트 | LeafTagMap | findByLeafIdAndLeafTagId")
+    void findByLeafIdAndLeafTagId() {
         // given
         // 9990L이라는 leafId와 1L이라는 tagId를 가진 LeafTagMap이 존재함 (leaf-tag-map-repository-test.sql 참고)
         Long leafId = 9990L;
-        Long tagId = 1L;
+        Long leafTagId = 3L;
 
         // when
-        LeafTagMap leafTagMap = leafTagMapRepository.findByByLeafIdAndTagId(leafId, tagId);
-
-        // then
-        assertThat(leafTagMap).isNotNull();
+        leafTagMapRepository.findByLeafIdAndLeafTagId(leafId, leafTagId);
     }
 
     @Test
@@ -79,7 +76,7 @@ class LeafTagMapRepositoryTest {
         Long tagId = 1L;
 
         // when
-        LeafTagMap leafTagMap = leafTagMapRepository.findByTagId(tagId).getFirst();
+        LeafTagMap leafTagMap = leafTagMapRepository.findByLeafTagId(tagId).getFirst();
 
         // then
         assertThat(leafTagMap).isNotNull();

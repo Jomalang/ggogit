@@ -8,5 +8,5 @@ import lombok.*;
 @Builder
 public class LeafTagMap {
     private Long leafId; // TODO: entity 수정
-    private Long tagId; // TODO: entity 수정
+    private Long leafTagId; // TODO: entity 수정
 }

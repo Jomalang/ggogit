@@ -8,7 +8,7 @@ import java.util.List;
 @Mapper
 public interface LeafTagMapRepository {
     Long save(LeafTagMap leaf);
-    LeafTagMap findByByLeafIdAndTagId(Long leafId, Long tagId);
+    LeafTagMap findByLeafIdAndLeafTagId(Long leafId, Long leafTagId);
     List<LeafTagMap> findByLeafId(Long leafId);
-    List<LeafTagMap> findByTagId(Long tagId);
+    List<LeafTagMap> findByLeafTagId(Long tagId);
 }

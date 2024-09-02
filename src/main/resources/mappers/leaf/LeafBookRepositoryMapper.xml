@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Recorders.ggogit.domain.leaf.repository.LeafBookRepository">
+
+    <insert id="save" parameterType="LeafBook">
+        INSERT INTO LEAF_BOOK (LEAF_ID, START_PAGE, END_PAGE)
+        VALUES (#{leafId}, #{startPage}, #{endPage})
+    </insert>
+
+    <update id="update" parameterType="LeafBook">
+        UPDATE LEAF_BOOK
+        SET START_PAGE = #{startPage},
+            END_PAGE = #{endPage}
+        WHERE LEAF_ID = #{leafId}
+    </update>
+
+</mapper>

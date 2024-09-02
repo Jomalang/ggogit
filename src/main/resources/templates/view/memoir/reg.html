@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="https://www.thymeleaf.org" lang="ko">
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -40,23 +40,25 @@
             </div>
         </section>
     </section>
-    <form th:action="@{/memoir/reg(t=${treeId})}" method="POST">
+    <form th:action="@{/memoir/reg(t=${treeId})}" method="POST" th:object="${memoirForm}">
         <section class="register__input-container">
             <h3 class="none">회고록 제목 입력</h3>
             <!-- 컴포넌트 -->
-            <div th:replace="~{fragments/input :: text-box(label='*회고록 제목', placeholder='회고록 제목을 입력해 주세요.', name='title')}">
+            <div th:replace="~{fragments/input :: text-box(label='*회고록 제목', placeholder='회고록 제목을 입력해 주세요.', object=${memoirForm}, field=*{title})}">
             </div>
+            <div class="text--errors" th:errors="*{title}"></div>
         </section>
         <section class="register__input-container">
             <h3 class="none">회고록 설명글</h3>
             <!-- 컴포넌트 -->
-            <div th:replace="~{fragments/input :: textarea-box(label='*내용', placeholder='회고록 내용을 입력해 주세요', name='text')}">
+            <div th:replace="~{fragments/input :: textarea-box(label='*내용', placeholder='회고록 내용을 입력해 주세요', object=${memoirForm}, field=*{text})}">
             </div>
+            <div class="text--errors" th:errors="*{text}"></div>
         </section>
         <section class="register__input-container">
             <h3 class="none">공개 여부</h3>
             <!-- 컴포넌트 -->
-            <div th:replace="~{fragments/input :: input-visibility(name='visibility')}">
+            <div th:replace="~{fragments/input :: input-visibility(object=${memoirForm}, field=*{visibility})}">
             </div>
         </section>
         <section class="register__input-container--last">

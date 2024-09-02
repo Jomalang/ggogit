@@ -81,5 +81,9 @@ abbr, address, b, bdi,
 }
 
 .text--errors{
+  font-size: 20px;
   color: var(--warning);
+  font-weight: var(--medium);
+  line-height: var(--line-height-main);
+  letter-spacing: var(--letter-spacing-main);
 }

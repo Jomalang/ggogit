@@ -9,7 +9,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/memoir")
@@ -37,10 +39,13 @@ public class MemoirController {
     }
 
     @PostMapping("/reg")
-    public String regMemoir(@ModelAttribute("memoirForm") MemoirForm memoirForm, BindingResult bindingResult
-            , @RequestParam("t")long treeId) {
+    public String regMemoir(@Validated @ModelAttribute("memoirForm") MemoirForm memoirForm, BindingResult bindingResult
+            , @RequestParam("t")long treeId, Model model) {
+
         if(bindingResult.hasErrors()) {
-            return"view/memoir/reg";
+            log.info("errors = {}", bindingResult.getAllErrors());
+            model.addAttribute("treeId", treeId);
+            return "view/memoir/reg";
         }
         memoirForm.setTreeId(treeId);
         memoirService.regMemoir(memoirForm);

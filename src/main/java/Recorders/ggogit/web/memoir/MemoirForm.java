@@ -1,5 +1,6 @@
 package Recorders.ggogit.web.memoir;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -11,15 +12,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class MemoirForm {
 
-    @NotEmpty
+    @NotNull
     private Long treeId;
 
-    @NotEmpty
+    @NotBlank(message = "제목을 적어주세요!")
     private String title;
 
-    @NotEmpty
+    @NotEmpty(message = "내용을 적어주세요!")
     private String text;
 
-    @NotEmpty
     private boolean visibility;
 }

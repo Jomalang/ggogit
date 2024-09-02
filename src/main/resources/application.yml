@@ -12,7 +12,7 @@ mybatis:
   # 공용 핸들러 패키지 경로 추가 -----------------------------
   type-handlers-package: Recorders.ggogit.web.CommonTypeHandler
   # -----------------------------------------------------
-  mapper-locations: mappers/*Mapper.xml
+  mapper-locations: mappers/**/*Mapper.xml
 logging:
   level:
     Recorders.ggogit.domain: trace

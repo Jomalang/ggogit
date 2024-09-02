@@ -1,8 +1,10 @@
 package Recorders.ggogit.memoir;
 
 
-import Recorders.ggogit.domain.memoir.Memoir;
-import Recorders.ggogit.domain.memoir.MemoirRepository;
+import Recorders.ggogit.domain.memoir.entity.Memoir;
+import Recorders.ggogit.domain.memoir.repository.MemoirRepository;
+import Recorders.ggogit.domain.memoir.vIew.MemoirCommentLikeView;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
@@ -81,7 +83,7 @@ public class MemoirRepositoryTest {
 
     private static Memoir createTestMemoir() {
         Memoir memoir = new Memoir();
-        memoir.setTreeId(2);
+        memoir.setTreeId(2L);
         memoir.setTitle("testTitle1");
         memoir.setText("testText1");
         memoir.setVisibility(false);

@@ -35,19 +35,19 @@ public class MemoirCommentLikeRepositoryTest {
         MemoirCommentLike memoirCommentLike = createMemoirCommentLike();
         memoirCommentLikeRepository.save(memoirCommentLike);
         MemoirCommentLike foundMemoirCommentLike = memoirCommentLikeRepository.findById(memoirCommentLike);
-        boolean before = foundMemoirCommentLike.isActivate();
+        boolean before = foundMemoirCommentLike.getActivate();
 
         memoirCommentLikeRepository.toggle(memoirCommentLike);
         MemoirCommentLike foundMemoirLike2 = memoirCommentLikeRepository.findById(memoirCommentLike);
-        boolean after = foundMemoirLike2.isActivate();
+        boolean after = foundMemoirLike2.getActivate();
 
         assertThat(after).isFalse();
     }
 
     private static MemoirCommentLike createMemoirCommentLike() {
         MemoirCommentLike memoirCommentLike = new MemoirCommentLike();
-        memoirCommentLike.setMemoirCommentId(31);
-        memoirCommentLike.setMemberId(1);
+        memoirCommentLike.setMemoirCommentId(31L);
+        memoirCommentLike.setMemberId(1L);
 
         return memoirCommentLike;
     }

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Recorders.ggogit.domain.leaf.repository.LeafRepository">
+
+        <insert id="save" parameterType="Leaf"
+                useGeneratedKeys="true" keyProperty="id"  keyColumn="ID">
+            INSERT INTO LEAF (TREE_ID, PARENT_LEAF_ID, VISIBILITY, VIEW_COUNT, LIKE_COUNT, TITLE, CONTENT, CHILD_LEAF_COUNT, BOOK_MARK)
+            VALUES (#{treeId}, #{parentLeafId}, #{visibility}, #{viewCount}, #{likeCount}, #{title}, #{content}, #{childLeafCount}, #{bookMark})
+        </insert>
+
+        <select id="findById" resultType="Leaf">
+            SELECT *
+            FROM LEAF
+            WHERE ID = #{id}
+        </select>
+
+        <select id="findAll" parameterType="LeafRepositoryFilter" resultType="Leaf">
+            SELECT *
+            FROM LEAF
+            <where>
+                <if test="ids.isEmpty() == false">
+                    AND ID IN
+                    <foreach collection="ids" item="item" open="(" separator="," close=")">
+                        #{item}
+                    </foreach>
+                </if>
+                <if test="treeIds.isEmpty() == false">
+                    AND TREE_ID IN
+                    <foreach collection="treeIds" item="item" open="(" separator="," close=")">
+                        #{item}
+                    </foreach>
+                </if>
+                <if test="parentLeafIds.isEmpty() == false">
+                    AND PARENT_LEAF_ID IN
+                    <foreach collection="parentLeafIds" item="item" open="(" separator="," close=")">
+                        #{item}
+                    </foreach>
+                </if>
+                <if test="visibilities.isEmpty() == false">
+                    AND VISIBILITY IN
+                    <foreach collection="visibilities" item="item" open="(" separator="," close=")">
+                        #{item}
+                    </foreach>
+                </if>
+                <if test="viewCounts.isEmpty() == false">
+                    AND VIEW_COUNT IN
+                    <foreach collection="viewCounts" item="item" open="(" separator="," close=")">
+                        #{item}
+                    </foreach>
+                </if>
+                <if test="likeCounts.isEmpty() == false">
+                    AND LIKE_COUNT IN
+                    <foreach collection="likeCounts" item="item" open="(" separator="," close=")">
+                        #{item}
+                    </foreach>
+                </if>
+                <if test="childLeafCounts.isEmpty() == false">
+                    AND CHILD_LEAF_COUNT IN
+                    <foreach collection="childLeafCounts" item="item" open="(" separator="," close=")">
+                        #{item}
+                    </foreach>
+                </if>
+                <if test="bookMarks.isEmpty() == false">
+                    AND BOOK_MARK IN
+                    <foreach collection="bookMarks" item="item" open="(" separator="," close=")">
+                        #{item}
+                    </foreach>
+                </if>
+                <if test="updateTimes.isEmpty() == false">
+                    AND UPDATE_TIME IN
+                    <foreach collection="updateTimes" item="item" open="(" separator="," close=")">
+                        #{item}
+                    </foreach>
+                </if>
+                <if test="createTimes.isEmpty() == false">
+                    AND CREATE_TIME IN
+                    <foreach collection="createTimes" item="item" open="(" separator="," close=")">
+                        #{item}
+                    </foreach>
+                </if>
+                <if test="titles.isEmpty() == false">
+                    AND TITLE LIKE
+                    <foreach collection="titles" item="item" separator="OR">
+                        '%' || #{item} || '%'
+                    </foreach>
+                </if>
+                <if test="contents.isEmpty() == false">
+                    AND CONTENT LIKE
+                    <foreach collection="contents" item="item" separator="OR">
+                        '%' || #{item} || '%'
+                    </foreach>
+                </if>
+            </where>
+        </select>
+
+        <update id="update" parameterType="Leaf">
+            UPDATE LEAF
+            SET
+                VISIBILITY = #{visibility},
+                VIEW_COUNT = #{viewCount},
+                LIKE_COUNT = #{likeCount},
+                TITLE = #{title},
+                CONTENT = #{content},
+                CHILD_LEAF_COUNT = #{childLeafCount},
+                BOOK_MARK = #{bookMark}
+            WHERE ID = #{id}
+        </update>
+</mapper>

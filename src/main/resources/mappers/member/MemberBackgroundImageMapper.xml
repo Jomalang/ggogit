@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Recorders.ggogit.domain.member.repository.MemberBackgroundImageRepository">
+
+    <insert id="save" parameterType="MemberBackgroundImage">
+        INSERT INTO MEMBER_BACKGROUND_IMAGE(NAME)
+        VALUES(#{name})
+    </insert>
+
+    <update id="update" parameterType="MemberBackgroundImage">
+        UPDATE MEMBER_BACKGROUND_IMAGE
+        SET NAME = #{name}
+        WHERE ID = #{id}
+    </update>
+
+    <delete id="delete" parameterType="MemberBackgroundImage">
+        DELETE MEMBER_BACKGROUND_IMAGE
+        WHERE ID = #{id}
+    </delete>
+
+    <select id="findAll" resultType="MemberBackgroundImage">
+        SELECT * FROM MEMBER_BACKGROUND_IMAGE
+    </select>
+
+    <select id="findById" resultType="Long">
+        SELECT * FROM MEMBER_BACKGROUND_IMAGE
+        WHERE ID = #{id}
+    </select>
+
+    <select id="findByName" resultType="String">
+        SELECT * FROM MEMBER_BACKGROUND_IMAGE
+        WHERE NAME LIKE '%${name}%'
+    </select>
+
+</mapper>

@@ -12,9 +12,9 @@ import java.time.LocalDate;
 @ToString
 public class Memoir {
 
-    private long id;
+    private Long id;
     @NotNull
-    private long treeId;
+    private Long treeId;
     @NotNull
     private String title;
     private String text;

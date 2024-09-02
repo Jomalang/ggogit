@@ -3,8 +3,9 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="Recorders.ggogit.domain.memoir.MemoirRepository">
-    <insert id="save" parameterType="Memoir">
+<mapper namespace="Recorders.ggogit.domain.memoir.repository.MemoirRepository">
+    <insert id="save" parameterType="Memoir"
+            useGeneratedKeys="true" keyProperty="id" keyColumn="ID">
         INSERT INTO MEMOIR(TREE_ID, TITLE, TEXT, VISIBILITY)
         VALUES(#{treeId}, #{title}, #{text}, #{visibility})
     </insert>
@@ -17,7 +18,7 @@
         DELETE MEMOIR
         WHERE ID = #{id}
     </delete>
-    <update id="update" parameterType="Memoir">
+    <update id="update" parameterType="Memoir" keyProperty="id" keyColumn="ID">
         UPDATE MEMOIR
         SET TITLE = #{title}, TEXT = #{text}, VISIBILITY = #{visibility}
         WHERE ID = #{id}
@@ -35,6 +36,12 @@
         SELECT *
         FROM MEMOIR
         WHERE TITLE LIKE '%${title}%'
+    </select>
+
+    <select id="findCntById" resultType="MemoirCommentLikeView" parameterType="MemoirCommentLikeView">
+        SELECT *
+        FROM MEMOIR_CL_CNT
+        WHERE ID = #{id}
     </select>
 
 

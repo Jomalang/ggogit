@@ -1,4 +1,4 @@
-package Recorders.ggogit.web.CommonTypeHandler;
+package Recorders.ggogit.domain.util.mybatis;
 
 
 import org.apache.ibatis.type.BaseTypeHandler;
@@ -15,7 +15,7 @@ import java.sql.SQLException;
  * 이 커스텀 핸들러는 mybatis-config.xml에 매핑되어 있습니다.
  */
 
-public class booleanToNumberTypeHandler extends BaseTypeHandler<Boolean> {
+public class BooleanToNumberTypeHandler extends BaseTypeHandler<Boolean> {
 
     @Override
     public void setNonNullParameter(PreparedStatement ps, int i, Boolean parameter, JdbcType jdbcType) throws SQLException {

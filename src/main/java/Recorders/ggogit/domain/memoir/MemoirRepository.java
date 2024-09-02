@@ -1,7 +1,5 @@
-package Recorders.ggogit.domain.memoir.repository;
+package Recorders.ggogit.domain.memoir;
 
-import Recorders.ggogit.domain.memoir.entity.Memoir;
-import Recorders.ggogit.domain.memoir.vIew.MemoirCommentLikeView;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -24,11 +22,8 @@ public interface MemoirRepository {
 
     Memoir findByTitle(String title);
 
+
     //고려해보기
     //Memoir findByBookId(long bookId);
-
-    //뷰를 이용하는 메서드
-    MemoirCommentLikeView findCntById(long id);
-
 
 }

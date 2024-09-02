@@ -1,4 +1,4 @@
-package Recorders.ggogit.domain.memoir.entity;
+package Recorders.ggogit.domain.memoir;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -12,9 +12,9 @@ import java.time.LocalDate;
 @ToString
 public class Memoir {
 
-    private Long id;
+    private long id;
     @NotNull
-    private Long treeId;
+    private long treeId;
     @NotNull
     private String title;
     private String text;

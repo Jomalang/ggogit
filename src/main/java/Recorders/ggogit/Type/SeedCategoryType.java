@@ -1,21 +1,23 @@
-package Recorders.ggogit.entity;
+package Recorders.ggogit.Type;
 
 import lombok.Getter;
 
 @Getter
 public enum SeedCategoryType {
-    BOOK("book", "도서"),
-    IDEA("idea", "생각"),
-    PHRASE("phrase", "문장"),
-    STUDY("study", "공부"),
-    YOUTUBE("youtube", "유튜브");
+    BOOK("book", "도서", 1),
+    IDEA("idea", "생각", 2),
+    PHRASE("phrase", "문장", 3),
+    STUDY("study", "공부", 4),
+    YOUTUBE("youtube", "유튜브", 5);
 
     private final String value;
     private final String description;
+    private final Integer num;
 
-    SeedCategoryType(String value, String description) {
+    SeedCategoryType(String value, String description, Integer num) {
         this.value = value;
         this.description = description;
+        this.num = num;
     }
 
     public static boolean contains(String value) {
@@ -24,6 +26,10 @@ public enum SeedCategoryType {
                 return true;
         }
         return false;
+    }
+
+    public static boolean isBook(Integer value) {
+        return SeedCategoryType.BOOK.num.equals(value);
     }
 
     public static SeedCategoryType of(String value) {

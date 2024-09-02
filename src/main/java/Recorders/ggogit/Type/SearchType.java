@@ -1,5 +1,8 @@
-package Recorders.ggogit.entity;
+package Recorders.ggogit.Type;
 
+import lombok.Getter;
+
+@Getter
 public enum SearchType {
     TITLE("title", "제목"),
     CONTENT("content", "내용"),

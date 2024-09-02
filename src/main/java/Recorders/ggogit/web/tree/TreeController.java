@@ -2,19 +2,14 @@ package Recorders.ggogit.web.tree;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import Recorders.ggogit.entity.BookCategoryType;
-import Recorders.ggogit.entity.Branch;
 import Recorders.ggogit.entity.SeedCategoryType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import Recorders.ggogit.entity.Tree;
 
 @Controller()
 @RequestMapping("/tree")

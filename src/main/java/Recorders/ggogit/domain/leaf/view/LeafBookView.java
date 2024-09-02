@@ -1,22 +1,20 @@
-
-package Recorders.ggogit.domain.leaf.domain;
+package Recorders.ggogit.domain.leaf.view;
 
 import lombok.*;
 
 import java.util.List;
 
-@Setter
-
-@Getter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-
 @Builder
-public class LeafEtcDomain {
+public class LeafBookView {
     private Long id;
     private Long treeId;
     private Long parentLeafId;
-    private List<LeafTagDomain> tags;
+    private Long startPage;
+    private Long endPage;
+    private List<LeafTagView> tags;
     private String title;
     private String content;
     private Boolean visibility;

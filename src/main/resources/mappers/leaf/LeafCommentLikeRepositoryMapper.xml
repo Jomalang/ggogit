@@ -3,18 +3,36 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="Recorders.ggogit.domain.leaf.entity.LeafCommentLike">
+<mapper namespace="Recorders.ggogit.domain.leaf.repository.LeafCommentLikeRepository">
 
-    <insert id="insertLeafCommentLike" parameterType="Recorders.ggogit.domain.leaf.entity.LeafCommentLike">
-        INSERT INTO LEAF_COMMENT_LIKE (MEMBER_ID, LEAF_COMMENT_ID, ACTIVATE, UPDATE_TIME, CREATE_TIME)
-        VALUES (#{memberId}, #{leafCommentId}, #{activate}, #{updateTime}, #{createTime})
+    <insert id="save" parameterType="LeafCommentLike">
+        INSERT INTO LEAF_COMMENT_LIKE (MEMBER_ID, LEAF_COMMENT_ID)
+        VALUES (#{memberId}, #{leafCommentId})
     </insert>
+
+    <select id="findByLeafCommentIdAndMemberId" parameterType="LeafCommentLike" resultType="LeafCommentLike">
+        SELECT *
+        FROM LEAF_COMMENT_LIKE
+        WHERE LEAF_COMMENT_ID = #{leafCommentId} AND MEMBER_ID = #{memberId}
+    </select>
+
+    <select id="findByLeafCommentId" parameterType="Long" resultType="LeafCommentLike">
+        SELECT *
+        FROM LEAF_COMMENT_LIKE
+        WHERE LEAF_COMMENT_ID = #{leafCommentId}
+    </select>
+
+    <select id="findByMemberId" parameterType="Long" resultType="LeafCommentLike">
+        SELECT *
+        FROM LEAF_COMMENT_LIKE
+        WHERE MEMBER_ID = #{memberId}
+    </select>
 
     <update id="update" parameterType="LeafCommentLike">
         UPDATE LEAF_COMMENT_LIKE
-        SET ACTIVATE = #{activate}
-        WHERE MEMBER_ID = #{memberId}
-            AND LEAF_COMMENT_ID = #{leafCommentId}
+        SET
+            ACTIVATE = #{activate}
+        WHERE LEAF_COMMENT_ID = #{leafCommentId} AND MEMBER_ID = #{memberId}
     </update>
 
 </mapper>

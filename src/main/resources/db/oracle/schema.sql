@@ -367,20 +367,16 @@ COMMENT ON COLUMN "TREE"."CREATE_TIME" IS '데이터 생성 시각';
 -- 트리 책 추가 정보 테이블
 -- ============================================ --
 CREATE TABLE "TREE_BOOK" (
-    "ID"	        NUMBER		    NOT NULL, -- 트리 FK
-    "TOTAL_PAGE"	NUMBER(5)		NOT NULL, -- 책 트리 총 페이지 수
+    "TREE_ID"	        NUMBER		    NOT NULL, -- 트리 FK
     "READING_PAGE"	NUMBER(5)		NOT NULL, -- 책 트리 읽은 페이지 수
-    "PROGRESS"	    NUMBER(3)		NOT NULL, -- 책 트리 진행률
     -- PK 정의
-    CONSTRAINT "PK_TREE_BOOK" PRIMARY KEY ("ID"),
+    CONSTRAINT "PK_TREE_BOOK" PRIMARY KEY ("TREE_ID"),
     -- FK 정의
-    CONSTRAINT "FK_TREE_BOOK_TREE" FOREIGN KEY ("ID") REFERENCES "TREE" ("ID")
+    CONSTRAINT "FK_TREE_BOOK_TREE" FOREIGN KEY ("TREE_ID") REFERENCES "TREE" ("ID")
 );
 
-COMMENT ON COLUMN "TREE_BOOK"."ID" IS '책 트리 PK';
-COMMENT ON COLUMN "TREE_BOOK"."TOTAL_PAGE" IS '책 트리 총 페이지 수';
+COMMENT ON COLUMN "TREE_BOOK"."TREE_ID" IS '책 트리 PK';
 COMMENT ON COLUMN "TREE_BOOK"."READING_PAGE" IS '책 트리 읽은 페이지 수';
-COMMENT ON COLUMN "TREE_BOOK"."PROGRESS" IS '책 트리 진행률';
 
 -- ============================================ --
 -- 트리 이미지 테이블
@@ -632,7 +628,7 @@ CREATE TABLE "LEAF" (
     "VIEW_COUNT"	    NUMBER		                            NOT NULL,
     "LIKE_COUNT"	    NUMBER	        DEFAULT 0	            NOT NULL,
     "TITLE"	            NVARCHAR2(100)		                    NOT NULL,
-    "TEXT"	            NVARCHAR2(2000)		                    NOT NULL,
+    "CONTENT"	            NVARCHAR2(2000)		                    NOT NULL,
 	"CHILD_LEAF_COUNT"	NUMBER(1)	    DEFAULT 0	            NOT NULL,
     "BOOK_MARK"	        NUMBER(1)	    DEFAULT 0	            NOT NULL,
     "UPDATE_TIME"	    TIMESTAMP       DEFAULT SYSTIMESTAMP    NOT NULL, -- 데이터 수정 시각
@@ -667,7 +663,7 @@ COMMENT ON COLUMN "LEAF"."VISIBILITY" IS '사용자 공개 여부';
 COMMENT ON COLUMN "LEAF"."VIEW_COUNT" IS '리프 조회수';
 COMMENT ON COLUMN "LEAF"."LIKE_COUNT" IS '리프 좋아요 수';
 COMMENT ON COLUMN "LEAF"."TITLE" IS '리프 제목';
-COMMENT ON COLUMN "LEAF"."TEXT" IS '리프 내용';
+COMMENT ON COLUMN "LEAF".CONTENT IS '리프 내용';
 COMMENT ON COLUMN "LEAF"."CHILD_LEAF_COUNT" IS '자식 리프 수';
 COMMENT ON COLUMN "LEAF"."UPDATE_TIME" IS '데이터 수정 시각';
 COMMENT ON COLUMN "LEAF"."CREATE_TIME" IS '데이터 생성 시각';

@@ -4,11 +4,10 @@ import lombok.*;
 
 import java.util.List;
 
-@Setter
-@Getter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
+
 @Builder
 public class LeafBookDomain {
     private Long id;

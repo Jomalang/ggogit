@@ -3,8 +3,42 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="Recorders.ggogit.domain.leaf.entity.LeafComment">
+<mapper namespace="Recorders.ggogit.domain.leaf.repository.LeafCommentRepository">
 
     <insert id="save" parameterType="LeafComment">
+        INSERT INTO LEAF_COMMENT (MEMBER_ID, LEAF_ID, CONTENT)
+        VALUES (#{memberId}, #{leafId}, #{content})
+    </insert>
+
+    <select id="findById" parameterType="Long" resultType="LeafComment">
+        SELECT *
+        FROM LEAF_COMMENT
+        WHERE ID = #{id}
+    </select>
+
+    <select id="findByLeafId" parameterType="Long" resultType="LeafComment">
+        SELECT *
+        FROM LEAF_COMMENT
+        WHERE LEAF_ID = #{leafId}
+    </select>
+
+    <select id="findByMemberId" parameterType="Long" resultType="LeafComment">
+        SELECT *
+        FROM LEAF_COMMENT
+        WHERE MEMBER_ID = #{memberId}
+    </select>
+
+    <select id="findAll" resultType="LeafComment">
+        SELECT *
+        FROM LEAF_COMMENT
+    </select>
+
+    <update id="update" parameterType="LeafComment">
+        UPDATE LEAF_COMMENT
+        SET
+            LIKE_COUNT = #{likeCount},
+            CONTENT = #{content}
+        WHERE ID = #{id}
+    </update>
 
 </mapper>

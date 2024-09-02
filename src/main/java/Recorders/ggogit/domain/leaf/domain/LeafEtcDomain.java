@@ -10,7 +10,7 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
+
 @Builder
 public class LeafEtcDomain {
     private Long id;

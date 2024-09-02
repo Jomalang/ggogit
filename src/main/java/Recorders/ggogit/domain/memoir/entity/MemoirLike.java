@@ -14,10 +14,10 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class MemoirLike {
     @NotNull
-    private long memberId;
+    private Long memberId;
     @NotNull
-    private long memoirId;
-    private boolean activate;
+    private Long memoirId;
+    private Boolean activate;
     private LocalDateTime createTime;
     private LocalDateTime updateTime;
 }

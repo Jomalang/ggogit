@@ -14,12 +14,12 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MemoirComment {
-    private long id;
+    private Long id;
     @NotNull
-    private long memberId;
+    private Long memberId;
     @NotNull
-    private long memoirId;
-    private int likeCount;
+    private Long memoirId;
+    private Integer likeCount;
     private String content;
     private LocalDateTime updateTime;
     private LocalDateTime createTime;

@@ -15,12 +15,12 @@ import java.time.LocalDateTime;
 public class MemoirCommentLike {
 
     @NotNull
-    private long memberId;
+    private Long memberId;
 
     @NotNull
-    private long memoirCommentId;
+    private Long memoirCommentId;
 
-    private boolean activate;
+    private Boolean activate;
     private LocalDateTime updateTime;
     private LocalDateTime createTime;
 }

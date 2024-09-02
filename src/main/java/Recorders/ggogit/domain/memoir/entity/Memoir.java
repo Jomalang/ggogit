@@ -20,4 +20,16 @@ public class Memoir {
     private LocalDate updateTime;
     private LocalDate createTime;
 
+    public void changeTitle(String title) {
+        this.title = title;
+    }
+
+    public void changeText(String text) {
+        this.text = text;
+    }
+
+    public void changeVisibility(Boolean visibility) {
+        this.visibility = visibility;
+    }
+
 }

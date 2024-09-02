@@ -106,7 +106,7 @@
 }
 
 .text-book-info__create {
-  width: 100%;
+  width: fit-content;
   display: flex;
   justify-content: left;
   gap: 2px;
@@ -114,10 +114,6 @@
 .text-book-info__create-frame {
   display: flex;
   gap: 2px;
-}
-
-.text-book-info__create {
-  display: flex;
 }
 
 .text-book-info-create-info {

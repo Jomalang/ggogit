@@ -1,7 +1,7 @@
 package Recorders.ggogit.domain.leaf.service;
 
 import Recorders.ggogit.domain.leaf.view.LeafBookView;
-import Recorders.ggogit.entity.SearchType;
+import Recorders.ggogit.Type.SearchType;
 
 import java.util.List;
 

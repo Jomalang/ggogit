@@ -9,7 +9,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class LeafEtcView {
+public class LeafView {
     private Long id;
     private Long treeId;
     private Long parentLeafId;

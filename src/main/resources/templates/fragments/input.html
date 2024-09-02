@@ -202,12 +202,13 @@
     <!--  ==========================================
       FRAGMENT: 로그 페이지 구간 기록
       ========================================== -->
-    <div class="input-page-number-box" th:fragment="page-number">
+    <div class="input-page-number-box" th:fragment="page-number(startPage, endPage)">
       <p class="input-page-number__title">페이지</p>
       <div class="input-page-number__frame">
         <label class="input-page-number__label">
           <input
             class="input-page-number__input--start"
+            th:field="*{startPage}"
             name="startPage"
             type="number"
             placeholder="시작 페이지"
@@ -217,6 +218,7 @@
         <label class="input-page-number__label">
           <input
             class="input-page-number__input--end"
+            th:field="*{endPage}"
             name="endPage"
             type="number"
             placeholder="마지막 페이지"
@@ -243,7 +245,7 @@
                   <button class="input-tag-select__tag-delete-btn">
                     <img th:src="@{/svg/x-button.svg}" alt="next-button" />
                   </button>
-                  <input class="none" name="tag" value="1" disabled />
+                  <input class="none" name="tagIds" value="1" />
                 </label>
               </li>
 
@@ -253,7 +255,7 @@
                   <button class="input-tag-select__tag-delete-btn">
                     <img th:src="@{/svg/x-button.svg}" alt="next-button" />
                   </button>
-                  <input class="none" name="tag" value="1" disabled />
+                  <input class="none" name="tagIds" value="1" />
                 </label>
               </li>
 
@@ -263,7 +265,7 @@
                   <button class="input-tag-select__tag-delete-btn">
                     <img th:src="@{/svg/x-button.svg}" alt="next-button" />
                   </button>
-                  <input class="none" name="tag" value="1" disabled />
+                  <input class="none" name="tagIds" value="1" />
                 </label>
               </li>
             </ul>

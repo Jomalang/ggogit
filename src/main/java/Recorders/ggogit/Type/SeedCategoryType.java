@@ -39,4 +39,12 @@ public enum SeedCategoryType {
         }
         throw new IllegalArgumentException("SeedCategoryType의 value 인자를 잘못 받았습니다.");
     }
+
+    public static SeedCategoryType of(Integer num) {
+        for (SeedCategoryType type : SeedCategoryType.values()) {
+            if (type.num.equals(num))
+                return type;
+        }
+        throw new IllegalArgumentException("SeedCategoryType의 num 인자를 잘못 받았습니다.");
+    }
 }

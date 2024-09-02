@@ -67,8 +67,8 @@ public class MemoirCommentRepositoryTest {
 
     private static MemoirComment createTestComment() {
         MemoirComment comment = new MemoirComment();
-        comment.setMemberId(1);
-        comment.setMemoirId(2);
+        comment.setMemberId(1L);
+        comment.setMemoirId(2L);
         comment.setContent("잘 읽었습니다~");
 
         return comment;

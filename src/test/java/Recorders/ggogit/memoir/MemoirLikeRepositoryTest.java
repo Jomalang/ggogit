@@ -36,19 +36,19 @@ public class MemoirLikeRepositoryTest {
         MemoirLike memoirLike = createMemoirLike();
         memoirLikeRepository.save(memoirLike);
         MemoirLike foundMemoirLike = memoirLikeRepository.findById(memoirLike);
-        boolean before = foundMemoirLike.isActivate();
+        boolean before = foundMemoirLike.getActivate();
 
         memoirLikeRepository.toggle(memoirLike);
         MemoirLike foundMemoirLike2 = memoirLikeRepository.findById(memoirLike);
-        boolean after = foundMemoirLike2.isActivate();
+        boolean after = foundMemoirLike2.getActivate();
 
         assertThat(after).isFalse();
     }
 
     private static MemoirLike createMemoirLike() {
         MemoirLike memoirLike = new MemoirLike();
-        memoirLike.setMemoirId(2);
-        memoirLike.setMemberId(1);
+        memoirLike.setMemoirId(2L);
+        memoirLike.setMemberId(1L);
 
         return memoirLike;
     }

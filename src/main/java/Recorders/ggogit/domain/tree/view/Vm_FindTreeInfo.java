@@ -14,7 +14,8 @@ import java.util.Date;
 @Builder
 @Repository
 public class Vm_FindTreeInfo {
-    private Long id;
+    private Long bookId;
+    private Long treeId;
     private Long memberId ;
     private Long seedId;
     private String title;

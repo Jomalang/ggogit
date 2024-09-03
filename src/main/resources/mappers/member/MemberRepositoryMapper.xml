@@ -25,17 +25,17 @@
         SELECT * FROM MEMBER
     </select>
 
-    <select id="findById" resultType="Long">
+    <select id="findById" resultType="Member">
         SELECT * FROM MEMBER
         WHERE ID = #{id}
     </select>
 
-    <select id="findByEmail" resultType="String">
+    <select id="findByEmail" resultType="Member">
         SELECT * FROM MEMBER
         WHERE EMAIL = #{email}
     </select>
 
-    <select id="findByName" resultType="String">
+    <select id="findByName" resultType="Member">
         SELECT * FROM MEMBER
         WHERE NAME LIKE '%${name}%'
     </select>

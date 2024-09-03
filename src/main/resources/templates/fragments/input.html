@@ -80,6 +80,7 @@
           class="input-text__input"
           th:name="${name}"
           th:placeholder="${placeholder}"
+          autocomplete="off"
         />
       </label>
     </div>
@@ -291,7 +292,7 @@
 <!--  ==========================================
     FRAGMENT: 초록색 긴 버튼
     ========================================== -->
-<div class="tree-create__link-btn" href="#" th:fragment="green-wide-btn(label)">
+<div class="tree-create__link-btn" th:fragment="green-wide-btn(label)">
     <button class="tree-create__link-btn--green" th:text="${label}">버튼 내용</button>
 </div>
 

@@ -16,21 +16,27 @@
     <div th:replace="~{/fragments/button::login-join-page__back-btn}"></div>
 </header>
 
-<section class="login-screen-container">
+<section class="login-screen-container" th:object="${member}">
     <h1 class="none">로그인 화면 안내</h1>
-    <div th:replace="~{/fragments/text::text-login__page-info(label='로그인', infoText='이메일과 비밀번호를 입력해주세요.')}"></div>
+    <div th:if="${!#fields.hasGlobalErrors()}" th:insert="~{/fragments/text::text-login__page-info(label='로그인', infoText='이메일과 비밀번호를 입력해주세요.')}"></div>
+    <div th:if="${#fields.hasGlobalErrors()}" th:with="err = ${#fields.globalErrors().getFirst()}" th:insert="~{/fragments/text::text-login__page-info(label='로그인', infoText=null)}">
+        <div class="text--errors" th:text="${err}"></div>
+    </div>
+
 </section>
 
-<section class="social-login-container">
+
+<form method="POST" th:action th:object="${member}">
+<section class="social-login-container" >
     <h1 class="none">로그인</h1>
     <div th:replace="~{/fragments/input::text-box(label='이메일', placeholder='이메일을 입력하세요', name='email')}"></div>
+    <div th:errors="*{email}" class="text--errors"></div>
 </section>
 <section class="social-login-container">
     <h1 class="none">비밀번호</h1>
-    <div th:replace="~{/fragments/input::text-box(label='비밀번호', placeholder='비밀번호를 입력하세요', name='email')}"></div>
+    <div th:replace="~{/fragments/input::text-box(label='비밀번호', placeholder='비밀번호를 입력하세요', name='password')}"></div>
+    <div th:errors="*{password}" class="text--errors"></div>
 </section>
-
-<form method="POST" action="#">
     <section class="social-login-container">
         <h1 class="none">로그인 버튼</h1>
         <div th:replace="~{/fragments/input::green-wide-btn(label='로그인')}"></div>

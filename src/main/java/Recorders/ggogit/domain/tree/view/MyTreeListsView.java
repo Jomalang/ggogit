@@ -13,21 +13,20 @@ import java.util.Date;
 @AllArgsConstructor
 @Builder
 @Repository
-public class FindTreeInfoView {
+public class MyTreeListsView {
     private Long bookId;
     private String bookCategory;
     private String bookTitle;
     private String bookAuthor;
     private String bookTranslator;
     private String bookPublisher;
+    private Integer bookPublishedYear;
     private Integer bookTotalPage;
     private Long treeId;
-    private Long memberId ;
     private Long seedId;
     private String title;
-    private String description;
     private Boolean visibility;
-    private Date createdAt;
+    private Date leafCreatedAt;
     private Integer readingPage ;
     private String coverImageName;
     private Long treeLeafCnt;

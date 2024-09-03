@@ -200,21 +200,21 @@
   th:object="${tree}"
 >
   <a href="#" class="textbox-recent-tree-info__a">
-    <h2 class="textbox-recent-tree-info__tree-title" th:text="*{treeName}">
+    <h2 class="textbox-recent-tree-info__tree-title" th:text="*{title}">
       나의 첫번째 트리
     </h2>
     <div
       class="textbox-recent-tree-info__tag tag"
-      th:text="*{bookCategoryType}"
+      th:text="*{bookCategory}"
     >
       시/에세이
     </div>
-    <p class="textbox-recent-tree-info__book-title" th:text="*{bookName}">
+    <p class="textbox-recent-tree-info__book-title" th:text="*{bookTitle}">
       무정형의 삶
     </p>
     <div class="textbox-recent-tree-info__items">
-      <p class="textbox-recent-tree-info__author" th:text="*{author}">김민철</p>
-      <p class="textbox-recent-tree-info__publisher" th:text="*{publisher}">
+      <p class="textbox-recent-tree-info__author" th:text="*{bookAuthor}">김민철</p>
+      <p class="textbox-recent-tree-info__publisher" th:text="*{bookPublisher}">
         위즈덤 하우스
       </p>
     </div>

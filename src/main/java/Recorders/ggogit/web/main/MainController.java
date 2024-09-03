@@ -1,32 +1,39 @@
 package Recorders.ggogit.web.main;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import Recorders.ggogit.domain.tree.service.TreeService;
+import Recorders.ggogit.domain.tree.service.MemTreeServiceImpl;
+import Recorders.ggogit.domain.tree.view.FindTreeInfoView;
+import Recorders.ggogit.domain.tree.view.MyTreeListsView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import Recorders.ggogit.entity.Tree;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping()
 public class MainController {
 
+    @Autowired
+    private MemTreeServiceImpl memTreeService;
 
     @GetMapping("/home")
     public String index(Model model,
                         @RequestParam(name = "tree", required = false, defaultValue = "true") Boolean memberHasTree) {
-
+        List<FindTreeInfoView> treeInfoList = memTreeService.treeInfoLists(1L);
+        List<MyTreeListsView> treeLists = memTreeService.treeAllLists(1L);
         if (!memberHasTree) {
             return "view/home/no-tree";
         } else {
+
+
             // 더미 데이터
             // 테스트 위한 트리 리스트(나중에 리포지로 빠짐)
+
+            /*
             List<Tree> trees = new ArrayList<>();
             long id = 1L;
             for (int i = 0; i < 1; i++) {
@@ -67,8 +74,9 @@ public class MainController {
                 t1.setDescription("헤르만 헤세의 싯다르타를 읽고 정리한 트리입니다.");
                 trees.add(t1);
             }
-
-            model.addAttribute("treeList", trees);
+*/
+            model.addAttribute("treeInfoList", treeInfoList);
+            model.addAttribute("treeList", treeLists);
             return "view/home/has-tree";
         }
     }

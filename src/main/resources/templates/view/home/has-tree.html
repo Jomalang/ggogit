@@ -31,7 +31,7 @@
           <h3 class="none">최근 트리 이미지 캐러셀</h3>
           <section class="book-img-container">
             <div
-              th:replace="~{fragments/background :: bg-tree-book-covers(trees=${treeList})}"
+              th:replace="~{fragments/background :: bg-tree-book-covers(trees=${treeInfoList})}"
             ></div>
           </section>
 
@@ -40,7 +40,7 @@
             <ul class="book-tree-explanation-list">
               <li
                 class="book-tree-explanation-item none"
-                th:each="tree: ${treeList}"
+                th:each="tree: ${treeInfoList}"
                 th:with="exIdx=${treeStat.index}"
                 th:classappend="${exIdx}"
               >
@@ -49,15 +49,15 @@
                 ></div>
                 <section
                   class="card-progress-home-container"
-                  th:with="readingPage=${tree.readingPage}, totalPage=${tree.totalPage}, progress=${T(java.lang.String).format('%.1f',(readingPage*100.0)/totalPage)},
-            leaf=${tree.leaf}, like=${tree.like}, view=${tree.view}"
+                  th:with="readingPage=${tree.readingPage}, totalPage=${tree.bookTotalPage}, progress=${T(java.lang.String).format('%.1f',(readingPage*100.0)/bookTotalPage)},
+            leaf=${treeLeafCnt}, like=${treeLikeCnt}, view=${treeViewCnt}"
                 >
                   <h4 class="none">트리 진행률</h4>
                   <div
-                    th:replace="~{fragments/card::card-progress-bar(${progress}, ${readingPage}, ${totalPage})}"
+                    th:replace="~{fragments/card::card-progress-bar(${progress}, ${readingPage}, ${bookTotalPage})}"
                   ></div>
                   <div
-                    th:replace="~{fragments/card::card-react-numbers(${leaf},${like},${view})}"
+                    th:replace="~{fragments/card::card-react-numbers(${treeLeafCnt},${treeLikeCnt},${treeViewCnt})}"
                   ></div>
                 </section>
               </li>

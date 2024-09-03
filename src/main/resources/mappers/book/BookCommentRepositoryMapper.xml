@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Recorders.ggogit.domain.book.repository.BookCommentRepositoryk">
+    <insert id="save" parameterType="Recorders.ggogit.domain.book.entity.BookComment">
+        INSERT INTO BOOK_COMMENT (MEMBER_ID, BOOK_ID, LIKE_COUNT, CONTENT)
+        VALUES (#{memberId}, #{bookId}, #{likeCount}, #{content})
+    </insert>
+
+    <update id="update" parameterType="BookComment">
+        UPDATE BOOK_COMMENT
+        SET
+            MEMBER_ID = #{memberId},
+            BOOK_ID = #{bookId},
+            LIKE_COUNT = #{likeCount},
+            CONTENT = #{content}
+        WHERE ID = #{id}
+    </update>
+</mapper>

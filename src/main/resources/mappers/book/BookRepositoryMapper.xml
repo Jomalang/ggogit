@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Recorders.ggogit.domain.book.repository.BookRepository">
+
+    <insert id="save" parameterType="Book">
+        INSERT INTO BOOK (MEMBER_ID, TITLE, AUTHOR, PUBLISHER, PUBLIC_DATE, TOTAL_PAGE, IMAGE_FILE, RESOURCE_FROM)
+        VALUES (#{memberId}, #{title}, #{author}, #{publisher}, #{publicDate}, #{totalPage}, #{imageFile}, #{resourceFrom})
+    </insert>
+
+    <update id="update" parameterType="Book">
+        UPDATE BOOK
+        SET
+            TOTAL_PAGE = #{totalPage},
+            TITLE = #{title},
+            AUTHOR = #{author},
+            PUBLISHER = #{publisher},
+            IMAGE_FILE = #{imageFile},
+            RESOURCE_FROM = #{resourceFrom},
+            PUBLIC_DATE = #{publicDate}
+        WHERE ID = #{id}
+    </update>
+
+    <select id="findAll" resultType="Book">
+        SELECT * FROM BOOK
+    </select>
+
+    <select id="findByTitle" resultType="Book" parameterType="String">
+        SELECT * FROM BOOK WHERE TITLE = #{title}
+    </select>
+
+    <delete id="deleteById" parameterType="Long">
+        DELETE FROM BOOK WHERE ID = #{id}
+    </delete>
+
+    <delete id="delete" parameterType="Book">
+        DELETE FROM BOOK WHERE ID = #{id}
+    </delete>
+
+</mapper>

@@ -6,7 +6,7 @@
 <!--트리 생성-->
     <insert id="save" parameterType="Tree">
         INSERT INTO TREE(MEMBER_ID, SEED_ID, TITLE, DESCRIPTION, BOOK_MARK_COUNT, VISIBILITY)
-        VALUES(#{memberId}, #{seedId}, #{title}, #{description}, #{bookMarkCountNum}, #{visibility})
+        VALUES(#{memberId}, #{seedId}, #{title}, #{description}, #{bookMarkCount}, #{visibility})
     </insert>
 
 

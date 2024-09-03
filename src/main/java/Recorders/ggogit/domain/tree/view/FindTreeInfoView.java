@@ -13,19 +13,27 @@ import java.util.Date;
 @AllArgsConstructor
 @Builder
 @Repository
-public class Vm_FindTreeInfo {
+public class FindTreeInfoView {
     private Long bookId;
+    private String bookCategory;
+    private String bookTitle;
+    private String bookAuthor;
+    private String bookTranslator;
+    private String bookPublisher;
+    private Integer bookPage;
+    private Date bookPublishDate;
     private Long treeId;
     private Long memberId ;
     private Long seedId;
     private String title;
     private String description;
-    private Integer bookMarkCountNum;
+    private Integer bookMarkCount;
     private Boolean visibility;
     private Date updateTime;
     private Date createTime;
     private Integer readingPage ;
-    private String treeImageName;
+    private String coverImageName;
+    private Long treeLeafCnt;
     private Long treeLikeCnt;
-
+    private Long treeViewCnt;
 }

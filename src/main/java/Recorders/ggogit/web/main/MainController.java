@@ -17,8 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping()
 public class MainController {
 
-    @Autowired
-    TreeService treeService;
 
     @GetMapping("/home")
     public String index(Model model,

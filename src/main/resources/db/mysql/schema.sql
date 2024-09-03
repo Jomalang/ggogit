@@ -88,6 +88,15 @@ CREATE TABLE `FOLLOW` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ============================================ --
+-- 도서 카테고리 테이블 생성
+-- ============================================ --
+CREATE TABLE `BOOK_CATEGORY` (
+    `ID` BIGINT(20) NOT NULL AUTO_INCREMENT COMMENT '도서 카테고리 PK',
+    `NAME` VARCHAR(255) NOT NULL COMMENT '카테고리 이름',
+    PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ============================================ --
 -- 도서 테이블 생성
 -- ============================================ --
 CREATE TABLE `BOOK` (
@@ -155,8 +164,6 @@ CREATE TABLE `BOOK_COMMENT_LIKE` (
 CREATE TABLE `SEED` (
     `ID` BIGINT(20) NOT NULL AUTO_INCREMENT COMMENT '씨앗 PK',
     `NAME` VARCHAR(255) NOT NULL COMMENT '씨앗 이름',
-    `CREATE_DATE` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '생성 날짜',
-    `UPDATE_DATE` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '수정 날짜',
     PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

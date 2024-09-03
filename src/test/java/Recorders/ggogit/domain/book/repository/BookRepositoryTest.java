@@ -1,6 +1,7 @@
 package Recorders.ggogit.domain.book.repository;
 
 import Recorders.ggogit.domain.book.entity.Book;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;

@@ -73,7 +73,7 @@ class LeafTagRepositoryTest {
                 .build();
 
         // when
-        int updatedCount = leafTagRepository.update(leafTag);
+        Long updatedCount = leafTagRepository.update(leafTag);
 
         // then
         assertThat(updatedCount).isEqualTo(1);

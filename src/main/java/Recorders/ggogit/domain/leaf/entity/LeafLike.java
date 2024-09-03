@@ -4,16 +4,14 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 
-@Setter
-@Getter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 @Builder
 public class LeafLike {
     private Long memberId; // TODO: entity 수정
     private Long leafId; // TODO: entity 수정
-    private Boolean activate;
+    private boolean activate;
     private LocalDateTime updateTime;
     private LocalDateTime createTime;
 }

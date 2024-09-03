@@ -4,19 +4,21 @@ import lombok.Getter;
 
 @Getter
 public enum LeafDirectionType {
-    START("start", "시작"),
-    END("end", "끝"),
-    LEFT("left", "왼쪽"),
-    RIGHT("right", "오른쪽"),
-    SIDE("side", "옆"),
-    DOWN("down", "아래");
+    START("start", "시작", 1),
+    RIGHT("right", "오른쪽", 2),
+    SIDE("side", "양쪽", 3),
+    DOWN("down", "아래", 4),
+    LEFT("left", "왼쪽", 5),
+    END("end", "끝", 6);
 
     private final String value;
     private final String description;
+    private final Integer num;
 
-    LeafDirectionType(String value, String description) {
+    LeafDirectionType(String value, String description, Integer num) {
         this.value = value;
         this.description = description;
+        this.num = num;
     }
 
     public static LeafDirectionType of(String value) {

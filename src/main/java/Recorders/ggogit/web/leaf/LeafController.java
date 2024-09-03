@@ -3,8 +3,11 @@ package Recorders.ggogit.web.leaf;
 import Recorders.ggogit.Type.SeedCategoryType;
 import Recorders.ggogit.domain.leaf.service.LeafBookService;
 import Recorders.ggogit.domain.leaf.service.LeafEtcService;
+import Recorders.ggogit.domain.leaf.service.LeafService;
+import Recorders.ggogit.domain.leaf.view.LeafCardView;
+import Recorders.ggogit.domain.leaf.view.LeafImageCardView;
+import Recorders.ggogit.domain.leaf.view.LeafItemView;
 import Recorders.ggogit.web.leaf.form.LeafFrom;
-import jakarta.annotation.Nullable;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,6 +15,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/leaf")
@@ -22,6 +27,9 @@ public class LeafController {
 
     @Autowired
     private LeafBookService leafBookService;
+
+    @Autowired
+    private LeafService leafService;
 
     @GetMapping("/first/reg")
     public ModelAndView getFirstReg(
@@ -113,22 +121,35 @@ public class LeafController {
     @GetMapping("/list")
     public String getList(
         @RequestParam(value = "tree_id") Long treeId,
-        @RequestParam(value = "leaf_id", required = false) @Nullable Long leafId,
+        @RequestParam(value = "leaf_id") Long leafId,
         Model model
     ) {
-        // TODO: 트리 조회를 통한 SEED값 조회
-        Long seedId = 1L;
-        if (SeedCategoryType.isBook(seedId.intValue())) {
-            model.addAttribute("list", leafBookService.getLeafItemList(treeId, leafId));
-        } else {
-            model.addAttribute("list", leafEtcService.getLeafItemList(treeId, leafId));
+        List<LeafItemView> list = leafService.getLeafItems(treeId, leafId);
+        for (LeafItemView item : list) {
+            if (item.getFocused()) {
+                model.addAttribute("focusedTime", item.getCreateTime());
+                break;
+            }
         }
+        // 최근 수정 브랜치 이름 정보 넣어야함
+        model.addAttribute("recentBranch", leafService.getRecentBranch(treeId));
+        model.addAttribute("breadcrumb", leafService.getBreadcrumb(treeId, leafId));
+        model.addAttribute("list", list);
         return "/view/leaf/list";
     }
 
     @GetMapping("/detail")
-    public String getLeafDetail() {
+    public String getLeafDetail(
+            @RequestParam(value = "tree_id") Long treeId,
+            @RequestParam(value = "leaf_id") Long leafId,
+            Model model
+    ) {
+        model.addAttribute("breadcrumb", leafService.getBreadcrumb(treeId, leafId));
+        // TODO: 도서 상세 정보 넣어야함
+
+        Long memberId = 1L;
+        LeafImageCardView leafCardView = leafService.LeafImageCardView(memberId);
+        model.addAttribute("leafCards", leafCardView);
         return "/view/leaf/list";
     }
-
 }

@@ -2527,14 +2527,14 @@ card.html
   gap: 4px;
 }
 
-.login-screen-container {
-  padding-top: 60px;
-}
+
 
 .join-guide {
   display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  text-align: center;
   gap: 4px;
-  white-space: nowrap;
 }
 
 

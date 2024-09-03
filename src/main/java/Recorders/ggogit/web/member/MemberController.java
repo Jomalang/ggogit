@@ -15,9 +15,7 @@ public class MemberController {
     }
 
     @PostMapping("/login")
-    public String postMemberLogin() {
-        return "redirect:/member/login";
-    }
+    public String postMemberLogin() {return "redirect:/member/login";}
 
     @GetMapping("/join")
     public String getMemberJoin() {

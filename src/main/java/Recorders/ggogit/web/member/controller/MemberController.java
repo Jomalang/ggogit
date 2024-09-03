@@ -4,16 +4,16 @@ import Recorders.ggogit.domain.member.entity.Member;
 import Recorders.ggogit.domain.member.service.LoginService;
 import Recorders.ggogit.web.member.LoginForm;
 import Recorders.ggogit.web.member.LoginRegForm;
+import Recorders.ggogit.web.member.session.SessionConst;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -34,7 +34,8 @@ public class MemberController {
     public String postMemberLogin(@Validated @ModelAttribute("member") LoginForm loginForm,
                                   BindingResult bindingResult,
                                   RedirectAttributes redirectAttributes
-                                  ,Model model) {
+                                  , Model model
+                                ,HttpServletRequest request) {
 
         //입력에 오류가 있을 경우(빈칸 등)
         //TODO 이메일 형식 검증 로직 필요
@@ -43,17 +44,30 @@ public class MemberController {
             return "/view/member/index";
         }
 
-        Member member = loginService.login(loginForm);
-        if(member == null) {
+        Member loginMember = loginService.login(loginForm);
+        if(loginMember == null) {
             bindingResult.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다.");
             log.info("errors: {}", bindingResult.getGlobalErrors());
             return "/view/member/index";
         }
 
         //로그인 성공
-        redirectAttributes.addAttribute("nickName", member.getNickname());
-        return "redirect:/home/index/{nickName}";
+        //세션 생성
+        HttpSession session = request.getSession();
+        session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember);
+        redirectAttributes.addAttribute("nickName", loginMember.getNickname());
+        return "redirect:/home/{nickName}";
     }
+
+    @PostMapping("/logout")
+    public String postMemberLogout(Model model, HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if(session != null) {
+            session.invalidate();
+        }
+        return"redirect:/home/index";
+    }
+
 
     @GetMapping("/join")
     public String getMemberJoin() {

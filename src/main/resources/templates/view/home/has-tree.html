@@ -49,15 +49,15 @@
                 ></div>
                 <section
                   class="card-progress-home-container"
-                  th:with="readingPage=${tree.readingPage}, totalPage=${tree.bookTotalPage}, progress=${T(java.lang.String).format('%.1f',(readingPage*100.0)/bookTotalPage)},
-            leaf=${treeLeafCnt}, like=${treeLikeCnt}, view=${treeViewCnt}"
+                  th:with="readingPage=${tree.readingPage}, totalPage=${tree.bookTotalPage}, progress=${T(java.lang.String).format('%.1f',(readingPage*100.0)/totalPage)},
+            leaf=${tree.treeLeafCnt}, like=${tree.treeLikeCnt}, view=${tree.treeViewCnt}"
                 >
                   <h4 class="none">트리 진행률</h4>
                   <div
-                    th:replace="~{fragments/card::card-progress-bar(${progress}, ${readingPage}, ${bookTotalPage})}"
+                    th:replace="~{fragments/card::card-progress-bar(${progress}, ${readingPage}, ${totalPage})}"
                   ></div>
                   <div
-                    th:replace="~{fragments/card::card-react-numbers(${treeLeafCnt},${treeLikeCnt},${treeViewCnt})}"
+                    th:replace="~{fragments/card::card-react-numbers(${leaf},${like},${view})}"
                   ></div>
                 </section>
               </li>

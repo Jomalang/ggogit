@@ -22,6 +22,7 @@ public class MyTreeListsView {
     private String bookPublisher;
     private Integer bookPublishedYear;
     private Integer bookTotalPage;
+    private Boolean bookComplete;
     private Long treeId;
     private Long seedId;
     private String title;

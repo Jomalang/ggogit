@@ -30,28 +30,26 @@
         <img
           class="card-tree__book-cover"
           src="/src/main/resources/static/svg/card-felt__cover.svg"
-          th:src="@{/svg/{img}(img=*{imgUrl})}"
+          th:src="@{/svg/{img}(img=*{coverImageName})}"
+          alt="treeCover"
         />
         <div class="card-tree-detail__box">
           <!--반복문으로 넣어야 할듯..-->
           <div class="card-tree-detail__tags">
-            <span class="card-tree-detail__tag" id="data-XXX">도서</span>
-            <span class="card-tree-detail__tag" id="data-XXX">정치비평</span>
+            <span class="card-tree-detail__tag" id="data-XXX" th:text="*{bookCategory}">도서</span>
+<!--            <span class="card-tree-detail__tag" id="data-XXX">정치비평</span>-->
           </div>
           <!---->
-          <p class="card-tree-detail__name" id="data-XXX" th:text="*{bookName}">
-            운명이란 무엇인가?
-            <img
-              class="card-tree-detail__complete-icon"
-              th:if="{*{complete} == true}"
-              src="/src/main/resources/static/svg/card-tree-details-complete.svg"
-              alt="완독"
-            />
-          </p>
+            <div class="card-tree-detail__slot">
+                <p class="card-tree-detail__name" id="data-XXX" th:text="*{bookTitle}">
+                    운명이란 무엇인가?
+                </p>
+                <div th:if="*{bookComplete}" class="card-tree-detail__complete-icon" ></div>
+            </div>
           <p
             class="card-tree-detail__explanation"
             id="data-XXX"
-            th:text="*{description}"
+            th:text="*{title}"
           >
             그의 운명에 대한 아주 개인적인 생각
           </p>
@@ -59,28 +57,28 @@
             <span
                     class="card-tree-detail__info"
                     id="data-XXX"
-                    th:text="*{createdAt}"
+                    th:text="*{bookPublishedYear}"
             >2024</span
             >
                     <span class="card-tree-detail__info">/</span>
                     <span
                             class="card-tree-detail__info"
                             id="data-XXX"
-                            th:text="*{author}"
+                            th:text="*{bookAuthor}"
                     >유시민</span
                     >
                     <span class="card-tree-detail__info">/</span>
                     <span
                             class="card-tree-detail__info"
                             id="data-XXX"
-                            th:text="*{publisher}"
+                            th:text="*{bookPublisher}"
                     >생각의 길</span
                     >
                 </div>
                 <span
                         class="card-tree-detail__info-created-date"
                         id="data-XXX"
-                        th:text="*{updatedAt}"
+                        th:text="*{leafCreatedAt}"
                 >2024-07-15</span
                 >
             </div>

@@ -40,15 +40,15 @@
     <!-- ==========================================
      FRAGMENT: 공개성 여부 체크
      ========================================== -->
-    <div class="input-visibility" th:fragment="input-visibility(object, field)">
+    <div class="input-visibility" th:fragment="input-visibility(name)">
       <p class="input-visibility__name">공개 여부</p>
       <div class="input-visibility__btns">
-        <label class="input-visibility__label" th:object="${object}">
+        <label class="input-visibility__label">
           <input
             class="input-visibility__btn"
             label="공개"
             type="radio"
-            th:field="*{__${field}__}"
+            th:name="${name}"
             id="public"
             value="1"
             checked
@@ -59,7 +59,7 @@
             class="input-visibility__btn"
             label="비공개"
             type="radio"
-            th:field="*{__${field}__}"
+            th:name="${name}"
             id="private"
             value="0"
           />
@@ -72,17 +72,16 @@
      ========================================== -->
     <div
       class="input-text__bar"
-      th:fragment="text-box(label, placeholder, object, field)"
+      th:fragment="text-box(label, placeholder, name)"
     >
-      <label class="input-text__label" th:object="${object}">
+      <label class="input-text__label">
         <span class="input-text__label-text" th:text="${label}">지은이</span>
         <input
           class="input-text__input"
-          th:field="*{__${field}__}"
+          th:name="${name}"
           th:placeholder="${placeholder}"
         />
       </label>
-
     </div>
 
     <!-- ==========================================
@@ -90,15 +89,14 @@
      ========================================== -->
     <div
       class="input-textarea__box"
-      th:fragment="textarea-box(label, placeholder, object, field)"
+      th:fragment="textarea-box(label, placeholder, name)"
     >
-      <label class="input-textarea__label tree-input__large-text-label"
-      th:object="${object}">
+      <label class="input-textarea__label tree-input__large-text-label">
         <span th:text="${label}">트리 설명</span>
         <!-- textarea  태그 사이에 공백 X > placeholder 동작안함-->
         <textarea
           class="input-textarea__textarea tree-input__large-textarea"
-          th:field="*{__${field}__}"
+          th:name="${name}"
           th:placeholder="${placeholder}"
         ></textarea>
       </label>

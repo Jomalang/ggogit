@@ -518,6 +518,7 @@
   border-radius: 12px;
   color: var(--text-no-active);
   font-weight: var(--bold);
+  font-size: 16px;
   border: none;
   padding: 0 46px 0 46px;
   display: flex;
@@ -558,6 +559,7 @@
   width: 100%;
   border-radius: 40px;
   box-shadow: var(--shadow-basic);
+  font-size: 14px;
   font-weight: var(--bold, 700);
 }
 

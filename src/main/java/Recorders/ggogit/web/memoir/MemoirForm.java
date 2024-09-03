@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class MemoirForm {
 
-    @NotNull
     private Long treeId;
 
     @NotBlank(message = "제목을 적어주세요!")

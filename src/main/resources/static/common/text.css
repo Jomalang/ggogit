@@ -79,3 +79,11 @@ abbr, address, b, bdi,
   letter-spacing: var(--letter-spacing-main);
   color: var(--text-sub);
 }
+
+.text--errors{
+  font-size: 16px;
+  color: var(--warning);
+  font-weight: var(--medium);
+  line-height: var(--line-height-main);
+  letter-spacing: var(--letter-spacing-main);
+}

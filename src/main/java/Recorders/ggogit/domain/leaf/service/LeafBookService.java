@@ -2,6 +2,7 @@ package Recorders.ggogit.domain.leaf.service;
 
 import Recorders.ggogit.domain.leaf.view.LeafBookView;
 import Recorders.ggogit.Type.SearchType;
+import Recorders.ggogit.domain.leaf.view.LeafItemView;
 
 import java.util.List;
 
@@ -57,4 +58,13 @@ public interface LeafBookService {
      * @return LeafBookView 리프 도서 View 리스트
      */
     List<LeafBookView> list(Long treeId, SearchType searchType, String search);
+
+    /**
+     * 도서 리프 리스트 조회
+     *
+     * @param treeId 트리 ID
+     * @param leafId
+     * @return LeafItemView 리프 아이템 View 리스트
+     */
+    List<LeafItemView> getLeafItemList(Long treeId, Long leafId);
 }

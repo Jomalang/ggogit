@@ -2,12 +2,14 @@ package Recorders.ggogit.domain.leaf.service;
 
 import Recorders.ggogit.Type.SearchType;
 import Recorders.ggogit.domain.leaf.entity.Leaf;
+import Recorders.ggogit.domain.leaf.view.LeafItemView;
+import jakarta.annotation.Nullable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class MemoryLeafServiceImpl implements LeafService {
+public class MemoryLeafServiceImpl implements LeafEtcService {
 
     @Override
     public void register(Leaf leaf) {
@@ -51,6 +53,16 @@ public class MemoryLeafServiceImpl implements LeafService {
 
     @Override
     public List<Leaf> list(Long treeId, SearchType searchType, String search) {
+        return List.of();
+    }
+
+    @Override
+    public List<LeafItemView> getLeafItemList(Long treeId) {
+        return getLeafItemList(treeId, null);
+    }
+
+    @Override
+    public List<LeafItemView> getLeafItemList(Long treeId, @Nullable Long leafId) {
         return List.of();
     }
 }

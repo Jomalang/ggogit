@@ -28,6 +28,14 @@ public enum SeedCategoryType {
         return false;
     }
 
+    public static boolean contains(Integer num) {
+        for (SeedCategoryType type : SeedCategoryType.values()) {
+            if (type.num.equals(num))
+                return true;
+        }
+        return false;
+    }
+
     public static boolean isBook(Integer value) {
         return SeedCategoryType.BOOK.num.equals(value);
     }

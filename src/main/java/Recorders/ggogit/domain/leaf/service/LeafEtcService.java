@@ -2,10 +2,11 @@ package Recorders.ggogit.domain.leaf.service;
 
 import Recorders.ggogit.domain.leaf.entity.Leaf;
 import Recorders.ggogit.Type.SearchType;
+import Recorders.ggogit.domain.leaf.view.LeafItemView;
 
 import java.util.List;
 
-public interface LeafService {
+public interface LeafEtcService {
 
     /**
      * 최초 리프 등록
@@ -64,4 +65,18 @@ public interface LeafService {
      * @return Leaf 리프 Entity 리스트
      */
     List<Leaf> list(Long treeId,  SearchType searchType, String search);
+
+    /**
+     * 리프 리스트 조회
+     * @param treeId 트리 ID
+     * @return LeafItemView 리프 아이템 View 리스트
+     */
+    List<LeafItemView> getLeafItemList(Long treeId);
+
+    /**
+     * 리프 리스트 조회
+     * @param treeId 트리 ID
+     * @return LeafItemView 리프 아이템 View 리스트
+     */
+    List<LeafItemView> getLeafItemList(Long treeId, Long leafId);
 }

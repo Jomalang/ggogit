@@ -97,6 +97,11 @@
   th:fragment="text-main-title-center(title, size)"
 >
   <h1
+    class="text-main-title--center text--title38"
+    th:if="${size eq 38}"
+    th:text="${title}"
+  >
+  <h1
     class="text-main-title--center text--title28"
     th:if="${size eq 28}"
     th:text="${title}"
@@ -287,6 +292,14 @@
      ========================================== -->
 <div class="text-login__page-info" th:fragment="text-login__page-info(label, infoText)">
   <p class="text--title28" th:text="${label}">로그인</p>
+  <p class="text--explain" th:text="${infoText}">사용하는 이메일을 입력해주세요</p>
+</div>
+<!-- ==========================================
+     FRAGMENT: 회원가입 페이지 안내 텍스트
+     설명 : 회원가입시 안내 메시지
+     ========================================== -->
+<div class="text-login__page-info" th:fragment="text-join__page-info(label, infoText)">
+  <p class="text--title38" th:text="${label}">로그인</p>
   <p class="text--explain" th:text="${infoText}">사용하는 이메일을 입력해주세요</p>
 </div>
 

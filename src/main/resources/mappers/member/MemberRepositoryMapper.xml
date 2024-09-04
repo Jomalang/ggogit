@@ -35,9 +35,9 @@
         WHERE EMAIL = #{email}
     </select>
 
-    <select id="findByName" resultType="Member">
+    <select id="findByNickname" resultType="Member">
         SELECT * FROM MEMBER
-        WHERE NAME LIKE '%${name}%'
+        WHERE NICKNAME = #{nickname}
     </select>
 
 </mapper>

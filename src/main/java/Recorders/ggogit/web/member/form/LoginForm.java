@@ -1,4 +1,4 @@
-package Recorders.ggogit.web.member;
+package Recorders.ggogit.web.member.form;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -8,13 +8,10 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class LoginRegForm {
+public class LoginForm {
 
     @NotBlank
     private String email;
     @NotBlank
     private String password;
-    @NotBlank
-    private String nickname;
-    private String introduction;
 }

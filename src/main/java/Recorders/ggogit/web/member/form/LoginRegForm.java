@@ -11,13 +11,13 @@ import lombok.NoArgsConstructor;
 public class LoginRegForm {
 
     @NotBlank
-    private String name;
-    @NotBlank
     private String email;
     @NotBlank
     private String password;
     @NotBlank
     private String nickname;
+    @NotBlank
+    private String username;
     private String introduction;
     private Boolean policyAgreement;
 }

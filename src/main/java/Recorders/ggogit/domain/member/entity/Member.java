@@ -20,6 +20,8 @@ public class Member {
     private String password;
     @NotNull
     private String nickname;
+    @NotNull
+    private String username;
     private String introduction;
     private LocalDateTime updateTime;
     private LocalDateTime createTime;

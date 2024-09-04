@@ -959,7 +959,11 @@ button {
   font-size: 10px;
   margin-right: 2px;
 }
-
+.card-tree-detail__slot{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 .card-tree-detail__name {
   font-size: 18px;
   font-weight: var(--bold);
@@ -967,6 +971,17 @@ button {
   align-items: center;
   justify-content: space-between;
 }
+.card-tree-detail__complete-icon{
+  display: inline-flex;
+  width: 20px;
+  height: 20px;
+  background-color: var(--main1);
+  mask-image:url("/svg/card-tree-details-complete.svg");
+  mask-size: contain;
+  mask-repeat: no-repeat;
+  mask-position: center;
+}
+
 
 .card-tree-detail__explanation {
   font-size: 14px;

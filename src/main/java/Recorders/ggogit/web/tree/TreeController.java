@@ -119,9 +119,10 @@ public class TreeController {
         return "view/tree/book/select";
     }
 
-    @RequestMapping("/detail")
+    @RequestMapping("/detail/{treeId}")
     public String getTreeDetail(
-            Model model
+            Model model,
+            @PathVariable(name = "treeId") String treeId
     ) {
         return "view/tree/index";
     }

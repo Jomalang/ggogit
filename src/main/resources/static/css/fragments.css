@@ -106,7 +106,7 @@
 }
 
 .text-book-info__create {
-  width: 100%;
+  width: fit-content;
   display: flex;
   justify-content: left;
   gap: 2px;
@@ -114,10 +114,6 @@
 .text-book-info__create-frame {
   display: flex;
   gap: 2px;
-}
-
-.text-book-info__create {
-  display: flex;
 }
 
 .text-book-info-create-info {
@@ -522,6 +518,7 @@
   border-radius: 12px;
   color: var(--text-no-active);
   font-weight: var(--bold);
+  font-size: 16px;
   border: none;
   padding: 0 46px 0 46px;
   display: flex;
@@ -562,6 +559,7 @@
   width: 100%;
   border-radius: 40px;
   box-shadow: var(--shadow-basic);
+  font-size: 14px;
   font-weight: var(--bold, 700);
 }
 

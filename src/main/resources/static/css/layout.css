@@ -383,6 +383,7 @@ home-tree__reg-4--search-book__input
   padding-top: 60px;
   padding-left: 24px;
   padding-right: 24px;
+  margin-bottom: 10px;
 }
 
 .register__input-container--last {
@@ -525,9 +526,14 @@ home-tree__reg-4--search-book__input
 }
 
 .join-guide-container {
-    padding: 277px 24px 40px 185px;
+    padding: 50px 24px 40px 24px;
 }
 
-.login-memeber__join-page-container {
+.login-member__join-page-container {
+  width: auto;
     padding: 50px 24px 0 24px
+}
+
+.login-screen-container {
+  padding-top: 30px;
 }

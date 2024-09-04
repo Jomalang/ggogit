@@ -7,6 +7,13 @@ spring:
     ##메시지 소스 추가
   messages:
     basename: messages, errors
+server:
+  servlet:
+    session:
+      #최초 로그인시 URL에 SID표현 x
+      tracking-modes: cookie
+      # 세션 타임아웃 1800초
+      timeout: 1800
 mybatis:
   configuration:
     map-underscore-to-camel-case: true

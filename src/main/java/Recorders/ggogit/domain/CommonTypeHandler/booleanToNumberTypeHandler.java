@@ -1,4 +1,4 @@
-package Recorders.ggogit.web.CommonTypeHandler;
+package Recorders.ggogit.domain.CommonTypeHandler;
 
 
 import org.apache.ibatis.type.BaseTypeHandler;

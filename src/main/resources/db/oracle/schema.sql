@@ -40,6 +40,7 @@ CREATE TABLE "MEMBER" (
     "EMAIL"	            VARCHAR2(255)	                        NOT NULL, -- 회원 이메일
     "PASSWORD"	        VARCHAR2(64)	                        NOT NULL, -- 회원 비밀번호
     "NICKNAME"	        VARCHAR2(255)		                    NOT NULL, -- 회원 닉네임
+    "USERNAME"          NVARCHAR2(10)                           NOT NULL, -- 회원 이름
     "INTRODUCTION"	    NVARCHAR2(2000) 	                    NULL, -- 회원 소개글
     "UPDATE_TIME"	    TIMESTAMP       DEFAULT SYSTIMESTAMP    NOT NULL, -- 데이터 수정 시각
     "CREATE_TIME"	    TIMESTAMP       DEFAULT SYSTIMESTAMP    NOT NULL -- 데이터 생성 시각
@@ -68,6 +69,7 @@ COMMENT ON COLUMN "MEMBER"."ID" IS '회원 PK';
 COMMENT ON COLUMN "MEMBER"."EMAIL" IS '회원 이메일';
 COMMENT ON COLUMN "MEMBER"."PASSWORD" IS '회원 비밀번호';
 COMMENT ON COLUMN "MEMBER"."NICKNAME" IS '회원 닉네임';
+COMMENT ON COLUMN "MEMBER"."USERNAME" IS '회원 이름';
 COMMENT ON COLUMN "MEMBER"."INTRODUCTION" IS '회원 소개글';
 COMMENT ON COLUMN "MEMBER"."UPDATE_TIME" IS '데이터 수정 시각';
 COMMENT ON COLUMN "MEMBER"."CREATE_TIME" IS '데이터 생성 시각';

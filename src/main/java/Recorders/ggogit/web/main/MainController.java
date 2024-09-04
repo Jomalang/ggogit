@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,9 +21,15 @@ public class MainController {
     @Autowired
     private MemTreeServiceImpl memTreeService;
 
-    @GetMapping("/home")
+
+    @GetMapping("/home/{nickname}")
     public String index(Model model,
-                        @RequestParam(name = "tree", required = false, defaultValue = "true") Boolean memberHasTree) {
+                        @RequestParam(name = "tree", required = false, defaultValue = "true") Boolean memberHasTree,
+                        @PathVariable(name = "nickname") String nickname
+    ) {
+        if(!nickname.equals("gun-code")){
+            return "view/member/index";
+        }
         List<FindTreeInfoView> treeInfoList = memTreeService.treeInfoLists(1L);
         List<MyTreeListsView> treeLists = memTreeService.treeAllLists(1L);
         if (!memberHasTree) {

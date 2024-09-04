@@ -170,9 +170,10 @@ public class TreeController {
         return "view/tree/book/select";
     }
 
-    @RequestMapping("/detail")
+    @RequestMapping("/detail/{treeId}")
     public String getTreeDetail(
-            Model model
+            Model model,
+            @PathVariable(name = "treeId") String treeId
     ) {
         List<Branch> lists2 = new ArrayList<>();
         lists2.add(new Branch("heegwon-branch", "card-bookmark-icon.svg", "2024-07-18", "브랜치 이름", 999, 90));

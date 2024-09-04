@@ -8,9 +8,9 @@
     <link th:href="@{/css/fragments.css}" rel="stylesheet" />
     <link th:href="@{/css/layout.css}" rel="stylesheet" />
 
-    <title>Document</title>
+    <title>로그인</title>
 </head>
-<body class="login-memeber__join-page-container">
+<body class="login-member__join-page-container">
 <header>
     <h1 class="none">뒤로가기</h1>
     <div th:replace="~{/fragments/button::login-join-page__back-btn}"></div>
@@ -40,7 +40,7 @@
 
 <footer class="join-guide-container">
     <h1 class="none">회원가입 안내</h1>
-    <div th:replace="~{/fragments/text::join-guide(infoText='계정이 이미 있으신가요?', label='로그인')}"></div>
+    <div th:replace="~{/fragments/text::join-guide(infoText='계정이 이미 있으신가요?', label='로그인', href='/member/login')}"></div>
 </footer>
 </body>
 </html>

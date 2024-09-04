@@ -36,7 +36,7 @@ public class TreeTest {
                     .seedId(1L)
                     .title("tree title" + i + "test")
                     .description("tree" + i + "description")
-                    .bookMarkCountNum(0)
+                    .bookMarkCount(0)
                     .visibility(true)
                     .build();
             repo.save(tree);

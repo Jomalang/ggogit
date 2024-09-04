@@ -72,10 +72,11 @@ abbr, address, b, bdi,
 }
 
 .text--alert {
-  font-size: 20px;
-  font-weight: var(--medium);
+  font-size: 16px;
+  font-weight: var(--bold);
   line-height: var(--line-height-main);
   letter-spacing: var(--letter-spacing-main);
+  color: var(--main1);
 }
 
 .text--explain {

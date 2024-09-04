@@ -35,6 +35,7 @@ public class LoginService {
         member.setPassword(loginRegForm.getPassword());
         member.setNickname(loginRegForm.getNickname());
         member.setIntroduction(loginRegForm.getIntroduction());
+        member.setUsername(loginRegForm.getUsername());
 
         memberRepository.save(member);
 

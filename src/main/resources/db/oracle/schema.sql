@@ -40,6 +40,7 @@ CREATE TABLE "MEMBER" (
     "EMAIL"	            VARCHAR2(255)	                        NOT NULL, -- 회원 이메일
     "PASSWORD"	        VARCHAR2(64)	                        NOT NULL, -- 회원 비밀번호
     "NICKNAME"	        VARCHAR2(255)		                    NOT NULL, -- 회원 닉네임
+    "USERNAME"          NVARCHAR2(10)                           NOT NULL, -- 회원 이름
     "INTRODUCTION"	    NVARCHAR2(2000) 	                    NULL, -- 회원 소개글
     "UPDATE_TIME"	    TIMESTAMP       DEFAULT SYSTIMESTAMP    NOT NULL, -- 데이터 수정 시각
     "CREATE_TIME"	    TIMESTAMP       DEFAULT SYSTIMESTAMP    NOT NULL -- 데이터 생성 시각
@@ -68,6 +69,7 @@ COMMENT ON COLUMN "MEMBER"."ID" IS '회원 PK';
 COMMENT ON COLUMN "MEMBER"."EMAIL" IS '회원 이메일';
 COMMENT ON COLUMN "MEMBER"."PASSWORD" IS '회원 비밀번호';
 COMMENT ON COLUMN "MEMBER"."NICKNAME" IS '회원 닉네임';
+COMMENT ON COLUMN "MEMBER"."USERNAME" IS '회원 이름';
 COMMENT ON COLUMN "MEMBER"."INTRODUCTION" IS '회원 소개글';
 COMMENT ON COLUMN "MEMBER"."UPDATE_TIME" IS '데이터 수정 시각';
 COMMENT ON COLUMN "MEMBER"."CREATE_TIME" IS '데이터 생성 시각';
@@ -129,6 +131,27 @@ COMMENT ON COLUMN "FOLLOW"."MEMBER_ID" IS '회원 FK';
 COMMENT ON COLUMN "FOLLOW"."FOLLOW_ID" IS '팔로우 대상 회원 FK';
 COMMENT ON COLUMN "FOLLOW"."UPDATE_TIME" IS '데이터 수정 시각';
 COMMENT ON COLUMN "FOLLOW"."CREATE_TIME" IS '데이터 생성 시각';
+
+-- ============================================ --
+-- 도서 카테고리 테이블
+-- ============================================ --
+CREATE TABLE "BOOK_CATEGORY" (
+    "ID"	            NUMBER		                            PRIMARY KEY, -- 도서 카테고리 PK
+    "NAME"	            NVARCHAR2(255)		                    NOT NULL -- 도서 카테고리 이름
+);
+
+-- 시퀀스 생성
+CREATE SEQUENCE SEQ_BOOK_CATEGORY
+    START WITH 1
+    INCREMENT BY 1
+    NOCYCLE
+    NOCACHE;
+
+-- 시퀀스 등록
+ALTER TABLE "BOOK_CATEGORY" MODIFY ("ID" DEFAULT SEQ_BOOK_CATEGORY.NEXTVAL);
+
+COMMENT ON COLUMN "BOOK_CATEGORY"."ID" IS '도서 카테고리 PK';
+COMMENT ON COLUMN "BOOK_CATEGORY"."NAME" IS '도서 카테고리 이름';
 
 -- ============================================ --
 -- 도서 테이블

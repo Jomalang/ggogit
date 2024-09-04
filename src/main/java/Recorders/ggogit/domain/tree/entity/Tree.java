@@ -17,7 +17,7 @@ public class Tree {
     private Long seedId;
     private String title;
     private String description;
-    private Integer bookMarkCountNum;
+    private Integer bookMarkCount;
     private Boolean visibility;
     private Date updateTime;
     private Date createTime;

@@ -39,6 +39,7 @@ public class MemoryBookServiceImpl implements BookService {
     }
 
     @Override
+
     public void remove(Long bookId) {
 
     }

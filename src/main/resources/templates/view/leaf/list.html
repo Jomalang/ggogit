@@ -25,12 +25,12 @@
             <h1 class="none">현재 포커싱 로그 정보</h1>
             <section class="log-path-container">
                 <h1 class="none">로그 경로</h1>
-                <div th:replace="~{fragments/bar :: log-path(tree='자바 공부를 위한 트리', branch='브랜치 명', log='로그 명')}"></div>
+                <div th:replace="~{fragments/bar :: log-path(tree=${breadcrumb.treeName}, branch=${breadcrumb.branchName})}"></div>
             </section>
 
             <section class="log-list-date-title-container">
                 <h1 class="none">로그 날짜</h1>
-                <div th:replace="~{fragments/text :: text-main-title-right(title='2024년 07월 17일', size=24)}"></div>
+                <div th:replace="~{fragments/text :: text-main-title-right(title=${#dates.format(focusedTime, 'yyyy년 MM월 dd일')}, size=24)}"></div>
             </section>
         </section>
     </header>
@@ -40,35 +40,11 @@
         <section class="log-list-container">
             <h1 class="none">로그 리스트</h1>
 
-            <section>
+            <section th:each="leaf : ${list}">
                 <h1 class="none">로그</h1>
-                <div th:replace="~{fragments/log :: log-item(type='1', title='로그 제목 입니다.', date='2024-07-18', link='#', tags='')}"></div>
+                <div th:replace="~{fragments/log :: log-item(type=${leaf.direction.num}, title=${leaf.title}, date=${leaf.createTime}, link='#', tags=${leaf.tags})}"></div>
             </section>
 
-            <section>
-                <h1 class="none">로그</h1>
-                <div th:replace="~{fragments/log :: log-item(type='2', title='로그 제목 입니다.', date='2024-07-18', link='#', tags='')}"></div>
-            </section>
-
-            <section>
-                <h1 class="none">로그</h1>
-                <div th:replace="~{fragments/log :: log-item(type='3', title='로그 제목 입니다.', date='2024-07-18', link='#', tags='')}"></div>
-            </section>
-
-            <section>
-                <h1 class="none">로그</h1>
-                <div th:replace="~{fragments/log :: log-item(type='4', title='로그 제목 입니다.', date='2024-07-18', link='#', tags='')}"></div>
-            </section>
-
-            <section>
-                <h1 class="none">로그</h1>
-                <div th:replace="~{fragments/log :: log-item(type='5', title='로그 제목 입니다.', date='2024-07-18', link='#', tags='')}"></div>
-            </section>
-
-            <section>
-                <h1 class="none">로그</h1>
-                <div th:replace="~{fragments/log :: log-item(type='6', title='로그 제목 입니다.', date='2024-07-18', link='#', tags='')}"></div>
-            </section>
         </section>
 
     </main>
@@ -82,7 +58,7 @@
 
         <section class="log-list-bot-bar-info-container">
             <h1 class="none">브랜치 정보 하단 바</h1>
-            <div th:replace="~{fragments/bot-bar :: branch-state-main(branch='브랜치 이름', log='999', like='999', view='999', date='2024-07-18')}"></div>
+            <div th:replace="~{fragments/bot-bar :: branch-state-main(branch=${recentBranch.branchName}, log=${recentBranch.leafCount}, like=${recentBranch.likeCount}, view=${recentBranch.viewCount}, date=${recentBranch.updateTime})}"></div>
         </section>
     </aside>
 

@@ -1,26 +1,62 @@
 package Recorders.ggogit.domain.leaf.service;
 
-import Recorders.ggogit.domain.leaf.domain.LeafTagDomain;
 import Recorders.ggogit.domain.leaf.entity.LeafTag;
-import Recorders.ggogit.domain.leaf.repository.LeafTagMapRepository;
-import Recorders.ggogit.domain.leaf.repository.LeafTagRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import Recorders.ggogit.domain.leaf.view.LeafTagView;
 
-@Service
-public class LeafTagService {
+import java.util.List;
 
-    @Autowired
-    private LeafTagRepository repository;
-
-    @Autowired
-    private LeafTagMapRepository leafTagMapRepository;
+public interface LeafTagService {
 
     /**
-     * 리프 태그 생성
-     * */
-    public void createLeafTag(LeafTagDomain leafTagDomain) {
-        LeafTag leafTag = leafTagDomain.toEntity();
-        repository.save(leafTag);
-    }
+     * LeafTag를 등록한다.
+     * @param leafTag 리프 태그 Entity
+     */
+    void register(LeafTag leafTag);
+
+    /**
+     * LeafTag 소유 확인
+     * @param leafTag 리프 태그 Entity
+     * @return boolean 소유 여부
+     */
+    boolean isOwner(LeafTag leafTag);
+
+    /**
+     * LeafTag를 수정한다.
+     * @param leafTag 리프 태그 Entity
+     */
+    void modify(LeafTag leafTag);
+
+    /**
+     * LeafTag를 삭제한다.
+     * @param leafTag 리프 태그 Entity
+     */
+    void remove(LeafTag leafTag);
+
+    /**
+     * LeafTag를 삭제한다.
+     * @param leafTagId 리프 태그 ID
+     */
+    void remove(Long leafTagId);
+
+    /**
+     * LeafTag를 조회한다.
+     * @param leafTagId 리프 태그 ID
+     * @return LeafTagView 리프 태그 View
+     */
+    LeafTagView get(Long leafTagId);
+
+    /**
+     * LeafTag 회원의 LeafTag 리스트를 조회한다.
+     * @param memberId 회원 ID
+     * @return LeafTagView 리프 태그 View 리스트
+     */
+    List<LeafTagView> list(Long memberId);
+
+    /**
+     * LeafTag 회원의 LeafTag 리스트를 검색 조회한다.
+     * @param memberId 회원 ID
+     * @param search 검색어
+     * @return LeafTagView 리프 태그 View 리스트
+     */
+    List<LeafTagView> list(Long memberId, String search);
 }

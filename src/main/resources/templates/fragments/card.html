@@ -12,8 +12,8 @@
             <p class="card-tree-info__title">쪽수</p>
         </div>
         <div>
-            <p class="card-tree-info__content" th:text="${date}"></p>
-            <p class="card-tree-info__content" th:text="${pagecount}"></p>
+            <p class="card-tree-info__content" th:text="${#dates.format(date, 'yyyy-MM-dd')}"></p>
+            <p class="card-tree-info__content" th:text="${pagecount + ' 쪽'}"></p>
         </div>
     </div>
 </div>

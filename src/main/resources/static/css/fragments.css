@@ -304,8 +304,17 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
-  margin-bottom: 13.5px;
+  align-items: center;
+  margin-bottom: 14px;
   position: relative;
+}
+
+.tob-bar__title {
+    color: var(--main1, #323a27);
+    font-size: 20px;
+    line-height: var(--line-height-main);
+    letter-spacing: var(--letter-spacing-main);
+    font-weight: var(--bold);
 }
 
 .top-bar__title {
@@ -3743,11 +3752,7 @@ card.html
 .tree-input-text__rectangle:focus {
   outline: none;
 }
-.tree-input-text__rectangle:not(:placeholder-shown) {
-  color: var(--text-main);
-  border: 1px solid var(--filter-checked);
-  outline: none;
-}
+
 .tree-input-text__rectangle__re-enter {
   display: block;
   height: 56px;
@@ -3761,17 +3766,19 @@ card.html
 /* ===========================
         option or create
   =============================  */
-.topbar-option-or-create {
+.top-bar__tag-info-box {
   padding: 10px;
   display: flex;
   flex-direction: row;
   gap: 10px;
   row-gap: 0;
   align-items: center;
+  border-top: solid 1px #D9D9D9;
+  border-bottom: solid 1px #D9D9D9;
   justify-content: flex-start;
   flex-shrink: 0;
 }
-.topbar-option-or-create-text {
+.top-bar__tag-info-text {
   color: var(--main1);
   text-align: left;
   font-size: 10px;
@@ -3851,4 +3858,49 @@ card.html
 }
 .checkbox__input:checked ~ .checkbox__check::before {
   transform: scale(0.9) rotate(-45deg);
+}
+
+/*  ===========================
+    FRAGMENT: 태그 리스트
+    =============================  */
+.tag-info-box {
+  width: 100%;
+}
+
+.tag-info__list {
+  width: 100%;
+}
+
+.tag-info__item {
+  width: 100%;
+  display: flex;
+  border: 1px solid #D9D9D9;
+  padding: 8px 0;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tag-info__tag-box {
+    display: inline-flex;
+    margin-left: 16px;
+    gap: 6px;
+    align-items: center;
+    padding: 6px 12px;
+    border-radius: 12px;
+    background-color: var(--main1);
+}
+
+.tag-info__name {
+  color: var(--white);
+}
+
+.tag-info__option-box {
+    display: flex;
+    align-items: center;
+    margin-right: 16px;
+}
+
+.tag-info__option-link {
+    display: flex;
+    align-items: center;
 }

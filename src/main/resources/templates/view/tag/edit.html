@@ -12,14 +12,28 @@
 </head>
 <body>
 
-<div th:replace="~{/fragments/top-bar::top-bar-tag__edit}"></div>
+    <header>
+        <h1 class="none">트리 수정 페이지</h1>
+        <div th:replace="~{/fragments/top-bar::top-bar-tag-edit(tag='태그이름')}"></div>
+    </header>
 
-<div th:replace="~{/fragments/input::tag-create--joy}"></div>
+    <main>
+        <section>
+            <h2 class="none">태그 입력</h2>
+            <div th:replace="~{/fragments/input::tag-search-or-register-bar}"></div>
+        </section>
 
-<div th:replace="~{/fragments/top-bar::top-bar__option-or-create}"></div>
+        <section>
+            <h2 class="none">태그 기능 알림</h2>
+            <div th:replace="~{/fragments/top-bar::top-bar-tag-info}"></div>
+        </section>
 
-<div th:replace="~{/fragments/input::delete__form-btn}"></div>
+        <section>
+            <h1 class="none">삭제 버튼</h1>
+            <div th:replace="~{/fragments/input::delete__form-btn}"></div>
+        </section>
 
+    </main>
 
 </body>
 </html>

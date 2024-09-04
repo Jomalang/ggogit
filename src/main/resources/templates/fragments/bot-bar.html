@@ -16,7 +16,7 @@
                 />
             </div>
         </div>
-        <p class="branch-state__name">브랜치 이름</p>
+        <p class="branch-state__name" th:text="${branch}">브랜치 이름</p>
     </div>
     <div class="branch-state__info">
         <div class="branch-state__stats">
@@ -24,7 +24,7 @@
             <p>좋아요<span class="branch-state__nums" th:text="${like}">32</span></p>
             <p>조회<span class="branch-state__nums" th:text="${view}">32</span></p>
         </div>
-        <p class="branch-state__date" th:text="${date}">2024-07-18</p>
+        <p class="branch-state__date" th:text="${#dates.format(date, 'yyyy-MM-dd')}">2024-07-18</p>
     </div>
 </div>
 

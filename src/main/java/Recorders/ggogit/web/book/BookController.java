@@ -1,21 +1,29 @@
 package Recorders.ggogit.web.book;
 
 
+import Recorders.ggogit.domain.book.service.BookService;
+import Recorders.ggogit.domain.book.view.BookDetailView;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/book")
 public class BookController {
 
-    @GetMapping("/detail")
-    public String detail(Model model) {
+    @Autowired
+    private BookService bookService;
 
-        model.addAttribute("type1", new int[]{1, 1, 1});
-        model.addAttribute("type2", new int[]{2, 2, 2});
-        model.addAttribute("type3", new int[]{3, 3, 3});
+    @GetMapping("/detail")
+    public String detail(
+            @RequestParam(value = "id") Long bookId,
+            Model model
+    ) {
+        BookDetailView book = bookService.get(bookId);
+        model.addAttribute("book", book);
         return "view/book/index";
     }
 }

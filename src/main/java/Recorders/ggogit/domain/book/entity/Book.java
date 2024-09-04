@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 public class Book {
     private Long id;
     private Long memberId;
+    private Long bookCategoryId;
     private Long totalPage;
     private String title;
     private String author;

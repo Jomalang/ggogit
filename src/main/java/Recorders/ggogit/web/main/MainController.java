@@ -1,18 +1,21 @@
 package Recorders.ggogit.web.main;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import Recorders.ggogit.domain.member.entity.Member;
+import Recorders.ggogit.domain.tree.service.MemTreeServiceImpl;
+import Recorders.ggogit.domain.tree.view.FindTreeInfoView;
+import Recorders.ggogit.domain.tree.view.MyTreeListsView;
+import Recorders.ggogit.web.member.session.SessionConst;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import Recorders.ggogit.entity.Tree;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
 
 @Controller
 @RequestMapping()
@@ -23,7 +26,7 @@ public class MainController {
 
 
     @GetMapping("/")
-    public String index(@SessionAttribute(value = SessionConst.LOGIN_MEMBER, required = false)Member member
+    public String index(@SessionAttribute(value = SessionConst.LOGIN_MEMBER, required = false) Member member
             , Model model
             , RedirectAttributes redirectAttributes) {
         if(member == null){
@@ -91,6 +94,8 @@ public class MainController {
                 trees.add(t1);
             }
 */
+            List<FindTreeInfoView> treeInfoList = memTreeService.treeInfoLists(1L);
+            List<MyTreeListsView> treeLists = memTreeService.treeAllLists(1L);
 
 
             model.addAttribute("treeInfoList", treeInfoList);

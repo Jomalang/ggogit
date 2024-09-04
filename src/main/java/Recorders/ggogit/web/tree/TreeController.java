@@ -86,24 +86,32 @@ public class TreeController {
         return "view/tree/list";
     }
 
-    @GetMapping("/reg-etc")
+    @GetMapping("/etc/reg")
     public String getTreeEtcReg(
             @RequestParam(value = "type", required = false) String type,
             Model model
     ) {
+        String seedName;
+        if(type.equals("idea"))
+            seedName = "생각";
+        else if (type.equals("phrase")) 
+            seedName = "문장";
+        else if (type.equals("study"))
+            seedName = "공부";
+        else seedName = "영상";
         // hack type 데이터 로직 어디에 넣을지
-        SeedCategoryType seedCategoryType;
-        if (!SeedCategoryType.contains(type)) {
-            seedCategoryType = SeedCategoryType.IDEA;
-        } else {
-            seedCategoryType = SeedCategoryType.of(type);
-        }
+//        SeedCategoryType seedCategoryType;
+//        if (!SeedCategoryType.contains(type)) {
+//            seedCategoryType = SeedCategoryType.IDEA;
+//        } else {
+//            seedCategoryType = SeedCategoryType.of(type);
+//        }
+//
+//        if (seedCategoryType == SeedCategoryType.BOOK) {
+//            seedCategoryType = SeedCategoryType.IDEA;
+//        }
 
-        if (seedCategoryType == SeedCategoryType.BOOK) {
-            seedCategoryType = SeedCategoryType.IDEA;
-        }
-
-        model.addAttribute("seed", seedCategoryType);
+        model.addAttribute("seed", seedName);
         return "view/tree/reg-etc";
     }
 

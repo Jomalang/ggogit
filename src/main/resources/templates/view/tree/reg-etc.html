@@ -25,7 +25,7 @@
     <h1 class="none">도서 정보 입력</h1>
 
     <section class="select-title-container">
-      <div th:replace="~{fragments/text :: text-main-title(title=${seed.description}, size=28)}"></div>
+      <div th:replace="~{fragments/text :: text-main-title(title=${seed}, size=28)}"></div>
     </section>
 
     <form id="book-tree-input-form-id" class="book-tree-input-form" th:action="@{/tree/book/reg}" method="post" enctype="multipart/form-data">

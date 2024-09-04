@@ -42,7 +42,6 @@ public class MemTreeServiceImpl implements TreeService {
                     .build();
             treeInfos.add(treeInfo);
         }
-        System.out.println(treeInfos.toString());
         return treeInfos;
     }
 

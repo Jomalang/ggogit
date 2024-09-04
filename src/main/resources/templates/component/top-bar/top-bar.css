@@ -368,7 +368,7 @@
         option or create
   =============================  */
 
-.topbar-option-or-create {
+.top-bar__tag-info-box {
   padding: 10px;
   display: flex;
   flex-direction: row;
@@ -378,7 +378,7 @@
   justify-content: flex-start;
   flex-shrink: 0;
 }
-.topbar-option-or-create-text {
+.top-bar__tag-info-text {
   color: var(--main1);
   text-align: left;
   font-size: 10px;

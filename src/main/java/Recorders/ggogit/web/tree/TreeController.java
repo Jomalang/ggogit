@@ -1,7 +1,7 @@
 package Recorders.ggogit.web.tree;
 
-import Recorders.ggogit.Type.BookCategoryType;
-import Recorders.ggogit.Type.SeedCategoryType;
+import Recorders.ggogit.type.BookCategoryType;
+import Recorders.ggogit.type.SeedCategoryType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;

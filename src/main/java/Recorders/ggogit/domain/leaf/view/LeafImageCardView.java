@@ -1,6 +1,6 @@
 package Recorders.ggogit.domain.leaf.view;
 
-import Recorders.ggogit.Type.SeedCategoryType;
+import Recorders.ggogit.type.SeedCategoryType;
 
 import java.time.LocalDateTime;
 

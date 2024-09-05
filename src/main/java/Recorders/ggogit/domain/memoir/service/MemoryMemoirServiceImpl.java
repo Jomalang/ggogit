@@ -18,8 +18,7 @@ public class MemoryMemoirServiceImpl implements MemoirService {
     private final MemoirRepository memoirRepository;
 
     @Override
-    public long regMemoir(MemoirForm memoirForm) {
-        Memoir memoir = createMemoir(memoirForm);
+    public long regMemoir(Memoir memoir) {
         memoirRepository.save(memoir);
         //생성된 memoir의 id반환
         return memoir.getId();
@@ -31,17 +30,17 @@ public class MemoryMemoirServiceImpl implements MemoirService {
     }
 
     @Override
-    public long modifyMemoir(MemoirForm memoirForm, long id) {
+    public long modifyMemoir(Memoir memoir, long id) {
         return 0;
     }
 
     @Override
-    public MemoirForm getMemoir(long treeId) {
+    public Memoir getMemoir(long treeId) {
         return null;
     }
 
     @Override
-    public List<MemoirForm> getMemoirs(long memberId) {
+    public List<Memoir> getMemoirs(long memberId) {
         return List.of();
     }
 

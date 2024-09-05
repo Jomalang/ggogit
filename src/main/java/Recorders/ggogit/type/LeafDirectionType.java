@@ -1,4 +1,4 @@
-package Recorders.ggogit.Type;
+package Recorders.ggogit.type;
 
 import lombok.Getter;
 

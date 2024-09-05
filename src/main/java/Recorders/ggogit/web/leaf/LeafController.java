@@ -50,6 +50,7 @@ public class LeafController {
             mv.addObject("seed", seed);
             mv.addObject("form", new LeafForm());
         }
+        mv.addObject("memberId", 1L);
         return mv;
     }
 
@@ -58,15 +59,16 @@ public class LeafController {
             @Valid @ModelAttribute("form") LeafForm form,
             BindingResult bindingResult
     ) {
-        if (SeedCategoryType.BOOK == form.getSeed()) {
+        if (SeedCategoryType.BOOK == form.getSeed()) { // 도서 리프 에러 처리
             if (bindingResult.hasErrors()) {
                 return new ModelAndView("/view/leaf/1st-reg-book", "form", form);
             }
-        } else {
-            if (bindingResult.hasErrors()) {
-                return new ModelAndView("/view/leaf/1st-reg-etc", "form", form);
-            }
         }
+
+        if (bindingResult.hasErrors()) { // ETC 리프 에러 처리
+            return new ModelAndView("/view/leaf/1st-reg-etc", "form", form);
+        }
+
         return new ModelAndView("redirect:/leaf/list?tree_id=1&leaf_id=1");
     }
 
@@ -82,11 +84,16 @@ public class LeafController {
         }
 
         if (SeedCategoryType.isBook(seed)) {
-            return new ModelAndView("/view/leaf/reg-book",
-                    "form", new LeafBookForm());
+            ModelAndView mv =
+                    new ModelAndView("/view/leaf/reg-book", "form", new LeafBookForm());
+            mv.addObject("memberId", 1L); // TODO: 나중에 로그인한 사용자 정보로 변경
+            return mv;
         }
-        return new ModelAndView("/view/leaf/reg-etc",
-                "form", new LeafForm());
+
+        ModelAndView mv =
+                new ModelAndView("/view/leaf/reg-etc", "form", new LeafForm());
+        mv.addObject("memberId", 1L); // TODO: 나중에 로그인한 사용자 정보로 변경
+        return mv;
     }
 
     @PostMapping("/reg")
@@ -95,14 +102,14 @@ public class LeafController {
             BindingResult bindingResult
     ) {
 
-        if (SeedCategoryType.BOOK == form.getSeed()) {
+        if (SeedCategoryType.BOOK == form.getSeed()) { // 도서 리프 에러 처리
             if (bindingResult.hasErrors()) {
                 return new ModelAndView("/view/leaf/reg-book", "form", form);
             }
-        } else {
-            if (bindingResult.hasErrors()) {
-                return new ModelAndView("/view/leaf/reg-etc", "form", form);
-            }
+        }
+
+        if (bindingResult.hasErrors()) { // ETC 리프 에러 처리
+            return new ModelAndView("/view/leaf/reg-etc", "form", form);
         }
 
         return new ModelAndView("redirect:/leaf/list");

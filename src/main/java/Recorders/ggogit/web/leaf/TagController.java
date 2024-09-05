@@ -1,12 +1,11 @@
 package Recorders.ggogit.web.leaf;
 
+import Recorders.ggogit.domain.leaf.entity.LeafTag;
 import Recorders.ggogit.domain.leaf.service.LeafTagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/tag")
@@ -15,7 +14,7 @@ public class TagController {
     @Autowired
     LeafTagService leafTagService;
 
-    @RequestMapping("/list")
+    @GetMapping("/list")
     public String getTagList(
             @RequestParam(value = "id") Long memberId,
             Model model
@@ -24,17 +23,31 @@ public class TagController {
         return "/view/tag/list";
     }
 
-    @RequestMapping("/edit")
+    @GetMapping("/edit")
     public String getTagEdit(
-            @RequestParam(value = "id") Integer tagId
+            @RequestParam(value = "id") Long tagId,
+            Model model
     ) {
+        LeafTag leafTag = leafTagService.getLeafTag(tagId);
+        model.addAttribute("memberId", leafTag.getMemberId());
+        model.addAttribute("tag", leafTag);
         return "/view/tag/edit";
     }
 
     @PostMapping("/edit")
     public String postTagEdit(
-            @RequestParam(value = "id") Integer tagId
+            @RequestParam(value = "id") Long tagId
     ) {
-        return "redirect:";
+        Long memberId = leafTagService.getLeafTag(tagId).getMemberId();
+        return "redirect:/tag/list?id=" + memberId;
+    }
+
+    @PostMapping("/delete")
+    public String deleteTag(
+            @RequestParam(value = "id") Long tagId
+    ) {
+        Long memberId = leafTagService.getLeafTag(tagId).getMemberId();
+        leafTagService.remove(tagId);
+        return "redirect:/tag/list?id=" + memberId;
     }
 }

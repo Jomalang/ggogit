@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="" lang="ko">
   <body>
     <!-- ==========================================
      FRAGMENT: 필터 선택 박스
@@ -227,7 +227,7 @@
     <!--  ==========================================
       FRAGMENT: 태그 선택 입력 박스
       ========================================== -->
-    <div class="input-tag-select-box" th:fragment="tag-select">
+    <div class="input-tag-select-box" th:fragment="tag-select(memberId)">
       <p class="input-tag-select__label-text">선택</p>
       <label class="input-tag-select__bg">
         <div class="input-tag-select__button-box">
@@ -269,9 +269,9 @@
             <p class="input-tag-select__placeholder">선택해주세요</p>
           </div>
 
-          <button class="input-tag-select__button" type="button">
+          <a class="input-tag-select__button" type="button" th:href="@{/tag/list(id=${memberId})}">
             <img th:src="@{/svg/next.svg}" alt="next-button" />
-          </button>
+          </a>
         </div>
       </label>
     </div>
@@ -301,9 +301,10 @@
   <!-- ===================================
      FRAGMENT: 태그 검색 및 생성
   =================================== -->
-    <div class="tree-input-text__form" th:fragment="tag-search-or-register-bar">
+    <div class="tree-input-text__form" th:fragment="tag-search-or-register-bar(tag)">
       <label class="tree-input-text__subject">
-        <input  class="tree-input-text__rectangle"  placeholder="태그 생성 및 옵션 선택"/>
+        <input th:if="${tag}" class="tree-input-text__rectangle"  placeholder="태그 생성 및 옵션 선택" th:value="${tag}"/>
+        <input th:unless="${tag}" class="tree-input-text__rectangle"  placeholder="태그 생성 및 옵션 선택"/>
       </label>
     </div>
 
@@ -311,7 +312,7 @@
       FRAGMENT: 삭제 버튼
       =================================== -->
     <div class="delete-seed__form" th:fragment="delete__form-btn">
-        <button class="delete-seed__btn">
+        <button class="delete-seed__btn" type="submit">
           <img  th:src="@{/svg/delete.svg}" alt="delete" />
           <p class="delete-seed__btn-msg">삭제</p>
         </button>
@@ -332,3 +333,4 @@
 
   </body>
 </html>
+

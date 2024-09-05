@@ -13,13 +13,12 @@
 <body>
     <header>
         <h1 class="none">태그 이름</h1>
-<!--        <div th:replace="~{/fragments/top-bar::top-bar-tag-edit(tag='하하')}"></div>-->
         <div th:replace="~{/fragments/top-bar::top-bar-title(title='즐거운 텍스트')}"></div>
     </header>
     <main>
         <section>
             <h2 class="none">태그 검색</h2>
-            <div th:replace="~{/fragments/input::tag-search-or-register-bar}"></div>
+            <div th:replace="~{/fragments/input::tag-search-or-register-bar(tag=null)}"></div>
         </section>
 
         <section>

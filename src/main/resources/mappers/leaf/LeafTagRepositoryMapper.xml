@@ -36,4 +36,16 @@
         WHERE ID = #{id}
     </update>
 
+    <delete id="delete" parameterType="LeafTag">
+        DELETE
+        FROM LEAF_TAG
+        WHERE ID = #{id}
+    </delete>
+
+    <delete id="deleteById" parameterType="Long">
+        DELETE
+        FROM LEAF_TAG
+        WHERE ID = #{id}
+    </delete>
+
 </mapper>

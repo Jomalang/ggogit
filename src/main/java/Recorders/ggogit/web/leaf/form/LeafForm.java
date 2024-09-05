@@ -13,7 +13,8 @@ import java.util.List;
 
 @Data
 public class LeafForm {
-
+    
+    @NotNull
     private SeedCategoryType seed;
 
     @NotNull(message = "태그를 선택해주세요.")
@@ -25,6 +26,7 @@ public class LeafForm {
     @NotBlank(message = "내용을 입력해주세요.")
     private String content;
 
+    @NotNull
     private Boolean visibility;
 
     public void setSeed(@NotNull(message = "시드를 입력해주세요.") Long seed) {

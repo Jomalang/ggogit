@@ -11,32 +11,40 @@ public interface LeafTagService {
      * LeafTag를 등록한다.
      * @param leafTag 리프 태그 Entity
      */
-    void register(LeafTag leafTag);
+    LeafTag register(LeafTag leafTag);
 
     /**
-     * LeafTag 소유 확인
-     * @param leafTag 리프 태그 Entity
-     * @return boolean 소유 여부
+     * LeafTag 소유자 여부를 확인한다.
+     * @param memberId 회원 ID
+     * @param leafTagId 리프 태그 ID
+     * @return boolean 소유자 여부
      */
-    boolean isOwner(LeafTag leafTag);
+    boolean isOwner(Long memberId, Long leafTagId);
 
     /**
      * LeafTag를 수정한다.
      * @param leafTag 리프 태그 Entity
      */
-    void modify(LeafTag leafTag);
+    boolean modify(LeafTag leafTag);
 
     /**
      * LeafTag를 삭제한다.
      * @param leafTag 리프 태그 Entity
      */
-    void remove(LeafTag leafTag);
+    boolean remove(LeafTag leafTag);
 
     /**
      * LeafTag를 삭제한다.
      * @param leafTagId 리프 태그 ID
      */
-    void remove(Long leafTagId);
+    boolean remove(Long leafTagId);
+
+    /**
+     * LeafTag를 조회한다.
+     * @param leafTagId 리프 태그 ID
+     * @return LeafTag 리프 태그 Entity
+     */
+    LeafTag getLeafTag(Long leafTagId);
 
     /**
      * LeafTag를 조회한다.

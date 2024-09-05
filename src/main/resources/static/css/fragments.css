@@ -1193,6 +1193,9 @@ button {
 }
 
 .input-tag-select__button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: 56px;
   width: 56px;
 }

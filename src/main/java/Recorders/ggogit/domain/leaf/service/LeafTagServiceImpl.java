@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+
 @Service
 public class LeafTagServiceImpl implements LeafTagService {
 
@@ -15,33 +16,49 @@ public class LeafTagServiceImpl implements LeafTagService {
     private LeafTagRepository leafTagRepository;
 
     @Override
-    public void register(LeafTag leafTag) {
-
+    public LeafTag register(LeafTag leafTag) {
+        Long id =  leafTagRepository.save(leafTag);
+        leafTag.setId(id);
+        return leafTag;
     }
 
     @Override
-    public boolean isOwner(LeafTag leafTag) {
-        return false;
+    public boolean isOwner(Long memberId, Long leafTagId) {
+        LeafTag leafTag = leafTagRepository.findById(leafTagId);
+        if (leafTag == null) return false;
+        return leafTag.getMemberId().equals(memberId);
     }
 
     @Override
-    public void modify(LeafTag leafTag) {
-
+    public boolean modify(LeafTag leafTag) {
+        LeafTag origin = leafTagRepository.findById(leafTag.getId());
+        if (origin == null) return false;
+        origin.setName(leafTag.getName()); // TODO 예외처리 해야함
+        Long id = leafTagRepository.save(origin);
+        return id != null;
     }
 
     @Override
-    public void remove(LeafTag leafTag) {
-
+    public boolean remove(LeafTag leafTag) {
+        leafTagRepository.delete(leafTag);
+        return true;
     }
 
     @Override
-    public void remove(Long leafTagId) {
+    public boolean remove(Long leafTagId) {
+        leafTagRepository.deleteById(leafTagId);
+        return true;
+    }
 
+    @Override
+    public LeafTag getLeafTag(Long leafTagId) {
+        return leafTagRepository.findById(leafTagId);
     }
 
     @Override
     public LeafTagView getLeafTagView(Long leafTagId) {
-        return null;
+        LeafTag leafTag = leafTagRepository.findById(leafTagId);
+        return LeafTagView.of(leafTag);
     }
 
     @Override

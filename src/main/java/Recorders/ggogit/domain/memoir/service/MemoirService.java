@@ -25,20 +25,14 @@ public interface MemoirService {
     public long removeMemoir(long id);
 
     /**
-     * @param memoir, id
+     * @param newMemoir, id //수정할 memoir객체와 이전 memoir의 id를 인자로 받습니다.
      * @return 수정한 회고록의 id를 반환합니다.
      */
-    public long modifyMemoir(Memoir memoir, long id);
+    public long modifyMemoir(Memoir newMemoir, long id);
 
     /**
      * @param treeId
      * @return treeId로 조회한 회고록을 반환합니다.
      */
     public Memoir getMemoir(long treeId);
-
-    /**
-     * @param memberId
-     * @return memberId로 조회한 회고록의 목록을 반환합니다.
-     */
-    public List<Memoir> getMemoirs(long memberId);
 }

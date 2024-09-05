@@ -26,31 +26,22 @@ public class MemoryMemoirServiceImpl implements MemoirService {
 
     @Override
     public long removeMemoir(long id) {
-        return 0;
+        return memoirRepository.delete(id);
     }
 
     @Override
-    public long modifyMemoir(Memoir memoir, long id) {
-        return 0;
+    public long modifyMemoir(Memoir newMemoir, long id) {
+        Memoir memoir = memoirRepository.findById(id);
+        memoir.changeTitle(newMemoir.getTitle());
+        memoir.changeText(newMemoir.getText());
+        memoir.changeVisibility(newMemoir.getVisibility());
+
+        memoirRepository.update(memoir);
+        return memoir.getId();
     }
 
     @Override
     public Memoir getMemoir(long treeId) {
-        return null;
-    }
-
-    @Override
-    public List<Memoir> getMemoirs(long memberId) {
-        return List.of();
-    }
-
-    private static Memoir createMemoir(MemoirForm memoirForm) {
-        Memoir memoir = new Memoir();
-        memoir.setTreeId(memoirForm.getTreeId());
-        memoir.setTitle(memoirForm.getTitle());
-        memoir.setText(memoirForm.getText());
-        memoir.setVisibility(memoirForm.isVisibility());
-
-        return memoir;
+        return memoirRepository.findByTreeId(treeId);
     }
 }

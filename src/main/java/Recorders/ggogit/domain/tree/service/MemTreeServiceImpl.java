@@ -1,7 +1,7 @@
 package Recorders.ggogit.domain.tree.service;
 
-import Recorders.ggogit.domain.tree.view.FindTreeInfoView;
-import Recorders.ggogit.domain.tree.view.MyTreeListsView;
+import Recorders.ggogit.domain.tree.view.TreeInfoView;
+import Recorders.ggogit.domain.tree.view.MyTreeView;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -13,13 +13,13 @@ import java.util.List;
 public class MemTreeServiceImpl implements TreeService {
 
     @Override
-    public List<FindTreeInfoView> treeInfoLists(Long memberId) {
+    public List<TreeInfoView> getTreeInfoView(Long memberId) {
 
-        FindTreeInfoView treeInfo;
-        List<FindTreeInfoView> treeInfos = new ArrayList<>();
+        TreeInfoView treeInfo;
+        List<TreeInfoView> treeInfos = new ArrayList<>();
 
         for(long i = 0L; i < 10L; i++) {
-            treeInfo = FindTreeInfoView.builder()
+            treeInfo = TreeInfoView.builder()
                     .bookId(i)
                     .bookCategory("Test "+ i  +" Category")
                     .bookTitle("Book " + i)
@@ -46,14 +46,14 @@ public class MemTreeServiceImpl implements TreeService {
     }
 
     @Override
-    public List<MyTreeListsView> treeAllLists(Long memberId){
-        MyTreeListsView treeLists;
-        List<MyTreeListsView> treeListsViews = new ArrayList<>();
+    public List<MyTreeView> getMyTreeView(Long memberId){
+        MyTreeView treeLists;
+        List<MyTreeView> treeListsViews = new ArrayList<>();
 
         for(long i = 0L; i < 10L; i++) {
             boolean bookComplete;
             bookComplete = (((319 + (int) i) * 100.0) / (400 + (int) i)) >= 80.0;
-            treeLists = MyTreeListsView.builder()
+            treeLists = MyTreeView.builder()
                     .bookId(i)
                     .bookCategory("Test "+ i  +" Category")
                     .bookTitle("Book " + i)

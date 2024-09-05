@@ -13,7 +13,7 @@ import java.util.Date;
 @AllArgsConstructor
 @Builder
 @Repository
-public class MyTreeListsView {
+public class MyTreeView {
     private Long bookId;
     private String bookCategory;
     private String bookTitle;

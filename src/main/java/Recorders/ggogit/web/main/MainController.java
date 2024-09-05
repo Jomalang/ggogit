@@ -2,8 +2,8 @@ package Recorders.ggogit.web.main;
 
 import Recorders.ggogit.domain.member.entity.Member;
 import Recorders.ggogit.domain.tree.service.MemTreeServiceImpl;
-import Recorders.ggogit.domain.tree.view.FindTreeInfoView;
-import Recorders.ggogit.domain.tree.view.MyTreeListsView;
+import Recorders.ggogit.domain.tree.view.TreeInfoView;
+import Recorders.ggogit.domain.tree.view.MyTreeView;
 import Recorders.ggogit.web.member.session.SessionConst;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -92,8 +91,8 @@ public class MainController {
                 trees.add(t1);
             }
 */
-            List<FindTreeInfoView> treeInfoList = memTreeService.treeInfoLists(1L);
-            List<MyTreeListsView> treeLists = memTreeService.treeAllLists(1L);
+            List<TreeInfoView> treeInfoList = memTreeService.getTreeInfoView(1L);
+            List<MyTreeView> treeLists = memTreeService.getMyTreeView(1L);
 
 
             model.addAttribute("treeInfoList", treeInfoList);

@@ -35,7 +35,7 @@
         <h1 class="none">로그 생성 데이터 입력</h1>
         <section class="before-log_page-input-container">
             <h1 class="none">로그 페이지</h1>
-            <div th:replace="~{fragments/input :: page-number}"></div>
+            <div th:replace="~{fragments/input :: page-number(startPage=${form.startPage}, endPage=${form.endPage})}"></div>
         </section>
 
         <section class="input-form__select-tag-input-container">

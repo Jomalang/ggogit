@@ -4,10 +4,10 @@ import Recorders.ggogit.Type.SeedCategoryType;
 import Recorders.ggogit.domain.leaf.service.LeafBookService;
 import Recorders.ggogit.domain.leaf.service.LeafEtcService;
 import Recorders.ggogit.domain.leaf.service.LeafService;
-import Recorders.ggogit.domain.leaf.view.LeafCardView;
 import Recorders.ggogit.domain.leaf.view.LeafImageCardView;
 import Recorders.ggogit.domain.leaf.view.LeafItemView;
-import Recorders.ggogit.web.leaf.form.LeafFrom;
+import Recorders.ggogit.web.leaf.form.LeafBookForm;
+import Recorders.ggogit.web.leaf.form.LeafForm;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,8 +32,8 @@ public class LeafController {
     private LeafService leafService;
 
     @GetMapping("/first/reg")
-    public ModelAndView getFirstReg(
-            @RequestParam(value = "seed", required = false) Integer seed
+    public ModelAndView firstReg(
+            @RequestParam(value = "seed", required = false) Long seed
     ) {
 
         if (!SeedCategoryType.contains(seed)) {
@@ -44,18 +44,18 @@ public class LeafController {
         ModelAndView mv;
         if (SeedCategoryType.isBook(seed)) {
             mv = new ModelAndView("/view/leaf/1st-reg-book");
-            mv.addObject("form", new LeafFrom());
+            mv.addObject("form", new LeafBookForm());
         } else {
             mv = new ModelAndView("/view/leaf/1st-reg-etc");
             mv.addObject("seed", seed);
-            mv.addObject("form", new LeafFrom());
+            mv.addObject("form", new LeafForm());
         }
         return mv;
     }
 
     @PostMapping("/first/reg")
-    public ModelAndView postFirstReg(
-            @Valid @ModelAttribute("form") LeafFrom form,
+    public ModelAndView firstReg(
+            @Valid @ModelAttribute("form") LeafForm form,
             BindingResult bindingResult
     ) {
         if (SeedCategoryType.BOOK == form.getSeed()) {
@@ -67,12 +67,13 @@ public class LeafController {
                 return new ModelAndView("/view/leaf/1st-reg-etc", "form", form);
             }
         }
-        return new ModelAndView("redirect:/leaf/list");
+        return new ModelAndView("redirect:/leaf/list?tree_id=1&leaf_id=1");
     }
 
     @GetMapping("/reg")
-    public String getReg(
-            @RequestParam(value = "seed", required = false) Integer seed
+    public ModelAndView reg(
+            @RequestParam(value = "leaf_id") Long leafId,
+            @RequestParam(value = "seed") Long seed
     ) {
 
         if (!SeedCategoryType.contains(seed)) {
@@ -81,14 +82,16 @@ public class LeafController {
         }
 
         if (SeedCategoryType.isBook(seed)) {
-            return "/view/leaf/reg-book";
+            return new ModelAndView("/view/leaf/reg-book",
+                    "form", new LeafBookForm());
         }
-        return "/view/leaf/reg-etc";
+        return new ModelAndView("/view/leaf/reg-etc",
+                "form", new LeafForm());
     }
 
     @PostMapping("/reg")
-    public ModelAndView postReg(
-            @Valid @ModelAttribute("form") LeafFrom form,
+    public ModelAndView reg(
+            @Valid @ModelAttribute("form") LeafForm form,
             BindingResult bindingResult
     ) {
 
@@ -106,20 +109,20 @@ public class LeafController {
     }
 
     @GetMapping("/edit")
-    public String getLeafEdit(
-            @RequestParam(value = "seed", required = false) Integer seed,
-            @RequestParam(value = "id", required = false) Integer id,
+    public ModelAndView edit(
+            @RequestParam(value = "seed", required = false) Long seed,
+            @RequestParam(value = "id", required = false) Long id,
             Model model
     ) {
         if (SeedCategoryType.isBook(seed)) {
-            return "/view/leaf/edit-book";
+            return new ModelAndView("/view/leaf/edit-book","form", leafBookService.get(id));
         } else {
-            return "/view/leaf/edit-etc";
+            return new ModelAndView("/view/leaf/edit-etc","form", leafEtcService.get(id));
         }
     }
 
     @GetMapping("/list")
-    public String getList(
+    public String list(
         @RequestParam(value = "tree_id") Long treeId,
         @RequestParam(value = "leaf_id") Long leafId,
         Model model

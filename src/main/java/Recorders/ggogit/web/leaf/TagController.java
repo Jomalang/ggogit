@@ -20,7 +20,7 @@ public class TagController {
             @RequestParam(value = "id") Long memberId,
             Model model
     ) {
-        model.addAttribute("list", leafTagService.list(memberId));
+        model.addAttribute("list", leafTagService.getLeafTagViews(memberId));
         return "/view/tag/list";
     }
 

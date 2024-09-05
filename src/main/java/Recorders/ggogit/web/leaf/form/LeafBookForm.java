@@ -3,8 +3,8 @@ package Recorders.ggogit.web.leaf.form;
 
 import Recorders.ggogit.Type.SeedCategoryType;
 import Recorders.ggogit.domain.leaf.view.LeafBookView;
-import Recorders.ggogit.domain.leaf.view.LeafView;
 import Recorders.ggogit.domain.leaf.view.LeafTagView;
+import Recorders.ggogit.domain.leaf.view.LeafView;
 import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-public class LeafFrom {
+public class LeafBookForm {
 
     private SeedCategoryType seed;
 
@@ -35,7 +35,7 @@ public class LeafFrom {
 
     private Boolean visibility;
 
-    public void setSeed(@NotNull(message = "시드를 입력해주세요.") Integer seed) {
+    public void setSeed(@NotNull(message = "시드를 입력해주세요.") Long seed) {
         this.seed = SeedCategoryType.of(seed);
     }
 

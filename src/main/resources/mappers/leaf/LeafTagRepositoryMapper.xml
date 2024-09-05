@@ -14,6 +14,14 @@
     <select id="findAll" resultType="LeafTag">
         SELECT *
         FROM LEAF_TAG
+        <where>
+            <if test="memberId != null">
+                MEMBER_ID = #{memberId}
+            </if>
+            <if test="name != null">
+                AND NAME LIKE '%#{name}%'
+            </if>
+        </where>
     </select>
 
     <select id="findById" parameterType="Long" resultType="LeafTag">

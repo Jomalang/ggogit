@@ -44,38 +44,38 @@ public class TreeTest {
     }
 
     @Test
-    void findByListAll() {
-        List<Tree> treeList = repo.findListAll();
+    void getAll() {
+        List<Tree> treeList = repo.getAll();
         assertThat(treeList).isNotNull();
     }
 
     @Test
-    void findByTreeId() {
+    void getByTreeId() {
         Long i = 2L;
-        assertThat(repo.findByTreeId(i)).isNotNull();
+        assertThat(repo.getByTreeId(i)).isNotNull();
     }
 
     @Test
-    void findByMemberId() {
+    void getByMemberId() {
         Long i = 1L;
-        assertThat(repo.findByMemberId(i)).isNotNull();
+        assertThat(repo.getByMemberId(i)).isNotNull();
     }
 
     @Test
-    void findByTitle() {
+    void getByTitle() {
         String title = "tree";
-        assertThat(repo.findByTitle(title)).isNotNull();
+        assertThat(repo.getByTitle(title)).isNotNull();
     }
 
     @Test
-    void findByDescription() {
+    void getByDescription() {
         String description = "test";
-        assertThat(repo.findByDescription(description)).isNotNull();
+        assertThat(repo.getByDescription(description)).isNotNull();
     }
     @Test
-    void findByVisibility() {
+    void getByVisibility() {
         boolean visibility = true;
-        assertThat(repo.findByVisibility(visibility)).isNotNull();
+        assertThat(repo.getByVisibility(visibility)).isNotNull();
     }
 //    @Test
 //    void findMemberIdById() {
@@ -103,7 +103,7 @@ public class TreeTest {
         Long id = 71L;
         String title = "test title";
         repo.updateTitleById(id, title);
-        Tree tree = repo.findByTreeId(id);
+        Tree tree = repo.getByTreeId(id);
         assertThat(tree.getTitle()).isEqualTo(title);
     }
     @Test
@@ -111,7 +111,7 @@ public class TreeTest {
         Long id = 71L;
         String description = "test description";
         repo.updateDescriptionById(id, description);
-        Tree tree = repo.findByTreeId(id);
+        Tree tree = repo.getByTreeId(id);
         assertThat(tree.getDescription()).isEqualTo(description);
     }
     @Test
@@ -119,7 +119,7 @@ public class TreeTest {
         Long id = 71L;
         boolean visibility = true;
         repo.updateVisibilityById(id, visibility);
-        Tree tree = repo.findByTreeId(id);
+        Tree tree = repo.getByTreeId(id);
         assertThat(tree.getVisibility()).isEqualTo(visibility);
     }
 

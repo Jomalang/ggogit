@@ -13,7 +13,7 @@ public interface TreeService {
     /***
      * 트리 생성 메서드
      *
-     * @param tree
+     * @param tree ^^
      */
     void register(Tree tree);
 
@@ -30,6 +30,8 @@ public interface TreeService {
 
     List<EtcTreeView> getEtcTreeview(Long memberId);
 
-    List<>
+    Boolean getComplate(Long treeId);
+
+    void delete(Long treeId);
 
 }

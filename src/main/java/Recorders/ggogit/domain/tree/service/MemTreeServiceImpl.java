@@ -1,7 +1,12 @@
 package Recorders.ggogit.domain.tree.service;
 
+import Recorders.ggogit.domain.tree.entity.Tree;
+import Recorders.ggogit.domain.tree.repository.TreeRepository;
+import Recorders.ggogit.domain.tree.view.BookTreeView;
+import Recorders.ggogit.domain.tree.view.EtcTreeView;
 import Recorders.ggogit.domain.tree.view.TreeInfoView;
 import Recorders.ggogit.domain.tree.view.MyTreeView;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -12,9 +17,18 @@ import java.util.List;
 @Service
 public class MemTreeServiceImpl implements TreeService {
 
+    @Autowired
+    TreeRepository repository;
+
+    @Override
+    public void register(Tree tree) {
+        repository.save(tree);
+    }
+
     @Override
     public List<TreeInfoView> getTreeInfoView(Long memberId) {
 
+        
         TreeInfoView treeInfo;
         List<TreeInfoView> treeInfos = new ArrayList<>();
 
@@ -26,6 +40,7 @@ public class MemTreeServiceImpl implements TreeService {
                     .bookAuthor("Author " + i)
                     .bookTranslator("Translator " + i)
                     .bookPublisher("Publisher " + i)
+                    .bookPublishedYear(Calendar.YEAR)
                     .bookTotalPage(400 + (int) i)
                     .treeId(i)
                     .memberId(memberId)
@@ -34,6 +49,7 @@ public class MemTreeServiceImpl implements TreeService {
                     .description("Description " + i)
                     .visibility(true)
                     .createdAt(new Date())
+                    .leafCreatedAt(new Date())
                     .readingPage(315 + (int) i)
                     .coverImageName("book-cover-dummy1.svg")
                     .treeLeafCnt(100 * (i*4))
@@ -46,38 +62,18 @@ public class MemTreeServiceImpl implements TreeService {
     }
 
     @Override
-    public List<MyTreeView> getMyTreeView(Long memberId){
-        MyTreeView treeLists;
-        List<MyTreeView> treeListsViews = new ArrayList<>();
-
-        for(long i = 0L; i < 10L; i++) {
-            boolean bookComplete;
-            bookComplete = (((319 + (int) i) * 100.0) / (400 + (int) i)) >= 80.0;
-            treeLists = MyTreeView.builder()
-                    .bookId(i)
-                    .bookCategory("Test "+ i  +" Category")
-                    .bookTitle("Book " + i)
-                    .bookAuthor("Author " + i)
-                    .bookTranslator("Translator " + i)
-                    .bookPublisher("Publisher " + i)
-                    .bookPublishedYear(Calendar.YEAR)
-                    .bookTotalPage(400 + (int) i)
-                    .bookComplete(bookComplete)
-                    .treeId(i)
-                    .seedId(memberId)
-                    .seedId(i % 5)
-                    .title("Title " + i)
-                    .visibility(true)
-                    .leafCreatedAt(new Date())
-                    .readingPage(319 + (int) i)
-                    .coverImageName("book-cover-dummy1.svg")
-                    .treeLeafCnt(100 * i)
-                    .treeLikeCnt(100 * i)
-                    .treeViewCnt(100 * i)
-                    .build();
-
-            treeListsViews.add(treeLists);
-        }
-        return  treeListsViews;
+    public List<BookTreeView> getBookTreeView(Long memberId) {
+        return List.of();
     }
+
+    @Override
+    public List<EtcTreeView> getEtcTreeview(Long memberId) {
+        return List.of();
+    }
+
+    @Override
+    public void delete(Long treeId) {
+
+    }
+
 }

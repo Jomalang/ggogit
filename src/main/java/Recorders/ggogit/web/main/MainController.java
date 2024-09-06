@@ -3,7 +3,6 @@ package Recorders.ggogit.web.main;
 import Recorders.ggogit.domain.member.entity.Member;
 import Recorders.ggogit.domain.tree.service.MemTreeServiceImpl;
 import Recorders.ggogit.domain.tree.view.TreeInfoView;
-import Recorders.ggogit.domain.tree.view.MyTreeView;
 import Recorders.ggogit.web.member.session.SessionConst;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -92,11 +91,10 @@ public class MainController {
             }
 */
             List<TreeInfoView> treeInfoList = memTreeService.getTreeInfoView(1L);
-            List<MyTreeView> treeLists = memTreeService.getMyTreeView(1L);
 
 
             model.addAttribute("treeInfoList", treeInfoList);
-            model.addAttribute("treeList", treeLists);
+            model.addAttribute("treeList", treeInfoList);
             return "view/home/has-tree";
         }
     }

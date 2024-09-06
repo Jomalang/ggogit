@@ -5,7 +5,6 @@ import Recorders.ggogit.domain.tree.repository.TreeRepository;
 import Recorders.ggogit.domain.tree.view.BookTreeView;
 import Recorders.ggogit.domain.tree.view.EtcTreeView;
 import Recorders.ggogit.domain.tree.view.TreeInfoView;
-import Recorders.ggogit.domain.tree.view.MyTreeView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +14,7 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class MemTreeServiceImpl implements TreeService {
+public class TreeServiceImpl implements TreeService {
 
     @Autowired
     TreeRepository repository;
@@ -69,6 +68,11 @@ public class MemTreeServiceImpl implements TreeService {
     @Override
     public List<EtcTreeView> getEtcTreeview(Long memberId) {
         return List.of();
+    }
+
+    @Override
+    public Boolean getComplate(Long treeId) {
+        return null;
     }
 
     @Override

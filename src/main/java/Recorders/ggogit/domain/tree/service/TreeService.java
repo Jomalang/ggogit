@@ -26,12 +26,39 @@ public interface TreeService {
      */
     List<TreeInfoView> getTreeInfoView(Long memberId);
 
+    /***
+     * 멤버 ID 별 도서 + 트리 정보 조회
+     * 도서 테이블 + 트리 테이블
+     *
+     * @param memberId
+     * @return
+     */
     List<BookTreeView> getBookTreeView(Long memberId);
 
+    /***
+     * 멤버 ID 별 도서가 아닌 트리 전체 정보 조회
+     * !도서 테이블 + 트리 테이블
+     *
+     * @param memberId
+     * @return
+     */
     List<EtcTreeView> getEtcTreeview(Long memberId);
 
+    /***
+     * 트리 완독 여부 조회
+     *
+     * @param memberId
+     * @return
+     */
     Boolean getComplate(Long treeId);
 
+    /***
+     * 트리 ID 별 트리 제거
+     *
+     *
+     * @param memberId
+     * @return
+     */
     void delete(Long treeId);
 
 }

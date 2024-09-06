@@ -17,6 +17,12 @@ abbr, address, b, bdi,
   color: var(--main1);
 }
 
+.text--title38 {
+  font-size: 38px;
+  font-weight: var(--bold);
+  line-height: var(--line-height-main);
+  letter-spacing: var(--letter-spacing-main);
+}
 .text--title28 {
   font-size: 28px;
   font-weight: var(--bold);
@@ -66,16 +72,31 @@ abbr, address, b, bdi,
 }
 
 .text--alert {
-  font-size: 20px;
+  font-size: 16px;
+  font-weight: var(--bold);
+  line-height: var(--line-height-main);
+  letter-spacing: var(--letter-spacing-main);
+  color: var(--main1);
+}
+
+.text--explain {
+  font-size: 16px;
+  font-weight: var(--regular);
+  line-height: var(--line-height-main);
+  letter-spacing: var(--letter-spacing-main);
+  color: var(--text-sub);
+}
+
+.text--errors{
+  padding-top: 5px;
+  font-size: 16px;
+  color: var(--warning);
   font-weight: var(--medium);
   line-height: var(--line-height-main);
   letter-spacing: var(--letter-spacing-main);
 }
 
-.text--explain {
-  font-size: 14px;
-  font-weight: var(--regular);
-  line-height: var(--line-height-main);
-  letter-spacing: var(--letter-spacing-main);
-  color: var(--text-sub);
+.text--underline{
+  text-decoration: underline;
+  font-weight: var(--bold);
 }

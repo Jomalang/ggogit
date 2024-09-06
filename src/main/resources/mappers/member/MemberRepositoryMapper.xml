@@ -6,13 +6,13 @@
 <mapper namespace="Recorders.ggogit.domain.member.repository.MemberRepository">
 
     <insert id="save" parameterType="Member">
-        INSERT INTO MEMBER(EMAIL, PASSWORD, NICKNAME, INTRODUCTION)
-        VALUES(#{email}, #{password}, #{nickname}, #{introduction})
+        INSERT INTO MEMBER(EMAIL, PASSWORD, NICKNAME, INTRODUCTION, USERNAME)
+        VALUES(#{email}, #{password}, #{nickname}, #{introduction}, #{username})
     </insert>
 
     <update id="update" parameterType="Member">
         UPDATE MEMBER
-        SET EMAIL = #{email}, PASSWORD = #{password}, NICKNAME = #{nickname}, INTRODUCTION = #{introduction}
+        SET EMAIL = #{email}, PASSWORD = #{password}, NICKNAME = #{nickname}, INTRODUCTION = #{introduction} USERNAME=#{username}
         WHERE ID = #{id}
     </update>
 
@@ -25,19 +25,24 @@
         SELECT * FROM MEMBER
     </select>
 
-    <select id="findById" resultType="Long">
+    <select id="findById" resultType="Member">
         SELECT * FROM MEMBER
         WHERE ID = #{id}
     </select>
 
-    <select id="findByEmail" resultType="String">
+    <select id="findByEmail" resultType="Member">
         SELECT * FROM MEMBER
         WHERE EMAIL = #{email}
     </select>
 
-    <select id="findByName" resultType="String">
+    <select id="findByNickname" resultType="Member">
         SELECT * FROM MEMBER
-        WHERE NAME LIKE '%${name}%'
+        WHERE NICKNAME = #{nickname}
+    </select>
+
+    <select id="findByUsername" resultType="Member">
+        SELECT * FROM MEMBER
+        WHERE USERNAME = #{username}
     </select>
 
 </mapper>

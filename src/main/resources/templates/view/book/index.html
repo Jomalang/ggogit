@@ -33,14 +33,13 @@
 
       <section class="book-detail-book-info-container">
         <h1 class="none">도서 제목 및 저자 정보</h1>
-        <div th:replace="~{fragments/text :: text-book-info('시/에세이','무정형의 삶','올라프',null,'위즈덤하우스')}">
-        </div>
+        <div th:replace="~{fragments/text :: text-book-info('시/에세이','무정형의 삶','올라프',null,'위즈덤하우스')}"></div>
       </section>
 
       <section class="book-detail-book-info-container">
         <h1 class="none">도서 기본 정보</h1>
-        <div th:replace="~{fragments/card :: tree-info-card('2024년 07월 10일', '336쪽')}">
-        </div>
+
+        <div th:replace="~{fragments/card :: tree-info-card(date=${book.publicDate}, pagecount=${book.totalPage})}"></div>
       </section>
 
       <section class="book-detail-comment-container">

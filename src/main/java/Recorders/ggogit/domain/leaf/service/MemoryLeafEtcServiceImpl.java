@@ -1,6 +1,6 @@
 package Recorders.ggogit.domain.leaf.service;
 
-import Recorders.ggogit.Type.SearchType;
+import Recorders.ggogit.type.SearchType;
 import Recorders.ggogit.domain.leaf.entity.Leaf;
 import org.springframework.stereotype.Service;
 

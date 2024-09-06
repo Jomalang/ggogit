@@ -1,5 +1,5 @@
 package Recorders.ggogit.domain.leaf.service;
-import Recorders.ggogit.Type.SearchType;
+import Recorders.ggogit.type.SearchType;
 import Recorders.ggogit.domain.leaf.view.LeafCardView;
 import Recorders.ggogit.domain.leaf.view.LeafBookView;
 import org.springframework.stereotype.Service;

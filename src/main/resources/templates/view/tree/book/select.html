@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thyemleaf.org">
+<html lang="ko" xmlns:th="https://www.thyemleaf.org">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -14,9 +14,35 @@
       <section>
         <h2 class="none">검색 바</h2>
         <!-- fragment -->
-        <div
-          th:replace="fragments/input::input-back-search('개발 중입니다.', '/register/seed')"
-        ></div>
+        <div class="search__form">
+          <div>
+            <a th:href="@{/seed/index}">
+              <img src="/src/main/resources/static/svg/back.svg"
+                   th:src="@{/svg/back.svg}"
+                   alt="back button"/>
+            </a>
+          </div>
+          <form class="search-bar" th:action method="post">
+            <label class="search-bar--label">
+              <input class="search-bar--input"
+                     type="text"
+                      th:field="${target}"
+                      th:placeholder="'검색어를 입력해주세요'"
+                      autocomplete="off"/>
+              <button class="search-bar--close" type="reset">
+                <img src="/src/main/resources/static/svg/close-button.svg"
+                     th:src="@{/svg/close-button.svg}"
+                     alt="close-btn"/>
+              </button>
+            </label>
+            <button type="submit">
+              <img src="/src/main/resources/static/svg/lens.svg"
+                   th:src="@{/svg/lens.svg}"
+                   alt="lens"
+              />
+            </button>
+          </form>
+        </div>
       </section>
 
       <section>
@@ -31,10 +57,16 @@
     <main class="text-info-container">
       <h2 class="none">검색 시작 안내</h2>
       <!-- fragment -->
-      <div
-        th:replace="~{fragments/text :: text-info('현재 검색중인 도서가 없습니다',
-        '도서를 검색하거나 직접 등록해주세요')}"
-      ></div>
+      <div th:if="${resultCnt == 0}">
+      <div th:replace="~{fragments/text :: text-info('현재 검색중인 도서가 없습니다',
+        '도서를 검색하거나 직접 등록해주세요')}"></div>
+      </div>
+
+      <div th:if="${resultCnt != 0}">
+        <ul class="tree-card-list" th:each:="bookPreview:${bookPreviews}">
+        <li th:insert ="~{fragments/card :: card-book-previews(bookPreview = ${bookPreview})}"></li>
+        </ul>
+      </div>
     </main>
 
     <section class="btn-select-container--right">

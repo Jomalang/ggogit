@@ -88,6 +88,49 @@
     </div>
 </div>
 
+<!-- ================ -->
+<!-- book preview -->
+<!-- 위의 tree card와 클래스는 동일함 -->
+<!-- ================ -->
+<div
+        class="card-tree-details"
+        th:fragment="card-book-previews(bookPreivew)"
+        th:object="${bookPreview}"
+>
+    <a class="card-tree-detail">
+        <img class="card-tree__book-cover"
+             src="/src/main/resources/static/svg/card-felt__cover.svg"
+             th:src="@{/svg/{img}(img=*{imageFile})}"
+        />
+        <div class="card-tree-detail__box">
+            <!--반복문으로 넣어야 할듯..-->
+            <div class="card-tree-detail__tags">
+                <span class="card-tree-detail__tag" th:text="*{category}">도서</span>
+            </div>
+            <!---->
+            <p class="card-tree-detail__name" th:text="*{title}">
+                운명이란 무엇인가?</p>
+            <div class="card-tree-detail__info">
+            <span
+                    class="card-tree-detail__info"
+                    th:text="*{publishDate}">2024</span>
+                <span class="card-tree-detail__info">/</span>
+                <span class="card-tree-detail__info"
+                        th:text="*{author}"
+                >유시민</span
+                >
+                <span class="card-tree-detail__info">/</span>
+                <span class="card-tree-detail__info" th:text="*{publisher}">생각의 길</span>
+            </div>
+            <span
+                    class="card-tree-detail__info-created-date"
+                    id="data-XXX"
+                    th:text="*{createTime}">2024-07-15</span>
+        </div>
+    </a>
+</div>
+</div>
+
 <!-- =========================
             branch-state
       ========================== -->

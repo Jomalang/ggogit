@@ -2,16 +2,23 @@ package Recorders.ggogit.web.tree;
 
 import Recorders.ggogit.Type.BookCategoryType;
 import Recorders.ggogit.Type.SeedCategoryType;
+import Recorders.ggogit.domain.book.service.BookService;
+import Recorders.ggogit.domain.book.view.BookPreviewView;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
+
 @Controller()
 @RequestMapping("/tree")
+@RequiredArgsConstructor
 public class TreeController {
 
+    private final BookService bookService;
     @GetMapping("/search")
     public String treeSearch() {
         return "view/tree/search/index";
@@ -112,10 +119,35 @@ public class TreeController {
         return "redirect:/leaf/reg?first=true&seed=seed_id";
     }
 
+
+    //sortType=  검색 기준
+    // t: title 검색
+    // a: author 검색
     @GetMapping("/book/select")
-    public String searchBook(Model model) {
-        int resultCnt = 0;
-        model.addAttribute("resultCnt", resultCnt);
+    public String searchBook(@ModelAttribute("bookPreviews")List<BookPreviewView> bookPreviews
+            ,Model model ,@RequestParam(value = "sort",defaultValue = "t",required = true) String searchType
+            ,@RequestParam(value = "target", required = false) String target) {
+
+        if(target != null && searchType.equals("t")){
+            List<BookPreviewView> books = bookService.getBooksbyTitle(target);
+            model.addAttribute("booksPreviews", books);
+            return "view/tree/book/select";
+        }
+
+        if(target != null && searchType.equals("a")){
+            List<BookPreviewView> books = bookService.getBooksbyAuthor(target);
+            model.addAttribute("booksPreviews", books);
+            return "view/tree/book/select";
+        }
+
+        model.addAttribute("resultCnt", bookPreviews.size());
+        return "view/tree/book/select";
+    }
+
+    @PostMapping("/book/select")
+    public String PostSearchBook(@RequestParam(value = "target", required = false) String target
+                                ,RedirectAttributes redirectAttributes){
+
         return "view/tree/book/select";
     }
 

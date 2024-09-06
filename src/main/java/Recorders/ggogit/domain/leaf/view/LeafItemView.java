@@ -1,7 +1,7 @@
 package Recorders.ggogit.domain.leaf.view;
 
 
-import Recorders.ggogit.Type.LeafDirectionType;
+import Recorders.ggogit.type.LeafDirectionType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

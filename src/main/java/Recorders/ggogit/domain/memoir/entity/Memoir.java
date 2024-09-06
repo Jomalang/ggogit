@@ -11,9 +11,7 @@ import java.time.LocalDate;
 public class Memoir {
 
     private Long id;
-    @NotNull
     private Long treeId;
-    @NotNull
     private String title;
     private String text;
     private Boolean visibility;

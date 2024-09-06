@@ -46,7 +46,10 @@ public class MemberController {
             return "/view/member/index";
         }
 
-        Member loginMember = loginService.login(loginForm);
+        Member member = loginForm.toMember();
+        Member loginMember = loginService.login(member);
+
+        //검증 로직
         if(loginMember == null) {
             bindingResult.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다.");
             log.info("errors: {}", bindingResult.getGlobalErrors());
@@ -127,8 +130,10 @@ public class MemberController {
             }
         }
 
+        Member newMember = loginRegForm.toMember();
+
         //회원 가입 성공
-        Member newMember = loginService.RegMember(loginRegForm);
+        loginService.RegMember(newMember);
         redirectAttributes.addAttribute("j", true);
         return "redirect:/member/login";
 

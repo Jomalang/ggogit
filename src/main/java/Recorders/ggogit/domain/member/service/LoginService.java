@@ -2,8 +2,6 @@ package Recorders.ggogit.domain.member.service;
 
 import Recorders.ggogit.domain.member.entity.Member;
 import Recorders.ggogit.domain.member.repository.MemberRepository;
-import Recorders.ggogit.web.member.form.LoginForm;
-import Recorders.ggogit.web.member.form.LoginRegForm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,25 +15,19 @@ public class LoginService {
 
     private final MemberRepository memberRepository;
 
-    public Member login(LoginForm loginForm) {
+    public Member login(Member member) {
         //TODO 중복되는 이메일일 경우도 처리해줘야 함.
-        Optional<Member> findMemberOptional = Optional.ofNullable(memberRepository.findByEmail(loginForm.getEmail()));
-        Member member = findMemberOptional.orElse(null);
-        if(member != null && member.getPassword().equals(loginForm.getPassword())){
-            return member;
+        Optional<Member> findMemberOptional = Optional.ofNullable(memberRepository.findByEmail(member.getEmail()));
+        Member foundMember = findMemberOptional.orElse(null);
+        if(foundMember != null && member.getPassword().equals(foundMember.getPassword())){
+            return foundMember;
         } else{
             return null;
         }
     }
 
-    public Member RegMember(LoginRegForm loginRegForm) {
-        Member member = new Member();
+    public Member RegMember(Member member) {
         //TODO 사용자 이름도 받을 건지 결정해야 함.
-        member.setEmail(loginRegForm.getEmail());
-        member.setPassword(loginRegForm.getPassword());
-        member.setNickname(loginRegForm.getNickname());
-        member.setIntroduction(loginRegForm.getIntroduction());
-
         memberRepository.save(member);
 
         return member;

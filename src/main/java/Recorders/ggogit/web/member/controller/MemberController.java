@@ -25,8 +25,9 @@ public class MemberController {
     private final LoginService loginService;
 
     @GetMapping("/login")
-    public String getMemberLogin(Model model) {
+    public String getMemberLogin(Model model ,@RequestParam(value = "j", required = false) boolean isNewMember) {
         model.addAttribute("member", new LoginRegForm());
+        model.addAttribute("isNewMember", isNewMember);
         return "view/member/index";
     }
 
@@ -45,7 +46,10 @@ public class MemberController {
             return "/view/member/index";
         }
 
-        Member loginMember = loginService.login(loginForm);
+        Member member = loginForm.toMember();
+        Member loginMember = loginService.login(member);
+
+        //검증 로직
         if(loginMember == null) {
             bindingResult.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다.");
             log.info("errors: {}", bindingResult.getGlobalErrors());
@@ -83,8 +87,7 @@ public class MemberController {
 
     @PostMapping("/join-input")
     public String PostMemberJoinInput(@Validated @ModelAttribute("loginRegForm") LoginRegForm loginRegForm,
-                                      BindingResult bindingResult,
-                                      RedirectAttributes redirectAttributes){
+                                      BindingResult bindingResult,RedirectAttributes redirectAttributes){
 
         //검증 로직
         //TODO Validation 계층 따로 만들기
@@ -127,12 +130,12 @@ public class MemberController {
             }
         }
 
-
-        Member newMember = loginService.RegMember(loginRegForm);
+        Member newMember = loginRegForm.toMember();
 
         //회원 가입 성공
-        redirectAttributes.addAttribute("nickName",newMember.getNickname());
-        return "redirect:/home/{nickName}";
+        loginService.RegMember(newMember);
+        redirectAttributes.addAttribute("j", true);
+        return "redirect:/member/login";
 
     }
 

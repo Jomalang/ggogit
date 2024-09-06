@@ -14,12 +14,10 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class Member {
     private Long id;
-    @NotNull
     private String email;
-    @NotNull
     private String password;
-    @NotNull
     private String nickname;
+    private String username;
     private String introduction;
     private LocalDateTime updateTime;
     private LocalDateTime createTime;

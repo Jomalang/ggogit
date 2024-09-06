@@ -1,10 +1,9 @@
 package Recorders.ggogit.web.leaf;
 
-import Recorders.ggogit.Type.SeedCategoryType;
+import Recorders.ggogit.type.SeedCategoryType;
 import Recorders.ggogit.domain.leaf.service.LeafBookService;
 import Recorders.ggogit.domain.leaf.service.LeafEtcService;
 import Recorders.ggogit.domain.leaf.service.LeafService;
-import Recorders.ggogit.domain.leaf.view.LeafCardView;
 import Recorders.ggogit.domain.leaf.view.LeafImageCardView;
 import Recorders.ggogit.domain.leaf.view.LeafItemView;
 import Recorders.ggogit.web.leaf.form.LeafFrom;

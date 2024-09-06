@@ -1,7 +1,7 @@
 package Recorders.ggogit.web.tree;
 
-import Recorders.ggogit.Type.BookCategoryType;
-import Recorders.ggogit.Type.SeedCategoryType;
+import Recorders.ggogit.type.BookCategoryType;
+import Recorders.ggogit.type.SeedCategoryType;
 import Recorders.ggogit.domain.book.service.BookService;
 import Recorders.ggogit.domain.book.view.BookPreviewView;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +19,7 @@ import java.util.List;
 public class TreeController {
 
     private final BookService bookService;
+
     @GetMapping("/search")
     public String treeSearch() {
         return "view/tree/search/index";
@@ -151,9 +152,10 @@ public class TreeController {
         return "view/tree/book/select";
     }
 
-    @RequestMapping("/detail")
+    @RequestMapping("/detail/{treeId}")
     public String getTreeDetail(
-            Model model
+            Model model,
+            @PathVariable(name = "treeId") String treeId
     ) {
         return "view/tree/index";
     }

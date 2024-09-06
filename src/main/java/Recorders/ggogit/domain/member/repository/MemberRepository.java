@@ -22,4 +22,6 @@ public interface MemberRepository {
 
     Member findByNickname(String nickname);
 
+    Member findByUsername(String username);
+
 }

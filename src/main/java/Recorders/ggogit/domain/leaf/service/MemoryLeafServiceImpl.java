@@ -1,6 +1,6 @@
 package Recorders.ggogit.domain.leaf.service;
 
-import Recorders.ggogit.Type.LeafDirectionType;
+import Recorders.ggogit.type.LeafDirectionType;
 import Recorders.ggogit.domain.leaf.view.*;
 import jakarta.annotation.Nullable;
 import org.springframework.stereotype.Service;

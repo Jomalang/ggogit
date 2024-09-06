@@ -31,7 +31,7 @@
           <h3 class="none">최근 트리 이미지 캐러셀</h3>
           <section class="book-img-container">
             <div
-              th:replace="~{fragments/background :: bg-tree-book-covers(trees=${treeList})}"
+              th:replace="~{fragments/background :: bg-tree-book-covers(trees=${treeInfoList})}"
             ></div>
           </section>
 
@@ -40,7 +40,7 @@
             <ul class="book-tree-explanation-list">
               <li
                 class="book-tree-explanation-item none"
-                th:each="tree: ${treeList}"
+                th:each="tree: ${treeInfoList}"
                 th:with="exIdx=${treeStat.index}"
                 th:classappend="${exIdx}"
               >
@@ -49,8 +49,8 @@
                 ></div>
                 <section
                   class="card-progress-home-container"
-                  th:with="readingPage=${tree.readingPage}, totalPage=${tree.totalPage}, progress=${T(java.lang.String).format('%.1f',(readingPage*100.0)/totalPage)},
-            leaf=${tree.leaf}, like=${tree.like}, view=${tree.view}"
+                  th:with="readingPage=${tree.readingPage}, totalPage=${tree.bookTotalPage}, progress=${T(java.lang.String).format('%.1f',(readingPage*100.0)/totalPage)},
+            leaf=${tree.treeLeafCnt}, like=${tree.treeLikeCnt}, view=${tree.treeViewCnt}"
                 >
                   <h4 class="none">트리 진행률</h4>
                   <div
@@ -108,7 +108,7 @@
       <section class="short-btn-container">
         <h4 class="none">트리 생성 버튼</h4>
         <div
-          th:replace="~{fragments/button::btn-short-a--green(href= '/register/seed', text='트리 생성')}"
+          th:replace="~{fragments/button::btn-short-a--green(href= '/seed/index', text='트리 생성')}"
         ></div>
       </section>
       <div th:replace="~{fragments/nav :: navigation-bar(home)}"></div>

@@ -76,5 +76,4 @@ class BookRepositoryTest {
         assertThat(actual).isEqualTo("Hello, World!");
 
     }
-
 }

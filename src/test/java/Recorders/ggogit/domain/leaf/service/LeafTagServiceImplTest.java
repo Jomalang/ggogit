@@ -23,7 +23,7 @@ class LeafTagServiceImplTest {
     @DisplayName("조회 테스트 | LeafTag | getLeafTagViews")
     void getLeafTagViews() {
         // given
-        leafTagServiceImpl.getLeafTagViews(999L);
+        leafTagServiceImpl.getLeafTags(999L);
         // when
         // then
     }

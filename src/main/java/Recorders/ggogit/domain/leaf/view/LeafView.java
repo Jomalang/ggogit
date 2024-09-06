@@ -1,6 +1,7 @@
 
 package Recorders.ggogit.domain.leaf.view;
 
+import Recorders.ggogit.domain.leaf.entity.LeafTag;
 import lombok.*;
 
 import java.util.List;
@@ -13,7 +14,7 @@ public class LeafView {
     private Long id;
     private Long treeId;
     private Long parentLeafId;
-    private List<LeafTagView> tags;
+    private List<LeafTag> tags;
     private String title;
     private String content;
     private Boolean visibility;

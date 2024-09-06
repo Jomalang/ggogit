@@ -12,7 +12,28 @@
     </insert>
 
     <select id="findAll" resultType="LeafTag">
-        SELECT *
+        SELECT * FROM (
+            SELECT t.*, ROWNUM AS RNUM FROM (
+                SELECT *
+                FROM LEAF_TAG
+                <where>
+                    <if test="memberId != null">
+                        MEMBER_ID = #{memberId}
+                    </if>
+                    <if test="name != null">
+                        AND NAME LIKE '%${name}%'
+                    </if>
+                </where>
+                ORDER BY ID DESC
+            ) t
+            WHERE ROWNUM &lt;= #{limit}
+        )
+        WHERE RNUM &gt; #{offset}
+    </select>
+
+
+    <select id="count" resultType="Long">
+        SELECT COUNT(*)
         FROM LEAF_TAG
         <where>
             <if test="memberId != null">

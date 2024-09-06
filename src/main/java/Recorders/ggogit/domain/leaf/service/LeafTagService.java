@@ -47,24 +47,20 @@ public interface LeafTagService {
     LeafTag getLeafTag(Long leafTagId);
 
     /**
-     * LeafTag를 조회한다.
-     * @param leafTagId 리프 태그 ID
-     * @return LeafTagView 리프 태그 View
-     */
-    LeafTagView getLeafTagView(Long leafTagId);
-
-    /**
      * LeafTag 회원의 LeafTag 리스트를 조회한다.
      * @param memberId 회원 ID
-     * @return LeafTagView 리프 태그 View 리스트
+     * @return LeafTag 리프 태그 View 리스트
      */
-    List<LeafTagView> getLeafTagViews(Long memberId);
+    List<LeafTagView> getLeafTags(Long memberId);
+
+
+    List<LeafTagView> getLeafTags(Long memberId, Long page, Long size);
 
     /**
      * LeafTag 회원의 LeafTag 리스트를 검색 조회한다.
      * @param memberId 회원 ID
      * @param name 태그 이름
-     * @return LeafTagView 리프 태그 View 리스트
+     * @return LeafTag 리프 태그 View 리스트
      */
-    List<LeafTagView> getLeafTagViews(Long memberId, String name);
+    List<LeafTagView> getLeafTags(Long memberId, String name, Long page, Long size);
 }

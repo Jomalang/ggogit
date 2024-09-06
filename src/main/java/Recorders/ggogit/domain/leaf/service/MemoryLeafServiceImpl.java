@@ -1,6 +1,7 @@
 package Recorders.ggogit.domain.leaf.service;
 
 import Recorders.ggogit.Type.LeafDirectionType;
+import Recorders.ggogit.domain.leaf.entity.LeafTag;
 import Recorders.ggogit.domain.leaf.view.*;
 import jakarta.annotation.Nullable;
 import org.springframework.stereotype.Service;
@@ -14,10 +15,10 @@ public class MemoryLeafServiceImpl implements LeafService {
     @Override
     public List<LeafItemView> getLeafItems(Long treeId, @Nullable Long leafId) {
 
-        List<LeafTagView> tags = List.of(
-                LeafTagView.builder().id(1L).name("태그1").build(),
-                LeafTagView.builder().id(2L).name("태그2").build(),
-                LeafTagView.builder().id(3L).name("태그3").build()
+        List<LeafTag> tags = List.of(
+                LeafTag.builder().id(1L).name("태그1").build(),
+                LeafTag.builder().id(2L).name("태그2").build(),
+                LeafTag.builder().id(3L).name("태그3").build()
         );
 
         return List.of(

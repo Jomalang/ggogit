@@ -2,8 +2,8 @@ package Recorders.ggogit.web.leaf.form;
 
 
 import Recorders.ggogit.Type.SeedCategoryType;
+import Recorders.ggogit.domain.leaf.entity.LeafTag;
 import Recorders.ggogit.domain.leaf.view.LeafBookView;
-import Recorders.ggogit.domain.leaf.view.LeafTagView;
 import Recorders.ggogit.domain.leaf.view.LeafView;
 import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotBlank;
@@ -59,10 +59,10 @@ public class LeafBookForm {
                     .build();
     }
 
-    public List<LeafTagView> getTags() {
-        List<LeafTagView> tags = new ArrayList<>();
+    public List<LeafTag> getTags() {
+        List<LeafTag> tags = new ArrayList<>();
         for (Long tagId : tagIds) {
-            tags.add(LeafTagView.builder().id(tagId).build());
+            tags.add(LeafTag.builder().id(tagId).build());
         }
         return tags;
     }

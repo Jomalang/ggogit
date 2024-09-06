@@ -3,6 +3,7 @@ package Recorders.ggogit.domain.leaf.service;
 import Recorders.ggogit.domain.leaf.entity.LeafTag;
 import Recorders.ggogit.domain.leaf.repository.LeafTagRepository;
 import Recorders.ggogit.domain.leaf.view.LeafTagView;
+import jakarta.annotation.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -49,27 +50,34 @@ public class LeafTagServiceImpl implements LeafTagService {
         leafTagRepository.deleteById(leafTagId);
         return true;
     }
-
     @Override
     public LeafTag getLeafTag(Long leafTagId) {
         return leafTagRepository.findById(leafTagId);
     }
 
     @Override
-    public LeafTagView getLeafTagView(Long leafTagId) {
-        LeafTag leafTag = leafTagRepository.findById(leafTagId);
-        return LeafTagView.of(leafTag);
+    public List<LeafTagView> getLeafTags(Long memberId) {
+        return getLeafTags(memberId, null, 1L, 10L);
     }
 
     @Override
-    public List<LeafTagView> getLeafTagViews(Long memberId) {
-        return getLeafTagViews(memberId, null);
+    public List<LeafTagView> getLeafTags(Long memberId, Long page, Long size) {
+        return getLeafTags(memberId, null, page, size);
     }
 
     @Override
-    public List<LeafTagView> getLeafTagViews(Long memberId, String search) {
-        return leafTagRepository.findAll(memberId, search).stream()
-                .map(LeafTagView::of)
-                .toList();
+        public List<LeafTagView> getLeafTags(Long memberId, @Nullable String search, Long page, Long size) {
+        Long total = leafTagRepository.count(memberId, search);
+
+        // 데이터가 없는 경우
+        if (total == 0) { return List.of(); }
+
+        long offset = (page - 1) * size;
+        if (total < offset) { // total 보다 큰 페이지 요청시 마지막 페이지로 변경
+            offset = (total / size) * size;
+        }
+
+        return leafTagRepository.findAll(memberId, search, offset, size)
+                .stream().map(LeafTagView::of).toList();
     }
 }

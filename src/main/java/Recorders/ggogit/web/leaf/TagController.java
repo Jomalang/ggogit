@@ -7,7 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+@Controller("WebLeafTagController")
 @RequestMapping("/tag")
 public class TagController {
 
@@ -16,10 +16,12 @@ public class TagController {
 
     @GetMapping("/list")
     public String getTagList(
-            @RequestParam(value = "id") Long memberId,
+            @RequestParam(value = "id", required = false) Long memberId, // TODO: 계정 필터 적용해야함
+            @RequestParam(value = "page", defaultValue = "1") Long page,
+            @RequestParam(value = "size", defaultValue = "10") Long size,
             Model model
     ) {
-        model.addAttribute("list", leafTagService.getLeafTagViews(memberId));
+        model.addAttribute("list", leafTagService.getLeafTags(memberId, page, size));
         return "/view/tag/list";
     }
 

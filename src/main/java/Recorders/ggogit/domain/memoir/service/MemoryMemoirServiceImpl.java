@@ -18,8 +18,7 @@ public class MemoryMemoirServiceImpl implements MemoirService {
     private final MemoirRepository memoirRepository;
 
     @Override
-    public long regMemoir(MemoirForm memoirForm) {
-        Memoir memoir = createMemoir(memoirForm);
+    public long regMemoir(Memoir memoir) {
         memoirRepository.save(memoir);
         //생성된 memoir의 id반환
         return memoir.getId();
@@ -27,31 +26,22 @@ public class MemoryMemoirServiceImpl implements MemoirService {
 
     @Override
     public long removeMemoir(long id) {
-        return 0;
+        return memoirRepository.delete(id);
     }
 
     @Override
-    public long modifyMemoir(MemoirForm memoirForm, long id) {
-        return 0;
+    public long modifyMemoir(Memoir newMemoir, long id) {
+        Memoir memoir = memoirRepository.findById(id);
+        memoir.changeTitle(newMemoir.getTitle());
+        memoir.changeText(newMemoir.getText());
+        memoir.changeVisibility(newMemoir.getVisibility());
+
+        memoirRepository.update(memoir);
+        return memoir.getId();
     }
 
     @Override
-    public MemoirForm getMemoir(long treeId) {
-        return null;
-    }
-
-    @Override
-    public List<MemoirForm> getMemoirs(long memberId) {
-        return List.of();
-    }
-
-    private static Memoir createMemoir(MemoirForm memoirForm) {
-        Memoir memoir = new Memoir();
-        memoir.setTreeId(memoirForm.getTreeId());
-        memoir.setTitle(memoirForm.getTitle());
-        memoir.setText(memoirForm.getText());
-        memoir.setVisibility(memoirForm.isVisibility());
-
-        return memoir;
+    public Memoir getMemoir(long treeId) {
+        return memoirRepository.findByTreeId(treeId);
     }
 }

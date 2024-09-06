@@ -1,6 +1,7 @@
 package Recorders.ggogit.web.memoir.controller;
 
 
+import Recorders.ggogit.domain.memoir.entity.Memoir;
 import Recorders.ggogit.domain.memoir.repository.MemoirRepository;
 import Recorders.ggogit.domain.memoir.service.MemoirService;
 import Recorders.ggogit.web.memoir.MemoirForm;
@@ -48,7 +49,8 @@ public class MemoirController {
             return "view/memoir/reg";
         }
         memoirForm.setTreeId(treeId);
-        memoirService.regMemoir(memoirForm);
+        Memoir newMemoir = memoirForm.toMemoir();
+        memoirService.regMemoir(newMemoir);
 
         log.info("memoirForm = {}", memoirForm);
 

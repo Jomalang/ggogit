@@ -1,5 +1,6 @@
 package Recorders.ggogit.web.memoir;
 
+import Recorders.ggogit.domain.memoir.entity.Memoir;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -21,4 +22,14 @@ public class MemoirForm {
     private String text;
 
     private boolean visibility;
+
+    public Memoir toMemoir(){
+        Memoir memoir = new Memoir();
+        memoir.setTreeId(treeId);
+        memoir.setTitle(title);
+        memoir.setText(text);
+        memoir.setVisibility(visibility);
+
+        return memoir;
+    }
 }

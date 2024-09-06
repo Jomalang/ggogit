@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="https://www.thyemleaf.org">
+<html lang="ko" xmlns:th="https://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -22,7 +22,7 @@
                    alt="back button"/>
             </a>
           </div>
-          <form class="search-bar" th:action method="post">
+          <form class="search-bar" th:action method="POST">
             <label class="search-bar--label">
               <input class="search-bar--input"
                      type="text"
@@ -49,7 +49,7 @@
         <h3 class="none">검색 결과 개수</h3>
         <!-- fragment -->
         <div
-          th:replace="fragments/top-bar::topbar-search-result-num(${resultCnt})"
+          th:replace="~{fragments/top-bar::topbar-search-result-num(${resultCnt})}"
         ></div>
       </section>
     </header>
@@ -63,7 +63,7 @@
       </div>
 
       <div th:if="${resultCnt != 0}">
-        <ul class="tree-card-list" th:each:="bookPreview:${bookPreviews}">
+        <ul class="tree-card-list" th:each="bookPreview : ${bookPreviews}">
         <li th:insert ="~{fragments/card :: card-book-previews(bookPreview = ${bookPreview})}"></li>
         </ul>
       </div>

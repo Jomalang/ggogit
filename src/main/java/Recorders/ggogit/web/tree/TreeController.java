@@ -125,20 +125,26 @@ public class TreeController {
     // t: title 검색
     // a: author 검색
     @GetMapping("/book/select")
-    public String searchBook(@ModelAttribute("bookPreviews")List<BookPreviewView> bookPreviews
-            ,Model model ,@RequestParam(value = "sort",defaultValue = "t",required = true) String searchType
-            ,@RequestParam(value = "target", required = false) String target) {
+    public String searchBook(@RequestParam(value = "bookPreviews",required = false)List<BookPreviewView> bookPreviews
+            ,@RequestParam(value = "sort",defaultValue = "t",required = true) String searchType
+            ,@RequestParam(value = "target", required = false, defaultValue = "#") String target, Model model ) {
+
+        if(bookPreviews == null && target.equals("#")){
+            model.addAttribute("bookPreviews", bookPreviews);
+            model.addAttribute("resultCnt", 0);
+            model.addAttribute("target", "");
+
+            return "view/tree/book/select";
+        }
 
         if(target != null && searchType.equals("t")){
             List<BookPreviewView> books = bookService.getBooksbyTitle(target);
-            model.addAttribute("booksPreviews", books);
-            return "view/tree/book/select";
+            model.addAttribute("bookPreviews", books);
         }
 
         if(target != null && searchType.equals("a")){
             List<BookPreviewView> books = bookService.getBooksbyAuthor(target);
-            model.addAttribute("booksPreviews", books);
-            return "view/tree/book/select";
+            model.addAttribute("bookPreviews", books);
         }
 
         model.addAttribute("resultCnt", bookPreviews.size());
@@ -146,10 +152,12 @@ public class TreeController {
     }
 
     @PostMapping("/book/select")
-    public String PostSearchBook(@RequestParam(value = "target", required = false) String target
+    public String PostSearchBook(@ModelAttribute(value = "target") String target
                                 ,RedirectAttributes redirectAttributes){
 
-        return "view/tree/book/select";
+        redirectAttributes.addAttribute("target", target);
+
+        return "redirect:/tree/book/select";
     }
 
     @RequestMapping("/detail/{treeId}")

@@ -39,13 +39,13 @@
     </delete>
 
     <!-- VW_BOOK_CATEGORY_LIST -->
-    <select id="findBookCategoryViewByTitle" resultType="BookCategoryView">
+    <select id="findBookCategoryViewByTitle" resultType="BookPreviewView">
         SELECT *
         FROM VW_BOOK_CATEGORY_LIST
         WHERE TITLE LIKE '%${title}%;
     </select>
 
-    <select id="findBookCategoryViewByAuthor" resultType="BookCategoryView">
+    <select id="findBookCategoryViewByAuthor" resultType="BookPreviewView">
         SELECT *
         FROM VW_BOOK_CATEGORY_LIST
         WHERE AUTHOR LIKE '%${author}%'

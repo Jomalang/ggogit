@@ -122,9 +122,9 @@ public class LeafController {
             Model model
     ) {
         if (SeedCategoryType.isBook(seed)) {
-            return new ModelAndView("/view/leaf/edit-book","form", leafBookService.get(id));
+            return new ModelAndView("/view/leaf/edit-book","form", leafBookService.getLeafBookView(id));
         } else {
-            return new ModelAndView("/view/leaf/edit-etc","form", leafEtcService.get(id));
+            return new ModelAndView("/view/leaf/edit-etc","form", leafEtcService.getLeafEtcView(id));
         }
     }
 
@@ -158,8 +158,8 @@ public class LeafController {
         // TODO: 도서 상세 정보 넣어야함
 
         Long memberId = 1L;
-        LeafImageCardView leafCardView = leafService.LeafImageCardView(memberId);
-        model.addAttribute("leafCards", leafCardView);
+        List<LeafImageCardView> leafImageCardViews = leafService.getLeafImageCardViews(memberId);
+        model.addAttribute("leafImageCardViews", leafImageCardViews);
         return "/view/leaf/list";
     }
 }

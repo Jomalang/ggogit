@@ -6,11 +6,13 @@ import Recorders.ggogit.domain.leaf.repository.LeafRepository;
 import Recorders.ggogit.domain.leaf.repository.LeafTagMapRepository;
 import Recorders.ggogit.domain.leaf.repository.LeafTagRepository;
 import Recorders.ggogit.domain.leaf.view.LeafEtcView;
-import Recorders.ggogit.type.SearchType;
 import Recorders.ggogit.domain.leaf.entity.Leaf;
+import Recorders.ggogit.type.SearchType;
+import Recorders.ggogit.type.SortType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -92,7 +94,7 @@ public class LeafEtcServiceImpl implements LeafEtcService {
     }
 
     @Override
-    public void modify(LeafEtcView leafEtcView) {
+    public boolean modify(LeafEtcView leafEtcView) {
         assert leafEtcView.getLeafId() != null;
 
         // 리프 조회
@@ -124,6 +126,7 @@ public class LeafEtcServiceImpl implements LeafEtcService {
             }
         }
 
+        return true;
     }
 
     @Override
@@ -143,17 +146,67 @@ public class LeafEtcServiceImpl implements LeafEtcService {
     }
 
     @Override
-    public Leaf get(Long leafId) {
-        return null;
+    public LeafEtcView getLeafEtcView(Long leafId) {
+
+        // 리프 조회
+        Leaf leaf = Optional.ofNullable(leafRepository.findById(leafId))
+                .orElseThrow(() -> new IllegalArgumentException("Leaf 조회 실패"));
+
+        // 리프 태그 맵핑 조회
+        List<LeafTagMap> leafTagMaps = leafTagMapRepository.findByLeafId(leafId);
+
+        // 리프 태그 조회
+        List<LeafTag> tags = getLeafTags(leafTagMaps);
+        return LeafEtcView.of(leaf, tags);
     }
 
     @Override
-    public List<Leaf> list(Long treeId) {
-        return List.of();
+    public List<LeafEtcView> getLeafEtcViews(Long treeId) {
+        return getLeafEtcViews(treeId, SearchType.NONE, null, SortType.NONE, 1L, 10L);
+    }
+
+    @Override // 트리 기준 리프 제목 검색
+    public List<LeafEtcView> getLeafEtcViews(Long treeId, SearchType searchType, String search) {
+        return getLeafEtcViews(treeId, searchType, search, SortType.NONE, 1L, 10L);
     }
 
     @Override
-    public List<Leaf> list(Long treeId, SearchType searchType, String search) {
-        return List.of();
+    public List<LeafEtcView> getLeafEtcViews(Long treeId, SearchType searchType, String search, SortType sortType, Long page, Long size) {
+
+        List<LeafEtcView> leafEtcViews = new ArrayList<>();
+
+        // 리프 제목 및 내용 검색
+        if (searchType == SearchType.ALL) {
+            leafEtcViews = leafRepository
+                    .findLeafEtcViewByTreeId(treeId, SearchType.ALL, search, sortType, page, size);
+        }
+        // 리프 제목 검색
+        else if (searchType == SearchType.TITLE) {
+            leafEtcViews = leafRepository
+                    .findLeafEtcViewByTreeId(treeId, SearchType.TITLE, search, sortType, page, size);
+        }
+        // 리프 내용 검색
+        else if (searchType == SearchType.CONTENT) {
+            leafEtcViews = leafRepository
+                    .findLeafEtcViewByTreeId(treeId, SearchType.CONTENT, search, sortType, page, size);
+        }
+
+        for (LeafEtcView leafEtcView : leafEtcViews) {
+            List<LeafTagMap> leafTagMaps = leafTagMapRepository.findByLeafId(leafEtcView.getLeafId());
+            List<LeafTag> tags = getLeafTags(leafTagMaps);
+            leafEtcView.setTags(tags);
+        }
+
+        return leafEtcViews;
+    }
+
+    private List<LeafTag> getLeafTags(List<LeafTagMap> leafTagMaps) { // 리프 태그 조회
+        List<LeafTag> tags = new ArrayList<>();
+        for (LeafTagMap leafTagMap : leafTagMaps) {
+            LeafTag leafTag = Optional.ofNullable(leafTagRepository.findById(leafTagMap.getLeafTagId()))
+                    .orElseThrow(() -> new IllegalArgumentException("LeafTag 조회 실패"));
+            tags.add(leafTag);
+        }
+        return tags;
     }
 }

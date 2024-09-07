@@ -9,7 +9,6 @@ import Recorders.ggogit.domain.leaf.repository.LeafRepository;
 import Recorders.ggogit.domain.leaf.repository.LeafTagMapRepository;
 import Recorders.ggogit.domain.leaf.repository.LeafTagRepository;
 import Recorders.ggogit.domain.leaf.view.LeafBookView;
-import Recorders.ggogit.domain.leaf.view.LeafCardView;
 import Recorders.ggogit.type.SearchType;
 import Recorders.ggogit.type.SortType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -187,7 +186,7 @@ public class LeafBookServiceImpl implements LeafBookService {
     }
 
     @Override
-    public LeafBookView get(Long leafBookId) {
+    public LeafBookView getLeafBookView(Long leafBookId) {
 
         // 리프 도서 뷰 조회
         LeafBookView leafBookView = Optional.ofNullable(leafBookRepository.findLeafBookViewByLeafId(leafBookId))
@@ -204,17 +203,17 @@ public class LeafBookServiceImpl implements LeafBookService {
     }
 
     @Override
-    public List<LeafBookView> leafBooks(Long treeId) {
-        return leafBooks(treeId, SearchType.NONE, null, SortType.NONE, 1L, 10L);
+    public List<LeafBookView> getLeafBookViews(Long treeId) {
+        return getLeafBookViews(treeId, SearchType.NONE, null, SortType.NONE, 1L, 10L);
     }
 
     @Override // 트리 기준 리프 제목 검색
-    public List<LeafBookView> leafBooks(Long treeId, SearchType searchType, String search) {
-        return leafBooks(treeId, searchType, search, SortType.NONE, 1L, 10L);
+    public List<LeafBookView> getLeafBookViews(Long treeId, SearchType searchType, String search) {
+        return getLeafBookViews(treeId, searchType, search, SortType.NONE, 1L, 10L);
     }
 
     @Override
-    public List<LeafBookView> leafBooks(Long treeId, SearchType searchType, String search, SortType sortType, Long page, Long size) {
+    public List<LeafBookView> getLeafBookViews(Long treeId, SearchType searchType, String search, SortType sortType, Long page, Long size) {
 
         List<LeafBookView> leafBookViews = new ArrayList<>();
 
@@ -241,35 +240,7 @@ public class LeafBookServiceImpl implements LeafBookService {
             leafBookView.setTags(tags);
         }
 
-        return List.of();
-    }
-
-    @Override
-    public List<LeafCardView> leafBookCards(Long bookId) {
-        return leafBookCards(bookId, SearchType.NONE, null, SortType.NONE, 1L, 10L);
-    }
-
-    public List<LeafCardView> leafBookCards(Long bookId, SearchType searchType, String search, SortType sortType, Long page, Long size) {
-
-        List<LeafCardView> leafCardViews = new ArrayList<>();
-
-        // 리프 제목 및 내용 검색
-        if (searchType == SearchType.ALL) {
-            leafCardViews = leafBookRepository
-                    .findLeafCardViewByBookId(bookId, SearchType.ALL, search, sortType, page, size);
-        }
-        // 리프 제목 검색
-        else if (searchType == SearchType.TITLE) {
-            leafCardViews = leafBookRepository
-                    .findLeafCardViewByBookId(bookId, SearchType.TITLE, search, sortType, page, size);
-        }
-        // 리프 내용 검색
-        else if (searchType == SearchType.CONTENT) {
-            leafCardViews = leafBookRepository
-                    .findLeafCardViewByBookId(bookId, SearchType.CONTENT, search, sortType, page, size);
-        }
-
-        return leafCardViews;
+        return leafBookViews;
     }
 
     private List<LeafTag> getLeafTags(List<LeafTagMap> leafTagMaps) { // 리프 태그 조회

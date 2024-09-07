@@ -2,6 +2,9 @@ package Recorders.ggogit.domain.leaf.repository;
 
 import Recorders.ggogit.domain.leaf.entity.Leaf;
 import Recorders.ggogit.domain.leaf.repository.filter.LeafRepositoryFilter;
+import Recorders.ggogit.domain.leaf.view.*;
+import Recorders.ggogit.type.SearchType;
+import Recorders.ggogit.type.SortType;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -9,17 +12,23 @@ import java.util.List;
 @Mapper
 public interface LeafRepository {
 
-    // Create
     Long save(Leaf leaf);
-
-    // Read
+    Long update(Leaf leaf);
+    void delete(Leaf leaf);
     Leaf findById(Long id);
     List<Leaf> findAll(LeafRepositoryFilter filter);
     boolean existsById(Long parentLeafId);
 
-    // Update
-    Long update(Leaf leaf);
+    List<LeafCardView> findLeafCardViewByBookId(Long bookId);
+    List<LeafCardView> findLeafCardViewByBookId(Long bookId, SearchType searchType, String search, SortType sortType, Long page, Long size);
 
-    // Delete
-    void delete(Leaf leaf);
+    List<LeafImageCardView> findLeafImageCardViewByMemberId(Long memberId, SearchType searchType, String search, SortType sortType, Long page, Long size);
+
+    List<Leaf> findByTreeId(Long treeId);
+
+    List<LeafEtcView> findLeafEtcViewByTreeId(Long treeId, SearchType searchType, String search, SortType sortType, Long page, Long size);
+
+    LeafRecentBranchView findLeafRecentBranchViewByTreeId(Long treeId);
+
+    LeafBreadcrumbView findLeafBreadcrumbViewByTreeIdAndLeafId(Long treeId, Long leafId);
 }

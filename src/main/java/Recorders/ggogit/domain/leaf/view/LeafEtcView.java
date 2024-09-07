@@ -23,6 +23,19 @@ public class LeafEtcView {
     private Integer childLeafCount;
     private List<LeafTag> tags;
 
+    public static LeafEtcView of(Leaf leaf, List<LeafTag> tags) {
+        return LeafEtcView.builder()
+                .leafId(leaf.getId())
+                .treeId(leaf.getTreeId())
+                .parentLeafId(leaf.getParentLeafId())
+                .title(leaf.getTitle())
+                .content(leaf.getContent())
+                .visibility(leaf.getVisibility())
+                .childLeafCount(leaf.getChildLeafCount())
+                .tags(tags)
+                .build();
+    }
+
     public Leaf toLeaf() {
         return Leaf.builder()
                 .id(leafId)

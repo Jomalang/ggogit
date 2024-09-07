@@ -74,11 +74,12 @@ public class LeafTagServiceImpl implements LeafTagService {
     }
 
     @Override
-        public List<LeafTag> getLeafTags(Long memberId, @Nullable String search, Long page, Long size) {
+    public List<LeafTag> getLeafTags(Long memberId, @Nullable String search, Long page, Long size) {
         Long total = leafTagRepository.count(memberId, search);
 
-        // 데이터가 없는 경우
-        if (total == 0) { return List.of(); }
+        if (total == 0) { // 검색 결과가 없는 경우
+            return List.of();
+        }
 
         long offset = (page - 1) * size;
         if (total < offset) { // total 보다 큰 페이지 요청시 마지막 페이지로 변경

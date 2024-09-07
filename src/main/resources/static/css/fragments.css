@@ -923,19 +923,19 @@ button {
 /* tree card */
 /* ================ */
 .card-tree-details {
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
 }
 
 .card-tree-detail {
+  width: 100%;
   display: flex;
   flex-direction: row;
-  margin-bottom: 20px;
 }
 
 .card-tree__book-cover {
-  width: 80px;
   height: 120px;
   margin-right: 8px;
 }
@@ -946,8 +946,6 @@ button {
   width: 100%;
   line-height: var(--line-height-main);
   letter-spacing: var(--letter-spacing-main);
-  transform: translateY(-8px);
-  width: 250px;
 }
 
 .card-tree-detail__tags {
@@ -1003,8 +1001,9 @@ button {
   font-weight: var(--regular);
   color: var(--text-sub);
   display: flex;
-  justify-content: end;
-  transform: translateY(8px);
+  flex-direction: column-reverse;
+  align-items: flex-end;
+  flex-grow: 1;
 }
 
 /* =========================
@@ -2367,9 +2366,6 @@ card.html
 @media screen and (min-width: 768px) {
   .filter-tree-list-btn {
     padding: 9px 12px;
-  }
-  .card-tree-detail__box {
-    width: 600px;
   }
 }
 

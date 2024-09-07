@@ -12,6 +12,7 @@ public interface LeafTagRepository {
     List<LeafTag> findAll(Long memberId, String name, Long offset, Long limit);
     Long count(Long memberId, String name);
     Long update(LeafTag leafTag);
+    Boolean existsById(Long leafTagId);
     void deleteById(Long leafTagId);
     void delete(LeafTag leafTagId);
 }

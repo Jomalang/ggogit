@@ -2,12 +2,12 @@ package Recorders.ggogit.domain.leaf.service;
 
 import Recorders.ggogit.domain.leaf.entity.LeafTag;
 import Recorders.ggogit.domain.leaf.repository.LeafTagRepository;
-import Recorders.ggogit.domain.leaf.view.LeafTagView;
 import jakarta.annotation.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -19,54 +19,62 @@ public class LeafTagServiceImpl implements LeafTagService {
     @Override
     public LeafTag register(LeafTag leafTag) {
         Long id =  leafTagRepository.save(leafTag);
-        leafTag.setId(id);
-        return leafTag;
+        return Optional.ofNullable(leafTagRepository.findById(id))
+                .orElseThrow(() -> new IllegalArgumentException("태그 등록에 실패하였습니다."));
     }
 
     @Override
     public boolean isOwner(Long memberId, Long leafTagId) {
-        LeafTag leafTag = leafTagRepository.findById(leafTagId);
-        if (leafTag == null) return false;
+        LeafTag leafTag = Optional.ofNullable(leafTagRepository.findById(leafTagId))
+                .orElseThrow(() -> new IllegalArgumentException("해당 태그가 존재하지 않습니다."));
         return leafTag.getMemberId().equals(memberId);
     }
 
     @Override
     public boolean modify(LeafTag leafTag) {
-        LeafTag origin = leafTagRepository.findById(leafTag.getId());
-        if (origin == null) return false;
-        origin.setName(leafTag.getName()); // TODO 예외처리 해야함
-        Long id = leafTagRepository.save(origin);
-        return id != null;
+        LeafTag origin = Optional.ofNullable(leafTagRepository.findById(leafTag.getId()))
+                .orElseThrow(() -> new IllegalArgumentException("해당 태그가 존재하지 않습니다."));
+        origin.setName(leafTag.getName());
+        leafTagRepository.save(origin);
+        return true;
     }
 
     @Override
     public boolean remove(LeafTag leafTag) {
-        leafTagRepository.delete(leafTag);
-        return true;
+        return remove(leafTag.getMemberId(), leafTag.getId());
     }
 
     @Override
-    public boolean remove(Long leafTagId) {
+    public boolean remove(Long memberId, Long leafTagId) {
+        assert memberId != null;
+        assert leafTagId != null;
+
+        if (!isOwner(memberId, leafTagId)) {
+            throw new IllegalArgumentException("해당 태그에 대한 권한이 없습니다.");
+        }
+
         leafTagRepository.deleteById(leafTagId);
         return true;
     }
+
     @Override
     public LeafTag getLeafTag(Long leafTagId) {
-        return leafTagRepository.findById(leafTagId);
+        return Optional.ofNullable(leafTagRepository.findById(leafTagId))
+                .orElseThrow(() -> new IllegalArgumentException("해당 태그가 존재하지 않습니다."));
     }
 
     @Override
-    public List<LeafTagView> getLeafTags(Long memberId) {
+    public List<LeafTag> getLeafTags(Long memberId) {
         return getLeafTags(memberId, null, 1L, 10L);
     }
 
     @Override
-    public List<LeafTagView> getLeafTags(Long memberId, Long page, Long size) {
+    public List<LeafTag> getLeafTags(Long memberId, Long page, Long size) {
         return getLeafTags(memberId, null, page, size);
     }
 
     @Override
-        public List<LeafTagView> getLeafTags(Long memberId, @Nullable String search, Long page, Long size) {
+        public List<LeafTag> getLeafTags(Long memberId, @Nullable String search, Long page, Long size) {
         Long total = leafTagRepository.count(memberId, search);
 
         // 데이터가 없는 경우
@@ -77,7 +85,6 @@ public class LeafTagServiceImpl implements LeafTagService {
             offset = (total / size) * size;
         }
 
-        return leafTagRepository.findAll(memberId, search, offset, size)
-                .stream().map(LeafTagView::of).toList();
+        return leafTagRepository.findAll(memberId, search, offset, size);
     }
 }

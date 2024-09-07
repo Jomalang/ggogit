@@ -49,7 +49,7 @@ public class TagController {
             @RequestParam(value = "id") Long tagId
     ) {
         Long memberId = leafTagService.getLeafTag(tagId).getMemberId();
-        leafTagService.remove(tagId);
+        leafTagService.remove(memberId, tagId);
         return "redirect:/tag/list?id=" + memberId;
     }
 }

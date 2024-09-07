@@ -31,7 +31,6 @@
         WHERE RNUM &gt; #{offset}
     </select>
 
-
     <select id="count" resultType="Long">
         SELECT COUNT(*)
         FROM LEAF_TAG
@@ -40,7 +39,7 @@
                 MEMBER_ID = #{memberId}
             </if>
             <if test="name != null">
-                AND NAME LIKE '%#{name}%'
+                AND NAME LIKE '%${name}%'
             </if>
         </where>
     </select>
@@ -49,6 +48,12 @@
         SELECT *
         FROM LEAF_TAG
         WHERE ID = #{id}
+    </select>
+
+    <select id="existsById" parameterType="Long" resultType="Boolean">
+        SELECT COUNT(LEAF_ID) > 0
+        FROM LEAF_BOOK
+        WHERE LEAF_ID = #{leafId}
     </select>
 
     <update id="update" parameterType="LeafTag">

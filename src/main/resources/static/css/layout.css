@@ -242,7 +242,7 @@ home-tree__reg-4--search-book__input
 .tree-card-list {
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 20px;
   margin-left: 24px;
   margin-right: 24px;
 }

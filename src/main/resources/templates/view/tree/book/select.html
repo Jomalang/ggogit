@@ -10,8 +10,6 @@
 
   <body>
     <header class="reg-book-search-container">
-      <h1 class="none">검색 결과</h1>
-      <section>
         <h2 class="none">검색 바</h2>
         <!-- fragment -->
         <div class="search__form">
@@ -26,7 +24,8 @@
             <label class="search-bar--label">
               <input class="search-bar--input"
                      type="text"
-                      th:field="${target}"
+                     name="target"
+                     th:value="${target}"
                       th:placeholder="'검색어를 입력해주세요'"
                       autocomplete="off"/>
               <button class="search-bar--close" type="reset">
@@ -43,7 +42,6 @@
             </button>
           </form>
         </div>
-      </section>
 
       <section>
         <h3 class="none">검색 결과 개수</h3>
@@ -54,19 +52,30 @@
       </section>
     </header>
 
-    <main class="text-info-container">
+    <main>
+      <section >
       <h2 class="none">검색 시작 안내</h2>
-      <!-- fragment -->
-      <div th:if="${resultCnt == 0}">
+      <div class="text-info-container" th:if="${target.isBlank()}">
       <div th:replace="~{fragments/text :: text-info('현재 검색중인 도서가 없습니다',
         '도서를 검색하거나 직접 등록해주세요')}"></div>
       </div>
 
-      <div th:if="${resultCnt != 0}">
-        <ul class="tree-card-list" th:each="bookPreview : ${bookPreviews}">
-        <li th:insert ="~{fragments/card :: card-book-previews(bookPreview = ${bookPreview})}"></li>
-        </ul>
+
+      <h2 class="none"> 검색 결과 - 없음</h2>
+      <div class="text-info-container" th:if="${resultCnt == 0 && !target.isBlank()}">
+        <div th:replace="~{fragments/text :: text-info('검색 결과가 없습니다.',
+        '다른 도서를 검색하거나 도서를 직접 등록 해주세요.')}"></div>
       </div>
+      </section>
+
+      <section th:if="${resultCnt != 0}">
+        <h2 class="none">검색 결과 - 있음</h2>
+      <ul class="tree-card-list">
+        <li th:each="bookPreview : ${bookPreviews}">
+        <div th:insert ="~{fragments/card :: card-book-previews(bookPreviewView = ${bookPreview})}"></div>
+        </li>
+      </ul>
+      </section>
     </main>
 
     <section class="btn-select-container--right">

@@ -92,8 +92,8 @@
 <!-- ================ -->
 <div
         class="card-tree-details"
-        th:fragment="card-book-previews(bookPreivew)"
-        th:object="${bookPreview}"
+        th:fragment="card-book-previews(bookPreviewView)"
+        th:object="${bookPreviewView}"
 >
     <a class="card-tree-detail">
         <img class="card-tree__book-cover"
@@ -120,10 +120,9 @@
                 <span class="card-tree-detail__info">/</span>
                 <span class="card-tree-detail__info" th:text="*{publisher}">생각의 길</span>
             </div>
-            <span
-                    class="card-tree-detail__info-created-date"
-                    id="data-XXX"
-                    th:text="*{createTime}">2024-07-15</span>
+            <div class="card-tree-detail__info-created-date"
+                  id="data-XXX"
+                  th:text="*{createTime}">2024-07-15</div>
         </div>
     </a>
 </div>

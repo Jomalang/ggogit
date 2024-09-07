@@ -42,7 +42,7 @@
     <select id="findBookCategoryViewByTitle" resultType="BookPreviewView">
         SELECT *
         FROM VW_BOOK_CATEGORY_LIST
-        WHERE TITLE LIKE '%${title}%;
+        WHERE TITLE LIKE '%${title}%'
     </select>
 
     <select id="findBookCategoryViewByAuthor" resultType="BookPreviewView">

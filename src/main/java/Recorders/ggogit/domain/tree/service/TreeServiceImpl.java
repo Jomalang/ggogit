@@ -8,6 +8,7 @@ import Recorders.ggogit.domain.tree.view.TreeInfoView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -22,6 +23,11 @@ public class TreeServiceImpl implements TreeService {
     @Override
     public void register(Tree tree) {
         repository.save(tree);
+    }
+
+    @Override
+    public List<TreeInfoView> getTreeInfoView(String str) {
+        return List.of();
     }
 
     @Override
@@ -77,6 +83,11 @@ public class TreeServiceImpl implements TreeService {
 
     @Override
     public void delete(Long treeId) {
+
+    }
+
+    public void setTreeImg(File img) {
+
 
     }
 

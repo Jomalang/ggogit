@@ -1,16 +1,32 @@
 package Recorders.ggogit.web.tree;
 
+import Recorders.ggogit.domain.book.entity.Book;
+import Recorders.ggogit.domain.book.service.BookService;
+import Recorders.ggogit.domain.tree.entity.Tree;
+import Recorders.ggogit.domain.tree.service.TreeService;
+import Recorders.ggogit.domain.tree.view.BookTreeView;
 import Recorders.ggogit.type.BookCategoryType;
-import Recorders.ggogit.type.SeedCategoryType;
+import jakarta.servlet.ServletContext;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.File;
+
 @Controller()
 @RequestMapping("/tree")
 public class TreeController {
+
+    @Autowired
+    private TreeService treeService;
+
+    @Autowired
+    private BookService bookService;
+    @Autowired
+    private ServletContext servletContext;
 
     @GetMapping("/search")
     public String treeSearch() {
@@ -56,9 +72,25 @@ public class TreeController {
     @PostMapping("/book/reg")
     @ResponseBody
     public Object postBookReg(
-            @RequestParam(value = "bookImage", required = false) MultipartFile bookImage
-//            @ModelAttribute("tree") Tree tree
+            @RequestParam(value = "bookImage", required = false) MultipartFile bookImage,
+
+            @ModelAttribute("bookTree")BookTreeView view
     ) {
+        File img;
+
+        if(bookImage != null && !bookImage.isEmpty()) {
+            String name = bookImage.getOriginalFilename();
+            String path = servletContext.getRealPath("/") + File.separator + name;
+            img = new File(path);
+            treeService.setTreeImg(img);
+        }
+
+        Book book = view.toBook();
+        Tree tree = view.toTree();
+
+        bookService.register(book);
+        treeService.register(tree);
+
         return null;
     }
 

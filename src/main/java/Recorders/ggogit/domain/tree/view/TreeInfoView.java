@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.stereotype.Repository;
 
 import java.util.Date;
 
@@ -35,4 +34,5 @@ public class TreeInfoView {
     private Long treeLeafCnt;
     private Long treeLikeCnt;
     private Long treeViewCnt;
+
 }

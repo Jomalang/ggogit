@@ -6,6 +6,7 @@ import Recorders.ggogit.domain.tree.view.BookTreeView;
 import Recorders.ggogit.domain.tree.view.EtcTreeView;
 import Recorders.ggogit.domain.tree.view.TreeInfoView;
 
+import java.io.File;
 import java.util.List;
 
 public interface TreeService {
@@ -16,6 +17,16 @@ public interface TreeService {
      * @param tree ^^
      */
     void register(Tree tree);
+
+    /***
+     * 트리 문자열 탐색 전체 정보 조회
+     * 도서 테이블 + 트리 테이블 + 트리 소속 리프 마지막 수정시간
+     *
+     * @param memberId
+     * @return
+     */
+    List<TreeInfoView> getTreeInfoView(String str);
+
 
     /***
      * 멤버 ID 별 트리 전체 정보 조회
@@ -60,5 +71,15 @@ public interface TreeService {
      * @return
      */
     void delete(Long treeId);
+
+    /***
+     * 트리 ID 별 트리 제거
+     *
+     *
+     * @param memberId
+     * @return
+     */
+    void setTreeImg(File file);
+
 
 }

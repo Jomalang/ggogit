@@ -106,7 +106,7 @@
 }
 
 .text-book-info__create {
-  width: 100%;
+  width: fit-content;
   display: flex;
   justify-content: left;
   gap: 2px;
@@ -114,10 +114,6 @@
 .text-book-info__create-frame {
   display: flex;
   gap: 2px;
-}
-
-.text-book-info__create {
-  display: flex;
 }
 
 .text-book-info-create-info {
@@ -308,8 +304,17 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
-  margin-bottom: 13.5px;
+  align-items: center;
+  margin-bottom: 14px;
   position: relative;
+}
+
+.tob-bar__title {
+    color: var(--main1, #323a27);
+    font-size: 20px;
+    line-height: var(--line-height-main);
+    letter-spacing: var(--letter-spacing-main);
+    font-weight: var(--bold);
 }
 
 .top-bar__title {
@@ -522,6 +527,7 @@
   border-radius: 12px;
   color: var(--text-no-active);
   font-weight: var(--bold);
+  font-size: 16px;
   border: none;
   padding: 0 46px 0 46px;
   display: flex;
@@ -560,8 +566,9 @@
   background-color: var(--main1, #323a27);
   height: 56px;
   width: 100%;
-  border-radius: 40px;
+  border-radius: 20px;
   box-shadow: var(--shadow-basic);
+  font-size: 18px;
   font-weight: var(--bold, 700);
 }
 
@@ -916,19 +923,19 @@ button {
 /* tree card */
 /* ================ */
 .card-tree-details {
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
 }
 
 .card-tree-detail {
+  width: 100%;
   display: flex;
   flex-direction: row;
-  margin-bottom: 20px;
 }
 
 .card-tree__book-cover {
-  width: 80px;
   height: 120px;
   margin-right: 8px;
 }
@@ -939,8 +946,6 @@ button {
   width: 100%;
   line-height: var(--line-height-main);
   letter-spacing: var(--letter-spacing-main);
-  transform: translateY(-8px);
-  width: 250px;
 }
 
 .card-tree-detail__tags {
@@ -952,7 +957,11 @@ button {
   font-size: 10px;
   margin-right: 2px;
 }
-
+.card-tree-detail__slot{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 .card-tree-detail__name {
   font-size: 18px;
   font-weight: var(--bold);
@@ -960,6 +969,17 @@ button {
   align-items: center;
   justify-content: space-between;
 }
+.card-tree-detail__complete-icon{
+  display: inline-flex;
+  width: 20px;
+  height: 20px;
+  background-color: var(--main1);
+  mask-image:url("/svg/card-tree-details-complete.svg");
+  mask-size: contain;
+  mask-repeat: no-repeat;
+  mask-position: center;
+}
+
 
 .card-tree-detail__explanation {
   font-size: 14px;
@@ -981,8 +1001,9 @@ button {
   font-weight: var(--regular);
   color: var(--text-sub);
   display: flex;
-  justify-content: end;
-  transform: translateY(8px);
+  flex-direction: column-reverse;
+  align-items: flex-end;
+  flex-grow: 1;
 }
 
 /* =========================
@@ -2343,9 +2364,6 @@ card.html
   .filter-tree-list-btn {
     padding: 9px 12px;
   }
-  .card-tree-detail__box {
-    width: 600px;
-  }
 }
 
 .__like-frame {
@@ -2529,14 +2547,14 @@ card.html
   gap: 4px;
 }
 
-.login-screen-container {
-  padding-top: 60px;
-}
+
 
 .join-guide {
   display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  text-align: center;
   gap: 4px;
-  white-space: nowrap;
 }
 
 
@@ -3730,11 +3748,7 @@ card.html
 .tree-input-text__rectangle:focus {
   outline: none;
 }
-.tree-input-text__rectangle:not(:placeholder-shown) {
-  color: var(--text-main);
-  border: 1px solid var(--filter-checked);
-  outline: none;
-}
+
 .tree-input-text__rectangle__re-enter {
   display: block;
   height: 56px;
@@ -3748,17 +3762,19 @@ card.html
 /* ===========================
         option or create
   =============================  */
-.topbar-option-or-create {
+.top-bar__tag-info-box {
   padding: 10px;
   display: flex;
   flex-direction: row;
   gap: 10px;
   row-gap: 0;
   align-items: center;
+  border-top: solid 1px #D9D9D9;
+  border-bottom: solid 1px #D9D9D9;
   justify-content: flex-start;
   flex-shrink: 0;
 }
-.topbar-option-or-create-text {
+.top-bar__tag-info-text {
   color: var(--main1);
   text-align: left;
   font-size: 10px;
@@ -3790,4 +3806,97 @@ card.html
   font-size: 16px;
   font-weight: var(--regular);
   color: var(--text-sub);
+}
+
+.join-policy-agreement{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+/** ==========================================
+      FRAGMENT: 체크박스 버튼
+==================================== **/
+.checkbox {
+  /** height값은 컴포넌트 제작 당시엔 없었음. align center 정렬을 위해 추가함.**/
+  height: 24px;
+  position: relative;
+  font-size: 24px;
+  font-weight: var(--bold);
+  color: var(--main1);
+  cursor: pointer;
+}
+.checkbox__input {
+  position: absolute;
+  opacity: 0;
+}
+.checkbox__check {
+  position: relative;
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  border: 1px solid var(--main1);
+  border-radius: 4px;
+}
+.checkbox__input:checked ~ .checkbox__check {
+  background: var(--main1);
+  border-color: var(--main1);
+}
+.checkbox__check::before {
+  content: " ";
+  position: absolute;
+  top: 4px;
+  left: 2px;
+  width: 15px;
+  height: 6px;
+  border-bottom: 4px solid var(--white);
+  border-left: 4px solid var(--white);
+  transform: scale(0) rotate(-45deg);
+}
+.checkbox__input:checked ~ .checkbox__check::before {
+  transform: scale(0.9) rotate(-45deg);
+}
+
+/*  ===========================
+    FRAGMENT: 태그 리스트
+    =============================  */
+.tag-info-box {
+  width: 100%;
+}
+
+.tag-info__list {
+  width: 100%;
+}
+
+.tag-info__item {
+  width: 100%;
+  display: flex;
+  border: 1px solid #D9D9D9;
+  padding: 8px 0;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tag-info__tag-box {
+    display: inline-flex;
+    margin-left: 16px;
+    gap: 6px;
+    align-items: center;
+    padding: 6px 12px;
+    border-radius: 12px;
+    background-color: var(--main1);
+}
+
+.tag-info__name {
+  color: var(--white);
+}
+
+.tag-info__option-box {
+    display: flex;
+    align-items: center;
+    margin-right: 16px;
+}
+
+.tag-info__option-link {
+    display: flex;
+    align-items: center;
 }

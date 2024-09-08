@@ -1,29 +1,58 @@
 package Recorders.ggogit.web.main;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import Recorders.ggogit.domain.member.entity.Member;
+import Recorders.ggogit.domain.tree.service.MemTreeServiceImpl;
+import Recorders.ggogit.domain.tree.view.FindTreeInfoView;
+import Recorders.ggogit.domain.tree.view.MyTreeListsView;
+import Recorders.ggogit.web.member.session.SessionConst;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import Recorders.ggogit.entity.Tree;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
 
 @Controller
 @RequestMapping()
 public class MainController {
 
-    @GetMapping("/home")
+    @Autowired
+    private MemTreeServiceImpl memTreeService;
+
+
+    @GetMapping("/")
+    public String index(@SessionAttribute(value = SessionConst.LOGIN_MEMBER, required = false) Member member
+            , Model model
+            , RedirectAttributes redirectAttributes) {
+        if(member == null){
+            return "/index";
+        }
+
+        model.addAttribute("member", member);
+        redirectAttributes.addAttribute("nickName", member.getNickname());
+        return "redirect:/home/{nickName}";
+
+
+    }
+
+    @GetMapping("/home/{nickname}")
     public String index(Model model,
                         @RequestParam(name = "tree", required = false, defaultValue = "true") Boolean memberHasTree) {
 
         if (!memberHasTree) {
             return "view/home/no-tree";
         } else {
+
+
             // 더미 데이터
             // 테스트 위한 트리 리스트(나중에 리포지로 빠짐)
+
+            /*
             List<Tree> trees = new ArrayList<>();
             long id = 1L;
             for (int i = 0; i < 1; i++) {
@@ -64,8 +93,13 @@ public class MainController {
                 t1.setDescription("헤르만 헤세의 싯다르타를 읽고 정리한 트리입니다.");
                 trees.add(t1);
             }
+*/
+            List<FindTreeInfoView> treeInfoList = memTreeService.treeInfoLists(1L);
+            List<MyTreeListsView> treeLists = memTreeService.treeAllLists(1L);
 
-            model.addAttribute("treeList", trees);
+
+            model.addAttribute("treeInfoList", treeInfoList);
+            model.addAttribute("treeList", treeLists);
             return "view/home/has-tree";
         }
     }

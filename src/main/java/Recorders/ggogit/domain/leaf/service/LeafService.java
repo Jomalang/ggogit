@@ -1,31 +1,52 @@
 package Recorders.ggogit.domain.leaf.service;
 
-import Recorders.ggogit.domain.leaf.domain.LeafBookDomain;
-import Recorders.ggogit.domain.leaf.repository.LeafBookRepository;
-import Recorders.ggogit.domain.leaf.repository.LeafRepository;
-import Recorders.ggogit.domain.leaf.repository.LeafTagMapRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import Recorders.ggogit.domain.leaf.view.LeafBreadcrumbView;
+import Recorders.ggogit.domain.leaf.view.LeafImageCardView;
+import Recorders.ggogit.domain.leaf.view.LeafItemView;
+import Recorders.ggogit.domain.leaf.view.LeafRecentBranchView;
+import jakarta.annotation.Nullable;
 
-@Service
-public class LeafService {
+import java.util.List;
 
-//    @Autowired // TODO: service 수정
-//    private TreeRepository treeRepository;
+public interface LeafService {
 
-    @Autowired
-    private LeafRepository repository;
+    /**
+     * LeafItemView 리스트를 조회한다.
+     * @param treeId 트리 ID
+     * @param leafId 리프 ID
+     * @return LeafItemView 리프 아이템 View 리스트
+     */
+    List<LeafItemView> getLeafItems(Long treeId, @Nullable Long leafId);
 
-    @Autowired
-    private LeafBookRepository leafBookRepository;
 
-    @Autowired
-    private LeafTagMapRepository leafTagMap;
+    /**
+     * 리프의 브레드크럼 정보를 조회한다.
+     * @param treeId 트리 ID
+     * @param leafId 리프 ID
+     * @return LeafBreadcrumbView 리프 브레드크럼 View
+     */
+    LeafBreadcrumbView getBreadcrumb(Long treeId, Long leafId);
 
-    @Autowired
-    private LeafTagMapRepository leafTagMapRepository;
 
-    public Long createLeafBook(LeafBookDomain leafBookDomain) {
-        return 1L;
-    }
+    /**
+     * 리프의 브레드크럼 정보를 조회한다.
+     * @param leafId 리프 ID
+     * @return LeafBreadcrumbView 리프 브레드크럼 View
+     */
+    LeafBreadcrumbView getBreadcrumb(Long leafId);
+
+
+    /**
+     * 최근 업데이트된 브랜치 정보를 조회한다.
+     * @param treeId 트리 ID
+     * @return LeafRecentBranchView 최근 업데이트된 브랜치 View
+     */
+    LeafRecentBranchView getRecentBranch(Long treeId);
+
+    /**
+     * 리프 이미지 카드 정보를 조회한다.
+     * @param memberId 멤버 ID
+     * @return LeafImageCardView 리프 이미지 카드 View
+     */
+    LeafImageCardView LeafImageCardView(Long memberId);
 }

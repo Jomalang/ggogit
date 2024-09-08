@@ -11,13 +11,23 @@ import java.time.LocalDate;
 public class Memoir {
 
     private Long id;
-    @NotNull
     private Long treeId;
-    @NotNull
     private String title;
     private String text;
     private Boolean visibility;
     private LocalDate updateTime;
     private LocalDate createTime;
+
+    public void changeTitle(String title) {
+        this.title = title;
+    }
+
+    public void changeText(String text) {
+        this.text = text;
+    }
+
+    public void changeVisibility(Boolean visibility) {
+        this.visibility = visibility;
+    }
 
 }

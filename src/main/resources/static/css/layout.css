@@ -242,7 +242,7 @@ home-tree__reg-4--search-book__input
 .tree-card-list {
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 20px;
   margin-left: 24px;
   margin-right: 24px;
 }
@@ -383,10 +383,11 @@ home-tree__reg-4--search-book__input
   padding-top: 60px;
   padding-left: 24px;
   padding-right: 24px;
+  margin-bottom: 10px;
 }
 
 .register__input-container--last {
-  padding: 120px 24px 60px;
+  padding: 60px 24px 60px;
 }
 
 .book-detail-top-bar-container {
@@ -525,9 +526,14 @@ home-tree__reg-4--search-book__input
 }
 
 .join-guide-container {
-    padding: 277px 24px 40px 185px;
+    padding: 50px 24px 40px 24px;
 }
 
-.login-memeber__join-page-container {
+.login-member__join-page-container {
+  width: auto;
     padding: 50px 24px 0 24px
+}
+
+.login-screen-container {
+  padding-top: 30px;
 }

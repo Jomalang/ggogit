@@ -3,53 +3,106 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../../static/css/reset.css" />
-    <title>Document</title>
+    <link th:href="@{/css/reset.css}" rel="stylesheet" />
+    <link th:href="@{/css/fragments.css}" rel="stylesheet" />
+    <link th:href="@{/css/layout.css}" rel="stylesheet" />
+
+    <title>꼬깃 회원가입</title>
 </head>
-<body>
-    <header>
+<body class="login-member__join-page-container">
+    <header th:object="${loginRegForm}">
         <h1 class="none">회원가입 정보 입력</h1>
-        <!-- 컨포넌트 -->
+        <!-- 컴포넌트 -->
+        <div th:if="${!#fields.hasGlobalErrors()}">
+            <div th:replace="~{/fragments/text::text-join__page-info(label='회원가입', infoText='기본 정보를 작성해 주세요')}"></div>
+        </div>
+        <div th:if="${#fields.hasGlobalErrors()}" >
+            <div th:replace="~{/fragments/text::text-join__page-info(label='회원가입', infoText='')}"></div>
+            <div class="text--errors" th:with="err = ${#fields.globalErrors().getFirst()}" th:text="${err}"></div>
+        </div>
     </header>
     <main>
-        <section>
+        <form method="POST" th:action th:object="${loginRegForm}">
             <h2 class="none">회원가입 정보</h2>
-            <!-- 컨포넌트 -->
-
-            <section>
+            <section class="social-login-container" >
                 <h3 class="none">회원가입 이름</h3>
-                <!-- 컨포넌트 -->
+                <!-- 컴포넌트 -->
+                <div class="input-text__bar">
+                    <label class="input-text__label">
+                        <span class="input-text__label-text" th:text="'이름'">이름</span>
+                        <input class="input-text__input" th:field="*{username}" th:placeholder="'(필수)이름을 입력해주세요'" autocomplete="off"/>
+                    </label>
+                    <div th:errors="*{username}" class="text--errors"></div>
+                </div>
             </section>
 
-            <section>
+            <section class="social-login-container" >
                 <h3 class="none">회원가입 이메일</h3>
-                <!-- 컨포넌트 -->
+                <!-- 컴포넌트 -->
+                <div class="input-text__bar">
+                    <label class="input-text__label">
+                        <span class="input-text__label-text" th:text="'이메일'">이메일</span>
+                        <input class="input-text__input" th:field="*{email}" th:placeholder="'(필수)이메일을 입력해주세요'" autocomplete="off"/>
+                    </label>
+                    <div th:errors="*{email}" class="text--errors"></div>
+                </div>
             </section>
 
-            <section>
+            <section class="social-login-container" >
+                <h3 class="none">회원가입 비밀번호</h3>
+                <!-- 컴포넌트 -->
+                <div class="input-text__bar">
+                    <label class="input-text__label">
+                        <span class="input-text__label-text" th:text="'비밀번호'">비밀번호</span>
+                        <input class="input-text__input" type="password" th:field="*{password}" th:placeholder="'(필수)비밀번호를 입력해주세요'" autocomplete="off"/>
+                    </label>
+                    <div th:errors="*{password}" class="text--errors"></div>
+                </div>
+            </section>
+
+            <section class="social-login-container" >
                 <h3 class="none">회원가입 닉네임</h3>
-                <!-- 컨포넌트 -->
+                <!-- 컴포넌트 -->
+                <div class="input-text__bar">
+                    <label class="input-text__label">
+                        <span class="input-text__label-text" th:text="'닉네임'">닉네임</span>
+                        <input class="input-text__input" th:field="*{nickname}" th:placeholder="'(필수)닉네임을 입력해주세요'" autocomplete="off"/>
+                    </label>
+                    <div th:errors="*{nickname}" class="text--errors"></div>
+                </div>
             </section>
 
-            <section>
+            <section class="social-login-container" >
                 <h3 class="none">회원가입 한줄 소개</h3>
-                <!-- 컨포넌트 -->
+                <!-- 컴포넌트 -->
+                <div class="input-text__bar">
+                    <label class="input-text__label">
+                        <span class="input-text__label-text" th:text="'한 줄 소개'">한줄 소개</span>
+                        <input class="input-text__input" th:field="*{introduction}" th:placeholder="'간단한 한줄 소개를 작성해 주세요'" autocomplete="off"/>
+                    </label>
+                </div>
             </section>
 
-            <section>
+            <section class="social-login-container" >
                 <h3 class="none">회원가입 이용약관</h3>
-                <!-- 컨포넌트 -->
+                <div class="join-policy-agreement">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" class="checkbox__input" value="true" name="policyAgreement" th:field="*{policyAgreement}"/>
+                            <span class="checkbox__check"></span>
+                        </label>
+                    </div>
+                    <p><a class="text--underline" href="#">이용약관</a>과 <a class="text--underline" href="#">개인정보 취급 방침</a>에 동의합니다.</p>
+                    <div class = "text--errors" th:errors="*{policyAgreement}"></div>
+                </div>
             </section>
 
-            <section>
+            <section class="register__input-container">
                 <h3 class="none">회원가입 버튼</h3>
-                <!-- 컨포넌트 -->
+                <!-- 컴포넌트 -->
+                <div th:replace="~{fragments/button :: submit-btn-full-bar('회원가입')}"></div>
             </section>
-
-        </section>
+        </form>
     </main>
-    
-    <footer>
-    </footer>
 </body>
 </html>

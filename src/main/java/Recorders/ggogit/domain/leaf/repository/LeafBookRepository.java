@@ -11,10 +11,10 @@ import java.util.List;
 @Mapper
 public interface LeafBookRepository {
     Long save(LeafBook leafBook);
-    LeafBook findByLeafId(Long leafId);
-    LeafBook findById(Long leafId);
     Long update(LeafBook leafBook);
     void delete(LeafBook leafBook);
+    LeafBook findByLeafId(Long leafId);
+    LeafBook findById(Long leafId);
     LeafBookView findLeafBookViewByLeafId(Long leafBookId);
     List<LeafBookView> findLeafBookViewByTreeId(Long treeId);
     List<LeafBookView> findLeafBookViewByTreeId(Long treeId, SearchType searchType, String search, SortType sortType, Long page, Long size);

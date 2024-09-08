@@ -19,6 +19,6 @@ public interface LeafService {
     List<LeafImageCardView> getLeafImageCardViews(Long memberId, SearchType searchType, String search, SortType sortType, Long page, Long size);
 
 
-    List<LeafCardView> getLeafCardViews(Long bookId);
-    List<LeafCardView> getLeafCardViews(Long bookId, SearchType searchType, String search, SortType sortType, Long page, Long size);
+    List<LeafCardView> getLeafCardViews(Long bookId, Long memberId);
+    List<LeafCardView> getLeafCardViews(Long bookId, Long memberId, SearchType searchType, String search, SortType sortType, Long page, Long size);
 }

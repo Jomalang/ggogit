@@ -52,29 +52,29 @@ public class LeafServiceImpl implements LeafService {
     }
 
     @Override
-    public List<LeafCardView> getLeafCardViews(Long bookId) {
-        return getLeafCardViews(bookId, SearchType.NONE, null, SortType.NONE, 1L, 10L);
+    public List<LeafCardView> getLeafCardViews(Long bookId, Long memberId) {
+        return getLeafCardViews(bookId, memberId, SearchType.NONE, null, SortType.NONE, 1L, 10L);
     }
 
     @Override
-    public List<LeafCardView> getLeafCardViews(Long bookId, SearchType searchType, String search, SortType sortType, Long page, Long size) {
+    public List<LeafCardView> getLeafCardViews(Long bookId, Long memberId, SearchType searchType, String search, SortType sortType, Long page, Long size) {
 
         List<LeafCardView> leafCardViews = new ArrayList<>();
 
         // 리프 제목 및 내용 검색
         if (searchType == SearchType.ALL) {
             leafCardViews = leafRepository
-                    .findLeafCardViewByBookId(bookId, SearchType.ALL, search, sortType, page, size);
+                    .findLeafCardViewByBookId(bookId, memberId, SearchType.ALL, search, sortType, page, size);
         }
         // 리프 제목 검색
         else if (searchType == SearchType.TITLE) {
             leafCardViews = leafRepository
-                    .findLeafCardViewByBookId(bookId, SearchType.TITLE, search, sortType, page, size);
+                    .findLeafCardViewByBookId(bookId, memberId, SearchType.TITLE, search, sortType, page, size);
         }
         // 리프 내용 검색
         else if (searchType == SearchType.CONTENT) {
             leafCardViews = leafRepository
-                    .findLeafCardViewByBookId(bookId, SearchType.CONTENT, search, sortType, page, size);
+                    .findLeafCardViewByBookId(bookId, memberId, SearchType.CONTENT, search, sortType, page, size);
         }
 
         return leafCardViews;

@@ -16,9 +16,8 @@ public class LeafCardView {
     private Long leafId;
     private String title;
     private String content;
-    private Long likeCount;
     private Long viewCount;
-    private String userNickName;
+    private String userNickname;
     private String userEmailId;
     private Boolean likeActive;
     private LocalDateTime updateTime;

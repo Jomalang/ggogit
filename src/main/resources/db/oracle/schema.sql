@@ -349,6 +349,7 @@ COMMENT ON COLUMN "SEED"."NAME" IS '씨앗 제목';
 CREATE TABLE "TREE" (
     "ID"	            NUMBER		                            PRIMARY KEY,
     "MEMBER_ID"	        NUMBER		                            NOT NULL,
+    "BOOK_ID"           NUMBER                                  NULL,
     "SEED_ID"	        NUMBER		                            NOT NULL,
     "TITLE"	            NVARCHAR2(300)		                    NOT NULL,
 	"DESCRIPTION"	    NVARCHAR2(2000)		                    NOT NULL,
@@ -358,6 +359,7 @@ CREATE TABLE "TREE" (
     "CREATE_TIME"	    TIMESTAMP       DEFAULT SYSTIMESTAMP    NOT NULL, -- 데이터 생성 시각
     -- FK 정의
     CONSTRAINT "FK_TREE_MEMBER" FOREIGN KEY ("MEMBER_ID") REFERENCES "MEMBER" ("ID"),
+    CONSTRAINT "FK_TREE_BOOK" FOREIGN KEY ("BOOK_ID") REFERENCES "BOOK" ("ID"),
     CONSTRAINT "FK_TREE_SEED" FOREIGN KEY ("SEED_ID") REFERENCES "SEED" ("ID")
 );
 

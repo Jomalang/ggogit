@@ -13,13 +13,12 @@
 <body>
     <header>
         <h1 class="none">태그 이름</h1>
-<!--        <div th:replace="~{/fragments/top-bar::top-bar-tag-edit(tag='하하')}"></div>-->
         <div th:replace="~{/fragments/top-bar::top-bar-title(title='즐거운 텍스트')}"></div>
     </header>
     <main>
         <section>
             <h2 class="none">태그 검색</h2>
-            <div th:replace="~{/fragments/input::tag-search-or-register-bar}"></div>
+            <div th:replace="~{/fragments/input::tag-search-or-register-bar(tag=null)}"></div>
         </section>
 
         <section>
@@ -33,6 +32,26 @@
         </section>
 
     </main>
-    <footer></footer>
+
+    <script>
+        const inputTag = document.getElementById('tree-input-text__rectangle-id');
+        // 실시간 입력 API 검색
+        inputTag.addEventListener('input', function() {
+            const params = new URLSearchParams({
+                search: inputTag.value,
+                page: 0,
+                size: 10
+            });
+
+
+            // 실시간 검색 API GET 호출
+            fetch('/api/tags?search=' + search + '&page=' + page + '&size=' + size)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                });
+        });
+
+    </script>
 </body>
 </html>

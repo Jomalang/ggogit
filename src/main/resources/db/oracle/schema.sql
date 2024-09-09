@@ -159,6 +159,7 @@ COMMENT ON COLUMN "BOOK_CATEGORY"."NAME" IS '도서 카테고리 이름';
 CREATE TABLE "BOOK" (
     "ID"	            NUMBER		                            PRIMARY KEY, -- 도서 PK
     "MEMBER_ID"         NUMBER		                            NOT NULL, -- 회원 FK
+    "BOOK_CATEGORY_ID"	NUMBER		                            NOT NULL, -- 도서 카테고리 FK
     "TITLE"             NVARCHAR2(1024)	                        NOT NULL, -- 도서 제목
     "AUTHOR"            NVARCHAR2(1024)	                        NOT NULL, -- 도서 저자
     "ISBN"              VARCHAR2(13)	                        NULL, -- 도서 ISBN
@@ -172,7 +173,8 @@ CREATE TABLE "BOOK" (
     -- UNIQUE 정의
     UNIQUE ("ISBN"),
     -- FK 정의
-    CONSTRAINT "FK_BOOK_MEMBER" FOREIGN KEY ("MEMBER_ID") REFERENCES "MEMBER" ("ID")
+    CONSTRAINT "FK_BOOK_MEMBER" FOREIGN KEY ("MEMBER_ID") REFERENCES "MEMBER" ("ID"),
+    CONSTRAINT "FK_BOOK_BOOK_CATEGORY" FOREIGN KEY ("BOOK_CATEGORY_ID") REFERENCES "BOOK_CATEGORY" ("ID")
 );
 
 -- 시퀀스 생성
@@ -195,6 +197,7 @@ END;
 
 COMMENT ON COLUMN "BOOK"."ID" IS '도서 PK';
 COMMENT ON COLUMN "BOOK"."MEMBER_ID" IS '회원 FK';
+COMMENT ON COLUMN "BOOK"."BOOK_CATEGORY_ID" IS '도서 카테고리 FK';
 COMMENT ON COLUMN "BOOK"."TITLE" IS '도서 제목';
 COMMENT ON COLUMN "BOOK"."AUTHOR" IS '도서 저자';
 COMMENT ON COLUMN "BOOK"."ISBN" IS '도서 ISBN';
@@ -346,6 +349,7 @@ COMMENT ON COLUMN "SEED"."NAME" IS '씨앗 제목';
 CREATE TABLE "TREE" (
     "ID"	            NUMBER		                            PRIMARY KEY,
     "MEMBER_ID"	        NUMBER		                            NOT NULL,
+    "BOOK_ID"           NUMBER                                  NULL,
     "SEED_ID"	        NUMBER		                            NOT NULL,
     "TITLE"	            NVARCHAR2(300)		                    NOT NULL,
 	"DESCRIPTION"	    NVARCHAR2(2000)		                    NOT NULL,
@@ -355,6 +359,7 @@ CREATE TABLE "TREE" (
     "CREATE_TIME"	    TIMESTAMP       DEFAULT SYSTIMESTAMP    NOT NULL, -- 데이터 생성 시각
     -- FK 정의
     CONSTRAINT "FK_TREE_MEMBER" FOREIGN KEY ("MEMBER_ID") REFERENCES "MEMBER" ("ID"),
+    CONSTRAINT "FK_TREE_BOOK" FOREIGN KEY ("BOOK_ID") REFERENCES "BOOK" ("ID"),
     CONSTRAINT "FK_TREE_SEED" FOREIGN KEY ("SEED_ID") REFERENCES "SEED" ("ID")
 );
 

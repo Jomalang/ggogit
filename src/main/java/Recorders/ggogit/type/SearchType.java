@@ -4,16 +4,19 @@ import lombok.Getter;
 
 @Getter
 public enum SearchType {
-    TITLE("title", "제목"),
-    CONTENT("content", "내용"),
-    ALL("all", "제목 + 내용");
+    NONE("none", "없음", 0L),
+    TITLE("title", "제목", 1L),
+    CONTENT("content", "내용", 2L),
+    ALL("all", "제목 + 내용", 3L);
 
     private final String value;
     private final String description;
+    private final Long num;
 
-    SearchType(String value, String description) {
+    SearchType(String value, String description, Long num) {
         this.value = value;
         this.description = description;
+        this.num = num;
     }
 
     public static SearchType of(String value) {

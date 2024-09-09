@@ -109,9 +109,9 @@
 <!-- ===================================
       FRAGMENT: 나뭇잎 태그 선택 디테일 상단 바
      =================================== -->
-      <div class="top-bar--green" th:fragment="top-bar-tag-edit(tag)">
+      <div class="top-bar--green" th:fragment="top-bar-tag-edit(tag, memberId)">
         <div class="top-bar__frame">
-          <a class="tob-bar--a">
+          <a class="tob-bar--a" th:href="@{/tag/list(id=${memberId})}">
             <img th:src="@{/svg/back-arrow-icon.svg}" alt="top-bar--backarrow.svg"/>
           </a>
           <div class="tree-input-text--select__tag" th:text="${tag}">즐거움</div>

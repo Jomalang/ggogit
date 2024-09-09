@@ -1,68 +1,19 @@
 package Recorders.ggogit.domain.leaf.service;
 
-import Recorders.ggogit.domain.leaf.view.LeafCardView;
 import Recorders.ggogit.domain.leaf.view.LeafBookView;
 import Recorders.ggogit.type.SearchType;
+import Recorders.ggogit.type.SortType;
 
 import java.util.List;
 
 public interface LeafBookService {
-
-    /**
-     * 최초 도서 리프 등록
-     * @param leafBookView 리프 도서 View
-     */
-    void register(LeafBookView leafBookView);
-
-    /**
-     * 일반 도서 리프 등록
-     * @param leafBookView 리프 도서 View
-     */
-    void register(LeafBookView leafBookView, Long parentLeafId);
-
-    /**
-     * 도서 리프 소유 확인
-     * @param leafBookView 리프 도서 View
-     * @return boolean 소유 여부
-     */
-    boolean isOwner(LeafBookView leafBookView);
-
-    /**
-     * 도서 리프 수정
-     * @param leafBookView 리프 도서 View
-     */
-    void modify(LeafBookView leafBookView);
-
-    /**
-     * 도서 리프 삭제
-     * @param leafBookView 리프 도서 View
-     */
-    void remove(LeafBookView leafBookView);
-
-    /**
-     * 도서 리프 조회
-     * @param leafBookId 리프 도서 ID
-     */
-    LeafBookView get(Long leafBookId);
-
-    /**
-     * 도서 리프 리스트 조회
-     * @param treeId 트리 ID
-     * @return LeafBookView 리프 도서 View 리스트
-     */
-    List<LeafBookView> leafBooks(Long treeId);
-
-    /**
-     * 도서 리프 리스트 조회 검색 조회
-     * @param treeId 트리 ID
-     * @return LeafBookView 리프 도서 View 리스트
-     */
-    List<LeafBookView> leafBooks(Long treeId, SearchType searchType, String search);
-
-    /**
-     * 도서 리프 카드 리스트 조회
-     * @param bookId 도서 ID
-     * @return LeafCardView 리프 도서 카드 View 리스트
-     */
-    List<LeafCardView> leafBookCards(Long bookId);
+    boolean register(LeafBookView leafBookView);
+    boolean registerRoot(LeafBookView leafBookView);
+    boolean registerNode(LeafBookView leafBookView);
+    boolean modify(LeafBookView leafBookView);
+    boolean remove(Long leafId);
+    LeafBookView getLeafBookView(Long leafBookId);
+    List<LeafBookView> getLeafBookViews(Long treeId);
+    List<LeafBookView> getLeafBookViews(Long treeId, SearchType searchType, String search);
+    List<LeafBookView> getLeafBookViews(Long treeId, SearchType searchType, String search, SortType sortType, Long page, Long size);
 }

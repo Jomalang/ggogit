@@ -11,5 +11,5 @@ import lombok.NoArgsConstructor;
 @Builder
 public class LeafBreadcrumbView {
     String treeName;
-    String branchName; // 브랜치 명
+    String branchName;
 }

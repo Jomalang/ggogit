@@ -7,8 +7,15 @@ import java.util.List;
 
 @Mapper
 public interface LeafTagMapRepository {
+
+    /**
+     * 리프 태그 맵핑 저장
+     * @param leaf 리프 태그 맵핑
+     * @return 저장된 ID
+     */
     Long save(LeafTagMap leaf);
-    LeafTagMap findByLeafIdAndLeafTagId(Long leafId, Long leafTagId);
+    LeafTagMap findByPk(Long leafId, Long leafTagId);
     List<LeafTagMap> findByLeafId(Long leafId);
     List<LeafTagMap> findByLeafTagId(Long tagId);
+    void delete(LeafTagMap leafTagMap);
 }

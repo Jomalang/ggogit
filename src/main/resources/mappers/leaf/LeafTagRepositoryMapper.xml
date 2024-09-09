@@ -12,8 +12,36 @@
     </insert>
 
     <select id="findAll" resultType="LeafTag">
-        SELECT *
+        SELECT * FROM (
+            SELECT t.*, ROWNUM AS RNUM FROM (
+                SELECT *
+                FROM LEAF_TAG
+                <where>
+                    <if test="memberId != null">
+                        MEMBER_ID = #{memberId}
+                    </if>
+                    <if test="name != null">
+                        AND NAME LIKE '%${name}%'
+                    </if>
+                </where>
+                ORDER BY ID DESC
+            ) t
+            WHERE ROWNUM &lt;= #{limit}
+        )
+        WHERE RNUM &gt; #{offset}
+    </select>
+
+    <select id="count" resultType="Long">
+        SELECT COUNT(*)
         FROM LEAF_TAG
+        <where>
+            <if test="memberId != null">
+                MEMBER_ID = #{memberId}
+            </if>
+            <if test="name != null">
+                AND NAME LIKE '%${name}%'
+            </if>
+        </where>
     </select>
 
     <select id="findById" parameterType="Long" resultType="LeafTag">
@@ -22,10 +50,28 @@
         WHERE ID = #{id}
     </select>
 
+    <select id="existsById" parameterType="Long" resultType="Boolean">
+        SELECT COUNT(LEAF_ID) > 0
+        FROM LEAF_BOOK
+        WHERE LEAF_ID = #{leafId}
+    </select>
+
     <update id="update" parameterType="LeafTag">
         UPDATE LEAF_TAG
         SET NAME = #{name}
         WHERE ID = #{id}
     </update>
+
+    <delete id="delete" parameterType="LeafTag">
+        DELETE
+        FROM LEAF_TAG
+        WHERE ID = #{id}
+    </delete>
+
+    <delete id="deleteById" parameterType="Long">
+        DELETE
+        FROM LEAF_TAG
+        WHERE ID = #{id}
+    </delete>
 
 </mapper>

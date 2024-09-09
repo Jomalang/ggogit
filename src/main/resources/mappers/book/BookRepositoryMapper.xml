@@ -51,4 +51,10 @@
         WHERE AUTHOR LIKE '%${author}%'
     </select>
 
+    <select id="findBookCategoryViewById" resultType="BookInfoView">
+        SELECT *
+        FROM VW_BOOK_INFO
+        WHERE ID = #{id}
+    </select>
+
 </mapper>

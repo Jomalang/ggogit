@@ -1,6 +1,7 @@
 package Recorders.ggogit.domain.book.service;
 
 import Recorders.ggogit.domain.book.entity.Book;
+import Recorders.ggogit.domain.book.view.BookInfoView;
 import Recorders.ggogit.domain.book.view.BookPreviewView;
 import Recorders.ggogit.domain.book.view.BookDetailView;
 
@@ -53,4 +54,11 @@ public interface BookService {
      * @return
      */
     List<BookPreviewView> getBooksbyAuthor(String author);
+
+    /**
+     * 저자로 도서 검색
+     * @param author
+     * @return
+     */
+    BookInfoView getBookbyId(Long bookId);
 }

@@ -72,7 +72,7 @@
           <div class="filter-tab__item-label">
             <a
                     class="filter-tab__item--label-text"
-                    th:href="${v.category == 'book'} ? @{/tree/search} : @{|/tree/${v.category}/${source}?type=${v.description}|}"
+                    th:href="${v.category == 'book'} ? @{|/tree/book/select|} : @{|/tree/${v.category}/${source}?type=${v.description}|}"
                     th:text="${v.name}"
             >
 <!--              <a-->

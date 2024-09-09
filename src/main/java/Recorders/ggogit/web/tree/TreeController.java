@@ -2,22 +2,25 @@ package Recorders.ggogit.web.tree;
 
 import Recorders.ggogit.domain.book.entity.Book;
 import Recorders.ggogit.domain.book.service.BookService;
+import Recorders.ggogit.domain.book.view.BookDetailView;
+import Recorders.ggogit.domain.book.view.BookInfoView;
+import Recorders.ggogit.domain.book.view.BookPreviewView;
 import Recorders.ggogit.domain.tree.entity.Tree;
 import Recorders.ggogit.domain.tree.service.TreeService;
 import Recorders.ggogit.domain.tree.view.BookTreeView;
 import Recorders.ggogit.type.BookCategoryType;
+import Recorders.ggogit.type.SeedCategoryType;
 import jakarta.servlet.ServletContext;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import java.io.File;
 
@@ -34,34 +37,34 @@ public class TreeController {
     @Autowired
     private ServletContext servletContext;
 
-    private final BookService bookService;
+//    private final BookService bookService;
 
-    @GetMapping("/search")
-    public String treeSearch() {
-        return "view/tree/search/index";
-    }
-
-    @PostMapping("/search")
-    public String treeSearch(@RequestParam("treeSearchText") String treeSearchText,
-                             RedirectAttributes redirectAttributes) {
-        System.out.println(treeSearchText);
-        redirectAttributes.addAttribute("treeSearchText", treeSearchText);
-        return "redirect:/tree/search/result/{treeSearchText}";
-    }
-
-    @GetMapping("/search/result/{treeSearchText}")
-    public String treeSearchResult(@PathVariable String treeSearchText,
-                                   Model model) {
-        return "view/tree/search/tree-list";
-    }
-
-    @PostMapping("/search/result/{treeSearchText}")
-    public String treeSearchResult(@RequestParam("treeSearchText") String treeSearchText,
-                                   RedirectAttributes redirectAttributes) {
-        System.out.println(treeSearchText);
-        redirectAttributes.addAttribute("treeSearchText", treeSearchText);
-        return "redirect:/tree/search/result/{treeSearchText}";
-    }
+//    @GetMapping("/search")
+//    public String treeSearch() {
+//        return "view/tree/search/index";
+//    }
+//
+//    @PostMapping("/search")
+//    public String treeSearch(@RequestParam("treeSearchText") String treeSearchText,
+//                             RedirectAttributes redirectAttributes) {
+//        System.out.println(treeSearchText);
+//        redirectAttributes.addAttribute("treeSearchText", treeSearchText);
+//        return "redirect:/tree/search/result/{treeSearchText}";
+//    }
+//
+//    @GetMapping("/search/result/{treeSearchText}")
+//    public String treeSearchResult(@PathVariable String treeSearchText,
+//                                   Model model) {
+//        return "view/tree/search/tree-list";
+//    }
+//
+//    @PostMapping("/search/result/{treeSearchText}")
+//    public String treeSearchResult(@RequestParam("treeSearchText") String treeSearchText,
+//                                   RedirectAttributes redirectAttributes) {
+//        System.out.println(treeSearchText);
+//        redirectAttributes.addAttribute("treeSearchText", treeSearchText);
+//        return "redirect:/tree/search/result/{treeSearchText}";
+//    }
 
     @GetMapping("/book/reg")
     public String getBookReg(
@@ -70,6 +73,10 @@ public class TreeController {
             Model model
     ) {
         if (auto) {
+            BookInfoView book = bookService.getBookbyId(id);
+
+            System.out.println(book.toString());
+            model.addAttribute("book", book);
             return "view/tree/book/reg-auto";
         } else {
             model.addAttribute("categories", BookCategoryType.values());
@@ -80,8 +87,8 @@ public class TreeController {
     @PostMapping("/book/reg")
     @ResponseBody
     public Object postBookReg(
-            @RequestParam(value = "bookImage", required = false) MultipartFile bookImage
-//            @ModelAttribute("tree") Tree tree
+            @RequestParam(value = "bookImage", required = false) MultipartFile bookImage,
+            @ModelAttribute("tree") BookTreeView view
     ) {
         File img;
 
@@ -125,32 +132,30 @@ public class TreeController {
         return "view/tree/list";
     }
 
-    @GetMapping("/reg-etc")
+    @GetMapping("/etc/reg")
     public String getTreeEtcReg(
             @RequestParam(value = "type", required = false) String type,
             Model model
     ) {
-        String seedName;
-        if(type.equals("idea"))
-            seedName = "생각";
-        else if (type.equals("phrase"))
-            seedName = "문장";
-        else if (type.equals("study"))
-            seedName = "공부";
-        else seedName = "영상";
+        String seedName = switch (type) {
+            case "idea" -> "생각";
+            case "phrase" -> "문장";
+            case "study" -> "공부";
+            default -> "영상";
+        };
         // hack type 데이터 로직 어디에 넣을지
-        SeedCategoryType seedCategoryType;
-        if (!SeedCategoryType.contains(type)) {
-            seedCategoryType = SeedCategoryType.IDEA;
-        } else {
-            seedCategoryType = SeedCategoryType.of(type);
-        }
+//        SeedCategoryType seedCategoryType;
+//        if (!SeedCategoryType.contains(type)) {
+//            seedCategoryType = SeedCategoryType.IDEA;
+//        } else {
+//            seedCategoryType = SeedCategoryType.of(type);
+//        }
+//
+//        if (seedCategoryType == SeedCategoryType.BOOK) {
+//            seedCategoryType = SeedCategoryType.IDEA;
+//        }
 
-        if (seedCategoryType == SeedCategoryType.BOOK) {
-            seedCategoryType = SeedCategoryType.IDEA;
-        }
-
-        model.addAttribute("seed", seedCategoryType);
+        model.addAttribute("seed", seedName);
         return "view/tree/reg-etc";
     }
 
@@ -230,6 +235,6 @@ public class TreeController {
     @GetMapping("/memoir/register/index")
     public String getmemoirindex(Model model) {
         model.addAttribute("categories", BookCategoryType.values());
-        return "view/tree/memoir/register/index";
+        return "view/memoir/index";
     }
 }

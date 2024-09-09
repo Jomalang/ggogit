@@ -23,6 +23,23 @@
         >
       </label>
     </div>
+    <!-- =============================
+                라디오 버튼 필터
+        ============================== -->
+    <div class="search-filter-log" th:fragment="search-filter-radio(description, name, value, isChecked)">
+      <label class="search-filter-log__checkbox-labal"
+      ><input
+              class="search-filter-log__checkbox-input"
+              type="radio"
+              th:name="${name}"
+              th:value="${value}"
+              th:checked="${isChecked}"
+      />
+        <span class="search-filter-log__checkbox-input-text" th:text="${description}"
+        >나뭇잎 전체 검색</span
+        >
+      </label>
+    </div>
 
     <!-- =============================
               씨앗 필터

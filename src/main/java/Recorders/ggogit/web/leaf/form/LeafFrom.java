@@ -1,7 +1,7 @@
 package Recorders.ggogit.web.leaf.form;
 
 
-import Recorders.ggogit.Type.SeedCategoryType;
+import Recorders.ggogit.type.SeedCategoryType;
 import Recorders.ggogit.domain.leaf.view.LeafBookView;
 import Recorders.ggogit.domain.leaf.view.LeafView;
 import Recorders.ggogit.domain.leaf.view.LeafTagView;

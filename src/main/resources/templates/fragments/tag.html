@@ -10,14 +10,27 @@
         <li th:each="tag : ${tags}" class="tag-info__item">
             <div class="tag-info__tag-box">
                 <q class="tag-info__name" th:text="${tag.name}">책리뷰</q>
-                <a href=""> <!-- TODO: 삭제 로직  -->
-                    <img class="tag-info__btn" th:src="@{/svg/x-button.svg}" alt="">
-                </a>
             </div>
             <div class="tag-info__option-box">
                 <a class="tag-info__option-link" th:href="@{/tag/edit(id=${tag.id})}">
                     <img class="tag-info__option-btn" th:src="@{/svg/icon-option.svg}" alt="태그 선택 제거 이미지">
                 </a>
+            </div>
+        </li>
+    </ul>
+</div>
+
+<!-- ==========================================
+     FRAGMENT: 선택 태그 리스트
+     ========================================== -->
+<div class="tag-info-box" th:fragment="tag-selected-list(tags)">
+    <ul class="tag-info__list">
+        <li th:each="tag : ${tags}" class="tag-info__item">
+            <div class="tag-info__tag-box">
+                <q class="tag-info__name" th:text="${tag.name}">책리뷰</q>
+                <button class="tag-info__btn"> <!-- TODO: JS를 이용한 제거 로직  -->
+                    <img class="tag-info__btn" th:src="@{/svg/x-button.svg}" alt="">
+                </button>
             </div>
         </li>
     </ul>

@@ -31,12 +31,12 @@ public class LeafTagServiceImpl implements LeafTagService {
     }
 
     @Override
-    public boolean modify(LeafTag leafTag) {
+    public LeafTag modify(LeafTag leafTag) {
         LeafTag origin = Optional.ofNullable(leafTagRepository.findById(leafTag.getId()))
                 .orElseThrow(() -> new IllegalArgumentException("해당 태그가 존재하지 않습니다."));
         origin.setName(leafTag.getName());
-        leafTagRepository.save(origin);
-        return true;
+        leafTagRepository.update(origin);
+        return origin;
     }
 
     @Override

@@ -3893,6 +3893,10 @@ card.html
   color: var(--white);
 }
 
+.tag-info__btn {
+  padding: 0;
+}
+
 .tag-info__option-box {
     display: flex;
     align-items: center;

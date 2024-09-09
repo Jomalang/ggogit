@@ -22,6 +22,11 @@
         </section>
 
         <section>
+            <h2 class="none">태그 선택 태그</h2>
+            <div th:replace="~{/fragments/tag::tag-selected-list(tags=${selectedList})}"></div>
+        </section>
+
+        <section>
             <h2 class="none">태그 기능 알림</h2>
             <div th:replace="~{/fragments/top-bar::top-bar-tag-info}"></div>
         </section>

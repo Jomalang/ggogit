@@ -2,6 +2,7 @@ package Recorders.ggogit.domain.leaf.view;
 
 
 import Recorders.ggogit.type.LeafDirectionType;
+import Recorders.ggogit.domain.leaf.entity.LeafTag;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,7 +20,7 @@ public class LeafItemView {
     private Long id;
     private Long parentLeafId;
     private String title;
-    private List<LeafTagView> tags;
+    private List<LeafTag> tags;
     private Boolean focused;
     private LeafDirectionType direction;
     private LocalDateTime createTime;

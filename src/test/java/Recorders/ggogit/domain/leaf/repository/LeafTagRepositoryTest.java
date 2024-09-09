@@ -5,9 +5,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.test.annotation.Rollback;
-import org.springframework.test.context.jdbc.Sql;
 
 import java.util.List;
 
@@ -15,8 +13,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @MybatisTest
 @Rollback
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE) // 실제 DB 사용
-@Sql("/domain/leaf/repository/leaf-tag-repository-test.sql")
+//@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE) // 실제 DB 사용
+//@Sql("/domain/leaf/repository/leaf-tag-repository-test.sql")
 class LeafTagRepositoryTest {
 
     @Autowired
@@ -41,8 +39,13 @@ class LeafTagRepositoryTest {
     @Test
     @DisplayName("조회 테스트 | LeafTag | findAll")
     void findAllTest() {
+        //given
+        Long memberId = 999L;
+        Long offset = 0L;
+        Long limit = 10L;
+
         // when
-        List<LeafTag> leafTags = leafTagRepository.findAll();
+        List<LeafTag> leafTags = leafTagRepository.findAll(memberId, null, offset, limit);
 
         // then
         assertThat(leafTags.isEmpty()).isFalse();

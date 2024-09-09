@@ -15,8 +15,8 @@
                 </a>
             </div>
             <div class="tag-info__option-box">
-                <a class="tag-info__option-link" href=""> <!-- TODO: 수정 로직  -->
-                    <img class="tag-info__option-btn" th:src="@{/svg/icon-option.svg}" alt="">
+                <a class="tag-info__option-link" th:href="@{/tag/edit(id=${tag.id})}">
+                    <img class="tag-info__option-btn" th:src="@{/svg/icon-option.svg}" alt="태그 선택 제거 이미지">
                 </a>
             </div>
         </li>

@@ -15,11 +15,10 @@ public class LeafCardView {
     private Long treeId;
     private Long leafId;
     private String title;
-    private LocalDateTime updateTime;
     private String content;
-    private Long likeCount;
     private Long viewCount;
-    private String userNickName;
+    private String userNickname;
     private String userEmailId;
     private Boolean likeActive;
+    private LocalDateTime updateTime;
 }

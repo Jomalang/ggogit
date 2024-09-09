@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 @Transactional
 @Service
@@ -38,8 +39,27 @@ public class LoginService {
         return member.orElse(null);
     }
 
-    public Member getMemberBynickname(String nickname) {
+    public Member getMemberByNickname(String nickname) {
         Optional<Member> member = Optional.ofNullable(memberRepository.findByNickname(nickname));
         return member.orElse(null);
     }
+
+    // 닉네임 유효성 확인
+    public boolean getNickname(String nickname) {
+        String ValidNickname = "^[a-zA-Z0-9가-힣_]$";
+        return Pattern.matches(ValidNickname, nickname);
+    }
+
+    // 이메일 유효성 확인
+    public boolean getEmail(String email) {
+        String ValidEmail = "^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
+        return Pattern.matches(ValidEmail, email);
+    }
+
+    //비밀번호 유효성 확인
+    public boolean getPassword(String password) {
+        String ValidPassword = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*()\\-_+=\\[\\]{}|;:,.<>?]).{8,32}$";
+        return Pattern.matches(ValidPassword, password);
+    }
+
 }

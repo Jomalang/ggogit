@@ -5,6 +5,7 @@ import Recorders.ggogit.domain.book.service.BookService;
 import Recorders.ggogit.domain.book.view.BookDetailView;
 import Recorders.ggogit.domain.book.view.BookInfoView;
 import Recorders.ggogit.domain.book.view.BookPreviewView;
+import Recorders.ggogit.web.book.form.bookSearchType;
 import Recorders.ggogit.domain.tree.entity.Tree;
 import Recorders.ggogit.domain.tree.service.TreeService;
 import Recorders.ggogit.domain.tree.view.BookTreeView;
@@ -21,6 +22,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import java.io.File;
 
@@ -37,34 +39,34 @@ public class TreeController {
     @Autowired
     private ServletContext servletContext;
 
-//    private final BookService bookService;
 
-//    @GetMapping("/search")
-//    public String treeSearch() {
-//        return "view/tree/search/index";
-//    }
-//
-//    @PostMapping("/search")
-//    public String treeSearch(@RequestParam("treeSearchText") String treeSearchText,
-//                             RedirectAttributes redirectAttributes) {
-//        System.out.println(treeSearchText);
-//        redirectAttributes.addAttribute("treeSearchText", treeSearchText);
-//        return "redirect:/tree/search/result/{treeSearchText}";
-//    }
-//
-//    @GetMapping("/search/result/{treeSearchText}")
-//    public String treeSearchResult(@PathVariable String treeSearchText,
-//                                   Model model) {
-//        return "view/tree/search/tree-list";
-//    }
-//
-//    @PostMapping("/search/result/{treeSearchText}")
-//    public String treeSearchResult(@RequestParam("treeSearchText") String treeSearchText,
-//                                   RedirectAttributes redirectAttributes) {
-//        System.out.println(treeSearchText);
-//        redirectAttributes.addAttribute("treeSearchText", treeSearchText);
-//        return "redirect:/tree/search/result/{treeSearchText}";
-//    }
+
+    @GetMapping("/search")
+    public String treeSearch() {
+        return "view/tree/search/index";
+    }
+
+    @PostMapping("/search")
+    public String treeSearch(@RequestParam("treeSearchText") String treeSearchText,
+                             RedirectAttributes redirectAttributes) {
+        System.out.println(treeSearchText);
+        redirectAttributes.addAttribute("treeSearchText", treeSearchText);
+        return "redirect:/tree/search/result/{treeSearchText}";
+    }
+
+    @GetMapping("/search/result/{treeSearchText}")
+    public String treeSearchResult(@PathVariable String treeSearchText,
+                                   Model model) {
+        return "view/tree/search/tree-list";
+    }
+
+    @PostMapping("/search/result/{treeSearchText}")
+    public String treeSearchResult(@RequestParam("treeSearchText") String treeSearchText,
+                                   RedirectAttributes redirectAttributes) {
+        System.out.println(treeSearchText);
+        redirectAttributes.addAttribute("treeSearchText", treeSearchText);
+        return "redirect:/tree/search/result/{treeSearchText}";
+    }
 
     @GetMapping("/book/reg")
     public String getBookReg(
@@ -167,14 +169,15 @@ public class TreeController {
 
 
     @GetMapping("/book/select")
-    public String searchBook(@ModelAttribute(name = "target") String target, Model model
-                            ,@RequestParam(name = "type", defaultValue = "t") String type) {
+    public String searchBook(@ModelAttribute(name = "target") String target, Model model)
+    {
 
         //검색어가 없을때, 최초 페이지 진입시
         if(target.isEmpty()){
             model.addAttribute("bookPreviews", new BookPreviewView());
             model.addAttribute("resultCnt", 0);
             model.addAttribute("target", "");
+            model.addAttribute("searchTypes", bookSearchType.createBookSearchTypes());
 
             return "view/tree/book/select";
         }
@@ -187,6 +190,7 @@ public class TreeController {
         }
         model.addAttribute("resultCnt", cnt);
         model.addAttribute("target", target);
+        model.addAttribute("searchTypes", model.getAttribute("searchTypes"));
         return "view/tree/book/select";
     }
 
@@ -204,7 +208,12 @@ public class TreeController {
         }
 
         List<BookPreviewView> books = new ArrayList<>();
-
+        List<bookSearchType> bookSearchTypes = bookSearchType.createBookSearchTypes();
+        bookSearchTypes.stream().forEach(
+                value -> {
+                    if(value.getValue().equals(type)) value.setIsChecked("checked");
+                    else {value.setIsChecked(null);}
+                });
         switch (type) {
             case "t": {
                 //get메서드가 받는 모델에 자동으로 포함됨
@@ -220,6 +229,7 @@ public class TreeController {
 
         redirectAttributes.addFlashAttribute("bookPreviews", books);
         redirectAttributes.addFlashAttribute("target", target);
+        redirectAttributes.addFlashAttribute("searchTypes", bookSearchTypes);
 
         return "redirect:/tree/book/select";
     }

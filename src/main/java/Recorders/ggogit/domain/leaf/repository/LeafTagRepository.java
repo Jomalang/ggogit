@@ -9,6 +9,10 @@ import java.util.List;
 public interface LeafTagRepository {
     Long save(LeafTag leafTag);
     LeafTag findById(Long id);
-    List<LeafTag> findAll();
+    List<LeafTag> findAll(Long memberId, String name, Long offset, Long limit);
+    Long count(Long memberId, String name);
     Long update(LeafTag leafTag);
+    Boolean existsById(Long leafTagId);
+    void deleteById(Long leafTagId);
+    void delete(LeafTag leafTagId);
 }

@@ -11,17 +11,37 @@
         VALUES (#{leafId}, #{startPage}, #{endPage})
     </insert>
 
+    <update id="update" parameterType="LeafBook">
+        UPDATE LEAF_BOOK
+        SET START_PAGE = #{startPage},
+        END_PAGE = #{endPage}
+        WHERE LEAF_ID = #{leafId}
+    </update>
+
+    <delete id="delete" parameterType="LeafBook">
+        DELETE FROM LEAF_BOOK
+        WHERE LEAF_ID = #{leafId}
+    </delete>
+
     <select id="findByLeafId" parameterType="Long" resultType="LeafBook">
         SELECT LEAF_ID, START_PAGE, END_PAGE
         FROM LEAF_BOOK
         WHERE LEAF_ID = #{leafId}
     </select>
 
-    <update id="update" parameterType="LeafBook">
-        UPDATE LEAF_BOOK
-        SET START_PAGE = #{startPage},
-            END_PAGE = #{endPage}
+    <select id="findById" parameterType="Long" resultType="LeafBook">
+        SELECT LEAF_ID, START_PAGE, END_PAGE
+        FROM LEAF_BOOK
         WHERE LEAF_ID = #{leafId}
-    </update>
+    </select>
+
+<!--    LookBookView 못찾는 문제를 해결해야함-->
+<!--    <select id="findLeafBookViewByLeafId" parameterType="Long" resultType="LookBookView">-->
+<!--        SELECT * FROM LEAF-->
+<!--        LEFT JOIN (-->
+<!--            SELECT * FROM LEAF_BOOK WHERE LEAF_ID = #{leafId}-->
+<!--        )-->
+<!--        ON LEAF.LEAF_ID = LEAF_BOOK.LEAF_ID-->
+<!--    </select>-->
 
 </mapper>

@@ -68,7 +68,7 @@ class LeafRepositoryTest {
         filter.addTreeId(997L);
 
         // when
-        List<Leaf> leafs = leafRepository.findAll(filter);
+        List<Leaf> leafs = leafRepository.findAll();
 
         // then
         System.out.println(leafs);

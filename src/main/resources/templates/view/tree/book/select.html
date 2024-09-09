@@ -12,6 +12,7 @@
     <header class="reg-book-search-container">
         <h2 class="none">검색 바</h2>
         <!-- fragment -->
+      <form th:action method="POST">
         <div class="search__form">
           <div>
             <a th:href="@{/seed/index}">
@@ -20,7 +21,8 @@
                    alt="back button"/>
             </a>
           </div>
-          <form class="search-bar" th:action method="POST">
+
+          <div class="search-bar">
             <label class="search-bar--label">
               <input class="search-bar--input"
                      type="text"
@@ -33,15 +35,22 @@
                      th:src="@{/svg/close-button.svg}"
                      alt="close-btn"/>
               </button>
-            </label>
-            <button type="submit">
-              <img src="/src/main/resources/static/svg/lens.svg"
+              </label>
+              <button type="submit">
+                <img src="/src/main/resources/static/svg/lens.svg"
                    th:src="@{/svg/lens.svg}"
                    alt="lens"
-              />
-            </button>
-          </form>
+                />
+              </button>
+          </div>
         </div>
+
+        <ul class="filter-category-frame">
+          <li th:each="searchType : ${searchTypes}" th:object="${searchType}">
+            <div th:replace="~{fragments/filter::search-filter-radio(description=*{description}, name='type', value=*{value}, isChecked=*{isChecked})}"></div>
+          </li>
+        </ul>
+      </form>
 
       <section>
         <h3 class="none">검색 결과 개수</h3>
@@ -97,4 +106,10 @@
       </section>
     </aside>
   </body>
+<script>
+  document.querySelector('.search-bar--close').addEventListener('click', function(e) {
+    e.preventDefault();
+    document.querySelector('.search-bar--input').value ='';
+  });
+</script>
 </html>

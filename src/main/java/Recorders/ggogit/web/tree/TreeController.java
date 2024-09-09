@@ -8,6 +8,10 @@ import Recorders.ggogit.domain.tree.view.BookTreeView;
 import Recorders.ggogit.type.BookCategoryType;
 import jakarta.servlet.ServletContext;
 import org.springframework.beans.factory.annotation.Autowired;
+import Recorders.ggogit.domain.book.view.BookPreviewView;
+import Recorders.ggogit.web.book.form.bookSearchType;
+import lombok.RequiredArgsConstructor;
+import org.antlr.v4.runtime.atn.PredicateEvalInfo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -162,14 +166,15 @@ public class TreeController {
 
 
     @GetMapping("/book/select")
-    public String searchBook(@ModelAttribute(name = "target") String target, Model model
-                            ,@RequestParam(name = "type", defaultValue = "t") String type) {
+    public String searchBook(@ModelAttribute(name = "target") String target, Model model)
+    {
 
         //검색어가 없을때, 최초 페이지 진입시
         if(target.isEmpty()){
             model.addAttribute("bookPreviews", new BookPreviewView());
             model.addAttribute("resultCnt", 0);
             model.addAttribute("target", "");
+            model.addAttribute("searchTypes", bookSearchType.createBookSearchTypes());
 
             return "view/tree/book/select";
         }
@@ -182,6 +187,7 @@ public class TreeController {
         }
         model.addAttribute("resultCnt", cnt);
         model.addAttribute("target", target);
+        model.addAttribute("searchTypes", model.getAttribute("searchTypes"));
         return "view/tree/book/select";
     }
 
@@ -199,7 +205,12 @@ public class TreeController {
         }
 
         List<BookPreviewView> books = new ArrayList<>();
-
+        List<bookSearchType> bookSearchTypes = bookSearchType.createBookSearchTypes();
+        bookSearchTypes.stream().forEach(
+                value -> {
+                    if(value.getValue().equals(type)) value.setIsChecked("checked");
+                    else {value.setIsChecked(null);}
+                });
         switch (type) {
             case "t": {
                 //get메서드가 받는 모델에 자동으로 포함됨
@@ -215,6 +226,7 @@ public class TreeController {
 
         redirectAttributes.addFlashAttribute("bookPreviews", books);
         redirectAttributes.addFlashAttribute("target", target);
+        redirectAttributes.addFlashAttribute("searchTypes", bookSearchTypes);
 
         return "redirect:/tree/book/select";
     }

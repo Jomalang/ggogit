@@ -1896,7 +1896,7 @@ card.html
   letter-spacing: var(--letter-spacing-sub);
 }
 .filter-category-frame {
-  margin-top: 10px;
+  margin-top: 18px;
   display: flex;
   overflow-x: auto;
   white-space: nowrap;

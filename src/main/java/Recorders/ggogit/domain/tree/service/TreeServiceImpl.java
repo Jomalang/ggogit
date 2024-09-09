@@ -94,8 +94,9 @@ public class TreeServiceImpl implements TreeService {
 
     }
 
-    public Long tmpTreeSave(TreeSaveTmpView view){
+    public void tmpTreeSave(TreeSaveTmpView view){
         treeSaveTmpRepository.save(view);
+
     }
 
 

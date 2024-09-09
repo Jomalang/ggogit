@@ -1,4 +1,4 @@
-package Recorders.ggogit.domain.config.mybatis;
+package Recorders.ggogit.config.mybatis;
 
 
 import org.apache.ibatis.type.BaseTypeHandler;

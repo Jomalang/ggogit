@@ -90,7 +90,7 @@
                 WHERE TREE_ID IN (
                     SELECT T1.ID
                     FROM TREE T1
-                    WHERE BOOK_ID = 18
+                    WHERE BOOK_ID = #{bookId}
                 )
             ) L2
             LEFT JOIN (
@@ -110,7 +110,7 @@
                 SELECT  LK.LEAF_ID,
                 LK.ACTIVATE AS LIKE_ACTIVATE
                 FROM LEAF_LIKE LK
-                WHERE MEMBER_ID = 14
+                WHERE MEMBER_ID = #{memberId}
             ) LK2
             ON L2.LEAF_ID = LK2.LEAF_ID;
         </select>

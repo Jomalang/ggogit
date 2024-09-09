@@ -344,6 +344,63 @@ COMMENT ON COLUMN "SEED"."ID" IS '씨앗 PK';
 COMMENT ON COLUMN "SEED"."NAME" IS '씨앗 제목';
 
 -- ============================================ --
+-- 트리 생성 탬프 테이블
+-- ============================================ --
+CREATE TABLE "TREE_SAVE_TMP" (
+    "ID"	            NUMBER		                            PRIMARY KEY,
+    "MEMBER_ID"	        NUMBER		                            NOT NULL,
+    -- 도서 정보 (도서 트리 생성시에만 사용)
+    "BOOK_CATEGORY_ID"	NUMBER		                            NULL, -- 도서 카테고리 FK
+    "BOOK_TITLE"        NVARCHAR2(300)		                    NULL, -- 직접 입력 도서 제목
+    "AUTHOR"            NVARCHAR2(300)		                    NULL, -- 직접 입력 도서 저자
+    "PUBLISHER"         NVARCHAR2(300)		                    NULL, -- 직접 입력 도서 출판사
+    "TOTAL_PAGE"        NUMBER		                            NULL, -- 직접 입력 도서 총 페이지 수
+    -- 선택 도서 트리 생성
+    "BOOK_ID"           NUMBER                                  NULL, -- 선택 도서 저장시 사용
+    -- 트리 정보
+    "SEED_ID"	        NUMBER		                            NOT NULL,
+    "TREE_TITLE"	    NVARCHAR2(300)		                    NOT NULL,
+    "DESCRIPTION"	    NVARCHAR2(2000)		                    NOT NULL,
+    "IMAGE_FILE"        VARCHAR2(1024)	                        NULL,
+    "VISIBILITY"	    NUMBER(1)	    DEFAULT 1	            NOT NULL,
+    "CREATE_TIME"	    TIMESTAMP       DEFAULT SYSTIMESTAMP    NOT NULL,
+    -- FK 정의
+    CONSTRAINT "FK_TREE_SAVE_TMP_MEMBER" FOREIGN KEY ("MEMBER_ID") REFERENCES "MEMBER" ("ID"),
+    CONSTRAINT "FK_TREE_SAVE_TMP_BOOK" FOREIGN KEY ("BOOK_ID") REFERENCES "BOOK" ("ID"),
+    CONSTRAINT "FK_TREE_SAVE_TMP_BOOK_CATEGORY" FOREIGN KEY ("BOOK_CATEGORY_ID") REFERENCES "BOOK_CATEGORY" ("ID"),
+    CONSTRAINT "FK_TREE_SAVE_TMP_SEED" FOREIGN KEY ("SEED_ID") REFERENCES "SEED" ("ID")
+);
+
+-- 시퀀스 생성
+CREATE SEQUENCE SEQ_TREE_SAVE_TMP
+    START WITH 1
+    INCREMENT BY 1
+    NOCYCLE
+    NOCACHE;
+
+-- 시퀀스 등록
+ALTER TABLE "TREE_SAVE_TMP" MODIFY ("ID" DEFAULT SEQ_TREE_SAVE_TMP.NEXTVAL);
+
+-- 인덱스 정의
+CREATE INDEX "IDX_TREE_SAVE_TMP_MEMBER_ID" ON "TREE_SAVE_TMP" ("MEMBER_ID");
+
+-- 주석
+COMMENT ON COLUMN "TREE_SAVE_TMP"."ID" IS '트리 생성 탬프 PK';
+COMMENT ON COLUMN "TREE_SAVE_TMP"."MEMBER_ID" IS '회원 FK';
+COMMENT ON COLUMN "TREE_SAVE_TMP"."BOOK_CATEGORY_ID" IS '도서 카테고리 FK';
+COMMENT ON COLUMN "TREE_SAVE_TMP"."BOOK_TITLE" IS '직접 입력 도서 제목';
+COMMENT ON COLUMN "TREE_SAVE_TMP"."AUTHOR" IS '직접 입력 도서 저자';
+COMMENT ON COLUMN "TREE_SAVE_TMP"."PUBLISHER" IS '직접 입력 도서 출판사';
+COMMENT ON COLUMN "TREE_SAVE_TMP"."TOTAL_PAGE" IS '직접 입력 도서 총 페이지 수';
+COMMENT ON COLUMN "TREE_SAVE_TMP"."BOOK_ID" IS '선택 도서 저장시 사용';
+COMMENT ON COLUMN "TREE_SAVE_TMP"."SEED_ID" IS '씨앗 FK';
+COMMENT ON COLUMN "TREE_SAVE_TMP"."TREE_TITLE" IS '트리 제목';
+COMMENT ON COLUMN "TREE_SAVE_TMP"."DESCRIPTION" IS '트리 설명';
+COMMENT ON COLUMN "TREE_SAVE_TMP"."IMAGE_FILE" IS '트리 이미지 파일';
+COMMENT ON COLUMN "TREE_SAVE_TMP"."VISIBILITY" IS '사용자 공개 여부';
+COMMENT ON COLUMN "TREE_SAVE_TMP"."CREATE_TIME" IS '데이터 생성 시각';
+
+-- ============================================ --
 -- 트리 테이블
 -- ============================================ --
 CREATE TABLE "TREE" (

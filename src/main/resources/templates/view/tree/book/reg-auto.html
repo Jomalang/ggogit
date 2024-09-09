@@ -48,10 +48,13 @@
         </div>
       </section>
       </section>
+
+      <form th:action="@{|/tree/book/reg?auto=true&id=*{id}|}" method="POST">
+
       <section class="register__input-container">
         <h3 class="none">트리 이름 입력</h3>
         <!-- 컴포넌트 -->
-        <div th:replace="~{fragments/input :: text-box(label='*트리 이름', placeholder='트리 이름을 입력해 주세요.', name='')}">
+        <div th:replace="~{fragments/input :: text-box(label='*트리 이름', placeholder='트리 이름을 입력해 주세요.', name='tree-title')}">
         </div>
 
       </section>
@@ -64,21 +67,22 @@
       <section class="register__input-container">
         <h3 class="none">트리 설명글</h3>
         <!-- 컴포넌트 -->
-        <div th:replace="~{fragments/input :: textarea-box(label='*설명글', placeholder='트리를 설명하는 글을 작성해 주세요', name='')}">
+        <div th:replace="~{fragments/input :: textarea-box(label='*설명글', placeholder='트리를 설명하는 글을 작성해 주세요', name='tree-description')}">
         </div>
       </section>
       <section class="register__input-container">
         <h3 class="none">공개성 선택</h3>
         <!-- 컴포넌트 -->
-        <div th:replace="~{fragments/input :: input-visibility(name='공개성')}">
+        <div th:replace="~{fragments/input :: input-visibility(name='tree-visibility')}">
         </div>
       </section>
       <section class="register__input-container--last">
         <h3 class="none">트리 생성 버튼</h3>
         <!-- 컴포넌트 -->
-        <div th:replace="~{fragments/button :: submit-btn-full-bar('트리 생성하기')}">
+        <div th:replace="~{fragments/button :: submit-btn-full-bar('꼬깃 시작하기')}">
         </div>
       </section>
+      </form>
     </main>
 
     <aside>

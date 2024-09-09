@@ -2,9 +2,11 @@ package Recorders.ggogit.domain.tree.service;
 
 import Recorders.ggogit.domain.tree.entity.Tree;
 import Recorders.ggogit.domain.tree.repository.TreeRepository;
+import Recorders.ggogit.domain.tree.repository.TreeSaveTmpRepository;
 import Recorders.ggogit.domain.tree.view.BookTreeView;
 import Recorders.ggogit.domain.tree.view.EtcTreeView;
 import Recorders.ggogit.domain.tree.view.TreeInfoView;
+import Recorders.ggogit.domain.tree.view.TreeSaveTmpView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +21,8 @@ public class TreeServiceImpl implements TreeService {
 
     @Autowired
     TreeRepository repository;
+
+    TreeSaveTmpRepository treeSaveTmpRepository;
 
     @Override
     public void register(Tree tree) {
@@ -88,7 +92,11 @@ public class TreeServiceImpl implements TreeService {
 
     public void setTreeImg(File img) {
 
-
     }
+
+    public Long tmpTreeSave(TreeSaveTmpView view){
+        treeSaveTmpRepository.save(view);
+    }
+
 
 }

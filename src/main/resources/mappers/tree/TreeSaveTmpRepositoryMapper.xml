@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Recorders.ggogit.domain.tree.repository.TreeSaveTmpRepository">
+<!--트리 도서 row 생성-->
+    <insert id="save" parameterType="TreeSaveTmpView">
+        INSERT INTO TREE_SAVE_TMP(
+            MEMBER_ID,
+            BOOK_CATEGORY_ID,
+            BOOK_TITLE,
+            AUTHOR,
+            PUBLISHER,
+            TOTAL_PAGE,
+            BOOK_ID,
+            SEED_ID,
+            TREE_TITLE,
+            DESCRIPTION,
+            IMAGE_FILE,
+            VISIBILITY,
+            CREATE_TIME
+        ) VALUES (
+            #{memberId},
+            #{bookCategoryId},
+            #{bookTitle},
+            #{author},
+            #{publisher},
+            #{totalPage},
+            #{bookId},
+            #{seedId},
+            #{treeTitle},
+            #{description},
+            #{imageFile},
+            #{visibility},
+            #{createTime})
+    </insert>
+
+    <!--MEMBER_ID 별 트리 도서 정보 조회-->
+    <select id="find" resultType="TreeSaveTmpView">
+        SELECT * FROM TREE_SAVE_TMP WHERE MEMBER_ID = #{memberId}
+    </select>
+
+    <!--MEMBER_ID row 조회-->
+    <select id="isEmpty" >
+        SELECT * FROM TREE_SAVE_TMP WHERE MEMBER_ID = #{memberId}
+    </select>
+
+    <delete id="delete" >
+        DELETE FROM TREE_SAVE_TMP WHERE MEMBER_ID = #{memberId}
+    </delete>
+</mapper>

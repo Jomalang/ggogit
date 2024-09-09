@@ -46,13 +46,13 @@ public class LoginService {
 
     // 닉네임 유효성 확인
     public boolean getNickname(String nickname) {
-        String ValidNickname = "^[a-zA-Z0-9가-힣_]+$";
+        String ValidNickname = "^[a-zA-Z0-9가-힣_]$";
         return Pattern.matches(ValidNickname, nickname);
     }
 
     // 이메일 유효성 확인
     public boolean getEmail(String email) {
-        String ValidEmail = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
+        String ValidEmail = "^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
         return Pattern.matches(ValidEmail, email);
     }
 

@@ -9,6 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller("WebLeafTagController")
 @RequestMapping("/tag")
 public class TagController {
@@ -23,7 +25,7 @@ public class TagController {
             @RequestParam(value = "size", defaultValue = "10") Long size,
             Model model
     ) {
-        model.addAttribute("selectedList", leafTagService.getLeafTags(memberId, page, size));
+        model.addAttribute("selectedList", List.of());
         model.addAttribute("list", leafTagService.getLeafTags(memberId, page, size));
         return "/view/tag/list";
     }

@@ -6,8 +6,8 @@
      FRAGMENT: 태그 리스트
      ========================================== -->
 <div class="tag-info-box" th:fragment="tag-list(tags)">
-    <ul class="tag-info__list">
-        <li th:each="tag : ${tags}" class="tag-info__item">
+    <ul class="tag-info__list tag-info__list--unselected">
+        <li th:each="tag : ${tags}" class="tag-info__item tag-info__item--unselected" th:id="${tag.id} + '--unselected'">
             <div class="tag-info__tag-box">
                 <q class="tag-info__name" th:text="${tag.name}">책리뷰</q>
             </div>
@@ -23,12 +23,12 @@
 <!-- ==========================================
      FRAGMENT: 선택 태그 리스트
      ========================================== -->
-<div class="tag-info-box" th:fragment="tag-selected-list(tags)">
-    <ul class="tag-info__list">
-        <li th:each="tag : ${tags}" class="tag-info__item">
+<div class="tag-info-box tag-info-box--selected" th:fragment="tag-selected-list(tags)">
+    <ul class="tag-info__list tag-info__list--selected">
+        <li th:each="tag : ${tags}" class="tag-info__item tag-info__item--selected" th:id="${tag.id} + '--selected'">
             <div class="tag-info__tag-box">
                 <q class="tag-info__name" th:text="${tag.name}">책리뷰</q>
-                <button class="tag-info__btn"> <!-- TODO: JS를 이용한 제거 로직  -->
+                <button class="tag-info__btn tag-info__btn--selected" type="button">
                     <img class="tag-info__btn" th:src="@{/svg/x-button.svg}" alt="">
                 </button>
             </div>

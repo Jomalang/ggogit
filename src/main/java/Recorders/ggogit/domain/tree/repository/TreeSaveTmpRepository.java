@@ -1,15 +1,17 @@
 package Recorders.ggogit.domain.tree.repository;
 
-import Recorders.ggogit.domain.tree.view.TreeSaveTmpView;
+import Recorders.ggogit.web.tree.form.TreeSaveTmpForm;
+import org.apache.ibatis.annotations.Mapper;
 
+@Mapper
 public interface TreeSaveTmpRepository {
 
-    void save(TreeSaveTmpView view); // id 값 반환
+    void save(TreeSaveTmpForm form); // id 값 반환
 
-    TreeSaveTmpView find(Long memberId);
+    TreeSaveTmpForm find(Long memberId);
 
     Boolean isEmpty(Long memberId);
 
-    boolean delete(Long id);
+    int delete(Long id);
 
 }

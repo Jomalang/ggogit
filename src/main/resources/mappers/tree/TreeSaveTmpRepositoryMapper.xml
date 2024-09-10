@@ -4,7 +4,7 @@
 
 <mapper namespace="Recorders.ggogit.domain.tree.repository.TreeSaveTmpRepository">
 <!--트리 도서 row 생성-->
-    <insert id="save" parameterType="TreeSaveTmpView">
+    <insert id="save" parameterType="Recorders.ggogit.web.tree.form.TreeSaveTmpForm">
         INSERT INTO TREE_SAVE_TMP(
             MEMBER_ID,
             BOOK_CATEGORY_ID,
@@ -17,8 +17,7 @@
             TREE_TITLE,
             DESCRIPTION,
             IMAGE_FILE,
-            VISIBILITY,
-            CREATE_TIME
+            VISIBILITY
         ) VALUES (
             #{memberId},
             #{bookCategoryId},
@@ -31,21 +30,21 @@
             #{treeTitle},
             #{description},
             #{imageFile},
-            #{visibility},
-            #{createTime})
+            #{visibility}
+        )
     </insert>
 
     <!--MEMBER_ID 별 트리 도서 정보 조회-->
-    <select id="find" resultType="TreeSaveTmpView">
+    <select id="find" parameterType="Long" resultType="Recorders.ggogit.web.tree.form.TreeSaveTmpForm">
         SELECT * FROM TREE_SAVE_TMP WHERE MEMBER_ID = #{memberId}
     </select>
 
     <!--MEMBER_ID row 조회-->
-    <select id="isEmpty" >
+    <select id="isEmpty" parameterType="Long" resultType="Boolean" >
         SELECT * FROM TREE_SAVE_TMP WHERE MEMBER_ID = #{memberId}
     </select>
 
-    <delete id="delete" >
+    <delete id="delete" parameterType="Long" >
         DELETE FROM TREE_SAVE_TMP WHERE MEMBER_ID = #{memberId}
     </delete>
 </mapper>

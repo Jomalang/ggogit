@@ -12,6 +12,5 @@ public interface TreeSaveTmpRepository {
 
     Boolean isEmpty(Long memberId);
 
-    int delete(Long id);
-
+    void deleteByMemberId(Long memberId);
 }

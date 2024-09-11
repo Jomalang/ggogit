@@ -21,7 +21,7 @@
       </section>
     </header>
 
-    <main>
+    <main >
       <h2 class="none">선택한 도서</h2>
       <section class="tree-book-reg-search-book__title-container">
         <h3 class="none">도서 TEXT 컨테이너</h3>
@@ -46,10 +46,11 @@
         <!-- 컴포넌트-->
         <div th:replace="~{fragments/card :: tree-info-card(*{publishDate}, *{totalPage})}">
         </div>
+
       </section>
       </section>
 
-      <form th:action="@{|/tree/book/reg?auto=true&id=*{id}|}" method="POST">
+      <form action="/tree/book/reg?auto=true" name="form"  method="POST" enctype="multipart/form-data">
 
       <section class="register__input-container">
         <h3 class="none">트리 이름 입력</h3>
@@ -85,13 +86,15 @@
 
         <!--    임시 저장소    -->
         <section class="none">
-          <label><input name="bookId" value="${id}"></label>
-          <label><input name="bookCategorytId" value="1"></label> <!--todo: 도서 카테고리 개발예정 -->
-          <label><input name="bookTitle" value="${imageFile}"></label>
-          <label><input name="author" value="${author}"></label>
-          <label><input name="publisher" value="${publisher}"></label>
-          <label><input name="totalPage" value="${totalPage}"></label>
-          <label><input name="memberId" value="1"></label> <!--todo: session storage or cookies or JWT 확인 필요 -->
+          <label><input name="bookId" th:value="${book.id}"></label>
+          <label><input name="bookCategoryId" value="1"></label> <!--todo: 도서 카테고리 개발예정 -->
+          <label><input name="bookTitle" th:value="${book.title}"></label>
+          <label><input name="imageFile" th:value="${book.imageFile}"></label>
+          <label><input name="author" th:value="${book.author}"></label>
+          <label><input name="publisher" th:value="${book.publisher}"></label>
+          <label><input name="totalPage" th:value="${book.totalPage}"></label>
+          <label><input name="seedId" value="1"></label>
+          <label><input name="memberId" value="14"></label> <!--todo: session storage or cookies or JWT 확인 필요 -->
         </section>
       </form>
     </main>

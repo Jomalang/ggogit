@@ -100,5 +100,10 @@ public class TreeServiceImpl implements TreeService {
 
     }
 
+    @Override
+    public void deleteTmpFormById(Long memberId) {
+        treeSaveTmpRepository.deleteByMemberId(memberId);
+    }
+
 
 }

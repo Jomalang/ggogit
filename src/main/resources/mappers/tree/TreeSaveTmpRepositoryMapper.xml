@@ -44,7 +44,7 @@
         SELECT * FROM TREE_SAVE_TMP WHERE MEMBER_ID = #{memberId}
     </select>
 
-    <delete id="delete" parameterType="Long" >
+    <delete id="deleteByMemberId" parameterType="Long" >
         DELETE FROM TREE_SAVE_TMP WHERE MEMBER_ID = #{memberId}
     </delete>
 </mapper>

@@ -1,19 +1,12 @@
 package Recorders.ggogit.web.tree;
 
-import Recorders.ggogit.domain.book.entity.Book;
 import Recorders.ggogit.domain.book.service.BookService;
-import Recorders.ggogit.domain.book.view.BookDetailView;
 import Recorders.ggogit.domain.book.view.BookInfoView;
 import Recorders.ggogit.domain.book.view.BookPreviewView;
 import Recorders.ggogit.domain.tree.service.TreeServiceImpl;
 import Recorders.ggogit.web.book.form.bookSearchType;
-import Recorders.ggogit.domain.tree.entity.Tree;
-import Recorders.ggogit.domain.tree.service.TreeService;
-import Recorders.ggogit.domain.tree.view.BookTreeView;
 import Recorders.ggogit.type.BookCategoryType;
-import Recorders.ggogit.type.SeedCategoryType;
 import Recorders.ggogit.web.tree.form.TreeSaveTmpForm;
-import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +22,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import java.io.File;
 
@@ -77,6 +69,10 @@ public class TreeController {
             @RequestParam(value = "id", required = false) Long id,
             Model model
     ) {
+        //TODO: memberId 개선 시 하드코딩 제거
+        Long memberId=14L;
+        treeService.deleteTmpFormById(memberId);
+
         if (auto) {
             BookInfoView book = bookService.getBookbyId(id);
 
@@ -90,59 +86,37 @@ public class TreeController {
     }
 
     @PostMapping("/book/reg")
-    @ResponseBody
-    public Object postBookReg(
+    public String postBookReg(
             @RequestParam(required = false) MultipartFile img,
-            @ModelAttribute("form")TreeSaveTmpForm form,
-            @RequestParam(value = "auto", required = false) boolean auto,
-            @RequestParam(value = "id", required = false) Long id,
+            @ModelAttribute TreeSaveTmpForm form,
+            @RequestParam(value = "auto") boolean auto,
             HttpServletRequest request
-            ) {
+            ) throws IOException {
 
-        System.out.println(form.toString());
-        treeService.tmpTreeSave(form);
+        form.setSeedId(1L);
 
         if(!auto){
 
-            String path = request.getServletContext().getRealPath("/image/tmp");
+            String path = request.getSession().getServletContext().getRealPath("/image/tmp");
             String fileName = img.getOriginalFilename();
-            System.out.println(fileName);
-            String filePath = path + File.separator + fileName;
+            String fullPath = path + File.separator + fileNa/////me;
 
-            // 경로가 존재하지 않으면 생성
-            try {
-                Path dirPath = Paths.get(path);
-                Files.createDirectories(dirPath);
+            form.setImageFile(fullPath);
+            System.out.println(fullPath);
 
-                // 파일 저장
-                File destFile = new File(filePath);
-                img.transferTo(destFile);
-            } catch (IOException e) {
-                // 디렉토리 생성 중 오류 발생 시 처리
-                e.printStackTrace();
-                // 적절한 오류 처리 로직 추가
-            }
+
+            File filePath = new File(path);
+            if(!filePath.exists())
+                filePath.mkdirs();
+
+            img.transferTo(new File(fullPath));
         }
-        return null;
-    }
 
-    @GetMapping("/book/edit")
-    public String getBookEdit(
-            @RequestParam(value = "auto", required = false) boolean auto,
-            @RequestParam(value = "id", required = false) Long id,
-            Model model
-    ) {
-        model.addAttribute("categories", BookCategoryType.values());
-        return "view/tree/book/edit";
-    }
+        System.out.println(form.toString());
 
-    @PostMapping("/book/edit")
-    @ResponseBody
-    public Object postBookEdit(
-            @RequestParam(value = "bookImage", required = false) MultipartFile bookImage
-//            @ModelAttribute("tree") Tree tree
-    ) {
-        return null;
+        treeService.tmpTreeSave(form);
+
+        return "redirect:/leaf/first/reg";
     }
 
     @GetMapping("/list")

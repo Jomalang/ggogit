@@ -5,6 +5,7 @@ import Recorders.ggogit.domain.tree.entity.Tree;
 import Recorders.ggogit.domain.tree.view.BookTreeView;
 import Recorders.ggogit.domain.tree.view.EtcTreeView;
 import Recorders.ggogit.domain.tree.view.TreeInfoView;
+import Recorders.ggogit.web.tree.form.TreeEtcSaveTmpForm;
 import Recorders.ggogit.web.tree.form.TreeSaveTmpForm;
 
 import java.util.List;
@@ -80,6 +81,15 @@ public interface TreeService {
      * @return
      */
     void tmpTreeSave(TreeSaveTmpForm form);
+
+    /***
+     * 트리 생성 TMP 테이블 생성
+     *
+     *
+     * @param TreeSaveTmpForm
+     * @return
+     */
+    void tmpEtcTreeSave(TreeEtcSaveTmpForm form);
 
     /***
      * 트리 생성 TMP 테이블 MEMBERID 중복 삭제

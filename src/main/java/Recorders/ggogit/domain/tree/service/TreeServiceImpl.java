@@ -6,6 +6,7 @@ import Recorders.ggogit.domain.tree.repository.TreeSaveTmpRepository;
 import Recorders.ggogit.domain.tree.view.BookTreeView;
 import Recorders.ggogit.domain.tree.view.EtcTreeView;
 import Recorders.ggogit.domain.tree.view.TreeInfoView;
+import Recorders.ggogit.web.tree.form.TreeEtcSaveTmpForm;
 import Recorders.ggogit.web.tree.form.TreeSaveTmpForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -98,6 +99,11 @@ public class TreeServiceImpl implements TreeService {
     public void tmpTreeSave(TreeSaveTmpForm form){
         treeSaveTmpRepository.save(form);
 
+    }
+
+    @Override
+    public void tmpEtcTreeSave(TreeEtcSaveTmpForm form) {
+        treeSaveTmpRepository.saveEtc(form);
     }
 
     @Override

@@ -6,6 +6,7 @@ import Recorders.ggogit.domain.book.view.BookPreviewView;
 import Recorders.ggogit.domain.tree.service.TreeServiceImpl;
 import Recorders.ggogit.web.book.form.bookSearchType;
 import Recorders.ggogit.type.BookCategoryType;
+import Recorders.ggogit.web.tree.form.TreeEtcSaveTmpForm;
 import Recorders.ggogit.web.tree.form.TreeSaveTmpForm;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -95,11 +96,10 @@ public class TreeController {
 
         form.setSeedId(1L);
 
-        if(!auto){
-
+        if(!auto && img != null && !img.isEmpty()){
             String path = request.getSession().getServletContext().getRealPath("/image/tmp");
             String fileName = img.getOriginalFilename();
-            String fullPath = path + File.separator + fileNa/////me;
+            String fullPath = path + File.separator + fileName;
 
             form.setImageFile(fullPath);
             System.out.println(fullPath);
@@ -119,43 +119,76 @@ public class TreeController {
         return "redirect:/leaf/first/reg";
     }
 
-    @GetMapping("/list")
-    public String getBranchList(Model model) {
-        return "view/tree/list";
-    }
-
     @GetMapping("/etc/reg")
     public String getTreeEtcReg(
             @RequestParam(value = "type", required = false) String type,
             Model model
     ) {
+        //TODO: memberId 개선 시 하드코딩 제거
+        Long memberId=14L;
+        treeService.deleteTmpFormById(memberId);
+
+        int seedId;
         String seedName = switch (type) {
             case "idea" -> "생각";
             case "phrase" -> "문장";
             case "study" -> "공부";
             default -> "영상";
         };
-        // hack type 데이터 로직 어디에 넣을지
-//        SeedCategoryType seedCategoryType;
-//        if (!SeedCategoryType.contains(type)) {
-//            seedCategoryType = SeedCategoryType.IDEA;
-//        } else {
-//            seedCategoryType = SeedCategoryType.of(type);
-//        }
-//
-//        if (seedCategoryType == SeedCategoryType.BOOK) {
-//            seedCategoryType = SeedCategoryType.IDEA;
-//        }
-
         model.addAttribute("seed", seedName);
         return "view/tree/reg-etc";
     }
 
-    @PostMapping("/reg-etc")
-    public String postTreeEtcReg() {
-        return "redirect:/leaf/reg?first=true&seed=seed_id";
+    @PostMapping("/etc/reg")
+    public String postTreeEtcReg(
+            @RequestParam(value = "type", required = false) String type,
+            @RequestParam(required = false) MultipartFile img,
+            @ModelAttribute TreeEtcSaveTmpForm form,
+            HttpServletRequest request
+    ) throws IOException  {
+
+        Long seedId;
+        switch (type) {
+            case "생각" :
+                seedId = 2L;
+                break;
+            case "문장" :
+                seedId = 3L;
+                break;
+            case "공부" :
+                seedId = 4L;
+                break;
+            default:
+                seedId = 5L;
+                break;
+        }
+        form.setSeedId(seedId);
+
+        if(img != null && !img.isEmpty()){
+            String path = request.getSession().getServletContext().getRealPath("/image/tmp");
+            String fileName = img.getOriginalFilename();
+            String fullPath = path + File.separator + fileName;
+
+            form.setImageFile(fullPath);
+            System.out.println(fullPath);
+
+
+            File filePath = new File(path);
+            if(!filePath.exists())
+                filePath.mkdirs();
+
+            img.transferTo(new File(fullPath));
+        }
+
+        treeService.tmpEtcTreeSave(form);
+        return "redirect:/leaf/first/reg";
     }
 
+
+    @GetMapping("/list")
+    public String getBranchList(Model model) {
+        return "view/tree/list";
+    }
 
 
     @GetMapping("/book/select")

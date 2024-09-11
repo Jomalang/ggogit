@@ -1,5 +1,6 @@
 package Recorders.ggogit.domain.tree.repository;
 
+import Recorders.ggogit.web.tree.form.TreeEtcSaveTmpForm;
 import Recorders.ggogit.web.tree.form.TreeSaveTmpForm;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -13,4 +14,6 @@ public interface TreeSaveTmpRepository {
     Boolean isEmpty(Long memberId);
 
     void deleteByMemberId(Long memberId);
+
+    void saveEtc(TreeEtcSaveTmpForm form);
 }

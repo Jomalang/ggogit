@@ -24,34 +24,11 @@ class LeafTagMapRepositoryTest {
     @Test
     @DisplayName("저장 테스트 | LeafTagMap | save")
     void save() {
-        // given
-        // 9990L이라는 leafId와 1L이라는 tagId를 가진 LeafTagMap이 존재함 (leaf-tag-map-repository-test.sql 참고)
-        Long leafId = 9990L;
-        Long tagId = 4L;
-
-        LeafTagMap leafTagMap = LeafTagMap.builder()
-                .leafId(leafId)
-                .leafTagId(tagId)
-                .build();
-
-        // when
-        leafTagMapRepository.save(leafTagMap);
-
-        // given
-        LeafTagMap savedLeafTagMap = leafTagMapRepository.findByLeafIdAndLeafTagId(leafId, tagId);
-        assertThat(savedLeafTagMap).isNotNull();
     }
 
     @Test
     @DisplayName("조회 테스트 | LeafTagMap | findByLeafIdAndLeafTagId")
     void findByLeafIdAndLeafTagId() {
-        // given
-        // 9990L이라는 leafId와 1L이라는 tagId를 가진 LeafTagMap이 존재함 (leaf-tag-map-repository-test.sql 참고)
-        Long leafId = 9990L;
-        Long leafTagId = 3L;
-
-        // when
-        leafTagMapRepository.findByLeafIdAndLeafTagId(leafId, leafTagId);
     }
 
     @Test

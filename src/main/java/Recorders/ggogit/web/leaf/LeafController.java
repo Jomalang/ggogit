@@ -6,7 +6,8 @@ import Recorders.ggogit.domain.leaf.service.LeafEtcService;
 import Recorders.ggogit.domain.leaf.service.LeafService;
 import Recorders.ggogit.domain.leaf.view.LeafImageCardView;
 import Recorders.ggogit.domain.leaf.view.LeafItemView;
-import Recorders.ggogit.web.leaf.form.LeafFrom;
+import Recorders.ggogit.web.leaf.form.LeafBookForm;
+import Recorders.ggogit.web.leaf.form.LeafForm;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,7 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
-@Controller
+@Controller("WebLeafController")
 @RequestMapping("/leaf")
 public class LeafController {
 
@@ -31,8 +32,8 @@ public class LeafController {
     private LeafService leafService;
 
     @GetMapping("/first/reg")
-    public ModelAndView getFirstReg(
-            @RequestParam(value = "seed", required = false) Integer seed
+    public ModelAndView firstReg(
+            @RequestParam(value = "seed", required = false) Long seed
     ) {
 
         if (!SeedCategoryType.contains(seed)) {
@@ -43,35 +44,38 @@ public class LeafController {
         ModelAndView mv;
         if (SeedCategoryType.isBook(seed)) {
             mv = new ModelAndView("/view/leaf/1st-reg-book");
-            mv.addObject("form", new LeafFrom());
+            mv.addObject("form", new LeafBookForm());
         } else {
             mv = new ModelAndView("/view/leaf/1st-reg-etc");
             mv.addObject("seed", seed);
-            mv.addObject("form", new LeafFrom());
+            mv.addObject("form", new LeafForm());
         }
+        mv.addObject("memberId", 1L);
         return mv;
     }
 
     @PostMapping("/first/reg")
-    public ModelAndView postFirstReg(
-            @Valid @ModelAttribute("form") LeafFrom form,
+    public ModelAndView firstReg(
+            @Valid @ModelAttribute("form") LeafForm form,
             BindingResult bindingResult
     ) {
-        if (SeedCategoryType.BOOK == form.getSeed()) {
+        if (SeedCategoryType.BOOK == form.getSeed()) { // 도서 리프 에러 처리
             if (bindingResult.hasErrors()) {
                 return new ModelAndView("/view/leaf/1st-reg-book", "form", form);
             }
-        } else {
-            if (bindingResult.hasErrors()) {
-                return new ModelAndView("/view/leaf/1st-reg-etc", "form", form);
-            }
         }
-        return new ModelAndView("redirect:/leaf/list");
+
+        if (bindingResult.hasErrors()) { // ETC 리프 에러 처리
+            return new ModelAndView("/view/leaf/1st-reg-etc", "form", form);
+        }
+
+        return new ModelAndView("redirect:/leaf/list?tree_id=1&leaf_id=1");
     }
 
     @GetMapping("/reg")
-    public String getReg(
-            @RequestParam(value = "seed", required = false) Integer seed
+    public ModelAndView reg(
+            @RequestParam(value = "leaf_id") Long leafId,
+            @RequestParam(value = "seed") Long seed
     ) {
 
         if (!SeedCategoryType.contains(seed)) {
@@ -80,45 +84,52 @@ public class LeafController {
         }
 
         if (SeedCategoryType.isBook(seed)) {
-            return "/view/leaf/reg-book";
+            ModelAndView mv =
+                    new ModelAndView("/view/leaf/reg-book", "form", new LeafBookForm());
+            mv.addObject("memberId", 1L); // TODO: 나중에 로그인한 사용자 정보로 변경
+            return mv;
         }
-        return "/view/leaf/reg-etc";
+
+        ModelAndView mv =
+                new ModelAndView("/view/leaf/reg-etc", "form", new LeafForm());
+        mv.addObject("memberId", 1L); // TODO: 나중에 로그인한 사용자 정보로 변경
+        return mv;
     }
 
     @PostMapping("/reg")
-    public ModelAndView postReg(
-            @Valid @ModelAttribute("form") LeafFrom form,
+    public ModelAndView reg(
+            @Valid @ModelAttribute("form") LeafForm form,
             BindingResult bindingResult
     ) {
 
-        if (SeedCategoryType.BOOK == form.getSeed()) {
+        if (SeedCategoryType.BOOK == form.getSeed()) { // 도서 리프 에러 처리
             if (bindingResult.hasErrors()) {
                 return new ModelAndView("/view/leaf/reg-book", "form", form);
             }
-        } else {
-            if (bindingResult.hasErrors()) {
-                return new ModelAndView("/view/leaf/reg-etc", "form", form);
-            }
+        }
+
+        if (bindingResult.hasErrors()) { // ETC 리프 에러 처리
+            return new ModelAndView("/view/leaf/reg-etc", "form", form);
         }
 
         return new ModelAndView("redirect:/leaf/list");
     }
 
     @GetMapping("/edit")
-    public String getLeafEdit(
-            @RequestParam(value = "seed", required = false) Integer seed,
-            @RequestParam(value = "id", required = false) Integer id,
+    public ModelAndView edit(
+            @RequestParam(value = "seed", required = false) Long seed,
+            @RequestParam(value = "id", required = false) Long id,
             Model model
     ) {
         if (SeedCategoryType.isBook(seed)) {
-            return "/view/leaf/edit-book";
+            return new ModelAndView("/view/leaf/edit-book","form", leafBookService.getLeafBookView(id));
         } else {
-            return "/view/leaf/edit-etc";
+            return new ModelAndView("/view/leaf/edit-etc","form", leafEtcService.getLeafEtcView(id));
         }
     }
 
     @GetMapping("/list")
-    public String getList(
+    public String list(
         @RequestParam(value = "tree_id") Long treeId,
         @RequestParam(value = "leaf_id") Long leafId,
         Model model
@@ -147,8 +158,8 @@ public class LeafController {
         // TODO: 도서 상세 정보 넣어야함
 
         Long memberId = 1L;
-        LeafImageCardView leafCardView = leafService.LeafImageCardView(memberId);
-        model.addAttribute("leafCards", leafCardView);
+        List<LeafImageCardView> leafImageCardViews = leafService.getLeafImageCardViews(memberId);
+        model.addAttribute("leafImageCardViews", leafImageCardViews);
         return "/view/leaf/list";
     }
 }

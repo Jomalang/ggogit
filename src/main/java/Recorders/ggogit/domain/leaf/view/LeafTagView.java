@@ -1,7 +1,10 @@
 package Recorders.ggogit.domain.leaf.view;
 
-
-import lombok.*;
+import Recorders.ggogit.domain.leaf.entity.LeafTag;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
@@ -9,6 +12,14 @@ import lombok.*;
 @Builder
 public class LeafTagView {
     private Long id;
-    private Long memberId;
     private String name;
+    private Long priority;
+
+    public static LeafTagView of(LeafTag leafTag) {
+        return LeafTagView.builder()
+                .id(leafTag.getId())
+                .name(leafTag.getName())
+                .priority(1L) // 일반 조회
+                .build();
+    }
 }

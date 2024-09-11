@@ -2,6 +2,7 @@ package Recorders.ggogit.domain.book.service;
 
 import Recorders.ggogit.domain.book.entity.Book;
 import Recorders.ggogit.domain.book.repository.BookRepository;
+import Recorders.ggogit.domain.book.view.BookInfoView;
 import Recorders.ggogit.domain.book.view.BookPreviewView;
 import Recorders.ggogit.domain.book.view.BookDetailView;
 import lombok.RequiredArgsConstructor;
@@ -51,5 +52,10 @@ public class BookServiceImpl implements BookService{
     public List<BookPreviewView> getBooksbyAuthor(String author) {
         List<BookPreviewView> books = bookRepository.findBookCategoryViewByAuthor(author);
         return books;
+    }
+
+    @Override
+    public BookInfoView getBookbyId(Long bookId) {
+        return bookRepository.findBookCategoryViewById(bookId);
     }
 }

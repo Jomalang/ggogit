@@ -2,23 +2,31 @@ package Recorders.ggogit.web.tree;
 
 import Recorders.ggogit.domain.book.entity.Book;
 import Recorders.ggogit.domain.book.service.BookService;
+import Recorders.ggogit.domain.book.view.BookDetailView;
+import Recorders.ggogit.domain.book.view.BookInfoView;
+import Recorders.ggogit.domain.book.view.BookPreviewView;
+import Recorders.ggogit.domain.tree.service.TreeServiceImpl;
+import Recorders.ggogit.web.book.form.bookSearchType;
 import Recorders.ggogit.domain.tree.entity.Tree;
 import Recorders.ggogit.domain.tree.service.TreeService;
 import Recorders.ggogit.domain.tree.view.BookTreeView;
 import Recorders.ggogit.type.BookCategoryType;
+import Recorders.ggogit.type.SeedCategoryType;
+import Recorders.ggogit.web.tree.form.TreeSaveTmpForm;
 import jakarta.servlet.ServletContext;
-import org.springframework.beans.factory.annotation.Autowired;
-import Recorders.ggogit.domain.book.view.BookPreviewView;
-import Recorders.ggogit.web.book.form.bookSearchType;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.antlr.v4.runtime.atn.PredicateEvalInfo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -31,14 +39,10 @@ import java.io.File;
 public class TreeController {
 
     @Autowired
-    private TreeService treeService;
+    private TreeServiceImpl treeService;
 
     @Autowired
     private BookService bookService;
-    @Autowired
-    private ServletContext servletContext;
-
-    private final BookService bookService;
 
     @GetMapping("/search")
     public String treeSearch() {
@@ -74,6 +78,10 @@ public class TreeController {
             Model model
     ) {
         if (auto) {
+            BookInfoView book = bookService.getBookbyId(id);
+
+            System.out.println(book.toString());
+            model.addAttribute("book", book);
             return "view/tree/book/reg-auto";
         } else {
             model.addAttribute("categories", BookCategoryType.values());
@@ -84,24 +92,37 @@ public class TreeController {
     @PostMapping("/book/reg")
     @ResponseBody
     public Object postBookReg(
-            @RequestParam(value = "bookImage", required = false) MultipartFile bookImage
-//            @ModelAttribute("tree") Tree tree
-    ) {
-        File img;
+            @RequestParam(required = false) MultipartFile img,
+            @ModelAttribute("form")TreeSaveTmpForm form,
+            @RequestParam(value = "auto", required = false) boolean auto,
+            @RequestParam(value = "id", required = false) Long id,
+            HttpServletRequest request
+            ) {
 
-        if(bookImage != null && !bookImage.isEmpty()) {
-            String name = bookImage.getOriginalFilename();
-            String path = servletContext.getRealPath("/") + File.separator + name;
-            img = new File(path);
-            treeService.setTreeImg(img);
+        System.out.println(form.toString());
+        treeService.tmpTreeSave(form);
+
+        if(!auto){
+
+            String path = request.getServletContext().getRealPath("/image/tmp");
+            String fileName = img.getOriginalFilename();
+            System.out.println(fileName);
+            String filePath = path + File.separator + fileName;
+
+            // 경로가 존재하지 않으면 생성
+            try {
+                Path dirPath = Paths.get(path);
+                Files.createDirectories(dirPath);
+
+                // 파일 저장
+                File destFile = new File(filePath);
+                img.transferTo(destFile);
+            } catch (IOException e) {
+                // 디렉토리 생성 중 오류 발생 시 처리
+                e.printStackTrace();
+                // 적절한 오류 처리 로직 추가
+            }
         }
-
-        Book book = view.toBook();
-        Tree tree = view.toTree();
-
-        bookService.register(book);
-        treeService.register(tree);
-
         return null;
     }
 
@@ -129,32 +150,30 @@ public class TreeController {
         return "view/tree/list";
     }
 
-    @GetMapping("/reg-etc")
+    @GetMapping("/etc/reg")
     public String getTreeEtcReg(
             @RequestParam(value = "type", required = false) String type,
             Model model
     ) {
-        String seedName;
-        if(type.equals("idea"))
-            seedName = "생각";
-        else if (type.equals("phrase"))
-            seedName = "문장";
-        else if (type.equals("study"))
-            seedName = "공부";
-        else seedName = "영상";
+        String seedName = switch (type) {
+            case "idea" -> "생각";
+            case "phrase" -> "문장";
+            case "study" -> "공부";
+            default -> "영상";
+        };
         // hack type 데이터 로직 어디에 넣을지
-        SeedCategoryType seedCategoryType;
-        if (!SeedCategoryType.contains(type)) {
-            seedCategoryType = SeedCategoryType.IDEA;
-        } else {
-            seedCategoryType = SeedCategoryType.of(type);
-        }
+//        SeedCategoryType seedCategoryType;
+//        if (!SeedCategoryType.contains(type)) {
+//            seedCategoryType = SeedCategoryType.IDEA;
+//        } else {
+//            seedCategoryType = SeedCategoryType.of(type);
+//        }
+//
+//        if (seedCategoryType == SeedCategoryType.BOOK) {
+//            seedCategoryType = SeedCategoryType.IDEA;
+//        }
 
-        if (seedCategoryType == SeedCategoryType.BOOK) {
-            seedCategoryType = SeedCategoryType.IDEA;
-        }
-
-        model.addAttribute("seed", seedCategoryType);
+        model.addAttribute("seed", seedName);
         return "view/tree/reg-etc";
     }
 
@@ -242,6 +261,6 @@ public class TreeController {
     @GetMapping("/memoir/register/index")
     public String getmemoirindex(Model model) {
         model.addAttribute("categories", BookCategoryType.values());
-        return "view/tree/memoir/register/index";
+        return "view/memoir/index";
     }
 }

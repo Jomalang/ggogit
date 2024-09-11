@@ -42,7 +42,7 @@
 
       <section class="input-form__input-container">
         <h1 class="none">트리이름 입력</h1>
-        <div th:replace="~{fragments/input :: text-box(label='*트리 이름', placeholder='트리 이름을 입력해주세요', name='treeName')}"></div>
+        <div th:replace="~{fragments/input :: text-box(label='*트리 이름', placeholder='트리 이름을 입력해주세요', name='tree-title')}"></div>
       </section>
 
       <section class="book-tree-input-form__large-input-container">
@@ -59,7 +59,16 @@
         <h1 class="none">트리 생성 버튼</h1>
         <div th:replace="~{fragments/button :: submit-btn-full-bar(text='트리 생성', id='submit-btn')}"></div>
       </section>
-
+        <!--    임시 저장소    -->
+        <section class="none">
+            <label><input name="book-id" value="${id}"></label>
+            <label><input name="book-category-id" value="${category}"></label> <!--todo: 도서 카테고리-->
+            <label><input name="book-title" value="${imageFile}"></label>
+            <label><input name="author" value="${author}"></label>
+            <label><input name="publisher" value="${publisher}"></label>
+            <label><input name="total-page" value="${totalPage}"></label>
+            <label><input name="member-id" value="1"></label>
+        </section>
     </form>
   </section>
 </main>

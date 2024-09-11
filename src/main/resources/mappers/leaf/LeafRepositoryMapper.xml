@@ -5,107 +5,114 @@
 
 <mapper namespace="Recorders.ggogit.domain.leaf.repository.LeafRepository">
 
-        <insert id="save" parameterType="Leaf"
-                useGeneratedKeys="true" keyProperty="id"  keyColumn="ID">
-            INSERT INTO LEAF (TREE_ID, PARENT_LEAF_ID, VISIBILITY, VIEW_COUNT, LIKE_COUNT, TITLE, CONTENT, CHILD_LEAF_COUNT, BOOK_MARK)
-            VALUES (#{treeId}, #{parentLeafId}, #{visibility}, #{viewCount}, #{likeCount}, #{title}, #{content}, #{childLeafCount}, #{bookMark})
+        <insert
+            id="save"
+            parameterType="Leaf"
+            useGeneratedKeys="true"
+            keyProperty="id"
+            keyColumn="ID"
+        >
+            INSERT INTO LEAF (
+                TREE_ID,
+                PARENT_LEAF_ID,
+                VISIBILITY,
+                VIEW_COUNT,
+                LIKE_COUNT,
+                TITLE,
+                CONTENT,
+                CHILD_LEAF_COUNT,
+                BOOK_MARK
+            )
+            VALUES (
+                #{treeId},
+                #{parentLeafId},
+                #{visibility},
+                #{viewCount},
+                #{likeCount},
+                #{title},
+                #{content},
+                #{childLeafCount},
+                #{bookMark}
+            )
         </insert>
 
-        <select id="findById" resultType="Leaf">
-            SELECT *
-            FROM LEAF
-            WHERE ID = #{id}
-        </select>
-
-        <select id="findAll" parameterType="LeafRepositoryFilter" resultType="Leaf">
-            SELECT *
-            FROM LEAF
-            <where>
-                <if test="ids.isEmpty() == false">
-                    AND ID IN
-                    <foreach collection="ids" item="item" open="(" separator="," close=")">
-                        #{item}
-                    </foreach>
-                </if>
-                <if test="treeIds.isEmpty() == false">
-                    AND TREE_ID IN
-                    <foreach collection="treeIds" item="item" open="(" separator="," close=")">
-                        #{item}
-                    </foreach>
-                </if>
-                <if test="parentLeafIds.isEmpty() == false">
-                    AND PARENT_LEAF_ID IN
-                    <foreach collection="parentLeafIds" item="item" open="(" separator="," close=")">
-                        #{item}
-                    </foreach>
-                </if>
-                <if test="visibilities.isEmpty() == false">
-                    AND VISIBILITY IN
-                    <foreach collection="visibilities" item="item" open="(" separator="," close=")">
-                        #{item}
-                    </foreach>
-                </if>
-                <if test="viewCounts.isEmpty() == false">
-                    AND VIEW_COUNT IN
-                    <foreach collection="viewCounts" item="item" open="(" separator="," close=")">
-                        #{item}
-                    </foreach>
-                </if>
-                <if test="likeCounts.isEmpty() == false">
-                    AND LIKE_COUNT IN
-                    <foreach collection="likeCounts" item="item" open="(" separator="," close=")">
-                        #{item}
-                    </foreach>
-                </if>
-                <if test="childLeafCounts.isEmpty() == false">
-                    AND CHILD_LEAF_COUNT IN
-                    <foreach collection="childLeafCounts" item="item" open="(" separator="," close=")">
-                        #{item}
-                    </foreach>
-                </if>
-                <if test="bookMarks.isEmpty() == false">
-                    AND BOOK_MARK IN
-                    <foreach collection="bookMarks" item="item" open="(" separator="," close=")">
-                        #{item}
-                    </foreach>
-                </if>
-                <if test="updateTimes.isEmpty() == false">
-                    AND UPDATE_TIME IN
-                    <foreach collection="updateTimes" item="item" open="(" separator="," close=")">
-                        #{item}
-                    </foreach>
-                </if>
-                <if test="createTimes.isEmpty() == false">
-                    AND CREATE_TIME IN
-                    <foreach collection="createTimes" item="item" open="(" separator="," close=")">
-                        #{item}
-                    </foreach>
-                </if>
-                <if test="titles.isEmpty() == false">
-                    AND TITLE LIKE
-                    <foreach collection="titles" item="item" separator="OR">
-                        '%' || #{item} || '%'
-                    </foreach>
-                </if>
-                <if test="contents.isEmpty() == false">
-                    AND CONTENT LIKE
-                    <foreach collection="contents" item="item" separator="OR">
-                        '%' || #{item} || '%'
-                    </foreach>
-                </if>
-            </where>
-        </select>
-
         <update id="update" parameterType="Leaf">
-            UPDATE LEAF
-            SET
+            UPDATE LEAF SET
+                TITLE = #{title},
+                CONTENT = #{content},
                 VISIBILITY = #{visibility},
                 VIEW_COUNT = #{viewCount},
                 LIKE_COUNT = #{likeCount},
-                TITLE = #{title},
-                CONTENT = #{content},
                 CHILD_LEAF_COUNT = #{childLeafCount},
                 BOOK_MARK = #{bookMark}
-            WHERE ID = #{id}
+            WHERE ID = 1;
         </update>
+
+        <delete id="delete" parameterType="int">
+            DELETE FROM LEAF
+            WHERE ID = #{id}
+        </delete>
+
+        <select id="existsById" parameterType="Long" resultType="Boolean">
+            SELECT COUNT(*) FROM LEAF
+            WHERE ID = #{id}
+        </select>
+
+        <select id="findById" resultType="Leaf">
+            SELECT * FROM LEAF
+            WHERE ID = #{id}
+        </select>
+
+        <select id="findAll" resultType="Leaf">
+            SELECT * FROM LEAF
+        </select>
+
+        <select id="findLeafCardViewByBookId" resultType="LeafCardView">
+            SELECT
+                L2.TREE_ID,
+                L2.LEAF_ID,
+                L2.TITLE,
+                L2.CONTENT,
+                L2.VIEW_COUNT,
+                M2.USER_NICKNAME,
+                M2.USER_EMAIL_ID,
+                NVL(LK2.LIKE_ACTIVATE, 0) AS LIKE_ACTIVATE,
+                L2.UPDATE_TIME
+            FROM (
+                SELECT
+                    L.ID AS LEAF_ID,
+                    L.TREE_ID,
+                    L.TITLE,
+                    L.CONTENT,
+                    L.VIEW_COUNT,
+                    L.UPDATE_TIME
+                FROM LEAF L
+                WHERE TREE_ID IN (
+                    SELECT T1.ID
+                    FROM TREE T1
+                    WHERE BOOK_ID = #{bookId}
+                )
+            ) L2
+            LEFT JOIN (
+                SELECT T.ID AS TREE_ID,
+                T.MEMBER_ID
+                FROM TREE T
+            ) T2
+            ON T2.TREE_ID = L2.TREE_ID
+            LEFT JOIN (
+                SELECT M.ID AS MEMBER_ID,
+                M.NICKNAME AS USER_NICKNAME,
+                SUBSTR(M.EMAIL, 1, INSTR(EMAIL, '@') - 1) AS USER_EMAIL_ID
+                FROM MEMBER M
+            ) M2
+            ON T2.MEMBER_ID = M2.MEMBER_ID
+            LEFT JOIN (
+                SELECT  LK.LEAF_ID,
+                LK.ACTIVATE AS LIKE_ACTIVATE
+                FROM LEAF_LIKE LK
+                WHERE MEMBER_ID = #{memberId}
+            ) LK2
+            ON L2.LEAF_ID = LK2.LEAF_ID;
+        </select>
+
 </mapper>

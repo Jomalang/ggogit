@@ -5,6 +5,7 @@ import Recorders.ggogit.domain.tree.entity.Tree;
 import Recorders.ggogit.domain.tree.view.BookTreeView;
 import Recorders.ggogit.domain.tree.view.EtcTreeView;
 import Recorders.ggogit.domain.tree.view.TreeInfoView;
+import Recorders.ggogit.web.tree.form.TreeSaveTmpForm;
 
 import java.io.File;
 import java.util.List;
@@ -73,13 +74,12 @@ public interface TreeService {
     void delete(Long treeId);
 
     /***
-     * 트리 ID 별 트리 제거
+     * 트리 생성 TMP 테이블 생성
      *
      *
-     * @param memberId
+     * @param TreeSaveTmpForm
      * @return
      */
-    void setTreeImg(File file);
-
+    void tmpTreeSave(TreeSaveTmpForm form);
 
 }

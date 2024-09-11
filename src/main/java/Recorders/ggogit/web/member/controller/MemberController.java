@@ -123,7 +123,7 @@ public class MemberController {
         //중복되는 닉네임 검증
         {
             String nickname = loginRegForm.getNickname();
-            if(loginService.getMemberBynickname(nickname) != null){
+            if(loginService.getMemberByNickname(nickname) != null){
                 bindingResult.rejectValue("nickname","Duplicate");
                 log.info("errors: {}", bindingResult.getAllErrors());
                 return "/view/member/join-input";

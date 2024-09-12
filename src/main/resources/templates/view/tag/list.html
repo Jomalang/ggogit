@@ -104,19 +104,33 @@
                         item.remove();
                     });
 
+                    // 생성중인 태그 제거
                     const createList = document.querySelectorAll('.tag-info__item--create');
                     createList.forEach(item => {
                         item.remove();
                     });
 
                     // 검색 결과 생성
-                    let existTagName = false;
-
+                    let existTagName = false; // 생성 여부 확인 이미 존재하면 생성하지 않음
                     const unSelectedTagList = document.querySelector('.tag-info__list--unselected');
                     data.forEach(d => {
-                        const li = makeUnSelectedTag(d.name, d.id);
 
-                        unSelectedTagList.insertAdjacentElement('beforeend', li);
+                        // 선택 되어 있는 경우 PASS
+                        const selectedList = document.querySelector('.tag-info__list--selected');
+                        const selectedTagList = selectedList.querySelectorAll('.tag-info__item--selected');
+
+                        let isSelected = false; // 선택 여부 확인
+                        selectedTagList.forEach(selectedTag => {
+                            const selectedTagId = selectedTag.id.replace('--selected', '');
+                            if (d.id === selectedTagId) {
+                                isSelected = true; // 선택되어 있는 경우 PASS
+                            }
+                        });
+                        if (isSelected) { return; }
+
+                        const li = makeUnSelectedTag(d.name, d.id);
+                        addSelectEvent(li);
+                        unSelectedTagList.insertAdjacentElement('beforeend', li); // 조회 결과 추가
                         if (d.name === searchTag.value) {
                             existTagName = true;
                         }
@@ -156,16 +170,20 @@
                     const createLiTag = document.querySelector('.tag-info__item--create');
                     createLiTag.remove();
 
-                    // 대기 태그로 이동
-                    const li = makeUnSelectedTag(data.name, data.id);
-                    addSelectEvent(li);
-                    const unSelectedTagList = document.querySelector('.tag-info__list--unselected');
-                    unSelectedTagList.insertAdjacentElement('afterbegin', li);
-
                     // 3개 이하이면 선택된 태그로 이동
                     const selectedList = document.querySelector('.tag-info__list--selected');
-                    if (3 <= selectedList.children.length) { return; }
+                    if (3 <= selectedList.children.length) {
+                        // 3개 이상이면 대기 태그로 이동
+                        // 대기 태그로 이동
+                        const li = makeUnSelectedTag(data.name, data.id);
+                        addSelectEvent(li);
+                        const unSelectedTagList = document.querySelector('.tag-info__list--unselected');
+                        unSelectedTagList.insertAdjacentElement('afterbegin', li);
 
+                        return; // 3개 이상인 경우 PASS
+                    }
+
+                    // 선택된 태그로 이동
                     const selectedLi = makeSelectedTag(data.name, data.id);
                     addRemoveEvent(selectedLi);
                     selectedList.insertAdjacentElement('beforeend', selectedLi);
@@ -202,21 +220,29 @@
 
             const tagName = itemTag.querySelector('.tag-info__name').textContent;
             const liTag = makeSelectedTag(tagName, newTagId);
-
-            // 선택 제거 이벤트 등록
-            liTag.addEventListener('click', () => {
-                const tag = liTag.closest('li.tag-info__item--selected');
-                tag.remove();
-            });
-
+            addRemoveEvent(liTag);
             selectedList.insertAdjacentElement('beforeend', liTag);
+
+            // 기존 리스트에서 제거
+            itemTag.closest('li.tag-info__item--unselected').remove();
         });
     }
 
     function addRemoveEvent(item) {
         item.querySelector('.tag-info__btn').addEventListener('click', () => {
             const tag = item.closest('li.tag-info__item--selected');
+
+            // 리스트에 추가
+            const unSelectedTagList = document.querySelector('.tag-info__list--unselected');
+            const tagName = tag.querySelector('.tag-info__name').textContent;
+            const tagId = tag.id.replace('--selected', '');
+            const li = makeUnSelectedTag(tagName, tagId);
+            addSelectEvent(li);
+            unSelectedTagList.insertAdjacentElement('afterbegin', li);
+
+            // 선택된 태그에서 제거
             tag.remove();
+
         });
     }
 

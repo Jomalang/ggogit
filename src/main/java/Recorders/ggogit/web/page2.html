@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page 2</title>
+</head>
+<body>
+<h1>Page 2</h1>
+
+<p id="displayData">Loading data...</p>
+
+<p><a href="page1.html">Go back to Page 1</a></p>
+
+<script>
+    window.onload = function() {
+        const savedData = sessionStorage.getItem('inputData');
+        const displayData = document.getElementById('displayData');
+        if (savedData) {
+            displayData.textContent = `Saved data: ${savedData}`;
+        } else {
+            displayData.textContent = 'No data found!';
+        }
+    };
+</script>
+
+</body>
+</html>

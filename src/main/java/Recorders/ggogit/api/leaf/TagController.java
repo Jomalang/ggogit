@@ -17,7 +17,7 @@ public class TagController {
     private LeafTagService leafTagService;
 
     @GetMapping
-    public ResponseEntity<List<LeafTag>> getTags(
+    public ResponseEntity<List<LeafTag>> gets(
             @RequestParam(value = "member_id") Long memberId,
             @RequestParam(value = "search", required = false) String search,
             @RequestParam(value = "page", defaultValue = "0") Long page,
@@ -27,10 +27,11 @@ public class TagController {
         return ResponseEntity.ok(leafTags);
     }
 
-    @PostMapping("/reg")
-    public ResponseEntity<LeafTag> registerTag(
+    @PostMapping
+    public ResponseEntity<LeafTag> post(
             @RequestBody LeafTag leafTag
     ) {
+        System.out.println(leafTag);
         LeafTag saved = leafTagService.register(leafTag);
         return ResponseEntity.ok(saved);
     }

@@ -40,25 +40,52 @@
 </body>
 </html>
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
 
-        // 선택 태그 삭제 이벤트 추가
-        document.querySelectorAll('.tag-info__btn--selected').forEach(button => {
-            removeTag(button);
-        });
+    function makeSelectedTag(name, id) {
+        const li = document.createElement('li');
+        li.classList.add('tag-info__item', 'tag-info__item--selected');
+        li.id = `${id}--selected`;
+        li.innerHTML = `
+            <div class="tag-info__tag-box">
+                <q class="tag-info__name">${name}</q>
+                <button class="tag-info__btn" type="button">
+                    <img class="tag-info__btn" src="/svg/x-button.svg" alt="선택 제거 버튼">
+                </button>
+            </div>`;
+        return li;
+    }
 
-        // 선택 태그 선택 이벤트 추가
-        document.querySelectorAll('.tag-info__item--unselected').forEach(tagBox => {
-            const itemTag = tagBox.querySelector('.tag-info__tag-box');
-            addTag(itemTag);
-        });
+    function makeNewTag(name) {
+        const li = document.createElement('li');
+        li.classList.add('tag-info__item', 'tag-info__item--create');
+        li.innerHTML = `
+        <div class="tag-info__create-btn">
+            <q class="tag-info__create-btn-name">생성</q>
+        </div>
+        <div class="tag-info__tag-box">
+            <q class="tag-info__name">${name}</q>
+        </div>`;
+        return li;
+    }
 
-        // 실시간 입력 API 검색
-        searchTagList();
-    });
+    function makeUnSelectedTag(name, id) {
+        const li = document.createElement('li');
+        li.classList.add('tag-info__item', 'tag-info__item--unselected');
+        li.id = `${id}--unselected`;
+        li.innerHTML = `
+        <div class="tag-info__tag-box">
+            <q class="tag-info__name">${name}</q>
+        </div>
+        <div class="tag-info__option-box">
+            <a class="tag-info__option-link" href="/tag/edit?id=${id}">
+                <img class="tag-info__option-btn" src="/svg/icon-option.svg" alt="태그 선택 제거 이미지">
+            </a>
+        </div>`;
+        return li;
+    }
 
-    function searchTagList() {
-        const searchTag = document.getElementById('tree-input-text__rectangle-id');
+    function addSearchTagEvent(searchTag) {
+
         searchTag.addEventListener('input', () => {
 
             const params = new URLSearchParams();
@@ -98,81 +125,55 @@
                     // 검색어가 없는 경우 생성 로직
                     if (existTagName) { return; } // 데이터가 있는 경우 PASS
                     if (searchTag.value === '') { return; } // 검색어가 없는 경우 PASS
-
-                    const li = makeNewTag(searchTag.value);
-                    unSelectedTagList.insertAdjacentElement('beforeend', li);
+                    const tagName = searchTag.value;
+                    const li = makeNewTag(tagName);
+                    addCreateEvent(li, tagName);
+                    unSelectedTagList.insertAdjacentElement('afterbegin', li);
                 });
         });
     }
 
-    function makeSelectedTag(name, id) {
-        const li = document.createElement('li');
-        li.classList.add('tag-info__item', 'tag-info__item--selected');
-        li.id = id + '--selected';
-        li.innerHTML =
-            '<div class="tag-info__tag-box">' +
-            '    <q class="tag-info__name">' + name + '</q>' +
-            '    <button class="tag-info__btn" type="button">' +
-            '        <img class="tag-info__btn" src="/svg/x-button.svg" alt="선택 제거 버튼">' +
-            '    </button>' +
-            '</div>';
-        return li;
-    }
-
-    function makeNewTag(name) {
-        const li = document.createElement('li');
-        li.classList.add('tag-info__item', 'tag-info__item--create');
-
-        li.innerHTML =
-            '<div class="tag-info__create-btn">' +
-            '    <q class="tag-info__create-btn-name">생성</q>' +
-            '</div>' +
-            '<div class="tag-info__tag-box">' +
-            '    <q class="tag-info__name">' + name + '</q>' +
-            '</div>';
-
+    function addCreateEvent(li, name) {
         li.addEventListener('click', () => {
             const params = new URLSearchParams();
             params.append('member_id', 999); // TODO: 로그인한 사용자 ID 변경해야함
             params.append('name', name);
 
             // 태그 생성
-            fetch('/api/v1/tags/reg', {
+            fetch('/api/v1/tags', {
                 method: 'POST',
                 headers: {
-                   'Content-Type': 'application/json'
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
                     memberId: 999, // TODO: 로그인한 사용자 ID 변경해야함
                     name: name
                 })
             })
-            .then(response => response.json())
-            .then(data => {
-                const li = makeUnSelectedTag(data.name, data.id);
-                addTag(li);
-            });
+                .then(response => response.json())
+                .then(data => {
+                    // 생성 태그 제거
+                    const createLiTag = document.querySelector('.tag-info__item--create');
+                    createLiTag.remove();
+
+                    // 대기 태그로 이동
+                    const li = makeUnSelectedTag(data.name, data.id);
+                    addSelectEvent(li);
+                    const unSelectedTagList = document.querySelector('.tag-info__list--unselected');
+                    unSelectedTagList.insertAdjacentElement('afterbegin', li);
+
+                    // 3개 이하이면 선택된 태그로 이동
+                    const selectedList = document.querySelector('.tag-info__list--selected');
+                    if (3 <= selectedList.children.length) { return; }
+
+                    const selectedLi = makeSelectedTag(data.name, data.id);
+                    addRemoveEvent(selectedLi);
+                    selectedList.insertAdjacentElement('beforeend', selectedLi);
+                });
         });
-        return li;
     }
 
-    function makeUnSelectedTag(name, id) {
-        const li = document.createElement('li');
-        li.classList.add('tag-info__item', 'tag-info__item--unselected');
-        li.id = id + '--unselected';
-        li.innerHTML =
-            '<div class="tag-info__tag-box">' +
-            '    <q class="tag-info__name">' + name + '</q>' +
-            '</div>' + 
-            '<div class="tag-info__option-box">' +
-            '    <a class="tag-info__option-link" href="/tag/edit?id=' + id + '">' +
-            '        <img class="tag-info__option-btn" src="/svg/icon-option.svg" alt="태그 선택 제거 이미지">' +
-            '    </a>' +
-            '</div>'
-        return li;
-    }
-
-    function addTag(itemTag) {
+    function addSelectEvent(itemTag) {
         itemTag.addEventListener('click', (event) => {
 
             // 선택된 태그들
@@ -212,11 +213,27 @@
         });
     }
 
-    function removeTag(button) {
-        button.addEventListener('click', () => {
-            const tag = button.closest('li.tag-info__item--selected');
+    function addRemoveEvent(item) {
+        item.querySelector('.tag-info__btn').addEventListener('click', () => {
+            const tag = item.closest('li.tag-info__item--selected');
             tag.remove();
         });
     }
 
+    document.addEventListener('DOMContentLoaded', () => {
+        // 선택 태그 삭제 이벤트 추가
+        document.querySelectorAll('.tag-info__item--selected').forEach(item => {
+            addRemoveEvent(item);
+        });
+
+        // 선택 태그 선택 이벤트 추가
+        document.querySelectorAll('.tag-info__item--unselected').forEach(item => {
+            const itemTag = item.querySelector('.tag-info__tag-box');
+            addSelectEvent(itemTag);
+        });
+
+        // 실시간 입력 API 검색
+        const searchTag = document.getElementById('tree-input-text__rectangle-id');
+        addSearchTagEvent(searchTag);
+    });
 </script>

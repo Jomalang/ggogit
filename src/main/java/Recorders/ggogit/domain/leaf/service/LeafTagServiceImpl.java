@@ -27,9 +27,10 @@ public class LeafTagServiceImpl implements LeafTagService {
         }
 
         // 저장
-        Long id =  leafTagRepository.save(leafTag);
-        return Optional.ofNullable(leafTagRepository.findById(id))
-                .orElseThrow(() -> new IllegalArgumentException("태그 등록에 실패하였습니다."));
+        Optional.ofNullable(leafTagRepository.save(leafTag))
+                .orElseThrow(() -> new IllegalArgumentException("태그 저장에 실패하였습니다."));
+
+        return leafTag;
     }
 
     @Override

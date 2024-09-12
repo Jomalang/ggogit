@@ -6,7 +6,7 @@
 <mapper namespace="Recorders.ggogit.domain.leaf.repository.LeafTagRepository">
 
     <insert id="save" parameterType="LeafTag"
-            useGeneratedKeys="true" keyProperty="id" keyColumn="ID">
+            useGeneratedKeys="true" keyProperty="id,updateTime,createTime" keyColumn="ID,UPDATE_TIME,CREATE_TIME">
         INSERT INTO LEAF_TAG (MEMBER_ID , NAME)
         VALUES (#{memberId}, #{name})
     </insert>

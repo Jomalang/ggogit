@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page 1</title>
+</head>
+<body>
+<h1>Page 1</h1>
+<label for="inputData">Enter some data:</label>
+<input type="text" id="inputData" placeholder="Enter your data">
+<button onclick="saveData()">Save Data</button>
+
+<p><a href="page2.html">Go to Page 2</a></p>
+
+<script>
+    function saveData() {
+        const inputData = document.getElementById('inputData').value;
+        sessionStorage.setItem('inputData', inputData);
+        alert('Data saved!');
+    }
+
+    // 페이지 로드 시 저장된 데이터를 불러오기 (옵션)
+    window.onload = function() {
+        const savedData = sessionStorage.getItem('inputData');
+        if (savedData) {
+            document.getElementById('inputData').value = savedData;
+        }
+    };
+</script>
+</body>
+</html>

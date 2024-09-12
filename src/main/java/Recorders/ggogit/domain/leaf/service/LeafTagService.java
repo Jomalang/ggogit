@@ -24,7 +24,7 @@ public interface LeafTagService {
      * LeafTag를 수정한다.
      * @param leafTag 리프 태그 Entity
      */
-    boolean modify(LeafTag leafTag);
+    LeafTag modify(LeafTag leafTag);
 
     /**
      * LeafTag를 삭제한다.

@@ -3879,6 +3879,14 @@ card.html
   align-items: center;
 }
 
+.tag-info__item--create {
+  justify-content: flex-start;
+}
+
+.tag-info__create-btn {
+  margin-left: 16px;
+}
+
 .tag-info__tag-box {
     display: inline-flex;
     margin-left: 16px;
@@ -3891,6 +3899,10 @@ card.html
 
 .tag-info__name {
   color: var(--white);
+}
+
+.tag-info__btn {
+  padding: 0;
 }
 
 .tag-info__option-box {

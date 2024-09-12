@@ -1,12 +1,16 @@
 spring:
   datasource:
     driver-class-name: oracle.jdbc.driver.OracleDriver
-    url: jdbc:oracle:thin:@//hi.newlecture.com:1521/XEPDB1
+    url: jdbc:oracle:thin:@//221.148.97.239:1521/XEPDB1
+#    url: jdbc:oracle:thin:@//hi.newlecture.com:1521/XEPDB1
     username: GGOGIT
     password: qmfoscl0809
     ##메시지 소스 추가
   messages:
     basename: messages, errors
+  servlet:
+    multipart:
+      max-file-size: 10MB
 server:
   servlet:
     session:
@@ -25,5 +29,4 @@ mybatis:
 logging:
   level:
     Recorders.ggogit.domain: trace
-
 

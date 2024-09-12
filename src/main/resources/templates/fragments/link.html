@@ -4,7 +4,7 @@
 
 <div th:fragment="link__one-image-detail(src, href)">
     <a class="link-cover-img-anker" th:href="${href}" >
-        <img class="link-cover-img" th:src="${src}" alt="표지">
+        <img class="link-cover-img"  th:src="@{'/svg/' + ${src}}" alt="표지" >
         <p class="link-cover-img-p">자세히 보기</p>
     </a>
 </div>

@@ -1,18 +1,14 @@
 package Recorders.ggogit.web.main;
 
 import Recorders.ggogit.domain.member.entity.Member;
-import Recorders.ggogit.domain.tree.service.MemTreeServiceImpl;
-import Recorders.ggogit.domain.tree.view.FindTreeInfoView;
-import Recorders.ggogit.domain.tree.view.MyTreeListsView;
+import Recorders.ggogit.domain.tree.service.TreeServiceImpl;
+import Recorders.ggogit.domain.tree.view.TreeInfoView;
 import Recorders.ggogit.web.member.session.SessionConst;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
@@ -22,7 +18,7 @@ import java.util.List;
 public class MainController {
 
     @Autowired
-    private MemTreeServiceImpl memTreeService;
+    private TreeServiceImpl memTreeService;
 
 
     @GetMapping("/")
@@ -94,12 +90,11 @@ public class MainController {
                 trees.add(t1);
             }
 */
-            List<FindTreeInfoView> treeInfoList = memTreeService.treeInfoLists(1L);
-            List<MyTreeListsView> treeLists = memTreeService.treeAllLists(1L);
+            List<TreeInfoView> treeInfoList = memTreeService.getTreeInfoView(1L);
 
 
             model.addAttribute("treeInfoList", treeInfoList);
-            model.addAttribute("treeList", treeLists);
+            model.addAttribute("treeList", treeInfoList);
             return "view/home/has-tree";
         }
     }

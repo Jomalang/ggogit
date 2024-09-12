@@ -34,7 +34,7 @@
         <form
           id="book-tree-input-form-id"
           class="book-tree-input-form"
-          th:action="@{/tree/book/reg}"
+          action="/tree/book/reg?auto=false"
           method="post"
           enctype="multipart/form-data"
         >
@@ -53,7 +53,7 @@
           <section class="input-form__input-container">
             <h1 class="none">도서 이름 입력</h1>
             <div
-              th:replace="~{fragments/input :: text-box(label='*도서 이름', placeholder='도서 이름을 입력해주세요', name='bookName')}"
+              th:replace="~{fragments/input :: text-box(label='*도서 이름', placeholder='도서 이름을 입력해주세요', name='bookTitle')}"
             ></div>
           </section>
 
@@ -95,7 +95,7 @@
           <section class="input-form__input-container">
             <h1 class="none">트리이름 입력</h1>
             <div
-              th:replace="~{fragments/input :: text-box(label='*트리 이름', placeholder='트리 이름을 입력해주세요', name='treeName')}"
+              th:replace="~{fragments/input :: text-box(label='*트리 이름', placeholder='트리 이름을 입력해주세요', name='treeTitle')}"
             ></div>
           </section>
 
@@ -119,13 +119,18 @@
               th:replace="~{fragments/button :: submit-btn-full-bar(text='트리 생성', id='submit-btn')}"
             ></div>
           </section>
+          <section class="none">
+            <label><input name="bookCategoryId" value="1"></label> <!--todo: 도서 카테고리 개발예정 -->
+            <label><input name="memberId" value="14"></label><!--todo: session storage or cookies or JWT 확인 필요 -->
+          </section>
+
         </form>
       </section>
     </main>
 
     <aside class="nav-container">
       <h1 class="none">네비게이션 하단</h1>
-      <nav th:replace="fragments/nav :: navigation-bar(active='home')"></nav>
+      <nav th:replace="~{fragments/nav :: navigation-bar(active='home')}"></nav>
     </aside>
 
     <script th:src="@{/js/filter-tab.js}"></script>

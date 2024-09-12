@@ -2921,6 +2921,7 @@ card.html
   font-size: 14px;
   font-weight: var(--bold);
   color: var(--text-sub);
+  padding: 0;
   margin-right: 10px;
 }
 

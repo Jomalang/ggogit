@@ -54,7 +54,7 @@
                 <div class="input-text__bar">
                     <label class="input-text__label">
                         <span class="input-text__label-text" th:text="'비밀번호'">비밀번호</span>
-                        <input class="input-text__input" type="password" th:field="*{password}" th:placeholder="'(필수)비밀번호를 입력해주세요'" autocomplete="off"/>
+                        <input class="input-text__input" type="password" th:field="*{password}" th:placeholder="'(필수)비밀번호를 입력해주세요  (8~32자, 대소문자 포함, 숫자, 특수문자 1개이상 포함)'" autocomplete="off"/>
                     </label>
                     <div th:errors="*{password}" class="text--errors"></div>
                 </div>

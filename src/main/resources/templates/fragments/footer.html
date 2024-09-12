@@ -17,7 +17,9 @@
         </p>
       </header>
       <div class="tree-footer__membership">
-        <a th:href="@{/member/logout}" class="membership-login">로그아웃</a>
+        <form class="display__inline" method="post" th:action="@{/member/logout}" >
+          <button class="membership-login">로그아웃</button>
+        </form>
         <a href="#" class="membership-asking">문의하기</a>
       </div>
       <div class="tree-footer__app">

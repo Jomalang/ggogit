@@ -30,13 +30,13 @@ public class LoginRegValidator implements Validator {
         //유효성 검증 로직 시작
 
         //동의 하지 않은 경우 검증
-        if(!loginRegForm.getPolicyAgreement()){
+        if(loginRegForm.getPolicyAgreement() != null && !loginRegForm.getPolicyAgreement()){
             errors.rejectValue("policyAgreement", "NotAgree");
             log.info("errors: {}", errors.getAllErrors());
         }
 
         //이메일
-        {
+        if(loginRegForm.getEmail() != null){
             String email = loginRegForm.getEmail();
             String ValidEmail = "^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
 
@@ -51,7 +51,7 @@ public class LoginRegValidator implements Validator {
         }
 
         //닉네임
-        {
+        if(loginRegForm.getNickname() != null){
             String nickname = loginRegForm.getNickname();
             String ValidNickname = "^[a-zA-Z0-9가-힣_]+$";
             //중복되는 닉네임 검증
@@ -66,7 +66,7 @@ public class LoginRegValidator implements Validator {
         }
 
         //비밀번호
-        {
+        if(loginRegForm.getPassword() != null){
             //비밀번호 유효성 확인
             String ValidPassword = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*()?\\-_+=\\[\\]{}|;:,.<>]).{8,32}$";
             if(!Pattern.matches(ValidPassword, loginRegForm.getPassword())){

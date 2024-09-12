@@ -119,13 +119,34 @@ public class MemberController {
 
 
     @GetMapping("/join")
-    public String getMemberJoin() {
+    public String getMemberJoin(@ModelAttribute("loginRegForm") LoginRegForm loginRegForm, @RequestParam(name = "s", required = false) Boolean status) {
         return "view/member/join";
     }
 
     @PostMapping("/join")
-    public String postMemberJoin() {
-        return "view/member/join";
+    public String postMemberJoin(@Validated @ModelAttribute("loginRegForm") LoginRegForm tmpForm
+                                 , BindingResult bindingResult ,@RequestParam("email") String email
+                                , RedirectAttributes redirectAttributes) {
+
+        //공백 검사
+        if(bindingResult.hasFieldErrors("email")){
+            log.info("errors: {}", bindingResult.getAllErrors());
+            return "view/member/join";
+        }
+
+        tmpForm.setEmail(email);
+
+        //이메일 형식 검증
+        loginRegValidator.validate(tmpForm, bindingResult);
+        if(bindingResult.hasFieldErrors("email")){
+            log.info("errors: {}", bindingResult.getAllErrors());
+            return "view/member/join";
+        }
+
+        log.info("올바른 이메일");
+        redirectAttributes.addFlashAttribute("loginRegForm", tmpForm);
+        redirectAttributes.addAttribute("s",true);
+        return "redirect:/member/join";
     }
 
     @GetMapping("/pw/rst")

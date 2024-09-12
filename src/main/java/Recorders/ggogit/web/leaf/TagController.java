@@ -20,13 +20,11 @@ public class TagController {
 
     @GetMapping("/list")
     public String getTagList(
-            @RequestParam(value = "id", required = false) Long memberId, // TODO: 계정 필터 적용해야함
-            @RequestParam(value = "page", defaultValue = "1") Long page,
-            @RequestParam(value = "size", defaultValue = "10") Long size,
+            @RequestParam(value = "id") Long memberId,
             Model model
     ) {
-        model.addAttribute("selectedList", List.of());
-        model.addAttribute("list", leafTagService.getLeafTags(memberId, page, size));
+        List<LeafTag> leafTags = leafTagService.getLeafTags(memberId);
+        model.addAttribute("list", leafTags);
         return "/view/tag/list";
     }
 

@@ -23,7 +23,7 @@
 
         <section>
             <h2 class="none">태그 선택 태그</h2>
-            <div th:replace="~{/fragments/tag::tag-selected-list(tags=${selectedList})}"></div>
+            <div th:replace="~{/fragments/tag::tag-selected-list(tags=null)}"></div>
         </section>
 
         <section>
@@ -37,42 +37,40 @@
         </section>
     </main>
 
-</body>
-</html>
-<script>
+    <script>
 
-    function makeSelectedTag(name, id) {
-        const li = document.createElement('li');
-        li.classList.add('tag-info__item', 'tag-info__item--selected');
-        li.id = `${id}--selected`;
-        li.innerHTML = `
+        function makeSelectedTag(name, id) {
+            const li = document.createElement('li');
+            li.classList.add('tag-info__item', 'tag-info__item--selected');
+            li.id = `${id}--selected`;
+            li.innerHTML = `
             <div class="tag-info__tag-box">
                 <q class="tag-info__name">${name}</q>
                 <button class="tag-info__btn" type="button">
                     <img class="tag-info__btn" src="/svg/x-button.svg" alt="선택 제거 버튼">
                 </button>
             </div>`;
-        return li;
-    }
+            return li;
+        }
 
-    function makeNewTag(name) {
-        const li = document.createElement('li');
-        li.classList.add('tag-info__item', 'tag-info__item--create');
-        li.innerHTML = `
+        function makeNewTag(name) {
+            const li = document.createElement('li');
+            li.classList.add('tag-info__item', 'tag-info__item--create');
+            li.innerHTML = `
         <div class="tag-info__create-btn">
             <q class="tag-info__create-btn-name">생성</q>
         </div>
         <div class="tag-info__tag-box">
             <q class="tag-info__name">${name}</q>
         </div>`;
-        return li;
-    }
+            return li;
+        }
 
-    function makeUnSelectedTag(name, id) {
-        const li = document.createElement('li');
-        li.classList.add('tag-info__item', 'tag-info__item--unselected');
-        li.id = `${id}--unselected`;
-        li.innerHTML = `
+        function makeUnSelectedTag(name, id) {
+            const li = document.createElement('li');
+            li.classList.add('tag-info__item', 'tag-info__item--unselected');
+            li.id = `${id}--unselected`;
+            li.innerHTML = `
         <div class="tag-info__tag-box">
             <q class="tag-info__name">${name}</q>
         </div>
@@ -81,185 +79,335 @@
                 <img class="tag-info__option-btn" src="/svg/icon-option.svg" alt="태그 선택 제거 이미지">
             </a>
         </div>`;
-        return li;
-    }
+            return li;
+        }
 
-    function addSearchTagEvent(searchTag) {
+        function addSearchTagEvent(searchTag) {
 
-        searchTag.addEventListener('input', () => {
+            searchTag.addEventListener('input', () => {
 
-            const params = new URLSearchParams();
-            params.append('member_id', 999); // TODO: 로그인한 사용자 ID 변경해야함
-            params.append('search', searchTag.value);
-            params.append('page', 1);
-            params.append('size', 20);
+                const tagName = searchTag.value.trim();
 
-            const url = '/api/v1/tags?' + params.toString();
-            fetch(url) // 실시간 검색 API GET 호출
-                .then(response => response.json())
-                .then(data => {
-                    // 모드 제거
-                    const unSelectedList = document.querySelectorAll('.tag-info__item--unselected');
-                    unSelectedList.forEach(item => {
-                        item.remove();
-                    });
+                const params = new URLSearchParams();
+                params.append('member_id', 999); // TODO: 로그인한 사용자 ID 변경해야함
+                params.append('search', tagName);
+                params.append('page', 1);
+                params.append('size', 20);
 
-                    // 생성중인 태그 제거
-                    const createList = document.querySelectorAll('.tag-info__item--create');
-                    createList.forEach(item => {
-                        item.remove();
-                    });
-
-                    // 검색 결과 생성
-                    let existTagName = false; // 생성 여부 확인 이미 존재하면 생성하지 않음
-                    const unSelectedTagList = document.querySelector('.tag-info__list--unselected');
-                    data.forEach(d => {
-
-                        // 선택 되어 있는 경우 PASS
-                        const selectedList = document.querySelector('.tag-info__list--selected');
-                        const selectedTagList = selectedList.querySelectorAll('.tag-info__item--selected');
-
-                        let isSelected = false; // 선택 여부 확인
-                        selectedTagList.forEach(selectedTag => {
-                            const selectedTagId = selectedTag.id.replace('--selected', '');
-                            if (d.id === selectedTagId) {
-                                isSelected = true; // 선택되어 있는 경우 PASS
-                            }
+                const url = '/api/v1/tags?' + params.toString();
+                fetch(url) // 실시간 검색 API GET 호출
+                    .then(response => response.json())
+                    .then(data => {
+                        // 모드 제거
+                        const unSelectedList = document.querySelectorAll('.tag-info__item--unselected');
+                        unSelectedList.forEach(item => {
+                            item.remove();
                         });
-                        if (isSelected) { return; }
 
-                        const li = makeUnSelectedTag(d.name, d.id);
-                        addSelectEvent(li);
-                        unSelectedTagList.insertAdjacentElement('beforeend', li); // 조회 결과 추가
-                        if (d.name === searchTag.value) {
-                            existTagName = true;
-                        }
-                    })
+                        // 생성중인 태그 제거
+                        const createList = document.querySelectorAll('.tag-info__item--create');
+                        createList.forEach(item => {
+                            item.remove();
+                        });
 
-                    // 검색어가 없는 경우 생성 로직
-                    if (existTagName) { return; } // 데이터가 있는 경우 PASS
-                    if (searchTag.value === '') { return; } // 검색어가 없는 경우 PASS
-                    const tagName = searchTag.value;
-                    const li = makeNewTag(tagName);
-                    addCreateEvent(li, tagName);
-                    unSelectedTagList.insertAdjacentElement('afterbegin', li);
-                });
-        });
-    }
-
-    function addCreateEvent(li, name) {
-        li.addEventListener('click', () => {
-            const params = new URLSearchParams();
-            params.append('member_id', 999); // TODO: 로그인한 사용자 ID 변경해야함
-            params.append('name', name);
-
-            // 태그 생성
-            fetch('/api/v1/tags', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    memberId: 999, // TODO: 로그인한 사용자 ID 변경해야함
-                    name: name
-                })
-            })
-                .then(response => response.json())
-                .then(data => {
-                    // 생성 태그 제거
-                    const createLiTag = document.querySelector('.tag-info__item--create');
-                    createLiTag.remove();
-
-                    // 3개 이하이면 선택된 태그로 이동
-                    const selectedList = document.querySelector('.tag-info__list--selected');
-                    if (3 <= selectedList.children.length) {
-                        // 3개 이상이면 대기 태그로 이동
-                        // 대기 태그로 이동
-                        const li = makeUnSelectedTag(data.name, data.id);
-                        addSelectEvent(li);
+                        // 검색 결과 생성
+                        let existTagName = false; // 생성 여부 확인 이미 존재하면 생성하지 않음
                         const unSelectedTagList = document.querySelector('.tag-info__list--unselected');
+                        data.forEach(d => {
+
+                            // 선택 되어 있는 경우 PASS
+                            const selectedList = document.querySelector('.tag-info__list--selected');
+                            const selectedTagList = selectedList.querySelectorAll('.tag-info__item--selected');
+
+                            let isSelected = false; // 선택 여부 확인
+                            selectedTagList.forEach(selectedTag => {
+                                const selectedTagId = selectedTag.id.replace('--selected', '');
+                                if (d.id === selectedTagId) {
+                                    isSelected = true; // 선택되어 있는 경우 PASS
+                                }
+                            });
+                            if (isSelected) { return; }
+
+                            const li = makeUnSelectedTag(d.name, d.id);
+                            addSelectEvent(li);
+                            unSelectedTagList.insertAdjacentElement('beforeend', li); // 조회 결과 추가
+                            if (d.name === tagName) {
+                                existTagName = true;
+                            }
+                        })
+
+                        // 검색어가 없는 경우 생성 로직
+                        if (existTagName) { return; } // 데이터가 있는 경우 PASS
+                        if (searchTag.value === '') { return; } // 검색어가 없는 경우 PASS
+
+                        const li = makeNewTag(tagName);
+                        addCreateEvent(li, tagName);
                         unSelectedTagList.insertAdjacentElement('afterbegin', li);
+                    });
+            });
+        }
 
-                        return; // 3개 이상인 경우 PASS
-                    }
+        function addCreateEvent(li, name) {
+            li.addEventListener('click', () => {
+                const params = new URLSearchParams();
+                params.append('member_id', 999); // TODO: 로그인한 사용자 ID 변경해야함
+                params.append('name', name);
 
-                    // 선택된 태그로 이동
-                    const selectedLi = makeSelectedTag(data.name, data.id);
-                    addRemoveEvent(selectedLi);
-                    selectedList.insertAdjacentElement('beforeend', selectedLi);
-                });
-        });
-    }
+                // 태그 생성
+                fetch('/api/v1/tags', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        memberId: 999, // TODO: 로그인한 사용자 ID 변경해야함
+                        name: name
+                    })
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        // 생성 태그 제거
+                        const createLiTag = document.querySelector('.tag-info__item--create');
+                        createLiTag.remove();
 
-    function addSelectEvent(itemTag) {
-        itemTag.addEventListener('click', (event) => {
+                        // 3개 이하이면 선택된 태그로 이동
+                        const selectedList = document.querySelector('.tag-info__list--selected');
+                        if (3 <= selectedList.children.length) {
+                            // 3개 이상이면 대기 태그로 이동
+                            // 대기 태그로 이동
+                            const li = makeUnSelectedTag(data.name, data.id);
+                            addSelectEvent(li);
+                            const unSelectedTagList = document.querySelector('.tag-info__list--unselected');
+                            unSelectedTagList.insertAdjacentElement('afterbegin', li);
 
-            // 선택된 태그들
-            const selectedList = document.querySelector('.tag-info__list--selected');
+                            return; // 3개 이상인 경우 PASS
+                        }
 
-            if (3 <= selectedList.children.length) {
-                alert('태그는 최대 3개까지 선택 가능합니다.');
-                return;
-            }
+                        // 선택된 태그로 이동
+                        const selectedLi = makeSelectedTag(data.name, data.id);
+                        addRemoveEvent(selectedLi);
+                        selectedList.insertAdjacentElement('beforeend', selectedLi);
+                    });
+            });
+        }
 
-            let isDuplicate = false;
-            const newTagId = itemTag.closest('li.tag-info__item--unselected')
-                .id.replace('--unselected', '');
+        function addSelectEvent(itemTag) {
+            itemTag.addEventListener('click', (event) => {
 
-            selectedList.querySelectorAll('.tag-info__item--selected').forEach(selectedTag => {
-                const selectedTagId = selectedTag.id.replace('--selected', '');
-                if (newTagId === selectedTagId) {
-                    isDuplicate = true;
+                // 선택된 태그들
+                const selectedList = document.querySelector('.tag-info__list--selected');
+
+                if (3 <= selectedList.children.length) {
+                    alert('태그는 최대 3개까지 선택 가능합니다.');
+                    return;
                 }
+
+                let isDuplicate = false;
+                const newTagId = itemTag.closest('li.tag-info__item--unselected')
+                    .id.replace('--unselected', '');
+
+                selectedList.querySelectorAll('.tag-info__item--selected').forEach(selectedTag => {
+                    const selectedTagId = selectedTag.id.replace('--selected', '');
+                    if (newTagId === selectedTagId) {
+                        isDuplicate = true;
+                    }
+                });
+
+                if (isDuplicate) {
+                    alert('이미 선택된 태그입니다.');
+                    return;
+                }
+
+                const tagName = itemTag.querySelector('.tag-info__name').textContent;
+                const liTag = makeSelectedTag(tagName, newTagId);
+                addRemoveEvent(liTag);
+                selectedList.insertAdjacentElement('beforeend', liTag);
+
+                // 기존 리스트에서 제거
+                itemTag.closest('li.tag-info__item--unselected').remove();
+            });
+        }
+
+        function addRemoveEvent(item) {
+            item.querySelector('.tag-info__btn').addEventListener('click', () => {
+                const tag = item.closest('li.tag-info__item--selected');
+                // 선택된 태그에서 제거
+                tag.remove();
+
+            });
+        }
+
+        function loadSelectedTagList() {
+            const selectedTagList = document.querySelector('.tag-info__list--selected');
+            const selectedTagListStorage = JSON.parse(sessionStorage.getItem('selectedTagList'));
+            if (!selectedTagListStorage) { return } // 세션 스토리지에 저장된 태그 정보가 없는 경우 PASS
+
+            selectedTagListStorage.forEach(tag => {
+                const li = makeSelectedTag(tag.name, tag.id);
+                addRemoveEvent(li);
+                selectedTagList.insertAdjacentElement('beforeend', li);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // 세션 스토리지에 저장
+            const selectedTagList = [
+                {id: 1, name: '태그1'},
+                {id: 2, name: '태그2'},
+                {id: 3, name: '태그3'},
+            ];
+            sessionStorage.setItem('selectedTagList', JSON.stringify(selectedTagList));
+
+            // 세션 스토리지에 저장된 태그 정보 Load
+            loadSelectedTagList();
+
+            // 선택 태그 삭제 이벤트 추가
+            document.querySelectorAll('.tag-info__item--selected').forEach(item => {
+                addRemoveEvent(item);
             });
 
-            if (isDuplicate) {
-                alert('이미 선택된 태그입니다.');
-                return;
-            }
+            // 선택 태그 선택 이벤트 추가
+            document.querySelectorAll('.tag-info__item--unselected').forEach(item => {
+                const itemTag = item.querySelector('.tag-info__tag-box');
+                addSelectEvent(itemTag);
+            });
 
-            const tagName = itemTag.querySelector('.tag-info__name').textContent;
-            const liTag = makeSelectedTag(tagName, newTagId);
-            addRemoveEvent(liTag);
-            selectedList.insertAdjacentElement('beforeend', liTag);
-
-            // 기존 리스트에서 제거
-            itemTag.closest('li.tag-info__item--unselected').remove();
+            // 실시간 입력 API 검색
+            const searchTag = document.getElementById('tree-input-text__rectangle-id');
+            addSearchTagEvent(searchTag);
         });
-    }
+    </script>
 
-    function addRemoveEvent(item) {
-        item.querySelector('.tag-info__btn').addEventListener('click', () => {
-            const tag = item.closest('li.tag-info__item--selected');
 
-            // 리스트에 추가
-            const unSelectedTagList = document.querySelector('.tag-info__list--unselected');
-            const tagName = tag.querySelector('.tag-info__name').textContent;
-            const tagId = tag.id.replace('--selected', '');
-            const li = makeUnSelectedTag(tagName, tagId);
-            addSelectEvent(li);
-            unSelectedTagList.insertAdjacentElement('afterbegin', li);
+<!--    <script>-->
+<!--        class TagManager {-->
+<!--            constructor(selectedTagListStorage) {-->
+<!--                this.list = [];-->
+<!--                this.listInit();-->
+<!--                this.selectedTagList = [];-->
+<!--                this.selectedTagListStorage = selectedTagListStorage;-->
+<!--                this.selectedTagListStorage.forEach(tag => {-->
+<!--                    this.selectedTagList.push(tag);-->
+<!--                });-->
+<!--                this.reLoad();-->
+<!--                console.log(this.selectedTagList);-->
+<!--                console.log(this.list);-->
+<!--            }-->
 
-            // 선택된 태그에서 제거
-            tag.remove();
+<!--            listInit() {-->
+<!--                const unSelectedTagList = document.querySelector('.tag-info__list&#45;&#45;unselected');-->
+<!--                unSelectedTagList.querySelectorAll('.tag-info__item&#45;&#45;unselected').forEach(item => {-->
+<!--                    this.selectedEvent(item);-->
+<!--                    const tag = {-->
+<!--                        id: parseInt(item.id.replace('&#45;&#45;unselected', '')),-->
+<!--                        name: item.querySelector('.tag-info__name').textContent-->
+<!--                    };-->
+<!--                    this.list.push(tag);-->
+<!--                });-->
+<!--            }-->
 
-        });
-    }
+<!--            reLoad() {-->
+<!--                const unSelectedTagList = document.querySelector('.tag-info__list&#45;&#45;unselected');-->
+<!--                unSelectedTagList.innerHTML = '';-->
+<!--                const selectedTagList = document.querySelector('.tag-info__list&#45;&#45;selected');-->
+<!--                selectedTagList.innerHTML = '';-->
 
-    document.addEventListener('DOMContentLoaded', () => {
-        // 선택 태그 삭제 이벤트 추가
-        document.querySelectorAll('.tag-info__item--selected').forEach(item => {
-            addRemoveEvent(item);
-        });
+<!--                this.list.forEach(tag => {-->
+<!--                    const li = this.unSelectedTag(tag.name, tag.id);-->
+<!--                    this.unSelectedEvent(li);-->
+<!--                    unSelectedTagList.insertAdjacentElement('beforeend', li);-->
+<!--                });-->
 
-        // 선택 태그 선택 이벤트 추가
-        document.querySelectorAll('.tag-info__item--unselected').forEach(item => {
-            const itemTag = item.querySelector('.tag-info__tag-box');
-            addSelectEvent(itemTag);
-        });
+<!--                this.selectedTagList.forEach(tag => {-->
+<!--                    const li = this.selectedTag(tag.name, tag.id);-->
+<!--                    this.selectedEvent(li);-->
+<!--                    selectedTagList.insertAdjacentElement('beforeend', li);-->
+<!--                });-->
+<!--            }-->
 
-        // 실시간 입력 API 검색
-        const searchTag = document.getElementById('tree-input-text__rectangle-id');
-        addSearchTagEvent(searchTag);
-    });
-</script>
+<!--            unSelectedEvent(item) {-->
+<!--                item.addEventListener('click', (event) => {-->
+<!--                    const tagId = parseInt(item.id.replace('&#45;&#45;selected', ''));-->
+<!--                    const tagName = item.querySelector('.tag-info__name').textContent;-->
+<!--                    this.reLoad();-->
+<!--                });-->
+<!--            }-->
+
+<!--            selectedEvent(item) {-->
+<!--                item.addEventListener('click', (event) => {-->
+<!--                    const tagId = parseInt(item.id.replace('&#45;&#45;unselected', ''));-->
+<!--                    const tagName = item.querySelector('.tag-info__name').textContent;-->
+<!--                    this.reLoad();-->
+<!--                });-->
+<!--            }-->
+
+<!--            requestList(search, page=1, size=20) {-->
+<!--                const params = new URLSearchParams();-->
+<!--                params.append('member_id', 999); // TODO: 로그인한 사용자 ID 변경해야함-->
+<!--                params.append('search', search);-->
+<!--                params.append('page', page);-->
+<!--                params.append('size', size);-->
+
+<!--                const url = '/api/v1/tags?' + params.toString();-->
+<!--                fetch(url) // 실시간 검색 API GET 호출-->
+<!--                    .then(response => response.json())-->
+<!--                    .then(data => {-->
+<!--                        this.list = data;-->
+<!--                    });-->
+<!--            }-->
+
+<!--            selectedTag(name, id) {-->
+<!--                const li = document.createElement('li');-->
+<!--                li.classList.add('tag-info__item', 'tag-info__item&#45;&#45;selected');-->
+<!--                li.id = `${id}&#45;&#45;selected`;-->
+<!--                li.innerHTML = `-->
+<!--                <div class="tag-info__tag-box">-->
+<!--                    <q class="tag-info__name">${name}</q>-->
+<!--                    <button class="tag-info__btn" type="button">-->
+<!--                        <img class="tag-info__btn" src="/svg/x-button.svg" alt="선택 제거 버튼">-->
+<!--                    </button>-->
+<!--                </div>`;-->
+<!--                return li;-->
+<!--            }-->
+
+<!--            unSelectedTag(name, id) {-->
+<!--                const li = document.createElement('li');-->
+<!--                li.classList.add('tag-info__item', 'tag-info__item&#45;&#45;unselected');-->
+<!--                li.id = `${id}&#45;&#45;unselected`;-->
+<!--                li.innerHTML = `-->
+<!--                <div class="tag-info__tag-box">-->
+<!--                    <q class="tag-info__name">${name}</q>-->
+<!--                </div>-->
+<!--                <div class="tag-info__option-box">-->
+<!--                    <a class="tag-info__option-link" href="/tag/edit?id=${id}">-->
+<!--                        <img class="tag-info__option-btn" src="/svg/icon-option.svg" alt="태그 선택 제거 이미지">-->
+<!--                    </a>-->
+<!--                </div>`;-->
+<!--                return li;-->
+<!--            }-->
+<!--        }-->
+
+<!--        document.addEventListener('DOMContentLoaded', () => {-->
+<!--            // 세션 스토리지에 저장-->
+<!--            const selectedTagList = [-->
+<!--                {id: 1, name: '태그1'},-->
+<!--                {id: 2, name: '태그2'},-->
+<!--                {id: 3, name: '태그3'},-->
+<!--            ];-->
+<!--            sessionStorage.setItem('selectedTagList', JSON.stringify(selectedTagList));-->
+
+<!--            // 세션 스토리지에 저장된 태그 정보 Load-->
+<!--            const selectedTagListStorage = JSON.parse(sessionStorage.getItem('selectedTagList'));-->
+<!--            const tagManager = new TagManager(selectedTagListStorage);-->
+
+<!--            const searchTag = document.getElementById('tree-input-text__rectangle-id');-->
+<!--            searchTag.addEventListener('input', () => {-->
+<!--                tagManager.requestList(searchTag.value);-->
+<!--            });-->
+<!--        });-->
+<!--    </script>-->
+
+
+</body>
+</html>

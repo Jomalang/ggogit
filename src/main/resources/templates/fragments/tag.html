@@ -25,7 +25,7 @@
      ========================================== -->
 <div class="tag-info-box tag-info-box--selected" th:fragment="tag-selected-list(tags)">
     <ul class="tag-info__list tag-info__list--selected">
-        <li th:each="tag : ${tags}" class="tag-info__item tag-info__item--selected" th:id="${tag.id} + '--selected'">
+        <li th:if="tag not null" th:each="tag : ${tags}" class="tag-info__item tag-info__item--selected" th:id="${tag.id} + '--selected'">
             <div class="tag-info__tag-box">
                 <q class="tag-info__name" th:text="${tag.name}">책리뷰</q>
                 <button class="tag-info__btn tag-info__btn--selected" type="button">

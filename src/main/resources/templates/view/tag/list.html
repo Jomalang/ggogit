@@ -13,22 +13,22 @@
 <body>
     <header>
         <h1 class="none">태그 이름</h1>
-        <div th:replace="~{/fragments/top-bar::top-bar-title(title='즐거운 텍스트')}"></div>
+        <div th:replace="~{fragments/top-bar::top-bar-title(title='즐거운 텍스트')}"></div>
     </header>
     <main>
         <section>
             <h2 class="none">태그 검색</h2>
-            <div th:replace="~{/fragments/input::tag-search-or-register-bar(tag=null)}"></div>
+            <div th:replace="~{fragments/input::tag-search-or-register-bar(tag=null)}"></div>
         </section>
 
         <section>
             <h2 class="none">태그 기능 알림</h2>
-            <div th:replace="~{/fragments/top-bar::top-bar-tag-info}"></div>
+            <div th:replace="~{fragments/top-bar::top-bar-tag-info}"></div>
         </section>
 
         <section>
             <h2 class="none">태그 리스트</h2>
-            <div th:replace="~{/fragments/tag::tag-list(tags=${list})}"></div>
+            <div th:replace="~{fragments/tag::tag-list(tags=${list})}"></div>
         </section>
 
     </main>

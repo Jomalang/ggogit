@@ -13,34 +13,34 @@
 <body class="login-member__join-page-container">
 <header>
     <h1 class="none">뒤로가기</h1>
-    <div th:replace="~{/fragments/button::login-join-page__back-btn}"></div>
+    <div th:replace="~{fragments/button::login-join-page__back-btn}"></div>
 </header>
 
 <section class="login-screen-container">
     <h1 class="none">회원가입 화면 안내</h1>
-    <div th:replace="~{/fragments/text::text-login__page-info(label='회원가입', infoText='이메일로 회원가입을 진행합니다')}"></div>
+    <div th:replace="~{fragments/text::text-login__page-info(label='회원가입', infoText='이메일로 회원가입을 진행합니다')}"></div>
 </section>
 
 <section class="social-login-container">
     <h1 class="none">회원가입</h1>
-    <div th:replace="~{/fragments/input::text-box(label='이메일', placeholder='이메일을 입력하세요', name='email')}"></div>
+    <div th:replace="~{fragments/input::text-box(label='이메일', placeholder='이메일을 입력하세요', name='email')}"></div>
 </section>
 
 <form method="POST" action="#">
     <section class="social-login-container">
         <h1 class="none">회원가입 버튼</h1>
-        <div th:replace="~{/fragments/input::green-wide-btn(label='회원가입')}"></div>
+        <div th:replace="~{fragments/input::green-wide-btn(label='회원가입')}"></div>
     </section>
 </form>
 
 <section class="social-login-container">
     <h1 class="none">소셜 로그인 버튼</h1>
-    <div th:replace="~{/fragments/link::social-login}"></div>
+    <div th:replace="~{fragments/link::social-login}"></div>
 </section>
 
 <footer class="join-guide-container">
     <h1 class="none">회원가입 안내</h1>
-    <div th:replace="~{/fragments/text::join-guide(infoText='계정이 이미 있으신가요?', label='로그인', href='/member/login')}"></div>
+    <div th:replace="~{fragments/text::join-guide(infoText='계정이 이미 있으신가요?', label='로그인', href='/member/login')}"></div>
 </footer>
 </body>
 </html>

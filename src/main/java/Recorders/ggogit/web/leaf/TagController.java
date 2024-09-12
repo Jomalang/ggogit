@@ -22,7 +22,7 @@ public class TagController {
             Model model
     ) {
         model.addAttribute("list", leafTagService.getLeafTags(memberId, page, size));
-        return "/view/tag/list";
+        return "view/tag/list";
     }
 
     @GetMapping("/edit")
@@ -33,7 +33,7 @@ public class TagController {
         LeafTag leafTag = leafTagService.getLeafTag(tagId);
         model.addAttribute("memberId", leafTag.getMemberId());
         model.addAttribute("tag", leafTag);
-        return "/view/tag/edit";
+        return "view/tag/edit";
     }
 
     @PostMapping("/edit")

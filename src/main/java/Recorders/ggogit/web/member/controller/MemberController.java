@@ -43,7 +43,7 @@ public class MemberController {
         //TODO 이메일 형식 검증 로직 필요
         if (bindingResult.hasErrors()) {
             log.info("errors: {}", bindingResult.getAllErrors());
-            return "/view/member/index";
+            return "view/member/index";
         }
 
         Member member = loginForm.toMember();
@@ -53,7 +53,7 @@ public class MemberController {
         if(loginMember == null) {
             bindingResult.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다.");
             log.info("errors: {}", bindingResult.getGlobalErrors());
-            return "/view/member/index";
+            return "view/member/index";
         }
 
         //로그인 성공
@@ -93,7 +93,7 @@ public class MemberController {
         //TODO Validation 계층 따로 만들기
         if(bindingResult.hasErrors()) {
             log.info("errors: {}", bindingResult.getAllErrors());
-            return "/view/member/join-input";
+            return "view/member/join-input";
         }
 
 
@@ -101,7 +101,7 @@ public class MemberController {
         if(!loginRegForm.getPolicyAgreement()){
             bindingResult.rejectValue("policyAgreement", "NotAgree");
             log.info("errors: {}", bindingResult.getAllErrors());
-            return "/view/member/join-input";
+            return "view/member/join-input";
         }
 
         //TODO Email 형식 검증해야 함.
@@ -116,7 +116,7 @@ public class MemberController {
             if(loginService.getMemberByEmail(email) != null){
                 bindingResult.rejectValue("email","Duplicate");
                 log.info("errors: {}", bindingResult.getAllErrors());
-                return "/view/member/join-input";
+                return "view/member/join-input";
             }
         }
 
@@ -126,7 +126,7 @@ public class MemberController {
             if(loginService.getMemberByNickname(nickname) != null){
                 bindingResult.rejectValue("nickname","Duplicate");
                 log.info("errors: {}", bindingResult.getAllErrors());
-                return "/view/member/join-input";
+                return "view/member/join-input";
             }
         }
 

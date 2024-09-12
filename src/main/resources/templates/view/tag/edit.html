@@ -14,31 +14,31 @@
 
     <header>
         <h1 class="none">트리 수정 페이지</h1>
-        <div th:replace="~{/fragments/top-bar::top-bar-tag-edit(tag=${tag.name}, memberId=${memberId})}"></div>
+        <div th:replace="~{fragments/top-bar::top-bar-tag-edit(tag=${tag.name}, memberId=${memberId})}"></div>
     </header>
 
     <main>
         <form th:action="@{/tag/edit}" th:object="${tag}" method="post">
             <section>
                 <h2 class="none">태그 입력</h2>
-                <div th:replace="~{/fragments/input::tag-search-or-register-bar(tag=${tag.name})}"></div>
+                <div th:replace="~{fragments/input::tag-search-or-register-bar(tag=${tag.name})}"></div>
             </section>
         </form>
 
         <section>
             <h2 class="none">태그 기능 알림</h2>
-            <div th:replace="~{/fragments/top-bar::top-bar-tag-info}"></div>
+            <div th:replace="~{fragments/top-bar::top-bar-tag-info}"></div>
         </section>
 
         <form th:action="@{/tag/delete}" method="post">
             <section>
                 <h1 class="none">삭제 데이터</h1>
-                <div th:replace="~{/fragments/input::default-data(name='id', values=${tag.id})}"></div>
+                <div th:replace="~{fragments/input::default-data(name='id', values=${tag.id})}"></div>
             </section>
 
             <section>
                 <h1 class="none">삭제 버튼</h1>
-                <div th:replace="~{/fragments/input::delete__form-btn}"></div>
+                <div th:replace="~{fragments/input::delete__form-btn}"></div>
             </section>
         </form>
 

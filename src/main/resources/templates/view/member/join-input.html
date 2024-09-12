@@ -14,10 +14,10 @@
         <h1 class="none">회원가입 정보 입력</h1>
         <!-- 컴포넌트 -->
         <div th:if="${!#fields.hasGlobalErrors()}">
-            <div th:replace="~{/fragments/text::text-join__page-info(label='회원가입', infoText='기본 정보를 작성해 주세요')}"></div>
+            <div th:replace="~{fragments/text::text-join__page-info(label='회원가입', infoText='기본 정보를 작성해 주세요')}"></div>
         </div>
         <div th:if="${#fields.hasGlobalErrors()}" >
-            <div th:replace="~{/fragments/text::text-join__page-info(label='회원가입', infoText='')}"></div>
+            <div th:replace="~{fragments/text::text-join__page-info(label='회원가입', infoText='')}"></div>
             <div class="text--errors" th:with="err = ${#fields.globalErrors().getFirst()}" th:text="${err}"></div>
         </div>
     </header>

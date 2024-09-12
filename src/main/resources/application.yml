@@ -1,6 +1,6 @@
 spring:
   datasource:
-    driver-class-name: oracle.jdbc.driver.OracleDriver
+    driver-class-name: oracle.jdbc.OracleDriver
     url: jdbc:oracle:thin:@//hi.newlecture.com:1521/XEPDB1
     username: GGOGIT
     password: qmfoscl0809
@@ -25,5 +25,6 @@ mybatis:
 logging:
   level:
     Recorders.ggogit.domain: trace
+    org.springframework.jdbc: trace
 
 

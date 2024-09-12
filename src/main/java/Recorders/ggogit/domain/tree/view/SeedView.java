@@ -6,11 +6,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
-public class Vm_TreeLikeCount {
-    private Long treeId;
-    private Integer count;
-
+public class SeedView {
+    String name;
+    String category;
+    String description;
 }

@@ -21,62 +21,82 @@
       </section>
     </header>
 
-    <main>
+    <main >
       <h2 class="none">선택한 도서</h2>
       <section class="tree-book-reg-search-book__title-container">
         <h3 class="none">도서 TEXT 컨테이너</h3>
         <div th:replace="~{fragments/text :: text-main-title(title='선택한 도서', size=28)}"></div>
       </section>
+      <section th:object="${book}">
       <section class="tree-reg-cover-info__container">
         <h3 class="none">도서 커버 및 도서 정보</h3>
         <section class="tree-reg-cover__container">
           <h4 class="none">도서 커버</h4>
-        <div th:replace="~{fragments/link :: link__one-image-detail(src=@{'/img/home/home-mid-book.png'}, href='#')}">
+        <div th:replace="~{fragments/link :: link__one-image-detail(src=*{imageFile}, href='#')}">
         </div>
         </section>
         <section class="tree-reg-book-info__container">
          <h4 class="none">도서 정보</h4>
-          <div th:replace="~{fragments/text :: text-book-info('시/에세이','무정형의 삶','올라프',null,'위즈덤하우스')}">
+          <div th:replace="~{fragments/text :: text-book-info(*{category},*{title},*{author},null,*{publisher})}">
           </div>
         </section>
       </section>
       <section class="tree-info-card__container">
         <h3 class="none">선택 도서 기본 정보</h3>
         <!-- 컴포넌트-->
-        <div th:replace="~{fragments/card :: tree-info-card('2024년 07월 10일', '336쪽')}">
+        <div th:replace="~{fragments/card :: tree-info-card(*{publishDate}, *{totalPage})}">
         </div>
+
       </section>
+      </section>
+
+      <form action="/tree/book/reg?auto=true" name="form"  method="POST" enctype="multipart/form-data">
+
       <section class="register__input-container">
         <h3 class="none">트리 이름 입력</h3>
         <!-- 컴포넌트 -->
-        <div th:replace="~{fragments/input :: text-box(label='*트리 이름', placeholder='트리 이름을 입력해 주세요.', name='')}">
+        <div th:replace="~{fragments/input :: text-box(label='*트리 이름', placeholder='트리 이름을 입력해 주세요.', name='treeTitle')}">
         </div>
 
       </section>
       <section class="register__input-container">
         <h3 class="none">카테고리 선택</h3>
-        <!-- 컴포넌트 -->
+        <!--todo: 도서 카테고리-->
         <div th:replace="~{fragments/input :: input-select-box(label='*카테고리', id='')}">
         </div>
       </section>
       <section class="register__input-container">
         <h3 class="none">트리 설명글</h3>
         <!-- 컴포넌트 -->
-        <div th:replace="~{fragments/input :: textarea-box(label='*설명글', placeholder='트리를 설명하는 글을 작성해 주세요', name='')}">
+        <div th:replace="~{fragments/input :: textarea-box(label='*설명글', placeholder='트리를 설명하는 글을 작성해 주세요', name='description')}">
         </div>
       </section>
       <section class="register__input-container">
         <h3 class="none">공개성 선택</h3>
         <!-- 컴포넌트 -->
-        <div th:replace="~{fragments/input :: input-visibility(name='공개성')}">
+        <div th:replace="~{fragments/input :: input-visibility(name='visibility')}">
         </div>
       </section>
       <section class="register__input-container--last">
         <h3 class="none">트리 생성 버튼</h3>
         <!-- 컴포넌트 -->
-        <div th:replace="~{fragments/button :: submit-btn-full-bar('트리 생성하기')}">
+        <div th:replace="~{fragments/button :: submit-btn-full-bar('꼬깃 시작하기')}">
         </div>
       </section>
+
+        <!--    임시 저장소    -->
+        <section class="none">
+          <label><input name="bookId" th:value="${book.id}"></label>
+          <label><input name="bookCategoryId" value="1"></label> <!--todo: 도서 카테고리 개발예정 -->
+          <label><input name="bookTitle" th:value="${book.title}"></label>
+          <label><input name="imageFile" th:value="${book.imageFile}"></label>
+          <label><input name="author" th:value="${book.author}"></label>
+          <label><input name="publisher" th:value="${book.publisher}"></label>
+          <label><input name="totalPage" th:value="${book.totalPage}"></label>
+          <label><input name="seedId" value="1"></label>
+          <label><input name="memberId" value="14"></label> <!--todo: session storage or cookies or JWT 확인 필요 -->
+        </section>
+      </form>
     </main>
 
     <aside>

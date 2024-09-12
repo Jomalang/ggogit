@@ -71,10 +71,16 @@
         <li th:each="v : ${values}" class="filter-tab__item">
           <div class="filter-tab__item-label">
             <a
-              class="filter-tab__item--label-text"
-              th:href="@{|/${source}/${v.value}|}"
-              th:text="${v.description}"
+                    class="filter-tab__item--label-text"
+                    th:href="${v.category == 'book'} ? @{|/tree/book/select|} : @{|/tree/${v.category}/${source}?type=${v.description}|}"
+                    th:text="${v.name}"
             >
+<!--              <a-->
+<!--                      class="filter-tab__item&#45;&#45;label-text"-->
+<!--                      th:if="${v.category != 'book'}"-->
+<!--                      th:href="@{|/tree/${v.category}/${source}?type=${v.description}|}"-->
+<!--                      th:text="${v.name}"-->
+<!--              >-->
               <div class="filter-tab__icon-box">
                 <img
                   class="filter-tab__icon-img"

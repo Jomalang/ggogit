@@ -9,7 +9,7 @@
         <span th:text="${label}">label</span>
         <div class="input-select--select__selected">
           <p class="input-select--select__selected-description">선택해주세요</p>
-          <button class="input-next-button" th:id="${id}" type="button">
+          <button class="input-next-button" th:id="${id}" type="button" >
             <img th:src="@{/svg/next.svg}" alt="next-button" />
           </button>
         </div>
@@ -23,7 +23,7 @@
       <label class="input-book-img-box__label">
         <input
           type="file"
-          name="bookImage"
+          name="img"
           id="input-book-img-box__input-id"
           class="input-book-img-box__input"
           accept="image/*"

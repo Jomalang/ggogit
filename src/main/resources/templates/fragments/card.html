@@ -95,7 +95,7 @@
         th:fragment="card-book-previews(bookPreviewView)"
         th:object="${bookPreviewView}"
 >
-    <a class="card-tree-detail">
+    <a class="card-tree-detail" th:href="@{|/tree/book/reg?auto=true&id=*{id}|}">
         <img class="card-tree__book-cover"
              src="/src/main/resources/static/svg/card-felt__cover.svg"
              th:src="@{/svg/{img}(img=*{imageFile})}"

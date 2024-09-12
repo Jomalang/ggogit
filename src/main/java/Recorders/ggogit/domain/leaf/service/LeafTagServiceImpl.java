@@ -18,6 +18,15 @@ public class LeafTagServiceImpl implements LeafTagService {
 
     @Override
     public LeafTag register(LeafTag leafTag) {
+
+        // 존재 여부 확인
+        Long exist = leafTagRepository
+                .existsByMemberIdAndName(leafTag.getMemberId(), leafTag.getName());
+        if (exist == 1) {
+            throw new IllegalArgumentException("이미 존재하는 태그입니다.");
+        }
+
+        // 저장
         Long id =  leafTagRepository.save(leafTag);
         return Optional.ofNullable(leafTagRepository.findById(id))
                 .orElseThrow(() -> new IllegalArgumentException("태그 등록에 실패하였습니다."));
@@ -31,12 +40,12 @@ public class LeafTagServiceImpl implements LeafTagService {
     }
 
     @Override
-    public boolean modify(LeafTag leafTag) {
+    public LeafTag modify(LeafTag leafTag) {
         LeafTag origin = Optional.ofNullable(leafTagRepository.findById(leafTag.getId()))
                 .orElseThrow(() -> new IllegalArgumentException("해당 태그가 존재하지 않습니다."));
         origin.setName(leafTag.getName());
-        leafTagRepository.save(origin);
-        return true;
+        leafTagRepository.update(origin);
+        return origin;
     }
 
     @Override

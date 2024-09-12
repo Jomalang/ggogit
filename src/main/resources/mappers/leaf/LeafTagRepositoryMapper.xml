@@ -56,6 +56,16 @@
         WHERE LEAF_ID = #{leafId}
     </select>
 
+    <select id="existsByMemberIdAndName" parameterType="LeafTag" resultType="Long">
+        SELECT CASE
+            WHEN COUNT(ID) > 0 THEN 1
+            ELSE 0
+        END AS row_exists
+        FROM LEAF_TAG
+        WHERE MEMBER_ID = #{memberId}
+              AND NAME = #{name}
+    </select>
+    
     <update id="update" parameterType="LeafTag">
         UPDATE LEAF_TAG
         SET NAME = #{name}

@@ -14,17 +14,26 @@
 
     <header>
         <h1 class="none">트리 수정 페이지</h1>
-        <div th:replace="~{fragments/top-bar::top-bar-tag-edit(tag=${tag.name}, memberId=${memberId})}"></div>
-    </header>
+      
+        <form th:action="@{/tag/edit}" method="post" th:object="${leafTagForm}">
+            <section>
+                <h2 class="none">뒤로가기 및 완료 바</h2>
+                <div th:replace="~{/fragments/top-bar::top-bar-tag-edit(tag=${tag.name}, memberId=${memberId})}"></div>
+            </section>
 
-    <main>
-        <form th:action="@{/tag/edit}" th:object="${tag}" method="post">
+            <section class="none">
+                <h2>태그 아이디</h2>
+                <label><input type="text" name="id" th:value="${tag.id}" /></label>
+            </section>
+
             <section>
                 <h2 class="none">태그 입력</h2>
                 <div th:replace="~{fragments/input::tag-search-or-register-bar(tag=${tag.name})}"></div>
             </section>
         </form>
+    </header>
 
+    <main>
         <section>
             <h2 class="none">태그 기능 알림</h2>
             <div th:replace="~{fragments/top-bar::top-bar-tag-info}"></div>

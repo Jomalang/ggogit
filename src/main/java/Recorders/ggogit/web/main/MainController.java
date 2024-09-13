@@ -26,7 +26,7 @@ public class MainController {
             , Model model
             , RedirectAttributes redirectAttributes) {
         if(member == null){
-            return "/index";
+            return "index";
         }
 
         model.addAttribute("member", member);

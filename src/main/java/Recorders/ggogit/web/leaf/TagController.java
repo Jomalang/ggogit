@@ -27,7 +27,7 @@ public class TagController {
     ) {
         model.addAttribute("selectedList", List.of());
         model.addAttribute("list", leafTagService.getLeafTags(memberId, page, size));
-        return "/view/tag/list";
+        return "view/tag/list";
     }
 
     @GetMapping("/edit")
@@ -39,7 +39,7 @@ public class TagController {
         model.addAttribute("leafTagForm", new LeafTagForm());
         model.addAttribute("memberId", leafTag.getMemberId());
         model.addAttribute("tag", leafTag);
-        return "/view/tag/edit";
+        return "view/tag/edit";
     }
 
     @PostMapping("/edit")

@@ -94,15 +94,15 @@ public class MemberController {
 
     @GetMapping("/join-input")
     public String getMemberJoinInput(Model model, HttpServletRequest request) {
-        LoginForm loginForm = new LoginForm();
+        LoginRegForm loginRegForm = new LoginRegForm();
         Optional<String> emailCookie = emailService.getEmailCookie(request);
 
         //만약 /member/join에서 입력한 쿠키가 있다면 쿠키에서 이메일 값을 받아서 모델에 전송해준다.
         //뷰에서는 전송받은 email은 read-only로 처리해준다.
         if(emailCookie.isPresent()){
-            loginForm.setEmail(emailCookie.get());
+            loginRegForm.setEmail(emailCookie.get());
         }
-        model.addAttribute("loginRegForm", loginForm);
+        model.addAttribute("loginRegForm", loginRegForm);
         return "view/member/join-input";
     }
 

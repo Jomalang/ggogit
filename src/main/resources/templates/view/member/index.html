@@ -13,16 +13,16 @@
 <body class="login-member__join-page-container">
 <header>
     <h1 class="none">뒤로가기</h1>
-    <div th:replace="~{/fragments/button::login-join-page__back-btn}"></div>
+    <div th:replace="~{fragments/button::login-join-page__back-btn}"></div>
 </header>
 
 <section class="login-screen-container" th:object="${member}">
     <h1 class="none">로그인 화면 안내</h1>
     <div th:if="${!#fields.hasGlobalErrors()}">
-        <div th:replace="~{/fragments/text::text-login__page-info(label='로그인', infoText='이메일과 비밀번호를 입력해주세요.')}"></div>
+        <div th:replace="~{fragments/text::text-login__page-info(label='로그인', infoText='이메일과 비밀번호를 입력해주세요.')}"></div>
     </div>
     <div th:if="${#fields.hasGlobalErrors()}" >
-        <div th:replace="~{/fragments/text::text-login__page-info(label='로그인', infoText='')}"></div>
+        <div th:replace="~{fragments/text::text-login__page-info(label='로그인', infoText='')}"></div>
         <div class="text--errors" th:with="err = ${#fields.globalErrors().getFirst()}" th:text="${err}"></div>
     </div>
     <div th:if="${isNewMember == true}">
@@ -55,18 +55,18 @@
 </section>
     <section class="social-login-container">
         <h1 class="none">로그인 버튼</h1>
-        <div th:replace="~{/fragments/input::green-wide-btn(label='로그인')}"></div>
+        <div th:replace="~{fragments/input::green-wide-btn(label='로그인')}"></div>
     </section>
 </form>
 
 <section class="social-login-container">
     <h1 class="none">소셜 로그인 버튼</h1>
-    <div th:replace="~{/fragments/link::social-login}"></div>
+    <div th:replace="~{fragments/link::social-login}"></div>
 </section>
 
 <footer class="join-guide-container">
     <h1 class="none">회원가입 안내</h1>
-        <div th:replace="~{/fragments/text::join-guide(infoText='계정이 없으신가요?', label='회원가입', href='/member/join')}"></div>
+        <div th:replace="~{fragments/text::join-guide(infoText='계정이 없으신가요?', label='회원가입', href='/member/join')}"></div>
 </footer>
 </body>
 </html>

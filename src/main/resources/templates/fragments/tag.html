@@ -6,18 +6,31 @@
      FRAGMENT: 태그 리스트
      ========================================== -->
 <div class="tag-info-box" th:fragment="tag-list(tags)">
-    <ul class="tag-info__list">
-        <li th:each="tag : ${tags}" class="tag-info__item">
+    <ul class="tag-info__list tag-info__list--unselected">
+        <li th:each="tag : ${tags}" class="tag-info__item tag-info__item--unselected" th:id="${tag.id} + '--unselected'">
             <div class="tag-info__tag-box">
                 <q class="tag-info__name" th:text="${tag.name}">책리뷰</q>
-                <a href=""> <!-- TODO: 삭제 로직  -->
-                    <img class="tag-info__btn" th:src="@{/svg/x-button.svg}" alt="">
-                </a>
             </div>
             <div class="tag-info__option-box">
                 <a class="tag-info__option-link" th:href="@{/tag/edit(id=${tag.id})}">
                     <img class="tag-info__option-btn" th:src="@{/svg/icon-option.svg}" alt="태그 선택 제거 이미지">
                 </a>
+            </div>
+        </li>
+    </ul>
+</div>
+
+<!-- ==========================================
+     FRAGMENT: 선택 태그 리스트
+     ========================================== -->
+<div class="tag-info-box tag-info-box--selected" th:fragment="tag-selected-list(tags)">
+    <ul class="tag-info__list tag-info__list--selected">
+        <li th:each="tag : ${tags}" class="tag-info__item tag-info__item--selected" th:id="${tag.id} + '--selected'">
+            <div class="tag-info__tag-box">
+                <q class="tag-info__name" th:text="${tag.name}">책리뷰</q>
+                <button class="tag-info__btn tag-info__btn--selected" type="button">
+                    <img class="tag-info__btn" th:src="@{/svg/x-button.svg}" alt="">
+                </button>
             </div>
         </li>
     </ul>

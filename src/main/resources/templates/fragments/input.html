@@ -204,6 +204,7 @@
         <label class="input-page-number__label">
           <input
             class="input-page-number__input--start"
+            id="input-page-number__input--start-id"
             th:field="*{startPage}"
             name="startPage"
             type="number"
@@ -214,6 +215,7 @@
         <label class="input-page-number__label">
           <input
             class="input-page-number__input--end"
+            id="input-page-number__input--end-id"
             th:field="*{endPage}"
             name="endPage"
             type="number"
@@ -269,7 +271,7 @@
             <p class="input-tag-select__placeholder">선택해주세요</p>
           </div>
 
-          <a class="input-tag-select__button" type="button" th:href="@{/tag/list(id=${memberId})}">
+          <a class="input-tag-select__button" id="input-tag-select__button-id" type="button" th:href="@{/tag/list(id=${memberId})}">
             <img th:src="@{/svg/next.svg}" alt="next-button" />
           </a>
         </div>
@@ -303,8 +305,8 @@
   =================================== -->
     <div class="tree-input-text__form" th:fragment="tag-search-or-register-bar(tag)">
       <label class="tree-input-text__subject">
-        <input th:if="${tag}" id="tree-input-text__rectangle-id" class="tree-input-text__rectangle"  placeholder="태그 생성 및 옵션 선택" th:value="${tag}"/>
-        <input th:unless="${tag}" id="tree-input-text__rectangle-id" class="tree-input-text__rectangle"  placeholder="태그 생성 및 옵션 선택"/>
+        <input th:if="${tag}" id="tree-input-text__rectangle-id" name="name" class="tree-input-text__rectangle"  placeholder="태그 생성 및 옵션 선택" th:value="${tag}"/>
+        <input th:unless="${tag}" id="tree-input-text__rectangle-id" name="name" class="tree-input-text__rectangle"  placeholder="태그 생성 및 옵션 선택"/>
       </label>
     </div>
 

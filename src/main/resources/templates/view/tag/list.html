@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,45 +13,210 @@
 <body>
     <header>
         <h1 class="none">태그 이름</h1>
-        <div th:replace="~{/fragments/top-bar::top-bar-title(title='즐거운 텍스트')}"></div>
+        <div th:replace="~{fragments/top-bar::top-bar-title(title='즐거운 텍스트')}"></div>
     </header>
     <main>
         <section>
             <h2 class="none">태그 검색</h2>
-            <div th:replace="~{/fragments/input::tag-search-or-register-bar(tag=null)}"></div>
+            <div th:replace="~{fragments/input::tag-search-or-register-bar(tag=null)}"></div>
+        </section>
+
+        <section>
+            <h2 class="none">태그 선택 태그</h2>
+            <div th:replace="~{/fragments/tag::tag-selected-list(tags=${selectedList})}"></div>
         </section>
 
         <section>
             <h2 class="none">태그 기능 알림</h2>
-            <div th:replace="~{/fragments/top-bar::top-bar-tag-info}"></div>
+            <div th:replace="~{fragments/top-bar::top-bar-tag-info}"></div>
         </section>
 
         <section>
             <h2 class="none">태그 리스트</h2>
-            <div th:replace="~{/fragments/tag::tag-list(tags=${list})}"></div>
+            <div th:replace="~{fragments/tag::tag-list(tags=${list})}"></div>
         </section>
-
     </main>
 
-    <script>
-        const inputTag = document.getElementById('tree-input-text__rectangle-id');
-        // 실시간 입력 API 검색
-        inputTag.addEventListener('input', function() {
-            const params = new URLSearchParams({
-                search: inputTag.value,
-                page: 0,
-                size: 10
-            });
-
-
-            // 실시간 검색 API GET 호출
-            fetch('/api/tags?search=' + search + '&page=' + page + '&size=' + size)
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data);
-                });
-        });
-
-    </script>
 </body>
 </html>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+        // 선택 태그 삭제 이벤트 추가
+        document.querySelectorAll('.tag-info__btn--selected').forEach(button => {
+            removeTag(button);
+        });
+
+        // 선택 태그 선택 이벤트 추가
+        document.querySelectorAll('.tag-info__item--unselected').forEach(tagBox => {
+            const itemTag = tagBox.querySelector('.tag-info__tag-box');
+            addTag(itemTag);
+        });
+
+        // 실시간 입력 API 검색
+        searchTagList();
+    });
+
+    function searchTagList() {
+        const searchTag = document.getElementById('tree-input-text__rectangle-id');
+        searchTag.addEventListener('input', () => {
+
+            const params = new URLSearchParams();
+            params.append('member_id', 999); // TODO: 로그인한 사용자 ID 변경해야함
+            params.append('search', searchTag.value);
+            params.append('page', 1);
+            params.append('size', 20);
+
+            const url = '/api/v1/tags?' + params.toString();
+            fetch(url) // 실시간 검색 API GET 호출
+                .then(response => response.json())
+                .then(data => {
+                    // 모드 제거
+                    const unSelectedList = document.querySelectorAll('.tag-info__item--unselected');
+                    unSelectedList.forEach(item => {
+                        item.remove();
+                    });
+
+                    const createList = document.querySelectorAll('.tag-info__item--create');
+                    createList.forEach(item => {
+                        item.remove();
+                    });
+
+                    // 검색 결과 생성
+                    let existTagName = false;
+
+                    const unSelectedTagList = document.querySelector('.tag-info__list--unselected');
+                    data.forEach(d => {
+                        const li = makeUnSelectedTag(d.name, d.id);
+
+                        unSelectedTagList.insertAdjacentElement('beforeend', li);
+                        if (d.name === searchTag.value) {
+                            existTagName = true;
+                        }
+                    })
+
+                    // 검색어가 없는 경우 생성 로직
+                    if (existTagName) { return; } // 데이터가 있는 경우 PASS
+                    if (searchTag.value === '') { return; } // 검색어가 없는 경우 PASS
+
+                    const li = makeNewTag(searchTag.value);
+                    unSelectedTagList.insertAdjacentElement('beforeend', li);
+                });
+        });
+    }
+
+    function makeSelectedTag(name, id) {
+        const li = document.createElement('li');
+        li.classList.add('tag-info__item', 'tag-info__item--selected');
+        li.id = id + '--selected';
+        li.innerHTML =
+            '<div class="tag-info__tag-box">' +
+            '    <q class="tag-info__name">' + name + '</q>' +
+            '    <button class="tag-info__btn" type="button">' +
+            '        <img class="tag-info__btn" src="/svg/x-button.svg" alt="선택 제거 버튼">' +
+            '    </button>' +
+            '</div>';
+        return li;
+    }
+
+    function makeNewTag(name) {
+        const li = document.createElement('li');
+        li.classList.add('tag-info__item', 'tag-info__item--create');
+
+        li.innerHTML =
+            '<div class="tag-info__create-btn">' +
+            '    <q class="tag-info__create-btn-name">생성</q>' +
+            '</div>' +
+            '<div class="tag-info__tag-box">' +
+            '    <q class="tag-info__name">' + name + '</q>' +
+            '</div>';
+
+        li.addEventListener('click', () => {
+            const params = new URLSearchParams();
+            params.append('member_id', 999); // TODO: 로그인한 사용자 ID 변경해야함
+            params.append('name', name);
+
+            // 태그 생성
+            fetch('/api/v1/tags/reg', {
+                method: 'POST',
+                headers: {
+                   'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    memberId: 999, // TODO: 로그인한 사용자 ID 변경해야함
+                    name: name
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                const li = makeUnSelectedTag(data.name, data.id);
+                addTag(li);
+            });
+        });
+        return li;
+    }
+
+    function makeUnSelectedTag(name, id) {
+        const li = document.createElement('li');
+        li.classList.add('tag-info__item', 'tag-info__item--unselected');
+        li.id = id + '--unselected';
+        li.innerHTML =
+            '<div class="tag-info__tag-box">' +
+            '    <q class="tag-info__name">' + name + '</q>' +
+            '</div>' + 
+            '<div class="tag-info__option-box">' +
+            '    <a class="tag-info__option-link" href="/tag/edit?id=' + id + '">' +
+            '        <img class="tag-info__option-btn" src="/svg/icon-option.svg" alt="태그 선택 제거 이미지">' +
+            '    </a>' +
+            '</div>'
+        return li;
+    }
+
+    function addTag(itemTag) {
+        itemTag.addEventListener('click', (event) => {
+
+            // 선택된 태그들
+            const selectedList = document.querySelector('.tag-info__list--selected');
+
+            if (3 <= selectedList.children.length) {
+                alert('태그는 최대 3개까지 선택 가능합니다.');
+                return;
+            }
+
+            let isDuplicate = false;
+            const newTagId = itemTag.closest('li.tag-info__item--unselected')
+                .id.replace('--unselected', '');
+
+            selectedList.querySelectorAll('.tag-info__item--selected').forEach(selectedTag => {
+                const selectedTagId = selectedTag.id.replace('--selected', '');
+                if (newTagId === selectedTagId) {
+                    isDuplicate = true;
+                }
+            });
+
+            if (isDuplicate) {
+                alert('이미 선택된 태그입니다.');
+                return;
+            }
+
+            const tagName = itemTag.querySelector('.tag-info__name').textContent;
+            const liTag = makeSelectedTag(tagName, newTagId);
+
+            // 선택 제거 이벤트 등록
+            liTag.addEventListener('click', () => {
+                const tag = liTag.closest('li.tag-info__item--selected');
+                tag.remove();
+            });
+
+            selectedList.insertAdjacentElement('beforeend', liTag);
+        });
+    }
+
+    function removeTag(button) {
+        button.addEventListener('click', () => {
+            const tag = button.closest('li.tag-info__item--selected');
+            tag.remove();
+        });
+    }
+
+</script>

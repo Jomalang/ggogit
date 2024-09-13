@@ -76,8 +76,17 @@
 
     <aside class="nav-container">
         <h1 class="none">네비게이션 하단</h1>
-        <nav th:replace="fragments/nav :: navigation-bar(active='home')"></nav>
+        <nav th:replace="~{fragments/nav :: navigation-bar(active='home')}"></nav>
     </aside>
+
+    <script>
+        document.getElementById("input-tag-select__button-id").addEventListener("click", function() {
+            const pageStart = document.getElementById('input-page-number__input--start-id').value;
+            sessionStorage.setItem('input-page-number__input--start-id', pageStart);
+            const pageEnd = document.getElementById('input-page-number__input--end-id').value;
+            sessionStorage.setItem('input-page-number__input--end-id', pageEnd);
+        });
+    </script>
 
 </body>
 </html>

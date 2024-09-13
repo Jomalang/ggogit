@@ -36,19 +36,21 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    runtimeOnly 'com.oracle.database.jdbc:ojdbc11'
+    runtimeOnly 'com.oracle.database.jdbc:ojdbc11:23.5.0.24.07'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
     // 개발을 위한 의존성
     // Thymeleaf 개발을 위해서 넣음
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
+    // Swagger
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0'
+
     //for BeanValidation hibernate
     implementation 'org.springframework.boot:spring-boot-starter-validation'
 
-    //swagger
+    //for Swagger
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0'
-
 }
 
 tasks.named('test') {

@@ -15,4 +15,5 @@ public interface LeafTagRepository {
     Boolean existsById(Long leafTagId);
     void deleteById(Long leafTagId);
     void delete(LeafTag leafTagId);
+    Long existsByMemberIdAndName(Long memberId, String name);
 }

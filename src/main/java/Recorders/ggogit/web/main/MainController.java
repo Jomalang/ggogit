@@ -57,6 +57,8 @@ public class MainController {
 
             List<TreeInfoView> treeInfoList = treeService.getTreeInfoView(member.getId());
 
+            System.out.println(treeInfoList.toString());
+
             model.addAttribute("treeInfoList", treeInfoList);
             model.addAttribute("treeList", treeInfoList);
             return "view/home/has-tree";

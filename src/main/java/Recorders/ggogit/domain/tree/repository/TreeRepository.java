@@ -45,5 +45,5 @@ public interface TreeRepository {
 
     long hasTreeNumById(Long id);
 
-    List<TreeInfoView> getTreeInfoView(Long memberId);
+    List<TreeInfoView> getTreeInfoBookView(Long memberId);
 }

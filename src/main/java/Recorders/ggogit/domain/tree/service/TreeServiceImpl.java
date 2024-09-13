@@ -74,7 +74,9 @@ public class TreeServiceImpl implements TreeService {
 //                    .build();
 //            treeInfos.add(treeInfo);
 //        }
-        return repository.getTreeInfoView(memberId);
+
+
+        return repository.getTreeInfoBookView(memberId);
     }
 
     @Override

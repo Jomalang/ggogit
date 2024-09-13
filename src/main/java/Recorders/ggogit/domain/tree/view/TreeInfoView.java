@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -18,7 +20,7 @@ public class TreeInfoView {
     private String bookAuthor;
     private String bookTranslator;
     private String bookPublisher;
-    private Integer bookPublishedYear;
+    private String bookPublishedYear;
     private Integer bookTotalPage;
     private Boolean bookComplete;
     private Long treeId;

@@ -1,13 +1,17 @@
 package Recorders.ggogit.web.member.controller;
 
 import Recorders.ggogit.domain.member.entity.Member;
+import Recorders.ggogit.domain.member.entity.MemberJoinEmail;
+import Recorders.ggogit.domain.member.service.EmailService;
 import Recorders.ggogit.domain.member.service.LoginService;
 import Recorders.ggogit.web.member.form.LoginForm;
 import Recorders.ggogit.web.member.form.LoginRegForm;
 import Recorders.ggogit.web.member.session.SessionConst;
 import Recorders.ggogit.web.member.validation.LoginRegValidator;
 import Recorders.ggogit.web.member.validation.LoginValidator;
+import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +22,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.Optional;
+
 @Controller
 @RequestMapping("/member")
 @RequiredArgsConstructor
@@ -25,8 +31,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class MemberController {
 
     private final LoginService loginService;
+    private final EmailService emailService;
     private final LoginRegValidator loginRegValidator;
     private final LoginValidator loginValidator;
+
 
     @GetMapping("/login")
     public String getMemberLogin(Model model ,@RequestParam(value = "j", required = false) boolean isNewMember) {
@@ -85,8 +93,16 @@ public class MemberController {
     }
 
     @GetMapping("/join-input")
-    public String getMemberJoinInput(Model model) {
-        model.addAttribute("loginRegForm", new LoginRegForm());
+    public String getMemberJoinInput(Model model, HttpServletRequest request) {
+        LoginForm loginForm = new LoginForm();
+        Optional<String> emailCookie = emailService.getEmailCookie(request);
+
+        //만약 /member/join에서 입력한 쿠키가 있다면 쿠키에서 이메일 값을 받아서 모델에 전송해준다.
+        //뷰에서는 전송받은 email은 read-only로 처리해준다.
+        if(emailCookie.isPresent()){
+            loginForm.setEmail(emailCookie.get());
+        }
+        model.addAttribute("loginRegForm", loginForm);
         return "view/member/join-input";
     }
 
@@ -125,8 +141,9 @@ public class MemberController {
 
     @PostMapping("/join")
     public String postMemberJoin(@Validated @ModelAttribute("loginRegForm") LoginRegForm tmpForm
-                                 , BindingResult bindingResult ,@RequestParam("email") String email
-                                , RedirectAttributes redirectAttributes) {
+                                 , BindingResult bindingResult , @RequestParam("email") String email
+                                , RedirectAttributes redirectAttributes,
+                                 HttpServletResponse response) throws MessagingException {
 
         //공백 검사
         if(bindingResult.hasFieldErrors("email")){
@@ -144,6 +161,10 @@ public class MemberController {
         }
 
         log.info("올바른 이메일");
+        //이메일을 쿠키에 담아 브라우저에 전송한다. 이 쿠키는 /member/join-input에서 쓰인다.
+        emailService.createEmailCookie(response, email);
+        emailService.sendEmail(email);
+        log.info("이메일이 전송되었습니다.");
         redirectAttributes.addFlashAttribute("loginRegForm", tmpForm);
         redirectAttributes.addAttribute("s",true);
         return "redirect:/member/join";

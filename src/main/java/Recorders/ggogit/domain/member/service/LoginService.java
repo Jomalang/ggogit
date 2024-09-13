@@ -2,11 +2,15 @@ package Recorders.ggogit.domain.member.service;
 
 import Recorders.ggogit.domain.member.entity.Member;
 import Recorders.ggogit.domain.member.repository.MemberRepository;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.Optional;
 
 @Transactional
@@ -28,7 +32,6 @@ public class LoginService {
 
     public Member RegMember(Member member) {
         memberRepository.save(member);
-
         return member;
     }
 

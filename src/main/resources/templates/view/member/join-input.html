@@ -42,7 +42,7 @@
                 <div class="input-text__bar">
                     <label class="input-text__label">
                         <span class="input-text__label-text" th:text="'이메일'">이메일</span>
-                        <input class="input-text__input" th:field="*{email}" th:placeholder="'(필수)이메일을 입력해주세요'" autocomplete="off"/>
+                        <input class="input-text__input" th:field="*{email}" th:placeholder="'(필수)이메일을 입력해주세요'" autocomplete="off" readonly/>
                     </label>
                     <div th:errors="*{email}" class="text--errors"></div>
                 </div>

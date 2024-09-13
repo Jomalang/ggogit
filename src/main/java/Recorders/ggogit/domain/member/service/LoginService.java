@@ -3,11 +3,11 @@ package Recorders.ggogit.domain.member.service;
 import Recorders.ggogit.domain.member.entity.Member;
 import Recorders.ggogit.domain.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
-import java.util.regex.Pattern;
 
 @Transactional
 @Service
@@ -41,7 +41,5 @@ public class LoginService {
         Optional<Member> member = Optional.ofNullable(memberRepository.findByNickname(nickname));
         return member.orElse(null);
     }
-
-
 
 }

@@ -19,6 +19,10 @@
     <select id="findByTreeId" parameterType="Tree">
         SELECT * FROM TREE WHERE ID=#{id}
     </select>
+    <!--트리 ID별 조회-->
+    <select id="hasTreeNumById" resultType="Long" >
+        SELECT COUNT(ID) FROM TREE WHERE ID=#{id} GROUP BY ID
+    </select>
     <!--회원 ID별 조회-->
     <select id="findByMemberId" parameterType="Tree">
         SELECT * FROM TREE WHERE MEMBER_ID=#{memberId}
@@ -49,6 +53,10 @@
     </select>
     <!--일치하는 트리 ID 공개성 조회-->
     <select id="findVisibilityById" parameterType="Tree">
+        SELECT TREE.VISIBILITY FROM TREE WHERE ID = #{id}
+    </select>
+    <!--Member ID 별 트리 리스트 조회-->
+    <select id="findVisibilityById" parameterType="TreeInfoView">
         SELECT TREE.VISIBILITY FROM TREE WHERE ID = #{id}
     </select>
 

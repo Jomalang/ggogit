@@ -29,6 +29,15 @@ public interface TreeService {
     List<TreeInfoView> getTreeInfoView(String str);
 
 
+
+    /***
+     * 멤버 ID 별 트리 갯수 조회
+     *
+     * @param memberId
+     * @return
+     */
+    long hasTreeNumById(Long id);
+
     /***
      * 멤버 ID 별 트리 전체 정보 조회
      * 도서 테이블 + 트리 테이블 + 트리 소속 리프 마지막 수정시간

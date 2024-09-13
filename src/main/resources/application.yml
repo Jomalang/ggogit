@@ -7,6 +7,9 @@ spring:
     ##메시지 소스 추가
   messages:
     basename: messages, errors
+  servlet:
+    multipart:
+      max-file-size: 10MB
 server:
   servlet:
     session:
@@ -26,5 +29,4 @@ logging:
   level:
     Recorders.ggogit.domain: trace
     org.springframework.jdbc: trace
-
 

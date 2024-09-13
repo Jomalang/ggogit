@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Recorders.ggogit.domain.tree.repository.TreeSaveTmpRepository">
+    <!--트리 도서 row 생성-->
+    <insert id="save" parameterType="Recorders.ggogit.web.tree.form.TreeSaveTmpForm">
+        INSERT INTO TREE_SAVE_TMP(
+        MEMBER_ID,
+        BOOK_CATEGORY_ID,
+        BOOK_TITLE,
+        AUTHOR,
+        PUBLISHER,
+        TOTAL_PAGE,
+        SEED_ID,
+        TREE_TITLE,
+        DESCRIPTION,
+        VISIBILITY,
+        IMAGE_FILE,
+        BOOK_ID
+        ) VALUES (
+        #{memberId},
+        #{bookCategoryId},
+        #{bookTitle},
+        #{author},
+        #{publisher},
+        #{totalPage},
+        #{seedId},
+        #{treeTitle},
+        #{description},
+        #{visibility},
+        <choose>
+            <when test="imageFile != null">#{imageFile}</when>
+            <otherwise>NULL</otherwise>
+        </choose>,
+          <choose>
+            <when test="bookId != null">#{bookId}</when>
+            <otherwise>NULL</otherwise>
+        </choose>
+
+        )
+    </insert>
+
+    <!--트리 도서 row 생성-->
+    <insert id="saveEtc" parameterType="Recorders.ggogit.web.tree.form.TreeEtcSaveTmpForm">
+        INSERT INTO TREE_SAVE_TMP(
+        MEMBER_ID,
+        SEED_ID,
+        TREE_TITLE,
+        DESCRIPTION,
+        VISIBILITY,
+        IMAGE_FILE
+        ) VALUES (
+        #{memberId},
+        #{seedId},
+        #{treeTitle},
+        #{description},
+        #{visibility},
+        <choose>
+            <when test="imageFile != null">#{imageFile}</when>
+            <otherwise>NULL</otherwise>
+        </choose>
+        )
+    </insert>
+
+    <!--MEMBER_ID 별 트리 도서 정보 조회-->
+    <select id="find" parameterType="Long" resultType="Recorders.ggogit.web.tree.form.TreeSaveTmpForm">
+        SELECT * FROM TREE_SAVE_TMP WHERE MEMBER_ID = #{memberId}
+    </select>
+
+    <!--MEMBER_ID row 조회-->
+    <select id="isEmpty" parameterType="Long" resultType="Boolean" >
+        SELECT * FROM TREE_SAVE_TMP WHERE MEMBER_ID = #{memberId}
+    </select>
+
+    <delete id="deleteByMemberId" parameterType="Long" >
+        DELETE FROM TREE_SAVE_TMP WHERE MEMBER_ID = #{memberId}
+    </delete>
+</mapper>

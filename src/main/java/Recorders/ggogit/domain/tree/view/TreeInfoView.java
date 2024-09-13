@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.stereotype.Repository;
 
 import java.util.Date;
 
@@ -12,8 +11,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Repository
-public class MyTreeListsView {
+public class TreeInfoView {
     private Long bookId;
     private String bookCategory;
     private String bookTitle;
@@ -24,13 +22,17 @@ public class MyTreeListsView {
     private Integer bookTotalPage;
     private Boolean bookComplete;
     private Long treeId;
+    private Long memberId ;
     private Long seedId;
     private String title;
+    private String description;
     private Boolean visibility;
     private Date leafCreatedAt;
+    private Date createdAt;
     private Integer readingPage ;
     private String coverImageName;
     private Long treeLeafCnt;
     private Long treeLikeCnt;
     private Long treeViewCnt;
+
 }

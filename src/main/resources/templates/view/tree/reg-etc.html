@@ -25,10 +25,10 @@
     <h1 class="none">도서 정보 입력</h1>
 
     <section class="select-title-container">
-      <div th:replace="~{fragments/text :: text-main-title(title=${seed.description}, size=28)}"></div>
+      <div th:replace="~{fragments/text :: text-main-title(title=${seed}, size=28)}"></div>
     </section>
 
-    <form id="book-tree-input-form-id" class="book-tree-input-form" th:action="@{/tree/book/reg}" method="post" enctype="multipart/form-data">
+    <form id="book-tree-input-form-id" class="book-tree-input-form" th:action="@{/tree/etc/reg(type=${seed})}" method="post" enctype="multipart/form-data">
 
 <!--      <section>-->
 <!--        <h1 class="none">씨앗 카테고리</h1>-->
@@ -42,7 +42,7 @@
 
       <section class="input-form__input-container">
         <h1 class="none">트리이름 입력</h1>
-        <div th:replace="~{fragments/input :: text-box(label='*트리 이름', placeholder='트리 이름을 입력해주세요', name='treeName')}"></div>
+        <div th:replace="~{fragments/input :: text-box(label='*트리 이름', placeholder='트리 이름을 입력해주세요', name='treeTitle')}"></div>
       </section>
 
       <section class="book-tree-input-form__large-input-container">
@@ -59,7 +59,10 @@
         <h1 class="none">트리 생성 버튼</h1>
         <div th:replace="~{fragments/button :: submit-btn-full-bar(text='트리 생성', id='submit-btn')}"></div>
       </section>
-
+        <!--    임시 저장소    -->
+        <section class="none">
+            <label><input name="memberId" value="14"></label>
+        </section>
     </form>
   </section>
 </main>

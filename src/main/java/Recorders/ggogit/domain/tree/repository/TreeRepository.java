@@ -12,17 +12,17 @@ public interface TreeRepository {
     void save(Tree tree);
 
     //Read:  트리 리스트 출력
-    List<Tree> findListAll();
+    List<Tree> getAll();
     //Read:  트리id로 트리 조회
-    Tree findByTreeId(long id);
+    Tree getByTreeId(long id);
     //Read:  회원id로 트리 조회
-    List<Tree> findByMemberId(long memberId);
+    List<Tree> getByMemberId(long memberId);
     //Read:  트리제목으로 트리 조회
-    List<Tree> findByTitle(String title);
+    List<Tree> getByTitle(String title);
     //Read:  설명글으로 트리 조회
-    List<Tree> findByDescription(String description);
+    List<Tree> getByDescription(String description);
     //Read:  공개성으로 트리 조회
-    List<Tree> findByVisibility(boolean visibility);
+    List<Tree> getByVisibility(boolean visibility);
 //    //Read:  id로 회원id 조회
 //    Long findMemberIdById(long id);
 //    //Read:  id로 트리제목 조회

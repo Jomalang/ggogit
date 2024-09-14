@@ -78,7 +78,7 @@
                 <span
                         class="card-tree-detail__info-created-date"
                         id="data-XXX"
-                        th:text="*{leafCreatedAt}"
+                        th:text="*{#dates.format(leafCreatedAt, 'yyyy-MM-dd')}"
                 >2024-07-15</span
                 >
             </div>

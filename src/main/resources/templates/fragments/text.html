@@ -223,7 +223,7 @@
         위즈덤 하우스
       </p>
     </div>
-    <p class="textbox-recent-tree-info__date" th:text="*{createdAt}">
+    <p class="textbox-recent-tree-info__date" th:text="*{#dates.format(createdAt, 'yyyy-MM-dd')}">
       2024.07.15
     </p>
   </a>

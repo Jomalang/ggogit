@@ -50,6 +50,12 @@ public class SeedServiceImpl implements SeedService {
     }
 
     @Override
+    public Seed get(Long id) {
+        return Optional.ofNullable(seedRepository.findById(id))
+                .orElseThrow(() -> new IllegalArgumentException("해당하는 Seed가 없습니다."));
+    }
+
+    @Override
     public Seed getByDiscription(String description) {
         return Optional.ofNullable(seedRepository.findByDescription(description))
                 .orElseThrow(() -> new IllegalArgumentException("해당하는 Seed가 없습니다."));

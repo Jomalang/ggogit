@@ -31,13 +31,13 @@
             <div th:replace="~{fragments/text :: text-main-title-center(title='트리 첫번째 기록', size=28)}"></div>
         </section>
 
-        <form th:action="@{/leaf/first/reg}" th:object="${form}" method="post" class="input-form">
+        <form th:action="@{/leaf/first/reg}" th:object="${form}" method="post" class="input-form" id="input-leaf-register-form-id">
             <section>
                 <h1 class="none">로그 생성 데이터 입력</h1>
 
                 <section class="none">
                     <h1>씨앗 데이터 타입</h1>
-                    <label><input type="number" name="seed" value="1"></label>
+                    <label><input type="number" name="seedId" value="1"></label>
                 </section>
 
                 <section class="first-log_page-input-container">
@@ -80,12 +80,55 @@
     </aside>
 
     <script>
-        document.getElementById("input-tag-select__button-id").addEventListener("click", function() {
-            const pageStart = document.getElementById('input-page-number__input--start-id').value;
-            sessionStorage.setItem('input-page-number__input--start-id', pageStart);
-            const pageEnd = document.getElementById('input-page-number__input--end-id').value;
-            sessionStorage.setItem('input-page-number__input--end-id', pageEnd);
+
+        function saveInputData() {
+            // 세션 스토리지에 저장한다.
+            const form = document.getElementById('input-leaf-register-form-id');
+            const formData = new FormData(form);
+            const formJson = JSON.stringify(Object.fromEntries(formData.entries()));
+            sessionStorage.setItem('input-leaf-register-form', formJson);
+        }
+
+        function loadInputData() {
+            // 세션 스토리지에서 불러온다.
+            const formJson = sessionStorage.getItem('input-leaf-register-form');
+            if (!formJson) { return; } // 저장된 데이터가 없다면 종료한다.
+
+            const formObj = JSON.parse(formJson);
+            const form = document.getElementById('input-leaf-register-form-id');
+            for (const key in formObj) {
+                if (key === 'tagIds') { continue; } // 태그는 제외한다.
+
+                // 공개성 input
+                if (key === 'visibility') {
+                    const isPublic = formObj[key] === true;
+                    document.getElementById('public').checked = isPublic;
+                    document.getElementById('private').checked = !isPublic;
+                    continue;
+                }
+
+                // 나머지 input
+                const input = form.querySelector(`[name="${key}"]`);
+                if (input) {
+                    input.value = formObj[key];
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const initDat = {
+                seedId: 1,
+                startPage: 100,
+                endPage: 120,
+                title: '안녕하세요',
+                content: '내용입니다.',
+                visibility: false,
+            };
+            sessionStorage.setItem('input-leaf-register-form', JSON.stringify(initDat));
+
+            loadInputData();
         });
+
     </script>
 
 </body>

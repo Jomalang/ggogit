@@ -3,6 +3,7 @@ package Recorders.ggogit.web.leaf.form;
 
 import Recorders.ggogit.domain.leaf.entity.LeafTag;
 import Recorders.ggogit.domain.leaf.view.LeafBookView;
+import Recorders.ggogit.domain.leaf.view.LeafEtcView;
 import Recorders.ggogit.domain.leaf.view.LeafView;
 import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotBlank;
@@ -38,6 +39,15 @@ public class LeafBookForm {
         return LeafBookView.builder()
                 .startPage(startPage)
                 .endPage(endPage)
+                .tags(getTags())
+                .title(title)
+                .content(content)
+                .visibility(visibility)
+                .build();
+    }
+
+    public LeafEtcView toLeafEtcView() {
+        return LeafEtcView.builder()
                 .tags(getTags())
                 .title(title)
                 .content(content)

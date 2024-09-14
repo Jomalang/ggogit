@@ -76,10 +76,13 @@ public class TreeController {
     public String getBookReg(
             @RequestParam(value = "auto", required = false) boolean auto,
             @RequestParam(value = "id", required = false) Long id,
+            HttpServletRequest request,
             Model model
     ) {
-        //TODO: memberId 개선 시 하드코딩 제거
-        Long memberId=14L;
+//        Member member = (Member) request
+//                .getSession().getAttribute(SessionConst.LOGIN_MEMBER);
+
+        Long memberId = 1L;
         treeService.deleteTmpFormById(memberId);
 
         if (auto) {
@@ -120,11 +123,12 @@ public class TreeController {
             img.transferTo(new File(fullPath));
         }
 
-        System.out.println(form.toString());
+        System.out.println(form);
 
         treeService.tmpTreeSave(form);
+        Seed seed = seedService.get(form.getSeedId());
 
-        return "redirect:/leaf/first/reg";
+        return "redirect:/leaf/first/reg?seed=" + seed.getName();
     }
 
     @GetMapping("/etc/reg")

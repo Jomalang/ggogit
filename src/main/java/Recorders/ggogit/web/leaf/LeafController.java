@@ -55,20 +55,21 @@ public class LeafController {
 
     @PostMapping("/first/reg")
     public ModelAndView firstReg(
-            @Valid @ModelAttribute("form") LeafForm form,
+            @Valid @ModelAttribute("form") LeafBookForm form,
             BindingResult bindingResult
     ) {
-
         if (seedService.isBookById(form.getSeedId())) { // 도서 리프 에러 처리
             if (bindingResult.hasErrors()) {
                 return new ModelAndView("view/leaf/1st-reg-book", "form", form);
             }
+            leafBookService.register(form.toLeafBookView()); // 도서 리프 등록
+            return new ModelAndView("redirect:/leaf/list?tree_id=1&leaf_id=1");
         }
 
         if (bindingResult.hasErrors()) { // ETC 리프 에러 처리
             return new ModelAndView("view/leaf/1st-reg-etc", "form", form);
         }
-
+        leafEtcService.register(form.toLeafEtcView()); // ETC 리프 등록
         return new ModelAndView("redirect:/leaf/list?tree_id=1&leaf_id=1");
     }
 

@@ -1,6 +1,7 @@
 package Recorders.ggogit.web.leaf;
 
-import Recorders.ggogit.type.SeedCategoryType;
+import Recorders.ggogit.domain.tree.entity.Seed;
+import Recorders.ggogit.domain.tree.service.SeedService;
 import Recorders.ggogit.domain.leaf.service.LeafBookService;
 import Recorders.ggogit.domain.leaf.service.LeafEtcService;
 import Recorders.ggogit.domain.leaf.service.LeafService;
@@ -31,23 +32,21 @@ public class LeafController {
     @Autowired
     private LeafService leafService;
 
+    @Autowired
+    private SeedService seedService;
+
     @GetMapping("/first/reg")
     public ModelAndView firstReg(
-            @RequestParam(value = "seed", required = false) Long seed
+            @RequestParam(value = "seed", required = false) String type
     ) {
-
-        if (!SeedCategoryType.contains(seed)) {
-            // TODO: 나중에 예외 처리 해야함
-            throw new IllegalArgumentException("잘못된 SeedCategoryType 인자를 받았습니다.");
-        }
-
         ModelAndView mv;
-        if (SeedCategoryType.isBook(seed)) {
+        if (seedService.isBook(type)) {
             mv = new ModelAndView("view/leaf/1st-reg-book");
             mv.addObject("form", new LeafBookForm());
         } else {
+            Seed seed = seedService.get(type);
             mv = new ModelAndView("view/leaf/1st-reg-etc");
-            mv.addObject("seed", seed);
+            mv.addObject("seedId", seed.getId());
             mv.addObject("form", new LeafForm());
         }
         mv.addObject("memberId", 1L);
@@ -59,7 +58,8 @@ public class LeafController {
             @Valid @ModelAttribute("form") LeafForm form,
             BindingResult bindingResult
     ) {
-        if (SeedCategoryType.BOOK == form.getSeed()) { // 도서 리프 에러 처리
+
+        if (seedService.isBookById(form.getSeedId())) { // 도서 리프 에러 처리
             if (bindingResult.hasErrors()) {
                 return new ModelAndView("view/leaf/1st-reg-book", "form", form);
             }
@@ -75,15 +75,15 @@ public class LeafController {
     @GetMapping("/reg")
     public ModelAndView reg(
             @RequestParam(value = "leaf_id") Long leafId,
-            @RequestParam(value = "seed") Long seed
+            @RequestParam(value = "seed") String seed
     ) {
 
-        if (!SeedCategoryType.contains(seed)) {
+        if (!seedService.contains(seed)) {
             // TODO: 나중에 예외 처리 해야함
             throw new IllegalArgumentException("잘못된 SeedCategoryType 인자를 받았습니다.");
         }
 
-        if (SeedCategoryType.isBook(seed)) {
+        if (seedService.isBook(seed)) {
             ModelAndView mv =
                     new ModelAndView("view/leaf/reg-book", "form", new LeafBookForm());
             mv.addObject("memberId", 1L); // TODO: 나중에 로그인한 사용자 정보로 변경
@@ -102,7 +102,7 @@ public class LeafController {
             BindingResult bindingResult
     ) {
 
-        if (SeedCategoryType.BOOK == form.getSeed()) { // 도서 리프 에러 처리
+        if (seedService.isBookById(form.getSeedId())) {
             if (bindingResult.hasErrors()) {
                 return new ModelAndView("view/leaf/reg-book", "form", form);
             }
@@ -121,7 +121,7 @@ public class LeafController {
             @RequestParam(value = "id", required = false) Long id,
             Model model
     ) {
-        if (SeedCategoryType.isBook(seed)) {
+        if (seedService.isBookById(seed)) {
             return new ModelAndView("view/leaf/edit-book","form", leafBookService.getLeafBookView(id));
         } else {
             return new ModelAndView("view/leaf/edit-etc","form", leafEtcService.getLeafEtcView(id));

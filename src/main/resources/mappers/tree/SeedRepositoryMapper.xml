@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="Recorders.ggogit.domain.member.repository.SeedRepository">
+<mapper namespace="Recorders.ggogit.domain.tree.repository.SeedRepository">
 
     <insert id="save" parameterType="Seed">
         INSERT INTO SEED(NAME)
@@ -25,14 +25,14 @@
         SELECT * FROM SEED
     </select>
 
-    <select id="findById" resultType="Long">
+    <select id="findById" resultType="Seed">
         SELECT * FROM SEED
         WHERE ID = #{id}
     </select>
 
-    <select id="findByName" resultType="String">
+    <select id="findByName" resultType="Seed">
         SELECT * FROM SEED
-        WHERE NAME LIKE '%${name}%'
+        WHERE NAME = #{name}
     </select>
 
 </mapper>

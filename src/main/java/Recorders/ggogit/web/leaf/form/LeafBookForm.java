@@ -1,7 +1,6 @@
 package Recorders.ggogit.web.leaf.form;
 
 
-import Recorders.ggogit.type.SeedCategoryType;
 import Recorders.ggogit.domain.leaf.entity.LeafTag;
 import Recorders.ggogit.domain.leaf.view.LeafBookView;
 import Recorders.ggogit.domain.leaf.view.LeafView;
@@ -16,7 +15,7 @@ import java.util.List;
 @Data
 public class LeafBookForm {
 
-    private SeedCategoryType seed;
+    private Long seedId;
 
     @Nullable // etc Leaf 등록시 null
     private Long startPage;
@@ -34,10 +33,6 @@ public class LeafBookForm {
     private String content;
 
     private Boolean visibility;
-
-    public void setSeed(@NotNull(message = "시드를 입력해주세요.") Long seed) {
-        this.seed = SeedCategoryType.of(seed);
-    }
 
     public LeafBookView toLeafBookView() {
         return LeafBookView.builder()

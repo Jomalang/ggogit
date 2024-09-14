@@ -439,6 +439,10 @@
   margin: 12px 0 0 12px;
   color: var(--warning, #ba0c0c);
 }
+.input-text__input:read-only{
+  background-color: var(--main2, #e5eddb);
+  outline: 3px solid var(--gray);
+}
 
 /*  ========================================== /
      FRAGMENT: 필터 선택 박스
@@ -2921,6 +2925,7 @@ card.html
   font-size: 14px;
   font-weight: var(--bold);
   color: var(--text-sub);
+  padding: 0;
   margin-right: 10px;
 }
 

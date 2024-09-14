@@ -7,7 +7,7 @@
   </head>
   <body>
     <!-- ==========================================
-     FRAGMENT: Footer
+     FRAGMENT: Footer - 로그인 되어있을때
      ========================================== -->
     <footer class="tree-footer" th:fragment="footer(noticeText)">
       <header class="tree-footer-header">
@@ -17,8 +17,9 @@
         </p>
       </header>
       <div class="tree-footer__membership">
-        <a href="#" class="membership-login">로그인</a>
-        <a href="#" class="membership-join">회원가입</a>
+        <form class="display__inline" method="post" th:action="@{/member/logout}" >
+          <button class="membership-login">로그아웃</button>
+        </form>
         <a href="#" class="membership-asking">문의하기</a>
       </div>
       <div class="tree-footer__app">

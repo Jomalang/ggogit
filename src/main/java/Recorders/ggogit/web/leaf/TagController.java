@@ -20,12 +20,14 @@ public class TagController {
 
     @GetMapping("/list")
     public String getTagList(
-            @RequestParam(value = "id") Long memberId,
+            @RequestParam(value = "id", required = false) Long memberId, // TODO: 계정 필터 적용해야함
+            @RequestParam(value = "page", defaultValue = "1") Long page,
+            @RequestParam(value = "size", defaultValue = "10") Long size,
             Model model
     ) {
-        List<LeafTag> leafTags = leafTagService.getLeafTags(memberId);
-        model.addAttribute("list", leafTags);
-        return "/view/tag/list";
+        model.addAttribute("selectedList", List.of());
+        model.addAttribute("list", leafTagService.getLeafTags(memberId, page, size));
+        return "view/tag/list";
     }
 
     @GetMapping("/edit")
@@ -37,7 +39,7 @@ public class TagController {
         model.addAttribute("leafTagForm", new LeafTagForm());
         model.addAttribute("memberId", leafTag.getMemberId());
         model.addAttribute("tag", leafTag);
-        return "/view/tag/edit";
+        return "view/tag/edit";
     }
 
     @PostMapping("/edit")

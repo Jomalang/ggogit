@@ -5,3 +5,7 @@
 .hidden {
   visibility: hidden;
 }
+
+.display__inline{
+  display: inline;
+}

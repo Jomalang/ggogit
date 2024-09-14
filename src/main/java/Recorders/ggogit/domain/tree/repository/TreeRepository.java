@@ -1,6 +1,7 @@
 package Recorders.ggogit.domain.tree.repository;
 
 import Recorders.ggogit.domain.tree.entity.Tree;
+import Recorders.ggogit.domain.tree.view.TreeInfoView;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -41,4 +42,8 @@ public interface TreeRepository {
 
     //Delete: 트리 삭제
     void delete(Long id);
+
+    long hasTreeNumById(Long id);
+
+    List<TreeInfoView> getTreeInfoBookView(Long memberId);
 }

@@ -1,11 +1,17 @@
 package Recorders.ggogit.web.member.controller;
 
 import Recorders.ggogit.domain.member.entity.Member;
+import Recorders.ggogit.domain.member.entity.MemberJoinEmail;
+import Recorders.ggogit.domain.member.service.EmailService;
 import Recorders.ggogit.domain.member.service.LoginService;
 import Recorders.ggogit.web.member.form.LoginForm;
 import Recorders.ggogit.web.member.form.LoginRegForm;
 import Recorders.ggogit.web.member.session.SessionConst;
+import Recorders.ggogit.web.member.validation.LoginRegValidator;
+import Recorders.ggogit.web.member.validation.LoginValidator;
+import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +22,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.Optional;
+
 @Controller
 @RequestMapping("/member")
 @RequiredArgsConstructor
@@ -23,6 +31,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class MemberController {
 
     private final LoginService loginService;
+    private final EmailService emailService;
+    private final LoginRegValidator loginRegValidator;
+    private final LoginValidator loginValidator;
+
 
     @GetMapping("/login")
     public String getMemberLogin(Model model ,@RequestParam(value = "j", required = false) boolean isNewMember) {
@@ -39,22 +51,23 @@ public class MemberController {
                                 ,HttpServletRequest request
                                 ,@RequestParam(value = "redirectURL", required = false) String redirectURL) {
 
-        //입력에 오류가 있을 경우(빈칸 등)
-        //TODO 이메일 형식 검증 로직 필요
-        if (bindingResult.hasErrors()) {
+        //공백 검사
+        if(bindingResult.hasErrors()){
             log.info("errors: {}", bindingResult.getAllErrors());
-            return "/view/member/index";
+            return "view/member/index";
+        }
+
+        //유효성 검사
+        if(loginValidator.supports(loginForm.getClass())){
+            loginValidator.validate(loginForm, bindingResult);
+            if(bindingResult.hasErrors()){
+                log.info("errors: {}", bindingResult.getAllErrors());
+                return "view/member/index";
+            }
         }
 
         Member member = loginForm.toMember();
         Member loginMember = loginService.login(member);
-
-        //검증 로직
-        if(loginMember == null) {
-            bindingResult.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다.");
-            log.info("errors: {}", bindingResult.getGlobalErrors());
-            return "/view/member/index";
-        }
 
         //로그인 성공
         //세션 생성
@@ -76,57 +89,38 @@ public class MemberController {
         if(session != null) {
             session.invalidate();
         }
-        return"redirect:/home/index";
+        return"redirect:/member/login";
     }
 
     @GetMapping("/join-input")
-    public String getMemberJoinInput(Model model) {
-        model.addAttribute("loginRegForm", new LoginRegForm());
+    public String getMemberJoinInput(Model model, HttpServletRequest request) {
+        LoginRegForm loginRegForm = new LoginRegForm();
+        Optional<String> emailCookie = emailService.getEmailCookie(request);
+
+        //만약 /member/join에서 입력한 쿠키가 있다면 쿠키에서 이메일 값을 받아서 모델에 전송해준다.
+        //뷰에서는 전송받은 email은 read-only로 처리해준다.
+        if(emailCookie.isPresent()){
+            loginRegForm.setEmail(emailCookie.get());
+        }
+        model.addAttribute("loginRegForm", loginRegForm);
         return "view/member/join-input";
     }
 
     @PostMapping("/join-input")
     public String PostMemberJoinInput(@Validated @ModelAttribute("loginRegForm") LoginRegForm loginRegForm,
                                       BindingResult bindingResult,RedirectAttributes redirectAttributes){
-
-        //검증 로직
-        //TODO Validation 계층 따로 만들기
-        if(bindingResult.hasErrors()) {
+        //공백 검사
+        if(bindingResult.hasErrors()){
             log.info("errors: {}", bindingResult.getAllErrors());
-            return "/view/member/join-input";
+            return "view/member/join-input";
         }
 
-
-        //동의 하지 않은 경우 검증
-        if(!loginRegForm.getPolicyAgreement()){
-            bindingResult.rejectValue("policyAgreement", "NotAgree");
-            log.info("errors: {}", bindingResult.getAllErrors());
-            return "/view/member/join-input";
-        }
-
-        //TODO Email 형식 검증해야 함.
-        {
-
-        }
-
-        //중복되는 이메일 검증
-        //TODO 이메일 중복 검사 버튼 만들기
-        {
-            String email = loginRegForm.getEmail();
-            if(loginService.getMemberByEmail(email) != null){
-                bindingResult.rejectValue("email","Duplicate");
+        //유효성 검사
+        if(loginRegValidator.supports(loginRegForm.getClass())){
+            loginRegValidator.validate(loginRegForm, bindingResult);
+            if(bindingResult.hasErrors()){
                 log.info("errors: {}", bindingResult.getAllErrors());
-                return "/view/member/join-input";
-            }
-        }
-
-        //중복되는 닉네임 검증
-        {
-            String nickname = loginRegForm.getNickname();
-            if(loginService.getMemberByNickname(nickname) != null){
-                bindingResult.rejectValue("nickname","Duplicate");
-                log.info("errors: {}", bindingResult.getAllErrors());
-                return "/view/member/join-input";
+                return "view/member/join-input";
             }
         }
 
@@ -141,13 +135,39 @@ public class MemberController {
 
 
     @GetMapping("/join")
-    public String getMemberJoin() {
+    public String getMemberJoin(@ModelAttribute("loginRegForm") LoginRegForm loginRegForm, @RequestParam(name = "s", required = false) Boolean status) {
         return "view/member/join";
     }
 
     @PostMapping("/join")
-    public String postMemberJoin() {
-        return "view/member/join";
+    public String postMemberJoin(@Validated @ModelAttribute("loginRegForm") LoginRegForm tmpForm
+                                 , BindingResult bindingResult , @RequestParam("email") String email
+                                , RedirectAttributes redirectAttributes,
+                                 HttpServletResponse response) throws MessagingException {
+
+        //공백 검사
+        if(bindingResult.hasFieldErrors("email")){
+            log.info("errors: {}", bindingResult.getAllErrors());
+            return "view/member/join";
+        }
+
+        tmpForm.setEmail(email);
+
+        //이메일 형식 검증
+        loginRegValidator.validate(tmpForm, bindingResult);
+        if(bindingResult.hasFieldErrors("email")){
+            log.info("errors: {}", bindingResult.getAllErrors());
+            return "view/member/join";
+        }
+
+        log.info("올바른 이메일");
+        //이메일을 쿠키에 담아 브라우저에 전송한다. 이 쿠키는 /member/join-input에서 쓰인다.
+        emailService.createEmailCookie(response, email);
+        emailService.sendEmail(email);
+        log.info("이메일이 전송되었습니다.");
+        redirectAttributes.addFlashAttribute("loginRegForm", tmpForm);
+        redirectAttributes.addAttribute("s",true);
+        return "redirect:/member/join";
     }
 
     @GetMapping("/pw/rst")

@@ -43,10 +43,10 @@ public class LeafController {
 
         ModelAndView mv;
         if (SeedCategoryType.isBook(seed)) {
-            mv = new ModelAndView("/view/leaf/1st-reg-book");
+            mv = new ModelAndView("view/leaf/1st-reg-book");
             mv.addObject("form", new LeafBookForm());
         } else {
-            mv = new ModelAndView("/view/leaf/1st-reg-etc");
+            mv = new ModelAndView("view/leaf/1st-reg-etc");
             mv.addObject("seed", seed);
             mv.addObject("form", new LeafForm());
         }
@@ -61,12 +61,12 @@ public class LeafController {
     ) {
         if (SeedCategoryType.BOOK == form.getSeed()) { // 도서 리프 에러 처리
             if (bindingResult.hasErrors()) {
-                return new ModelAndView("/view/leaf/1st-reg-book", "form", form);
+                return new ModelAndView("view/leaf/1st-reg-book", "form", form);
             }
         }
 
         if (bindingResult.hasErrors()) { // ETC 리프 에러 처리
-            return new ModelAndView("/view/leaf/1st-reg-etc", "form", form);
+            return new ModelAndView("view/leaf/1st-reg-etc", "form", form);
         }
 
         return new ModelAndView("redirect:/leaf/list?tree_id=1&leaf_id=1");
@@ -85,13 +85,13 @@ public class LeafController {
 
         if (SeedCategoryType.isBook(seed)) {
             ModelAndView mv =
-                    new ModelAndView("/view/leaf/reg-book", "form", new LeafBookForm());
+                    new ModelAndView("view/leaf/reg-book", "form", new LeafBookForm());
             mv.addObject("memberId", 1L); // TODO: 나중에 로그인한 사용자 정보로 변경
             return mv;
         }
 
         ModelAndView mv =
-                new ModelAndView("/view/leaf/reg-etc", "form", new LeafForm());
+                new ModelAndView("view/leaf/reg-etc", "form", new LeafForm());
         mv.addObject("memberId", 1L); // TODO: 나중에 로그인한 사용자 정보로 변경
         return mv;
     }
@@ -104,12 +104,12 @@ public class LeafController {
 
         if (SeedCategoryType.BOOK == form.getSeed()) { // 도서 리프 에러 처리
             if (bindingResult.hasErrors()) {
-                return new ModelAndView("/view/leaf/reg-book", "form", form);
+                return new ModelAndView("view/leaf/reg-book", "form", form);
             }
         }
 
         if (bindingResult.hasErrors()) { // ETC 리프 에러 처리
-            return new ModelAndView("/view/leaf/reg-etc", "form", form);
+            return new ModelAndView("view/leaf/reg-etc", "form", form);
         }
 
         return new ModelAndView("redirect:/leaf/list");
@@ -122,9 +122,9 @@ public class LeafController {
             Model model
     ) {
         if (SeedCategoryType.isBook(seed)) {
-            return new ModelAndView("/view/leaf/edit-book","form", leafBookService.getLeafBookView(id));
+            return new ModelAndView("view/leaf/edit-book","form", leafBookService.getLeafBookView(id));
         } else {
-            return new ModelAndView("/view/leaf/edit-etc","form", leafEtcService.getLeafEtcView(id));
+            return new ModelAndView("view/leaf/edit-etc","form", leafEtcService.getLeafEtcView(id));
         }
     }
 
@@ -145,7 +145,7 @@ public class LeafController {
         model.addAttribute("recentBranch", leafService.getRecentBranch(treeId));
         model.addAttribute("breadcrumb", leafService.getBreadcrumb(treeId, leafId));
         model.addAttribute("list", list);
-        return "/view/leaf/list";
+        return "view/leaf/list";
     }
 
     @GetMapping("/detail")
@@ -160,6 +160,6 @@ public class LeafController {
         Long memberId = 1L;
         List<LeafImageCardView> leafImageCardViews = leafService.getLeafImageCardViews(memberId);
         model.addAttribute("leafImageCardViews", leafImageCardViews);
-        return "/view/leaf/list";
+        return "view/leaf/list";
     }
 }

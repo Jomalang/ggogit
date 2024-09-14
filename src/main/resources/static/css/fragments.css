@@ -2163,16 +2163,20 @@ card.html
 
 .tree-book-bg {
   /* 캐러셀 위해 30vw로 고정 */
-  width: 30vw;
+  display: flex;
   overflow: hidden;
+  width: 90vw;
+  position: relative;
 }
 
 .tree-book-bg__list {
+  z-index: 1;
   display: flex;
   align-items: last baseline;
   justify-content: space-between;
   padding: 0;
   margin: 0;
+  gap: 10vw;
 }
 
 .tree-book-bg__list--transition {
@@ -2182,12 +2186,13 @@ card.html
 .mid__item {
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  width: fit-content;
+  width: 20vw;
+  transition: all 0.6s ease-out;
 }
 
-.mid__img {
+.center__item{
   width: 30vw;
+  transition: all 0.6s ease-out;
 }
 
 /*  ==========================================

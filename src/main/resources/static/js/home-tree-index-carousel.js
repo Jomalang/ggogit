@@ -1,4 +1,4 @@
-import {bookExRemoveNone} from "./home-tree-explanation.js";
+import {bookExRemoveNone, calcMidTree} from "./home-tree-explanation.js";
 
 const carouselList = document.querySelector(".tree-book-bg__list");
 // carousel item 너비
@@ -26,7 +26,7 @@ const dragStart = (clientX) => {
   isMove = true;
   moveStartX = clientX;
 
-  // carousel list transition 제거, 왜 제거?
+  // carousel list transition 제거
   carouselList.classList.remove("tree-book-bg__list--transition");
 
   // drag 종료시점으로부터 transition 시간이 지났는지 확인
@@ -65,7 +65,6 @@ const dragging = (clientX) => {
     else if (nextTranslateX > 0) {
       nextTranslateX = 0;
     }
-
     carouselList.style.transform = `translateX(${nextTranslateX}px)`;
   }
 };
@@ -110,9 +109,9 @@ const dragEnd = () => {
         currentTranslateX = -Math.floor(-currentTranslateX / width) * width;
       }
     }
-
     carouselList.style.transform = `translateX(${currentTranslateX}px)`;
   }
+
 };
 
 //첫 화면 렌더링 시 디테일 초기화
@@ -140,16 +139,16 @@ const observer = new IntersectionObserver(
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
         entry.target.classList.add("selected");
-        selectedElement = entry.target;
       } else {
         entry.target.classList.remove("selected");
       }
     });
+    selectedElement = calcMidTree();
     if(selectedElement){
       bookExRemoveNone(selectedElement);
     }
   },
-  { root: container, threshold: 0.3 }
+  { root: container, threshold: 0.1 }
 );
 
 document.querySelectorAll(".mid__item").forEach((item) => {

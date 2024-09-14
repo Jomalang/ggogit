@@ -223,6 +223,11 @@
                 addRemoveEvent(liTag);
                 selectedList.insertAdjacentElement('beforeend', liTag);
 
+                // 세션 스토리지에 넣기
+                const selectedTagListStorage = JSON.parse(sessionStorage.getItem('selectedTagList'));
+                selectedTagListStorage.push({id: parseInt(newTagId), name: tagName});
+                sessionStorage.setItem('selectedTagList', JSON.stringify(selectedTagListStorage));
+
                 // 기존 리스트에서 제거
                 itemTag.closest('li.tag-info__item--unselected').remove();
             });
@@ -230,10 +235,17 @@
 
         function addRemoveEvent(item) {
             item.querySelector('.tag-info__btn').addEventListener('click', () => {
-                const tag = item.closest('li.tag-info__item--selected');
+
                 // 선택된 태그에서 제거
+                const tag = item.closest('li.tag-info__item--selected');
                 tag.remove();
 
+                // 세션 스토리지에서 제거
+                const selectedTagListStorage = JSON.parse(sessionStorage.getItem('selectedTagList'));
+                const newSelectedTagList = selectedTagListStorage.filter(selectedTag => {
+                    return selectedTag.id !== parseInt(tag.id.replace('--selected', ''));
+                });
+                sessionStorage.setItem('selectedTagList', JSON.stringify(newSelectedTagList));
             });
         }
 

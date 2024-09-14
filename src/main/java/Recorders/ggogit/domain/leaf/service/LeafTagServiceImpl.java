@@ -1,6 +1,7 @@
 package Recorders.ggogit.domain.leaf.service;
 
 import Recorders.ggogit.domain.leaf.entity.LeafTag;
+import Recorders.ggogit.domain.leaf.repository.LeafTagMapRepository;
 import Recorders.ggogit.domain.leaf.repository.LeafTagRepository;
 import jakarta.annotation.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,9 @@ public class LeafTagServiceImpl implements LeafTagService {
 
     @Autowired
     private LeafTagRepository leafTagRepository;
+
+    @Autowired
+    private LeafTagMapRepository leafTagMapRepository;
 
     @Override
     public LeafTag register(LeafTag leafTag) {
@@ -63,6 +67,9 @@ public class LeafTagServiceImpl implements LeafTagService {
             throw new IllegalArgumentException("해당 태그에 대한 권한이 없습니다.");
         }
 
+        // 리프와 연관된 태그 삭제
+        leafTagMapRepository.deleteByLeafTagId(leafTagId);
+        // 태그 삭제
         leafTagRepository.deleteById(leafTagId);
         return true;
     }

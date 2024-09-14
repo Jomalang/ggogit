@@ -1,3 +1,5 @@
+import {bookExRemoveNone} from "./home-tree-explanation.js";
+
 const carouselList = document.querySelector(".tree-book-bg__list");
 // carousel item 너비
 const width = document.querySelector(".mid__item").clientWidth;
@@ -113,6 +115,8 @@ const dragEnd = () => {
   }
 };
 
+//첫 화면 렌더링 시 디테일 초기화
+window.addEventListener("pageshow", bookExRemoveNone);
 // PC
 carouselList.addEventListener("mousedown", (e) => dragStart(e.clientX));
 window.addEventListener("mousemove", (e) => dragging(e.clientX));
@@ -131,13 +135,19 @@ const container = document.querySelector(".tree-book-bg");
 
 const observer = new IntersectionObserver(
   (entries) => {
+    let selectedElement = null;
+
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
         entry.target.classList.add("selected");
+        selectedElement = entry.target;
       } else {
         entry.target.classList.remove("selected");
       }
     });
+    if(selectedElement){
+      bookExRemoveNone(selectedElement);
+    }
   },
   { root: container, threshold: 0.3 }
 );

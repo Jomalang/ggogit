@@ -1,6 +1,11 @@
+import {bookExRemoveNone, calcMidTree} from "./home-tree-explanation.js";
+//첫 화면 렌더링 시 디테일 초기화
+
+
 const carouselList = document.querySelector(".tree-book-bg__list");
 // carousel item 너비
-const width = document.querySelector(".mid__item").clientWidth;
+// const width = document.querySelector(".mid__item").clientWidth;
+const width = window.innerWidth * 0.3;
 // carousel item 전체 갯수
 const carouselItemCount = document.querySelectorAll(".mid__item").length / 3;
 
@@ -20,11 +25,16 @@ const moveGap = 30;
 let dragEndTime = new Date().getTime();
 
 // drag 시작 이벤트
-const dragStart = (clientX) => {
+const dragStart = (e, clientX) => {
   isMove = true;
   moveStartX = clientX;
 
-  // carousel list transition 제거, 왜 제거?
+// 기본 동작 방지 (특히 모바일에서의 스크롤)
+  if (e.type.includes('touch')) {
+    e.preventDefault(); // 기본 터치 스크롤 동작을 방지
+  }
+
+  // carousel list transition 제거
   carouselList.classList.remove("tree-book-bg__list--transition");
 
   // drag 종료시점으로부터 transition 시간이 지났는지 확인
@@ -49,10 +59,15 @@ const dragStart = (clientX) => {
 };
 
 // drag 중 이벤트
-const dragging = (clientX) => {
+const dragging = (e, clientX) => {
   if (isMove) {
     moveTranslateX = clientX - moveStartX;
     nextTranslateX = currentTranslateX + moveTranslateX;
+
+    // 기본 동작 방지 (특히 모바일에서의 스크롤)
+    if (e.type.includes('touch')) {
+      e.preventDefault(); // 기본 터치 스크롤 동작을 방지
+    }
 
     // 오른쪽으로 최대 이동한 경우
     if (nextTranslateX < -width * (carouselItemCount * 3 - 1)) {
@@ -63,13 +78,12 @@ const dragging = (clientX) => {
     else if (nextTranslateX > 0) {
       nextTranslateX = 0;
     }
-
     carouselList.style.transform = `translateX(${nextTranslateX}px)`;
   }
 };
 
 // drag 종료 이벤트
-const dragEnd = () => {
+const dragEnd = (e) => {
   if (isMove) {
     // 초기화
     isMove = false;
@@ -77,6 +91,10 @@ const dragEnd = () => {
     carouselList.classList.add("tree-book-bg__list--transition");
     dragEndTime = new Date().getTime();
 
+// 기본 동작 방지 (특히 모바일에서의 스크롤)
+    if (e.type.includes('touch')) {
+      e.preventDefault(); // 기본 터치 스크롤 동작을 방지
+    }
     // 오른쪽으로 이동한 경우
     if (currentTranslateX > nextTranslateX) {
       if ((currentTranslateX - nextTranslateX) % width > moveGap) {
@@ -108,29 +126,32 @@ const dragEnd = () => {
         currentTranslateX = -Math.floor(-currentTranslateX / width) * width;
       }
     }
-
     carouselList.style.transform = `translateX(${currentTranslateX}px)`;
   }
+
 };
 
+
 // PC
-carouselList.addEventListener("mousedown", (e) => dragStart(e.clientX));
-window.addEventListener("mousemove", (e) => dragging(e.clientX));
-window.addEventListener("mouseup", dragEnd);
+carouselList.addEventListener("mousedown", (e) => dragStart(e, e.clientX));
+window.addEventListener("mousemove", (e) => dragging(e, e.clientX));
+window.addEventListener("mouseup", (e) => dragEnd(e));
 
 // Mobile
 carouselList.addEventListener("touchstart", (e) =>
-  dragStart(e.targetTouches[0].clientX)
+  dragStart(e, e.targetTouches[0].clientX)
 );
 window.addEventListener("touchmove", (e) =>
-  dragging(e.targetTouches[0].clientX)
+  dragging(e, e.targetTouches[0].clientX)
 );
-window.addEventListener("touchend", dragEnd);
+window.addEventListener("touchend", (e) => dragEnd(e));
 
 const container = document.querySelector(".tree-book-bg");
 
 const observer = new IntersectionObserver(
   (entries) => {
+    let selectedElement = null;
+
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
         entry.target.classList.add("selected");
@@ -138,6 +159,10 @@ const observer = new IntersectionObserver(
         entry.target.classList.remove("selected");
       }
     });
+    selectedElement = calcMidTree();
+    if(selectedElement){
+      bookExRemoveNone(selectedElement);
+    }
   },
   { root: container, threshold: 0.3 }
 );
@@ -145,3 +170,7 @@ const observer = new IntersectionObserver(
 document.querySelectorAll(".mid__item").forEach((item) => {
   observer.observe(item);
 });
+
+// window.addEventListener("pageshow", () => {
+//   bookExRemoveNone(calcMidTree());
+// });

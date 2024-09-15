@@ -35,6 +35,22 @@
      ========================================== -->
 <div class="log-item" th:fragment="log-item(type, title, date, link, tags)">
 
+    <!--초기 시작 로그 -->
+    <section class="log-item__type--1" th:if="${type == 0}">
+        <div class="log-item__branch-img--1">
+            <div class="log-item__circle--1 log-item__circle--check"></div>
+        </div>
+        <a class="log-item__link" href="">
+            <div class="log-item__text-box">
+                <p class="log-item__title" th:text="${title}">로그 제목입니다.</p>
+                <p class="log-item__date" th:text="${#dates.format(date, 'yyyy-MM-dd')}">2024-07-18</p>
+                <ul class="log-item__tags">
+                    <li class="log-item__tag" th:each="tag : ${tags}" th:text="${tag.name}">태그</li>
+                </ul>
+            </div>
+        </a>
+    </section>
+
     <!--시작-->
     <section class="log-item__type--1" th:if="${type == 1}">
         <div class="log-item__branch-img--1">

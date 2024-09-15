@@ -1,9 +1,15 @@
 package Recorders.ggogit.domain.leaf.service;
 
 import Recorders.ggogit.domain.leaf.entity.Leaf;
+import Recorders.ggogit.domain.leaf.entity.LeafTag;
 import Recorders.ggogit.domain.leaf.repository.LeafBookRepository;
 import Recorders.ggogit.domain.leaf.repository.LeafRepository;
+import Recorders.ggogit.domain.leaf.repository.LeafTagRepository;
+import Recorders.ggogit.domain.leaf.structure.LeafNode;
+import Recorders.ggogit.domain.leaf.structure.LeafTree;
 import Recorders.ggogit.domain.leaf.view.*;
+import Recorders.ggogit.domain.tree.entity.Tree;
+import Recorders.ggogit.domain.tree.repository.TreeRepository;
 import Recorders.ggogit.type.SearchType;
 import Recorders.ggogit.type.SortType;
 import jakarta.annotation.Nullable;
@@ -23,21 +29,69 @@ public class LeafServiceImpl implements LeafService {
     @Autowired
     private LeafBookRepository leafBookRepository;
 
+    @Autowired
+    private TreeRepository treeRepository;
+
+    @Autowired
+    private LeafTagRepository leafTagRepository;
+
     @Override
     public List<LeafItemView> getLeafItems(Long treeId, @Nullable Long leafId) {
-        return List.of();
+        List<Leaf> leafs =  leafRepository.findByTreeIdOrderByCreateTimeDesc(treeId);
+
+        LeafTree leafTree = new LeafTree(leafs); // Tree 자료구조
+        List<LeafNode> branch = leafTree.getBranchNodes(leafId);
+
+        List<LeafItemView> leafItemViews = new ArrayList<>();
+        for (LeafNode leafNode : branch) {
+//            List<LeafTag> tags = leafTagRepository.findByLeafId(leafNode.getData().getId());
+            List<LeafTag> tags = new ArrayList<>();
+            leafItemViews.add(LeafItemView.of(leafNode, tags));
+        }
+        leafItemViews.getFirst().setFocused(true); // 첫번째 리프는 focused
+
+        // 트리 조회
+        return leafItemViews;
     }
 
     @Override
-    public LeafRecentBranchView getRecentBranch(Long treeId) {
-        return Optional.ofNullable(leafRepository.findLeafRecentBranchViewByTreeId(treeId))
-                .orElseThrow(() -> new IllegalArgumentException("최근 수정한 브랜치 조회 실패"));
+    public LeafRecentSaveBranchView getRecentBranch(Long treeId, Long leafId) {
+        List<Leaf> leafs =  leafRepository.findByTreeIdOrderByCreateTimeDesc(treeId);
+
+        LeafTree leafTree = new LeafTree(leafs); // Tree 자료구조
+        List<Leaf> branch = leafTree.getBranch(leafId);
+
+        Long likeCount = 0L;
+        Long viewCount = 0L;
+        for (Leaf leaf : branch) {
+            likeCount += leaf.getLikeCount();
+            viewCount += leaf.getViewCount();
+        }
+
+        return LeafRecentSaveBranchView.builder()
+                .branchName(branch.getFirst().getTitle())
+                .leafCount((long) branch.size())
+                .likeCount(likeCount)
+                .viewCount(viewCount)
+                .updateTime(branch.getLast().getUpdateTime())
+                .build();
     }
 
     @Override
     public LeafBreadcrumbView getBreadcrumb(Long treeId, Long leafId) {
-        return Optional.ofNullable(leafRepository.findLeafBreadcrumbViewByTreeIdAndLeafId(treeId, leafId))
-                .orElseThrow(() -> new IllegalArgumentException("브랜치 조회 실패"));
+
+        // 트리 조회
+        Tree tree = Optional.ofNullable(treeRepository.findById(treeId))
+                .orElseThrow(() -> new IllegalArgumentException("Tree 조회 실패"));
+
+        // 리프 조회
+        Leaf leaf = Optional.ofNullable(leafRepository.findById(leafId))
+                .orElseThrow(() -> new IllegalArgumentException("Leaf 조회 실패"));
+
+        return LeafBreadcrumbView.builder()
+                .treeName(tree.getTitle())
+                .branchName(leaf.getTitle())
+                .build();
     }
 
     @Override

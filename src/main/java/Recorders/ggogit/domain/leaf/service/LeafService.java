@@ -8,9 +8,9 @@ import jakarta.annotation.Nullable;
 import java.util.List;
 
 public interface LeafService {
-    List<LeafItemView> getLeafItems(Long treeId, @Nullable Long leafId);
+    List<LeafItemView> getLeafItems(Long treeId, Long leafId);
 
-    LeafRecentBranchView getRecentBranch(Long treeId);
+    LeafRecentSaveBranchView getRecentBranch(Long treeId, Long leafId);
 
     LeafBreadcrumbView getBreadcrumb(Long treeId, Long leafId);
     LeafBreadcrumbView getBreadcrumb(Long leafId);

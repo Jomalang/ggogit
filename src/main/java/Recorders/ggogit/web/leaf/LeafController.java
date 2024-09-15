@@ -1,5 +1,6 @@
 package Recorders.ggogit.web.leaf;
 
+import Recorders.ggogit.domain.leaf.view.LeafBookView;
 import Recorders.ggogit.domain.member.entity.Member;
 import Recorders.ggogit.domain.tree.entity.Seed;
 import Recorders.ggogit.domain.tree.service.SeedService;
@@ -19,6 +20,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
 
@@ -71,8 +73,14 @@ public class LeafController {
             if (bindingResult.hasErrors()) {
                 return new ModelAndView("view/leaf/1st-reg-book", "form", form);
             }
-            leafBookService.register(form.toLeafBookView(), memberId); // 도서 리프 등록
-            return new ModelAndView("redirect:/leaf/list?tree_id=1&leaf_id=1");
+            LeafBookView leafBookView = leafBookService.register(form.toLeafBookView(), memberId); // 도서 리프 등록
+
+            String url = UriComponentsBuilder.fromPath("/leaf/list")
+                    .queryParam("tree_id", leafBookView.getTreeId())
+                    .queryParam("leaf_id", leafBookView.getLeafId())
+                    .toUriString();
+
+            return new ModelAndView("redirect:" + url);
         }
 
         if (bindingResult.hasErrors()) { // ETC 리프 에러 처리
@@ -145,16 +153,18 @@ public class LeafController {
         Model model
     ) {
         List<LeafItemView> list = leafService.getLeafItems(treeId, leafId);
-        for (LeafItemView item : list) {
-            if (item.getFocused()) {
-                model.addAttribute("focusedTime", item.getCreateTime());
-                break;
-            }
-        }
+
+//        for (LeafItemView item : list) { 화면에서 처리하도록 변경
+//            if (item.getFocused()) {
+//                model.addAttribute("focusedTime", item.getCreateTime());
+//                break;
+//            }
+//        }
+
         // 최근 수정 브랜치 이름 정보 넣어야함
-        model.addAttribute("recentBranch", leafService.getRecentBranch(treeId));
+        model.addAttribute("recentBranch", leafService.getRecentBranch(treeId, leafId));
         model.addAttribute("breadcrumb", leafService.getBreadcrumb(treeId, leafId));
-        model.addAttribute("list", list);
+        model.addAttribute("list", list.reversed()); // 거꾸로 정렬
         return "view/leaf/list";
     }
 

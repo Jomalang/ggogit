@@ -31,6 +31,17 @@
         WHERE RNUM &gt; #{offset}
     </select>
 
+    <select id="findByLeafId" resultType="LeafTag">
+        SELECT LT.*
+        FROM (
+            SELECT LTM.TAG_ID
+            FROM LEAF_TAG_MAP LTM
+            WHERE LTM.LEAF_ID = #{leafId}
+        )
+        JOIN LEAF_TAG LT
+            ON LT.ID = LTM.TAG_ID
+    </select>
+
     <select id="count" resultType="Long">
         SELECT COUNT(*)
         FROM LEAF_TAG

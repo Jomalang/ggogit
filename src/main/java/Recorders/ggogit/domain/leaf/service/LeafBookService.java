@@ -7,9 +7,9 @@ import Recorders.ggogit.type.SortType;
 import java.util.List;
 
 public interface LeafBookService {
-    boolean register(LeafBookView leafBookView, Long memberId);
-    boolean registerRoot(LeafBookView leafBookView, Long memberId);
-    boolean registerNode(LeafBookView leafBookView, Long memberId);
+    LeafBookView register(LeafBookView leafBookView, Long memberId);
+    LeafBookView registerRoot(LeafBookView leafBookView, Long memberId);
+    LeafBookView registerNode(LeafBookView leafBookView, Long memberId);
     boolean modify(LeafBookView leafBookView);
     boolean remove(Long leafId);
     LeafBookView getLeafBookView(Long leafBookId);

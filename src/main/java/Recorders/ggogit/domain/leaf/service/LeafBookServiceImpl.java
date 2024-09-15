@@ -56,7 +56,7 @@ public class LeafBookServiceImpl implements LeafBookService {
     private TreeImageRepository treeImageRepository;
 
     @Override
-    public boolean register(LeafBookView leafBookView, Long memberId) {
+    public LeafBookView register(LeafBookView leafBookView, Long memberId) {
         if (leafBookView.getParentLeafId() == null && leafBookView.getTreeId() == null) {
             return registerRoot(leafBookView, memberId);
         } else {
@@ -65,7 +65,7 @@ public class LeafBookServiceImpl implements LeafBookService {
     }
 
     @Override
-    public boolean registerRoot(LeafBookView leafBookView, Long memberId) {
+    public LeafBookView registerRoot(LeafBookView leafBookView, Long memberId) {
         assert leafBookView.getParentLeafId() == null; // 부모 리프가 없어야 함
 
         // TMP트리 존재 확인
@@ -96,11 +96,14 @@ public class LeafBookServiceImpl implements LeafBookService {
         treeImage.setTreeId(tree.getId());
         treeImageRepository.save(treeImage);
 
+        // 트리 저장 TMP 삭제
+        treeSaveTmpRepository.deleteByMemberId(memberId);
+
         return registerLogic(leafBookView);
     }
 
     @Override
-    public boolean registerNode(LeafBookView leafBookView, Long memberId) {
+    public LeafBookView registerNode(LeafBookView leafBookView, Long memberId) {
         assert leafBookView.getParentLeafId() != null; // 부모 리프가 있어야 함
 
         // 부모 리프 조회
@@ -119,13 +122,15 @@ public class LeafBookServiceImpl implements LeafBookService {
         parentLeaf.setChildLeafCount(parentLeaf.getChildLeafCount() + 1);
 
         // 부모 리프 저장
-        Long parentLeafCheck = Optional.ofNullable(leafRepository.update(parentLeaf))
-                .orElseThrow(() -> new IllegalArgumentException("부모 Leaf 수정 실패"));
+        Long parentLeafCheck = leafRepository.update(parentLeaf);
+        if (parentLeafCheck == null || parentLeafCheck != 1) {
+            throw new IllegalArgumentException("부모 Leaf 수정 실패");
+        }
 
-        return parentLeafCheck != null;
+        return leafBookView;
     }
 
-    private boolean registerLogic(LeafBookView leafBookView) {
+    private LeafBookView registerLogic(LeafBookView leafBookView) {
 
         // 태그 존재 확인
         leafBookView.getTags().forEach(tag -> {
@@ -142,8 +147,8 @@ public class LeafBookServiceImpl implements LeafBookService {
         }
 
         // 도서 리프 저장
-        LeafBook leafBook = leafBookView.toLeafBook(leaf.getId());
-        Long bookSaveCheck = leafBookRepository.save(leafBook);
+        leafBookView.setLeafId(leaf.getId());
+        Long bookSaveCheck = leafBookRepository.save(leafBookView.toLeafBook());
         if (bookSaveCheck == null || bookSaveCheck != 1) {
             throw new IllegalArgumentException("LeafBook 저장 실패");
         }
@@ -155,7 +160,7 @@ public class LeafBookServiceImpl implements LeafBookService {
         });
 
         // 결과 확인
-        return true;
+        return leafBookView;
     }
 
     @Override

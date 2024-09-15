@@ -1,9 +1,10 @@
-package Recorders.ggogit.type;
+package Recorders.ggogit.domain.leaf.structure;
 
 import lombok.Getter;
 
 @Getter
 public enum LeafDirectionType {
+    INIT("init", "생성후", 0),
     START("start", "시작", 1),
     RIGHT("right", "오른쪽", 2),
     SIDE("side", "양쪽", 3),

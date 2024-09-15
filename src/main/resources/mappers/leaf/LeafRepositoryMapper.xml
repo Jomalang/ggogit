@@ -47,6 +47,12 @@
             SELECT * FROM LEAF
         </select>
 
+        <select id="findByTreeIdOrderByCreateTimeDesc" resultType="Leaf">
+            SELECT * FROM LEAF
+            WHERE TREE_ID = #{treeId}
+            ORDER BY CREATE_TIME
+        </select>
+    
         <select id="findLeafCardViewByBookId" resultType="LeafCardView">
             SELECT
                 L2.TREE_ID,

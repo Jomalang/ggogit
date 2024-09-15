@@ -3,12 +3,16 @@ package Recorders.ggogit.web.tree;
 import Recorders.ggogit.domain.book.service.BookService;
 import Recorders.ggogit.domain.book.view.BookInfoView;
 import Recorders.ggogit.domain.book.view.BookPreviewView;
+import Recorders.ggogit.domain.member.entity.Member;
 import Recorders.ggogit.domain.tree.service.TreeServiceImpl;
 import Recorders.ggogit.web.book.form.bookSearchType;
 import Recorders.ggogit.type.BookCategoryType;
+import Recorders.ggogit.web.member.session.SessionConst;
 import Recorders.ggogit.web.tree.form.TreeEtcSaveTmpForm;
 import Recorders.ggogit.web.tree.form.TreeSaveTmpForm;
+import Recorders.ggogit.domain.tree.util.TreeUtilService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,9 +22,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,6 +37,9 @@ public class TreeController {
 
     @Autowired
     private BookService bookService;
+
+    @Autowired
+    private TreeUtilService treeUtilService;
 
     @GetMapping("/search")
     public String treeSearch() {
@@ -68,10 +72,16 @@ public class TreeController {
     public String getBookReg(
             @RequestParam(value = "auto", required = false) boolean auto,
             @RequestParam(value = "id", required = false) Long id,
+            HttpServletRequest request,
             Model model
     ) {
-        //TODO: memberId 개선 시 하드코딩 제거
-        Long memberId=14L;
+
+
+        HttpSession session = request.getSession();
+
+        Member member = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
+
+        Long memberId= member.getId();
         treeService.deleteTmpFormById(memberId);
 
         if (auto) {
@@ -97,19 +107,9 @@ public class TreeController {
         form.setSeedId(1L);
 
         if(!auto && img != null && !img.isEmpty()){
-            String path = request.getSession().getServletContext().getRealPath("/image/tmp");
-            String fileName = img.getOriginalFilename();
-            String fullPath = path + File.separator + fileName;
+            //이미지 저장 서비스 : path 경로에 img 저장 후 fullpath 경로 String 리턴
+            form.setImageFile(treeUtilService.updateImageFile(img,request.getSession().getServletContext().getRealPath("/image/tmp")));
 
-            form.setImageFile(fullPath);
-            System.out.println(fullPath);
-
-
-            File filePath = new File(path);
-            if(!filePath.exists())
-                filePath.mkdirs();
-
-            img.transferTo(new File(fullPath));
         }
 
         System.out.println(form.toString());

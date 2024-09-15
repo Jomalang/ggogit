@@ -2162,17 +2162,23 @@ card.html
     ========================================== */
 
 .tree-book-bg {
-  /* 캐러셀 위해 40vw로 고정 */
-  width: 40vw;
+  /* 캐러셀 위해 90vw로 고정 */
+  display: flex;
   overflow: hidden;
+  width: 90vw;
+  height: 50vw;
 }
 
 .tree-book-bg__list {
+  z-index: 1;
   display: flex;
   align-items: last baseline;
   justify-content: space-between;
   padding: 0;
   margin: 0;
+  gap: 10vw;
+  /*캐러셀의 부드러운 이동을 위한 최적화*/
+  will-change: transform;
 }
 
 .tree-book-bg__list--transition {
@@ -2182,12 +2188,13 @@ card.html
 .mid__item {
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  width: fit-content;
+  width: 20vw;
+  transition: all 0.5s ease-in-out;
 }
 
-.mid__img {
-  width: 40vw;
+.center__item{
+  width: 30vw;
+  transition: all 0.5s ease-in-out;
 }
 
 /*  ==========================================

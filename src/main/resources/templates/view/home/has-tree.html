@@ -35,6 +35,17 @@
             ></div>
           </section>
 
+          <section>
+           <h3 class="none">트리 약식 정보</h3>
+            <ul >
+              <li class="none textbox-recent-tree-info__frame" th:each="tree : ${treeInfoList}"
+                  th:with="coverIdx=${treeStat.index}"
+                  th:classappend="${coverIdx}">
+                <div th:replace="~{fragments/text::recent-tree-info(tree=${tree})}"></div>
+              </li>
+            </ul>
+          </section>
+
           <section class="book-tree-explanation-container">
             <h3 class="none">트리 설명</h3>
             <ul class="book-tree-explanation-list">
@@ -42,11 +53,10 @@
                 class="book-tree-explanation-item none"
                 th:each="tree: ${treeInfoList}"
                 th:with="exIdx=${treeStat.index}"
-                th:classappend="${exIdx}"
-              >
+                th:classappend="${exIdx}">
                 <div
-                  th:replace="~{fragments/text::recent-tree-ex(text=${tree.description})}"
-                ></div>
+                  th:replace="~{fragments/text::recent-tree-ex(text=${tree.description})}"></div>
+
                 <section
                   class="card-progress-home-container"
                   th:with="readingPage=${tree.readingPage}, totalPage=${tree.bookTotalPage}, progress=${T(java.lang.String).format('%.1f',(readingPage*100.0)/totalPage)},
@@ -114,6 +124,6 @@
       <div th:replace="~{fragments/nav :: navigation-bar(home)}"></div>
     </aside>
   </body>
-  <script th:src="@{/js/home-tree-index-carousel.js}"></script>
-  <script th:src="@{/js/home-tree-explanation.js}"></script>
+  <script th:src="@{/js/home-tree-index-carousel.js}" type="module"></script>
+  <script th:src="@{/js/home-tree-explanation.js}" type="module"></script>
 </html>

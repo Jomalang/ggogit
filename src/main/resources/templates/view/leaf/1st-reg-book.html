@@ -137,7 +137,8 @@
             // 세션 스토리지에서 불러온다.
             const tagList = sessionStorage.getItem('selectedTagList');
             if (!tagList) { return; } // 저장된 데이터가 없다면 종료한다.
-            // 알림 제거
+            if (tagList === '[]') { return; } // 저장된 데이터가 없다면 종료한다.
+
             const placeHolder = document.querySelector('.input-tag-select__placeholder');
             placeHolder.remove();
 

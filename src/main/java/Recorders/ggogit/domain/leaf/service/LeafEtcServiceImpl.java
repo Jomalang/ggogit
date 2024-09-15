@@ -31,22 +31,22 @@ public class LeafEtcServiceImpl implements LeafEtcService {
     private LeafTagMapRepository leafTagMapRepository;
 
     @Override
-    public boolean register(LeafEtcView leafEtcView) {
+    public boolean register(LeafEtcView leafEtcView, Long memberId) {
         if (leafEtcView.getParentLeafId() == null) {
-            return registerRoot(leafEtcView);
+            return registerRoot(leafEtcView, memberId);
         } else {
-            return registerNode(leafEtcView, leafEtcView.getParentLeafId());
+            return registerNode(leafEtcView, leafEtcView.getParentLeafId(), memberId);
         }
     }
 
     @Override
-    public boolean registerRoot(LeafEtcView leafEtcView) {
+    public boolean registerRoot(LeafEtcView leafEtcView, Long memberId) {
         assert leafEtcView.getParentLeafId() == null;
         return registerLogic(leafEtcView);
     }
 
     @Override
-    public boolean registerNode(LeafEtcView leafEtcView, Long parentLeafId) {
+    public boolean registerNode(LeafEtcView leafEtcView, Long parentLeafId, Long memberId) {
         assert leafEtcView.getParentLeafId() != null;
 
         // 부모 리프 존재 확인

@@ -7,9 +7,9 @@ import Recorders.ggogit.type.SortType;
 import java.util.List;
 
 public interface LeafEtcService {
-    boolean register(LeafEtcView leafEtcView);
-    boolean registerRoot(LeafEtcView leafEtcView);
-    boolean registerNode(LeafEtcView leafEtcView, Long parentLeafId);
+    boolean register(LeafEtcView leafEtcView, Long memberId);
+    boolean registerRoot(LeafEtcView leafEtcView, Long memberId);
+    boolean registerNode(LeafEtcView leafEtcView, Long parentLeafId, Long memberId);
     boolean modify(LeafEtcView leafEtcView);
     void remove(Long leafId);
     LeafEtcView getLeafEtcView(Long leafId);

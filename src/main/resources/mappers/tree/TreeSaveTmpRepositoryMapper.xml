@@ -68,6 +68,10 @@
         SELECT * FROM TREE_SAVE_TMP WHERE MEMBER_ID = #{memberId}
     </select>
 
+    <select id="findById" parameterType="Long" resultType="TreeSaveTmp">
+        SELECT * FROM TREE_SAVE_TMP WHERE MEMBER_ID = #{memberId}
+    </select>
+
     <!--MEMBER_ID row 조회-->
     <select id="isEmpty" parameterType="Long" resultType="Boolean" >
         SELECT * FROM TREE_SAVE_TMP WHERE MEMBER_ID = #{memberId}

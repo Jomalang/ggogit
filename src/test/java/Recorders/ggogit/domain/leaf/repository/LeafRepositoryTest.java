@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.jdbc.Sql;
 
@@ -14,10 +15,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@MybatisTest
-@Rollback
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE) // 실제 DB 사용
-@Sql("/domain/leaf/repository/leaf-repository-test.sql")
+@SpringBootTest
 class LeafRepositoryTest {
 
     @Autowired
@@ -28,15 +26,15 @@ class LeafRepositoryTest {
     void save() {
         // given
         Leaf leaf = Leaf.builder()
-                .treeId(997L)
-                .parentLeafId(9970L)
+                .treeId(1L)
+                .parentLeafId(null)
                 .visibility(true)
-                .viewCount(0)
-                .likeCount(0)
+                .viewCount(null)
+                .likeCount(null)
                 .title("TitleTest")
                 .content("ContentTest")
-                .childLeafCount(0)
-                .bookMark(0L)
+                .childLeafCount(null)
+                .bookMark(null)
                 .build();
 
         // when
@@ -83,9 +81,9 @@ class LeafRepositoryTest {
         leaf.setTitle("UpdatedTitle");
         leaf.setContent("UpdatedContent");
         leaf.setVisibility(false);
-        leaf.setLikeCount(1);
-        leaf.setViewCount(1);
-        leaf.setChildLeafCount(1);
+        leaf.setLikeCount(1L);
+        leaf.setViewCount(1L);
+        leaf.setChildLeafCount(1L);
         leaf.setBookMark(1L);
 
         // when

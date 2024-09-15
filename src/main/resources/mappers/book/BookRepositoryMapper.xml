@@ -4,9 +4,10 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="Recorders.ggogit.domain.book.repository.BookRepository">
 
-    <insert id="save" parameterType="Book">
-        INSERT INTO BOOK (MEMBER_ID, TITLE, AUTHOR, PUBLISHER, PUBLIC_DATE, TOTAL_PAGE, IMAGE_FILE, RESOURCE_FROM)
-        VALUES (#{memberId}, #{title}, #{author}, #{publisher}, #{publicDate}, #{totalPage}, #{imageFile}, #{resourceFrom})
+    <insert id="save" parameterType="Book"
+            useGeneratedKeys="true" keyProperty="id" keyColumn="ID">
+        INSERT INTO BOOK (MEMBER_ID, BOOK_CATEGORY_ID, TITLE, AUTHOR, PUBLISHER, PUBLIC_DATE, TOTAL_PAGE, IMAGE_FILE, RESOURCE_FROM)
+        VALUES (#{memberId}, #{bookCategoryId}, #{title}, #{author}, #{publisher}, #{publicDate}, #{totalPage}, #{imageFile}, #{resourceFrom})
     </insert>
 
     <update id="update" parameterType="Book">
@@ -24,6 +25,10 @@
 
     <select id="findAll" resultType="Book">
         SELECT * FROM BOOK
+    </select>
+
+    <select id="findById" resultType="Book" parameterType="Long">
+        SELECT * FROM BOOK WHERE ID = #{id}
     </select>
 
     <select id="findByTitle" resultType="Book" parameterType="String">

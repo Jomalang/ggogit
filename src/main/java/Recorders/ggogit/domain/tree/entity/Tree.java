@@ -13,7 +13,7 @@ import java.util.Date;
 @Builder
 public class Tree {
     private Long id;
-    private Long memberId ;
+    private Long memberId;
     private Long seedId;
     private String title;
     private String description;

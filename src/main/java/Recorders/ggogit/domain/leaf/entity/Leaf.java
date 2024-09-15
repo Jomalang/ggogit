@@ -13,11 +13,11 @@ public class Leaf {
     private Long treeId; // TODO: entity 수정
     private Long parentLeafId; // TODO: entity 수정
     private Boolean visibility;
-    private Integer viewCount;
-    private Integer likeCount;
+    private Long viewCount;
+    private Long likeCount;
     private String title;
     private String content;
-    private Integer childLeafCount;
+    private Long childLeafCount;
     private Long bookMark;
     private LocalDateTime updateTime;
     private LocalDateTime createTime;

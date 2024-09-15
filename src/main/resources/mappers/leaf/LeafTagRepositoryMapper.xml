@@ -51,9 +51,12 @@
     </select>
 
     <select id="existsById" parameterType="Long" resultType="Boolean">
-        SELECT COUNT(LEAF_ID) > 0
-        FROM LEAF_BOOK
-        WHERE LEAF_ID = #{leafId}
+        SELECT CASE
+            WHEN COUNT(ID) > 0 THEN 1
+            ELSE 0
+        END AS ROW_EXISTS
+        FROM LEAF_TAG
+        WHERE ID = #{id}
     </select>
 
     <select id="existsByMemberIdAndName" parameterType="LeafTag" resultType="Long">

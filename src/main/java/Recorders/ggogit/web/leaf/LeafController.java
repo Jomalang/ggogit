@@ -1,5 +1,6 @@
 package Recorders.ggogit.web.leaf;
 
+import Recorders.ggogit.domain.member.entity.Member;
 import Recorders.ggogit.domain.tree.entity.Seed;
 import Recorders.ggogit.domain.tree.service.SeedService;
 import Recorders.ggogit.domain.leaf.service.LeafBookService;
@@ -9,6 +10,8 @@ import Recorders.ggogit.domain.leaf.view.LeafImageCardView;
 import Recorders.ggogit.domain.leaf.view.LeafItemView;
 import Recorders.ggogit.web.leaf.form.LeafBookForm;
 import Recorders.ggogit.web.leaf.form.LeafForm;
+import Recorders.ggogit.web.member.session.SessionConst;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -56,20 +59,26 @@ public class LeafController {
     @PostMapping("/first/reg")
     public ModelAndView firstReg(
             @Valid @ModelAttribute("form") LeafBookForm form,
-            BindingResult bindingResult
+            BindingResult bindingResult,
+            HttpServletRequest request
     ) {
+//        Member member = (Member) request
+//                .getSession().getAttribute(SessionConst.LOGIN_MEMBER);
+
+        Long memberId = 1L; // TODO: 나중에 로그인한 사용자 정보로 변경
+
         if (seedService.isBookById(form.getSeedId())) { // 도서 리프 에러 처리
             if (bindingResult.hasErrors()) {
                 return new ModelAndView("view/leaf/1st-reg-book", "form", form);
             }
-            leafBookService.register(form.toLeafBookView()); // 도서 리프 등록
+            leafBookService.register(form.toLeafBookView(), memberId); // 도서 리프 등록
             return new ModelAndView("redirect:/leaf/list?tree_id=1&leaf_id=1");
         }
 
         if (bindingResult.hasErrors()) { // ETC 리프 에러 처리
             return new ModelAndView("view/leaf/1st-reg-etc", "form", form);
         }
-        leafEtcService.register(form.toLeafEtcView()); // ETC 리프 등록
+        leafEtcService.register(form.toLeafEtcView(), memberId); // ETC 리프 등록
         return new ModelAndView("redirect:/leaf/list?tree_id=1&leaf_id=1");
     }
 

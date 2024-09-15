@@ -73,9 +73,16 @@
 
           <section class="input-form__input-container">
             <h1 class="none">총페이지 입력</h1>
-            <div
-              th:replace="~{fragments/input :: text-box(label='*총 페이지 수', placeholder='총 페이지를 입력해주세요', name='totalPage')}"
-            ></div>
+            <div class="input-text__bar" th:fragment="text-box(label, placeholder, name)">
+              <label class="input-text__label">
+                <span class="input-text__label-text">*총 페이지 수</span>
+                <input class="input-text__input" type="number" name="totalPage"
+                       min="0"
+                       placeholder="총 페이지를 입력해주세요"
+                       autocomplete="off"
+                />
+              </label>
+            </div>
           </section>
 
           <section class="input-form__input-container">
@@ -120,8 +127,8 @@
             ></div>
           </section>
           <section class="none">
-            <label><input name="bookCategoryId" value="1"></label> <!--todo: 도서 카테고리 개발예정 -->
-            <label><input name="memberId" value="14"></label><!--todo: session storage or cookies or JWT 확인 필요 -->
+            <label><input name="bookCategoryId" value="1"></label> <!--TODO: 도서 카테고리 개발예정 -->
+            <label><input name="memberId" value="1"></label><!--TODO: session storage or cookies or JWT 확인 필요 -->
           </section>
 
         </form>

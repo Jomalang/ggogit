@@ -1,6 +1,6 @@
-package Recorders.ggogit.domain.member.repository;
+package Recorders.ggogit.domain.tree.repository;
 
-import Recorders.ggogit.domain.member.entity.Seed;
+import Recorders.ggogit.domain.tree.entity.Seed;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -19,4 +19,6 @@ public interface SeedRepository {
     Seed findById(Long id);
 
     Seed findByName(String name);
+
+    Seed findByDescription(String description);
 }

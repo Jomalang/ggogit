@@ -203,7 +203,7 @@
       <div class="input-page-number__frame">
         <label class="input-page-number__label">
           <input
-            class="input-page-number__input--start"
+            class="input-page-number__input input-page-number__input--start"
             id="input-page-number__input--start-id"
             th:field="*{startPage}"
             name="startPage"
@@ -214,7 +214,7 @@
         </label>
         <label class="input-page-number__label">
           <input
-            class="input-page-number__input--end"
+            class="input-page-number__input input-page-number__input--end"
             id="input-page-number__input--end-id"
             th:field="*{endPage}"
             name="endPage"
@@ -230,48 +230,17 @@
       FRAGMENT: 태그 선택 입력 박스
       ========================================== -->
     <div class="input-tag-select-box" th:fragment="tag-select(memberId)">
-      <p class="input-tag-select__label-text">선택</p>
+      <p class="input-tag-select__label-text">태그 선택</p>
       <label class="input-tag-select__bg">
         <div class="input-tag-select__button-box">
-          <!-- start 태그 리스트 3개 -->
-
           <div class="input-tag-select__tag-box">
             <ul class="input-tag-select__tags">
-              <li class="input-tag-select__tag">
-                <label class="input-tag-select__tag-label">
-                  <span class="input-tag-select__tag-text">태그</span>
-                  <button class="input-tag-select__tag-delete-btn">
-                    <img th:src="@{/svg/x-button.svg}" alt="next-button" />
-                  </button>
-                  <input class="none" name="tagIds" value="1" />
-                </label>
-              </li>
-
-              <li class="input-tag-select__tag">
-                <label class="input-tag-select__tag-label">
-                  <span class="input-tag-select__tag-text">태그</span>
-                  <button class="input-tag-select__tag-delete-btn">
-                    <img th:src="@{/svg/x-button.svg}" alt="next-button" />
-                  </button>
-                  <input class="none" name="tagIds" value="1" />
-                </label>
-              </li>
-
-              <li class="input-tag-select__tag">
-                <label class="input-tag-select__tag-label">
-                  <span class="input-tag-select__tag-text">태그</span>
-                  <button class="input-tag-select__tag-delete-btn">
-                    <img th:src="@{/svg/x-button.svg}" alt="next-button" />
-                  </button>
-                  <input class="none" name="tagIds" value="1" />
-                </label>
-              </li>
+              <!-- 태그들 들어감 -->
             </ul>
-            <!-- end 태그 리스트 3개 -->
-            <p class="input-tag-select__placeholder">선택해주세요</p>
+            <p class="input-tag-select__placeholder">태그를 선택해주세요</p>
           </div>
 
-          <a class="input-tag-select__button" id="input-tag-select__button-id" type="button" th:href="@{/tag/list(id=${memberId})}">
+          <a class="input-tag-select__button" id="input-tag-select__button-id" href="javascript:void(0)">
             <img th:src="@{/svg/next.svg}" alt="next-button" />
           </a>
         </div>

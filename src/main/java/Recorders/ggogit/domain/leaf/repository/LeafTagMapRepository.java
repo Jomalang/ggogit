@@ -18,4 +18,5 @@ public interface LeafTagMapRepository {
     List<LeafTagMap> findByLeafId(Long leafId);
     List<LeafTagMap> findByLeafTagId(Long tagId);
     void delete(LeafTagMap leafTagMap);
+    void deleteByLeafTagId(Long leafTagId);
 }

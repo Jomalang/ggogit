@@ -329,7 +329,7 @@
   transform: translateX(-50%);
 }
 
-.top-bar__form {
+.top-bar__success-link {
   order: 2;
 }
 
@@ -513,7 +513,7 @@
 
 .input-visibility__btns {
   border-radius: 12px;
-  padding: 8px 7px 8px 7px;
+  padding: 8px 0;
   display: flex;
   flex-direction: row;
   gap: 10px;
@@ -523,7 +523,7 @@
 }
 
 .input-visibility__label {
-  flex: 1;
+  flex-grow: 1;
 }
 
 .input-visibility__btn {
@@ -531,7 +531,7 @@
   border-radius: 12px;
   color: var(--text-no-active);
   font-weight: var(--bold);
-  font-size: 16px;
+  font-size: 14px;
   border: none;
   padding: 0 46px 0 46px;
   display: flex;
@@ -889,7 +889,7 @@ button {
 }
 
 /* =============================
-        나뭇잎 전체 검색
+        리프 전체 검색
          search-filter-log
     ============================== */
 
@@ -1191,28 +1191,30 @@ button {
   display: flex;
   width: 100%;
   flex-direction: row;
+  min-height: 24px;
   border-radius: 12px;
+  padding: 16px 16px;
   align-items: center;
-  padding: 16px;
   justify-content: space-between;
   background-color: var(--main3, #f5f8f1);
 }
 
 .input-tag-select__tag-box {
+  display: flex;
+  align-items: center;
   flex-wrap: wrap;
   gap: 8px;
 }
 
 .input-tag-select__placeholder {
-  margin: 8px 16px 4px 16px;
+  margin: 8px 0;
 }
 
 .input-tag-select__button {
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
-  height: 56px;
-  width: 56px;
+  padding-left: 16px;
 }
 
 .input-tag-select__tag-label {
@@ -1223,9 +1225,10 @@ button {
 }
 
 .input-tag-select__tags {
-  margin: 0 0 0 16px;
-  display: inline-block;
+  display: flex;
+  flex-wrap: wrap;
   flex-direction: row;
+  gap: 10px;
 }
 
 .input-tag-select__tag-text {
@@ -1238,7 +1241,6 @@ button {
   display: inline-block;
   flex-direction: row;
   border-radius: 12px;
-  margin: 4px 0 4px 0;
   padding: 6px 12px 6px 12px;
   background-color: var(--main1, #323a27);
 }

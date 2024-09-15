@@ -36,7 +36,6 @@
             <div th:replace="~{fragments/tag::tag-list(tags=${list})}"></div>
         </section>
     </main>
-
     <script>
 
         function makeSelectedTag(name, id) {
@@ -89,7 +88,7 @@
                 const tagName = searchTag.value.trim();
 
                 const params = new URLSearchParams();
-                params.append('member_id', 999); // TODO: 로그인한 사용자 ID 변경해야함
+                params.append('memberId', 1); // TODO: 로그인한 사용자 ID 변경해야함
                 params.append('search', tagName);
                 params.append('page', 1);
                 params.append('size', 20);
@@ -225,8 +224,11 @@
 
                 // 세션 스토리지에 넣기
                 const selectedTagListStorage = JSON.parse(sessionStorage.getItem('selectedTagList'));
-                selectedTagListStorage.push({id: parseInt(newTagId), name: tagName});
-                sessionStorage.setItem('selectedTagList', JSON.stringify(selectedTagListStorage));
+
+                if (selectedTagListStorage) { // 세션 스토리지에 저장된 태그 정보가 없는 경우
+                    selectedTagListStorage.push({id: parseInt(newTagId), name: tagName});
+                    sessionStorage.setItem('selectedTagList', JSON.stringify(selectedTagListStorage));
+                }
 
                 // 기존 리스트에서 제거
                 itemTag.closest('li.tag-info__item--unselected').remove();
@@ -261,18 +263,37 @@
             });
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
+        function loadBackPath() {
+            const aTag = document.querySelector('.tob-bar__back-link');
+            const saveLink = document.querySelector('.top-bar__success-link')
+            const prevPage = sessionStorage.getItem('prevPage');
+            const prevPageObj = JSON.parse(prevPage);
+            aTag.href = prevPageObj.path;
+            saveLink.href = prevPageObj.path;
+        }
 
-            // 세션 스토리지에 저장
-            const selectedTagList = [
-                {id: 1, name: '태그1'},
-                {id: 2, name: '태그2'},
-                {id: 3, name: '태그3'},
-            ];
-            sessionStorage.setItem('selectedTagList', JSON.stringify(selectedTagList));
+        function tagSaveEvent(tag) {
+            console.log(tag);
+            tag.addEventListener('click', (event) => {
+                const list = [];
+                document.querySelectorAll('.tag-info__item--selected').forEach(item => {
+                    const tagId = parseInt(item.id.replace('--selected', ''));
+                    const tagName = item.querySelector('.tag-info__name').textContent;
+                    list.push({id: tagId, name: tagName});
+                });
+                sessionStorage.setItem('selectedTagList', JSON.stringify(list));
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
 
             // 세션 스토리지에 저장된 태그 정보 Load
             loadSelectedTagList();
+            loadBackPath();
+
+            // 태그 저장 버튼 이벤트 추가
+            tagSaveEvent(document.querySelector('.top-bar__success-link'));
+            tagSaveEvent(document.querySelector('.tob-bar__back-link'))
 
             // 선택 태그 삭제 이벤트 추가
             document.querySelectorAll('.tag-info__item--selected').forEach(item => {

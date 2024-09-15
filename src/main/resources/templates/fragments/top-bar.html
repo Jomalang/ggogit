@@ -7,7 +7,7 @@
     <div class="top-bar--green" th:fragment="top-bar-back(title, link)">
       <div class="top-bar__frame">
         <p class="top-bar__title" th:text="${title}">트리 생성</p>
-        <a class="tob-bar--a" href="#" th:href="${link}">
+        <a class="tob-bar__back-link" href="#" th:href="${link}">
           <img
             th:src="@{/svg/back-arrow-icon.svg}"
             alt="top-bar--backarrow.svg"
@@ -107,11 +107,11 @@
 </div>
 
 <!-- ===================================
-      FRAGMENT: 나뭇잎 태그 선택 디테일 상단 바
+      FRAGMENT: 리프 태그 선택 디테일 상단 바
      =================================== -->
       <div class="top-bar--green" th:fragment="top-bar-tag-edit(tag, memberId)">
         <div class="top-bar__frame">
-          <a class="tob-bar--a" th:href="@{/tag/list(id=${memberId})}">
+          <a class="tob-bar__back-link" th:href="@{/tag/list(id=${memberId})}">
             <img th:src="@{/svg/back-arrow-icon.svg}" alt="top-bar--backarrow.svg"/>
           </a>
           <div class="tree-input-text--select__tag" th:text="${tag}">즐거움</div>
@@ -120,17 +120,17 @@
       </div>
 
 <!-- ===================================
-      FRAGMENT: 나뭇잎 태그 선택 디테일 상단 바
+      FRAGMENT: 리프 태그 선택 디테일 상단 바
      =================================== -->
     <div class="top-bar--green" th:fragment="top-bar-title(title)">
       <div class="top-bar__frame">
-        <a class="tob-bar--a">
+        <a class="tob-bar__back-link" href="prevPage">
           <img th:src="@{/svg/back-arrow-icon.svg}" alt="top-bar--backarrow.svg"/>
         </a>
         <p class="tob-bar__title" th:text="${title}">즐거운 텍스트</p>
-        <form class="top-bar__form" action="" method="post">
-          <button class="top-bar__text" type="submit">완료</button>
-        </form>
+        <a class="top-bar__success-link" href="prevPage">
+          <div class="top-bar__text" type="submit">완료</div>
+        </a>
       </div>
     </div>
 

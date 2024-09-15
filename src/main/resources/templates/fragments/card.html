@@ -181,7 +181,7 @@
 
     <div class="card-reading-progress-status__list" th:fragment="card-react-numbers(leaf,like,view)">
         <p class="card-reading-progress-status__leaf" th:with="varLeaf=${leaf}">
-            나뭇잎
+            리프
             <span class="card-reading-progress-status__num"  th:if="${varLeaf gt 999}">+999</span>
             <span class="card-reading-progress-status__num" th:if="${varLeaf le 999}" id="data-XXX"
                   th:text="${leaf}"
@@ -270,7 +270,7 @@ Branch List 사용
     </a>
     <div class="branch-card-bottom-info-frame">
         <div class="branch-card-bottom-info">
-            <span>나뭇잎<p th:text="${lists.leaf}"></p></span>
+            <span>리프<p th:text="${lists.leaf}"></p></span>
             <span>조회수<p th:text="${lists.view}"></p></span></div>
         <div class="__like-frame">
             <input
@@ -313,7 +313,7 @@ Branch List 사용
             </div>
             <div class="card-tree__bot-statistics-box">
                 <p class="card-tree__bot-leaf-text">
-                    <span class="card-tree__bot-leaf-count">999+</span> 나뭇잎
+                    <span class="card-tree__bot-leaf-count">999+</span> 리프
                 </p>
                 <p class="card-tree__bot-view-text">
                     <span class="card-tree__bot-view-count">999+</span> 조회수
@@ -351,7 +351,7 @@ Branch List 사용
                 <img class="sns-card-tree__top-tree-img" th:src="@{/svg/memoir-icon--white.svg}" alt="회고록 아이콘">
             </div>
             <div class="sns-card-tree__top-leaf-icon-box" th:if="${type eq 3}">
-                <img class="sns-card-tree__top-tree-img" th:src="@{/svg/leaf-icon--white.svg}" alt="나뭇잎 아이콘">
+                <img class="sns-card-tree__top-tree-img" th:src="@{/svg/leaf-icon--white.svg}" alt="리프 아이콘">
             </div>
         </a>
         <div class="sns-card-tree__top-sns-icon-box">
@@ -385,7 +385,7 @@ Branch List 사용
         <a href="">
             <div class="sns-card-tree__bot-statistics-box">
                 <p class="sns-card-tree__bot-leaf-text">
-                    <span class="sns-card-tree__bot-leaf-count">999+</span> 나뭇잎
+                    <span class="sns-card-tree__bot-leaf-count">999+</span> 리프
                 </p>
                 <p class="sns-card-tree__bot-view-text">
                     <span class="sns-card-tree__bot-view-count">999+</span> 조회수
@@ -421,7 +421,7 @@ Branch List 사용
                 <img class="card-another-records__top-cover-box" th:src="@{/img/card/detail-book.png}" alt="회고록 아이콘">
             </div>
             <div th:if="${type eq 3}">
-                <img class="card-another-records__top-cover-box" th:src="@{/img/card/card-book__log-info-cover.svg}" alt="나뭇잎 아이콘">
+                <img class="card-another-records__top-cover-box" th:src="@{/img/card/card-book__log-info-cover.svg}" alt="리프 아이콘">
             </div>
 
 
@@ -476,10 +476,10 @@ Branch List 사용
             <div class="card-another-records__bot-statistics-box">
                 <a href="">
                 <p th:if="${type eq 1}" class="card-another-records__bot-leaf-text">
-                    <span class="card-another-records__bot-leaf-count">999+</span> 나뭇잎
+                    <span class="card-another-records__bot-leaf-count">999+</span> 리프
                 </p>
                 <p th:if="${type eq 2}" class="card-another-records__bot-leaf-text">
-                    <span class="card-another-records__bot-leaf-count">999+</span> 나뭇잎
+                    <span class="card-another-records__bot-leaf-count">999+</span> 리프
                 </p>
                 <p class="card-another-records__bot-view-text">
                     <span class="card-another-records__bot-view-count">999+</span> 조회수

@@ -13,10 +13,10 @@
 <body>
 
     <header>
-        <h1 class="none">나뭇잎 생성 페이지</h1>
+        <h1 class="none">리프 생성 페이지</h1>
         <section class="tob-bar-back-container">
-            <h1 class="none">나뭇잎 생성 상단 바</h1>
-            <div th:replace="~{fragments/top-bar :: top-bar-back(title='나뭇잎 생성', link='#')}"></div>
+            <h1 class="none">리프 생성 상단 바</h1>
+            <div th:replace="~{fragments/top-bar :: top-bar-back(title='리프 생성', link='#')}"></div>
         </section>
     </header>
 
@@ -63,11 +63,12 @@
                 <section class="input-form__input-container">
                     <h1 class="none">공개성 선택</h1>
                     <div th:replace="~{fragments/input :: input-visibility(name='visibility')}"></div>
+
                 </section>
 
                 <section class="book-tree-submit-container">
                     <h1 class="none">로그 생성 버튼</h1>
-                    <div th:replace="~{fragments/button :: submit-btn-full-bar(text='로그 생성 완료')}"></div>
+                    <div th:replace="~{fragments/button :: submit-btn-full-bar(text='리프 생성')}"></div>
                 </section>
             </section>
         </form>
@@ -81,11 +82,83 @@
 
     <script>
 
+        function makeTagElement(tagId, tagName) {
+            const li = document.createElement('li');
+            li.classList.add('input-tag-select__tag');
+            li.innerHTML = `
+                <label class="input-tag-select__tag-label">
+                      <span class="input-tag-select__tag-text">${tagName}</span>
+                      <button class="input-tag-select__tag-delete-btn" type="button">
+                        <img src="/svg/x-button.svg" alt="next-button" />
+                      </button>
+                      <input class="none input-tag-select__input" name="tagIds" value="${tagId}" />
+                </label>
+            `;
+            return li;
+        }
+
+        function removeTagEvent(liTag) {
+
+            const tagList = document.querySelector('.input-tag-select__bg');
+            tagList.addEventListener('click', (event) => {
+                event.preventDefault(); // 라벨 클릭 이벤트 제거
+            });
+
+            const label = liTag.querySelector('.input-tag-select__tag-label');
+            label.addEventListener('click', (event) => {
+                event.preventDefault(); // 라벨 클릭 이벤트 제거
+            });
+
+            const input = label.querySelector('.input-tag-select__input');
+            const deleteBtn = liTag.querySelector('.input-tag-select__tag-delete-btn');
+            deleteBtn.addEventListener('click', () => {
+                // 세션 스토리지에서 삭제한다.
+                const sessionStorageTagList = sessionStorage.getItem('selectedTagList');
+                if (!sessionStorageTagList) { return; } // 저장된 데이터가 없다면 종료한다.
+                const tagInfos = JSON.parse(sessionStorageTagList);
+                const newTagInfos = tagInfos.filter(ti => ti.id !== parseInt(input.value));
+                sessionStorage.setItem('selectedTagList', JSON.stringify(newTagInfos));
+
+                // HTML 요소를 삭제한다.
+                liTag.remove();
+
+                // 태그가 0개인 경우 placeholder를 추가
+                const tagList = document.querySelector('.input-tag-select__tags');
+                if (tagList.children.length === 0) {
+                    const placeHolder = document.createElement('li');
+                    placeHolder.classList.add('input-tag-select__placeholder');
+                    placeHolder.textContent = '태그를 선택해주세요.';
+                    tagList.insertAdjacentElement('beforeend', placeHolder);
+                }
+            });
+        }
+
+        function loadTagData() {
+            // 세션 스토리지에서 불러온다.
+            const tagList = sessionStorage.getItem('selectedTagList');
+            if (!tagList) { return; } // 저장된 데이터가 없다면 종료한다.
+            // 알림 제거
+            const placeHolder = document.querySelector('.input-tag-select__placeholder');
+            placeHolder.remove();
+
+            const tagInfos = JSON.parse(tagList);
+            tagInfos.forEach(ti => {
+                const liTag = makeTagElement(ti.id, ti.name);
+                removeTagEvent(liTag);
+                const tagList = document.querySelector('.input-tag-select__tags');
+                tagList.insertAdjacentElement('beforeend', liTag);
+            });
+        }
+    </script>
+
+    <script>
+
         function saveInputData() {
             // 세션 스토리지에 저장한다.
             const form = document.getElementById('input-leaf-register-form-id');
             const formData = new FormData(form);
             const formJson = JSON.stringify(Object.fromEntries(formData.entries()));
+            console.log(formJson);
             sessionStorage.setItem('input-leaf-register-form', formJson);
         }
 
@@ -101,7 +174,7 @@
 
                 // 공개성 input
                 if (key === 'visibility') {
-                    const isPublic = formObj[key] === true;
+                    const isPublic = formObj[key] === '1'; // 1: 공개, 0: 비공개
                     document.getElementById('public').checked = isPublic;
                     document.getElementById('private').checked = !isPublic;
                     continue;
@@ -115,18 +188,30 @@
             }
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
-            const initDat = {
-                seedId: 1,
-                startPage: 100,
-                endPage: 120,
-                title: '안녕하세요',
-                content: '내용입니다.',
-                visibility: false,
-            };
-            sessionStorage.setItem('input-leaf-register-form', JSON.stringify(initDat));
+        function getUrlPath() {
+            return window.location.pathname + window.location.search;
+        }
 
+        function loadPrevPage() {
+            const prevPage = {
+                path: getUrlPath()
+            }
+            sessionStorage.setItem('prevPage', JSON.stringify(prevPage));
+        }
+
+        function tagSelectedBtnEvent() {
+            const tagSelectBtn = document.getElementById('input-tag-select__button-id');
+            tagSelectBtn.addEventListener('click', () => {
+                saveInputData();
+                location.href = '/tag/list';
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadPrevPage();
             loadInputData();
+            loadTagData();
+            tagSelectedBtnEvent();
         });
 
     </script>

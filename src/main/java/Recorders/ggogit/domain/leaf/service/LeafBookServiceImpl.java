@@ -20,8 +20,12 @@ import Recorders.ggogit.domain.tree.repository.TreeSaveTmpRepository;
 import Recorders.ggogit.type.SearchType;
 import Recorders.ggogit.type.SortType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -30,6 +34,9 @@ import java.util.Optional;
 public class LeafBookServiceImpl implements LeafBookService {
 
     private final static int LEAF_MAX_CHILD_COUNT = 3;
+
+    @Value("${file.upload-dir}")
+    private String uploadDir;
 
     @Autowired
     private LeafRepository leafRepository;
@@ -78,7 +85,13 @@ public class LeafBookServiceImpl implements LeafBookService {
             book = treeSaveTmp.toBook();
             bookRepository.save(book);
             treeSaveTmp.setBookId(book.getId()); // 도서 ID 설정
-            // TODO: 도서 이미지 저장 로직 추가
+
+            // 도서 이미지 저장
+            String imageFilePath = treeSaveTmp.getImageFile();
+            if (imageFilePath != null) { // 이미지를 저장한 경우에
+                String toFileName = book.getId() + ".jpg";
+                moveImageFile(imageFilePath, toFileName);
+            }
         } else {
             // 도서 조회
             book = Optional.ofNullable(bookRepository.findById(treeSaveTmp.getBookId()))
@@ -87,11 +100,11 @@ public class LeafBookServiceImpl implements LeafBookService {
 
         // 트리 생성 로직
         Tree tree = treeSaveTmp.toTree();
+        tree.setBookId(book.getId());
         treeRepository.save(tree);
         leafBookView.setTreeId(tree.getId());
         // 트리 이미지 저장 로직
 
-        // TODO: 도서 이미지 저장 로직 추가
         TreeImage treeImage = treeSaveTmp.toTreeImage();
         treeImage.setTreeId(tree.getId());
         treeImageRepository.save(treeImage);
@@ -311,5 +324,19 @@ public class LeafBookServiceImpl implements LeafBookService {
             tags.add(leafTag);
         }
         return tags;
+    }
+
+    public void moveImageFile(String fromPath, String toFileName) {
+        Path from = Path.of(fromPath);
+        Path to = Paths.get(uploadDir, "image", "book", toFileName);
+
+        try {
+            if (!Files.exists(to.getParent())) { // 폴더 경로 존재 확인
+                Files.createDirectories(to.getParent());
+            }
+            Files.move(from, to);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("이미지 파일 이동 실패");
+        }
     }
 }

@@ -56,12 +56,12 @@
             const li = document.createElement('li');
             li.classList.add('tag-info__item', 'tag-info__item--create');
             li.innerHTML = `
-        <div class="tag-info__create-btn">
-            <q class="tag-info__create-btn-name">생성</q>
-        </div>
-        <div class="tag-info__tag-box">
-            <q class="tag-info__name">${name}</q>
-        </div>`;
+            <div class="tag-info__create-btn">
+                <q class="tag-info__create-btn-name">생성</q>
+            </div>
+            <div class="tag-info__tag-box">
+                <q class="tag-info__name">${name}</q>
+            </div>`;
             return li;
         }
 
@@ -70,14 +70,14 @@
             li.classList.add('tag-info__item', 'tag-info__item--unselected');
             li.id = `${id}--unselected`;
             li.innerHTML = `
-        <div class="tag-info__tag-box">
-            <q class="tag-info__name">${name}</q>
-        </div>
-        <div class="tag-info__option-box">
-            <a class="tag-info__option-link" href="/tag/edit?id=${id}">
-                <img class="tag-info__option-btn" src="/svg/icon-option.svg" alt="태그 선택 제거 이미지">
-            </a>
-        </div>`;
+            <div class="tag-info__tag-box">
+                <q class="tag-info__name">${name}</q>
+            </div>
+            <div class="tag-info__option-box">
+                <a class="tag-info__option-link" href="/tag/edit?id=${id}">
+                    <img class="tag-info__option-btn" src="/svg/icon-option.svg" alt="태그 선택 제거 이미지">
+                </a>
+            </div>`;
             return li;
         }
 
@@ -191,7 +191,7 @@
         }
 
         function addSelectEvent(itemTag) {
-            itemTag.addEventListener('click', (event) => {
+            itemTag.addEventListener('click', () => {
 
                 // 선택된 태그들
                 const selectedList = document.querySelector('.tag-info__list--selected');
@@ -274,7 +274,7 @@
 
         function tagSaveEvent(tag) {
             console.log(tag);
-            tag.addEventListener('click', (event) => {
+            tag.addEventListener('click', () => {
                 const list = [];
                 document.querySelectorAll('.tag-info__item--selected').forEach(item => {
                     const tagId = parseInt(item.id.replace('--selected', ''));

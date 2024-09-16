@@ -47,17 +47,12 @@ public class TreeSaveTmp {
         return Tree.builder()
                 .id(id)
                 .memberId(memberId)
+                .bookId(bookId)
                 .seedId(seedId)
                 .title(treeTitle)
                 .description(description)
                 .bookMarkCount(0)
                 .visibility(visibility)
-                .build();
-    }
-
-    public TreeBook toTreeBook() {
-        return TreeBook.builder()
-                .readingPage(0)
                 .build();
     }
 

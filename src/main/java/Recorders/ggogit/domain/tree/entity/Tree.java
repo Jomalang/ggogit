@@ -14,6 +14,7 @@ import java.util.Date;
 public class Tree {
     private Long id;
     private Long memberId;
+    private Long bookId;
     private Long seedId;
     private String title;
     private String description;

@@ -1015,10 +1015,16 @@ button {
     첫뻔째 로그 생성 로그 이미지
   ========================== */
 .first-log-box {
-  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
+  transform: translateY(-100%);
+  transition: transform 0.5s ease;
+}
+
+.first-log-box--show {
+  transform: translateY(0);
 }
 
 .first-log-box__line {

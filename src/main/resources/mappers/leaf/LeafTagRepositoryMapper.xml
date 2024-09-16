@@ -34,12 +34,12 @@
     <select id="findByLeafId" resultType="LeafTag">
         SELECT LT.*
         FROM (
-            SELECT LTM.TAG_ID
-            FROM LEAF_TAG_MAP LTM
-            WHERE LTM.LEAF_ID = #{leafId}
-        )
+            SELECT *
+            FROM LEAF_TAG_MAP
+            WHERE LEAF_ID = #{leafId}
+        ) LTM
         JOIN LEAF_TAG LT
-            ON LT.ID = LTM.TAG_ID
+            ON LT.ID = LTM.LEAF_TAG_ID
     </select>
 
     <select id="count" resultType="Long">

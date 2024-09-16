@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -32,23 +33,22 @@ public class LeafTree {
 
     public void addNode(Leaf node) {
         LeafNode leafNode = new LeafNode(node);
-        nodes.add(leafNode);
 
         if (root == null) { // root가 없으면 root로 설정
             root = leafNode;
+            nodes.add(leafNode);
             branchNodes.add(leafNode);
             return;
         }
 
-        // 리프노드들 에서 부모 찾기
-        LeafNode parent = findParent(node);
-        leafNode.setParent(parent);
-        if (!parent.isBranch()) { // 분기가 아니면 제거
+        LeafNode parent = findParent(node); // 리프노드들 에서 부모 찾기
+        leafNode.setParent(parent); // 부모 설정
+        if (!parent.isBranch()) { // 트리 자식 개수가 3개 이상이면, 분기 못함 > 분기 목록에서 제거
             branchNodes.remove(parent);
         }
 
-        parent.addChild(node);
-        branchNodes.add(leafNode);
+        parent.addChild(leafNode); // 부모에 자식 추가
+        branchNodes.add(leafNode); // 분기 목록에 추가
     }
 
     private LeafNode findParent(Leaf node) {
@@ -67,7 +67,6 @@ public class LeafTree {
     public List<Leaf> getBranch(Long leafId) {
         List<Leaf> branchLeafs = new ArrayList<>();
         LeafNode leafNode = findParent(leafId);
-
         do {
             branchLeafs.add(leafNode.getData());
             leafNode = leafNode.getParent();
@@ -78,13 +77,28 @@ public class LeafTree {
 
     public List<LeafNode> getBranchNodes(Long leafId) {
         List<LeafNode> branchNodes = new ArrayList<>();
-        LeafNode leafNode = findParent(leafId);
+        LeafNode startRootNode = findParent(leafId);
+        LeafNode startEndNode = startRootNode;
 
-        do {
-            branchNodes.add(leafNode);
-            leafNode = leafNode.getParent();
-        } while (leafNode != null);
+        while (startEndNode.hasChildren()) { // INPUT 리프 부터 말단 리프까지
+            List<LeafNode> children = startEndNode.getChildren();
+            int size = children.size();
+            if (size == 1) {
+                startEndNode = children.getFirst();
+            } else if (size == 2) {
+                startEndNode = children.getFirst();
+            } else if (size == 3) {
+                startEndNode = children.get(1);
+            }
+            branchNodes.add(startEndNode);
+        }
 
+        while (startRootNode != null) { // INPUT 리프 부터 ROOT까지
+            branchNodes.addLast(startRootNode);
+            startRootNode = startRootNode.getParent();
+        }
+
+        branchNodes.sort(Comparator.comparing(o -> o.getData().getCreateTime())); // 생성 시간 순으로 정렬
         return branchNodes;
     }
 }

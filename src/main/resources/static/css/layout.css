@@ -296,6 +296,10 @@ home-tree__reg-4--search-book__input
   background-color: var(--main2, #e5eddb);
 }
 
+.log-list-container {
+  margin: 600px 0;
+}
+
 .log-list-date-title-container {
   margin: 14px 24px 0 24px;
   position: absolute;

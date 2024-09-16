@@ -145,7 +145,7 @@ public class LeafController {
             return new ModelAndView("view/leaf/edit-etc","form", leafEtcService.getLeafEtcView(id));
         }
     }
-
+    
     @GetMapping("/list")
     public String list(
         @RequestParam(value = "tree_id") Long treeId,
@@ -154,17 +154,11 @@ public class LeafController {
     ) {
         List<LeafItemView> list = leafService.getLeafItems(treeId, leafId);
 
-//        for (LeafItemView item : list) { 화면에서 처리하도록 변경
-//            if (item.getFocused()) {
-//                model.addAttribute("focusedTime", item.getCreateTime());
-//                break;
-//            }
-//        }
-
         // 최근 수정 브랜치 이름 정보 넣어야함
-        model.addAttribute("recentBranch", leafService.getRecentBranch(treeId, leafId));
+        model.addAttribute("focusedTime", list.getLast().getCreateTime());
+        model.addAttribute("recentBranch", leafService.getRecentBranch(treeId, list.getLast().getId()));
         model.addAttribute("breadcrumb", leafService.getBreadcrumb(treeId, leafId));
-        model.addAttribute("list", list.reversed()); // 거꾸로 정렬
+        model.addAttribute("list", list); // 거꾸로 정렬
         return "view/leaf/list";
     }
 
@@ -181,5 +175,11 @@ public class LeafController {
         List<LeafImageCardView> leafImageCardViews = leafService.getLeafImageCardViews(memberId);
         model.addAttribute("leafImageCardViews", leafImageCardViews);
         return "view/leaf/list";
+    }
+
+    @GetMapping("/list/test")
+    public String listTest(
+    ) {
+        return "view/leaf/list-test";
     }
 }

@@ -99,4 +99,16 @@ class LeafRepositoryTest {
         assertEquals(updatedLeaf.getChildLeafCount(), 1);
         assertEquals(updatedLeaf.getBookMark(), 1L);
     }
+
+    @Test
+    void findByTreeIdOrderByCreateTimeDesc() {
+        // given
+        List<Leaf> leafs = leafRepository.findByTreeIdOrderByCreateTimeDesc(1L);
+        for (Leaf leaf : leafs) {
+            System.out.println(leaf);
+        }
+        // when
+
+        // then
+    }
 }

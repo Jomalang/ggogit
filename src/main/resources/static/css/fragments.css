@@ -1012,7 +1012,7 @@ button {
 
 /* =========================
          first-log-box
-    첫뻔째 로그 생성 로그 이미지
+    첫뻔째 리프 생성 리프 이미지
   ========================== */
 .first-log-box {
   display: flex;
@@ -1058,7 +1058,7 @@ button {
 }
 
 /*  ==========================================
-    FRAGMENT: 로그 페이지 구간 기록
+    FRAGMENT: 리프 페이지 구간 기록
     ========================================== */
 .input-page-number-box {
   width: 100%;
@@ -1252,7 +1252,7 @@ button {
 }
 
 /*  ==========================================
-    FRAGMENT: 로그 생성 이미지
+    FRAGMENT: 리프 생성 이미지
     ========================================== */
 .before-log-box {
   width: 100%;
@@ -1339,7 +1339,7 @@ button {
 }
 
 /*  ==========================================
-    FRAGMENT: 로그 경로 바
+    FRAGMENT: 리프 경로 바
     ========================================== */
 .log-path-box {
   width: 100%;
@@ -1355,7 +1355,7 @@ button {
 }
 
 /*  ==========================================
-    FRAGMENT: 로그 정보
+    FRAGMENT: 리프 정보
     ========================================== */
 
 .log-item__link {
@@ -1398,34 +1398,10 @@ button {
 }
 
 /*  ==========================================
-    FRAGMENT: 로그 TYPE 1
+    FRAGMENT: 리프 TYPE 1
     ========================================== */
 
-.log-item__type--1 {
-  margin: 300px 24px 0 24px;
-  padding-top: 26px;
-  display: flex;
-  flex-direction: row;
-}
-
-.log-item__branch-img--1 {
-  background-color: white;
-  width: 12px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 4px;
-  margin-bottom: 2px;
-}
-
-.log-item__line--1 {
-  width: 2px;
-  height: 70px;
-  background: var(--main1, #323a27);
-}
-
-.log-item__circle--1 {
+.log-item__circle {
   width: 12px;
   height: 12px;
   border-radius: 100px;
@@ -1433,159 +1409,70 @@ button {
 }
 
 /*  ==========================================
-    FRAGMENT: 로그 TYPE 2
+    FRAGMENT: 리프 TYPE 2
     ========================================== */
-.log-item__type--2 {
-  margin: 2px 0 2px 24px;
-  display: flex;
-  flex-direction: row;
-}
-
-.log-item__branch-img--2 {
-  display: flex;
-  width: 12px;
-  gap: 4px;
-  flex-direction: column;
-  align-items: center;
-}
-
-.log-item__line-top--2 {
-  width: 2px;
-  height: 20px;
-  background: var(--main1, #323a27);
-}
-
-.log-item__circle--2 {
-  width: 12px;
-  height: 12px;
-  border-radius: 100px;
-  background-color: var(--main1, #323a27);
-}
-
-.log-item__line-bot--2 {
-  width: 2px;
-  height: 70px;
-  background: var(--main1, #323a27);
-}
 
 .log-item__info-box {
   width: 100%;
 }
 
-.log-item__right-branch-img--2 {
-  width: 100%;
-  margin: 29px 0 0 0;
-}
-
-.log-item__line-right--2 {
-  height: 2px;
-  width: 100%;
-  background-color: var(--branch-left, #d6d8d4);
-}
-
-.log-item__text-box--2 {
-  margin: 15px 0 0 8px;
-}
-
 /*  ==========================================
-    FRAGMENT: 로그 TYPE 3
+    FRAGMENT: 리프 TYPE 3
     ========================================== */
-.log-item__type--3 {
+.log-item-box {
   margin: 2px 0 2px 0;
   display: flex;
   flex-direction: row;
 }
 
-.log-item__branch-img--3 {
+.log-item__mid-branch {
   display: flex;
   width: 12px;
+  flex-grow: 1;
   gap: 4px;
   flex-direction: column;
   align-items: center;
 }
 
-.log-item__line-top--3 {
+.log-item__line-top {
   width: 2px;
   height: 20px;
   background: var(--main1, #323a27);
 }
 
-.log-item__circle--3 {
-  width: 12px;
-  height: 12px;
-  border-radius: 100px;
-  background-color: var(--main1, #323a27);
-}
-
-.log-item__line-bot--3 {
+.log-item__line-bot {
   width: 2px;
-  height: 70px;
+  flex-grow: 1;
   background: var(--main1, #323a27);
 }
 
-.log-item__right-branch-img--3 {
+.log-item__right-branch {
   width: 100%;
   margin: 29px 0 0 0;
 }
 
-.log-item__line-right--3 {
+.log-item__line-right {
   height: 2px;
   width: 100%;
   background-color: var(--branch-left, #d6d8d4);
 }
 
-.log-item__text-box--3 {
+.log-item__text-box {
   margin: 15px 0 0 8px;
 }
 
-.log-item__left-branch-img--3 {
+.log-item__left-branch {
   padding-top: 29px;
 }
 
-.log-item__line-left--3 {
+.log-item__line-left {
   margin-right: 4px;
   height: 2px;
   width: 20px;
   background-color: var(--main1, #323a27);
 }
 
-/*  ==========================================
-    FRAGMENT: 로그 TYPE 4
-    ========================================== */
-.log-item__type--4 {
-  margin: 0 24px 0 24px;
-  padding: 2px 0;
-  display: flex;
-  flex-direction: row;
-}
-
-.log-item__text-box--4 {
-  margin: 44px 0 0 8px;
-}
-
-/*  ==========================================
-    FRAGMENT: 로그 TYPE 5
-    ========================================== */
-.log-item__type--5 {
-  margin: 2px 0 2px 0;
-  display: flex;
-  flex-direction: row;
-}
-
-.log-item__text-box--5 {
-  margin: 44px 0 0 8px;
-}
-
-/*  ==========================================
-    FRAGMENT: 로그 TYPE 6
-    ========================================== */
-.log-item__type--6 {
-  margin: 0 24px 400px 24px;
-  display: flex;
-  flex-direction: row;
-}
-
-.log-item__circle--check {
+.node--active {
   background-color: var(--warning, #ba0c0c);
 }
 

@@ -38,17 +38,15 @@ public class LeafServiceImpl implements LeafService {
     @Override
     public List<LeafItemView> getLeafItems(Long treeId, @Nullable Long leafId) {
         List<Leaf> leafs =  leafRepository.findByTreeIdOrderByCreateTimeDesc(treeId);
-
         LeafTree leafTree = new LeafTree(leafs); // Tree 자료구조
-        List<LeafNode> branch = leafTree.getBranchNodes(leafId);
+        List<LeafNode> branchNodes = leafTree.getBranchNodes(leafId);
 
         List<LeafItemView> leafItemViews = new ArrayList<>();
-        for (LeafNode leafNode : branch) {
-//            List<LeafTag> tags = leafTagRepository.findByLeafId(leafNode.getData().getId());
-            List<LeafTag> tags = new ArrayList<>();
-            leafItemViews.add(LeafItemView.of(leafNode, tags));
+        for (LeafNode leafNode : branchNodes) {
+            List<LeafTag> leafTags = leafTagRepository.findByLeafId(leafNode.getData().getId());
+            leafItemViews.add(LeafItemView.of(leafNode, leafTags));
         }
-        leafItemViews.getFirst().setFocused(true); // 첫번째 리프는 focused
+        leafItemViews.getLast().setFocused(true); // 마지막 리프에 포커스
 
         // 트리 조회
         return leafItemViews;

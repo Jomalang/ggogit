@@ -114,7 +114,7 @@
           <a class="tob-bar__back-link" th:href="@{/tag/list(id=${memberId})}">
             <img th:src="@{/svg/back-arrow-icon.svg}" alt="top-bar--backarrow.svg"/>
           </a>
-          <div class="tree-input-text--select__tag" th:text="${tag}">즐거움</div>
+          <div class="tree-input-text--select__tag" th:text="${tag.name}">즐거움</div>
             <button class="top-bar__text" type="submit">완료</button>
         </div>
       </div>

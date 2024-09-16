@@ -9,27 +9,27 @@
     <link th:href="@{/css/fragments.css}" rel="stylesheet" />
     <link th:href="@{/css/layout.css}" rel="stylesheet" />
 
-    <title>로그 리스트</title>
+    <title>리프 리스트</title>
 </head>
 
 <body>
 
     <header class="log-list-header-container">
-        <h1 class="none">로그 목록</h1>
+        <h1 class="none">리프 목록</h1>
         <section>
             <h1 class="none">뒤로가기 상단바</h1>
             <div th:replace="~{fragments/top-bar :: top-bar-back(title='브랜치', link='#')}"></div>
         </section>
 
         <section>
-            <h1 class="none">현재 포커싱 로그 정보</h1>
+            <h1 class="none">현재 포커싱 리프 정보</h1>
             <section class="log-path-container">
-                <h1 class="none">로그 경로</h1>
+                <h1 class="none">리프 경로</h1>
                 <div th:replace="~{fragments/bar :: log-path(tree=${breadcrumb.treeName}, branch=${breadcrumb.branchName})}"></div>
             </section>
 
             <section class="log-list-date-title-container">
-                <h1 class="none">로그 날짜</h1>
+                <h1 class="none">리프 날짜</h1>
                 <div th:replace="~{fragments/text :: text-main-title-right(title=${#dates.format(focusedTime, 'yyyy년 MM월 dd일')}, size=24)}"></div>
             </section>
         </section>
@@ -38,7 +38,7 @@
     <main>
 
         <section class="log-list-container">
-            <h1 class="none">로그 리스트</h1>
+            <h1 class="none">리프 리스트</h1>
 
             <section th:each="leaf : ${list}">
                 <h1 class="none">로그</h1>
@@ -52,8 +52,8 @@
     <aside class="log-list-bot-bar-container">
         <h1 class="none">브랜치 정보 알림 하단 바</h1>
         <section class="log-list-bot-btn-container">
-            <h1 class="none">로그 생성 버튼</h1>
-            <a th:replace="~{fragments/button :: btn-short-a--green(href='#', text='로그 생성')}"></a>
+            <h1 class="none">리프 생성 버튼</h1>
+            <a th:replace="~{fragments/button :: btn-short-a--green(href='#', text='리프 생성')}"></a>
         </section>
 
         <section class="log-list-bot-bar-info-container">
@@ -61,6 +61,39 @@
             <div th:replace="~{fragments/bot-bar :: branch-state-main(branch=${recentBranch.branchName}, log=${recentBranch.leafCount}, like=${recentBranch.likeCount}, view=${recentBranch.viewCount}, date=${recentBranch.updateTime})}"></div>
         </section>
     </aside>
+
+    <script>
+        function addNodeCheckEvent() {
+            window.addEventListener('scroll', () => {
+                const nodes = document.querySelectorAll('.node');
+
+                nodes.forEach(node => {
+                    const item =  node.closest('.leaf-item');
+
+                    const position = item.getBoundingClientRect();
+                    const top = position.top;
+                    const bottom = position.bottom;
+
+                    // 화면의 중앙 값
+                    const midHeight = (window.innerHeight / 2) - 100;
+
+                    console.log(top, midHeight, bottom);
+
+                    if (top <= midHeight && midHeight <= bottom) {
+                        node.classList.add('node--active');
+                    } else {
+                        node.classList.remove('node--active');
+                    }
+                });
+            });
+        }
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            addNodeCheckEvent();
+        });
+    </script>
 
 </body>
 </html>

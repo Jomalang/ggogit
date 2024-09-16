@@ -3,7 +3,7 @@
 <body>
 
 <!-- ==========================================
-     FRAGMENT: 로그 첫 생성 이미지
+     FRAGMENT: 리프 첫 생성 이미지
      ========================================== -->
     <div class="first-log-box" th:fragment="frist-log">
         <div class="first-log-box__line">s</div>
@@ -11,7 +11,7 @@
     </div>
 
 <!-- ==========================================
-     FRAGMENT: 로그 생성 이미지
+     FRAGMENT: 리프 생성 이미지
      ========================================== -->
 <div class="before-log-box" th:fragment="before-log">
     <div class="before-log__branch">
@@ -20,7 +20,7 @@
     </div>
     <div class="before-log__text-box">
         <p class="before-log__text">이전 로그</p>
-        <p class="before-log__title">로그 제목입니다.</p>
+        <p class="before-log__title">리프 제목입니다.</p>
         <p class="before-log__date">2024-07-18</p>
         <ul class="before-log__tags">
             <li class="before-log__tag">태그</li>
@@ -31,57 +31,32 @@
 </div>
 
 <!-- ==========================================
-     FRAGMENT: 로그
+     FRAGMENT: 리프
      ========================================== -->
 <div class="log-item" th:fragment="log-item(type, title, date, link, tags)">
 
-    <!--초기 시작 로그 -->
-    <section class="log-item__type--1" th:if="${type == 0}">
-        <div class="log-item__branch-img--1">
-            <div class="log-item__circle--1 log-item__circle--check"></div>
-        </div>
-        <a class="log-item__link" href="">
-            <div class="log-item__text-box">
-                <p class="log-item__title" th:text="${title}">로그 제목입니다.</p>
-                <p class="log-item__date" th:text="${#dates.format(date, 'yyyy-MM-dd')}">2024-07-18</p>
-                <ul class="log-item__tags">
-                    <li class="log-item__tag" th:each="tag : ${tags}" th:text="${tag.name}">태그</li>
-                </ul>
-            </div>
-        </a>
-    </section>
+    <!-- ==========================================
+         FRAGMENT: 리프 초기화
+         TYPE: 0
+         ========================================== -->
+    <div class="log-item-box leaf-item" th:if="${type == 0}">
 
-    <!--시작-->
-    <section class="log-item__type--1" th:if="${type == 1}">
-        <div class="log-item__branch-img--1">
-            <div class="log-item__circle--1"></div>
-            <div class="log-item__line--1"></div>
+        <div class="log-item__left-branch">
+            <div class="log-item__line-left hidden"></div>
         </div>
-        <a class="log-item__link" href="">
-            <div class="log-item__text-box">
-                <p class="log-item__title" th:text="${title}">로그 제목입니다.</p>
-                <p class="log-item__date" th:text="${#dates.format(date, 'yyyy-MM-dd')}">2024-07-18</p>
-                <ul class="log-item__tags">
-                    <li class="log-item__tag" th:each="tag : ${tags}" th:text="${tag.name}">태그</li>
-                </ul>
-            </div>
-        </a>
-    </section>
 
-    <!--오른쪽-->
-    <section class="log-item__type--2" th:if="${type == 2}">
-        <div class="log-item__branch-img--2">
-            <div class="log-item__line-top--2"></div>
-            <div class="log-item__circle--2"></div>
-            <div class="log-item__line-bot--2"></div>
+        <div class="log-item__mid-branch">
+            <div class="log-item__line-top hidden"></div>
+            <div class="log-item__circle node"></div>
+            <div class="log-item__line-bot hidden"></div>
         </div>
         <div class="log-item__info-box">
-            <div class="log-item__right-branch-img--2">
-                <div class="log-item__line-right--2"></div>
+            <div class="log-item__right-branch">
+                <div class="log-item__line-right hidden"></div>
             </div>
-            <a class="log-item__link" href="">
-                <div class="log-item__text-box--2">
-                    <p class="log-item__title" th:text="${title}">로그 제목입니다.</p>
+            <a class="log-item__link">
+                <div class="log-item__text-box">
+                    <p class="log-item__title" th:text="${title}">리프 제목입니다.</p>
                     <p class="log-item__date" th:text="${#dates.format(date, 'yyyy-MM-dd')}">2024-07-18</p>
                     <ul class="log-item__tags">
                         <li class="log-item__tag" th:each="tag : ${tags}" th:text="${tag.name}">태그</li>
@@ -89,27 +64,31 @@
                 </div>
             </a>
         </div>
-    </section>
+    </div>
 
-    <!--양쪽-->
-    <section class="log-item__type--3" th:if="${type == 3}">
 
-        <div class="log-item__left-branch-img--3">
-            <div class="log-item__line-left--3"></div>
+    <!-- ==========================================
+         FRAGMENT: 리프 아래
+         TYPE: 1
+         ========================================== -->
+    <div class="log-item-box leaf-item" th:if="${type == 1}">
+
+        <div class="log-item__left-branch">
+            <div class="log-item__line-left hidden"></div>
         </div>
 
-        <div class="log-item__branch-img--3">
-            <div class="log-item__line-top--3"></div>
-            <div class="log-item__circle--3"></div>
-            <div class="log-item__line-bot--3"></div>
+        <div class="log-item__mid-branch">
+            <div class="log-item__line-top hidden"></div>
+            <div class="log-item__circle node"></div>
+            <div class="log-item__line-bot"></div>
         </div>
         <div class="log-item__info-box">
-            <div class="log-item__right-branch-img--3">
-                <div class="log-item__line-right--3"></div>
+            <div class="log-item__right-branch">
+                <div class="log-item__line-right hidden"></div>
             </div>
-            <a class="log-item__link" href="">
-                <div class="log-item__text-box--3">
-                    <p class="log-item__title" th:text="${title}">로그 제목입니다.</p>
+            <a class="log-item__link">
+                <div class="log-item__text-box">
+                    <p class="log-item__title" th:text="${title}">리프 제목입니다.</p>
                     <p class="log-item__date" th:text="${#dates.format(date, 'yyyy-MM-dd')}">2024-07-18</p>
                     <ul class="log-item__tags">
                         <li class="log-item__tag" th:each="tag : ${tags}" th:text="${tag.name}">태그</li>
@@ -117,66 +96,317 @@
                 </div>
             </a>
         </div>
-    </section>
+    </div>
 
-    <!--아래-->
-    <section class="log-item__type--4" th:if="${type == 4}">
-        <div class="log-item__branch-img--3">
-            <div class="log-item__line-top--3"></div>
-            <div class="log-item__circle--3"></div>
-            <div class="log-item__line-bot--3"></div>
+    <!-- ==========================================
+         FRAGMENT: 리프 아래 오른쪽
+         TYPE: 2
+         ========================================== -->
+    <div class="log-item-box leaf-item" th:if="${type == 2}">
+
+        <div class="log-item__left-branch">
+            <div class="log-item__line-left hidden"></div>
         </div>
-        <a class="log-item__link" href="">
-            <div class="log-item__text-box--4">
-                <p class="log-item__title" th:text="${title}">로그 제목입니다.</p>
-                <p class="log-item__date" th:text="${#dates.format(date, 'yyyy-MM-dd')}">2024-07-18</p>
-                <ul class="log-item__tags">
-                    <li class="log-item__tag" th:each="tag : ${tags}" th:text="${tag.name}">태그</li>
-                </ul>
+
+        <div class="log-item__mid-branch">
+            <div class="log-item__line-top hidden"></div>
+            <div class="log-item__circle node"></div>
+            <div class="log-item__line-bot"></div>
+        </div>
+        <div class="log-item__info-box">
+            <div class="log-item__right-branch">
+                <div class="log-item__line-right"></div>
             </div>
-        </a>
-    </section>
+            <a class="log-item__link">
+                <div class="log-item__text-box">
+                    <p class="log-item__title" th:text="${title}">리프 제목입니다.</p>
+                    <p class="log-item__date" th:text="${#dates.format(date, 'yyyy-MM-dd')}">2024-07-18</p>
+                    <ul class="log-item__tags">
+                        <li class="log-item__tag" th:each="tag : ${tags}" th:text="${tag.name}">태그</li>
+                    </ul>
+                </div>
+            </a>
+        </div>
+    </div>
 
-    <!--왼쪽-->
-    <section class="log-item__type--3" th:if="${type == 5}">
+<!-- ==========================================
+     FRAGMENT: 리프 아래 양쪽
+     TYPE: 3
+     ========================================== -->
+    <div class="log-item-box leaf-item" th:if="${type == 3}">
 
-        <div class="log-item__left-branch-img--3">
-            <div class="log-item__line-left--3"></div>
+        <div class="log-item__left-branch">
+            <div class="log-item__line-left"></div>
         </div>
 
-        <div class="log-item__branch-img--3">
-            <div class="log-item__line-top--3"></div>
-            <div class="log-item__circle--3"></div>
-            <div class="log-item__line-bot--3"></div>
+        <div class="log-item__mid-branch">
+            <div class="log-item__line-top hidden"></div>
+            <div class="log-item__circle node"></div>
+            <div class="log-item__line-bot"></div>
         </div>
-        <a class="log-item__link" href="">
-            <div class="log-item__text-box--5">
-                <p class="log-item__title" th:text="${title}">로그 제목입니다.</p>
-                <p class="log-item__date" th:text="${#dates.format(date, 'yyyy-MM-dd')}">2024-07-18</p>
-                <ul class="log-item__tags">
-                    <li class="log-item__tag" th:each="tag : ${tags}" th:text="${tag.name}">태그</li>
-                </ul>
+        <div class="log-item__info-box">
+            <div class="log-item__right-branch">
+                <div class="log-item__line-right"></div>
             </div>
-        </a>
-    </section>
-
-    <!--끝-->
-    <section class="log-item__type--6" th:if="${type == 6}">
-        <div class="log-item__branch-img--3">
-            <div class="log-item__line-top--3"></div>
-            <div class="log-item__circle--3 log-item__circle--check"></div>
+            <a class="log-item__link">
+                <div class="log-item__text-box">
+                    <p class="log-item__title" th:text="${title}">리프 제목입니다.</p>
+                    <p class="log-item__date" th:text="${#dates.format(date, 'yyyy-MM-dd')}">2024-07-18</p>
+                    <ul class="log-item__tags">
+                        <li class="log-item__tag" th:each="tag : ${tags}" th:text="${tag.name}">태그</li>
+                    </ul>
+                </div>
+            </a>
         </div>
-        <a class="log-item__link" href="">
-            <div class="log-item__text-box--4">
-                <p class="log-item__title" th:text="${title}">로그 제목입니다.</p>
-                <p class="log-item__date" th:text="${#dates.format(date, 'yyyy-MM-dd')}">2024-07-18</p>
-                <ul class="log-item__tags">
-                    <li class="log-item__tag" th:each="tag : ${tags}" th:text="${tag.name}">태그</li>
-                </ul>
-            </div>
-        </a>
-    </section>
+    </div>
 
+<!-- ==========================================
+     FRAGMENT: 리프 아래 왼쪽
+     TYPE: 4
+     ========================================== -->
+    <div class="log-item-box leaf-item" th:if="${type == 4}">
+
+        <div class="log-item__left-branch">
+            <div class="log-item__line-left"></div>
+        </div>
+
+        <div class="log-item__mid-branch">
+            <div class="log-item__line-top hidden"></div>
+            <div class="log-item__circle node"></div>
+            <div class="log-item__line-bot"></div>
+        </div>
+        <div class="log-item__info-box">
+            <div class="log-item__right-branch hidden">
+                <div class="log-item__line-right"></div>
+            </div>
+            <a class="log-item__link">
+                <div class="log-item__text-box">
+                    <p class="log-item__title" th:text="${title}">리프 제목입니다.</p>
+                    <p class="log-item__date" th:text="${#dates.format(date, 'yyyy-MM-dd')}">2024-07-18</p>
+                    <ul class="log-item__tags">
+                        <li class="log-item__tag" th:each="tag : ${tags}" th:text="${tag.name}">태그</li>
+                    </ul>
+                </div>
+            </a>
+        </div>
+    </div>
+
+<!-- ==========================================
+     FRAGMENT: 리프 위 아래
+     TYPE: 5
+     ========================================== -->
+    <div class="log-item-box leaf-item" th:if="${type == 5}">
+
+        <div class="log-item__left-branch">
+            <div class="log-item__line-left hidden"></div>
+        </div>
+
+        <div class="log-item__mid-branch">
+            <div class="log-item__line-top"></div>
+            <div class="log-item__circle node"></div>
+            <div class="log-item__line-bot"></div>
+        </div>
+        <div class="log-item__info-box">
+            <div class="log-item__right-branch hidden">
+                <div class="log-item__line-right"></div>
+            </div>
+            <a class="log-item__link">
+                <div class="log-item__text-box">
+                    <p class="log-item__title" th:text="${title}">리프 제목입니다.</p>
+                    <p class="log-item__date" th:text="${#dates.format(date, 'yyyy-MM-dd')}">2024-07-18</p>
+                    <ul class="log-item__tags">
+                        <li class="log-item__tag" th:each="tag : ${tags}" th:text="${tag.name}">태그</li>
+                    </ul>
+                </div>
+            </a>
+        </div>
+    </div>
+
+<!-- ==========================================
+     FRAGMENT: 리프 위 아래 오른쪽
+     TYPE: 6
+     ========================================== -->
+    <div class="log-item-box leaf-item" th:if="${type == 6}">
+
+        <div class="log-item__left-branch">
+            <div class="log-item__line-left hidden"></div>
+        </div>
+
+        <div class="log-item__mid-branch">
+            <div class="log-item__line-top"></div>
+            <div class="log-item__circle node"></div>
+            <div class="log-item__line-bot"></div>
+        </div>
+        <div class="log-item__info-box">
+            <div class="log-item__right-branch">
+                <div class="log-item__line-right"></div>
+            </div>
+            <a class="log-item__link">
+                <div class="log-item__text-box">
+                    <p class="log-item__title" th:text="${title}">리프 제목입니다.</p>
+                    <p class="log-item__date" th:text="${#dates.format(date, 'yyyy-MM-dd')}">2024-07-18</p>
+                    <ul class="log-item__tags">
+                        <li class="log-item__tag" th:each="tag : ${tags}" th:text="${tag.name}">태그</li>
+                    </ul>
+                </div>
+            </a>
+        </div>
+    </div>
+
+<!-- ==========================================
+     FRAGMENT: 리프 위 아래 오른쪽 왼쪽
+     TYPE: 7
+     ========================================== -->
+    <div class="log-item-box leaf-item" th:if="${type == 7}">
+
+        <div class="log-item__left-branch">
+            <div class="log-item__line-left"></div>
+        </div>
+
+        <div class="log-item__mid-branch">
+            <div class="log-item__line-top"></div>
+            <div class="log-item__circle node"></div>
+            <div class="log-item__line-bot"></div>
+        </div>
+        <div class="log-item__info-box">
+            <div class="log-item__right-branch">
+                <div class="log-item__line-right"></div>
+            </div>
+            <a class="log-item__link">
+                <div class="log-item__text-box">
+                    <p class="log-item__title" th:text="${title}">리프 제목입니다.</p>
+                    <p class="log-item__date" th:text="${#dates.format(date, 'yyyy-MM-dd')}">2024-07-18</p>
+                    <ul class="log-item__tags">
+                        <li class="log-item__tag" th:each="tag : ${tags}" th:text="${tag.name}">태그</li>
+                    </ul>
+                </div>
+            </a>
+        </div>
+    </div>
+
+<!-- ==========================================
+     FRAGMENT: 리프 위 아래 왼쪽
+     TYPE: 8
+     ========================================== -->
+    <div class="log-item-box leaf-item" th:if="${type == 8}">
+
+        <div class="log-item__left-branch">
+            <div class="log-item__line-left"></div>
+        </div>
+
+        <div class="log-item__mid-branch">
+            <div class="log-item__line-top"></div>
+            <div class="log-item__circle node"></div>
+            <div class="log-item__line-bot"></div>
+        </div>
+        <div class="log-item__info-box">
+            <div class="log-item__right-branch hidden">
+                <div class="log-item__line-right"></div>
+            </div>
+            <a class="log-item__link">
+                <div class="log-item__text-box">
+                    <p class="log-item__title" th:text="${title}">리프 제목입니다.</p>
+                    <p class="log-item__date" th:text="${#dates.format(date, 'yyyy-MM-dd')}">2024-07-18</p>
+                    <ul class="log-item__tags">
+                        <li class="log-item__tag" th:each="tag : ${tags}" th:text="${tag.name}">태그</li>
+                    </ul>
+                </div>
+            </a>
+        </div>
+    </div>
+
+<!-- ==========================================
+     FRAGMENT: 끝 리프 오른쪽
+     TYPE: 9
+     ========================================== -->
+    <div class="log-item-box leaf-item" th:if="${type == 9}">
+
+        <div class="log-item__left-branch">
+            <div class="log-item__line-left hidden"></div>
+        </div>
+
+        <div class="log-item__mid-branch">
+            <div class="log-item__line-top hidden"></div>
+            <div class="log-item__circle node"></div>
+            <div class="log-item__line-bot hidden"></div>
+        </div>
+        <div class="log-item__info-box">
+            <div class="log-item__right-branch">
+                <div class="log-item__line-right"></div>
+            </div>
+            <a class="log-item__link">
+                <div class="log-item__text-box">
+                    <p class="log-item__title" th:text="${title}">리프 제목입니다.</p>
+                    <p class="log-item__date" th:text="${#dates.format(date, 'yyyy-MM-dd')}">2024-07-18</p>
+                    <ul class="log-item__tags">
+                        <li class="log-item__tag" th:each="tag : ${tags}" th:text="${tag.name}">태그</li>
+                    </ul>
+                </div>
+            </a>
+        </div>
+    </div>
+
+<!-- ==========================================
+     FRAGMENT: 끝 왼쪽
+     TYPE: 10
+     ========================================== -->
+    <div class="log-item-box leaf-item" th:if="${type == 10}">
+
+        <div class="log-item__left-branch">
+            <div class="log-item__line-left"></div>
+        </div>
+
+        <div class="log-item__mid-branch">
+            <div class="log-item__line-top hidden"></div>
+            <div class="log-item__circle node"></div>
+            <div class="log-item__line-bot hidden"></div>
+        </div>
+        <div class="log-item__info-box">
+            <div class="log-item__right-branch hidden">
+                <div class="log-item__line-right hidden"></div>
+            </div>
+            <a class="log-item__link">
+                <div class="log-item__text-box">
+                    <p class="log-item__title" th:text="${title}">리프 제목입니다.</p>
+                    <p class="log-item__date" th:text="${#dates.format(date, 'yyyy-MM-dd')}">2024-07-18</p>
+                    <ul class="log-item__tags">
+                        <li class="log-item__tag" th:each="tag : ${tags}" th:text="${tag.name}">태그</li>
+                    </ul>
+                </div>
+            </a>
+        </div>
+    </div>
+
+<!-- ==========================================
+     FRAGMENT: 끝
+     TYPE: 11
+     ========================================== -->
+    <div class="log-item-box leaf-item" th:if="${type == 11}">
+
+        <div class="log-item__left-branch">
+            <div class="log-item__line-left hidden"></div>
+        </div>
+
+        <div class="log-item__mid-branch">
+            <div class="log-item__line-top"></div>
+            <div class="log-item__circle node"></div>
+            <div class="log-item__line-bot hidden"></div>
+        </div>
+        <div class="log-item__info-box">
+            <div class="log-item__right-branch hidden">
+                <div class="log-item__line-right"></div>
+            </div>
+            <a class="log-item__link">
+                <div class="log-item__text-box">
+                    <p class="log-item__title" th:text="${title}">리프 제목입니다.</p>
+                    <p class="log-item__date" th:text="${#dates.format(date, 'yyyy-MM-dd')}">2024-07-18</p>
+                    <ul class="log-item__tags">
+                        <li class="log-item__tag" th:each="tag : ${tags}" th:text="${tag.name}">태그</li>
+                    </ul>
+                </div>
+            </a>
+        </div>
+    </div>
 </div>
 
 </body>

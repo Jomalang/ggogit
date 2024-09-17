@@ -86,8 +86,6 @@ public class TreeController {
 
         if (auto) {
             BookInfoView book = bookService.getBookbyId(id);
-
-            System.out.println(book.toString());
             model.addAttribute("book", book);
             return "view/tree/book/reg-auto";
         } else {
@@ -109,10 +107,7 @@ public class TreeController {
         if(!auto && img != null && !img.isEmpty()){
             //이미지 저장 서비스 : path 경로에 img 저장 후 fullpath 경로 String 리턴
             form.setImageFile(treeUtilService.updateImageFile(img,request.getSession().getServletContext().getRealPath("/image/tmp")));
-
         }
-
-        System.out.println(form.toString());
 
         treeService.tmpTreeSave(form);
 
@@ -165,19 +160,7 @@ public class TreeController {
         form.setSeedId(seedId);
 
         if(img != null && !img.isEmpty()){
-            String path = request.getSession().getServletContext().getRealPath("/image/tmp");
-            String fileName = img.getOriginalFilename();
-            String fullPath = path + File.separator + fileName;
-
-            form.setImageFile(fullPath);
-            System.out.println(fullPath);
-
-
-            File filePath = new File(path);
-            if(!filePath.exists())
-                filePath.mkdirs();
-
-            img.transferTo(new File(fullPath));
+            form.setImageFile(treeUtilService.updateImageFile(img,request.getSession().getServletContext().getRealPath("/image/tmp")));
         }
 
         treeService.tmpEtcTreeSave(form);

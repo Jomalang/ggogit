@@ -1,7 +1,6 @@
 package Recorders.ggogit.web.leaf.form;
 
 
-import Recorders.ggogit.type.SeedCategoryType;
 import Recorders.ggogit.domain.leaf.entity.LeafTag;
 import Recorders.ggogit.domain.leaf.view.LeafView;
 import jakarta.validation.constraints.NotBlank;
@@ -15,7 +14,7 @@ import java.util.List;
 public class LeafForm {
     
     @NotNull
-    private SeedCategoryType seed;
+    private Long seedId;
 
     @NotNull(message = "태그를 선택해주세요.")
     private List<Long> tagIds;
@@ -28,10 +27,6 @@ public class LeafForm {
 
     @NotNull
     private Boolean visibility;
-
-    public void setSeed(@NotNull(message = "시드를 입력해주세요.") Long seed) {
-        this.seed = SeedCategoryType.of(seed);
-    }
 
     public LeafView toLeafView() {
             return LeafView.builder()

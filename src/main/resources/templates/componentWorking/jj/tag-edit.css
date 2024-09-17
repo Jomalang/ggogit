@@ -33,7 +33,7 @@
     font-weight: var(--semi-bold);
     color: var(--text-icon);
 }
-.top-bar__form {
+.top-bar__success-link {
     order: 2;
 }
 .top-bar__text {

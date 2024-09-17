@@ -1,4 +1,4 @@
-package Recorders.ggogit.domain.member.entity;
+package Recorders.ggogit.domain.tree.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -6,10 +6,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class Seed {
     private Long id;
     private String name;
+    private String description;
 }

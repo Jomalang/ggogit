@@ -327,7 +327,8 @@ COMMENT ON COLUMN "BOOK_COMMENT_LIKE"."CREATE_TIME" IS '데이터 생성 시각'
 -- ============================================ --
 CREATE TABLE "SEED" (
     "ID"	            NUMBER		        PRIMARY KEY, -- 씨앗 PK
-    "NAME"	            NVARCHAR2(30)		NOT NULL -- 씨앗 제목
+    "NAME"	            NVARCHAR2(30)		NOT NULL, -- 씨앗 제목
+    "DESCRIPTION"	    NVARCHAR2(30)		NOT NULL -- 씨앗 설명
 );
 
 -- 시퀀스 생성
@@ -342,6 +343,7 @@ ALTER TABLE "SEED" MODIFY ("ID" DEFAULT SEQ_SEED.NEXTVAL);
 
 COMMENT ON COLUMN "SEED"."ID" IS '씨앗 PK';
 COMMENT ON COLUMN "SEED"."NAME" IS '씨앗 제목';
+COMMENT ON COLUMN "SEED"."DESCRIPTION" IS '씨앗 설명';
 
 -- ============================================ --
 -- 트리 생성 탬프 테이블

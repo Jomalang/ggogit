@@ -39,7 +39,7 @@
             <div th:replace="~{fragments/top-bar::top-bar-tag-info}"></div>
         </section>
 
-        <form th:action="@{/tag/delete}" method="post">
+        <form id="tag-delete-form-id" th:action="@{/tag/delete}" method="post">
             <section>
                 <h1 class="none">삭제 데이터</h1>
                 <div th:replace="~{fragments/input::default-data(name='id', values=${tag.id})}"></div>
@@ -50,8 +50,24 @@
                 <div th:replace="~{fragments/input::delete__form-btn}"></div>
             </section>
         </form>
-
     </main>
+
+    <script th:src="@{/js/pop-up.js}"></script>
+
+    <script>
+
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // 태그 삭제 팝업
+            const tagDeleteForm = document.getElementById('tag-delete-form-id');
+            const tagDeletePopUp = new PopUp('tag-delete-form-id');
+
+            tagDeleteForm.addEventListener('submit', function (event) {
+                event.preventDefault();
+                tagDeletePopUp.show('태그를 정말 삭제하시겠습니까?');
+            });
+        });
+    </script>
 
 </body>
 </html>

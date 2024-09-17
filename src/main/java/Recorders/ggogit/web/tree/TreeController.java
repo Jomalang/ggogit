@@ -4,6 +4,8 @@ import Recorders.ggogit.domain.book.service.BookService;
 import Recorders.ggogit.domain.book.view.BookInfoView;
 import Recorders.ggogit.domain.book.view.BookPreviewView;
 import Recorders.ggogit.domain.member.entity.Member;
+import Recorders.ggogit.domain.tree.entity.Seed;
+import Recorders.ggogit.domain.tree.service.SeedService;
 import Recorders.ggogit.domain.tree.service.TreeServiceImpl;
 import Recorders.ggogit.web.book.form.bookSearchType;
 import Recorders.ggogit.type.BookCategoryType;
@@ -27,7 +29,7 @@ import java.util.List;
 
 import java.io.File;
 
-@Controller()
+@Controller
 @RequestMapping("/tree")
 @RequiredArgsConstructor
 public class TreeController {
@@ -39,6 +41,9 @@ public class TreeController {
     private BookService bookService;
 
     @Autowired
+    private SeedService seedService;
+
+    @Autowired
     private TreeUtilService treeUtilService;
 
     @GetMapping("/search")
@@ -47,22 +52,28 @@ public class TreeController {
     }
 
     @PostMapping("/search")
-    public String treeSearch(@RequestParam("treeSearchText") String treeSearchText,
-                             RedirectAttributes redirectAttributes) {
+    public String treeSearch(
+            @RequestParam("treeSearchText") String treeSearchText,
+            RedirectAttributes redirectAttributes
+    ) {
         System.out.println(treeSearchText);
         redirectAttributes.addAttribute("treeSearchText", treeSearchText);
         return "redirect:/tree/search/result/{treeSearchText}";
     }
 
     @GetMapping("/search/result/{treeSearchText}")
-    public String treeSearchResult(@PathVariable String treeSearchText,
-                                   Model model) {
+    public String treeSearchResult(
+            @PathVariable String treeSearchText,
+            Model model
+    ) {
         return "view/tree/search/tree-list";
     }
 
     @PostMapping("/search/result/{treeSearchText}")
-    public String treeSearchResult(@RequestParam("treeSearchText") String treeSearchText,
-                                   RedirectAttributes redirectAttributes) {
+    public String treeSearchResult(
+            @RequestParam("treeSearchText") String treeSearchText,
+            RedirectAttributes redirectAttributes
+    ) {
         System.out.println(treeSearchText);
         redirectAttributes.addAttribute("treeSearchText", treeSearchText);
         return "redirect:/tree/search/result/{treeSearchText}";
@@ -82,6 +93,9 @@ public class TreeController {
         Member member = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
 
         Long memberId= member.getId();
+//        Member member = (Member) request
+//                .getSession().getAttribute(SessionConst.LOGIN_MEMBER);
+
         treeService.deleteTmpFormById(memberId);
 
         if (auto) {
@@ -100,7 +114,7 @@ public class TreeController {
             @ModelAttribute TreeSaveTmpForm form,
             @RequestParam(value = "auto") boolean auto,
             HttpServletRequest request
-            ) throws IOException {
+    ) throws IOException {
 
         form.setSeedId(1L);
 
@@ -110,8 +124,9 @@ public class TreeController {
         }
 
         treeService.tmpTreeSave(form);
+        Seed seed = seedService.get(form.getSeedId());
 
-        return "redirect:/leaf/first/reg";
+        return "redirect:/leaf/first/reg?seed=" + seed.getName();
     }
 
     @GetMapping("/etc/reg")
@@ -120,17 +135,11 @@ public class TreeController {
             Model model
     ) {
         //TODO: memberId 개선 시 하드코딩 제거
-        Long memberId=14L;
+        Long memberId = 14L;
         treeService.deleteTmpFormById(memberId);
 
-        int seedId;
-        String seedName = switch (type) {
-            case "idea" -> "생각";
-            case "phrase" -> "문장";
-            case "study" -> "공부";
-            default -> "영상";
-        };
-        model.addAttribute("seed", seedName);
+        Seed seed = seedService.get(type);
+        model.addAttribute("seed", seed.getDescription());
         return "view/tree/reg-etc";
     }
 
@@ -142,22 +151,8 @@ public class TreeController {
             HttpServletRequest request
     ) throws IOException  {
 
-        Long seedId;
-        switch (type) {
-            case "생각" :
-                seedId = 2L;
-                break;
-            case "문장" :
-                seedId = 3L;
-                break;
-            case "공부" :
-                seedId = 4L;
-                break;
-            default:
-                seedId = 5L;
-                break;
-        }
-        form.setSeedId(seedId);
+        Seed seed = seedService.getByDiscription(type);
+        form.setSeedId(seed.getId());
 
         if(img != null && !img.isEmpty()){
             form.setImageFile(treeUtilService.updateImageFile(img,request.getSession().getServletContext().getRealPath("/image/tmp")));

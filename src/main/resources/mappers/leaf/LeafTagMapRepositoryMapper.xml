@@ -25,4 +25,9 @@
             WHERE LEAF_TAG_ID = #{leafTagId} AND LEAF_ID = #{leafId}
         </select>
 
+        <delete id="deleteByLeafTagId" parameterType="Long">
+            DELETE FROM LEAF_TAG_MAP
+            WHERE LEAF_TAG_ID = #{leafTagId}
+        </delete>
+
 </mapper>

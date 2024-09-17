@@ -1398,8 +1398,19 @@ button {
 }
 
 /*  ==========================================
-    FRAGMENT: 리프 TYPE 1
+    FRAGMENT: 리프 리스트 아이템
     ========================================== */
+
+.log-item__left-box,
+.log-item__mid-box,
+.log-item__right-box
+{
+  flex-grow: 0;
+  flex-shrink: 0;
+  flex-basis: 100%;
+  width: 100%;
+}
+
 
 .log-item__circle {
   width: 12px;
@@ -1408,17 +1419,10 @@ button {
   background-color: var(--main1, #323a27);
 }
 
-/*  ==========================================
-    FRAGMENT: 리프 TYPE 2
-    ========================================== */
-
 .log-item__info-box {
   width: 100%;
 }
 
-/*  ==========================================
-    FRAGMENT: 리프 TYPE 3
-    ========================================== */
 .log-item-box {
   margin: 2px 0 2px 0;
   display: flex;

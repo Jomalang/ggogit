@@ -145,7 +145,7 @@ public class LeafController {
             return new ModelAndView("view/leaf/edit-etc","form", leafEtcService.getLeafEtcView(id));
         }
     }
-    
+
     @GetMapping("/list")
     public String list(
         @RequestParam(value = "tree_id") Long treeId,

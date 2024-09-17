@@ -75,10 +75,22 @@ public class LeafTree {
         return branchLeafs;
     }
 
-    public List<LeafNode> getBranchNodes(Long leafId) {
+    public List<LeafNode> findAll(Long leafId) {
         List<LeafNode> branchNodes = new ArrayList<>();
-        LeafNode startRootNode = findParent(leafId);
-        LeafNode startEndNode = startRootNode;
+        findToEnd(leafId, branchNodes); // INPUT 리프 부터 말단 리프까지
+        findToRoot(leafId, branchNodes); // INPUT 리프 부터 ROOT까지
+        branchNodes.sort(Comparator.comparing(o -> o.getData().getCreateTime())); // 생성 시간 순으로 정렬
+        return branchNodes;
+    }
+
+    public List<LeafNode> findToEnd(Long leafId) {
+        List<LeafNode> branchNodes = new ArrayList<>();
+        findToEnd(leafId, branchNodes); // INPUT 리프 부터 말단 리프까지
+        return branchNodes;
+    }
+
+    private void findToEnd(Long leafId, List<LeafNode> branchNodes) {
+        LeafNode startEndNode = findParent(leafId);
 
         while (startEndNode.hasChildren()) { // INPUT 리프 부터 말단 리프까지
             List<LeafNode> children = startEndNode.getChildren();
@@ -92,13 +104,19 @@ public class LeafTree {
             }
             branchNodes.add(startEndNode);
         }
+    }
 
+    public List<LeafNode> findToRoot(Long leafId) {
+        List<LeafNode> branchNodes = new ArrayList<>();
+        findToRoot(leafId, branchNodes); // INPUT 리프 부터 ROOT까지
+        return branchNodes;
+    }
+
+    private void findToRoot(Long leafId, List<LeafNode> branchNodes) {
+        LeafNode startRootNode = findParent(leafId);
         while (startRootNode != null) { // INPUT 리프 부터 ROOT까지
             branchNodes.addLast(startRootNode);
             startRootNode = startRootNode.getParent();
         }
-
-        branchNodes.sort(Comparator.comparing(o -> o.getData().getCreateTime())); // 생성 시간 순으로 정렬
-        return branchNodes;
     }
 }

@@ -62,4 +62,6 @@ public interface LeafTagService {
      * @return LeafTag 리프 태그 View 리스트
      */
     List<LeafTag> getLeafTags(Long memberId, String name, Long page, Long size);
+
+    List<LeafTag> getLeafTagsByLeafId(Long memberId);
 }

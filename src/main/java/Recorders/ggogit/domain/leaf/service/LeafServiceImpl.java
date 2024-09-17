@@ -39,11 +39,12 @@ public class LeafServiceImpl implements LeafService {
     public List<LeafItemView> getLeafItems(Long treeId, @Nullable Long leafId) {
         List<Leaf> leafs =  leafRepository.findByTreeIdOrderByCreateTimeDesc(treeId);
         LeafTree leafTree = new LeafTree(leafs); // Tree 자료구조
-        List<LeafNode> branchNodes = leafTree.getBranchNodes(leafId);
+        List<LeafNode> branchNodes = leafTree.findAll(leafId);
 
         List<LeafItemView> leafItemViews = new ArrayList<>();
         for (LeafNode leafNode : branchNodes) {
             List<LeafTag> leafTags = leafTagRepository.findByLeafId(leafNode.getData().getId());
+
             leafItemViews.add(LeafItemView.of(leafNode, leafTags));
         }
         leafItemViews.getLast().setFocused(true); // 마지막 리프에 포커스
@@ -130,6 +131,20 @@ public class LeafServiceImpl implements LeafService {
         }
 
         return leafCardViews;
+    }
+
+    @Override
+    public List<LeafNode> getLeafNodeFromLeafIdToEnd(Long treeId, Long leafId) {
+        List<Leaf> leafs =  leafRepository.findByTreeIdOrderByCreateTimeDesc(treeId);
+        LeafTree leafTree = new LeafTree(leafs); // Tree 자료구조
+        return leafTree.findToEnd(leafId);
+    }
+
+    @Override
+    public List<LeafNode> getLeafNodeAll(Long treeId, Long leafId) {
+        List<Leaf> leafs =  leafRepository.findByTreeIdOrderByCreateTimeDesc(treeId);
+        LeafTree leafTree = new LeafTree(leafs); // Tree 자료구조
+        return leafTree.findAll(leafId);
     }
 
     @Override

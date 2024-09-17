@@ -298,6 +298,13 @@ home-tree__reg-4--search-book__input
 
 .log-list-container {
   margin: 600px 0;
+  width: 100%;
+}
+
+.log-item-container {
+    display: flex;
+    flex-direction: row;
+    transition: all 0.5s ease;
 }
 
 .log-list-date-title-container {

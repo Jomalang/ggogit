@@ -3,6 +3,7 @@ package Recorders.ggogit.domain.tree.service;
 
 import Recorders.ggogit.domain.tree.entity.Tree;
 import Recorders.ggogit.domain.tree.view.BookTreeView;
+import Recorders.ggogit.domain.tree.view.CombineTreeView;
 import Recorders.ggogit.domain.tree.view.EtcTreeView;
 import Recorders.ggogit.domain.tree.view.TreeInfoView;
 import Recorders.ggogit.web.tree.form.TreeEtcSaveTmpForm;
@@ -109,4 +110,8 @@ public interface TreeService {
      * @return
      */
     void deleteTmpFormById(Long memberId);
+
+TreeInfoView getTreeInfoViewByTreeId(Long treeId);
+
+    CombineTreeView setCombineTreeView(Long memberId, Long treeId);
 }

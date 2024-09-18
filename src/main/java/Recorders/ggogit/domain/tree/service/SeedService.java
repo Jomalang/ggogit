@@ -15,7 +15,8 @@ public interface SeedService {
 
     List<Seed> getSeeds();
 
-    Seed get(String name);
+    Seed getByEngName(String name);
+
     Seed get(Long id);
 
     Seed getByDiscription(String type);

@@ -44,7 +44,7 @@ public class LeafController {
             mv = new ModelAndView("view/leaf/1st-reg-book");
             mv.addObject("form", new LeafBookForm());
         } else {
-            Seed seed = seedService.get(type);
+            Seed seed = seedService.getByEngName(type);
             mv = new ModelAndView("view/leaf/1st-reg-etc");
             mv.addObject("seedId", seed.getId());
             mv.addObject("form", new LeafForm());

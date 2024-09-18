@@ -40,9 +40,22 @@
         WHERE NICKNAME = #{nickname}
     </select>
 
-    <select id="findByUsername" resultType="Member">
-        SELECT * FROM MEMBER
-        WHERE USERNAME = #{username}
+
+
+    <select id="getMemberImageView" resultType="MemberImageView">
+        SELECT
+            M.ID,
+            M.USERNAME,
+            M.NICKNAME,
+            NVL(MP.NAME, 'default.svg') PROFILE_IMAGE
+        FROM
+            MEMBER M
+        LEFT JOIN
+            (SELECT * FROM MEMBER_PROFILE_IMAGE) MP
+        ON
+            M.ID = MP.MEMBER_ID
+        WHERE
+            M.ID=#{memberId}
     </select>
 
 </mapper>

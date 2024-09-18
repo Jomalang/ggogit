@@ -18,7 +18,7 @@
     <section>
         <h2 class="none">회고록 생성</h2>
         <!-- 컴포넌트 -->
-        <div th:replace="~{fragments/top-bar :: top-bar-back(title='회고록 생성', link='#')}">
+        <div th:replace="~{fragments/top-bar :: top-bar-back(title='회고록 생성', link='javascript:history.back()')}">
         </div>
     </section>
 </header>
@@ -33,7 +33,7 @@
         <h3 class="none">도서 커버 및 도서 정보</h3>
         <section class="tree-reg-cover__container">
             <h4 class="none">도서 커버</h4>
-            <div th:replace="~{fragments/link :: link__one-image-detail(src=@{/img/home/home-mid-book.png}, href='#')}">
+            <div th:replace="~{fragments/link :: link__one-image-detail(src=@{/img/home/home-mid-book.png}, href='javascript:history.back()')}">
             </div>
         </section>
         <section class="tree-reg-book-info__container">

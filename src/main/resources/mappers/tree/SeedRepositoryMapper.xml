@@ -22,7 +22,7 @@
     </delete>
 
     <select id="findAll" resultType="Seed">
-        SELECT * FROM SEED
+        SELECT * FROM SEED ORDER BY ID
     </select>
 
     <select id="findById" resultType="Seed">
@@ -32,7 +32,7 @@
 
     <select id="findByName" resultType="Seed">
         SELECT * FROM SEED
-        WHERE NAME = #{name}
+        WHERE ENG_NAME = #{name}
     </select>
 
 </mapper>

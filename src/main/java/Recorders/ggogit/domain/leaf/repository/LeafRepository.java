@@ -23,4 +23,5 @@ public interface LeafRepository {
     List<LeafEtcView> findLeafEtcViewByTreeId(Long treeId, SearchType searchType, String search, SortType sortType, Long page, Long size);
     LeafRecentBranchView findLeafRecentBranchViewByTreeId(Long treeId);
     LeafBreadcrumbView findLeafBreadcrumbViewByTreeIdAndLeafId(Long treeId, Long leafId);
+    List<LeafBranchView> findLeafBranchViewByTreeId(Long treeId);
 }

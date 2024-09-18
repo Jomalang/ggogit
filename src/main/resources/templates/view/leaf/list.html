@@ -18,7 +18,7 @@
         <h1 class="none">로그 목록</h1>
         <section>
             <h1 class="none">뒤로가기 상단바</h1>
-            <div th:replace="~{fragments/top-bar :: top-bar-back(title='브랜치', link='#')}"></div>
+            <div th:replace="~{fragments/top-bar :: top-bar-back(title='브랜치', link='javascript:history.back()')}"></div>
         </section>
 
         <section>
@@ -42,7 +42,7 @@
 
             <section th:each="leaf : ${list}">
                 <h1 class="none">로그</h1>
-                <div th:replace="~{fragments/log :: log-item(type=${leaf.direction.num}, title=${leaf.title}, date=${leaf.createTime}, link='#', tags=${leaf.tags})}"></div>
+                <div th:replace="~{fragments/log :: log-item(type=${leaf.direction.num}, title=${leaf.title}, date=${leaf.createTime}, link='javascript:history.back()', tags=${leaf.tags})}"></div>
             </section>
 
         </section>
@@ -53,7 +53,7 @@
         <h1 class="none">브랜치 정보 알림 하단 바</h1>
         <section class="log-list-bot-btn-container">
             <h1 class="none">로그 생성 버튼</h1>
-            <a th:replace="~{fragments/button :: btn-short-a--green(href='#', text='로그 생성')}"></a>
+            <a th:replace="~{fragments/button :: btn-short-a--green(href='javascript:history.back()', text='로그 생성')}"></a>
         </section>
 
         <section class="log-list-bot-bar-info-container">

@@ -17,19 +17,19 @@ public class SeedServiceImpl implements SeedService {
     @Override
     public boolean isBook(String name) {
         Seed seed = seedRepository.findByName(name);
-        return seed != null && seed.getName().equals("book");
+        return seed != null && seed.getEngName().equals("book");
     }
 
     @Override
     public boolean isBook(Long id) {
         Seed seed = seedRepository.findById(id);
-        return seed != null && seed.getName().equals("book");
+        return seed != null && seed.getEngName().equals("book");
     }
 
     @Override
     public boolean isBookById(Long name) {
         Seed seed = seedRepository.findById(name);
-        return seed != null && seed.getName().equals("book");
+        return seed != null && seed.getEngName().equals("book");
     }
 
     @Override
@@ -40,11 +40,13 @@ public class SeedServiceImpl implements SeedService {
 
     @Override
     public List<Seed> getSeeds() {
-        return seedRepository.findAll();
+        List<Seed> seeds = seedRepository.findAll();
+        System.out.println(seeds);
+        return seeds;
     }
 
     @Override
-    public Seed get(String name) {
+    public Seed getByEngName(String name) {
         return Optional.ofNullable(seedRepository.findByName(name))
                 .orElseThrow(() -> new IllegalArgumentException("해당하는 Seed가 없습니다."));
     }

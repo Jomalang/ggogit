@@ -1,4 +1,4 @@
-package Recorders.ggogit.domain.tree.entity;
+package Recorders.ggogit.domain.member.view;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,8 +9,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Seed {
+public class MemberImageView {
+
     private Long id;
-    private String korName;
-    private String engName;
+    private String nickName;
+    private String userName;
+    private String profileImage;
 }

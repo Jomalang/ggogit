@@ -212,7 +212,7 @@ Branch List 사용
 -->
 <div class="card-tree-info-cover-frame" th:fragment="card-tree-info-cover(src,treetitle,booktitle)">
     <div class="card-tree-info-cover">
-        <img th:src="${src}" alt="cover">
+        <img th:src="@{'/svg/'+${src}}" alt="cover">
     </div>
     <div>
         <p class="card-tree-title" th:text="${treetitle}"></p>
@@ -253,34 +253,34 @@ Branch List 사용
             </div>
         </section>
         <section class="card-tree-memoir-create-btn-container none">
-            <div th:replace="~{fragments/button :: link-full-width(link='#', text='회고록 작성')}"></div></section>
+            <div th:replace="~{fragments/button :: link-full-width(link='javascript:history.back()', text='회고록 작성')}"></div></section>
     </section>
 </div>
 
 <!---->
-<div class="card-branch__list-frame" th:fragment="card-branch__list(lists)" th:each="lists : ${lists}">
+<div class="card-branch__list-frame" th:fragment="card-branch__list(lists)" th:each="list : ${lists}">
     <a class="branch-info-frame" href="#">
         <div class="branch-img-frame">
-            <img th:src="@{'/svg/' + ${lists.src}}" alt="브랜치 이미지">
+            <img th:src="@{${list.bookMark} ? '/svg/card-bookmark-icon.svg' : '/svg/card-branch-represent-icon.svg' }" alt="브랜치 이미지">
         </div>
         <div class="branch-detail-info">
-            <p class="branch-detail-info--regdate" th:text="${lists.regDate}"></p>
-            <p class="branch-detail-info--name" th:text="${lists.name}"></p>
+            <p class="branch-detail-info--regdate" th:text="${#dates.format(list.updateTime, 'yyyy-MM-dd')}"></p>
+            <p class="branch-detail-info--name" th:text="${list.title}"></p>
         </div>
     </a>
     <div class="branch-card-bottom-info-frame">
         <div class="branch-card-bottom-info">
-            <span>리프<p th:text="${lists.leaf}"></p></span>
-            <span>조회수<p th:text="${lists.view}"></p></span></div>
+            <span>리프<p th:text="${list.likeCount}"></p></span>
+            <span>조회수<p th:text="${list.viewCount}"></p></span></div>
         <div class="__like-frame">
             <input
                     class="__like-input"
                     type="checkbox"
-                    th:id="${lists.id}"
+                    th:id="${list.id}"
             />
             <label
                     class="__like"
-                    th:for="${lists.id}"
+                    th:for="${list.id}"
             ></label>
         </div>
     </div>

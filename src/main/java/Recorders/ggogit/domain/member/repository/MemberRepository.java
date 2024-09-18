@@ -1,6 +1,7 @@
 package Recorders.ggogit.domain.member.repository;
 
 import Recorders.ggogit.domain.member.entity.Member;
+import Recorders.ggogit.domain.member.view.MemberImageView;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -16,7 +17,7 @@ public interface MemberRepository {
 
     List<Member> findAll();
 
-    Member findById(int id);
+    Member findById(Long id);
 
     Member findByEmail(String Email);
 
@@ -24,4 +25,5 @@ public interface MemberRepository {
 
     Member findByUsername(String username);
 
+    MemberImageView getMemberImageView(Long memberId);
 }

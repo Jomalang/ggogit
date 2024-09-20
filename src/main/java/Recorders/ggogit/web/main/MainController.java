@@ -27,7 +27,8 @@ public class MainController {
 
 
     @GetMapping("/")
-    public String index(@SessionAttribute(value = SessionConst.LOGIN_MEMBER, required = false) Member member
+    public String index(
+            @SessionAttribute(value = SessionConst.LOGIN_MEMBER, required = false) Member member
             , Model model
             , RedirectAttributes redirectAttributes) {
         if(member == null){
@@ -35,7 +36,6 @@ public class MainController {
         }
 
         model.addAttribute("member", member);
-        System.out.println(member.toString());
         redirectAttributes.addAttribute("nickName", member.getNickname());
         return "redirect:/home/{nickName}";
 
@@ -56,9 +56,6 @@ public class MainController {
         } else {
 
             List<TreeInfoView> treeInfoList = treeService.getTreeInfoView(member.getId());
-
-            System.out.println(treeInfoList.toString());
-
             model.addAttribute("treeInfoList", treeInfoList);
             model.addAttribute("treeList", treeInfoList);
             return "view/home/has-tree";

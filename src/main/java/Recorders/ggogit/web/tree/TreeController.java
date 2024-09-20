@@ -3,14 +3,23 @@ package Recorders.ggogit.web.tree;
 import Recorders.ggogit.domain.book.service.BookService;
 import Recorders.ggogit.domain.book.view.BookInfoView;
 import Recorders.ggogit.domain.book.view.BookPreviewView;
+import Recorders.ggogit.domain.leaf.view.LeafBranchView;
+import Recorders.ggogit.domain.member.entity.Member;
+import Recorders.ggogit.domain.member.service.MemberService;
+import Recorders.ggogit.domain.member.view.MemberImageView;
 import Recorders.ggogit.domain.tree.entity.Seed;
 import Recorders.ggogit.domain.tree.service.SeedService;
 import Recorders.ggogit.domain.tree.service.TreeServiceImpl;
+import Recorders.ggogit.domain.tree.view.CombineTreeView;
+import Recorders.ggogit.domain.tree.view.TreeInfoView;
 import Recorders.ggogit.web.book.form.bookSearchType;
 import Recorders.ggogit.type.BookCategoryType;
+import Recorders.ggogit.web.member.session.SessionConst;
 import Recorders.ggogit.web.tree.form.TreeEtcSaveTmpForm;
 import Recorders.ggogit.web.tree.form.TreeSaveTmpForm;
+import Recorders.ggogit.domain.tree.util.TreeUtilService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,8 +31,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import java.io.File;
 
 @Controller
 @RequestMapping("/tree")
@@ -38,6 +45,12 @@ public class TreeController {
 
     @Autowired
     private SeedService seedService;
+
+    @Autowired
+    private TreeUtilService treeUtilService;
+
+    @Autowired
+    private MemberService memberService;
 
     @GetMapping("/search")
     public String treeSearch() {
@@ -79,16 +92,20 @@ public class TreeController {
             HttpServletRequest request,
             Model model
     ) {
+
+
+        HttpSession session = request.getSession();
+
+        Member member = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
+
+        Long memberId= member.getId();
 //        Member member = (Member) request
 //                .getSession().getAttribute(SessionConst.LOGIN_MEMBER);
 
-        Long memberId = 1L;
         treeService.deleteTmpFormById(memberId);
 
         if (auto) {
             BookInfoView book = bookService.getBookbyId(id);
-
-            System.out.println(book.toString());
             model.addAttribute("book", book);
             return "view/tree/book/reg-auto";
         } else {
@@ -105,43 +122,44 @@ public class TreeController {
             HttpServletRequest request
     ) throws IOException {
 
+        HttpSession session = request.getSession();
+
+        Member member = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
+
+        Long memberId= member.getId();
+
+        form.setMemberId(memberId);
         form.setSeedId(1L);
 
+        System.out.println(form.toString());
+
         if(!auto && img != null && !img.isEmpty()){
-            String path = request.getSession().getServletContext().getRealPath("/image/tmp");
-            String fileName = img.getOriginalFilename();
-            String fullPath = path + File.separator + fileName;
-
-            form.setImageFile(fullPath);
-            System.out.println(fullPath);
-
-
-            File filePath = new File(path);
-            if(!filePath.exists())
-                filePath.mkdirs();
-
-            img.transferTo(new File(fullPath));
+            //이미지 저장 서비스 : path 경로에 img 저장 후 fullpath 경로 String 리턴
+            form.setImageFile(treeUtilService.updateImageFile(img,request.getSession().getServletContext().getRealPath("/image/tmp")));
         }
-
-        System.out.println(form);
 
         treeService.tmpTreeSave(form);
         Seed seed = seedService.get(form.getSeedId());
 
-        return "redirect:/leaf/first/reg?seed=" + seed.getName();
+        return "redirect:/leaf/first/reg?seed=" + seed.getEngName();
     }
 
     @GetMapping("/etc/reg")
     public String getTreeEtcReg(
             @RequestParam(value = "type", required = false) String type,
+            HttpServletRequest request,
             Model model
     ) {
-        //TODO: memberId 개선 시 하드코딩 제거
-        Long memberId = 14L;
+        HttpSession session = request.getSession();
+
+        Member member = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
+
+        Long memberId= member.getId();
+
         treeService.deleteTmpFormById(memberId);
 
-        Seed seed = seedService.get(type);
-        model.addAttribute("seed", seed.getDescription());
+        Seed seed = seedService.getByEngName(type);
+        model.addAttribute("seed", seed);
         return "view/tree/reg-etc";
     }
 
@@ -153,27 +171,24 @@ public class TreeController {
             HttpServletRequest request
     ) throws IOException  {
 
-        Seed seed = seedService.getByDiscription(type);
+
+
+        HttpSession session = request.getSession();
+
+        Member member = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
+
+        Long memberId= member.getId();
+
+        form.setMemberId(memberId);
+        Seed seed = seedService.getByEngName(type);
         form.setSeedId(seed.getId());
-        
+
         if(img != null && !img.isEmpty()){
-            String path = request.getSession().getServletContext().getRealPath("/image/tmp");
-            String fileName = img.getOriginalFilename();
-            String fullPath = path + File.separator + fileName;
-
-            form.setImageFile(fullPath);
-            System.out.println(fullPath);
-
-
-            File filePath = new File(path);
-            if(!filePath.exists())
-                filePath.mkdirs();
-
-            img.transferTo(new File(fullPath));
+            form.setImageFile(treeUtilService.updateImageFile(img,request.getSession().getServletContext().getRealPath("/image/tmp")));
         }
 
         treeService.tmpEtcTreeSave(form);
-        return "redirect:/leaf/first/reg";
+        return "redirect:/leaf/first/reg?seed=" + seed.getEngName();
     }
 
 
@@ -252,8 +267,22 @@ public class TreeController {
     @RequestMapping("/detail/{treeId}")
     public String getTreeDetail(
             Model model,
-            @PathVariable(name = "treeId") String treeId
+            @PathVariable(name = "treeId") Long treeId,
+            HttpServletRequest request
     ) {
+        HttpSession session = request.getSession();
+        Member member = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
+        Long memberId= member.getId();
+
+        CombineTreeView combineTreeView = treeService.setCombineTreeView(memberId,treeId);
+        MemberImageView memberImageView = combineTreeView.getMemberImageView();
+        TreeInfoView treeInfoView = combineTreeView.getTreeInfoView();
+        List<LeafBranchView> leafList = combineTreeView.getLeafList();
+        System.out.println(leafList.toString());
+
+        model.addAttribute("memberImageView", memberImageView);
+        model.addAttribute("treeInfoView", treeInfoView);
+        model.addAttribute("leafList", leafList);
         return "view/tree/index";
     }
 

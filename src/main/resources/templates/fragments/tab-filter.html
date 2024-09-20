@@ -72,8 +72,8 @@
           <div class="filter-tab__item-label">
             <a
                     class="filter-tab__item--label-text"
-                    th:href="${v.category == 'book'} ? @{|/tree/book/select|} : @{|/tree/${v.category}/${source}?type=${v.description}|}"
-                    th:text="${v.name}"
+                    th:href="${v.engName == 'book'} ? @{|/tree/book/select|} : @{|/tree/etc/${source}?type=${v.engName}|}"
+                    th:text="${v.korName}"
             >
 <!--              <a-->
 <!--                      class="filter-tab__item&#45;&#45;label-text"-->

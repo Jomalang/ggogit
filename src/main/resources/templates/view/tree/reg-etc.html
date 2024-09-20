@@ -16,7 +16,7 @@
   <h1 class="none">도서 트리 생성 페이지</h1>
   <section class="tob-bar-back-container">
     <h1 class="none">트리 생성 상단 바</h1>
-    <div th:replace="~{fragments/top-bar :: top-bar-back(title='트리 생성', link='#')}"></div>
+    <div th:replace="~{fragments/top-bar :: top-bar-back(title='트리 생성', link='javascript:history.back()')}"></div>
   </section>
 </header>
 
@@ -25,10 +25,10 @@
     <h1 class="none">도서 정보 입력</h1>
 
     <section class="select-title-container">
-      <div th:replace="~{fragments/text :: text-main-title(title=${seed}, size=28)}"></div>
+      <div th:replace="~{fragments/text :: text-main-title(title=${seed.korName}, size=28)}"></div>
     </section>
 
-    <form id="book-tree-input-form-id" class="book-tree-input-form" th:action="@{/tree/etc/reg(type=${seed})}" method="post" enctype="multipart/form-data">
+    <form id="book-tree-input-form-id" class="book-tree-input-form" th:action="@{/tree/etc/reg(type=${seed.engName})}" method="POST" enctype="multipart/form-data">
 
 <!--      <section>-->
 <!--        <h1 class="none">씨앗 카테고리</h1>-->

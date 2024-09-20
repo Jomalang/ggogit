@@ -1,6 +1,7 @@
 package Recorders.ggogit.domain.member.service;
 
 import Recorders.ggogit.domain.member.entity.Member;
+import Recorders.ggogit.domain.member.view.MemberImageView;
 
 public interface MemberService {
 
@@ -30,4 +31,8 @@ public interface MemberService {
      * @return 유효한 경우 true, 유효하지 않은 경우 false
      */
     boolean getPassword(String password);
+
+    Member getMember(Long id);
+
+    MemberImageView getMemberImageView(Long memberId);
 }

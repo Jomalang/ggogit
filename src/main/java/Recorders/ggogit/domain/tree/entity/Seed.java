@@ -11,6 +11,6 @@ import lombok.NoArgsConstructor;
 @Builder
 public class Seed {
     private Long id;
-    private String name;
-    private String description;
+    private String korName;
+    private String engName;
 }

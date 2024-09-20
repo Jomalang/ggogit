@@ -40,8 +40,13 @@
 
         <select id="findById" resultType="Leaf">
             SELECT * FROM LEAF
-            WHERE ID = #{id}
+            WHERE TREE_ID = #{id}
         </select>
+
+    <select id="findByTreeId" resultType="Leaf">
+        SELECT * FROM LEAF
+        WHERE ID = #{id}
+    </select>
 
         <select id="findAll" resultType="Leaf">
             SELECT * FROM LEAF
@@ -100,5 +105,20 @@
             ) LK2
             ON L2.LEAF_ID = LK2.LEAF_ID;
         </select>
+
+
+    <select id="findLeafBranchViewByTreeId" resultType="LeafBranchView">
+        SELECT
+            ID,
+            TITLE,
+            LIKE_COUNT,
+            VIEW_COUNT,
+            BOOK_MARK,
+            UPDATE_TIME
+        FROM
+            LEAF
+        WHERE
+            CHILD_LEAF_COUNT = 0 OR BOOK_MARK = 1
+    </select>
 
 </mapper>

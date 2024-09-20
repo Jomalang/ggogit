@@ -13,6 +13,7 @@ import Recorders.ggogit.web.leaf.form.LeafBookForm;
 import Recorders.ggogit.web.leaf.form.LeafForm;
 import Recorders.ggogit.web.member.session.SessionConst;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -42,19 +43,29 @@ public class LeafController {
 
     @GetMapping("/first/reg")
     public ModelAndView firstReg(
-            @RequestParam(value = "seed", required = false) String type
+            @RequestParam(value = "seed", required = false) String type,
+            HttpServletRequest request
     ) {
+
+
+        HttpSession session = request.getSession();
+
+        Member member = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
+
+        Long memberId= member.getId();
+
         ModelAndView mv;
         if (seedService.isBook(type)) {
             mv = new ModelAndView("view/leaf/1st-reg-book");
             mv.addObject("form", new LeafBookForm());
         } else {
-            Seed seed = seedService.get(type);
+            Seed seed = seedService.getByEngName(type);
+            System.out.println(seed.toString());
             mv = new ModelAndView("view/leaf/1st-reg-etc");
             mv.addObject("seedId", seed.getId());
             mv.addObject("form", new LeafForm());
         }
-        mv.addObject("memberId", 1L);
+        mv.addObject("memberId", memberId);
         return mv;
     }
 

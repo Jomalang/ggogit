@@ -24,4 +24,5 @@ public interface LeafRepository {
     LeafRecentSaveBranchView findLeafRecentSaveBranchViewByTreeId(Long treeId);
     LeafBreadcrumbView findLeafBreadcrumbViewByTreeIdAndLeafId(Long treeId, Long leafId);
     List<Leaf> findByTreeIdOrderByCreateTimeDesc(Long treeId);
+    List<LeafBranchView> findLeafBranchViewByTreeId(Long treeId);
 }

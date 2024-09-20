@@ -22,7 +22,7 @@
 
     <main>
         <section class="first-log-img-container">
-            <h1 class="none">이전 로그 생성 이미지</h1>
+            <h1 class="none">이전 리프 생성 이미지</h1>
             <div th:replace="~{fragments/log :: frist-log}"></div>
         </section>
 
@@ -33,7 +33,7 @@
 
         <form th:action="@{/leaf/first/reg}" th:object="${form}" method="post" class="input-form" id="input-leaf-register-form-id">
             <section>
-                <h1 class="none">로그 생성 데이터 입력</h1>
+                <h1 class="none">리프 생성 데이터 입력</h1>
 
                 <section class="none">
                     <h1>씨앗 데이터 타입</h1>
@@ -41,23 +41,23 @@
                 </section>
 
                 <section class="first-log_page-input-container">
-                    <h1 class="none">로그 페이지</h1>
+                    <h1 class="none">리프 페이지</h1>
                     <div th:replace="~{fragments/input :: page-number(startPage=${startPage}, endPage=${startPage})}"></div>
                 </section>
 
                 <section class="input-form__select-tag-input-container">
-                    <h1 class="none">로그 태그 입력</h1>
+                    <h1 class="none">리프 태그 입력</h1>
                     <div th:replace="~{fragments/input :: tag-select(memberId=${memberId})}"></div>
                 </section>
 
                 <section class="input-form__input-container">
                     <h1 class="none">로그이름 입력</h1>
-                    <div th:replace="~{fragments/input :: text-box(label='*제목', placeholder='로그 제목을 읿력해 주세요', name='title')}"></div>
+                    <div th:replace="~{fragments/input :: text-box(label='*제목', placeholder='리프 제목을 읿력해 주세요', name='title')}"></div>
                 </section>
 
                 <section class="book-tree-input-form__large-input-container">
-                    <h1 class="none">로그 제목 입력</h1>
-                    <div th:replace="~{fragments/input :: textarea-box(label='*내용', placeholder='로그 내용을 입력해 주세요', name='content')}"></div>
+                    <h1 class="none">리프 제목 입력</h1>
+                    <div th:replace="~{fragments/input :: textarea-box(label='*내용', placeholder='리프 내용을 입력해 주세요', name='content')}"></div>
                 </section>
 
                 <section class="input-form__input-container">
@@ -67,7 +67,7 @@
                 </section>
 
                 <section class="book-tree-submit-container">
-                    <h1 class="none">로그 생성 버튼</h1>
+                    <h1 class="none">리프 생성 버튼</h1>
                     <div th:replace="~{fragments/button :: submit-btn-full-bar(text='리프 생성')}"></div>
                 </section>
             </section>
@@ -137,7 +137,8 @@
             // 세션 스토리지에서 불러온다.
             const tagList = sessionStorage.getItem('selectedTagList');
             if (!tagList) { return; } // 저장된 데이터가 없다면 종료한다.
-            // 알림 제거
+            if (tagList === '[]') { return; } // 저장된 데이터가 없다면 종료한다.
+
             const placeHolder = document.querySelector('.input-tag-select__placeholder');
             placeHolder.remove();
 
@@ -207,11 +208,27 @@
             });
         }
 
+        function submitBtnEvent() {
+            const submitBtn = document.getElementById('book-tree-input-form-id');
+            submitBtn.addEventListener('click', () => {
+                const form = document.getElementById('input-leaf-register-form-id');
+                form.submit();
+                sessionStorage.removeItem('input-leaf-register-form');
+                sessionStorage.removeItem('selectedTagList');
+            });
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             loadPrevPage();
             loadInputData();
             loadTagData();
             tagSelectedBtnEvent();
+            submitBtnEvent();
+
+            setTimeout(() => {
+                document.querySelector('.first-log-box')
+                    .classList.add('first-log-box--show');
+            }, 500); // 0.5초 뒤에 이벤트를 등록한다.
         });
 
     </script>

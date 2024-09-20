@@ -167,7 +167,7 @@ CREATE TABLE "BOOK" (
     "PUBLIC_DATE"       DATE		                            NULL, -- 도서 출판일
     "TOTAL_PAGE"        NUMBER		                            NOT NULL, -- 도서 총 페이지 수
     "IMAGE_FILE"        VARCHAR2(1024)	                        NULL, -- 도서 이미지 파일
-    "RESOURCE_FROM"     NUMBER(1)	                            NOT NULL, -- 도서 출처
+    "RESOURCE_FROM"     NUMBER(1)	                            NOT NULL, -- 도서 등록 여부
     "UPDATE_TIME"	    TIMESTAMP       DEFAULT SYSTIMESTAMP    NOT NULL, -- 데이터 수정 시각
     "CREATE_TIME"	    TIMESTAMP       DEFAULT SYSTIMESTAMP    NOT NULL, -- 데이터 생성 시각
     -- UNIQUE 정의
@@ -716,10 +716,10 @@ CREATE TABLE "LEAF" (
     "TREE_ID"	        NUMBER		                            NOT NULL,
     "PARENT_LEAF_ID"	NUMBER		                            NULL,
     "VISIBILITY"	    NUMBER(1)	    DEFAULT 1	            NOT NULL,
-    "VIEW_COUNT"	    NUMBER		                            NOT NULL,
+    "VIEW_COUNT"	    NUMBER		    DEFAULT 0               NOT NULL,
     "LIKE_COUNT"	    NUMBER	        DEFAULT 0	            NOT NULL,
     "TITLE"	            NVARCHAR2(100)		                    NOT NULL,
-    "CONTENT"	            NVARCHAR2(2000)		                    NOT NULL,
+    "CONTENT"	        NVARCHAR2(2000)		                    NOT NULL,
 	"CHILD_LEAF_COUNT"	NUMBER(1)	    DEFAULT 0	            NOT NULL,
     "BOOK_MARK"	        NUMBER(1)	    DEFAULT 0	            NOT NULL,
     "UPDATE_TIME"	    TIMESTAMP       DEFAULT SYSTIMESTAMP    NOT NULL, -- 데이터 수정 시각

@@ -1,5 +1,7 @@
 package Recorders.ggogit.web.leaf;
 
+import Recorders.ggogit.domain.leaf.view.LeafBookView;
+import Recorders.ggogit.domain.member.entity.Member;
 import Recorders.ggogit.domain.tree.entity.Seed;
 import Recorders.ggogit.domain.tree.service.SeedService;
 import Recorders.ggogit.domain.leaf.service.LeafBookService;
@@ -9,6 +11,8 @@ import Recorders.ggogit.domain.leaf.view.LeafImageCardView;
 import Recorders.ggogit.domain.leaf.view.LeafItemView;
 import Recorders.ggogit.web.leaf.form.LeafBookForm;
 import Recorders.ggogit.web.leaf.form.LeafForm;
+import Recorders.ggogit.web.member.session.SessionConst;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +20,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
 
@@ -56,20 +61,32 @@ public class LeafController {
     @PostMapping("/first/reg")
     public ModelAndView firstReg(
             @Valid @ModelAttribute("form") LeafBookForm form,
-            BindingResult bindingResult
+            BindingResult bindingResult,
+            HttpServletRequest request
     ) {
+//        Member member = (Member) request
+//                .getSession().getAttribute(SessionConst.LOGIN_MEMBER);
+
+        Long memberId = 1L; // TODO: 나중에 로그인한 사용자 정보로 변경
+
         if (seedService.isBookById(form.getSeedId())) { // 도서 리프 에러 처리
             if (bindingResult.hasErrors()) {
                 return new ModelAndView("view/leaf/1st-reg-book", "form", form);
             }
-            leafBookService.register(form.toLeafBookView()); // 도서 리프 등록
-            return new ModelAndView("redirect:/leaf/list?tree_id=1&leaf_id=1");
+            LeafBookView leafBookView = leafBookService.register(form.toLeafBookView(), memberId); // 도서 리프 등록
+
+            String url = UriComponentsBuilder.fromPath("/leaf/list")
+                    .queryParam("tree_id", leafBookView.getTreeId())
+                    .queryParam("leaf_id", leafBookView.getLeafId())
+                    .toUriString();
+
+            return new ModelAndView("redirect:" + url);
         }
 
         if (bindingResult.hasErrors()) { // ETC 리프 에러 처리
             return new ModelAndView("view/leaf/1st-reg-etc", "form", form);
         }
-        leafEtcService.register(form.toLeafEtcView()); // ETC 리프 등록
+        leafEtcService.register(form.toLeafEtcView(), memberId); // ETC 리프 등록
         return new ModelAndView("redirect:/leaf/list?tree_id=1&leaf_id=1");
     }
 
@@ -136,16 +153,12 @@ public class LeafController {
         Model model
     ) {
         List<LeafItemView> list = leafService.getLeafItems(treeId, leafId);
-        for (LeafItemView item : list) {
-            if (item.getFocused()) {
-                model.addAttribute("focusedTime", item.getCreateTime());
-                break;
-            }
-        }
+
         // 최근 수정 브랜치 이름 정보 넣어야함
-        model.addAttribute("recentBranch", leafService.getRecentBranch(treeId));
+        model.addAttribute("focusedTime", list.getLast().getCreateTime());
+        model.addAttribute("recentBranch", leafService.getRecentBranch(treeId, list.getLast().getId()));
         model.addAttribute("breadcrumb", leafService.getBreadcrumb(treeId, leafId));
-        model.addAttribute("list", list);
+        model.addAttribute("list", list); // 거꾸로 정렬
         return "view/leaf/list";
     }
 
@@ -162,5 +175,11 @@ public class LeafController {
         List<LeafImageCardView> leafImageCardViews = leafService.getLeafImageCardViews(memberId);
         model.addAttribute("leafImageCardViews", leafImageCardViews);
         return "view/leaf/list";
+    }
+
+    @GetMapping("/list/test")
+    public String listTest(
+    ) {
+        return "view/leaf/list-test";
     }
 }

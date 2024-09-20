@@ -1,8 +1,9 @@
 package Recorders.ggogit.domain.leaf.view;
 
 
-import Recorders.ggogit.type.LeafDirectionType;
+import Recorders.ggogit.domain.leaf.structure.LeafDirectionType;
 import Recorders.ggogit.domain.leaf.entity.LeafTag;
+import Recorders.ggogit.domain.leaf.structure.LeafNode;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,9 +22,21 @@ public class LeafItemView {
     private Long parentLeafId;
     private String title;
     private List<LeafTag> tags;
-    private Boolean focused;
+    private Boolean focused; // 현재 사용자가 보고 있는 리프인지
     private LeafDirectionType direction;
     private LocalDateTime createTime;
+
+    public static LeafItemView of(LeafNode leafNode, List<LeafTag> tags) {
+        return LeafItemView.builder()
+                .id(leafNode.getData().getId())
+                .parentLeafId(leafNode.getData().getParentLeafId())
+                .title(leafNode.getData().getTitle())
+                .tags(tags)
+                .focused(false)
+                .direction(leafNode.getDirection())
+                .createTime(leafNode.getData().getCreateTime())
+                .build();
+    }
 
     public Date getCreateTime() {
         return Date.from(createTime.atZone(java.time.ZoneId.systemDefault()).toInstant());

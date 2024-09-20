@@ -20,7 +20,7 @@ public class LeafEtcView {
     private String title;
     private String content;
     private Boolean visibility;
-    private Integer childLeafCount;
+    private Long childLeafCount;
     private List<LeafTag> tags;
 
     public static LeafEtcView of(Leaf leaf, List<LeafTag> tags) {
@@ -42,8 +42,8 @@ public class LeafEtcView {
                 .treeId(treeId)
                 .parentLeafId(parentLeafId)
                 .visibility(visibility)
-                .viewCount(0)
-                .likeCount(0)
+                .viewCount(0L)
+                .likeCount(0L)
                 .title(title)
                 .content(content)
                 .childLeafCount(childLeafCount)

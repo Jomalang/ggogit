@@ -29,7 +29,9 @@ class BookRepositoryTest {
                 .memberId(1L) // <
                 .totalPage(100L)
                 .title("테스트123")
+                .bookCategoryId(1L)
                 .author("테스트")
+                .isbn("123123132")
                 .publisher("테스트")
                 .imageFile("테스트")
                 .resourceFrom(true)

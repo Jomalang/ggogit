@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>스와이프 박스 예시</title>
+    <style>
+        .container {
+            width: 300px;
+            height: 200px;
+            margin: 0 auto;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .slider {
+            display: flex;
+            transition: transform 0.3s ease;
+        }
+
+        .box {
+            flex: 0 0 300px;
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            color: white;
+        }
+
+        #box1 { background-color: #FF6B6B; }
+        #box2 { background-color: #4ECDC4; }
+        #box3 { background-color: #45B7D1; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="slider">
+        <div class="box" id="box1">박스 1</div>
+        <div class="box" id="box2">박스 2</div>
+        <div class="box" id="box3">박스 3</div>
+    </div>
+</div>
+
+<script>
+    const slider = document.querySelector('.slider');
+    let startX;
+    let isDragging = false;
+    let currentIndex = 0;
+    const boxWidth = 300;
+    const threshold = 100; // 스와이프 감지 임계값
+
+    slider.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        startX = e.pageX - slider.offsetLeft;
+    });
+
+    slider.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        e.preventDefault();
+        const x = e.pageX - slider.offsetLeft;
+        const walk = x - startX;
+
+        if (Math.abs(walk) > threshold) {
+            if (walk > 0 && currentIndex > 0) {
+                currentIndex--;
+            } else if (walk < 0 && currentIndex < 2) {
+                currentIndex++;
+            }
+            updateSliderPosition();
+            isDragging = false;
+        }
+    });
+
+    slider.addEventListener('mouseup', () => {
+        isDragging = false;
+    });
+
+    slider.addEventListener('mouseleave', () => {
+        isDragging = false;
+    });
+
+    function updateSliderPosition() {
+        slider.style.transform = `translateX(-${currentIndex * boxWidth}px)`;
+    }
+</script>
+</body>
+</html>

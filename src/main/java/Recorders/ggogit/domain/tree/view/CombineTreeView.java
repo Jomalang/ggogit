@@ -1,8 +1,6 @@
 package Recorders.ggogit.domain.tree.view;
 
-import Recorders.ggogit.domain.leaf.entity.Leaf;
 import Recorders.ggogit.domain.leaf.view.LeafBranchView;
-import Recorders.ggogit.domain.leaf.view.LeafRecentBranchView;
 import Recorders.ggogit.domain.member.view.MemberImageView;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

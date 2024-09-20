@@ -3,9 +3,7 @@ package Recorders.ggogit.web.tree;
 import Recorders.ggogit.domain.book.service.BookService;
 import Recorders.ggogit.domain.book.view.BookInfoView;
 import Recorders.ggogit.domain.book.view.BookPreviewView;
-import Recorders.ggogit.domain.leaf.entity.Leaf;
 import Recorders.ggogit.domain.leaf.view.LeafBranchView;
-import Recorders.ggogit.domain.leaf.view.LeafRecentBranchView;
 import Recorders.ggogit.domain.member.entity.Member;
 import Recorders.ggogit.domain.member.service.MemberService;
 import Recorders.ggogit.domain.member.view.MemberImageView;
@@ -33,8 +31,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import java.io.File;
 
 @Controller
 @RequestMapping("/tree")
@@ -192,7 +188,7 @@ public class TreeController {
         }
 
         treeService.tmpEtcTreeSave(form);
-        return "redirect:/leaf/first/reg";
+        return "redirect:/leaf/first/reg?seed=" + seed.getEngName();
     }
 
 

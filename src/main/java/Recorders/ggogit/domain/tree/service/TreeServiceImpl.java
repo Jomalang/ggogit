@@ -1,10 +1,7 @@
 package Recorders.ggogit.domain.tree.service;
 
-import Recorders.ggogit.domain.leaf.entity.Leaf;
 import Recorders.ggogit.domain.leaf.repository.LeafRepository;
 import Recorders.ggogit.domain.leaf.view.LeafBranchView;
-import Recorders.ggogit.domain.leaf.view.LeafRecentBranchView;
-import Recorders.ggogit.domain.member.entity.Member;
 import Recorders.ggogit.domain.member.repository.MemberRepository;
 import Recorders.ggogit.domain.member.view.MemberImageView;
 import Recorders.ggogit.domain.tree.entity.Tree;
@@ -22,9 +19,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 @Service

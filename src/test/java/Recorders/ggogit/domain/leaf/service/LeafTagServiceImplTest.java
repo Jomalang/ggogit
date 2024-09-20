@@ -51,4 +51,18 @@ class LeafTagServiceImplTest {
         // then
         //assertThat(leafTags).isNotNull();
     }
+
+    @Test
+    @DisplayName("등록 테스트 | LeafTag | register")
+    void testGetLeafTags() {
+        // given
+        LeafTag leafTag = new LeafTag();
+        leafTag.setMemberId(1L);
+
+        // when
+        LeafTag saved = leafTagServiceImpl.register(leafTag);
+
+        // then
+        //assertThat(saved).isNotNull();
+    }
 }

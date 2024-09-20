@@ -5,35 +5,15 @@
 
 <mapper namespace="Recorders.ggogit.domain.leaf.repository.LeafRepository">
 
-        <insert
-            id="save"
-            parameterType="Leaf"
-            useGeneratedKeys="true"
-            keyProperty="id"
-            keyColumn="ID"
-        >
-            INSERT INTO LEAF (
-                TREE_ID,
-                PARENT_LEAF_ID,
-                VISIBILITY,
-                VIEW_COUNT,
-                LIKE_COUNT,
-                TITLE,
-                CONTENT,
-                CHILD_LEAF_COUNT,
-                BOOK_MARK
-            )
-            VALUES (
-                #{treeId},
-                #{parentLeafId},
-                #{visibility},
-                #{viewCount},
-                #{likeCount},
-                #{title},
-                #{content},
-                #{childLeafCount},
-                #{bookMark}
-            )
+        <insert id="save" parameterType="Leaf"
+                useGeneratedKeys="true" keyProperty="id" keyColumn="ID">
+            INSERT INTO LEAF (TREE_ID, PARENT_LEAF_ID, VISIBILITY, TITLE, CONTENT)
+            <if test="parentLeafId != null">
+                VALUES (#{treeId}, #{parentLeafId}, #{visibility}, #{title}, #{content})
+            </if>
+            <if test="parentLeafId == null">
+                VALUES (#{treeId}, NULL, #{visibility}, #{title}, #{content})
+            </if>
         </insert>
 
         <update id="update" parameterType="Leaf">
@@ -72,6 +52,12 @@
             SELECT * FROM LEAF
         </select>
 
+        <select id="findByTreeIdOrderByCreateTimeDesc" resultType="Leaf">
+            SELECT * FROM LEAF
+            WHERE TREE_ID = #{treeId}
+            ORDER BY CREATE_TIME
+        </select>
+    
         <select id="findLeafCardViewByBookId" resultType="LeafCardView">
             SELECT
                 L2.TREE_ID,

@@ -81,8 +81,13 @@ public class LeafTagServiceImpl implements LeafTagService {
     }
 
     @Override
+    public List<LeafTag> getLeafTagsByLeafId(Long memberId) {
+        return leafTagRepository.findByLeafId(memberId);
+    }
+
+    @Override
     public List<LeafTag> getLeafTags(Long memberId) {
-        return getLeafTags(memberId, null, 1L, 10L);
+        return getLeafTags(memberId, null, 0L, 20L);
     }
 
     @Override

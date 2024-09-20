@@ -31,6 +31,17 @@
         WHERE RNUM &gt; #{offset}
     </select>
 
+    <select id="findByLeafId" resultType="LeafTag">
+        SELECT LT.*
+        FROM (
+            SELECT *
+            FROM LEAF_TAG_MAP
+            WHERE LEAF_ID = #{leafId}
+        ) LTM
+        JOIN LEAF_TAG LT
+            ON LT.ID = LTM.LEAF_TAG_ID
+    </select>
+
     <select id="count" resultType="Long">
         SELECT COUNT(*)
         FROM LEAF_TAG
@@ -51,9 +62,12 @@
     </select>
 
     <select id="existsById" parameterType="Long" resultType="Boolean">
-        SELECT COUNT(LEAF_ID) > 0
-        FROM LEAF_BOOK
-        WHERE LEAF_ID = #{leafId}
+        SELECT CASE
+            WHEN COUNT(ID) > 0 THEN 1
+            ELSE 0
+        END AS ROW_EXISTS
+        FROM LEAF_TAG
+        WHERE ID = #{id}
     </select>
 
     <select id="existsByMemberIdAndName" parameterType="LeafTag" resultType="Long">

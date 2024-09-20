@@ -33,6 +33,9 @@ public interface TreeRepository {
 //    //Read:  id로 공개성 조회
 //    Boolean findVisibilityById(long id);
 
+    //Read:  트리id로 트리 조회
+    Tree findById(Long id);
+
     //Update: 제목수정
     void updateTitleById(Long id, String title);
     //Update: 설명문 수정

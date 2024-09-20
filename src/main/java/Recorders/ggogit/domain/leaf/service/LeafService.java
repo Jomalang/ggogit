@@ -1,16 +1,16 @@
 package Recorders.ggogit.domain.leaf.service;
 
+import Recorders.ggogit.domain.leaf.structure.LeafNode;
 import Recorders.ggogit.domain.leaf.view.*;
 import Recorders.ggogit.type.SearchType;
 import Recorders.ggogit.type.SortType;
-import jakarta.annotation.Nullable;
 
 import java.util.List;
 
 public interface LeafService {
-    List<LeafItemView> getLeafItems(Long treeId, @Nullable Long leafId);
+    List<LeafItemView> getLeafItems(Long treeId, Long leafId);
 
-    LeafRecentBranchView getRecentBranch(Long treeId);
+    LeafRecentSaveBranchView getRecentBranch(Long treeId, Long leafId);
 
     LeafBreadcrumbView getBreadcrumb(Long treeId, Long leafId);
     LeafBreadcrumbView getBreadcrumb(Long leafId);
@@ -21,4 +21,8 @@ public interface LeafService {
 
     List<LeafCardView> getLeafCardViews(Long bookId, Long memberId);
     List<LeafCardView> getLeafCardViews(Long bookId, Long memberId, SearchType searchType, String search, SortType sortType, Long page, Long size);
+
+    List<LeafNode> getLeafNodeFromLeafIdToEnd(Long treeId, Long leafId);
+
+    List<LeafNode> getLeafNodeAll(Long treeId, Long leafId);
 }

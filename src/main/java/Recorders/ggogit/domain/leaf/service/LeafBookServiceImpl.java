@@ -1,5 +1,7 @@
 package Recorders.ggogit.domain.leaf.service;
 
+import Recorders.ggogit.domain.book.entity.Book;
+import Recorders.ggogit.domain.book.repository.BookRepository;
 import Recorders.ggogit.domain.leaf.entity.Leaf;
 import Recorders.ggogit.domain.leaf.entity.LeafBook;
 import Recorders.ggogit.domain.leaf.entity.LeafTag;
@@ -9,11 +11,21 @@ import Recorders.ggogit.domain.leaf.repository.LeafRepository;
 import Recorders.ggogit.domain.leaf.repository.LeafTagMapRepository;
 import Recorders.ggogit.domain.leaf.repository.LeafTagRepository;
 import Recorders.ggogit.domain.leaf.view.LeafBookView;
+import Recorders.ggogit.domain.tree.entity.Tree;
+import Recorders.ggogit.domain.tree.entity.TreeImage;
+import Recorders.ggogit.domain.tree.entity.TreeSaveTmp;
+import Recorders.ggogit.domain.tree.repository.TreeImageRepository;
+import Recorders.ggogit.domain.tree.repository.TreeRepository;
+import Recorders.ggogit.domain.tree.repository.TreeSaveTmpRepository;
 import Recorders.ggogit.type.SearchType;
 import Recorders.ggogit.type.SortType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -22,6 +34,9 @@ import java.util.Optional;
 public class LeafBookServiceImpl implements LeafBookService {
 
     private final static int LEAF_MAX_CHILD_COUNT = 3;
+
+    @Value("${file.upload-dir}")
+    private String uploadDir;
 
     @Autowired
     private LeafRepository leafRepository;
@@ -33,25 +48,75 @@ public class LeafBookServiceImpl implements LeafBookService {
     private LeafBookRepository leafBookRepository;
 
     @Autowired
+    private BookRepository bookRepository;
+
+    @Autowired
     private LeafTagMapRepository leafTagMapRepository;
 
+    @Autowired
+    private TreeSaveTmpRepository treeSaveTmpRepository;
+
+    @Autowired
+    private TreeRepository treeRepository;
+
+    @Autowired
+    private TreeImageRepository treeImageRepository;
+
     @Override
-    public boolean register(LeafBookView leafBookView) {
-        if (leafBookView.getParentLeafId() == null) {
-            return registerRoot(leafBookView);
+    public LeafBookView register(LeafBookView leafBookView, Long memberId) {
+        if (leafBookView.getParentLeafId() == null && leafBookView.getTreeId() == null) {
+            return registerRoot(leafBookView, memberId);
         } else {
-            return registerNode(leafBookView);
+            return registerNode(leafBookView, memberId);
         }
     }
 
     @Override
-    public boolean registerRoot(LeafBookView leafBookView) {
+    public LeafBookView registerRoot(LeafBookView leafBookView, Long memberId) {
         assert leafBookView.getParentLeafId() == null; // 부모 리프가 없어야 함
+
+        // TMP트리 존재 확인
+        TreeSaveTmp treeSaveTmp = Optional.ofNullable(treeSaveTmpRepository.findById(memberId))
+                .orElseThrow(() -> new IllegalArgumentException("TMP Tree가 존재하지 않습니다."));
+
+        // 도서 존재 확인
+        Book book;
+        if (treeSaveTmp.getBookId() == null) { // 도서 존재 안함 -> 새로 생성
+            book = treeSaveTmp.toBook();
+            bookRepository.save(book);
+            treeSaveTmp.setBookId(book.getId()); // 도서 ID 설정
+
+            // 도서 이미지 저장
+            String imageFilePath = treeSaveTmp.getImageFile();
+            if (imageFilePath != null) { // 이미지를 저장한 경우에
+                String toFileName = book.getId() + ".jpg";
+                moveImageFile(imageFilePath, toFileName);
+            }
+        } else {
+            // 도서 조회
+            book = Optional.ofNullable(bookRepository.findById(treeSaveTmp.getBookId()))
+                    .orElseThrow(() -> new IllegalArgumentException("Book 조회 실패"));
+        }
+
+        // 트리 생성 로직
+        Tree tree = treeSaveTmp.toTree();
+        tree.setBookId(book.getId());
+        treeRepository.save(tree);
+        leafBookView.setTreeId(tree.getId());
+        // 트리 이미지 저장 로직
+
+        TreeImage treeImage = treeSaveTmp.toTreeImage();
+        treeImage.setTreeId(tree.getId());
+        treeImageRepository.save(treeImage);
+
+        // 트리 저장 TMP 삭제
+        treeSaveTmpRepository.deleteByMemberId(memberId);
+
         return registerLogic(leafBookView);
     }
 
     @Override
-    public boolean registerNode(LeafBookView leafBookView) {
+    public LeafBookView registerNode(LeafBookView leafBookView, Long memberId) {
         assert leafBookView.getParentLeafId() != null; // 부모 리프가 있어야 함
 
         // 부모 리프 조회
@@ -70,13 +135,15 @@ public class LeafBookServiceImpl implements LeafBookService {
         parentLeaf.setChildLeafCount(parentLeaf.getChildLeafCount() + 1);
 
         // 부모 리프 저장
-        Long parentLeafCheck = Optional.ofNullable(leafRepository.update(parentLeaf))
-                .orElseThrow(() -> new IllegalArgumentException("부모 Leaf 수정 실패"));
+        Long parentLeafCheck = leafRepository.update(parentLeaf);
+        if (parentLeafCheck == null || parentLeafCheck != 1) {
+            throw new IllegalArgumentException("부모 Leaf 수정 실패");
+        }
 
-        return parentLeafCheck != null;
+        return leafBookView;
     }
 
-    private boolean registerLogic(LeafBookView leafBookView) {
+    private LeafBookView registerLogic(LeafBookView leafBookView) {
 
         // 태그 존재 확인
         leafBookView.getTags().forEach(tag -> {
@@ -86,21 +153,27 @@ public class LeafBookServiceImpl implements LeafBookService {
         });
 
         // 리프 저장
-        Long leafId = Optional.ofNullable(leafRepository.save(leafBookView.toLeaf()))
-                .orElseThrow(() -> new IllegalArgumentException("Leaf 저장 실패"));
+        Leaf leaf = leafBookView.toLeaf();
+        Long leafSaveCheck = leafRepository.save(leaf);
+        if (leafSaveCheck == null || leafSaveCheck != 1) {
+            throw new IllegalArgumentException("Leaf 저장 실패");
+        }
 
         // 도서 리프 저장
-        Long bookId = Optional.ofNullable(leafBookRepository.save(leafBookView.toLeafBook(leafId)))
-                .orElseThrow(() -> new IllegalArgumentException("LeafBook 저장 실패"));
+        leafBookView.setLeafId(leaf.getId());
+        Long bookSaveCheck = leafBookRepository.save(leafBookView.toLeafBook());
+        if (bookSaveCheck == null || bookSaveCheck != 1) {
+            throw new IllegalArgumentException("LeafBook 저장 실패");
+        }
 
         // 리프 태그 맵핑 저장
         leafBookView.getTags().forEach(tag -> {
-            Optional.ofNullable(leafTagMapRepository.save(LeafTagMap.of(leafId, tag.getId())))
+            Optional.ofNullable(leafTagMapRepository.save(LeafTagMap.of(leaf.getId(), tag.getId())))
                     .orElseThrow(() -> new IllegalArgumentException("LeafTagMap 저장 실패"));
         });
 
         // 결과 확인
-        return leafId != null && bookId != null;
+        return leafBookView;
     }
 
     @Override
@@ -251,5 +324,19 @@ public class LeafBookServiceImpl implements LeafBookService {
             tags.add(leafTag);
         }
         return tags;
+    }
+
+    public void moveImageFile(String fromPath, String toFileName) {
+        Path from = Path.of(fromPath);
+        Path to = Paths.get(uploadDir, "image", "book", toFileName);
+
+        try {
+            if (!Files.exists(to.getParent())) { // 폴더 경로 존재 확인
+                Files.createDirectories(to.getParent());
+            }
+            Files.move(from, to);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("이미지 파일 이동 실패");
+        }
     }
 }

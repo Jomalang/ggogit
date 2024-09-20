@@ -5,8 +5,8 @@
 <mapper namespace="Recorders.ggogit.domain.tree.repository.TreeImageRepository">
 <!--트리 이미지 row 생성-->
     <insert id="save" parameterType="TreeImage">
-        INSERT INTO TREE_IMAGE(TREE_ID,NAME)
-        VALUES(#{treeId},#{name})
+        INSERT INTO TREE_IMAGE(TREE_ID, NAME)
+        VALUES(#{treeId}, #{name})
     </insert>
 
 

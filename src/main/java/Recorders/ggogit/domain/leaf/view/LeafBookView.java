@@ -4,6 +4,7 @@ import Recorders.ggogit.domain.leaf.entity.Leaf;
 import Recorders.ggogit.domain.leaf.entity.LeafBook;
 import Recorders.ggogit.domain.leaf.entity.LeafTag;
 import lombok.*;
+import org.springframework.lang.Nullable;
 
 import java.util.List;
 
@@ -14,14 +15,16 @@ import java.util.List;
 public class LeafBookView {
 
     private Long leafId;
+    @Nullable
     private Long treeId;
+    @Nullable
     private Long parentLeafId;
     private Long startPage;
     private Long endPage;
     private String title;
     private String content;
     private Boolean visibility;
-    private Integer childLeafCount;
+    private Long childLeafCount;
     private List<LeafTag> tags;
 
     public static LeafBookView of(Leaf leaf, LeafBook leafBook, List<LeafTag> tags) {
@@ -52,8 +55,8 @@ public class LeafBookView {
                 .treeId(treeId)
                 .parentLeafId(parentLeafId)
                 .visibility(visibility)
-                .viewCount(0)
-                .likeCount(0)
+                .viewCount(0L)
+                .likeCount(0L)
                 .title(title)
                 .content(content)
                 .childLeafCount(childLeafCount)
@@ -67,8 +70,8 @@ public class LeafBookView {
                 .treeId(treeId)
                 .parentLeafId(parentLeafId)
                 .visibility(visibility)
-                .viewCount(0)
-                .likeCount(0)
+                .viewCount(0L)
+                .likeCount(0L)
                 .title(title)
                 .content(content)
                 .childLeafCount(childLeafCount)

@@ -60,6 +60,7 @@ const dragStart = (e, clientX) => {
 
 // drag 중 이벤트
 const dragging = (e, clientX) => {
+  console.log("dragging");
   if (isMove) {
     moveTranslateX = clientX - moveStartX;
     nextTranslateX = currentTranslateX + moveTranslateX;
@@ -131,10 +132,12 @@ const dragEnd = (e) => {
 
 };
 
+const throttledDragging = _.throttle((e) => dragging(e, e.clientX), 300);
 
 // PC
 carouselList.addEventListener("mousedown", (e) => dragStart(e, e.clientX));
-window.addEventListener("mousemove", (e) => dragging(e, e.clientX));
+// window.addEventListener("mousemove", (e) => dragging(e, e.clientX));
+window.addEventListener("mousemove", throttledDragging, {passive: false});
 window.addEventListener("mouseup", (e) => dragEnd(e));
 
 // Mobile

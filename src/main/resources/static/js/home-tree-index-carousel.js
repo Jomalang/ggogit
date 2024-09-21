@@ -2,12 +2,15 @@ import {bookExRemoveNone, calcMidTree} from "./home-tree-explanation.js";
 //첫 화면 렌더링 시 디테일 초기화
 
 
-const carouselList = document.querySelector(".tree-book-bg__list");
+export const carouselList = document.querySelector(".tree-book-bg__list");
 // carousel item 너비
 // const width = document.querySelector(".mid__item").clientWidth;
 const width = window.innerWidth * 0.3;
+const midWidth = window.innerWidth * 0.2;
+//carousel items
+export const carouselItems = document.querySelectorAll(".mid__item");
 // carousel item 전체 갯수
-const carouselItemCount = document.querySelectorAll(".mid__item").length / 3;
+const carouselItemCount = carouselItems.length / 3;
 
 // 현재 X값, 무엇의?
 let currentTranslateX = 0;
@@ -24,19 +27,14 @@ const moveGap = 30;
 // drag 종료시간을 얻기 위한 기준 시간 획득
 let dragEndTime = new Date().getTime();
 
+
 // drag 시작 이벤트
 const dragStart = (e, clientX) => {
   isMove = true;
   moveStartX = clientX;
 
-// 기본 동작 방지 (특히 모바일에서의 스크롤)
-  if (e.type.includes('touch')) {
-    e.preventDefault(); // 기본 터치 스크롤 동작을 방지
-  }
-
   // carousel list transition 제거
   carouselList.classList.remove("tree-book-bg__list--transition");
-
   // drag 종료시점으로부터 transition 시간이 지났는지 확인
   const dragEndStartGapTime = new Date().getTime() - dragEndTime; // drag 종료부터 다시 시작하기까지 걸린 시간 (단위 ms)
 
@@ -52,16 +50,20 @@ const dragStart = (e, clientX) => {
   // 두번째 carousel-item 위치로 변경
   currentTranslateX =
     -(((-currentTranslateX / width) % carouselItemCount) + carouselItemCount) *
-      width +
+      (width) +
     dragEndStartGapTranslateX;
   nextTranslateX = currentTranslateX;
   carouselList.style.transform = `translateX(${currentTranslateX}px)`;
+
 };
 
 // drag 중 이벤트
-const dragging = (e, clientX) => {
-  console.log("dragging");
+const dragging = (e) => {
   if (isMove) {
+    let clientX = e.clientX;
+    if(e.type === 'touchmove'){
+      clientX = e.targetTouches[0].clientX;
+    }
     moveTranslateX = clientX - moveStartX;
     nextTranslateX = currentTranslateX + moveTranslateX;
 
@@ -71,12 +73,14 @@ const dragging = (e, clientX) => {
     }
 
     // 오른쪽으로 최대 이동한 경우
-    if (nextTranslateX < -width * (carouselItemCount * 3 - 1)) {
-      nextTranslateX = -width * (carouselItemCount * 3 - 1);
+    if (nextTranslateX < -midWidth * (carouselItemCount * 3)) {
+      console.log('right end');
+      nextTranslateX = -midWidth * (carouselItemCount * 3);
     }
 
     // 왼쪽으로 최대 이동한 경우
     else if (nextTranslateX > 0) {
+      console.log('left end');
       nextTranslateX = 0;
     }
     carouselList.style.transform = `translateX(${nextTranslateX}px)`;
@@ -92,10 +96,6 @@ const dragEnd = (e) => {
     carouselList.classList.add("tree-book-bg__list--transition");
     dragEndTime = new Date().getTime();
 
-// 기본 동작 방지 (특히 모바일에서의 스크롤)
-    if (e.type.includes('touch')) {
-      e.preventDefault(); // 기본 터치 스크롤 동작을 방지
-    }
     // 오른쪽으로 이동한 경우
     if (currentTranslateX > nextTranslateX) {
       if ((currentTranslateX - nextTranslateX) % width > moveGap) {
@@ -129,10 +129,14 @@ const dragEnd = (e) => {
     }
     carouselList.style.transform = `translateX(${currentTranslateX}px)`;
   }
-
 };
 
-const throttledDragging = _.throttle((e) => dragging(e, e.clientX), 300);
+const throttledDragging = _.throttle((e) => {
+  if(isMove) {
+    dragging(e);
+  }
+  }, 50);
+
 
 // PC
 carouselList.addEventListener("mousedown", (e) => dragStart(e, e.clientX));
@@ -144,12 +148,16 @@ window.addEventListener("mouseup", (e) => dragEnd(e));
 carouselList.addEventListener("touchstart", (e) =>
   dragStart(e, e.targetTouches[0].clientX)
 );
-window.addEventListener("touchmove", (e) =>
-  dragging(e, e.targetTouches[0].clientX)
-);
+// window.addEventListener("touchmove", (e) =>
+//   dragging(e, e.targetTouches[0].clientX)
+// );
+
+window.addEventListener("touchmove", throttledDragging, {passive:false});
 window.addEventListener("touchend", (e) => dragEnd(e));
 
-const container = document.querySelector(".tree-book-bg");
+
+// --------------- 한 가운데 item 찾아내기 위한 IntersectionObserver코드 --------------
+const container = carouselList.querySelector(".tree-book-bg");
 
 const observer = new IntersectionObserver(
   (entries) => {
@@ -170,10 +178,7 @@ const observer = new IntersectionObserver(
   { root: container, threshold: 0.3 }
 );
 
-document.querySelectorAll(".mid__item").forEach((item) => {
+carouselItems.forEach((item) => {
   observer.observe(item);
 });
 
-// window.addEventListener("pageshow", () => {
-//   bookExRemoveNone(calcMidTree());
-// });

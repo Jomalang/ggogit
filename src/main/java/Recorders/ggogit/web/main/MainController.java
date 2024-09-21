@@ -7,6 +7,7 @@ import Recorders.ggogit.domain.tree.view.TreeInfoView;
 import Recorders.ggogit.web.member.session.SessionConst;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,11 +21,10 @@ import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
 @Controller
 @RequestMapping()
+@RequiredArgsConstructor
 public class MainController {
 
-    @Autowired
-    private TreeService treeService;
-
+    private final TreeService treeService;
 
     @GetMapping("/")
     public String index(

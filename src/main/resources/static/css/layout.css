@@ -68,6 +68,10 @@ body {
   justify-content: center;
 }
 
+.book-tree-total-info-container{
+  transition: all 0.3s ease-in-out;
+}
+
 .book-tree-explanation-container {
   margin: 0 24px 0 24px;
 }

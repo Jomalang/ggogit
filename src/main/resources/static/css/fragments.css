@@ -2100,13 +2100,16 @@ card.html
   display: flex;
   flex-direction: column;
   width: 20vw;
-  transition: all 0.5s ease-in-out;
+  transition: width 0.1s linear;
+}
+
+.mid__item--transition{
 }
 
 .center__item{
   width: 30vw;
-  transition: all 0.5s ease-in-out;
 }
+
 
 /*  ==========================================
     FRAGMENT: 최근 트리 정보

@@ -5,9 +5,9 @@ export const bookExRemoveNone = (selectedElement) => {
 
   carouselList.querySelectorAll(".mid__item").forEach(item => {
     if(item === selectedElement){
-      item.classList.add("center__item");
+      item.querySelector(".mid__img").classList.add("center__img");
     } else{
-      item.classList.remove("center__item");
+      item.querySelector(".mid__img").classList.remove("center__img");
     }
   })
 
@@ -37,7 +37,6 @@ export const calcMidTree = () =>{
   const midId = String(ids[1]);
   carouselList.querySelectorAll(".selected").forEach(item => {
     if(item.classList[1] === midId) {
-      console.log(item);
       ret = item;
     }
   });

@@ -135,7 +135,7 @@ const throttledDragging = _.throttle((e) => {
   if(isMove) {
     dragging(e);
   }
-  }, 50);
+  }, 10);
 
 
 // PC

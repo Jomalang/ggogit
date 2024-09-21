@@ -175,7 +175,7 @@ const observer = new IntersectionObserver(
       bookExRemoveNone(selectedElement);
     }
   },
-  { root: container, threshold: 0.3 }
+  { root: container, threshold: 0.6 }
 );
 
 carouselItems.forEach((item) => {

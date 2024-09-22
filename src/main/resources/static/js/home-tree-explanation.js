@@ -1,13 +1,13 @@
-export const bookExRemoveNone = (selectedElement) => {
-  console.log(selectedElement);
-  const id = selectedElement.classList[1];
-  console.log(id);
+import {carouselList, carouselItems} from "./home-tree-index-carousel.js";
 
-  document.querySelectorAll(".mid__item").forEach(item => {
+export const bookExRemoveNone = (selectedElement) => {
+  const id = selectedElement.classList[1];
+
+  carouselList.querySelectorAll(".mid__item").forEach(item => {
     if(item === selectedElement){
-      item.classList.add("center__item");
+      item.querySelector(".mid__img").classList.add("center__img");
     } else{
-      item.classList.remove("center__item");
+      item.querySelector(".mid__img").classList.remove("center__img");
     }
   })
 
@@ -31,13 +31,12 @@ export const bookExRemoveNone = (selectedElement) => {
 export const calcMidTree = () =>{
   let ids = [];
   let ret = null;
-  document.querySelectorAll(".selected").forEach(item => { ids.push
+  carouselList.querySelectorAll(".selected").forEach(item => { ids.push
   (item.classList[1]);
   });
   const midId = String(ids[1]);
-  document.querySelectorAll(".selected").forEach(item => {
+  carouselList.querySelectorAll(".selected").forEach(item => {
     if(item.classList[1] === midId) {
-      console.log(item);
       ret = item;
     }
   });

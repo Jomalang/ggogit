@@ -51,14 +51,37 @@
           th:with="coverIdx=${treeStat.index}"
           th:classappend="${coverIdx}"
         >
-          <a href="">
+          <a th:href="@{/tree/detail/{treeId}(treeId=*{treeId})}">
             <img
               class="mid__img"
-              th:src="@{/svg/{img}(img=*{coverImageName})}"
+              th:src="@{/img/home/{img}(img=*{coverImageName})}"
               alt="도서 예시 이미지"
             />
           </a>
         </li>
+          <li th:if="${trees.size() == 1}"
+              class="mid__item"
+              th:classappend="1">
+              <a th:href="@{/seed/index}">
+              <img
+                      class="mid__img"
+                      th:src="@{/img/home/tree-book-blank.png}"
+                      alt="도서 예시 이미지"
+              />
+              </a>
+          </li>
+          <li th:if="${trees.size() == 1 || trees.size() == 2}"
+              class="mid__item"
+              th:classappend="2">
+
+              <a th:href="@{/seed/index}">
+              <img
+                      class="mid__img"
+                      th:src="@{/img/home/tree-book-blank.png}"
+                      alt="도서 예시 이미지"
+              />
+              </a>
+          </li>
         <li
           class="mid__item"
           th:each="tree : ${trees}"
@@ -66,14 +89,40 @@
           th:with="coverIdx=${treeStat.index}"
           th:classappend="${coverIdx}"
         >
-          <a href="#">
+          <a th:href="@{/tree/detail/{treeId}(treeId=*{treeId})}">
             <img
               class="mid__img"
-              th:src="@{/svg/{img}(img=*{coverImageName})}"
+              th:src="@{/img/home/{img}(img=*{coverImageName})}"
               alt="도서 예시 이미지"
             />
           </a>
         </li>
+
+          <li th:if="${trees.size() == 1}"
+              class="mid__item"
+              th:classappend="1">
+
+              <a th:href="@{/seed/index}">
+              <img
+                      class="mid__img"
+                      th:src="@{/img/home/tree-book-blank.png}"
+                      alt="도서 예시 이미지"
+              />
+              </a>
+          </li>
+          <li th:if="${trees.size() == 1 || trees.size() == 2}"
+              class="mid__item"
+              th:classappend="2">
+
+              <a th:href="@{/seed/index}">
+              <img
+                      class="mid__img"
+                      th:src="@{/img/home/tree-book-blank.png}"
+                      alt="도서 예시 이미지"
+              />
+              </a>
+          </li>
+
         <li
           class="mid__item"
           th:each="tree : ${trees}"
@@ -81,14 +130,39 @@
           th:with="coverIdx=${treeStat.index}"
           th:classappend="${coverIdx}"
         >
-          <a href="#">
+          <a th:href="@{/tree/detail/{treeId}(treeId=*{treeId})}">
             <img
               class="mid__img"
-              th:src="@{/svg/{img}(img=*{coverImageName})}"
+              th:src="@{/img/home/{img}(img=*{coverImageName})}"
               alt="도서 예시 이미지"
             />
           </a>
         </li>
+          <li th:if="${trees.size() == 1}"
+              class="mid__item"
+              th:classappend="1">
+
+              <a th:href="@{/seed/index}">
+              <img
+                      class="mid__img"
+                      th:src="@{/img/home/tree-book-blank.png}"
+                      alt="도서 예시 이미지"
+              />
+              </a>
+          </li>
+          <li th:if="${trees.size() == 1 || trees.size() == 2}"
+              class="mid__item"
+              th:classappend="2">
+
+              <a th:href="@{/seed/index}">
+              <img
+                      class="mid__img"
+                      th:src="@{/img/home/tree-book-blank.png}"
+                      alt="도서 예시 이미지"
+              />
+              </a>
+          </li>
+
       </ul>
     </div>
   </body>

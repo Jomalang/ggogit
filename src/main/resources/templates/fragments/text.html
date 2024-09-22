@@ -161,7 +161,7 @@
   th:fragment="recent-tree-info(tree)"
   th:object="${tree}"
 >
-  <a href="#" class="textbox-recent-tree-info__a">
+  <div class="textbox-recent-tree-info__a">
     <h2 class="textbox-recent-tree-info__tree-title" th:text="*{title}">
       나의 첫번째 트리
     </h2>
@@ -183,7 +183,7 @@
     <p class="textbox-recent-tree-info__date" th:text="*{#dates.format(createdAt, 'yyyy-MM-dd')}">
       2024.07.15
     </p>
-  </a>
+  </div>
 </div>
 
 <!-- ==========================================

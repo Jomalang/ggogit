@@ -274,8 +274,8 @@
   =================================== -->
     <div class="tree-input-text__form" th:fragment="tag-search-or-register-bar(tag)">
       <label class="tree-input-text__subject">
-        <input th:if="${tag.name}" id="tree-input-text__rectangle-id" name="name" class="tree-input-text__rectangle"  placeholder="태그 생성 및 옵션 선택" th:value="${tag.name}"/>
-        <input th:unless="${tag.name}" id="tree-input-text__rectangle-id" name="name" class="tree-input-text__rectangle"  placeholder="태그 생성 및 옵션 선택"/>
+        <input th:if="${tag}" id="tree-input-text__rectangle-id" name="name" class="tree-input-text__rectangle"  placeholder="태그 생성 및 옵션 선택" th:value="${tag.name}"/>
+        <input th:unless="${tag}" id="tree-input-text__rectangle-id" name="name" class="tree-input-text__rectangle"  placeholder="태그 생성 및 옵션 선택"/>
       </label>
     </div>
 

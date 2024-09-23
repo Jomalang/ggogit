@@ -27,12 +27,14 @@
             th:object="${tree}"
     >
       <a class="card-tree-detail" th:href="@{/tree/detail/{id}(id=*{treeId})}">
-        <img
-          class="card-tree__book-cover"
-          src="/src/main/resources/static/svg/card-felt__cover.svg"
-          th:src="@{/img/home/{img}(img=*{coverImageName})}"
-          alt="treeCover"
-        />
+          <div class="card-tree__img-frame">
+            <img
+              class="card-tree__book-cover"
+              src="/svg/card-felt__cover.svg"
+              th:src="@{/img/home/{img}(img=*{coverImageName})}"
+              alt="treeCover"
+            />
+          </div>
         <div class="card-tree-detail__box">
           <!--반복문으로 넣어야 할듯..-->
           <div class="card-tree-detail__tags">

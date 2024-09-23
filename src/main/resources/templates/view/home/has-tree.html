@@ -58,16 +58,19 @@
                   th:replace="~{fragments/text::recent-tree-ex(text=${tree.description})}"></div>
 
                 <section
-                  class="card-progress-home-container"
-                  th:with="readingPage=${tree.readingPage}, totalPage=${tree.bookTotalPage}, progress=${T(java.lang.String).format('%.1f',(readingPage*100.0)/totalPage)},
-            leaf=${tree.treeLeafCnt}, like=${tree.treeLikeCnt}, view=${tree.treeViewCnt}"
-                >
+                        class="card-progress-home-container"
+                        th:with="readingPage=${tree.readingPage},
+           totalPage=${tree.bookTotalPage},
+           leaf=${tree.treeLeafCnt},
+           like=${tree.treeLikeCnt},
+           view=${tree.treeViewCnt},
+           progress=${tree.seedId eq 1 ? #numbers.formatDecimal((readingPage*100.0)/totalPage, 1, 1) : 0}">
                   <h4 class="none">트리 진행률</h4>
                   <div
-                    th:replace="~{fragments/card::card-progress-bar(${progress}, ${readingPage}, ${totalPage})}"
+                          th:replace="${tree.seedId eq 1} ? ~{fragments/card::card-progress-bar(${progress}, ${readingPage}, ${totalPage})} : ~{}"
                   ></div>
                   <div
-                    th:replace="~{fragments/card::card-react-numbers(${leaf},${like},${view})}"
+                          th:replace="~{fragments/card::card-react-numbers(${leaf},${like},${view})}"
                   ></div>
                 </section>
               </li>

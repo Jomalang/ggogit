@@ -46,13 +46,9 @@ public class LeafController {
             @RequestParam(value = "seed", required = false) String type,
             HttpServletRequest request
     ) {
-
-
         HttpSession session = request.getSession();
-
         Member member = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
-
-        Long memberId= member.getId();
+        Long memberId = member.getId();
 
         ModelAndView mv;
         if (seedService.isBook(type)) {
@@ -75,10 +71,9 @@ public class LeafController {
             BindingResult bindingResult,
             HttpServletRequest request
     ) {
-//        Member member = (Member) request
-//                .getSession().getAttribute(SessionConst.LOGIN_MEMBER);
-
-        Long memberId = 1L; // TODO: 나중에 로그인한 사용자 정보로 변경
+        Member member = (Member) request
+                .getSession().getAttribute(SessionConst.LOGIN_MEMBER);
+        Long memberId = member.getId();
 
         if (seedService.isBookById(form.getSeedId())) { // 도서 리프 에러 처리
             if (bindingResult.hasErrors()) {

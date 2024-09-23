@@ -22,6 +22,7 @@ import Recorders.ggogit.type.SortType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -63,6 +64,7 @@ public class LeafBookServiceImpl implements LeafBookService {
     private TreeImageRepository treeImageRepository;
 
     @Override
+    @Transactional
     public LeafBookView register(LeafBookView leafBookView, Long memberId) {
         if (leafBookView.getParentLeafId() == null && leafBookView.getTreeId() == null) {
             return registerRoot(leafBookView, memberId);
@@ -336,7 +338,7 @@ public class LeafBookServiceImpl implements LeafBookService {
             }
             Files.move(from, to);
         } catch (Exception e) {
-            throw new IllegalArgumentException("이미지 파일 이동 실패");
+            throw new IllegalArgumentException("이미지 파일 이동 실패", e);
         }
     }
 }

@@ -40,7 +40,7 @@
 
         <select id="findById" resultType="Leaf">
             SELECT * FROM LEAF
-            WHERE TREE_ID = #{id}
+            WHERE ID = #{id}
         </select>
 
     <select id="findByTreeId" resultType="Leaf">

@@ -114,4 +114,6 @@ public interface TreeService {
 TreeInfoView getTreeInfoViewByTreeId(Long treeId);
 
     CombineTreeView setCombineTreeView(Long memberId, Long treeId);
+
+    Integer getTreeCount(Long id);
 }

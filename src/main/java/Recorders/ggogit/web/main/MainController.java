@@ -51,7 +51,8 @@ public class MainController {
 
         Member member = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
 
-        if (member.getId() == 0) {
+        //TODO:
+        if (treeService.getTreeCount(member.getId()) == 0) {
             return "view/home/no-tree";
         } else {
 

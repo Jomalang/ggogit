@@ -6,8 +6,8 @@
 <!--트리 생성-->
     <insert id="save" parameterType="Tree"
             useGeneratedKeys="true" keyProperty="id" keyColumn="ID">
-        INSERT INTO TREE(MEMBER_ID, SEED_ID, TITLE, DESCRIPTION, BOOK_MARK_COUNT, VISIBILITY)
-        VALUES(#{memberId}, #{seedId}, #{title}, #{description}, #{bookMarkCount}, #{visibility})
+        INSERT INTO TREE(MEMBER_ID, SEED_ID, TITLE, DESCRIPTION, BOOK_MARK_COUNT, VISIBILITY, BOOK_ID)
+        VALUES(#{memberId}, #{seedId}, #{title}, #{description}, #{bookMarkCount}, #{visibility}, #{bookId})
     </insert>
     
     <!--트리 조회 아이디로 조회-->
@@ -29,6 +29,10 @@
     <!--회원 ID별 조회-->
     <select id="findByMemberId" parameterType="Tree">
         SELECT * FROM TREE WHERE MEMBER_ID=#{memberId}
+    </select>
+    <!--회원 ID별 트리 count조회-->
+    <select id="getTreeCountByMemberId" parameterType="Long">
+        SELECT count(ID) FROM TREE WHERE MEMBER_ID=#{memberId}
     </select>
     <!--제목 별 조회-->
     <select id="findByTitle" parameterType="Tree">

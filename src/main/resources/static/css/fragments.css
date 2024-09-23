@@ -941,7 +941,8 @@ button {
 
 .card-tree__book-cover {
   height: 120px;
-  margin-right: 8px;
+  width: 80px;
+  object-fit: cover;
 }
 
 .card-tree-detail__box {
@@ -2629,6 +2630,13 @@ card.html
   color: var(--main1, #323a27);
 }
 
+.card-tree__img-frame{
+  display: flex;
+  height: 120px;
+  width: 80px;
+  margin-right: 8px;
+  justify-items: center;
+}
 /*  ========================================== /
     FRAGMENT: 나의 트리 카드 리스트
 /   ========================================== */

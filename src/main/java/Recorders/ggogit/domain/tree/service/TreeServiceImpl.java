@@ -53,39 +53,6 @@ public class TreeServiceImpl implements TreeService {
 
     @Override
     public List<TreeInfoView> getTreeInfoView(Long memberId) {
-
-
-//        TreeInfoView treeInfo;
-//        List<TreeInfoView> treeInfos = new ArrayList<>();
-//
-//        for(long i = 0L; i < 10L; i++) {
-//            treeInfo = TreeInfoView.builder()
-//                    .bookId(i)
-//                    .bookCategory("Test "+ i  +" Category")
-//                    .bookTitle("Book " + i)
-//                    .bookAuthor("Author " + i)
-//                    .bookTranslator("Translator " + i)
-//                    .bookPublisher("Publisher " + i)
-//                    .bookPublishedYear(Calendar.YEAR)
-//                    .bookTotalPage(400 + (int) i)
-//                    .treeId(i)
-//                    .memberId(memberId)
-//                    .seedId(i % 5)
-//                    .title("Title " + i)
-//                    .description("Description " + i)
-//                    .visibility(true)
-//                    .createdAt(new Date())
-//                    .leafCreatedAt(new Date())
-//                    .readingPage(315 + (int) i)
-//                    .coverImageName("book-cover-dummy1.svg")
-//                    .treeLeafCnt(100 * (i*4))
-//                    .treeLikeCnt(100 * (i*4))
-//                    .treeViewCnt(100 * (i*4))
-//                    .build();
-//            treeInfos.add(treeInfo);
-//        }
-
-
         return repository.getTreeInfoBookView(memberId);
     }
 
@@ -151,6 +118,11 @@ public class TreeServiceImpl implements TreeService {
                 .build();
 
         return combineTreeView;
+    }
+
+    @Override
+    public Integer getTreeCount(Long id) {
+        return repository.getTreeCountByMemberId(id);
     }
 
 }

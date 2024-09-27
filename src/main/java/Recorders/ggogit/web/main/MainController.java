@@ -55,7 +55,6 @@ public class MainController {
         if (treeService.getTreeCount(member.getId()) == 0) {
             return "view/home/no-tree";
         } else {
-
             List<TreeInfoView> treeInfoList = treeService.getTreeInfoView(member.getId());
             model.addAttribute("treeInfoList", treeInfoList);
             model.addAttribute("treeList", treeInfoList);

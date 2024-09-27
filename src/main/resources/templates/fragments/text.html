@@ -68,7 +68,7 @@
      ========================================== -->
 <div
   class="text-book-info"
-  th:fragment="text-book-info(seed, title, authors,translators, publisher)"
+  th:fragment="text-book-info(seed, title, author, translators, publisher)"
 >
   <div class="text-book-info__frame">
     <p class="text-book-info__seed" th:text="${seed}"></p>
@@ -77,7 +77,7 @@
     <p class="text-book-info__title" th:text="${title}"></p>
   </div>
   <div class="text-book-info__create-frame">
-    <div class="text-book-info__create" th:each="author :${authors}">
+    <div class="text-book-info__create">
     <span class="text-book-info-create-info" th:text="${author}" ></span>
     <span class="text-book-info-create-info">·</span>
     </div>

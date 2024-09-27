@@ -18,7 +18,8 @@ import java.util.UUID;
 public class MemoirFileApiController {
 
     //파일을 메모리에 임시 저장할 경로
-    private final String uploadDir = Paths.get("C:", "tui-editor", "upload").toAbsolutePath().toString();
+//    private final String uploadDir = Paths.get("~/workspace", "ggogit", "src", "main", "webapp", "uploads", "image","memoir").toAbsolutePath().toString();
+    private final String uploadDir = Paths.get("C:", "ggogit", "src", "main", "webapp", "uploads", "image","memoir").toAbsolutePath().toString();
 
     @PostMapping("/image-upload")
     public String uploadEditorImage(@RequestParam final MultipartFile image) {
@@ -70,6 +71,4 @@ public class MemoirFileApiController {
             throw new RuntimeException(e); //TODO 예외 처리 해줄 것.
         }
     }
-
-
 }

@@ -23,22 +23,23 @@
     </section>
 </header>
 
-<main>
+<main >
     <h2 class="none">완독한 도서</h2>
     <section class="tree-book-reg-search-book__title-container">
         <h3 class="none">도서 TEXT 컨테이너</h3>
         <div th:replace="~{fragments/text :: text-main-title(title='완독한 도서', size=28)}"></div>
     </section>
-    <section class="tree-reg-cover-info__container">
+    <section class="tree-reg-cover-info__container" th:object = "${treeInfo}">
         <h3 class="none">도서 커버 및 도서 정보</h3>
         <section class="tree-reg-cover__container">
             <h4 class="none">도서 커버</h4>
-            <div th:replace="~{fragments/link :: link__one-image-detail(src=@{/img/home/home-mid-book.png}, href='javascript:history.back()')}">
+            <div th:replace="~{fragments/link :: link__one-image-detail(src=@{book/{bookImage}(bookImage = *{coverImageName})}, href='javascript:history.back()')}">
             </div>
         </section>
         <section class="tree-reg-book-info__container">
             <h4 class="none">도서 정보</h4>
-            <div th:replace="~{fragments/text :: text-book-info(seed='시/에세이', title='무정형의 삶', authors='올라프', translators = null , publisher = '위즈덤하우스')}">
+<!--            translator null 체크 fragments 내부에 있음.-->
+            <div th:replace="~{fragments/text :: text-book-info(seed=*{bookCategory}, title=*{bookTitle}, author=*{bookAuthor}, translators = *{bookTranslator}, publisher = *{bookPublisher})}">
             </div>
         </section>
     </section>
@@ -133,7 +134,7 @@
 <script>
     const editor = new toastui.Editor({
     el: document.querySelector('#editor'),
-    height: '300px',
+    height: '500px',
     initialEditType: 'wysiwyg',
     previewStyle: 'vertical'
         ,placeholder: '무엇을 느끼셨나요?'
@@ -159,7 +160,7 @@
 
                     // addImageBlobHook의 callback을 통해 디스크에 저장된 이미지 에디터에 렌더링
                     const imageUrl = `/tui-editor/image-print?filename=${filename}`;
-                    callback(imageUrl, 'image alt attribute');
+                    callback(imageUrl, 'image loading fail');
                     console.log(blob);
                     console.log(callback);
                 } catch (error){

@@ -4,6 +4,8 @@ package Recorders.ggogit.web.memoir.controller;
 import Recorders.ggogit.domain.memoir.entity.Memoir;
 import Recorders.ggogit.domain.memoir.repository.MemoirRepository;
 import Recorders.ggogit.domain.memoir.service.MemoirService;
+import Recorders.ggogit.domain.tree.service.TreeService;
+import Recorders.ggogit.domain.tree.view.TreeInfoView;
 import Recorders.ggogit.web.memoir.MemoirForm;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +23,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class MemoirController {
 
     private final MemoirService memoirService;
+    private final TreeService treeService;
 
     @GetMapping("/index")
     public String getMemoirIndex(Model model) {
@@ -36,6 +39,10 @@ public class MemoirController {
     public String MemoirRegForm(@RequestParam(value = "t") long treeId, Model model) {
         model.addAttribute("memoirForm", new MemoirForm());
         model.addAttribute("treeId", treeId);
+
+        TreeInfoView treeInfo = treeService.getTreeInfoViewByTreeId(treeId);
+        model.addAttribute("treeInfo", treeInfo);
+
         return "view/memoir/reg";
     }
 

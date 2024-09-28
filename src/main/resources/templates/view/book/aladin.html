@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>알라딘</title>
+
+    <link th:href="@{/css/reset.css}" rel="stylesheet" />
+    <link th:href="@{/css/fragments.css}" rel="stylesheet" />
+    <link th:href="@{/css/layout.css}" rel="stylesheet" />
+</head>
+<body>
+    <section>
+        <h1>알라딘 도서 검색</h1>
+        <form action="/aladin/search" method="post">
+            <input type="text" name="keyword" placeholder="검색어 입력">
+            <button type="submit">검색</button>
+        </form>
+    </section>
+</body>
+</html>

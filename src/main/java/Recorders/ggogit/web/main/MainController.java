@@ -51,14 +51,13 @@ public class MainController {
 
         Member member = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
 
-        //TODO:
         if (treeService.getTreeCount(member.getId()) == 0) {
             return "view/home/no-tree";
         } else {
 
             List<TreeInfoView> treeInfoList = treeService.getTreeInfoView(member.getId());
+
             model.addAttribute("treeInfoList", treeInfoList);
-            model.addAttribute("treeList", treeInfoList);
             return "view/home/has-tree";
         }
     }

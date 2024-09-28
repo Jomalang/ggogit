@@ -79,7 +79,7 @@
         </section>
       </section>
 
-      <section class="my-tree-list" th:object="${treeList}">
+      <section class="my-tree-list" th:object="${treeInfoList}">
         <h2 class="none">나의 트리 목록</h2>
         <div th:replace="~{fragments/text::tree-count(*{size})}"></div>
         <section>
@@ -92,7 +92,7 @@
         <h2 class="none">트리 검색 결과</h2>
         <section class="tree-card-list">
           <h3 class="none">트리 검색 리스트</h3>
-          <div th:each="tree : *{treeList}">
+          <div th:each="tree : *{treeInfoList}">
             <div
               th:replace="~{fragments/card::card-tree-details(tree = ${tree})}"
             ></div>

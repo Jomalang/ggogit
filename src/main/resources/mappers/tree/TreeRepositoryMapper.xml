@@ -9,7 +9,7 @@
         INSERT INTO TREE(MEMBER_ID, SEED_ID, TITLE, DESCRIPTION, BOOK_MARK_COUNT, VISIBILITY, BOOK_ID)
         VALUES(#{memberId}, #{seedId}, #{title}, #{description}, #{bookMarkCount}, #{visibility}, #{bookId})
     </insert>
-    
+
     <!--트리 조회 아이디로 조회-->
     <select id="findById" parameterType="Long" resultType="Tree">
         SELECT * FROM TREE WHERE ID = #{id}
@@ -27,8 +27,19 @@
         SELECT COUNT(ID) FROM TREE WHERE ID=#{id} GROUP BY ID
     </select>
     <!--회원 ID별 조회-->
-    <select id="findByMemberId" parameterType="Tree">
-        SELECT * FROM TREE WHERE MEMBER_ID=#{memberId}
+    <select id="findByMemberId">
+        SELECT * FROM TREE
+        <where>
+            MEMBER_ID=#{memberId}
+        </where>
+    </select>
+    <!--시드 ID, 회원 ID별 조회-->
+    <select id="findByMemberIdAndSeeedId">
+        SELECT * FROM TREE
+        <where>
+            MEMBER_ID=#{memberId}
+            AND SEED_ID=#{seedId}
+        </where>
     </select>
     <!--회원 ID별 트리 count조회-->
     <select id="getTreeCountByMemberId" parameterType="Long">
@@ -62,6 +73,16 @@
     <select id="findVisibilityById" parameterType="Tree">
         SELECT TREE.VISIBILITY FROM TREE WHERE ID = #{id}
     </select>
+    <!--트리 ID readPage 조회-->
+    <select id="findReadPageById">
+        SELECT NVL(READING_PAGE,0) AS READING_PAGE
+        FROM TREE_BOOK WHERE TREE_ID = #{id}
+    </select>
+    <!--트리 ID 이미지 조회-->
+    <select id="findTreeImageById">
+        SELECT NAME FROM TREE_IMAGE WHERE TREE_ID = #{id}
+    </select>
+
     <!--Member ID 별 도서 트리 리스트 조회-->
     <select id="getTreeInfoBookView" resultType="TreeInfoView">
         SELECT
@@ -69,8 +90,9 @@
             BC.NAME AS BOOK_CATEGORY,
             B.TITLE AS BOOK_AUTHOR,
             B.PUBLISHER AS BOOK_PUBLISHER,
-            TO_CHAR(B.PUBLIC_DATE, 'YYYY') AS BOOK_PUBLISHED_YEAR,
+            TO_CHAR(B.PUBLISH_DATE, 'YYYY') AS BOOK_PUBLISHED_YEAR,
             B.TOTAL_PAGE AS BOOK_TOTAL_PAGE,
+            COALESCE(B.IMAGE_FILE, TI.NAME) AS COVER_IMAGE_NAME,
             T.ID AS TREE_ID,
             T.MEMBER_ID AS MEMBER_ID,
             T.SEED_ID AS SEED_ID,
@@ -79,8 +101,7 @@
             T.VISIBILITY AS VISIBILITY,
             TO_CHAR(T.CREATE_TIME, 'YYYY-MM-DD HH24:MI:SS') AS CREATED_AT,
             TO_CHAR(LT.CREATE_TIME, 'YYYY-MM-DD HH24:MI:SS') AS LEAF_CREATED_AT,
-            NVL(TB.READING_PAGE,.0) AS READING_PAGE,
-            B.IMAGE_FILE AS COVER_IMAGE_NAME,
+            NVL(TB.READING_PAGE,0) AS READING_PAGE,
             NVL(LC.LEAF_CNT,0) AS TREE_LEAF_CNT,
             NVL(TL.LIKE_CNT,0) AS TREE_LIKE_CNT,
             NVL(LV.LEAF_VIEW,0) AS TREE_VIEW_CNT
@@ -112,7 +133,12 @@
              (SELECT LEAF.TREE_ID, LEAF.CREATE_TIME FROM LEAF ORDER BY LEAF.CREATE_TIME DESC FETCH FIRST 1 ROW ONLY ) LT
              ON
                  LT.TREE_ID = T.ID
-        WHERE T.MEMBER_ID = #{id}
+        <where>
+        T.MEMBER_ID = #{memberId}
+        <if test="seedId!=null">
+            SEED_ID = #{seedId}
+        </if>
+        </where>
     </select>
     <!--Member ID 별 도서 트리 리스트 조회-->
     <select id="getTreeInfoViewByTreeId" resultType="TreeInfoView">
@@ -121,7 +147,7 @@
             BC.NAME AS BOOK_CATEGORY,
             B.TITLE AS BOOK_AUTHOR,
             B.PUBLISHER AS BOOK_PUBLISHER,
-            TO_CHAR(B.PUBLIC_DATE, 'YYYY') AS BOOK_PUBLISHED_YEAR,
+            TO_CHAR(B.PUBLISH_DATE, 'YYYY') AS BOOK_PUBLISHED_YEAR,
             B.TOTAL_PAGE AS BOOK_TOTAL_PAGE,
             T.ID AS TREE_ID,
             T.MEMBER_ID AS MEMBER_ID,
@@ -131,40 +157,41 @@
             T.VISIBILITY AS VISIBILITY,
             TO_CHAR(T.CREATE_TIME, 'YYYY-MM-DD HH24:MI:SS') AS CREATED_AT,
             TO_CHAR(LT.CREATE_TIME, 'YYYY-MM-DD HH24:MI:SS') AS LEAF_CREATED_AT,
-            NVL(TB.READING_PAGE,.0) AS READING_PAGE,
-            B.IMAGE_FILE AS COVER_IMAGE_NAME,
-            NVL(LC.LEAF_CNT,0) AS TREE_LEAF_CNT,
-            NVL(TL.LIKE_CNT,0) AS TREE_LIKE_CNT,
-            NVL(LV.LEAF_VIEW,0) AS TREE_VIEW_CNT
+            NVL(TB.READING_PAGE, 0) AS READING_PAGE,
+            COALESCE(B.IMAGE_FILE, TI.NAME) AS COVER_IMAGE_NAME,
+            NVL(LC.LEAF_CNT, 0) AS TREE_LEAF_CNT,
+            NVL(TL.LIKE_CNT, 0) AS TREE_LIKE_CNT,
+            NVL(LV.LEAF_VIEW, 0) AS TREE_VIEW_CNT
         FROM TREE T
-                 LEFT JOIN TREE_BOOK TB
-                           ON T.ID = TB.TREE_ID
-                 LEFT JOIN BOOK B
-                           ON
-                               T.BOOK_ID = B.ID
-                 LEFT JOIN
-                 (SELECT TREE_IMAGE.NAME, TREE_IMAGE.TREE_ID  FROM TREE_IMAGE) TI
-                 ON
-                     TI.TREE_ID = T.ID
-                 LEFT JOIN
-                 (SELECT * FROM BOOK_CATEGORY) BC ON B.BOOK_CATEGORY_ID = BC.ID
-                 LEFT JOIN
-             (SELECT  TREE_LIKE.TREE_ID, COUNT(TREE_LIKE.MEMBER_ID) LIKE_CNT  FROM TREE_LIKE GROUP BY TREE_LIKE.TREE_ID) TL
-             ON
-                 TL.TREE_ID = T.ID
-                 LEFT JOIN
-             (SELECT LEAF.TREE_ID, COUNT(ID) LEAF_CNT FROM LEAF GROUP BY LEAF.TREE_ID) LC
-             ON
-                 LC.TREE_ID = T.ID
-                 LEFT JOIN
-             (SELECT LEAF.TREE_ID, SUM(VIEW_COUNT) LEAF_VIEW FROM LEAF GROUP BY LEAF.TREE_ID) LV
-             ON
-                 LV.TREE_ID = T.ID
-                 LEFT JOIN
-             (SELECT LEAF.TREE_ID, LEAF.CREATE_TIME FROM LEAF ORDER BY LEAF.CREATE_TIME DESC FETCH FIRST 1 ROW ONLY ) LT
-             ON
-                 LT.TREE_ID = T.ID
-        WHERE T.ID = #{id}
+                 LEFT JOIN TREE_BOOK TB ON T.ID = TB.TREE_ID
+                 LEFT JOIN BOOK B ON T.BOOK_ID = B.ID
+                 LEFT JOIN TREE_IMAGE TI ON TI.TREE_ID = T.ID
+                 LEFT JOIN BOOK_CATEGORY BC ON B.BOOK_CATEGORY_ID = BC.ID
+                 LEFT JOIN (
+            SELECT TREE_ID, COUNT(MEMBER_ID) AS LIKE_CNT
+            FROM TREE_LIKE
+            GROUP BY TREE_ID
+        ) TL ON TL.TREE_ID = T.ID
+                 LEFT JOIN (
+            SELECT TREE_ID, COUNT(ID) AS LEAF_CNT
+            FROM LEAF
+            GROUP BY TREE_ID
+        ) LC ON LC.TREE_ID = T.ID
+                 LEFT JOIN (
+            SELECT TREE_ID, SUM(VIEW_COUNT) AS LEAF_VIEW
+            FROM LEAF
+            GROUP BY TREE_ID
+        ) LV ON LV.TREE_ID = T.ID
+                 LEFT JOIN (
+            SELECT TREE_ID, CREATE_TIME
+            FROM (
+                     SELECT TREE_ID, CREATE_TIME,
+                            ROW_NUMBER() OVER (PARTITION BY TREE_ID ORDER BY CREATE_TIME DESC) AS RN
+                     FROM LEAF
+                 )
+            WHERE RN = 1
+        ) LT ON LT.TREE_ID = T.ID
+        WHERE T.ID = #{treeId}
     </select>
 
 

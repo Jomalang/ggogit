@@ -1,6 +1,7 @@
 package Recorders.ggogit.web.leaf;
 
 import Recorders.ggogit.domain.leaf.view.LeafBookView;
+import Recorders.ggogit.domain.leaf.view.LeafEtcView;
 import Recorders.ggogit.domain.member.entity.Member;
 import Recorders.ggogit.domain.tree.entity.Seed;
 import Recorders.ggogit.domain.tree.service.SeedService;
@@ -13,7 +14,6 @@ import Recorders.ggogit.web.leaf.form.LeafBookForm;
 import Recorders.ggogit.web.leaf.form.LeafForm;
 import Recorders.ggogit.web.member.session.SessionConst;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -46,8 +46,7 @@ public class LeafController {
             @RequestParam(value = "seed", required = false) String type,
             HttpServletRequest request
     ) {
-        HttpSession session = request.getSession();
-        Member member = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
+        Member member = (Member) request.getSession().getAttribute(SessionConst.LOGIN_MEMBER);
         Long memberId = member.getId();
 
         ModelAndView mv;
@@ -71,8 +70,8 @@ public class LeafController {
             BindingResult bindingResult,
             HttpServletRequest request
     ) {
-        Member member = (Member) request
-                .getSession().getAttribute(SessionConst.LOGIN_MEMBER);
+
+        Member member = (Member) request.getSession().getAttribute(SessionConst.LOGIN_MEMBER);
         Long memberId = member.getId();
 
         if (seedService.isBookById(form.getSeedId())) { // 도서 리프 에러 처리
@@ -92,8 +91,15 @@ public class LeafController {
         if (bindingResult.hasErrors()) { // ETC 리프 에러 처리
             return new ModelAndView("view/leaf/1st-reg-etc", "form", form);
         }
-        leafEtcService.register(form.toLeafEtcView(), memberId); // ETC 리프 등록
-        return new ModelAndView("redirect:/leaf/list?tree_id=1&leaf_id=1");
+
+        LeafEtcView leafEtcView = leafEtcService.register(form.toLeafEtcView(), memberId); // ETC 리프 등록
+
+        String url = UriComponentsBuilder.fromPath("/leaf/list")
+                .queryParam("tree_id", leafEtcView.getTreeId())
+                .queryParam("leaf_id", leafEtcView.getLeafId())
+                .toUriString();
+
+        return new ModelAndView("redirect:" + url);
     }
 
     @GetMapping("/reg")

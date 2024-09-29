@@ -11,6 +11,8 @@ public interface TreeRepository {
 
     //Create:  트리 입력
     void save(Tree tree);
+    // Create:  트리 입력
+    void saveEtc(Tree tree);
 
     //Read:  트리 리스트 출력
     List<Tree> getAll();

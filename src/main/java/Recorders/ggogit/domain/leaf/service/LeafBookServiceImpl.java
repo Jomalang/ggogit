@@ -108,8 +108,8 @@ public class LeafBookServiceImpl implements LeafBookService {
         tree.setBookId(book.getId());
         treeRepository.save(tree);
         leafBookView.setTreeId(tree.getId());
-        // 트리 이미지 저장 로직
 
+        // 트리 이미지 저장 로직
         TreeImage treeImage = treeSaveTmp.toTreeImage();
         treeImage.setTreeId(tree.getId());
         treeImageRepository.save(treeImage);

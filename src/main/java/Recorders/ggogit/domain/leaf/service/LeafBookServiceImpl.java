@@ -74,6 +74,7 @@ public class LeafBookServiceImpl implements LeafBookService {
     }
 
     @Override
+    @Transactional
     public LeafBookView registerRoot(LeafBookView leafBookView, Long memberId) {
         assert leafBookView.getParentLeafId() == null; // 부모 리프가 없어야 함
 
@@ -93,6 +94,8 @@ public class LeafBookServiceImpl implements LeafBookService {
             if (imageFilePath != null) { // 이미지를 저장한 경우에
                 String toFileName = book.getId() + ".jpg";
                 moveImageFile(imageFilePath, toFileName);
+                book.setImageFile(toFileName);
+                bookRepository.update(book);
             }
         } else {
             // 도서 조회

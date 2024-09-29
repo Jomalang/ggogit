@@ -7,7 +7,7 @@
     <insert id="save" parameterType="Book"
             useGeneratedKeys="true" keyProperty="id" keyColumn="ID">
         INSERT INTO BOOK (MEMBER_ID, BOOK_CATEGORY_ID, TITLE, AUTHOR, PUBLISHER, PUBLISH_DATE, TOTAL_PAGE, IMAGE_FILE, RESOURCE_FROM)
-        VALUES (#{memberId}, #{bookCategoryId}, #{title}, #{author}, #{publisher}, #{publicDate}, #{totalPage}, #{imageFile}, #{resourceFrom})
+        VALUES (#{memberId}, #{bookCategoryId}, #{title}, #{author}, #{publisher}, #{publishDate}, #{totalPage}, #{imageFile}, #{resourceFrom})
     </insert>
 
     <update id="update" parameterType="Book">
@@ -19,7 +19,7 @@
             PUBLISHER = #{publisher},
             IMAGE_FILE = #{imageFile},
             RESOURCE_FROM = #{resourceFrom},
-            PUBLISH_DATE = #{publicDate}
+            PUBLISH_DATE = #{publishDate}
         WHERE ID = #{id}
     </update>
 

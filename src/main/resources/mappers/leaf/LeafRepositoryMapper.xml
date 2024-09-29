@@ -25,7 +25,7 @@
                 LIKE_COUNT = #{likeCount},
                 CHILD_LEAF_COUNT = #{childLeafCount},
                 BOOK_MARK = #{bookMark}
-            WHERE ID = 1;
+            WHERE ID = #{id}
         </update>
 
         <delete id="delete" parameterType="int">
@@ -52,10 +52,10 @@
             SELECT * FROM LEAF
         </select>
 
-        <select id="findByTreeIdOrderByCreateTimeDesc" resultType="Leaf">
+        <select id="findByTreeIdOrderById" resultType="Leaf">
             SELECT * FROM LEAF
             WHERE TREE_ID = #{treeId}
-            ORDER BY CREATE_TIME
+            ORDER BY ID
         </select>
     
         <select id="findLeafCardViewByBookId" resultType="LeafCardView">

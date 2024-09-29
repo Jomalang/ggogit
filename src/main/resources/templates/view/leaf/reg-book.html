@@ -7,8 +7,8 @@
     <link th:href="@{/css/reset.css}" rel="stylesheet" />
     <link th:href="@{/css/fragments.css}" rel="stylesheet" />
     <link th:href="@{/css/layout.css}" rel="stylesheet" />
-
-    <title>Document</title>
+    <script th:src="@{/js/leaf-create.js}" defer></script>
+    <title>기타 리프 생성</title>
 </head>
 <body>
 
@@ -23,46 +23,61 @@
 <main>
     <section class="before-log-img-container">
         <h1 class="none">이전 리프 생성 이미지</h1>
-        <div th:replace="~{fragments/log :: before-log}"></div>
+        <div th:replace="~{fragments/log :: before-log(leafInfo=${beforeLeaf})}"></div>
     </section>
 
-    <section class="before-log-title-container">
+    <section class="first-log-title-container">
         <h1 class="none"></h1>
         <div th:replace="~{fragments/text :: text-main-title(title='리프 생성', size=28)}"></div>
     </section>
 
-    <section>
-        <h1 class="none">리프 생성 데이터 입력</h1>
-        <section class="before-log_page-input-container">
-            <h1 class="none">리프 페이지</h1>
-            <div th:replace="~{fragments/input :: page-number(startPage=${form.startPage}, endPage=${form.endPage})}"></div>
-        </section>
+    <form th:action="@{/leaf/reg}" th:object="${form}" method="post" class="input-form" id="input-leaf-register-form-id">
+        <section>
+            <h1 class="none">리프 생성 데이터 입력</h1>
 
-        <section class="input-form__select-tag-input-container">
-            <h1 class="none">리프 태그 입력</h1>
-            <div th:replace="~{fragments/input :: tag-select(memberId=${memberId})}"></div>
-        </section>
+            <section class="none">
+                <h1>씨앗 데이터 타입</h1>
+                <label><input type="number" name="seedId" th:value="${seedId}"></label>
+            </section>
 
-        <section class="input-form__input-container">
-            <h1 class="none">리프이름 입력</h1>
-            <div th:replace="~{fragments/input :: text-box(label='*제목', placeholder='리프 제목을 읿력해 주세요', name='title')}"></div>
-        </section>
+            <section class="none">
+                <h1>부모 리프 아이디</h1>
+                <label><input type="number" name="parentId" th:value="${leafId}"></label>
+            </section>
 
-        <section class="book-tree-input-form__large-input-container">
-            <h1 class="none">리프 제목 입력</h1>
-            <div th:replace="~{fragments/input :: textarea-box(label='*내용', placeholder='리프 내용을 입력해 주세요', name='content')}"></div>
-        </section>
+            <section class="first-log_page-input-container">
+                <h1 class="none">리프 페이지</h1>
+                <div th:replace="~{fragments/input :: page-number(startPage=${startPage}, endPage=${startPage})}"></div>
+            </section>
 
-        <section class="input-form__input-container">
-            <h1 class="none">공개성 선택</h1>
-            <div th:replace="~{fragments/input :: input-visibility(name='visibility')}"></div>
-        </section>
+            <section class="input-form__select-tag-input-container">
+                <h1 class="none">리프 태그 입력</h1>
+                <div th:replace="~{fragments/input :: tag-select(memberId=${memberId})}"></div>
+            </section>
 
-        <section class="book-tree-submit-container">
-            <h1 class="none">리프 생성 버튼</h1>
-            <div th:replace="~{fragments/button :: submit-btn-full-bar(text='리프 생성', id='submit-btn')}"></div>
+            <section class="input-form__input-container">
+                <h1 class="none">리프 이름 입력</h1>
+                <div th:replace="~{fragments/input :: text-box(label='*제목', placeholder='리프 제목을 입력해 주세요', name='title')}"></div>
+            </section>
+
+            <section class="book-tree-input-form__large-input-container">
+                <h1 class="none">리프 제목 입력</h1>
+                <div th:replace="~{fragments/input :: textarea-box(label='*내용', placeholder='리프 내용을 입력해 주세요', name='content')}"></div>
+            </section>
+
+            <section class="input-form__input-container">
+                <h1 class="none">공개성 선택</h1>
+                <div th:replace="~{fragments/input :: input-visibility(name='visibility')}"></div>
+
+            </section>
+
+            <section class="book-tree-submit-container">
+                <h1 class="none">리프 생성 버튼</h1>
+                <div th:replace="~{fragments/button :: submit-btn-full-bar(text='리프 생성')}"></div>
+            </section>
         </section>
-    </section>
+    </form>
+
 </main>
 
 <aside class="nav-container">

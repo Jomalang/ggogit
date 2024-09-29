@@ -5,6 +5,7 @@ import Recorders.ggogit.domain.leaf.entity.LeafTag;
 import Recorders.ggogit.domain.leaf.service.LeafService;
 import Recorders.ggogit.domain.leaf.service.LeafTagService;
 import Recorders.ggogit.domain.leaf.structure.LeafNode;
+import Recorders.ggogit.domain.leaf.view.LeafListBranchView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,11 +26,10 @@ public class LeafController {
     @Autowired
     private LeafTagService leafTagService;
 
-    @GetMapping("/trees/{treeId}/leafs/{leafId}/children/{childNumber}")
-    public ResponseEntity<List<LeafItemDto>> getLeafNodes(
+    @GetMapping("/trees/{treeId}/leafs/{leafId}/children")
+    public ResponseEntity<List<LeafItemDto>> getLeafNodesToEnd(
             @PathVariable Long treeId,
-            @PathVariable Long leafId,
-            @PathVariable Integer childNumber
+            @PathVariable Long leafId
     ) {
         List<LeafNode> leafNodes = leafService.getLeafNodeFromLeafIdToEnd(treeId, leafId);
 
@@ -56,5 +56,14 @@ public class LeafController {
         }
 
         return ResponseEntity.ok(leafItemDtos);
+    }
+
+    @GetMapping("/trees/{treeId}/leafs/{leafId}/branch")
+    public ResponseEntity<LeafListBranchView> getLeafBranch(
+            @PathVariable Long treeId,
+            @PathVariable Long leafId
+    ) {
+        LeafListBranchView leafLIstBranchView = leafService.getBranchInfo(treeId, leafId);
+        return ResponseEntity.ok(leafLIstBranchView);
     }
 }

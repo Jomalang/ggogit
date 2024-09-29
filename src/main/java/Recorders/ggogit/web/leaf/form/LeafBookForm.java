@@ -18,6 +18,8 @@ public class LeafBookForm {
 
     private Long seedId;
 
+    private Long parentId;
+
     @Nullable // etc Leaf 등록시 null
     private Long startPage;
 
@@ -39,6 +41,7 @@ public class LeafBookForm {
         return LeafBookView.builder()
                 .startPage(startPage)
                 .endPage(endPage)
+                .parentLeafId(parentId)
                 .tags(getTags())
                 .title(title)
                 .content(content)
@@ -49,6 +52,7 @@ public class LeafBookForm {
     public LeafEtcView toLeafEtcView() {
         return LeafEtcView.builder()
                 .tags(getTags())
+                .parentLeafId(parentId)
                 .title(title)
                 .content(content)
                 .visibility(visibility)

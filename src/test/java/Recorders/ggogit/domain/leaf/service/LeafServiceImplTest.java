@@ -1,7 +1,7 @@
 package Recorders.ggogit.domain.leaf.service;
 
 import Recorders.ggogit.domain.leaf.view.LeafItemView;
-import Recorders.ggogit.domain.leaf.view.LeafRecentSaveBranchView;
+import Recorders.ggogit.domain.leaf.view.LeafListBranchView;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,7 +18,7 @@ class LeafServiceImplTest {
     void getBreadcrumb() {
         Long treeId = 1L;
         Long leafId = 99932L;
-        LeafRecentSaveBranchView leafRecentSaveBranchView = leafServiceImpl.getRecentBranch(treeId, leafId);
+        LeafListBranchView leafRecentSaveBranchView = leafServiceImpl.getBranchInfo(treeId, leafId);
         System.out.println(leafRecentSaveBranchView);
     }
 

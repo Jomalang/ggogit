@@ -15,12 +15,12 @@ public class AladinController {
     private AladinService aladinService;
 
     @GetMapping("")
-    public String showSearchForm() {
+    public String saveForm() {
         return "view/book/aladin";
     }
 
-    @PostMapping("/search")
-    public String searchBooks(@RequestParam String keyword) {
+    @PostMapping("/save")
+    public String saveBooks(@RequestParam String keyword) {
         aladinService.saveBooks(keyword);
         return "redirect:/aladin";
     }

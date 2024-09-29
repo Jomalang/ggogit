@@ -10,10 +10,13 @@
 </head>
 <body>
     <section>
-        <h1>알라딘 도서 검색</h1>
-        <form action="/aladin/search" method="post">
-            <input type="text" name="keyword" placeholder="검색어 입력">
-            <button type="submit">검색</button>
+        <h1 style="font-size: 30px;">알라딘 도서 검색</h1>
+        <form action="/aladin/save" method="post">
+            <label>
+                <span>도서명과 저자명으로 검색가능</span><br>
+                <input type="text" name="keyword" placeholder="검색어 입력">
+            </label>
+            <button type="submit">저장</button>
         </form>
     </section>
 </body>

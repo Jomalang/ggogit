@@ -10,6 +10,12 @@
         VALUES(#{memberId}, #{seedId}, #{title}, #{description}, #{bookMarkCount}, #{visibility}, #{bookId})
     </insert>
 
+    <insert id="saveEtc" parameterType="Tree"
+            useGeneratedKeys="true" keyProperty="id" keyColumn="ID">
+        INSERT INTO TREE(MEMBER_ID, SEED_ID, TITLE, DESCRIPTION, BOOK_MARK_COUNT, VISIBILITY)
+        VALUES(#{memberId}, #{seedId}, #{title}, #{description}, #{bookMarkCount}, #{visibility})
+    </insert>
+
     <!--트리 조회 아이디로 조회-->
     <select id="findById" parameterType="Long" resultType="Tree">
         SELECT * FROM TREE WHERE ID = #{id}
@@ -130,7 +136,8 @@
         SELECT
             B.ID AS BOOK_ID,
             BC.NAME AS BOOK_CATEGORY,
-            B.TITLE AS BOOK_AUTHOR,
+            B.TITLE AS BOOK_TITLE,
+            B.AUTHOR AS BOOK_AUTHOR,
             B.PUBLISHER AS BOOK_PUBLISHER,
             TO_CHAR(B.PUBLISH_DATE, 'YYYY') AS BOOK_PUBLISHED_YEAR,
             B.TOTAL_PAGE AS BOOK_TOTAL_PAGE,

@@ -21,8 +21,8 @@ public interface LeafRepository {
     List<LeafImageCardView> findLeafImageCardViewByMemberId(Long memberId, SearchType searchType, String search, SortType sortType, Long page, Long size);
     List<Leaf> findByTreeId(Long treeId);
     List<LeafEtcView> findLeafEtcViewByTreeId(Long treeId, SearchType searchType, String search, SortType sortType, Long page, Long size);
-    LeafRecentSaveBranchView findLeafRecentSaveBranchViewByTreeId(Long treeId);
+    LeafListBranchView findLeafListBranchViewByTreeId(Long treeId);
     LeafBreadcrumbView findLeafBreadcrumbViewByTreeIdAndLeafId(Long treeId, Long leafId);
-    List<Leaf> findByTreeIdOrderByCreateTimeDesc(Long treeId);
+    List<Leaf> findByTreeIdOrderById(Long treeId);
     List<LeafBranchView> findLeafBranchViewByTreeId(Long treeId);
 }

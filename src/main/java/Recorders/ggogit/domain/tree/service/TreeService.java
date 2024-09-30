@@ -123,5 +123,7 @@ TreeInfoView getTreeInfoViewByTreeId(Long treeId);
 
     Integer getTreeCount(Long id);
 
+    Long getSeedId(Long treeId);
+
     List<TreeCardView> findTreeCardView(Long seedId, Long memberId);
 }

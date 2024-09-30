@@ -19,7 +19,7 @@ public class Book {
     private String publisher;
     private String imageFile;
     private Boolean resourceFrom; // 도서 등록 여부 (true: API, false: 직접 등록)
-    private LocalDateTime publicDate;
+    private LocalDateTime publishDate;
     private LocalDateTime updateTime;
     private LocalDateTime createTime;
 }

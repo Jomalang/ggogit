@@ -1,0 +1,13 @@
+################# 변수 #################
+@treeId = 1
+@leafId = 1
+#######################################
+
+### 리프 리스트 출력하기
+GET http://localhost:8080/api/v1/trees/{{treeId}}/leafs/{{leafId}}
+
+
+### 리프 조회부터 말단 리프까지 출력하기
+GET http://localhost:8080/api/v1/trees/{treeId}/leafs/{leafId}/children
+
+

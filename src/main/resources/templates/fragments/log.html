@@ -13,19 +13,17 @@
 <!-- ==========================================
      FRAGMENT: 리프 생성 이미지
      ========================================== -->
-<div class="before-log-box" th:fragment="before-log">
+<div class="before-log-box" th:fragment="before-log(leafInfo)">
     <div class="before-log__branch">
         <div class="before-log__line"></div>
         <div class="before-log__circle"></div>
     </div>
     <div class="before-log__text-box">
         <p class="before-log__text">이전 로그</p>
-        <p class="before-log__title">리프 제목입니다.</p>
-        <p class="before-log__date">2024-07-18</p>
+        <p class="before-log__title" th:text="${leafInfo.title}">리프 제목입니다.</p>
+        <p class="before-log__date" th:text="${leafInfo.createDate}">2024-07-18</p>
         <ul class="before-log__tags">
-            <li class="before-log__tag">태그</li>
-            <li class="before-log__tag">태그</li>
-            <li class="before-log__tag">태그</li>
+            <li class="before-log__tag" th:each="tag : ${leafInfo.tags}" th:text="${tag.name}">태그</li>
         </ul>
     </div>
 </div>

@@ -7,11 +7,22 @@ import Recorders.ggogit.domain.leaf.repository.LeafTagMapRepository;
 import Recorders.ggogit.domain.leaf.repository.LeafTagRepository;
 import Recorders.ggogit.domain.leaf.view.LeafEtcView;
 import Recorders.ggogit.domain.leaf.entity.Leaf;
+import Recorders.ggogit.domain.tree.entity.Tree;
+import Recorders.ggogit.domain.tree.entity.TreeImage;
+import Recorders.ggogit.domain.tree.entity.TreeSaveTmp;
+import Recorders.ggogit.domain.tree.repository.TreeImageRepository;
+import Recorders.ggogit.domain.tree.repository.TreeRepository;
+import Recorders.ggogit.domain.tree.repository.TreeSaveTmpRepository;
 import Recorders.ggogit.type.SearchType;
 import Recorders.ggogit.type.SortType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -30,8 +41,20 @@ public class LeafEtcServiceImpl implements LeafEtcService {
     @Autowired
     private LeafTagMapRepository leafTagMapRepository;
 
+    @Autowired
+    private TreeSaveTmpRepository treeSaveTmpRepository;
+
+    @Autowired
+    private TreeRepository treeRepository;
+    @Autowired
+    private TreeImageRepository treeImageRepository;
+
+    @Value("${file.upload-dir}")
+    private String uploadDir;
+
     @Override
-    public boolean register(LeafEtcView leafEtcView, Long memberId) {
+    @Transactional
+    public LeafEtcView register(LeafEtcView leafEtcView, Long memberId) {
         if (leafEtcView.getParentLeafId() == null) {
             return registerRoot(leafEtcView, memberId);
         } else {
@@ -40,13 +63,40 @@ public class LeafEtcServiceImpl implements LeafEtcService {
     }
 
     @Override
-    public boolean registerRoot(LeafEtcView leafEtcView, Long memberId) {
+    @Transactional
+    public LeafEtcView registerRoot(LeafEtcView leafEtcView, Long memberId) {
         assert leafEtcView.getParentLeafId() == null;
+
+        // TMP트리 존재 확인
+        TreeSaveTmp treeSaveTmp = Optional.ofNullable(treeSaveTmpRepository.findById(memberId))
+                .orElseThrow(() -> new IllegalArgumentException("TMP Tree가 존재하지 않습니다."));
+
+        // 기타 트리 저장
+        Tree tree = treeSaveTmp.toTree();
+        treeRepository.saveEtc(tree);
+        leafEtcView.setTreeId(tree.getId());
+
+        // 이미지가 있는 경우 이미지 저장
+        if (treeSaveTmp.getImageFile() != null) {
+            TreeImage treeImage = treeSaveTmp.toTreeImage();
+
+            String toFileName = tree.getId() + ".jpg";
+            moveImageFile(treeImage.getName(), toFileName);
+
+            treeImage.setName(toFileName);
+            treeImage.setTreeId(tree.getId());
+            treeImageRepository.save(treeImage);
+        }
+
+        // TMP트리 삭제
+        treeSaveTmpRepository.deleteByMemberId(memberId);
+
         return registerLogic(leafEtcView);
     }
 
     @Override
-    public boolean registerNode(LeafEtcView leafEtcView, Long parentLeafId, Long memberId) {
+    @Transactional
+    public LeafEtcView registerNode(LeafEtcView leafEtcView, Long parentLeafId, Long memberId) {
         assert leafEtcView.getParentLeafId() != null;
 
         // 부모 리프 존재 확인
@@ -68,10 +118,10 @@ public class LeafEtcServiceImpl implements LeafEtcService {
         Long parentLeafCheck = Optional.ofNullable(leafRepository.update(parentLeaf))
                 .orElseThrow(() -> new IllegalArgumentException("부모 Leaf 업데이트 실패"));
 
-        return parentLeafCheck != null;
+        return leafEtcView;
     }
 
-    private boolean registerLogic(LeafEtcView leafEtcView) {
+    private LeafEtcView registerLogic(LeafEtcView leafEtcView) {
 
         // 태그 존재 확인
         leafEtcView.getTags().forEach(tag -> {
@@ -80,20 +130,24 @@ public class LeafEtcServiceImpl implements LeafEtcService {
             }
         });
 
-        // 리프 저장
-        Long leafId = Optional.ofNullable(leafRepository.save(leafEtcView.toLeaf()))
-                .orElseThrow(() -> new IllegalArgumentException("리프 저장에 실패했습니다."));
+        Leaf leaf = leafEtcView.toLeaf();
+        Long saveCheck = leafRepository.save(leaf);
+        leafEtcView.setLeafId(leaf.getId());
+        if (saveCheck != 1) {
+            throw new IllegalArgumentException("Leaf저장에 실패했습니다.");
+        }
 
         // 리프 태그 맵핑 저장
         leafEtcView.getTags().forEach(tag -> {
-            Optional.ofNullable(leafTagMapRepository.save(LeafTagMap.of(leafId, tag.getId())))
+            Optional.ofNullable(leafTagMapRepository.save(LeafTagMap.of(leaf.getId(), tag.getId())))
                     .orElseThrow(() -> new IllegalArgumentException("LeafTagMap 저장 실패"));
         });
 
-        return leafId != null;
+        return leafEtcView;
     }
 
     @Override
+    @Transactional
     public boolean modify(LeafEtcView leafEtcView) {
         assert leafEtcView.getLeafId() != null;
 
@@ -130,6 +184,7 @@ public class LeafEtcServiceImpl implements LeafEtcService {
     }
 
     @Override
+    @Transactional
     public void remove(Long leafId) {
         // 리프 태그 맵핑 제거
         List<LeafTagMap> leafTagMaps = leafTagMapRepository.findByLeafId(leafId);
@@ -146,6 +201,7 @@ public class LeafEtcServiceImpl implements LeafEtcService {
     }
 
     @Override
+    @Transactional
     public LeafEtcView getLeafEtcView(Long leafId) {
 
         // 리프 조회
@@ -208,5 +264,19 @@ public class LeafEtcServiceImpl implements LeafEtcService {
             tags.add(leafTag);
         }
         return tags;
+    }
+
+    public void moveImageFile(String fromPath, String toFileName) {
+        Path from = Path.of(fromPath);
+        Path to = Paths.get(uploadDir, "image", "tree", toFileName);
+
+        try {
+            if (!Files.exists(to.getParent())) { // 폴더 경로 존재 확인
+                Files.createDirectories(to.getParent());
+            }
+            Files.move(from, to);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("이미지 파일 이동 실패", e);
+        }
     }
 }

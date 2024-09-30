@@ -12,7 +12,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class LeafRecentSaveBranchView {
+public class LeafListBranchView {
     String branchName;
     Long leafCount;
     Long likeCount;

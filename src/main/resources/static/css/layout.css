@@ -307,6 +307,14 @@ home-tree__reg-4--search-book__input
     transition: all 0.5s ease;
 }
 
+.log-item-container--hidden {
+    opacity: 0;
+}
+
+.log-item-container--visible {
+    opacity: 1;
+}
+
 .log-list-date-title-container {
   margin: 14px 24px 0 24px;
   position: absolute;

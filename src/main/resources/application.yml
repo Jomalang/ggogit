@@ -42,6 +42,7 @@ logging:
   level:
     Recorders.ggogit.domain: trace
     org.springframework.jdbc: trace
+    org.mybatis: trace
 
 file: # 이미지 업로드 경로
   upload-dir: src/main/webapp/uploads/

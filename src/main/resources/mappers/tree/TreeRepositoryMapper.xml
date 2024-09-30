@@ -38,7 +38,10 @@
         SELECT * FROM TREE
         <where>
             MEMBER_ID=#{memberId}
-            AND SEED_ID=#{seedId}
+                 <if test="seedId != 0">
+                     AND SEED_ID=#{seedId}
+                 </if>
+
         </where>
     </select>
     <!--회원 ID별 트리 count조회-->

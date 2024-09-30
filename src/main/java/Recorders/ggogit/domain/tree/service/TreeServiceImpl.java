@@ -8,6 +8,7 @@ import Recorders.ggogit.domain.leaf.view.LeafBranchView;
 import Recorders.ggogit.domain.member.repository.MemberRepository;
 import Recorders.ggogit.domain.member.view.MemberImageView;
 import Recorders.ggogit.domain.tree.entity.Tree;
+import Recorders.ggogit.domain.tree.repository.SeedRepository;
 import Recorders.ggogit.domain.tree.repository.TreeRepository;
 import Recorders.ggogit.domain.tree.repository.TreeSaveTmpRepository;
 import Recorders.ggogit.domain.tree.view.*;
@@ -42,6 +43,8 @@ public class TreeServiceImpl implements TreeService {
     private TreeRepository treeRepository;
     @Autowired
     private BookRepository bookRepository;
+    @Autowired
+    private SeedRepository seedRepository;
 
     @Override
     public void register(Tree tree) {
@@ -141,22 +144,15 @@ public class TreeServiceImpl implements TreeService {
     public List<TreeCardView> findTreeCardView(Long seedId, Long memberId) {
 
         List<TreeCardView> treeCardViews = new ArrayList<>();
-        List<Tree> treeList;
-
-        if(seedId != null){
-            treeList = treeRepository.findByMemberIdAndSeeedId(seedId,memberId);
-        }
-        else {
-            treeList = treeRepository.findByMemberId(memberId);
-        }
+        List<Tree> treeList = treeRepository.findByMemberIdAndSeeedId(seedId,memberId);
 
         for(Tree tree : treeList){
-            if(seedId != null && seedId == 1){
+            if(seedId == 0 || seedId == 1){
                 BookInfoView book = bookRepository.findBookCategoryViewById(tree.getBookId());
 
                 Long totalPage = book.getTotalPage();
                 Long readingPage = repository.findReadPageById(tree.getId());
-                System.out.println(readingPage);
+                String seedKorName = seedRepository.findById(tree.getSeedId()).getKorName();
 
                 boolean complateBook = (readingPage * 100.0 / totalPage) >= 80;
 
@@ -176,6 +172,7 @@ public class TreeServiceImpl implements TreeService {
                         .treeId(tree.getId())
                         .memberId(tree.getMemberId())
                         .seedId(tree.getSeedId())
+                        .seedKorName(seedKorName)
                         .title(tree.getTitle())
                         .visibility(tree.getVisibility())
                         .leafCreatedAt(tree.getUpdateTime())
@@ -183,11 +180,15 @@ public class TreeServiceImpl implements TreeService {
                 treeCardViews.add(tmp);
             }else {
                 String coverImage = repository.findTreeImageById(tree.getId());
+                String seedKorName = seedRepository.findById(seedId).getKorName();
+                String nickname = memberRepository.findById(tree.getMemberId()).getNickname();
                 TreeCardView tmp = TreeCardView.builder()
                         .coverImageName(coverImage)
                         .treeId(tree.getId())
+                        .bookAuthor(nickname)
                         .memberId(tree.getMemberId())
                         .seedId(tree.getSeedId())
+                        .seedKorName(seedKorName)
                         .title(tree.getTitle())
                         .visibility(tree.getVisibility())
                         .leafCreatedAt(tree.getUpdateTime())

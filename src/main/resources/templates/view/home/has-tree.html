@@ -6,7 +6,7 @@
 
     <link rel="stylesheet" th:href="@{/css/layout.css}" />
     <link rel="stylesheet" th:href="@{/css/fragments.css}" />
-    <link href="/js/treeListByseed.js"></link>
+    <script src="/js/treeListBySeed.js" defer></script>
 
     <title>home</title>
   </head>
@@ -61,11 +61,11 @@
                 <section
                         class="card-progress-home-container"
                         th:with="readingPage=${tree.readingPage},
-           totalPage=${tree.bookTotalPage},
-           leaf=${tree.treeLeafCnt},
-           like=${tree.treeLikeCnt},
-           view=${tree.treeViewCnt},
-           progress=${tree.seedId eq 1 ? #numbers.formatDecimal((readingPage*100.0)/totalPage, 1, 1) : 0}">
+                        totalPage=${tree.bookTotalPage},
+                        leaf=${tree.treeLeafCnt},
+                        like=${tree.treeLikeCnt},
+                        view=${tree.treeViewCnt},
+                        progress=${tree.seedId eq 1 ? #numbers.formatDecimal((readingPage*100.0)/totalPage, 1, 1) : 0}">
                   <h4 class="none">트리 진행률</h4>
                   <div
                           th:replace="${tree.seedId eq 1} ? ~{fragments/card::card-progress-bar(${progress}, ${readingPage}, ${totalPage})} : ~{}"
@@ -80,12 +80,12 @@
         </section>
       </section>
 
-      <section class="my-tree-list" id="my-tree-list" th:object="${treeInfoList}">
+      <section class="my-tree-list" th:object="${treeInfoList}">
         <h2 class="none">나의 트리 목록</h2>
         <div th:replace="~{fragments/text::tree-count(*{size})}"></div>
-        <section>
+        <section  id="seed-filter">
           <h2 class="none">트리 정렬 필터 버튼</h2>
-          <div th:replace="~{fragments/filter::filter-tree-list}"></div>
+          <div th:replace="~{fragments/filter::filter-tree-list(${seedList})}"></div>
         </section>
       </section>
 

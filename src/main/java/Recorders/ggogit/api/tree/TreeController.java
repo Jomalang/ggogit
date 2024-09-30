@@ -32,6 +32,12 @@ public class TreeController {
 
         Long memberId = member.getId();
 
-        return treeService.findTreeCardView(seedId,memberId);
+
+
+        List<TreeCardView> list = treeService.findTreeCardView(seedId,memberId);
+
+        System.out.println("test : " + seedId);
+        System.out.println("list : " + list.toString());
+        return list;
     }
 }

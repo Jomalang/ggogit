@@ -24,6 +24,7 @@ public class TreeCardView {
     private Long treeId;
     private Long memberId ;
     private Long seedId;
+    private String seedKorName;
     private String title;
     private Boolean visibility;
     private Date leafCreatedAt;

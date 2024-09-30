@@ -144,54 +144,56 @@
               메인 페이지 트리 필터
               고정된 seed로 정렬합니다.
       ============================== -->
-    <div class="filter-tree-list" th:fragment="filter-tree-list">
+    <div class="filter-tree-list" th:fragment="filter-tree-list(seedList)">
 <!--      <div class="sortIcon">-->
 <!--        <img th:src="@{/svg/sort.svg}" alt="sort-buttons" />-->
 <!--      </div>-->
       <label>
         <input
-                class="filter-tree-list-img"
+                class="filter-tree-list-img seedFilterEvent"
                 type="radio"
                 name="treeList"
+                data-id="0"
                 label=""
                 checked
         />
       </label>
-      <label>
+      <label th:each="seed : ${seedList}">
       <input
-              class="filter-tree-list-btn"
+              class="filter-tree-list-btn seedFilterEvent"
               type="radio"
               name="treeList"
-              label="도서"
+              th:data-id="${seed.id}"
+              th:label="${seed.korName}"
       /></label>
-      <label>
-        <input
-          class="filter-tree-list-btn"
-          type="radio"
-          name="treeList"
-          label="생각"
-      /></label>
-      <label>
-        <input
-          class="filter-tree-list-btn"
-          type="radio"
-          name="treeList"
-          label="문장"
-      /></label>
-      <label>
-        <input
-          class="filter-tree-list-btn"
-          type="radio"
-          name="treeList"
-          label="공부"
-      /></label>
-      <label>
-        <input
-          class="filter-tree-list-btn"
-          type="radio"
-          name="treeList"
-          label="유튜브"
-      /></label>
+<!--      <label>-->
+<!--        <input-->
+<!--          class="filter-tree-list-btn"-->
+<!--          type="radio"-->
+<!--          name="treeList"-->
+<!--          label="생각"-->
+<!--      /></label>-->
+<!--      <label>-->
+<!--        <input-->
+<!--          class="filter-tree-list-btn"-->
+<!--          type="radio"-->
+<!--          name="treeList"-->
+<!--          label="문장"-->
+<!--      /></label>-->
+<!--      <label>-->
+<!--        <input-->
+<!--          class="filter-tree-list-btn"-->
+<!--          type="radio"-->
+<!--          name="treeList"-->
+<!--          label="공부"-->
+<!--      /></label>-->
+<!--      <label>-->
+<!--        <input-->
+<!--          class="filter-tree-list-btn"-->
+<!--          type="radio"-->
+<!--          name="treeList"-->
+<!--          label="유튜브"-->
+<!--      /></label>-->
     </div>
   </body>
 </html>

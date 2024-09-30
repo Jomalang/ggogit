@@ -92,15 +92,11 @@ public class TreeController {
             HttpServletRequest request,
             Model model
     ) {
-
-
         HttpSession session = request.getSession();
 
         Member member = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
 
-        Long memberId= member.getId();
-//        Member member = (Member) request
-//                .getSession().getAttribute(SessionConst.LOGIN_MEMBER);
+        Long memberId = member.getId();
 
         treeService.deleteTmpFormById(memberId);
 

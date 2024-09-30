@@ -108,8 +108,8 @@ public class LeafBookServiceImpl implements LeafBookService {
         tree.setBookId(book.getId());
         treeRepository.save(tree);
         leafBookView.setTreeId(tree.getId());
-        // 트리 이미지 저장 로직
 
+        // 트리 이미지 저장 로직
         TreeImage treeImage = treeSaveTmp.toTreeImage();
         treeImage.setTreeId(tree.getId());
         treeImageRepository.save(treeImage);
@@ -121,12 +121,15 @@ public class LeafBookServiceImpl implements LeafBookService {
     }
 
     @Override
+    @Transactional
     public LeafBookView registerNode(LeafBookView leafBookView, Long memberId) {
-        assert leafBookView.getParentLeafId() != null; // 부모 리프가 있어야 함
 
         // 부모 리프 조회
         Leaf parentLeaf = Optional.ofNullable(leafRepository.findById(leafBookView.getParentLeafId()))
                 .orElseThrow(() -> new IllegalArgumentException("부모 Leaf 조회 실패"));
+
+        // 트리 아이디 저장
+        leafBookView.setTreeId(parentLeaf.getTreeId());
 
         // 부모 자식 개수 확인
         if (LEAF_MAX_CHILD_COUNT <= parentLeaf.getChildLeafCount()) {

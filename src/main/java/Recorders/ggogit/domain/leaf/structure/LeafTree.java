@@ -79,12 +79,13 @@ public class LeafTree {
         List<LeafNode> branchNodes = new ArrayList<>();
         findToEnd(leafId, branchNodes); // INPUT 리프 부터 말단 리프까지
         findToRoot(leafId, branchNodes); // INPUT 리프 부터 ROOT까지
-        branchNodes.sort(Comparator.comparing(o -> o.getData().getCreateTime())); // 생성 시간 순으로 정렬
+        branchNodes.sort(Comparator.comparing(o -> o.getData().getId())); // 생성 시간 순으로 정렬
         return branchNodes;
     }
 
     public List<LeafNode> findToEnd(Long leafId) {
         List<LeafNode> branchNodes = new ArrayList<>();
+        branchNodes.add(findParent(leafId));
         findToEnd(leafId, branchNodes); // INPUT 리프 부터 말단 리프까지
         return branchNodes;
     }

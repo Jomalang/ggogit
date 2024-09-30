@@ -125,4 +125,10 @@ public class TreeServiceImpl implements TreeService {
         return repository.getTreeCountByMemberId(id);
     }
 
+    @Override
+    public Long getSeedId(Long treeId) {
+        Tree tree = repository.findById(treeId);
+        return tree.getSeedId();
+    }
+
 }

@@ -2,6 +2,7 @@ package Recorders.ggogit.web.leaf.form;
 
 
 import Recorders.ggogit.domain.leaf.entity.LeafTag;
+import Recorders.ggogit.domain.leaf.view.LeafBookView;
 import Recorders.ggogit.domain.leaf.view.LeafView;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -15,6 +16,8 @@ public class LeafForm {
     
     @NotNull
     private Long seedId;
+
+    private Long parentId;
 
     @NotNull(message = "태그를 선택해주세요.")
     private List<Long> tagIds;
@@ -43,5 +46,14 @@ public class LeafForm {
             tags.add(LeafTag.builder().id(tagId).build());
         }
         return tags;
+    }
+
+    public LeafBookView toLeafBookView() {
+        return LeafBookView.builder()
+                .tags(getTags())
+                .title(title)
+                .content(content)
+                .visibility(visibility)
+                .build();
     }
 }

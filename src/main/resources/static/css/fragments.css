@@ -1389,6 +1389,7 @@ button {
 .log-item__tag {
   display: inline-block;
   border-radius: 4px;
+  margin: 2px;
   padding: 2px 8px;
   background-color: var(--main1, #323a27);
   font-size: 14px;

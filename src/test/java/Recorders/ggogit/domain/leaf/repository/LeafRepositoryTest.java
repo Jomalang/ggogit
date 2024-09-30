@@ -101,9 +101,9 @@ class LeafRepositoryTest {
     }
 
     @Test
-    void findByTreeIdOrderByCreateTimeDesc() {
+    void findByTreeIdOrderById() {
         // given
-        List<Leaf> leafs = leafRepository.findByTreeIdOrderByCreateTimeDesc(1L);
+        List<Leaf> leafs = leafRepository.findByTreeIdOrderById(1L);
         for (Leaf leaf : leafs) {
             System.out.println(leaf);
         }

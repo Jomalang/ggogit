@@ -68,17 +68,16 @@
      ========================================== -->
 <div
   class="text-book-info"
-  th:fragment="text-book-info(seed, title, author, translators, publisher)"
->
+  th:fragment="text-book-info(seed, title, author, translators, publisher)">
   <div class="text-book-info__frame">
-    <p class="text-book-info__seed" th:text="${seed}"></p>
+    <p class="text-book-info__seed" th:text="${seed}">카테고리</p>
   </div>
   <div class="text-book-info__category">
-    <p class="text-book-info__title" th:text="${title}"></p>
+    <p class="text-book-info__title" th:text="${title}">제목</p>
   </div>
   <div class="text-book-info__create-frame">
     <div class="text-book-info__create">
-    <span class="text-book-info-create-info" th:text="${author}" ></span>
+    <span class="text-book-info-create-info" th:text="${author}" >저자</span>
     <span class="text-book-info-create-info">·</span>
     </div>
     <div class="text-book-info__create" th:if="${translators != null}" th:each="translator :${translators}">

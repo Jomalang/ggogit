@@ -119,7 +119,8 @@
         SELECT
             B.ID AS BOOK_ID,
             BC.NAME AS BOOK_CATEGORY,
-            B.TITLE AS BOOK_AUTHOR,
+            B.TITLE AS BOOK_TITLE,
+            B.AUTHOR AS BOOK_AUTHOR,
             B.PUBLISHER AS BOOK_PUBLISHER,
             TO_CHAR(B.PUBLISH_DATE, 'YYYY') AS BOOK_PUBLISHED_YEAR,
             B.TOTAL_PAGE AS BOOK_TOTAL_PAGE,
@@ -138,31 +139,32 @@
             NVL(LV.LEAF_VIEW,0) AS TREE_VIEW_CNT
         FROM TREE T
                  LEFT JOIN TREE_BOOK TB
-                           ON T.ID = TB.TREE_ID
+                        ON T.ID = TB.TREE_ID
                  LEFT JOIN BOOK B
-                           ON
-                               T.BOOK_ID = B.ID
+                        ON
+                        T.BOOK_ID = B.ID
                  LEFT JOIN
                  (SELECT TREE_IMAGE.NAME, TREE_IMAGE.TREE_ID  FROM TREE_IMAGE) TI
-                 ON
-                     TI.TREE_ID = T.ID
+                        ON
+                        TI.TREE_ID = T.ID
                  LEFT JOIN
-                 (SELECT * FROM BOOK_CATEGORY) BC ON B.BOOK_CATEGORY_ID = BC.ID
+                 (SELECT * FROM BOOK_CATEGORY) BC
+                        ON B.BOOK_CATEGORY_ID = BC.ID
                  LEFT JOIN
-             (SELECT  TREE_LIKE.TREE_ID, COUNT(TREE_LIKE.MEMBER_ID) LIKE_CNT  FROM TREE_LIKE GROUP BY TREE_LIKE.TREE_ID) TL
-             ON
+                 (SELECT  TREE_LIKE.TREE_ID, COUNT(TREE_LIKE.MEMBER_ID) LIKE_CNT  FROM TREE_LIKE GROUP BY TREE_LIKE.TREE_ID) TL
+                        ON
                  TL.TREE_ID = T.ID
                  LEFT JOIN
-             (SELECT LEAF.TREE_ID, COUNT(ID) LEAF_CNT FROM LEAF GROUP BY LEAF.TREE_ID) LC
-             ON
+                 (SELECT LEAF.TREE_ID, COUNT(ID) LEAF_CNT FROM LEAF GROUP BY LEAF.TREE_ID) LC
+                        ON
                  LC.TREE_ID = T.ID
                  LEFT JOIN
-             (SELECT LEAF.TREE_ID, SUM(VIEW_COUNT) LEAF_VIEW FROM LEAF GROUP BY LEAF.TREE_ID) LV
-             ON
+                 (SELECT LEAF.TREE_ID, SUM(VIEW_COUNT) LEAF_VIEW FROM LEAF GROUP BY LEAF.TREE_ID) LV
+                        ON
                  LV.TREE_ID = T.ID
                  LEFT JOIN
-             (SELECT LEAF.TREE_ID, LEAF.CREATE_TIME FROM LEAF ORDER BY LEAF.CREATE_TIME DESC FETCH FIRST 1 ROW ONLY ) LT
-             ON
+                 (SELECT LEAF.TREE_ID, LEAF.CREATE_TIME FROM LEAF ORDER BY LEAF.CREATE_TIME DESC FETCH FIRST 1 ROW ONLY ) LT
+                        ON
                  LT.TREE_ID = T.ID
         WHERE T.ID = #{id}
     </select>

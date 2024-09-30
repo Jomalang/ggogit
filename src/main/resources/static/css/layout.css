@@ -561,3 +561,19 @@ home-tree__reg-4--search-book__input
 .login-screen-container {
   padding-top: 30px;
 }
+
+
+/*================================
+toast 이미지 팝업 레이아웃 css
+================================*/
+.toastui-editor-popup {
+  position: absolute !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+}
+
+@media (max-width: 480px) {
+  .toastui-editor-popup {
+    transform: translateX(0%) !important;
+  }
+}

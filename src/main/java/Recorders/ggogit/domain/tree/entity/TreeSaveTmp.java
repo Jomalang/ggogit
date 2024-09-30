@@ -38,7 +38,6 @@ public class TreeSaveTmp {
                 .author(author)
                 .publisher(publisher)
                 .imageFile(imageFile)
-                .resourceFrom(false)
                 .publishDate(LocalDateTime.now())
                 .build();
     }
@@ -61,4 +60,9 @@ public class TreeSaveTmp {
                 .name(imageFile)
                 .build();
     }
+
+    public boolean hasImage() {
+        return imageFile != null && !imageFile.isEmpty();
+    }
+
 }

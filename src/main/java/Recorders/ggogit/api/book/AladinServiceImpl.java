@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class AladinServicrImpl implements AladinService {
+public class AladinServiceImpl implements AladinService {
 
     @Autowired
     AladinRepository aladinRepository;

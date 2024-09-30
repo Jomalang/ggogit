@@ -6,6 +6,7 @@
 
     <link rel="stylesheet" th:href="@{/css/layout.css}" />
     <link rel="stylesheet" th:href="@{/css/fragments.css}" />
+    <link href="/js/treeListByseed.js"></link>
 
     <title>home</title>
   </head>
@@ -79,7 +80,7 @@
         </section>
       </section>
 
-      <section class="my-tree-list" th:object="${treeInfoList}">
+      <section class="my-tree-list" id="my-tree-list" th:object="${treeInfoList}">
         <h2 class="none">나의 트리 목록</h2>
         <div th:replace="~{fragments/text::tree-count(*{size})}"></div>
         <section>
@@ -90,7 +91,7 @@
 
       <section>
         <h2 class="none">트리 검색 결과</h2>
-        <section class="tree-card-list">
+        <section class="tree-card-list" id="tree-card-list">
           <h3 class="none">트리 검색 리스트</h3>
           <div th:each="tree : *{treeInfoList}">
             <div

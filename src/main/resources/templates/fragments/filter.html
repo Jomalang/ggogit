@@ -145,16 +145,24 @@
               고정된 seed로 정렬합니다.
       ============================== -->
     <div class="filter-tree-list" th:fragment="filter-tree-list">
-      <div class="sortIcon">
-        <img th:src="@{/svg/sort.svg}" alt="sort-buttons" />
-      </div>
+<!--      <div class="sortIcon">-->
+<!--        <img th:src="@{/svg/sort.svg}" alt="sort-buttons" />-->
+<!--      </div>-->
       <label>
         <input
-          class="filter-tree-list-btn"
-          type="radio"
-          name="treeList"
-          label="도서"
-          checked
+                class="filter-tree-list-img"
+                type="radio"
+                name="treeList"
+                label=""
+                checked
+        />
+      </label>
+      <label>
+      <input
+              class="filter-tree-list-btn"
+              type="radio"
+              name="treeList"
+              label="도서"
       /></label>
       <label>
         <input

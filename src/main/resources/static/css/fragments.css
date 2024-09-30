@@ -2244,10 +2244,38 @@ card.html
   gap: 5px;
   flex-direction: row;
 }
-
+.filter-tree-list-img{
+  background-image: url("/svg/sort.svg");
+  background-size: 50%;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  padding: 19px 20px;
+  white-space: nowrap;
+  width: fit-content;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background-color: var(--btn-no-active);
+  color: var(--text-sub);
+  font-weight: var(--medium);
+  letter-spacing: var(--letter-spacing-main);
+  line-height: var(--line-height-main);
+  appearance: none;
+  cursor: pointer;
+}
+.filter-tree-list-img::after {
+  display: block;
+  content: attr(label);
+  font-size: 16px;
+}
+.filter-tree-list-img:checked {
+  background-color: var(--btn-active);
+  color: var(--white);
+}
 .filter-tree-list-btn {
   display: flex;
-  padding: 20px 12px;
+  padding: 10px 12px;
   white-space: nowrap;
   width: fit-content;
   align-items: center;

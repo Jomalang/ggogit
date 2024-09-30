@@ -86,58 +86,40 @@
     <!--Member ID 별 도서 트리 리스트 조회-->
     <select id="getTreeInfoBookView" resultType="TreeInfoView">
         SELECT
-            B.ID AS BOOK_ID,
-            BC.NAME AS BOOK_CATEGORY,
-            B.TITLE AS BOOK_AUTHOR,
-            B.PUBLISHER AS BOOK_PUBLISHER,
-            TO_CHAR(B.PUBLISH_DATE, 'YYYY') AS BOOK_PUBLISHED_YEAR,
-            B.TOTAL_PAGE AS BOOK_TOTAL_PAGE,
-            COALESCE(B.IMAGE_FILE, TI.NAME) AS COVER_IMAGE_NAME,
-            T.ID AS TREE_ID,
-            T.MEMBER_ID AS MEMBER_ID,
-            T.SEED_ID AS SEED_ID,
-            T.TITLE AS TITLE,
-            T.DESCRIPTION AS DESCRIPTION,
-            T.VISIBILITY AS VISIBILITY,
-            TO_CHAR(T.CREATE_TIME, 'YYYY-MM-DD HH24:MI:SS') AS CREATED_AT,
-            TO_CHAR(LT.CREATE_TIME, 'YYYY-MM-DD HH24:MI:SS') AS LEAF_CREATED_AT,
-            NVL(TB.READING_PAGE,0) AS READING_PAGE,
-            NVL(LC.LEAF_CNT,0) AS TREE_LEAF_CNT,
-            NVL(TL.LIKE_CNT,0) AS TREE_LIKE_CNT,
-            NVL(LV.LEAF_VIEW,0) AS TREE_VIEW_CNT
+        B.ID AS BOOK_ID,
+        BC.NAME AS BOOK_CATEGORY,
+        B.TITLE AS BOOK_TITLE,
+        B.AUTHOR AS BOOK_AUTHOR,
+        B.PUBLISHER AS BOOK_PUBLISHER,
+        TO_CHAR(B.PUBLISH_DATE, 'YYYY') AS BOOK_PUBLISHED_YEAR,
+        B.TOTAL_PAGE AS BOOK_TOTAL_PAGE,
+        COALESCE(B.IMAGE_FILE, TI.NAME) AS COVER_IMAGE_NAME,
+        T.ID AS TREE_ID,
+        T.MEMBER_ID AS MEMBER_ID,
+        T.SEED_ID AS SEED_ID,
+        T.TITLE AS TITLE,
+        T.DESCRIPTION AS DESCRIPTION,
+        T.VISIBILITY AS VISIBILITY,
+        TO_CHAR(T.CREATE_TIME, 'YYYY-MM-DD HH24:MI:SS') AS CREATED_AT,
+        TO_CHAR(LT.CREATE_TIME, 'YYYY-MM-DD HH24:MI:SS') AS LEAF_CREATED_AT,
+        NVL(TB.READING_PAGE, 0) AS READING_PAGE,
+        NVL(LC.LEAF_CNT, 0) AS TREE_LEAF_CNT,
+        NVL(TL.LIKE_CNT, 0) AS TREE_LIKE_CNT,
+        NVL(LV.LEAF_VIEW, 0) AS TREE_VIEW_CNT
         FROM TREE T
-                 LEFT JOIN TREE_BOOK TB
-                           ON T.ID = TB.TREE_ID
-                 LEFT JOIN BOOK B
-                           ON
-                               T.BOOK_ID = B.ID
-                 LEFT JOIN
-                 (SELECT TREE_IMAGE.NAME, TREE_IMAGE.TREE_ID  FROM TREE_IMAGE) TI
-                 ON
-                     TI.TREE_ID = T.ID
-                 LEFT JOIN
-                 (SELECT * FROM BOOK_CATEGORY) BC ON B.BOOK_CATEGORY_ID = BC.ID
-                 LEFT JOIN
-             (SELECT  TREE_LIKE.TREE_ID, COUNT(TREE_LIKE.MEMBER_ID) LIKE_CNT  FROM TREE_LIKE GROUP BY TREE_LIKE.TREE_ID) TL
-             ON
-                 TL.TREE_ID = T.ID
-                 LEFT JOIN
-             (SELECT LEAF.TREE_ID, COUNT(ID) LEAF_CNT FROM LEAF GROUP BY LEAF.TREE_ID) LC
-             ON
-                 LC.TREE_ID = T.ID
-                 LEFT JOIN
-             (SELECT LEAF.TREE_ID, SUM(VIEW_COUNT) LEAF_VIEW FROM LEAF GROUP BY LEAF.TREE_ID) LV
-             ON
-                 LV.TREE_ID = T.ID
-                 LEFT JOIN
-             (SELECT LEAF.TREE_ID, LEAF.CREATE_TIME FROM LEAF ORDER BY LEAF.CREATE_TIME DESC FETCH FIRST 1 ROW ONLY ) LT
-             ON
-                 LT.TREE_ID = T.ID
+        LEFT JOIN TREE_BOOK TB ON T.ID = TB.TREE_ID
+        LEFT JOIN BOOK B ON T.BOOK_ID = B.ID
+        LEFT JOIN (SELECT NAME, TREE_ID FROM TREE_IMAGE) TI ON TI.TREE_ID = T.ID
+        LEFT JOIN BOOK_CATEGORY BC ON B.BOOK_CATEGORY_ID = BC.ID
+        LEFT JOIN (SELECT TREE_ID, COUNT(MEMBER_ID) AS LIKE_CNT FROM TREE_LIKE GROUP BY TREE_ID) TL ON TL.TREE_ID = T.ID
+        LEFT JOIN (SELECT TREE_ID, COUNT(ID) AS LEAF_CNT FROM LEAF GROUP BY TREE_ID) LC ON LC.TREE_ID = T.ID
+        LEFT JOIN (SELECT TREE_ID, SUM(VIEW_COUNT) AS LEAF_VIEW FROM LEAF GROUP BY TREE_ID) LV ON LV.TREE_ID = T.ID
+        LEFT JOIN (SELECT TREE_ID, CREATE_TIME FROM LEAF ORDER BY CREATE_TIME DESC FETCH FIRST 1 ROW ONLY) LT ON LT.TREE_ID = T.ID
         <where>
-        T.MEMBER_ID = #{memberId}
-        <if test="seedId!=null">
-            SEED_ID = #{seedId}
-        </if>
+            T.MEMBER_ID = #{memberId}
+            <if test="seedId != null">
+                AND T.SEED_ID = #{seedId}
+            </if>
         </where>
     </select>
     <!--Member ID 별 도서 트리 리스트 조회-->

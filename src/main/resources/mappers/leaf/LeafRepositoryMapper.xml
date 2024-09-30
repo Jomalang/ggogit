@@ -31,30 +31,36 @@
         <delete id="delete" parameterType="int">
             DELETE FROM LEAF
             WHERE ID = #{id}
+                AND IS_DELETED = FALSE
         </delete>
 
         <select id="existsById" parameterType="Long" resultType="Boolean">
             SELECT COUNT(*) FROM LEAF
             WHERE ID = #{id}
+                AND IS_DELETED = FALSE
         </select>
 
         <select id="findById" resultType="Leaf">
             SELECT * FROM LEAF
             WHERE ID = #{id}
+                AND IS_DELETED = FALSE
         </select>
 
-    <select id="findByTreeId" resultType="Leaf">
-        SELECT * FROM LEAF
-        WHERE ID = #{id}
-    </select>
+        <select id="findByTreeId" resultType="Leaf">
+            SELECT * FROM LEAF
+            WHERE ID = #{id}
+                AND IS_DELETED = FALSE
+        </select>
 
         <select id="findAll" resultType="Leaf">
             SELECT * FROM LEAF
+                WHERE IS_DELETED = FALSE
         </select>
 
         <select id="findByTreeIdOrderById" resultType="Leaf">
             SELECT * FROM LEAF
             WHERE TREE_ID = #{treeId}
+                AND IS_DELETED = FALSE
             ORDER BY ID
         </select>
     
@@ -82,12 +88,14 @@
                     SELECT T1.ID
                     FROM TREE T1
                     WHERE BOOK_ID = #{bookId}
+                AND IS_DELETED = FALSE
                 )
             ) L2
             LEFT JOIN (
                 SELECT T.ID AS TREE_ID,
                 T.MEMBER_ID
                 FROM TREE T
+                WHERE IS_DELETED = FALSE
             ) T2
             ON T2.TREE_ID = L2.TREE_ID
             LEFT JOIN (
@@ -95,6 +103,7 @@
                 M.NICKNAME AS USER_NICKNAME,
                 SUBSTR(M.EMAIL, 1, INSTR(EMAIL, '@') - 1) AS USER_EMAIL_ID
                 FROM MEMBER M
+                WHERE IS_DELETED = FALSE
             ) M2
             ON T2.MEMBER_ID = M2.MEMBER_ID
             LEFT JOIN (
@@ -102,6 +111,7 @@
                 LK.ACTIVATE AS LIKE_ACTIVATE
                 FROM LEAF_LIKE LK
                 WHERE MEMBER_ID = #{memberId}
+                    AND IS_DELETED = FALSE
             ) LK2
             ON L2.LEAF_ID = LK2.LEAF_ID;
         </select>
@@ -117,8 +127,8 @@
             UPDATE_TIME
         FROM
             LEAF
-        WHERE
-            CHILD_LEAF_COUNT = 0 OR BOOK_MARK = 1
+        WHERE CHILD_LEAF_COUNT = 0 OR BOOK_MARK = 1
+            AND IS_DELETED = FALSE
     </select>
 
 </mapper>

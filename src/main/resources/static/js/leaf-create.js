@@ -125,9 +125,9 @@ function submitBtnEvent() {
     const submitBtn = document.getElementById('book-tree-input-form-id');
     submitBtn.addEventListener('click', () => {
         const form = document.getElementById('input-leaf-register-form-id');
-        form.submit();
         sessionStorage.removeItem('input-leaf-register-form');
         sessionStorage.removeItem('selectedTagList');
+        form.submit();
     });
 }
 

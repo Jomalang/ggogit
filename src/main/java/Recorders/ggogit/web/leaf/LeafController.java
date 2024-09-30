@@ -75,12 +75,13 @@ public class LeafController {
 
         Member member = (Member) request.getSession().getAttribute(SessionConst.LOGIN_MEMBER);
         Long memberId = member.getId();
+        Long seedId = form.getSeedId();
 
-        if (seedService.isBookById(form.getSeedId())) { // 도서 리프 에러 처리
+        if (seedService.isBookById(seedId)) { // 도서 리프 에러 처리
             if (bindingResult.hasErrors()) {
                 return new ModelAndView("view/leaf/1st-reg-book", "form", form);
             }
-            LeafBookView leafBookView = leafBookService.register(form.toLeafBookView(), memberId); // 도서 리프 등록
+            LeafBookView leafBookView = leafBookService.register(form.toLeafBookView(), seedId, memberId); // 도서 리프 등록
 
             String url = UriComponentsBuilder.fromPath("/leaf/list")
                     .queryParam("tree_id", leafBookView.getTreeId())
@@ -107,10 +108,12 @@ public class LeafController {
     @GetMapping("/reg")
     public ModelAndView reg(
             @RequestParam(value = "tree_id") Long treeId,
-            @RequestParam(value = "leaf_id") Long leafId
+            @RequestParam(value = "leaf_id") Long leafId,
+            HttpServletRequest request
     ) {
+        Member member = (Member) request.getSession().getAttribute(SessionConst.LOGIN_MEMBER);
+        Long memberId = member.getId();
 
-        Long memberId = 1L; // TODO: 나중에 로그인한 사용자 정보로 변경
         Long seedId = treeService.getSeedId(treeId);
         BeforeLeafInfoView beforeLeafInfoView = leafService.getBeforeLeafInfoView(leafId);
 
@@ -134,17 +137,19 @@ public class LeafController {
     @PostMapping("/reg")
     public ModelAndView reg(
             @Validated @ModelAttribute("form") LeafBookForm form,
-            BindingResult bindingResult
+            BindingResult bindingResult,
+            HttpServletRequest request
     ) {
+        Member member = (Member) request.getSession().getAttribute(SessionConst.LOGIN_MEMBER);
+        Long memberId = member.getId();
         Long seedId = form.getSeedId();
-        Long memberId = 1L; // TODO: 나중에 로그인한 사용자 정보로 변경
 
         if (seedService.isBookById(seedId)) {
             if (bindingResult.hasErrors()) {
                 return new ModelAndView("view/leaf/reg-book", "form", form);
             }
 
-            LeafBookView leafBookView = leafBookService.register(form.toLeafBookView(), memberId); // 도서 리프 등록
+            LeafBookView leafBookView = leafBookService.register(form.toLeafBookView(), seedId, memberId); // 도서 리프 등록
 
             String url = UriComponentsBuilder.fromPath("/leaf/list")
                     .queryParam("tree_id", leafBookView.getTreeId())

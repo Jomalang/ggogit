@@ -6,33 +6,31 @@
 
     <link th:href="@{/css/fragments.css}" rel="stylesheet"/>
     <link th:href="@{/css/layout.css}" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor-viewer.min.css" />
     <title>Document</title>
 </head>
 <body>
-<header>
+<header th:object="${treeInfo}">
     <h1 class="none">사용자 트리 세부정보</h1>
     <section th:replace="~{fragments/background :: user-info-back-header
-        (src='javascript:history.back()',backimgpath='user-tree-index-user-background-img.svg',userimg='card-tree-author.png',username='빵형',userid='@BreadFitt',userurl='javascript:history.back()')}">
+        (src='javascript:history.back()',backimgpath=*{coverImageName},userimg='card-tree-author.png',username='빵형',userid='@BreadFitt',userurl='javascript:history.back()')}">
         <h2 class="none">브랜치 검색</h2>
         <!-- 컴포넌트 -->
-        <div></div>
     </section>
 </header>
 <main>
-    <section class="user-tree-info__container">
+    <section class="user-tree-info__container" th:object="${treeInfo}">
         <h2 class="none">회고록 정보</h2>
-        <div th:replace="~{fragments/card :: card-tree-info-cover(src='/svg/card-tree-cover.svg',treetitle='자바 공부를 위한 트리',booktitle='혼자 공부하는 자바')}">
+        <div th:replace="~{fragments/card :: card-tree-info-cover(src=*{coverImageName},treetitle=*{title},booktitle=*{bookTitle})}">
         </div>
     </section>
-    <section class="branch-tree-detail-container">
-        <h2 class="none">트리 상세 설명 </h2>
-        <div th:replace="~{fragments/card ::
-            card-hidden-info(hiddentext='자세히',
-            authors='김민철',translators='ㅈㅈㅈㅈ',publisher='위즈덤 하우스', page=400,seed='도서 카테고리',
-            treedescription='코딩 테스트 합격자 되기 자바스크립트 편의 영감 기록을 남기는 이유는 다음과 같습니다. 영감 기록을 작성하면 책에서 배운 내용을 정리하고 이해도를 높일 수 있습니다.',
-            progress=80,readpage=320,fullpage=400,
-            leaf=99,like=99,view=99)}"></div>
+<!-- 에디터 뷰어-->
+    <section class="my-tree-list" th:object="${memoir}">
+        <h2 class="none">에디터 뷰어</h2>
+        <input class="viewer-content hidden" th:value="*{text}"/>
+        <div id="viewer"></div>
     </section>
+
     <section class="tree-index-comment-container">
         <h1 class="none">댓글</h1>
         <div th:replace="~{fragments/bar :: comment(profileImg=@{/svg/comment-profile.svg}, commentCount='199')}"></div>
@@ -77,6 +75,19 @@
     </section>
 </aside>
 
+<!--toast view CDN-->
+<script src="https://uicdn.toast.com/editor/latest/toastui-editor-viewer.js"></script>
+<script>
+    const viewer = new toastui.Editor({
+        el: document.querySelector('#viewer'),
+        viewer: true,
+        height: '500px',
+        initialValue: "hello"
+    });
+    let elem = document.querySelector('.viewer-content');
+    console.log(elem.value);
+    viewer.setMarkdown(elem.value);
+</script>
 
 <script>
     function commentTabActive() {
@@ -97,7 +108,7 @@
 
     document.getElementById("bar-comment-id").addEventListener("click", commentTabActive);
     document.getElementById("top-bar-comment__back-icon-box-id").addEventListener("click", commentTabInactive);
-    document.getElementById("bg-book-detail-box-id").addEventListener("click", commentTabInactive);
+    // document.getElementById("bg-book-detail-box-id").addEventListener("click", commentTabInactive);
 </script>
 
 <script>

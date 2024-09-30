@@ -1,6 +1,5 @@
 package Recorders.ggogit.web.memoir.controller;
 
-
 import Recorders.ggogit.domain.memoir.entity.Memoir;
 import Recorders.ggogit.domain.memoir.service.MemoirService;
 import Recorders.ggogit.domain.tree.service.TreeService;
@@ -30,13 +29,16 @@ public class MemoirController {
     private final MemoirService memoirService;
     private final TreeService treeService;
 
-    private final String uploadDir = Paths.get("C:", "ggogit", "src", "main", "webapp","image", "tmp").toAbsolutePath().toString();
+    private final String uploadDir = Paths.get("C:", "ggogit", "src", "main", "webapp", "image", "tmp").toAbsolutePath()
+            .toString();
 
     @GetMapping("/index")
     public String getMemoirIndex(Model model, @RequestParam(value = "t") long treeId) {
         Memoir memoir = memoirService.getMemoir(treeId);
+        TreeInfoView treeInfo = treeService.getTreeInfoViewByTreeId(treeId);
         model.addAttribute("memoir", memoir);
-        return "view/memoir/test";
+        model.addAttribute("treeInfo", treeInfo);
+        return "view/memoir/index";
     }
 
     @GetMapping("/reg")
@@ -51,11 +53,12 @@ public class MemoirController {
     }
 
     @PostMapping("/reg")
-    public String regMemoir(@Validated @ModelAttribute("memoirForm") MemoirForm memoirForm, BindingResult bindingResult
-            , @RequestParam("t")long treeId, @RequestParam("fileNames") List<String> fileNames, Model model) throws IOException {
+    public String regMemoir(@Validated @ModelAttribute("memoirForm") MemoirForm memoirForm, BindingResult bindingResult,
+            @RequestParam("t") long treeId, @RequestParam("fileNames") List<String> fileNames, Model model)
+            throws IOException {
 
-        //오류 검출
-        if(bindingResult.hasErrors()) {
+        // 오류 검출
+        if (bindingResult.hasErrors()) {
             log.info("errors = {}", bindingResult.getAllErrors());
             model.addAttribute("treeId", treeId);
             TreeInfoView treeInfo = treeService.getTreeInfoViewByTreeId(treeId);
@@ -65,17 +68,17 @@ public class MemoirController {
             return "view/memoir/reg";
         }
 
-        //form 입력받은 데이터 memoir에 채우고, 서비스 이용해 저장
+        // form 입력받은 데이터 memoir에 채우고, 서비스 이용해 저장
         memoirForm.setTreeId(treeId);
 
-        //파일 경로 수정
+        // 파일 경로 수정
         String content = memoirForm.getText();
         String newContent = content.replaceAll("/tui-editor/image-print\\?filename=", "/uploads/image/memoir/");
         memoirForm.setText(newContent);
         Memoir newMemoir = memoirForm.toMemoir();
-        //이미지 저장
+        // 이미지 저장
         memoirService.imageSave(fileNames);
-        //최종 세이브
+        // 최종 세이브
         memoirService.regMemoir(newMemoir);
 
         log.info("memoirForm = {}", memoirForm);

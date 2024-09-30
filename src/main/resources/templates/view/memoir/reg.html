@@ -56,7 +56,6 @@
                     />
                 </label>
             </div>
-            <div class="text--errors" th:errors="*{title}"></div>
         </section>
 
         <section class="register__input-container">
@@ -76,7 +75,6 @@
 <!--                    ></textarea>-->
 <!--                </label>-->
 <!--            </div>-->
-            <div class="text--errors" th:errors="*{text}"></div>
         </section>
         <section class="register__input-container">
             <h3 class="none">공개 여부</h3>
@@ -113,6 +111,7 @@
             <div onclick = "savePost()" th:insert="~{fragments/button :: submit-btn-full-bar('회고록 생성하기')}" >
             </div>
         </section>
+        <input class="hidden" id="fileNames" th:field = "*{fileNames}" />
     </form>
 </main>
 
@@ -132,6 +131,7 @@
 <!--    nameSpace사용 -->
 </script>
 <script>
+    const fileNames = document.querySelector("#fileNames");
     const editor = new toastui.Editor({
     el: document.querySelector('#editor'),
     height: '500px',
@@ -157,6 +157,7 @@
                     // 컨트롤러에서 전달받은 디스크에 저장된 파일 명
                     const filename = await response.text();
                     console.log('서버에 저장된 파일 명 : ', filename);
+                    fileNames.value = filename;
 
                     // addImageBlobHook의 callback을 통해 디스크에 저장된 이미지 에디터에 렌더링
                     const imageUrl = `/tui-editor/image-print?filename=${filename}`;
@@ -173,12 +174,19 @@
     //게시글 저장
     async function savePost() {
         //유효성 검사.
+        if(document.querySelector(".input-text__input").value===""){
+            alert("제목을 입력해주세요");
+
+        }
         if(editor.getMarkdown().length < 1 || editor.getHTML().length < 1){
             alert('내용을 입력해 주세요');
             throw new Error ('editor content is required');
         }
-        //textaread의 value에 getHTMl() 담아주기
-        document.getElementById('editor-text').value = editor.getHTML();
+        else{
+            //textaread의 value에 getHTMl() 담아주기
+            document.getElementById('editor-text').value = editor.getHTML();
+        }
+
     }
 
 </script>

@@ -141,6 +141,12 @@ public class TreeServiceImpl implements TreeService {
     }
 
     @Override
+    public Long getSeedId(Long treeId) {
+        Tree tree = repository.findById(treeId);
+        return tree.getSeedId();
+    }
+
+    @Override
     public List<TreeCardView> findTreeCardView(Long seedId, Long memberId) {
 
         List<TreeCardView> treeCardViews = new ArrayList<>();

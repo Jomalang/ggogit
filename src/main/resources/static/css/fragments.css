@@ -638,7 +638,9 @@
   background-color: var(--white, #ffffff);
   padding: 10px;
   border: none;
-  margin: 5px 0;
+  margin-left: auto;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 .filter-tab__header--title {

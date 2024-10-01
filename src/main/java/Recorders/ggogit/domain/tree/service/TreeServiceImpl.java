@@ -160,6 +160,8 @@ public class TreeServiceImpl implements TreeService {
                 Long readingPage = repository.findReadPageById(tree.getId());
                 String seedKorName = seedRepository.findById(tree.getSeedId()).getKorName();
 
+                if(readingPage == null)
+                    readingPage = 0L;
                 boolean complateBook = (readingPage * 100.0 / totalPage) >= 80;
 
                 Date publishYear = book.getPublishDate();

@@ -73,7 +73,7 @@ function nullCard(){
                                             <span class="card-tree-detail__info"></span>
                                             <span class="card-tree-detail__info"></span>
                                             <span class="card-tree-detail__info" th:if="*{bookTranslator != null}"></span>
-                                            <span class="card-tree-detail__info" th:if="*{bookTranslator != null}">/</span>
+                                            <span class="card-tree-detail__info" th:if="*{bookTranslator != null}"></span>
                                             <span class="card-tree-detail__info"></span>
                                         </div>
                                         <span class="card-tree-detail__info-created-date"></span>

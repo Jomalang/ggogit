@@ -14,7 +14,7 @@ public interface MemoirRepository {
     Memoir findById(long id);
 
     //삭제한 회고록의 id 반환
-    Long delete(long id);
+    Long delete(long treeId);
 
     int update(Memoir memoir);
 

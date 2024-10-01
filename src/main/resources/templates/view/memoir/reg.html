@@ -62,7 +62,7 @@
             <h3 class="none">회고록 설명글</h3>
 <!--            toast 에디터2.0 -->
             <div id="editor"></div>
-            <textarea class="hidden" id="editor-text" th:field="*{text}"></textarea>
+            <input class="hidden" id="editor-text" th:field="*{text}"/>
             <!-- 컴포넌트 -->
 <!--            <div class="input-textarea__box">-->
 <!--                <label class="input-textarea__label tree-input__large-text-label">-->
@@ -136,6 +136,7 @@
     el: document.querySelector('#editor'),
     height: '500px',
     initialEditType: 'wysiwyg',
+        initialValue: document.querySelector("#editor-text").value,
     previewStyle: 'vertical'
         ,placeholder: '무엇을 느끼셨나요?'
         ,usageStatistics: false,

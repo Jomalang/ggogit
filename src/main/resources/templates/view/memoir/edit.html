@@ -45,7 +45,7 @@
     </section>
 <!--    이하는 field를 이용하기 위해 일부러 fragment를 이용하지 않았음.-->
 <!--    검증 오류 이후에 값을 그대로 유지하기 위함.-->
-    <form th:action="@{/memoir/reg(t=${treeId})}" method="POST" th:object="${memoirForm}">
+    <form th:action="@{/memoir/edit(t=${treeId})}" method="POST" th:object="${memoirForm}">
         <section class="register__input-container">
             <h3 class="none">회고록 제목 입력</h3>
             <!-- 컴포넌트 -->
@@ -62,7 +62,7 @@
             <h3 class="none">회고록 설명글</h3>
 <!--            toast 에디터2.0 -->
             <div id="editor"></div>
-            <textarea class="hidden" id="editor-text" th:field="*{text}"></textarea>
+            <input class="hidden" id="editor-text" th:field="*{text}"/>
             <!-- 컴포넌트 -->
 <!--            <div class="input-textarea__box">-->
 <!--                <label class="input-textarea__label tree-input__large-text-label">-->
@@ -136,6 +136,7 @@
     el: document.querySelector('#editor'),
     height: '500px',
     initialEditType: 'wysiwyg',
+        initialValue: document.querySelector("#editor-text").value,
     previewStyle: 'vertical'
         ,placeholder: '무엇을 느끼셨나요?'
         ,usageStatistics: false,
@@ -183,7 +184,7 @@
             throw new Error ('editor content is required');
         }
         else{
-            //textaread의 value에 getHTMl() 담아주기
+            //hiddenField value에 getHTMl() 담아주기
             document.getElementById('editor-text').value = editor.getHTML();
         }
 

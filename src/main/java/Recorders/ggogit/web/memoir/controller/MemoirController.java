@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
 import java.nio.file.Paths;
@@ -57,21 +58,18 @@ public class MemoirController {
     }
 
     @PostMapping("/reg")
-    public String regMemoir(@Validated @ModelAttribute("memoirForm") MemoirForm memoirForm, BindingResult bindingResult,
-            @RequestParam("t") long treeId, @RequestParam("fileNames") List<String> fileNames, Model model)
+    public String regMemoir(@Validated @ModelAttribute("memoirForm") MemoirForm memoirForm,
+                            BindingResult bindingResult,
+                            @RequestParam("t") long treeId,
+                            @RequestParam("fileNames") List<String> fileNames,
+                            Model model,
+                            RedirectAttributes redirectAttributes
+    )
             throws IOException {
 
         // 오류 검출
-        if (bindingResult.hasErrors()) {
-            log.info("errors = {}", bindingResult.getAllErrors());
-            model.addAttribute("treeId", treeId);
-            TreeInfoView treeInfo = treeService.getTreeInfoViewByTreeId(treeId);
-            model.addAttribute("treeInfo", treeInfo);
-            model.addAttribute("fileNames", fileNames);
-            model.addAttribute("memoirForm", memoirForm);
-            log.info(memoirForm.toString());
-            return "view/memoir/reg";
-        }
+        Boolean isValidate = validateMemoir(memoirForm, bindingResult, treeId, fileNames, model);
+        if (!isValidate) return "/view/memoir/edit";
 
         // form 입력받은 데이터 memoir에 채우고, 서비스 이용해 저장
         memoirForm.setTreeId(treeId);
@@ -87,8 +85,9 @@ public class MemoirController {
         memoirService.regMemoir(newMemoir);
 
         log.info("memoirForm = {}", memoirForm);
+        redirectAttributes.addAttribute("t",treeId);
 
-        return "redirect:/";
+        return "redirect:/memoir/index";
     }
 
     @GetMapping("/edit")
@@ -108,6 +107,54 @@ public class MemoirController {
         model.addAttribute("treeInfo", treeInfo);
 
         return "view/memoir/edit";
+    }
+
+    @PostMapping("/edit")
+    public String editMemoir(@Validated @ModelAttribute("memoirForm") MemoirForm memoirForm,
+                            BindingResult bindingResult,
+                            @RequestParam("t") long treeId,
+                            @RequestParam("fileNames") List<String> fileNames,
+                            Model model,
+                            RedirectAttributes redirectAttributes
+    )
+            throws IOException {
+
+        // 오류 검출
+        Boolean isValidate = validateMemoir(memoirForm, bindingResult, treeId, fileNames, model);
+        if (!isValidate) return "/view/memoir/edit";
+
+        // 파일 경로 수정
+        String content = memoirForm.getText();
+        String newContent = content.replaceAll("/tui-editor/image-print\\?filename=", "/uploads/image/memoir/");
+        memoirForm.setText(newContent);
+        // form 입력받은 데이터 memoir에 채우고, 서비스 이용해 저장
+        memoirForm.setTreeId(treeId);
+        System.out.println("memoirForm = " + memoirForm);
+        //폼객체 전환
+        Memoir newMemoir = memoirForm.toMemoir();
+        // 이미지 저장
+        memoirService.imageSave(fileNames);
+
+        log.info("newMemoir = {}", newMemoir);
+        // 최종 수정
+        memoirService.modifyMemoir(newMemoir,treeId);
+        redirectAttributes.addAttribute("t",treeId);
+
+        return "redirect:/memoir/index";
+    }
+
+    private boolean validateMemoir(MemoirForm memoirForm, BindingResult bindingResult, long treeId, List<String> fileNames, Model model) {
+        if (bindingResult.hasErrors()) {
+            log.info("errors = {}", bindingResult.getAllErrors());
+            model.addAttribute("treeId", treeId);
+            TreeInfoView treeInfo = treeService.getTreeInfoViewByTreeId(treeId);
+            model.addAttribute("treeInfo", treeInfo);
+            model.addAttribute("fileNames", fileNames);
+            model.addAttribute("memoirForm", memoirForm);
+            log.info(memoirForm.toString());
+            return false;
+        }
+        return true;
     }
 
 }

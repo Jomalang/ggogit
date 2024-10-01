@@ -30,19 +30,14 @@ public class MemoryMemoirServiceImpl implements MemoirService {
     }
 
     @Override
-    public long removeMemoir(long id) {
-        return memoirRepository.delete(id);
+    public long removeMemoir(long treeId) {
+        return memoirRepository.delete(treeId);
     }
 
     @Override
-    public long modifyMemoir(Memoir newMemoir, long id) {
-        Memoir memoir = memoirRepository.findById(id);
-        memoir.changeTitle(newMemoir.getTitle());
-        memoir.changeText(newMemoir.getText());
-        memoir.changeVisibility(newMemoir.getVisibility());
+    public void modifyMemoir(Memoir newMemoir, long treeId) {
 
-        memoirRepository.update(memoir);
-        return memoir.getId();
+        memoirRepository.update(newMemoir);
     }
 
     @Override

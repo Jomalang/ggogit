@@ -1,5 +1,6 @@
 package Recorders.ggogit.web.memoir.controller;
 
+import Recorders.ggogit.domain.leaf.service.LeafService;
 import Recorders.ggogit.domain.memoir.entity.Memoir;
 import Recorders.ggogit.domain.memoir.service.MemoirService;
 import Recorders.ggogit.domain.tree.service.TreeService;
@@ -13,10 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
@@ -28,6 +26,7 @@ public class MemoirController {
 
     private final MemoirService memoirService;
     private final TreeService treeService;
+    private final LeafService leafService;
 
     private final String uploadDir = Paths.get("C:", "ggogit", "src", "main", "webapp", "image", "tmp").toAbsolutePath()
             .toString();
@@ -38,6 +37,7 @@ public class MemoirController {
         TreeInfoView treeInfo = treeService.getTreeInfoViewByTreeId(treeId);
         model.addAttribute("memoir", memoir);
         model.addAttribute("treeInfo", treeInfo);
+
         return "view/memoir/index";
     }
 

@@ -3376,6 +3376,7 @@ card.html
 
 .bar-user-info-follow-btn-frame {
   display: flex;
+  align-items: center;
   justify-content: space-between;
 }
 .bar-user-info__user-name--color-main1 {
@@ -3408,7 +3409,6 @@ card.html
   height: 30px;
   display: flex;
   align-items: center;
-  border: 1px solid var(--main1);
   border-radius: 12px;
   color: var(--main1);
   justify-content: center;
@@ -3416,7 +3416,8 @@ card.html
   font-weight: var(--semi-bold);
   line-height: var(--line-height-main);
   letter-spacing: var(--letter-spacing-main);
-  background: var(--white);
+  background: var(--main2);
+  box-shadow: var(--shadow-active);
 }
 
 .__follow-btn:checked + .__follow-btn-msg {
@@ -3924,4 +3925,8 @@ card.html
 .viewer-content{
   position: absolute;
   z-index: 999;
+}
+
+.memoir-title{
+  padding-top: 30px;
 }

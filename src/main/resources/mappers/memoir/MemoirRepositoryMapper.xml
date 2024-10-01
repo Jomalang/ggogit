@@ -12,37 +12,38 @@
     <select id="findById" resultType="Memoir">
         SELECT *
         FROM MEMOIR
-        WHERE TREE_ID = #{id}
+        WHERE TREE_ID = #{id} AND IS_DELETED = 0
     </select>
-    <delete id="delete">
-        DELETE MEMOIR
-        WHERE ID = #{id}
-    </delete>
+    <update id="delete">
+        UPDATE MEMOIR
+        SET IS_DELETED = 1
+        WHERE ID = #{id} AND IS_DELETED = 0
+    </update>
     <update id="update" parameterType="Memoir" keyProperty="id" keyColumn="ID">
         UPDATE MEMOIR
         SET TITLE = #{title}, TEXT = #{text}, VISIBILITY = #{visibility}
-        WHERE ID = #{id}
+        WHERE ID = #{id} AND IS_DELETED = 0
     </update>
     <select id="findAll" resultType="Memoir">
         SELECT *
         FROM MEMOIR
+        WHERE IS_DELETED = 0
     </select>
     <select id="findByTreeId" resultType="Memoir">
         SELECT *
         FROM MEMOIR
-        WHERE TREE_ID = #{treeId}
+        WHERE TREE_ID = #{treeId} AND IS_DELETED = 0
     </select>
     <select id="findByTitle" resultType="Memoir">
         SELECT *
         FROM MEMOIR
-        WHERE TITLE LIKE '%${title}%'
+        WHERE TITLE LIKE '%${title}%' AND IS_DELETED = 0
     </select>
 
     <select id="findCntById" resultType="MemoirCommentLikeView" parameterType="MemoirCommentLikeView">
         SELECT *
         FROM MEMOIR_CL_CNT
-        WHERE ID = #{id}
+        WHERE ID = #{id} AND IS_DELETED = 0
     </select>
-
 
 </mapper>

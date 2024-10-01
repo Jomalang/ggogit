@@ -10,18 +10,20 @@
         VALUES(#{memberId}, #{followId})
     </insert>
 
-    <delete id="delete" parameterType="Follow">
-        DELETE FROM FOLLOW
+    <update id="delete" parameterType="Follow">
+        UPDATE FROM FOLLOW
+        SET ACTIVE = 0
         WHERE MEMBER_ID = #{memberId}
-    </delete>
+    </update>
 
     <select id="findAll" resultType="Follow">
         SELECT * FROM FOLLOW
+        WHERE ACTIVE = 1
     </select>
 
     <select id="findByMemberId" resultType="String">
         SELECT * FROM FOLLOW
-        WHERE MEMBER_ID LIKE '%${memberId}%'
+        WHERE MEMBER_ID LIKE '%${memberId}%' AND ACTIVE = 1
     </select>
 
 </mapper>

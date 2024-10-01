@@ -1,9 +1,10 @@
-package Recorders.ggogit.memoir;
+package Recorders.ggogit.domain.memoir;
 
 
 import Recorders.ggogit.domain.memoir.entity.Memoir;
 import Recorders.ggogit.domain.memoir.repository.MemoirRepository;
 import Recorders.ggogit.domain.memoir.vIew.MemoirCommentLikeView;
+import org.apache.ibatis.logging.slf4j.Slf4jImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -42,11 +43,13 @@ public class MemoirRepositoryTest {
     @Test
     public void saveTest() {
         Memoir memoir = createTestMemoir();
+        memoir.setTreeId(2L);
         memoirRepository.save(memoir);
 
-        Memoir foundMemoir = memoirRepository.findById(memoir.getId());
-        assertThat(foundMemoir.getTitle()).isEqualTo("testTitle1");
+        System.out.println("memoirId is : "+memoir.getId());
+        Memoir foundMemoir = memoirRepository.findById(memoir.getTreeId());
 
+        assertThat(foundMemoir.getTitle()).isEqualTo("testTitle1");
 
     }
 
@@ -58,14 +61,14 @@ public class MemoirRepositoryTest {
         memoir.setText("newText");
         memoirRepository.update(memoir);
 
-        Memoir foundMemoir = memoirRepository.findById(memoir.getId());
+        Memoir foundMemoir = memoirRepository.findById(memoir.getTreeId());
         assertThat(foundMemoir.getText()).isEqualTo("newText");
     }
 
     @Test
     public void deleteTest() {
         Memoir memoir = memoirRepository.findByTitle("testTitle1");
-        memoirRepository.delete(memoir.getId());
+        memoirRepository.delete(memoir.getTreeId());
 
         List<Memoir> memoirList = memoirRepository.findAll();
         assertThat(memoirList.size()).isEqualTo(1);
@@ -83,7 +86,7 @@ public class MemoirRepositoryTest {
 
     private static Memoir createTestMemoir() {
         Memoir memoir = new Memoir();
-        memoir.setTreeId(2L);
+        memoir.setTreeId(1L);
         memoir.setTitle("testTitle1");
         memoir.setText("testText1");
         memoir.setVisibility(false);

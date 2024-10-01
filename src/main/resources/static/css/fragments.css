@@ -937,6 +937,7 @@ button {
   width: 100%;
   display: flex;
   flex-direction: row;
+  gap:10px
 }
 
 .card-tree__book-cover {
@@ -3376,6 +3377,7 @@ card.html
 
 .bar-user-info-follow-btn-frame {
   display: flex;
+  align-items: center;
   justify-content: space-between;
 }
 .bar-user-info__user-name--color-main1 {
@@ -3408,7 +3410,6 @@ card.html
   height: 30px;
   display: flex;
   align-items: center;
-  border: 1px solid var(--main1);
   border-radius: 12px;
   color: var(--main1);
   justify-content: center;
@@ -3416,7 +3417,8 @@ card.html
   font-weight: var(--semi-bold);
   line-height: var(--line-height-main);
   letter-spacing: var(--letter-spacing-main);
-  background: var(--white);
+  background: var(--main2);
+  box-shadow: var(--shadow-active);
 }
 
 .__follow-btn:checked + .__follow-btn-msg {
@@ -3471,6 +3473,7 @@ card.html
   border-radius: 16px;
   background: var(--white);
   padding: 16px;
+  box-shadow: var(--shadow-active);
 }
 .card-another-records__top-anker {
   display: flex;
@@ -3918,4 +3921,16 @@ card.html
   max-width: 100%;
   border-radius: 16px;
   background-color: var(--main1);
+}
+
+/*회고록 idnex페이지*/
+.viewer-content{
+  position: absolute;
+  z-index: 999;
+}
+
+.memoir-title{
+  padding-top: 30px;
+  padding-bottom: 10px;
+  border-bottom: var(--main1) solid 1px;
 }

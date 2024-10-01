@@ -43,7 +43,7 @@
     <select id="findCntById" resultType="MemoirCommentLikeView" parameterType="MemoirCommentLikeView">
         SELECT *
         FROM MEMOIR_CL_CNT
-        WHERE ID = #{id} AND IS_DELETED = 0
+        WHERE ID = #{id}
     </select>
 
 </mapper>

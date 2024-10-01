@@ -6,65 +6,84 @@
 
     <link th:href="@{/css/fragments.css}" rel="stylesheet"/>
     <link th:href="@{/css/layout.css}" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor-viewer.min.css" />
     <title>Document</title>
 </head>
 <body>
-<header>
-    <h1 class="none">사용자 트리 세부정보</h1>
-    <section th:replace="~{fragments/background :: user-info-back-header
-        (src='javascript:history.back()',backimgpath='user-tree-index-user-background-img.svg',userimg='card-tree-author.png',username='빵형',userid='@BreadFitt',userurl='javascript:history.back()')}">
-        <h2 class="none">브랜치 검색</h2>
-        <!-- 컴포넌트 -->
-        <div></div>
-    </section>
+<header th:object="${treeInfo}">
+    <div th:replace="~{fragments/background :: user-info-back-header-memoir-title(src='javascript:history.back()',backimgpath=*{coverImageName},username='조현진',userid='hyeonjin',memoirtitle=*{bookTitle},userurl='hi')}">
+    </div>
 </header>
 <main>
-    <section class="user-tree-info__container">
-        <h2 class="none">트리 정보</h2>
-        <div th:replace="~{fragments/card :: card-tree-info-cover(src='/svg/card-tree-cover.svg',treetitle='자바 공부를 위한 트리',booktitle='혼자 공부하는 자바')}">
-        </div>
+<!-- 에디터 뷰어-->
+    <section class="my-tree-list" th:object="${memoir}">
+        <div class="memoir-title" th:insert ="~{fragments/text:: text-main-title(title=*{title}, size=28)}"></div>
+        <h2 class="none">에디터 뷰어</h2>
+        <input class="viewer-content hidden" th:value="*{text}"/>
+        <div id="viewer"></div>
     </section>
-    <section class="branch-tree-detail-container">
-        <h2 class="none">트리 상세 설명 </h2>
-        <div th:replace="~{fragments/card ::
-            card-hidden-info(hiddentext='자세히',
-            authors='김민철',translators='ㅈㅈㅈㅈ',publisher='위즈덤 하우스', page=400,seed='도서 카테고리',
-            treedescription='코딩 테스트 합격자 되기 자바스크립트 편의 영감 기록을 남기는 이유는 다음과 같습니다. 영감 기록을 작성하면 책에서 배운 내용을 정리하고 이해도를 높일 수 있습니다.',
-            progress=80,readpage=320,fullpage=400,
-            leaf=99,like=99,view=99)}"></div>
+   <!-- 작성자 -->
+    <!-- TODO: 프레그먼트 내부에서 사용되는 팔로우 메서드 만들기 -->
+    <section class="bar-user-info-container">
+        <h2 class="none">사용자 정보</h2>
+        <div th:replace="~{fragments/bar :: bar-user-info-follow-btn(userimg='', username='조현진', userid='hyeonjin')}"></div>
     </section>
+
+    <!-- 댓글 -->
     <section class="tree-index-comment-container">
         <h1 class="none">댓글</h1>
         <div th:replace="~{fragments/bar :: comment(profileImg=@{/svg/comment-profile.svg}, commentCount='199')}"></div>
 
         <section id="comment-filter-tab-id"
-                 class="book-detail-comment-tab-container book-detail-comment-tab-container--active">
+                 class="book-detail-comment-tab-container">
             <h1 class="none">댓글 탭</h1>
             <div th:replace="~{fragments/tab-comment :: tab-comment}"></div>
         </section>
     </section>
 
-    <section class="branch-list__container">
-        <h2 th:replace="~{fragments/text :: text-main-title(title='브랜치 목록', size=24)}"></h2>
+    <section class="user-another-records">
+        <h2 class="none">작성자 다른 기록들</h2>
         <!-- 컴포넌트 -->
-        <section class="branch-filter-container">
-            <h3 class="none">브랜치 필터</h3>
-            <!-- 컴포넌트 -->
-            <div th:replace="~{fragments/filter :: filter-seed-text-btns(bookmark='책갈피',seed1='씨앗',seed2='씨앗')}"></div>
+        <section class="user-another-records-title-container">
+            <div th:replace="~{fragments/text :: text-main-title(title=(${username}+'의 다른 최근 기록들'), size=28)}"></div>
+        </section>
+        <section class="branch-tree-other-recode-sub-title-container">
+            <h1 th:replace="~{fragments/text :: text-main-title(title='트리', size=24)}"></h1>
+        </section>
+        <section class="branch-tree-another-record-list-container">
+            <h1 class="none">트리 리스트</h1>
+            <section class="book-detail-other-tree-card-container">
+                <div th:replace="~{fragments/card :: card-another-records-list(list=${treeCards})}"></div>
+            </section>
         </section>
 
-        <section class="branch-filter-search__container">
-            <h3 class="none">브랜치 검색 결과</h3>
-            <!-- 컴포넌트 -->
-            <div th:replace="~{fragments/bar :: bar-search-result(result='10')}"></div>
+        <section class="branch-tree-other-recode-sub-title-container">
+            <h1 th:replace="~{fragments/text :: text-main-title(title='회고록', size=24)}"></h1>
         </section>
-        <section class="branch-filter-result-list__container">
-            <h3 class="none">브랜치 리스트</h3>
-            <!-- 컴포넌트 -->
-            <div th:replace="~{fragments/card :: card-branch__list(${lists})}"></div>
+
+        <section class="branch-tree-another-record-list-container">
+            <h1 class="none">회고록 리스트</h1>
+            <section class="book-detail-other-tree-card-container">
+                <div th:replace="~{fragments/card :: card-another-records-list(list=${memoirCards})}"></div>
+            </section>
+        </section>
+
+        <section class="branch-tree-other-recode-sub-title-container">
+            <h1 th:replace="~{fragments/text :: text-main-title(title='로그', size=24)}"></h1>
+        </section>
+
+        <section class="branch-tree-another-record-list-container">
+            <h1 class="none">리프 리스트</h1>
+            <section class="book-detail-other-tree-card-container">
+                <div th:replace="~{fragments/card :: card-another-records-list(list=${leafCards})}"></div>
+            </section>
         </section>
     </section>
 </main>
+
+<footer>
+    <div th:replace="~{fragments/footer::footer('개발 중입니다~')}"></div>
+</footer>
 
 <section class="nav-back-container">
     <h2 class="none">네비바 뒤 공백</h2>
@@ -77,41 +96,21 @@
     </section>
 </aside>
 
-
+<!--toast view CDN-->
+<script src="https://uicdn.toast.com/editor/latest/toastui-editor-viewer.js"></script>
 <script>
-    function commentTabActive() {
-        const commentTab = document.getElementById("comment-filter-tab-id");
-
-        commentTab.classList.add("book-detail-comment-tab-container--active");
-
-        document.body.classList.add("no-scroll");
-        window.scrollTo({top: 0, behavior: "smooth"});
-    }
-
-    function commentTabInactive() {
-        const commentTab = document.getElementById("comment-filter-tab-id");
-
-        commentTab.classList.remove("book-detail-comment-tab-container--active");
-        document.body.classList.remove("no-scroll");
-    }
-
-    document.getElementById("bar-comment-id").addEventListener("click", commentTabActive);
-    document.getElementById("top-bar-comment__back-icon-box-id").addEventListener("click", commentTabInactive);
-    document.getElementById("bg-book-detail-box-id").addEventListener("click", commentTabInactive);
+    const viewer = new toastui.Editor({
+        el: document.querySelector('#viewer'),
+        viewer: true,
+        height: '500px',
+        initialValue: "hello"
+    });
+    let elem = document.querySelector('.viewer-content');
+    console.log(elem.value);
+    viewer.setMarkdown(elem.value);
 </script>
 
-<script>
-    document.getElementById("input-comment-input__input-id").addEventListener("focus", function () {
-        const submitBtn = document.getElementById("input-comment-input__submit-id");
-        setTimeout(() => {
-            submitBtn.classList.add("input-comment-input__submit--active")
-        }, 100);
-    });
+<script th:src="@{/js/comment-popup.js}" type="module" defer></script>
 
-    document.getElementById("input-comment-input__input-id").addEventListener("focusout", function () {
-        const submitBtn = document.getElementById("input-comment-input__submit-id");
-        submitBtn.classList.remove("input-comment-input__submit--active");
-    });
-</script>
 </body>
 </html>

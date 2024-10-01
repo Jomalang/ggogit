@@ -3,7 +3,7 @@ spring:
     driver-class-name: org.mariadb.jdbc.Driver
     url: jdbc:mariadb://221.148.97.239:3306/ggogitdb
     username: ggogit
-    password: 
+    password: 111
     ##메시지 소스 추가
   messages:
     basename: messages, errors

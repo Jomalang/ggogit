@@ -1,4 +1,4 @@
-package Recorders.ggogit.memoir;
+package Recorders.ggogit.domain.memoir;
 
 import Recorders.ggogit.domain.memoir.entity.MemoirLike;
 import Recorders.ggogit.domain.memoir.repository.MemoirLikeRepository;

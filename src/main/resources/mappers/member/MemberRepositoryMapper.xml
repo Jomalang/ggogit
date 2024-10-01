@@ -13,34 +13,34 @@
     <update id="update" parameterType="Member">
         UPDATE MEMBER
         SET EMAIL = #{email}, PASSWORD = #{password}, NICKNAME = #{nickname}, INTRODUCTION = #{introduction} USERNAME=#{username}
-        WHERE ID = #{id}
+        WHERE ID = #{id} AND IS_DELETED = 0
     </update>
 
-    <delete id="delete" parameterType="Member">
-        DELETE MEMBER
-        WHERE ID = #{id}
-    </delete>
+    <update id="delete" parameterType="Member">
+        UPDATE MEMBER
+        SET IS_DELETED = 1
+        WHERE ID = #{id} AND IS_DELETED = 0
+    </update>
 
     <select id="findAll" resultType="Member">
         SELECT * FROM MEMBER
+        WHERE IS_DELETED = 0
     </select>
 
     <select id="findById" resultType="Member">
         SELECT * FROM MEMBER
-        WHERE ID = #{id}
+        WHERE ID = #{id} AND IS_DELETED = 0
     </select>
 
     <select id="findByEmail" resultType="Member">
         SELECT * FROM MEMBER
-        WHERE EMAIL = #{email}
+        WHERE EMAIL = #{email} AND IS_DELETED = 0
     </select>
 
     <select id="findByNickname" resultType="Member">
         SELECT * FROM MEMBER
-        WHERE NICKNAME = #{nickname}
+        WHERE NICKNAME = #{nickname} AND IS_DELETED = 0
     </select>
-
-
 
     <select id="getMemberImageView" resultType="MemberImageView">
         SELECT
@@ -55,7 +55,7 @@
         ON
             M.ID = MP.MEMBER_ID
         WHERE
-            M.ID=#{memberId}
+            M.ID=#{memberId} AND M.IS_DELETED = 0
     </select>
 
 </mapper>

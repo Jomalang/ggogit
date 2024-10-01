@@ -13,26 +13,28 @@
     <update id="update" parameterType="MemberBackgroundImage">
         UPDATE MEMBER_BACKGROUND_IMAGE
         SET NAME = #{name}
-        WHERE ID = #{id}
+        WHERE ID = #{id} AND IS_DELETED = 0
     </update>
 
-    <delete id="delete" parameterType="MemberBackgroundImage">
-        DELETE MEMBER_BACKGROUND_IMAGE
-        WHERE ID = #{id}
-    </delete>
+    <update id="delete" parameterType="MemberBackgroundImage">
+        UPDATE MEMBER_BACKGROUND_IMAGE
+        SET IS_DELETED = 1
+        WHERE ID = #{id} AND IS_DELETED = 0
+    </update>
 
     <select id="findAll" resultType="MemberBackgroundImage">
         SELECT * FROM MEMBER_BACKGROUND_IMAGE
+        WHERE IS_DELETED = 0
     </select>
 
     <select id="findById" resultType="Long">
         SELECT * FROM MEMBER_BACKGROUND_IMAGE
-        WHERE ID = #{id}
+        WHERE ID = #{id} AND IS_DELETED = 0
     </select>
 
     <select id="findByName" resultType="String">
         SELECT * FROM MEMBER_BACKGROUND_IMAGE
-        WHERE NAME LIKE '%${name}%'
+        WHERE NAME LIKE '%${name}%' AND IS_DELETED = 0
     </select>
 
 </mapper>

@@ -10,26 +10,27 @@
         VALUES (#{memberId}, #{memoirId}, #{content})
     </insert>
 
-    <delete id="delete">
-        DELETE MEMOIR_COMMENT
-        WHERE ID = #{id}
-    </delete>
+    <update id="delete">
+        UPDATE MEMOIR_COMMENT
+        SET iS_DELETED = 1
+        WHERE ID = #{id} AND IS_DELETED = 0
+    </update>
 
     <update id="update" parameterType="MemoirComment">
         UPDATE MEMOIR_COMMENT
         SET CONTENT = #{content}
-        WHERE MEMOIR_ID = #{memoirId}
+        WHERE MEMOIR_ID = #{memoirId} AND IS_DELETED = 0
     </update>
 
     <select id="findAllByMemoirId" resultType="MemoirComment">
         SELECT *
         FROM MEMOIR_COMMENT
-        WHERE MEMOIR_ID = #{memoirId}
+        WHERE MEMOIR_ID = #{memoirId} AND IS_DELETED = 0
     </select>
 
     <select id="findById" resultType="MemoirComment">
         SELECT *
         FROM MEMOIR_COMMENT
-        WHERE ID = #{id}
+        WHERE ID = #{id} AND IS_DELETED = 0
     </select>
 </mapper>

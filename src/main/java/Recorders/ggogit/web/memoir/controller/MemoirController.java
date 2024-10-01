@@ -68,6 +68,7 @@ public class MemoirController {
             TreeInfoView treeInfo = treeService.getTreeInfoViewByTreeId(treeId);
             model.addAttribute("treeInfo", treeInfo);
             model.addAttribute("fileNames", fileNames);
+            model.addAttribute("memoirForm", memoirForm);
             log.info(memoirForm.toString());
             return "view/memoir/reg";
         }
@@ -88,6 +89,25 @@ public class MemoirController {
         log.info("memoirForm = {}", memoirForm);
 
         return "redirect:/";
+    }
+
+    @GetMapping("/edit")
+    public String editMemoir(@RequestParam(value = "t") long treeId, Model model) {
+        model.addAttribute("treeId", treeId);
+
+        //TODO: 메서드 추출하기
+        Memoir memoir = memoirService.getMemoir(treeId);
+        MemoirForm memoirForm = new MemoirForm();
+        memoirForm.setTitle(memoir.getTitle());
+        memoirForm.setText(memoir.getText());
+        memoirForm.setTreeId(treeId);
+        memoirForm.setVisibility(memoir.getVisibility());
+        model.addAttribute("memoirForm", memoirForm);
+
+        TreeInfoView treeInfo = treeService.getTreeInfoViewByTreeId(treeId);
+        model.addAttribute("treeInfo", treeInfo);
+
+        return "view/memoir/edit";
     }
 
 }

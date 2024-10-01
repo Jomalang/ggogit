@@ -11,7 +11,7 @@
 </head>
 <body>
 <header th:object="${treeInfo}">
-    <div th:replace="~{fragments/background :: user-info-back-header-memoir-title(src='javascript:history.back()',backimgpath=*{coverImageName},username='조현진',userid='hyeonjin',memoirtitle=*{bookTitle},userurl='hi')}">
+    <div th:replace="~{fragments/background :: user-info-back-header-memoir-title(edit=('/memoir/edit?t='+*{treeId}),backimgpath=*{coverImageName},username='조현진',userid='hyeonjin',memoirtitle=*{bookTitle},userurl='hi')}">
     </div>
 </header>
 <main>

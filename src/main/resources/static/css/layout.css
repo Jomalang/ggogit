@@ -158,6 +158,9 @@ body {
   flex-direction: row-reverse;
   padding-right: 28px;
   margin-bottom: 28px;
+  bottom: 85px;
+  right: 0;
+  position: fixed;
 }
 
 .nav-back-container {

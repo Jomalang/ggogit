@@ -108,7 +108,7 @@
                     formData.append('image', blob);
 
                     // MemoirFileApiController - uploadEditorImage 메서드 호출
-                    const response = await fetch('/tui-editor/image-upload', {
+                    const response = await fetch('/api/v1/leaf/image-upload', {
                         method : 'POST',
                         body : formData,
                     });
@@ -117,7 +117,7 @@
                     console.log('서버에 저장된 파일 명 : ', filename);
 
                     // addImageBlobHook의 callback을 통해 디스크에 저장된 이미지 에디터에 렌더링
-                    const imageUrl = `/tui-editor/image-print?filename=${filename}`;
+                    const imageUrl = `/api/v1/leaf/image-print?filename=${filename}`;
                     callback(imageUrl, 'image alt attribute');
                     console.log(blob);
                     console.log(callback);

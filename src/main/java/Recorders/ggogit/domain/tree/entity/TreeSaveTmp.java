@@ -65,4 +65,7 @@ public class TreeSaveTmp {
         return imageFile != null && !imageFile.isEmpty();
     }
 
+    public String getFilePath() {
+        return imageFile; // 여기는 파일 경로가 들어온다.
+    }
 }

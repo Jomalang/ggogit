@@ -30,7 +30,8 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 public class LeafBookServiceImpl implements LeafBookService {
@@ -39,6 +40,9 @@ public class LeafBookServiceImpl implements LeafBookService {
 
     @Value("${file.upload-dir}")
     private String uploadDir;
+
+    @Value("${file.tmp-dir}")
+    private String tmpDir;
 
     @Autowired
     private LeafRepository leafRepository;
@@ -101,7 +105,8 @@ public class LeafBookServiceImpl implements LeafBookService {
                 treeSaveTmp.setBookId(book.getId());
 
                 if (treeSaveTmp.hasImage()) { // 이미지가 있는 경우 저장
-                    String toFileName = moveImageFile(treeSaveTmp.getImageFile(),"book");
+                    String fileName = extractFileName(treeSaveTmp.getFilePath());
+                    String toFileName = moveImageFile(fileName,"book");
                     book.setImageFile(toFileName);
                     bookRepository.update(book);
                 }
@@ -169,6 +174,15 @@ public class LeafBookServiceImpl implements LeafBookService {
                 throw new IllegalArgumentException("태그가 존재하지 않습니다.");
             }
         });
+
+        // 이미지 저장 로직
+        List<String> filesNames = extractImageFileNames(leafBookView.getContent());
+        for (String fileName : filesNames) {
+            moveImageFile(fileName, "leaf"); // 이미지 파일 이동
+            String content = leafBookView.getContent();
+            String changedContent = changeTagImageSrc(content, fileName); // 태그의 이미지 경로 변경
+            leafBookView.setContent(changedContent);
+        }
 
         // 리프 저장
         Leaf leaf = leafBookView.toLeaf();
@@ -344,19 +358,48 @@ public class LeafBookServiceImpl implements LeafBookService {
         return tags;
     }
 
-    public String moveImageFile(String fromPath, String directory) {
-        UUID uuid = UUID.randomUUID(); // 파일명 중복 방지
-        String toFileName = uuid + ".jpg";
-        Path from = Path.of(fromPath);
-        Path to = Paths.get(uploadDir, "image", directory, toFileName);
+    private String extractFileName(String fullPath) {
+        Path path = Paths.get(fullPath);
+        return path.getFileName().toString();
+    }
+
+    private String moveImageFile(String fileName, String directory) {
+        Path from = Path.of(tmpDir, fileName);
+        Path to = Paths.get(uploadDir, "image", directory, fileName);
         try {
             if (!Files.exists(to.getParent())) { // 폴더 경로 존재 확인
                 Files.createDirectories(to.getParent());
             }
             Files.move(from, to);
-            return toFileName;
+            return to.toString();
         } catch (Exception e) {
             throw new IllegalArgumentException("이미지 파일 이동 실패", e);
         }
+    }
+
+    private String changeTagImageSrc(String content, String fileName) {
+        String before = "/api/v1/leaf/image-print?filename=" + fileName;
+        String after = "/uploads/image/leaf/" + fileName;
+        return content.replace(before, after);
+    }
+
+    public List<String> extractImageFileNames(String content) {
+        List<String> fileNames = new ArrayList<>();
+        // 문자열에서 이미지 태그 추출
+        String regex = "src\\s*=\\s*\"?(.+?)(\"|\\s|>)"; // 이미지 태그 의 src 속성 추출
+        Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
+
+        // 이미지 태그에서 파일명 추출
+        Matcher matcher = pattern.matcher(content);
+
+        // 리스트에 저장
+        while (matcher.find()) {
+            String srcAttribute = matcher.group();
+            String imagePath = srcAttribute.substring(5, srcAttribute.length() - 1); // src="{}"제거 < 내용만 추출하기 위함
+            String fileName = imagePath.split("filename=")[1]; // 파일 이름 추출
+            fileNames.add(fileName);
+        }
+
+        return fileNames;
     }
 }

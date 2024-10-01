@@ -4,7 +4,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.io.File;
+import java.util.List;
+
 
 @SpringBootTest
 class LeafBookServiceImplTest {
@@ -13,13 +14,15 @@ class LeafBookServiceImplTest {
     private LeafBookServiceImpl leafBookService;
 
     @Test
-    void moveImageFile() {
+    void extractImageFileNames() {
         // Given
-        String sourcePath = "C:\\Users\\gksxo\\Desktop\\github\\ggogit\\src\\main\\webapp\\image\\tmp\\test.jpg";
-        String targetPath = "image" + File.separator + "book" + File.separator + "test.jpg";
+        String content = "<p><img src=\"/api/v1/leaf/image-print?filename=f34a1cd4a5c2447681d40f6572be2a4a.jpg\" alt=\"image alt attribute\" contenteditable=\"false\">sdfasdfsdfasdfasdf</p><p>asdfasd</p><p>fasd</p><p>fasdf</p><p>asdf</p><p>asd</p><p>fas</p><p>dfasdfasdfasdf</p><p>asdfasd</p><p>fas</p><p>dfa</p><img src=\"/api/v1/leaf/image-print?filename=f34a1cd4a5c2447681d40f6572be2a4a.jpg\" alt=\"image alt attribute\" contenteditable=\"false\"><p>sdf</p><p>asd</p><p>fas</p><p>df</p><img src=\"/api/v1/leaf/image-print?filename=f34a1cd4a5c2447681d40f6572be2a4a.jpg\" alt=\"image alt attribute\" contenteditable=\"false\"><p>asdfsdf</p>";
         // When
-        leafBookService.moveImageFile(sourcePath, targetPath);
+        List<String> names = leafBookService.extractImageFileNames(content);
 
         // Then
+        for (String name : names) {
+            System.out.println(name);
+        }
     }
 }

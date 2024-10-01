@@ -236,7 +236,7 @@ home-tree__reg-4--search-book__input
   position: fixed;
   width: 100%;
   bottom: 0;
-  z-index: 10;
+  z-index: 20;
 }
 
 /* /home/tree/search/list.html */

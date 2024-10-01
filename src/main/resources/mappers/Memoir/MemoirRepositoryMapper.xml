@@ -12,7 +12,7 @@
     <select id="findById" resultType="Memoir">
         SELECT *
         FROM MEMOIR
-        WHERE ID = #{id}
+        WHERE TREE_ID = #{id}
     </select>
     <delete id="delete">
         DELETE MEMOIR

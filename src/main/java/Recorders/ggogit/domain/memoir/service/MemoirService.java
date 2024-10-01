@@ -6,6 +6,7 @@ import Recorders.ggogit.web.memoir.MemoirForm;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 
+import java.io.IOException;
 import java.util.List;
 
 @Transactional
@@ -35,4 +36,6 @@ public interface MemoirService {
      * @return treeId로 조회한 회고록을 반환합니다.
      */
     public Memoir getMemoir(long treeId);
+
+    public void imageSave(List<String> fileNames) throws IOException;
 }

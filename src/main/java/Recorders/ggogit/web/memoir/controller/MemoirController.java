@@ -38,6 +38,9 @@ public class MemoirController {
         model.addAttribute("memoir", memoir);
         model.addAttribute("treeInfo", treeInfo);
 
+        model.addAttribute("memoirCards", new int[]{1, 1, 1});
+        model.addAttribute("leafCards", new int[]{2, 2, 2});
+        model.addAttribute("treeCards", new int[]{3, 3, 3});
 
         return "view/memoir/index";
     }

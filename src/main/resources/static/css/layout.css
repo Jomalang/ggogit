@@ -514,7 +514,8 @@ home-tree__reg-4--search-book__input
 }
 .user-another-records {
   margin-top: 22px;
-  padding-top: 38px;
+  padding-top: 15px;
+  padding-bottom: 30px;
   background: var(--main2--opacity40);
 }
 .user-another-records-title-container {
@@ -522,8 +523,8 @@ home-tree__reg-4--search-book__input
   padding-right: 24px;
 }
 .branch-tree-other-recode-sub-title-container {
-  margin-top: 70px;
-  margin-bottom: 16px;
+  margin-top: 30px;
+  margin-bottom: 10px;
   padding-left: 24px;
   padding-right: 24px;
 }

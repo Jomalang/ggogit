@@ -499,7 +499,7 @@ Branch List 사용
     <ul class="card-another-records__list">
         <li class="card-another-records__item" th:each="type : ${list}">
             <div th:replace="~{fragments/card :: card-another-records(type=${type})}"></div>
-            <div class="card-another-records__list-empty-space" th:if="${type eq 3}"></div>
+            <!--<div class="card-another-records__list-empty-space" th:if="${type eq 3}"></div> -->
         </li>
     </ul>
 </div>

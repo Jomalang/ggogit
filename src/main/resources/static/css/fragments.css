@@ -3472,6 +3472,7 @@ card.html
   border-radius: 16px;
   background: var(--white);
   padding: 16px;
+  box-shadow: var(--shadow-active);
 }
 .card-another-records__top-anker {
   display: flex;
@@ -3929,4 +3930,6 @@ card.html
 
 .memoir-title{
   padding-top: 30px;
+  padding-bottom: 10px;
+  border-bottom: var(--main1) solid 1px;
 }

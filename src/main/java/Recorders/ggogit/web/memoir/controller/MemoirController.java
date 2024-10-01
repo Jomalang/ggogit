@@ -38,6 +38,7 @@ public class MemoirController {
         model.addAttribute("memoir", memoir);
         model.addAttribute("treeInfo", treeInfo);
 
+
         return "view/memoir/index";
     }
 

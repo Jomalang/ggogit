@@ -39,6 +39,7 @@ dependencies {
     providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     runtimeOnly 'com.oracle.database.jdbc:ojdbc11:23.5.0.24.07'
+    runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
     // 개발을 위한 의존성

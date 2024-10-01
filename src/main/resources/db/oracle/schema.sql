@@ -167,6 +167,7 @@ CREATE TABLE "BOOK" (
     "BOOK_CATEGORY_ID"	NUMBER		                            NOT NULL, -- 도서 카테고리 FK
     "TITLE"             NVARCHAR2(1024)	                        NOT NULL, -- 도서 제목
     "AUTHOR"            NVARCHAR2(1024)	                        NOT NULL, -- 도서 저자
+    "TRANSLATOR"        NVARCHAR2(1024)		                    NULL, -- 도서 번역자
     "ISBN"              VARCHAR2(13)	                        NULL, -- 도서 ISBN
     "PUBLISHER"         NVARCHAR2(1024)	                        NOT NULL, -- 도서 출판사
     "PUBLISH_DATE"      DATE		                            NULL, -- 도서 출판일

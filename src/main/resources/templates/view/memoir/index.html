@@ -11,24 +11,21 @@
 </head>
 <body>
 <header th:object="${treeInfo}">
-    <h1 class="none">사용자 트리 세부정보</h1>
-    <section th:replace="~{fragments/background :: user-info-back-header
-        (src='javascript:history.back()',backimgpath=*{coverImageName},userimg='card-tree-author.png',username='빵형',userid='@BreadFitt',userurl='javascript:history.back()')}">
-        <h2 class="none">브랜치 검색</h2>
-        <!-- 컴포넌트 -->
-    </section>
+    <div th:replace="~{fragments/background :: user-info-back-header-memoir-title(src='javascript:history.back()',backimgpath=*{coverImageName},username='조현진',userid='hyeonjin',memoirtitle=${memoir.title},userurl='hi')}">
+    </div>
 </header>
 <main>
-    <section class="user-tree-info__container" th:object="${treeInfo}">
-        <h2 class="none">회고록 정보</h2>
-        <div th:replace="~{fragments/card :: card-tree-info-cover(src=*{coverImageName},treetitle=*{title},booktitle=*{bookTitle})}">
-        </div>
-    </section>
 <!-- 에디터 뷰어-->
     <section class="my-tree-list" th:object="${memoir}">
         <h2 class="none">에디터 뷰어</h2>
         <input class="viewer-content hidden" th:value="*{text}"/>
         <div id="viewer"></div>
+    </section>
+
+    <!-- TODO: 프레그먼트 내부에서 사용되는 팔로우 메서드 만들기 -->
+    <section class="bar-user-info-container">
+        <h2 class="none">사용자 정보</h2>
+        <div th:replace="~{fragments/bar :: bar-user-info-follow-btn(userimg='', username='조현진', userid='hyeonjin')}"></div>
     </section>
 
     <section class="tree-index-comment-container">

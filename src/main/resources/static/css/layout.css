@@ -482,6 +482,10 @@ home-tree__reg-4--search-book__input
   flex-direction: column;
   justify-content: space-between;
   height: 200px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position-y: center;
+  background-position-x: center;
 }
 .user-info__top-bar-container {
   display: flex;
@@ -506,7 +510,7 @@ home-tree__reg-4--search-book__input
   padding: 16px 24px;
 }
 .tree-index-comment-container {
-  padding-top: 30px;
+  padding-top: 10px;
 }
 .user-another-records {
   margin-top: 22px;
@@ -553,4 +557,11 @@ home-tree__reg-4--search-book__input
 
 .login-screen-container {
   padding-top: 30px;
+}
+
+.bar-user-info-container{
+  margin-right: 24px;
+  margin-left: 24px;
+  padding: 16px 0 16px 0;
+  border-top: var(--main1) solid 1px;
 }

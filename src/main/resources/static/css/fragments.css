@@ -3919,3 +3919,9 @@ card.html
   border-radius: 16px;
   background-color: var(--main1);
 }
+
+/*회고록 idnex페이지*/
+.viewer-content{
+  position: absolute;
+  z-index: 999;
+}

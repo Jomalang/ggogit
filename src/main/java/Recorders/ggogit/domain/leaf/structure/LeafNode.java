@@ -60,7 +60,7 @@ public class LeafNode {
     }
 
     public boolean isBranch() {
-        return data.getChildLeafCount() < MAX_CHILDREN; // 트리 자식 개수
+        return children.size() < MAX_CHILDREN; // 트리 자식 개수
     }
 
     public void setParent(LeafNode parent) {

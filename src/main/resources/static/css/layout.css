@@ -2,6 +2,7 @@
 html,
 body {
   width: 100%;
+  height: 100%;
   overflow-x: hidden;
 }
 
@@ -39,7 +40,7 @@ body {
   display: flex;
   flex-direction: row;
   align-self: stretch;
-  margin: 70px 0 300px 0;
+  margin: 70px 0 250px 0;
   align-items: self-start;
   justify-content: center;
   flex-shrink: 0;
@@ -73,13 +74,12 @@ body {
 }
 
 .btn-full-width-link-container {
-  margin: 0 5% 28px 5%;
+  padding-top: 40px;
+  margin: 0 5% 0 5%;
   width: 90%;
-  top: 550px;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  position: absolute;
 }
 
 .book-tree-input-form-container {
@@ -158,12 +158,16 @@ body {
   flex-direction: row-reverse;
   padding-right: 28px;
   margin-bottom: 28px;
+  bottom: 85px;
+  right: 0;
+  position: fixed;
 }
 
 .nav-back-container {
   display: block;
   width: 100%;
   height: 85px;
+  z-index: 1;
 }
 
 .margin-bottom24 {
@@ -235,7 +239,7 @@ home-tree__reg-4--search-book__input
   position: fixed;
   width: 100%;
   bottom: 0;
-  z-index: 10;
+  z-index: 20;
 }
 
 /* /home/tree/search/list.html */
@@ -245,6 +249,7 @@ home-tree__reg-4--search-book__input
   gap: 20px;
   margin-left: 24px;
   margin-right: 24px;
+  align-items: center;
 }
 
 .tree-card-list::after {
@@ -305,6 +310,14 @@ home-tree__reg-4--search-book__input
     display: flex;
     flex-direction: row;
     transition: all 0.5s ease;
+}
+
+.log-item-container--hidden {
+    opacity: 0;
+}
+
+.log-item-container--visible {
+    opacity: 1;
 }
 
 .log-list-date-title-container {
@@ -396,7 +409,7 @@ home-tree__reg-4--search-book__input
   margin: 24px;
 }
 .register__input-container {
-  padding-top: 60px;
+  padding-top: 30px;
   padding-left: 24px;
   padding-right: 24px;
   margin-bottom: 10px;
@@ -481,6 +494,10 @@ home-tree__reg-4--search-book__input
   flex-direction: column;
   justify-content: space-between;
   height: 200px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position-y: center;
+  background-position-x: center;
 }
 .user-info__top-bar-container {
   display: flex;
@@ -505,11 +522,12 @@ home-tree__reg-4--search-book__input
   padding: 16px 24px;
 }
 .tree-index-comment-container {
-  padding-top: 30px;
+  padding-top: 10px;
 }
 .user-another-records {
   margin-top: 22px;
-  padding-top: 38px;
+  padding-top: 15px;
+  padding-bottom: 30px;
   background: var(--main2--opacity40);
 }
 .user-another-records-title-container {
@@ -517,8 +535,8 @@ home-tree__reg-4--search-book__input
   padding-right: 24px;
 }
 .branch-tree-other-recode-sub-title-container {
-  margin-top: 70px;
-  margin-bottom: 16px;
+  margin-top: 30px;
+  margin-bottom: 10px;
   padding-left: 24px;
   padding-right: 24px;
 }
@@ -552,4 +570,27 @@ home-tree__reg-4--search-book__input
 
 .login-screen-container {
   padding-top: 30px;
+}
+
+.bar-user-info-container{
+  margin-right: 24px;
+  margin-left: 24px;
+  padding: 16px 0 16px 0;
+  border-top: var(--main1) solid 1px;
+}
+
+
+/*================================
+toast 이미지 팝업 레이아웃 css
+================================*/
+.toastui-editor-popup {
+  position: absolute !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+}
+
+@media (max-width: 480px) {
+  .toastui-editor-popup {
+    transform: translateX(0%) !important;
+  }
 }

@@ -54,7 +54,7 @@
           <a th:href="@{/tree/detail/{treeId}(treeId=*{treeId})}">
             <img
               class="mid__img"
-              th:src="@{/img/home/{img}(img=*{coverImageName})}"
+              th:src="*{coverImageName}"
               alt="도서 예시 이미지"
             />
           </a>
@@ -65,7 +65,7 @@
               <a th:href="@{/seed/index}">
               <img
                       class="mid__img"
-                      th:src="@{/img/home/tree-book-blank.png}"
+                      th:src="@{/uploads/image/book/tree-book-blank.png}"
                       alt="도서 예시 이미지"
               />
               </a>
@@ -77,7 +77,7 @@
               <a th:href="@{/seed/index}">
               <img
                       class="mid__img"
-                      th:src="@{/img/home/tree-book-blank.png}"
+                      th:src="@{/uploads/image/book/tree-book-blank.png}"
                       alt="도서 예시 이미지"
               />
               </a>
@@ -92,7 +92,7 @@
           <a th:href="@{/tree/detail/{treeId}(treeId=*{treeId})}">
             <img
               class="mid__img"
-              th:src="@{/img/home/{img}(img=*{coverImageName})}"
+              th:src="*{coverImageName}"
               alt="도서 예시 이미지"
             />
           </a>
@@ -105,7 +105,7 @@
               <a th:href="@{/seed/index}">
               <img
                       class="mid__img"
-                      th:src="@{/img/home/tree-book-blank.png}"
+                      th:src="@{/uploads/image/book/tree-book-blank.png}"
                       alt="도서 예시 이미지"
               />
               </a>
@@ -117,7 +117,7 @@
               <a th:href="@{/seed/index}">
               <img
                       class="mid__img"
-                      th:src="@{/img/home/tree-book-blank.png}"
+                      th:src="@{/uploads/image/book/tree-book-blank.png}"
                       alt="도서 예시 이미지"
               />
               </a>
@@ -133,7 +133,7 @@
           <a th:href="@{/tree/detail/{treeId}(treeId=*{treeId})}">
             <img
               class="mid__img"
-              th:src="@{/img/home/{img}(img=*{coverImageName})}"
+              th:src="*{coverImageName}"
               alt="도서 예시 이미지"
             />
           </a>
@@ -145,7 +145,7 @@
               <a th:href="@{/seed/index}">
               <img
                       class="mid__img"
-                      th:src="@{/img/home/tree-book-blank.png}"
+                      th:src="@{/uploads/image/book/tree-book-blank.png}"
                       alt="도서 예시 이미지"
               />
               </a>
@@ -157,7 +157,7 @@
               <a th:href="@{/seed/index}">
               <img
                       class="mid__img"
-                      th:src="@{/img/home/tree-book-blank.png}"
+                      th:src="@{/uploads/image/book/tree-book-blank.png}"
                       alt="도서 예시 이미지"
               />
               </a>
@@ -175,7 +175,7 @@
     <div id="bg-book-detail__front-img-box-id" class="bg-book-detail__front-img-box">
         <img class="bg-book-detail__front-img" th:src="@{${imgSrc}}" alt="도서 이미지" />
     </div>
-<div class="user-tree-user-info-container" th:fragment="user-info-back-header(src,backimgpath,userimg,username,userid,userurl)" th:style="'background-image: url(' + @{'/svg/'+${backimgpath}} + ');'">
+<div class="user-tree-user-info-container" th:fragment="user-info-back-header(src,backimgpath,userimg,username,userid,userurl)" th:style="'background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(' + @{'/uploads/image/book/'+${backimgpath}} + ');'">
     <section class="user-info__top-bar-container">
         <div th:replace="~{fragments/top-bar :: top-bar__transparent(${src})}"></div>
     </section>
@@ -188,15 +188,15 @@
      FRAGMENT: 사용자 정보, 회고록 제목 화면 - 상단바 + 바 / 회고록 제목
      설명: 사용자 트리 정보 user/memoir/index
      ========================================== -->
-<div class="user-tree-user-info-container" th:fragment="user-info-back-header-memoir-title(src,backimgpath,username,userid,memoirtitle,userurl)" th:style="'background-image: url(' + @{'/svg/'+${backimgpath}} + ');'">
+<div class="user-tree-user-info-container" th:fragment="user-info-back-header-memoir-title(edit,backimgpath,username,userid,memoirtitle,userurl)" th:style="'background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(' + @{'/uploads/image/book/'+${backimgpath}} + ');'">
     <section class="user-info__top-bar-container">
-        <div th:replace="~{fragments/top-bar :: top-bar__transparent(src='${src}')}"></div>
+        <div th:replace="~{fragments/top-bar :: top-bar__transparent(edit=${edit})}"></div>
     </section>
     <section class="user-info__user-info-bar-container">
         <div th:replace="~{fragments/bar :: bar-user-info-no-profile-btn(${username},${userid})}"></div>
         <div th:replace="~{fragments/bar :: bar-memoir-title-btn(${memoirtitle},${userurl})}"></div>
     </section>
-
 </div>
+
 </body>
 </html>

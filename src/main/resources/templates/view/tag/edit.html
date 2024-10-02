@@ -18,7 +18,7 @@
         <form th:action="@{/tag/edit}" method="post" th:object="${leafTagForm}">
             <section>
                 <h2 class="none">뒤로가기 및 완료 바</h2>
-                <div th:replace="~{/fragments/top-bar::top-bar-tag-edit(tag=${tag.name}, memberId=${memberId})}"></div>
+                <div th:replace="~{/fragments/top-bar::top-bar-tag-edit(tag=${tag}, memberId=${memberId})}"></div>
             </section>
 
             <section class="none">
@@ -28,7 +28,7 @@
 
             <section>
                 <h2 class="none">태그 입력</h2>
-                <div th:replace="~{fragments/input::tag-search-or-register-bar(tag=${tag.name})}"></div>
+                <div th:replace="~{fragments/input::tag-search-or-register-bar(tag=${tag})}"></div>
             </section>
         </form>
     </header>

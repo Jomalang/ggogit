@@ -10,7 +10,7 @@ import java.util.List;
 public interface LeafService {
     List<LeafItemView> getLeafItems(Long treeId, Long leafId);
 
-    LeafRecentSaveBranchView getRecentBranch(Long treeId, Long leafId);
+    LeafListBranchView getBranchInfo(Long treeId, Long leafId);
 
     LeafBreadcrumbView getBreadcrumb(Long treeId, Long leafId);
     LeafBreadcrumbView getBreadcrumb(Long leafId);
@@ -25,4 +25,6 @@ public interface LeafService {
     List<LeafNode> getLeafNodeFromLeafIdToEnd(Long treeId, Long leafId);
 
     List<LeafNode> getLeafNodeAll(Long treeId, Long leafId);
+
+    BeforeLeafInfoView getBeforeLeafInfoView(Long leafId);
 }

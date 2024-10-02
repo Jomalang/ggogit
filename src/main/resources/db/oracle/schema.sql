@@ -43,7 +43,8 @@ CREATE TABLE "MEMBER" (
     "USERNAME"          NVARCHAR2(10)                           NOT NULL, -- 회원 이름
     "INTRODUCTION"	    NVARCHAR2(2000) 	                    NULL, -- 회원 소개글
     "UPDATE_TIME"	    TIMESTAMP       DEFAULT SYSTIMESTAMP    NOT NULL, -- 데이터 수정 시각
-    "CREATE_TIME"	    TIMESTAMP       DEFAULT SYSTIMESTAMP    NOT NULL -- 데이터 생성 시각
+    "CREATE_TIME"	    TIMESTAMP       DEFAULT SYSTIMESTAMP    NOT NULL, -- 데이터 생성 시각
+    "IS_DELETED"	    NUMBER(1)	    DEFAULT 0	            NOT NULL -- 회원 삭제 여부
 );
 
 -- 시퀀스 생성
@@ -79,7 +80,8 @@ COMMENT ON COLUMN "MEMBER"."CREATE_TIME" IS '데이터 생성 시각';
 -- ============================================ --
 CREATE TABLE "MEMBER_PROFILE_IMAGE" (
     "MEMBER_ID"	        NUMBER		    NOT NULL, -- 회원 프로필 이미지 PK
-    "NAME"	        VARCHAR2(255)	NOT NULL, -- 회원 프로필 이미지 이름
+    "NAME"	            VARCHAR2(255)	NOT NULL, -- 회원 프로필 이미지 이름
+    "IS_DELETED"	    NUMBER(1)	    DEFAULT 0	            NOT NULL, -- 회원 프로필 이미지 삭제 여부
     -- PK 정의
     CONSTRAINT "PK_MEMBER_PROFILE_IMAGE" PRIMARY KEY ("MEMBER_ID"),
     -- FK 정의
@@ -94,7 +96,8 @@ COMMENT ON COLUMN "MEMBER_PROFILE_IMAGE"."NAME" IS '회원 프로필 이미지 �
 -- ============================================ --
 CREATE TABLE "MEMBER_BACKGROUND_IMAGE" (
     "MEMBER_ID"	        NUMBER		    NOT NULL, -- 회원 배경 이미지 PK
-    "NAME"	        VARCHAR2(255)	NOT NULL, -- 회원 배경 이미지 이름
+    "NAME"	            VARCHAR2(255)	NOT NULL, -- 회원 배경 이미지 이름
+    "IS_DELETED"	    NUMBER(1)	    DEFAULT 0	            NOT NULL, -- 회원 배경 이미지 삭제 여부
     -- PK 정의
     CONSTRAINT "PK_MEMBER_BACKGROUND_IMAGE" PRIMARY KEY ("MEMBER_ID"),
     -- FK 정의
@@ -112,6 +115,7 @@ CREATE TABLE "FOLLOW" (
     "FOLLOW_ID"	        NUMBER		                            NOT NULL, -- 팔로우 대상 회원 FK
     "UPDATE_TIME"	    TIMESTAMP       DEFAULT SYSTIMESTAMP    NOT NULL, -- 데이터 수정 시각
     "CREATE_TIME"	    TIMESTAMP       DEFAULT SYSTIMESTAMP    NOT NULL, -- 데이터 생성 시각
+    "IS_DELETED"        NUMBER(1)	    DEFAULT 0	            NOT NULL, -- 팔로우 삭제 여부
     -- PK 정의
     CONSTRAINT "PK_FOLLOW" PRIMARY KEY ("MEMBER_ID", "FOLLOW_ID"),
     -- FK 정의
@@ -137,7 +141,8 @@ COMMENT ON COLUMN "FOLLOW"."CREATE_TIME" IS '데이터 생성 시각';
 -- ============================================ --
 CREATE TABLE "BOOK_CATEGORY" (
     "ID"	            NUMBER		                            PRIMARY KEY, -- 도서 카테고리 PK
-    "NAME"	            NVARCHAR2(255)		                    NOT NULL -- 도서 카테고리 이름
+    "NAME"	            NVARCHAR2(255)		                    NOT NULL, -- 도서 카테고리 이름
+    "IS_DELETED"        NUMBER(1)	    DEFAULT 0	            NOT NULL -- 도서 카테고리 삭제 여부
 );
 
 -- 시퀀스 생성
@@ -162,14 +167,16 @@ CREATE TABLE "BOOK" (
     "BOOK_CATEGORY_ID"	NUMBER		                            NOT NULL, -- 도서 카테고리 FK
     "TITLE"             NVARCHAR2(1024)	                        NOT NULL, -- 도서 제목
     "AUTHOR"            NVARCHAR2(1024)	                        NOT NULL, -- 도서 저자
+    "TRANSLATOR"        NVARCHAR2(1024)		                    NULL, -- 도서 번역자
     "ISBN"              VARCHAR2(13)	                        NULL, -- 도서 ISBN
     "PUBLISHER"         NVARCHAR2(1024)	                        NOT NULL, -- 도서 출판사
-    "PUBLIC_DATE"       DATE		                            NULL, -- 도서 출판일
+    "PUBLISH_DATE"      DATE		                            NULL, -- 도서 출판일
     "TOTAL_PAGE"        NUMBER		                            NOT NULL, -- 도서 총 페이지 수
     "IMAGE_FILE"        VARCHAR2(1024)	                        NULL, -- 도서 이미지 파일
     "RESOURCE_FROM"     NUMBER(1)	                            NOT NULL, -- 도서 등록 여부
     "UPDATE_TIME"	    TIMESTAMP       DEFAULT SYSTIMESTAMP    NOT NULL, -- 데이터 수정 시각
     "CREATE_TIME"	    TIMESTAMP       DEFAULT SYSTIMESTAMP    NOT NULL, -- 데이터 생성 시각
+    "IS_DELETED"        NUMBER(1)	    DEFAULT 0	            NOT NULL, -- 도서 삭제 여부
     -- UNIQUE 정의
     UNIQUE ("ISBN"),
     -- FK 정의
@@ -217,6 +224,7 @@ CREATE TABLE "BOOK_LIKE" (
     "ACTIVATE"	        NUMBER(1)	    DEFAULT 1	            NOT NULL, -- 도서 좋아요 활성화 여부
     "UPDATE_TIME"	    TIMESTAMP       DEFAULT SYSTIMESTAMP    NOT NULL, -- 데이터 수정 시각
     "CREATE_TIME"	    TIMESTAMP       DEFAULT SYSTIMESTAMP    NOT NULL, -- 데이터 생성 시각
+    "IS_DELETED"        NUMBER(1)	    DEFAULT 0	            NOT NULL, -- 도서 좋아요 삭제 여부
     -- PK 정의
     CONSTRAINT "PK_BOOK_LIKE" PRIMARY KEY ("MEMBER_ID", "BOOK_ID"),
     -- FK 정의
@@ -253,6 +261,7 @@ CREATE TABLE "BOOK_COMMENT" (
     "CONTENT"	        NVARCHAR2(2000)		                    NOT NULL, -- 도서 댓글 내용
     "UPDATE_TIME"	    TIMESTAMP       DEFAULT SYSTIMESTAMP    NOT NULL, -- 데이터 수정 시각
     "CREATE_TIME"	    TIMESTAMP       DEFAULT SYSTIMESTAMP    NOT NULL, -- 데이터 생성 시각
+    "IS_DELETED"        NUMBER(1)	    DEFAULT 0	            NOT NULL, -- 도서 댓글 삭제 여부
     -- FK 정의
     CONSTRAINT "FK_BOOK_COMMENT_MEMBER" FOREIGN KEY ("MEMBER_ID") REFERENCES "MEMBER" ("ID"),
     CONSTRAINT "FK_BOOK_COMMENT_BOOK" FOREIGN KEY ("BOOK_ID") REFERENCES "BOOK" ("ID")
@@ -297,6 +306,7 @@ CREATE TABLE "BOOK_COMMENT_LIKE" (
     "ACTIVATE"	        NUMBER(1)	    DEFAULT 1	            NOT NULL, -- 도서 댓글 좋아요 활성화 여부
     "UPDATE_TIME"	    TIMESTAMP       DEFAULT SYSTIMESTAMP    NOT NULL, -- 데이터 수정 시각
     "CREATE_TIME"	    TIMESTAMP       DEFAULT SYSTIMESTAMP    NOT NULL, -- 데이터 생성 시각
+    "IS_DELETED"        NUMBER(1)	    DEFAULT 0	            NOT NULL, -- 도서 댓글 좋아요 삭제 여부
     -- PK 정의
     CONSTRAINT "PK_BOOK_COMMENT_LIKE" PRIMARY KEY ("MEMBER_ID", "BOOK_COMMENT_ID"),
     -- FK 정의
@@ -328,7 +338,8 @@ COMMENT ON COLUMN "BOOK_COMMENT_LIKE"."CREATE_TIME" IS '데이터 생성 시각'
 CREATE TABLE "SEED" (
     "ID"	            NUMBER		        PRIMARY KEY, -- 씨앗 PK
     "NAME"	            NVARCHAR2(30)		NOT NULL, -- 씨앗 제목
-    "DESCRIPTION"	    NVARCHAR2(30)		NOT NULL -- 씨앗 설명
+    "DESCRIPTION"	    NVARCHAR2(30)		NOT NULL, -- 씨앗 설명
+    "IS_DELETED"        NUMBER(1)	        DEFAULT 0	    NOT NULL -- 씨앗 삭제 여부
 );
 
 -- 시퀀스 생성
@@ -366,6 +377,7 @@ CREATE TABLE "TREE_SAVE_TMP" (
     "IMAGE_FILE"        VARCHAR2(1024)	                        NULL,
     "VISIBILITY"	    NUMBER(1)	    DEFAULT 1	            NOT NULL,
     "CREATE_TIME"	    TIMESTAMP       DEFAULT SYSTIMESTAMP    NOT NULL,
+    "IS_DELETED"        NUMBER(1)	    DEFAULT 0	            NOT NULL,
     -- FK 정의
     CONSTRAINT "FK_TREE_SAVE_TMP_MEMBER" FOREIGN KEY ("MEMBER_ID") REFERENCES "MEMBER" ("ID"),
     CONSTRAINT "FK_TREE_SAVE_TMP_BOOK" FOREIGN KEY ("BOOK_ID") REFERENCES "BOOK" ("ID"),
@@ -416,6 +428,7 @@ CREATE TABLE "TREE" (
 	"VISIBILITY"	    NUMBER(1)	    DEFAULT 1	            NOT NULL,
     "UPDATE_TIME"	    TIMESTAMP       DEFAULT SYSTIMESTAMP    NOT NULL, -- 데이터 수정 시각
     "CREATE_TIME"	    TIMESTAMP       DEFAULT SYSTIMESTAMP    NOT NULL, -- 데이터 생성 시각
+    "IS_DELETED"        NUMBER(1)	    DEFAULT 0	            NOT NULL,
     -- FK 정의
     CONSTRAINT "FK_TREE_MEMBER" FOREIGN KEY ("MEMBER_ID") REFERENCES "MEMBER" ("ID"),
     CONSTRAINT "FK_TREE_BOOK" FOREIGN KEY ("BOOK_ID") REFERENCES "BOOK" ("ID"),
@@ -459,7 +472,8 @@ COMMENT ON COLUMN "TREE"."CREATE_TIME" IS '데이터 생성 시각';
 -- ============================================ --
 CREATE TABLE "TREE_BOOK" (
     "TREE_ID"	        NUMBER		    NOT NULL, -- 트리 FK
-    "READING_PAGE"	NUMBER(5)		NOT NULL, -- 책 트리 읽은 페이지 수
+    "READING_PAGE"	    NUMBER(5)		NOT NULL, -- 책 트리 읽은 페이지 수
+    "IS_DELETED"        NUMBER(1)	    DEFAULT 0	            NOT NULL, -- 책 트리 삭제 여부
     -- PK 정의
     CONSTRAINT "PK_TREE_BOOK" PRIMARY KEY ("TREE_ID"),
     -- FK 정의
@@ -473,8 +487,9 @@ COMMENT ON COLUMN "TREE_BOOK"."READING_PAGE" IS '책 트리 읽은 페이지 수
 -- 트리 이미지 테이블
 -- ============================================ --
 CREATE TABLE "TREE_IMAGE" (
-    "TREE_ID"	NUMBER		    NOT NULL, -- 트리 FK
-    "NAME"	VARCHAR2(255)	NOT NULL, -- 트리 이미지 이름
+    "TREE_ID"	        NUMBER		    NOT NULL, -- 트리 FK
+    "NAME"	            VARCHAR2(255)	NOT NULL, -- 트리 이미지 이름
+    "IS_DELETED"        NUMBER(1)	    DEFAULT 0	            NOT NULL, -- 트리 이미지 삭제 여부
     -- PK 정의
     CONSTRAINT "PK_TREE_IMAGE" PRIMARY KEY ("TREE_ID"),
     -- FK 정의
@@ -493,6 +508,7 @@ CREATE TABLE "TREE_LIKE" (
     "ACTIVATE"	        NUMBER(1)	    DEFAULT 1	            NOT NULL, -- 트리 좋아요 활성화 여부
     "UPDATE_TIME"	    TIMESTAMP       DEFAULT SYSTIMESTAMP    NOT NULL, -- 데이터 수정 시각
     "CREATE_TIME"	    TIMESTAMP       DEFAULT SYSTIMESTAMP    NOT NULL, -- 데이터 생성 시각
+    "IS_DELETED"        NUMBER(1)	    DEFAULT 0	            NOT NULL, -- 트리 좋아요 삭제 여부
     -- PK 정의
     CONSTRAINT "PK_TREE_LIKE" PRIMARY KEY ("MEMBER_ID", "TREE_ID"),
     -- FK 정의
@@ -529,6 +545,7 @@ CREATE TABLE "MEMOIR" (
     "VISIBILITY"	    NUMBER(1)	    DEFAULT 1	            NOT NULL, -- 사용자 공개 여부
     "UPDATE_TIME"	    TIMESTAMP       DEFAULT SYSTIMESTAMP    NOT NULL, -- 데이터 수정 시각
     "CREATE_TIME"	    TIMESTAMP       DEFAULT SYSTIMESTAMP    NOT NULL, -- 데이터 생성 시각
+    "IS_DELETED"        NUMBER(1)	    DEFAULT 0	            NOT NULL, -- 회고록 삭제 여부
     -- FK 정의
     CONSTRAINT "FK_MEMOIR_TREE" FOREIGN KEY ("TREE_ID") REFERENCES "TREE" ("ID")
 );
@@ -571,6 +588,7 @@ CREATE TABLE "MEMOIR_LIKE" (
     "ACTIVATE"	        NUMBER(1)	    DEFAULT 1	            NOT NULL, -- 회고록 좋아요 활성화 여부
     "UPDATE_TIME"	    TIMESTAMP       DEFAULT SYSTIMESTAMP    NOT NULL, -- 데이터 수정 시각
     "CREATE_TIME"	    TIMESTAMP       DEFAULT SYSTIMESTAMP    NOT NULL, -- 데이터 생성 시각
+    "IS_DELETED"        NUMBER(1)	    DEFAULT 0	            NOT NULL, -- 회고록 좋아요 삭제 여부
     -- PK 정의
     CONSTRAINT "PK_MEMOIR_LIKE" PRIMARY KEY ("MEMBER_ID", "MEMOIR_ID"),
     -- FK 정의
@@ -603,6 +621,7 @@ CREATE TABLE "MEMOIR_COMMENT" (
     "CONTENT"	        NVARCHAR2(2000)		                    NOT NULL, -- 회고록 댓글 내용
     "UPDATE_TIME"	    TIMESTAMP       DEFAULT SYSTIMESTAMP    NOT NULL, -- 데이터 수정 시각
     "CREATE_TIME"	    TIMESTAMP       DEFAULT SYSTIMESTAMP    NOT NULL, -- 데이터 생성 시각
+    "IS_DELETED"        NUMBER(1)	    DEFAULT 0	            NOT NULL, -- 회고록 댓글 삭제 여부
     -- FK 정의
     CONSTRAINT "FK_MEMOIR_COMMENT_MEMBER" FOREIGN KEY ("MEMBER_ID") REFERENCES "MEMBER" ("ID"),
     CONSTRAINT "FK_MEMOIR_COMMENT_MEMOIR" FOREIGN KEY ("MEMOIR_ID") REFERENCES "MEMOIR" ("ID")
@@ -647,6 +666,7 @@ CREATE TABLE "MEMOIR_COMMENT_LIKE" (
     "ACTIVATE"	        NUMBER(1)	    DEFAULT 1	            NOT NULL, -- 회고록 댓글 좋아요 활성화 여부
     "UPDATE_TIME"	    TIMESTAMP       DEFAULT SYSTIMESTAMP    NOT NULL, -- 데이터 수정 시각
     "CREATE_TIME"	    TIMESTAMP       DEFAULT SYSTIMESTAMP    NOT NULL, -- 데이터 생성 시각
+    "IS_DELETED"        NUMBER(1)	    DEFAULT 0	            NOT NULL, -- 회고록 댓글 좋아요 삭제 여부
     -- PK 정의
     CONSTRAINT "PK_MEMOIR_COMMENT_LIKE" PRIMARY KEY ("MEMBER_ID", "MEMOIR_COMMENT_ID"),
     -- FK 정의
@@ -677,6 +697,7 @@ CREATE TABLE "LEAF_TAG" (
     "NAME"	            NVARCHAR2(20)	                        NOT NULL, -- 리프 태그 이름
     "UPDATE_TIME"	    TIMESTAMP       DEFAULT SYSTIMESTAMP    NOT NULL, -- 데이터 수정 시각
     "CREATE_TIME"	    TIMESTAMP       DEFAULT SYSTIMESTAMP    NOT NULL, -- 데이터 생성 시각
+    "IS_DELETED"        NUMBER(1)	    DEFAULT 0	            NOT NULL, -- 리프 태그 삭제 여부
     -- FK 정의
     CONSTRAINT "FK_LEAF_TAG_MEMBER" FOREIGN KEY ("MEMBER_ID") REFERENCES "MEMBER" ("ID")
 );
@@ -724,6 +745,7 @@ CREATE TABLE "LEAF" (
     "BOOK_MARK"	        NUMBER(1)	    DEFAULT 0	            NOT NULL,
     "UPDATE_TIME"	    TIMESTAMP       DEFAULT SYSTIMESTAMP    NOT NULL, -- 데이터 수정 시각
     "CREATE_TIME"	    TIMESTAMP       DEFAULT SYSTIMESTAMP    NOT NULL, -- 데이터 생성 시각
+    "IS_DELETED"        NUMBER(1)	    DEFAULT 0	            NOT NULL,
     -- FK 정의
     CONSTRAINT "FK_LEAF_TREE" FOREIGN KEY ("TREE_ID") REFERENCES "TREE" ("ID"),
     CONSTRAINT "FK_LEAF_PARENT_LEAF" FOREIGN KEY ("PARENT_LEAF_ID") REFERENCES "LEAF" ("ID")
@@ -765,6 +787,7 @@ COMMENT ON COLUMN "LEAF"."CREATE_TIME" IS '데이터 생성 시각';
 CREATE TABLE "LEAF_TAG_MAP" (
     "LEAF_ID"	    NUMBER		    NOT NULL, -- 리프 FK
     "LEAF_TAG_ID"	NUMBER		    NOT NULL, -- 리프 태그 FK
+    "IS_DELETED"    NUMBER(1)	    DEFAULT 0	            NOT NULL, -- 리프 태그 삭제 여부
     -- PK 정의
     CONSTRAINT "PK_LEAF_TAG_MAP" PRIMARY KEY ("LEAF_ID", "LEAF_TAG_ID"),
     -- FK 정의
@@ -782,6 +805,7 @@ CREATE TABLE "LEAF_BOOK" (
     "LEAF_ID"	    NUMBER		NOT NULL, -- 리프 FK
     "START_PAGE"	NUMBER		NOT NULL, -- 리프 도서 시작 페이지
     "END_PAGE"	    NUMBER		NOT NULL, -- 리프 도서 종료 페이지
+    "IS_DELETED"    NUMBER(1)	DEFAULT 0	NOT NULL, -- 리프 도서 삭제 여부
     -- PK 정의
     CONSTRAINT "PK_LEAF_BOOK" PRIMARY KEY ("LEAF_ID"),
     -- FK 정의
@@ -801,6 +825,7 @@ CREATE TABLE "LEAF_LIKE" (
     "ACTIVATE"	        NUMBER(1)	    DEFAULT 1	            NOT NULL, -- 리프 좋아요 활성화 여부
     "UPDATE_TIME"	    TIMESTAMP       DEFAULT SYSTIMESTAMP    NOT NULL, -- 데이터 수정 시각
     "CREATE_TIME"	    TIMESTAMP       DEFAULT SYSTIMESTAMP    NOT NULL, -- 데이터 생성 시각
+    "IS_DELETED"        NUMBER(1)	    DEFAULT 0	            NOT NULL, -- 리프 좋아요 삭제 여부
     -- PK 정의
     CONSTRAINT "PK_LEAF_LIKE" PRIMARY KEY ("MEMBER_ID", "LEAF_ID"),
     -- FK 정의
@@ -836,6 +861,7 @@ CREATE TABLE "LEAF_COMMENT" (
     "CONTENT"	        NVARCHAR2(2000)		                    NOT NULL, -- 리프 댓글 내용
     "UPDATE_TIME"	    TIMESTAMP       DEFAULT SYSTIMESTAMP    NOT NULL, -- 데이터 수정 시각
     "CREATE_TIME"	    TIMESTAMP       DEFAULT SYSTIMESTAMP    NOT NULL, -- 데이터 생성 시각
+    "IS_DELETED"        NUMBER(1)	    DEFAULT 0	            NOT NULL, -- 리프 댓글 삭제 여부
     -- FK 정의
     CONSTRAINT "FK_LEAF_COMMENT_MEMBER" FOREIGN KEY ("MEMBER_ID") REFERENCES "MEMBER" ("ID"),
     CONSTRAINT "FK_LEAF_COMMENT_LEAF" FOREIGN KEY ("LEAF_ID") REFERENCES "LEAF" ("ID")
@@ -880,6 +906,7 @@ CREATE TABLE "LEAF_COMMENT_LIKE" (
     "ACTIVATE"	        NUMBER(1)	    DEFAULT 1	            NOT NULL, -- 리프 댓글 좋아요 활성화 여부
     "UPDATE_TIME"	    TIMESTAMP       DEFAULT SYSTIMESTAMP    NOT NULL, -- 데이터 수정 시각
     "CREATE_TIME"	    TIMESTAMP       DEFAULT SYSTIMESTAMP    NOT NULL, -- 데이터 생성 시각
+    "IS_DELETED"        NUMBER(1)	    DEFAULT 0	            NOT NULL, -- 리프 댓글 좋아요 삭제 여부
     -- PK 정의
     CONSTRAINT "PK_LEAF_COMMENT_LIKE" PRIMARY KEY ("MEMBER_ID", "LEAF_COMMENT_ID"),
     -- FK 정의

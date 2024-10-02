@@ -73,7 +73,7 @@
       <h2 class="none"> 검색 결과 - 없음</h2>
       <div class="text-info-container" th:if="${resultCnt == 0 && !target.isBlank()}">
         <div th:replace="~{fragments/text :: text-info('검색 결과가 없습니다.',
-        '다른 도서를 검색하거나 도서를 직접 등록 해주세요.')}"></div>
+        '다른 도서를 검색하거나 직접 등록 해주세요.')}"></div>
       </div>
       </section>
 

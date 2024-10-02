@@ -638,7 +638,9 @@
   background-color: var(--white, #ffffff);
   padding: 10px;
   border: none;
-  margin: 5px 0;
+  margin-left: auto;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 .filter-tab__header--title {
@@ -937,6 +939,7 @@ button {
   width: 100%;
   display: flex;
   flex-direction: row;
+  gap:10px
 }
 
 .card-tree__book-cover {
@@ -1389,6 +1392,7 @@ button {
 .log-item__tag {
   display: inline-block;
   border-radius: 4px;
+  margin: 2px;
   padding: 2px 8px;
   background-color: var(--main1, #323a27);
   font-size: 14px;
@@ -1599,6 +1603,9 @@ card.html
   font-weight: var(--bold);
   line-height: var(--line-height-main);
   letter-spacing: var(--letter-spacing-main);
+}
+.card-tree-title-frame {
+  padding-left : 5px;
 }
 
 .card-book-title {
@@ -2244,10 +2251,38 @@ card.html
   gap: 5px;
   flex-direction: row;
 }
-
+.filter-tree-list-img{
+  background-image: url("/svg/sort.svg");
+  background-size: 50%;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  padding: 19px 20px;
+  white-space: nowrap;
+  width: fit-content;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background-color: var(--btn-no-active);
+  color: var(--text-sub);
+  font-weight: var(--medium);
+  letter-spacing: var(--letter-spacing-main);
+  line-height: var(--line-height-main);
+  appearance: none;
+  cursor: pointer;
+}
+.filter-tree-list-img::after {
+  display: block;
+  content: attr(label);
+  font-size: 16px;
+}
+.filter-tree-list-img:checked {
+  background-color: var(--btn-active);
+  color: var(--white);
+}
 .filter-tree-list-btn {
   display: flex;
-  padding: 20px 12px;
+  padding: 10px 12px;
   white-space: nowrap;
   width: fit-content;
   align-items: center;
@@ -2637,6 +2672,15 @@ card.html
   margin-right: 8px;
   justify-items: center;
 }
+.card-tree__img-frame-no-tree{
+  display: flex;
+  height: 120px;
+  width: 80px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  justify-items: center;
+}
+
 /*  ========================================== /
     FRAGMENT: 나의 트리 카드 리스트
 /   ========================================== */
@@ -3306,7 +3350,7 @@ card.html
   width: 25px;
   height: 25px;
   display: flex;
-  background: transparent url("/svg/setting.svg") no-repeat center;
+  background: transparent url("/svg/edit.svg") no-repeat center;
   background-size: contain;
 }
 
@@ -3375,6 +3419,7 @@ card.html
 
 .bar-user-info-follow-btn-frame {
   display: flex;
+  align-items: center;
   justify-content: space-between;
 }
 .bar-user-info__user-name--color-main1 {
@@ -3407,7 +3452,6 @@ card.html
   height: 30px;
   display: flex;
   align-items: center;
-  border: 1px solid var(--main1);
   border-radius: 12px;
   color: var(--main1);
   justify-content: center;
@@ -3415,7 +3459,8 @@ card.html
   font-weight: var(--semi-bold);
   line-height: var(--line-height-main);
   letter-spacing: var(--letter-spacing-main);
-  background: var(--white);
+  background: var(--main2);
+  box-shadow: var(--shadow-active);
 }
 
 .__follow-btn:checked + .__follow-btn-msg {
@@ -3470,6 +3515,7 @@ card.html
   border-radius: 16px;
   background: var(--white);
   padding: 16px;
+  box-shadow: var(--shadow-active);
 }
 .card-another-records__top-anker {
   display: flex;
@@ -3917,4 +3963,16 @@ card.html
   max-width: 100%;
   border-radius: 16px;
   background-color: var(--main1);
+}
+
+/*회고록 idnex페이지*/
+.viewer-content{
+  position: absolute;
+  z-index: 999;
+}
+
+.memoir-title{
+  padding-top: 30px;
+  padding-bottom: 10px;
+  border-bottom: var(--main1) solid 1px;
 }

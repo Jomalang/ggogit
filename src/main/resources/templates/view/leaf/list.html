@@ -8,6 +8,7 @@
     <link th:href="@{/css/reset.css}" rel="stylesheet" />
     <link th:href="@{/css/fragments.css}" rel="stylesheet" />
     <link th:href="@{/css/layout.css}" rel="stylesheet" />
+    <script th:src="@{/js/leaf-list.js}" defer></script>
 
     <title>리프 리스트</title>
 </head>
@@ -39,34 +40,7 @@
 
         <section class="log-list-container">
             <h1 class="none">리프 리스트</h1>
-
-            <section th:each="leaf : ${list}" class="log-item-container">
-
-                <!-- 오른쪽 왼쪽 리프 아이템 -->
-                <div th:if="${leaf.direction.num == 3}" class="log-item__left-box">
-                    <div th:replace="~{fragments/log :: log-item(type=2, title=${leaf.title}, date=${leaf.createTime}, link='#', tags=${leaf.tags})}"></div>
-                </div>
-                <div th:if="${leaf.direction.num == 7}" class="log-item__left-box">
-                    <div th:replace="~{fragments/log :: log-item(type=6, title=${leaf.title}, date=${leaf.createTime}, link='#', tags=${leaf.tags})}"></div>
-                </div>
-
-                <!-- 실제 나오는 부분 -->
-                <div class="log-item__mid-box">
-                    <div th:replace="~{fragments/log :: log-item(type=${leaf.direction.num}, title=${leaf.title}, date=${leaf.createTime}, link='#', tags=${leaf.tags})}"></div>
-                </div>
-
-                <!-- 오른쪽 리프 아이템 -->
-                <div th:if="${leaf.direction.num == 3}" class="log-item__right-box">
-                    <div th:replace="~{fragments/log :: log-item(type=4, title=${leaf.title}, date=${leaf.createTime}, link='#', tags=${leaf.tags})}"></div>
-                </div>
-                <div th:if="${leaf.direction.num == 6}" class="log-item__right-box">
-                    <div th:replace="~{fragments/log :: log-item(type=8, title=${leaf.title}, date=${leaf.createTime}, link='#', tags=${leaf.tags})}"></div>
-                </div>
-                <div th:if="${leaf.direction.num == 7}" class="log-item__right-box">
-                    <div th:replace="~{fragments/log :: log-item(type=8, title=${leaf.title}, date=${leaf.createTime}, link='#', tags=${leaf.tags})}"></div>
-                </div>
-            </section>
-
+            <!-- 리프 리스트 -->
         </section>
 
     </main>
@@ -80,166 +54,9 @@
 
         <section class="log-list-bot-bar-info-container">
             <h1 class="none">브랜치 정보 하단 바</h1>
-            <div th:replace="~{fragments/bot-bar :: branch-state-main(branch=${recentBranch.branchName}, log=${recentBranch.leafCount}, like=${recentBranch.likeCount}, view=${recentBranch.viewCount}, date=${recentBranch.updateTime})}"></div>
+            <div th:replace="~{fragments/bot-bar :: branch-state-main(branch=${branch.branchName}, log=${branch.leafCount}, like=${branch.likeCount}, view=${branch.viewCount}, date=${branch.updateTime})}"></div>
         </section>
     </aside>
-
-    <script>
-        function addNodeCheckEvent() {
-            window.addEventListener('scroll', () => {
-                const nodes = document.querySelectorAll('.node');
-
-                nodes.forEach(node => {
-                    const item =  node.closest('.leaf-item');
-
-                    const position = item.getBoundingClientRect();
-                    const top = position.top;
-                    const bottom = position.bottom;
-
-                    // 화면의 중앙 값
-                    const midHeight = (window.innerHeight / 2) - 100;
-
-                    if (top <= midHeight && midHeight <= bottom) {
-                        node.classList.add('node--active');
-                    } else {
-                        node.classList.remove('node--active');
-                    }
-                });
-            });
-        }
-    </script>
-
-    <script>
-
-        function removeNodeScrollEvent() {
-            const nodes = document.querySelectorAll('.log-item-container');
-            nodes.forEach(node => {
-                node.removeEventListener('touchstart', () => {});
-                node.removeEventListener('touchmove', () => {});
-            });
-        }
-
-        function addNodeScrollEvent(boxWidth) {
-            const nodes = document.querySelectorAll('.log-item-container');
-            const cooldown = 1000; // 쿨다운 시간 (밀리초 단위, 1000 = 1초)
-            let lastEventTime = 0; // 마지막 이벤트 발생 시간
-
-            nodes.forEach(node => {
-
-                if (node.children.length <= 1) {
-                    return; // 자식이 없으면 리턴
-                }
-
-                let startX;
-                let currentIndex = 0;
-                const threshold = boxWidth * 0.2; // 스와이프 감지 임계값
-
-                node.addEventListener('touchstart', (e) => {
-                    startX = e.touches[0].pageX - node.offsetLeft;
-                });
-
-                node.addEventListener('touchmove', (e) => {
-                    e.preventDefault();
-                    const currentTime = new Date().getTime();
-
-                    if (currentTime - lastEventTime < cooldown) {
-                        return; // 쿨다운 시간 내에 이벤트가 발생하면 리턴
-                    }
-
-                    const x = e.touches[0].pageX - node.offsetLeft;
-                    const walk = x - startX;
-
-                    if (Math.abs(walk) > threshold) {
-                        if (walk > 0 && currentIndex > 0) {
-                            currentIndex--; // 왼쪽으로 스와이프
-                        } else if (walk < 0 && currentIndex < node.children.length - 1) {
-                            currentIndex++; // 오른쪽으로 스와이프
-                        }
-                        node.style.transform = `translateX(-${currentIndex * boxWidth}px)`;
-                        lastEventTime = currentTime; // 이벤트 발생 시간 업데이트
-                    }
-                });
-            });
-        }
-    </script>
-
-    <script>
-        class LeafNode {
-            // TODO: 리프 노드 클래스 구현
-        }
-
-        class LeafTree {
-            constructor() {
-                this.root = null;
-                this.size = 0;
-                this.nodes = [];
-                this.branchNodes = [];
-                this.init();
-            }
-
-            async init() {
-                // 브라우저 url
-                const url = window.location.search;
-                const params = new URLSearchParams(url);
-                const treeId = params.get('tree_id');
-                const leafId = params.get('leaf_id');
-
-                try {
-                    const response = await fetch(
-                        "/api/v1/trees/" + treeId + "/leafs/" + leafId,
-                        {
-                            method: 'GET',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            }
-                        }
-                    );
-
-                    if (!response.ok) {
-                        throw new Error('서버에서 데이터를 불러오는데 실패했습니다.');
-                    }
-
-                    const data = await response.json();
-                    console.log(data); // 주석
-                    data.forEach(leaf => {
-                        this.addNode(leaf);
-                    });
-
-                } catch (error) {
-                    console.error('데이터를 불러오는데 실패했습니다.', error);
-                }
-            }
-
-            addNode(node) {
-
-                if (this.root === null) { // 루트 노드가 없으면
-                    this.root = node;
-                    this.nodes.push(node);
-                    this.branchNodes.push(node);
-                    return;
-                }
-
-
-
-            }
-
-        }
-    </script>
-
-    <script>
-        window.addEventListener('resize', () => {
-            // TODO: 브라우저 사이즈 변경시 옆으로 스크롤 버그 수정 필요
-            console.log('resize', window.innerWidth);
-            removeNodeScrollEvent();
-            addNodeScrollEvent(window.innerWidth);
-        });
-
-        document.addEventListener('DOMContentLoaded', () => {
-            addNodeCheckEvent();
-            addNodeScrollEvent(window.innerWidth);
-            const leafTree = new LeafTree();
-        });
-    </script>
 
 </body>
 </html>

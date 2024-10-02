@@ -1,12 +1,14 @@
-package Recorders.ggogit.web.memoir;
+package Recorders.ggogit.web.memoir.form;
 
 import Recorders.ggogit.domain.memoir.entity.Memoir;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -22,6 +24,8 @@ public class MemoirForm {
     private String text;
 
     private boolean visibility;
+
+    private List<String> fileNames = new ArrayList<>();
 
     public Memoir toMemoir(){
         Memoir memoir = new Memoir();

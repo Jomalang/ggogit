@@ -58,7 +58,7 @@ public class TreeTest {
     @Test
     void getByMemberId() {
         Long i = 1L;
-        assertThat(repo.getByMemberId(i)).isNotNull();
+        assertThat(repo.findByMemberId(i)).isNotNull();
     }
 
     @Test

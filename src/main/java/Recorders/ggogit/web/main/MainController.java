@@ -1,6 +1,8 @@
 package Recorders.ggogit.web.main;
 
 import Recorders.ggogit.domain.member.entity.Member;
+import Recorders.ggogit.domain.tree.entity.Seed;
+import Recorders.ggogit.domain.tree.service.SeedService;
 import Recorders.ggogit.domain.tree.service.TreeService;
 import Recorders.ggogit.domain.tree.service.TreeServiceImpl;
 import Recorders.ggogit.domain.tree.view.TreeInfoView;
@@ -24,7 +26,10 @@ import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 @RequiredArgsConstructor
 public class MainController {
 
-    private final TreeService treeService;
+    @Autowired
+    private TreeService treeService;
+    @Autowired
+    private SeedService seedService;
 
     @GetMapping("/")
     public String index(
@@ -51,14 +56,16 @@ public class MainController {
 
         Member member = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
 
-        //TODO:
         if (treeService.getTreeCount(member.getId()) == 0) {
             return "view/home/no-tree";
         } else {
+            List<Seed> seedList = seedService.getSeeds();
 
             List<TreeInfoView> treeInfoList = treeService.getTreeInfoView(member.getId());
+
             model.addAttribute("treeInfoList", treeInfoList);
-            model.addAttribute("treeList", treeInfoList);
+            model.addAttribute("seedList", seedList);
+
             return "view/home/has-tree";
         }
     }

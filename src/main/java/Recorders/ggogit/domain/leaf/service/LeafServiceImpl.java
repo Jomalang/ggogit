@@ -13,6 +13,7 @@ import Recorders.ggogit.domain.tree.repository.TreeRepository;
 import Recorders.ggogit.type.SearchType;
 import Recorders.ggogit.type.SortType;
 import jakarta.annotation.Nullable;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class LeafServiceImpl implements LeafService {
 
     @Autowired
@@ -37,7 +39,7 @@ public class LeafServiceImpl implements LeafService {
 
     @Override
     public List<LeafItemView> getLeafItems(Long treeId, @Nullable Long leafId) {
-        List<Leaf> leafs =  leafRepository.findByTreeIdOrderByCreateTimeDesc(treeId);
+        List<Leaf> leafs =  leafRepository.findByTreeIdOrderById(treeId);
         LeafTree leafTree = new LeafTree(leafs); // Tree 자료구조
         List<LeafNode> branchNodes = leafTree.findAll(leafId);
 
@@ -54,8 +56,8 @@ public class LeafServiceImpl implements LeafService {
     }
 
     @Override
-    public LeafRecentSaveBranchView getRecentBranch(Long treeId, Long leafId) {
-        List<Leaf> leafs =  leafRepository.findByTreeIdOrderByCreateTimeDesc(treeId);
+    public LeafListBranchView getBranchInfo(Long treeId, Long leafId) {
+        List<Leaf> leafs =  leafRepository.findByTreeIdOrderById(treeId);
 
         LeafTree leafTree = new LeafTree(leafs); // Tree 자료구조
         List<Leaf> branch = leafTree.getBranch(leafId);
@@ -67,12 +69,12 @@ public class LeafServiceImpl implements LeafService {
             viewCount += leaf.getViewCount();
         }
 
-        return LeafRecentSaveBranchView.builder()
+        return LeafListBranchView.builder()
                 .branchName(branch.getFirst().getTitle())
                 .leafCount((long) branch.size())
                 .likeCount(likeCount)
                 .viewCount(viewCount)
-                .updateTime(branch.getLast().getUpdateTime())
+                .updateTime(branch.getFirst().getCreateTime())
                 .build();
     }
 
@@ -135,16 +137,24 @@ public class LeafServiceImpl implements LeafService {
 
     @Override
     public List<LeafNode> getLeafNodeFromLeafIdToEnd(Long treeId, Long leafId) {
-        List<Leaf> leafs =  leafRepository.findByTreeIdOrderByCreateTimeDesc(treeId);
+        List<Leaf> leafs =  leafRepository.findByTreeIdOrderById(treeId);
         LeafTree leafTree = new LeafTree(leafs); // Tree 자료구조
         return leafTree.findToEnd(leafId);
     }
 
     @Override
     public List<LeafNode> getLeafNodeAll(Long treeId, Long leafId) {
-        List<Leaf> leafs =  leafRepository.findByTreeIdOrderByCreateTimeDesc(treeId);
+        List<Leaf> leafs =  leafRepository.findByTreeIdOrderById(treeId);
         LeafTree leafTree = new LeafTree(leafs); // Tree 자료구조
         return leafTree.findAll(leafId);
+    }
+
+    @Override
+    public BeforeLeafInfoView getBeforeLeafInfoView(Long leafId) {
+        Leaf leaf = Optional.ofNullable(leafRepository.findById(leafId))
+                .orElseThrow(() -> new IllegalArgumentException("Leaf 조회 실패"));
+        List<LeafTag> leafTags = leafTagRepository.findByLeafId(leafId);
+        return BeforeLeafInfoView.of(leaf, leafTags);
     }
 
     @Override

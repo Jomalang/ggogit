@@ -38,10 +38,14 @@
       <section class="btn-full-width-link-container">
         <h1 class="none">트리 생성 버튼</h1>
         <div
-          th:replace="~{fragments/button :: link-full-width(link='javascript:history.back()', text='트리 생성')}"
+          th:replace="~{fragments/button :: link-full-width(link='/seed/index', text='트리 생성')}"
         ></div>
       </section>
     </main>
+
+    <section class="nav-back-container">
+      <h2 class="none">네비 뒤 공백</h2>
+    </section>
 
     <aside class="nav-container">
       <h1 class="none">네비게이션 하단</h1>

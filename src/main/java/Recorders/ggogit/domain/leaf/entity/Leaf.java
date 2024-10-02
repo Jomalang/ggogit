@@ -10,8 +10,8 @@ import java.time.LocalDateTime;
 @Builder
 public class Leaf {
     private Long id;
-    private Long treeId; // TODO: entity 수정
-    private Long parentLeafId; // TODO: entity 수정
+    private Long treeId;
+    private Long parentLeafId;
     private Boolean visibility;
     private Long viewCount;
     private Long likeCount;

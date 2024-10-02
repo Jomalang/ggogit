@@ -31,19 +31,19 @@
             <img
               class="card-tree__book-cover"
               src="/svg/card-felt__cover.svg"
-              th:src="@{/img/home/{img}(img=*{coverImageName})}"
+              th:src="*{coverImageName}"
               alt="treeCover"
             />
           </div>
         <div class="card-tree-detail__box">
           <!--반복문으로 넣어야 할듯..-->
           <div class="card-tree-detail__tags">
-            <span class="card-tree-detail__tag" id="data-XXX" th:text="*{bookCategory}">도서</span>
+            <span class="card-tree-detail__tag" th:text="*{bookCategory}">도서</span>
 <!--            <span class="card-tree-detail__tag" id="data-XXX">정치비평</span>-->
           </div>
           <!---->
             <div class="card-tree-detail__slot">
-                <p class="card-tree-detail__name" id="data-XXX" th:text="*{bookTitle}">
+                <p class="card-tree-detail__name" th:text="*{bookTitle}">
                     운명이란 무엇인가?
                 </p>
                 <div th:if="*{bookComplete}" class="card-tree-detail__complete-icon" ></div>
@@ -70,6 +70,14 @@
                     >유시민</span
                     >
                     <span class="card-tree-detail__info">/</span>
+              <span
+                      th:if="*{bookTranslator != null}"
+                      class="card-tree-detail__info"
+                      id="data-XXX"
+                      th:text="*{bookTranslator}"
+              >유시민</span
+              >
+              <span class="card-tree-detail__info" th:if="*{bookTranslator != null}">/</span>
                     <span
                             class="card-tree-detail__info"
                             id="data-XXX"
@@ -100,7 +108,7 @@
     <a class="card-tree-detail" th:href="@{|/tree/book/reg?auto=true&id=*{id}|}">
         <img class="card-tree__book-cover"
              src="/src/main/resources/static/svg/card-felt__cover.svg"
-             th:src="@{/img/home/{img}(img=*{imageFile})}"
+             th:src="*{imageFile}"
         />
         <div class="card-tree-detail__box">
             <!--반복문으로 넣어야 할듯..-->
@@ -116,7 +124,7 @@
                     th:text="*{publishDate}">2024</span>
                 <span class="card-tree-detail__info">/</span>
                 <span class="card-tree-detail__info"
-                        th:text="*{author}"
+                      th:text="*{author}"
                 >유시민</span
                 >
                 <span class="card-tree-detail__info">/</span>
@@ -127,7 +135,6 @@
                   th:text="*{createTime}">2024-07-15</div>
         </div>
     </a>
-</div>
 </div>
 
 <!-- =========================
@@ -165,7 +172,7 @@
         <div class="card-reading-progress__title">
             <h2>독서 진행률</h2>
             <div>
-          <span class="card-reading-progress__num" id="data-XXX" th:text="${progress}"></span
+          <span class="card-reading-progress__num" th:text="${progress}"></span
           ><span class="card-reading-progress__sep">%</span>
             </div>
         </div>
@@ -214,9 +221,9 @@ Branch List 사용
 -->
 <div class="card-tree-info-cover-frame" th:fragment="card-tree-info-cover(src,treetitle,booktitle)">
     <div class="card-tree-info-cover">
-        <img class="card-tree-info-cover" th:src="@{'/img/home/'+${src}}" alt="cover">
+        <img class="card-tree-info-cover" th:src="${src}" alt="cover">
     </div>
-    <div>
+    <div class="card-tree-title-frame">
         <p class="card-tree-title" th:text="${treetitle}"></p>
         <p class="card-book-title" th:text="${booktitle}"></p>
     </div>
@@ -499,7 +506,7 @@ Branch List 사용
     <ul class="card-another-records__list">
         <li class="card-another-records__item" th:each="type : ${list}">
             <div th:replace="~{fragments/card :: card-another-records(type=${type})}"></div>
-            <div class="card-another-records__list-empty-space" th:if="${type eq 3}"></div>
+            <!--<div class="card-another-records__list-empty-space" th:if="${type eq 3}"></div> -->
         </li>
     </ul>
 </div>

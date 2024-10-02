@@ -1,6 +1,7 @@
 package Recorders.ggogit.domain.memoir.repository;
 
 import Recorders.ggogit.domain.memoir.entity.Memoir;
+import Recorders.ggogit.domain.memoir.vIew.MemoirBookView;
 import Recorders.ggogit.domain.memoir.vIew.MemoirCommentLikeView;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -14,7 +15,7 @@ public interface MemoirRepository {
     Memoir findById(long id);
 
     //삭제한 회고록의 id 반환
-    Long delete(long id);
+    Long delete(long treeId);
 
     int update(Memoir memoir);
 
@@ -31,4 +32,5 @@ public interface MemoirRepository {
     MemoirCommentLikeView findCntById(long id);
 
 
+    List<MemoirBookView> findMemoirBookViews(long memberId);
 }

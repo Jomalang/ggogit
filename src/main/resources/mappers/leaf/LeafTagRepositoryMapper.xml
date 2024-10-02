@@ -12,23 +12,19 @@
     </insert>
 
     <select id="findAll" resultType="LeafTag">
-        SELECT * FROM (
-            SELECT t.*, ROWNUM AS RNUM FROM (
-                SELECT *
-                FROM LEAF_TAG
-                <where>
-                    <if test="memberId != null">
-                        MEMBER_ID = #{memberId}
-                    </if>
-                    <if test="name != null">
-                        AND NAME LIKE '%${name}%'
-                    </if>
-                </where>
-                ORDER BY ID DESC
-            ) t
-            WHERE ROWNUM &lt;= #{limit}
-        )
-        WHERE RNUM &gt; #{offset}
+        SELECT *
+        FROM LEAF_TAG
+        <where>
+            IS_DELETED = FALSE
+            <if test="memberId != null">
+                AND MEMBER_ID = #{memberId}
+            </if>
+            <if test="name != null">
+                AND NAME LIKE CONCAT('%', #{name}, '%')
+            </if>
+        </where>
+        ORDER BY ID DESC
+        LIMIT #{limit} OFFSET #{offset}
     </select>
 
     <select id="findByLeafId" resultType="LeafTag">
@@ -37,6 +33,7 @@
             SELECT *
             FROM LEAF_TAG_MAP
             WHERE LEAF_ID = #{leafId}
+                AND IS_DELETED = FALSE
         ) LTM
         JOIN LEAF_TAG LT
             ON LT.ID = LTM.LEAF_TAG_ID
@@ -46,8 +43,9 @@
         SELECT COUNT(*)
         FROM LEAF_TAG
         <where>
+            IS_DELETED = FALSE
             <if test="memberId != null">
-                MEMBER_ID = #{memberId}
+                AND MEMBER_ID = #{memberId}
             </if>
             <if test="name != null">
                 AND NAME LIKE '%${name}%'
@@ -59,6 +57,7 @@
         SELECT *
         FROM LEAF_TAG
         WHERE ID = #{id}
+            AND IS_DELETED = FALSE
     </select>
 
     <select id="existsById" parameterType="Long" resultType="Boolean">
@@ -68,6 +67,7 @@
         END AS ROW_EXISTS
         FROM LEAF_TAG
         WHERE ID = #{id}
+            AND IS_DELETED = FALSE
     </select>
 
     <select id="existsByMemberIdAndName" parameterType="LeafTag" resultType="Long">
@@ -77,24 +77,26 @@
         END AS row_exists
         FROM LEAF_TAG
         WHERE MEMBER_ID = #{memberId}
-              AND NAME = #{name}
+            AND NAME = #{name}
+            AND IS_DELETED = FALSE
     </select>
     
     <update id="update" parameterType="LeafTag">
         UPDATE LEAF_TAG
         SET NAME = #{name}
         WHERE ID = #{id}
+            AND IS_DELETED = FALSE
     </update>
 
     <delete id="delete" parameterType="LeafTag">
-        DELETE
-        FROM LEAF_TAG
+        UPDATE LEAF_TAG
+        SET IS_DELETED = TRUE
         WHERE ID = #{id}
     </delete>
 
     <delete id="deleteById" parameterType="Long">
-        DELETE
-        FROM LEAF_TAG
+        UPDATE LEAF_TAG
+        SET IS_DELETED = TRUE
         WHERE ID = #{id}
     </delete>
 

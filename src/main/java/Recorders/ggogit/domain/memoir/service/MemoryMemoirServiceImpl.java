@@ -1,12 +1,11 @@
 package Recorders.ggogit.domain.memoir.service;
 
 import Recorders.ggogit.domain.memoir.entity.Memoir;
-import Recorders.ggogit.web.memoir.MemoirForm;
 import Recorders.ggogit.domain.memoir.repository.MemoirRepository;
+import Recorders.ggogit.domain.memoir.vIew.MemoirBookView;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.BindingResult;
 
 import java.io.File;
 import java.io.IOException;
@@ -61,6 +60,12 @@ public class MemoryMemoirServiceImpl implements MemoirService {
             //이전 임시 파일 삭제
             Files.delete(tmpFilePath);
         }
+    }
+
+    @Override
+    public List<MemoirBookView> getMemoirCards(Long memberId) {
+        List<MemoirBookView> memoirBookViews = memoirRepository.findMemoirBookViews(memberId);
+        return memoirBookViews;
     }
 
 

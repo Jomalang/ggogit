@@ -2,9 +2,8 @@ package Recorders.ggogit.domain.memoir.service;
 
 
 import Recorders.ggogit.domain.memoir.entity.Memoir;
-import Recorders.ggogit.web.memoir.MemoirForm;
+import Recorders.ggogit.domain.memoir.vIew.MemoirBookView;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.BindingResult;
 
 import java.io.IOException;
 import java.util.List;
@@ -38,4 +37,6 @@ public interface MemoirService {
     public Memoir getMemoir(long treeId);
 
     public void imageSave(List<String> fileNames) throws IOException;
+
+    public List<MemoirBookView> getMemoirCards(Long memberId);
 }

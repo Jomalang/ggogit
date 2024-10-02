@@ -17,9 +17,8 @@ import java.util.Map;
 @Service
 public class AladinServiceImpl implements AladinService {
 
-    
     @Autowired
-    AladinRepository aladinRepository;
+    private AladinRepository aladinRepository;
 
     private final String ALADIN_API_URL = "https://www.aladin.co.kr/ttb/api/" +
             "ItemSearch.aspx?ttbkey=ttbrhkddlr982013001&Query=%s&MaxResults=100&Cover=Big&Output=JS&Version=20131101";

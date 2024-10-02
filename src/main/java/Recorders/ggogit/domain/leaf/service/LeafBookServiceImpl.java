@@ -2,14 +2,10 @@ package Recorders.ggogit.domain.leaf.service;
 
 import Recorders.ggogit.domain.book.entity.Book;
 import Recorders.ggogit.domain.book.repository.BookRepository;
-import Recorders.ggogit.domain.leaf.entity.Leaf;
-import Recorders.ggogit.domain.leaf.entity.LeafBook;
-import Recorders.ggogit.domain.leaf.entity.LeafTag;
-import Recorders.ggogit.domain.leaf.entity.LeafTagMap;
-import Recorders.ggogit.domain.leaf.repository.LeafBookRepository;
-import Recorders.ggogit.domain.leaf.repository.LeafRepository;
-import Recorders.ggogit.domain.leaf.repository.LeafTagMapRepository;
-import Recorders.ggogit.domain.leaf.repository.LeafTagRepository;
+import Recorders.ggogit.domain.leaf.entity.*;
+import Recorders.ggogit.domain.leaf.mapper.LeafMapper;
+import Recorders.ggogit.domain.leaf.repository.*;
+import Recorders.ggogit.domain.leaf.utill.ImageSaveUtill;
 import Recorders.ggogit.domain.leaf.view.LeafBookView;
 import Recorders.ggogit.domain.tree.entity.Tree;
 import Recorders.ggogit.domain.tree.entity.TreeImage;
@@ -20,29 +16,17 @@ import Recorders.ggogit.domain.tree.repository.TreeSaveTmpRepository;
 import Recorders.ggogit.type.SearchType;
 import Recorders.ggogit.type.SortType;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @Service
 public class LeafBookServiceImpl implements LeafBookService {
 
     private final static int LEAF_MAX_CHILD_COUNT = 3;
-
-    @Value("${file.upload-dir}")
-    private String uploadDir;
-
-    @Value("${file.tmp-dir}")
-    private String tmpDir;
 
     @Autowired
     private LeafRepository leafRepository;
@@ -52,6 +36,9 @@ public class LeafBookServiceImpl implements LeafBookService {
 
     @Autowired
     private LeafBookRepository leafBookRepository;
+
+    @Autowired
+    private LeafImageRepository leafImageRepository;
 
     @Autowired
     private BookRepository bookRepository;
@@ -67,6 +54,12 @@ public class LeafBookServiceImpl implements LeafBookService {
 
     @Autowired
     private TreeImageRepository treeImageRepository;
+
+    @Autowired
+    private LeafMapper leafMapper;
+
+    @Autowired
+    private ImageSaveUtill imageSaveUtill;
 
     @Override
     @Transactional
@@ -105,8 +98,8 @@ public class LeafBookServiceImpl implements LeafBookService {
                 treeSaveTmp.setBookId(book.getId());
 
                 if (treeSaveTmp.hasImage()) { // 이미지가 있는 경우 저장
-                    String fileName = extractFileName(treeSaveTmp.getFilePath());
-                    String toFileName = moveImageFile(fileName,"book");
+                    String fileName = imageSaveUtill.extractFileName(treeSaveTmp.getFilePath());
+                    String toFileName = imageSaveUtill.moveImageFile(fileName,"book", true);
                     book.setImageFile(toFileName);
                     bookRepository.update(book);
                 }
@@ -121,7 +114,7 @@ public class LeafBookServiceImpl implements LeafBookService {
 
         // 트리 이미지 저장 로직
         if (seedId != 1) {
-            String toFileName = moveImageFile(treeSaveTmp.getImageFile(),"book");
+            String toFileName = imageSaveUtill.moveImageFile(treeSaveTmp.getImageFile(),"book", true);
             TreeImage treeImage = TreeImage.builder()
                     .name(toFileName)
                     .treeId(tree.getId())
@@ -176,11 +169,11 @@ public class LeafBookServiceImpl implements LeafBookService {
         });
 
         // 이미지 저장 로직
-        List<String> filesNames = extractImageFileNames(leafBookView.getContent());
+        List<String> filesNames = imageSaveUtill.extractImageFileNames(leafBookView.getContent());
         for (String fileName : filesNames) {
-            moveImageFile(fileName, "leaf"); // 이미지 파일 이동
+            imageSaveUtill.moveImageFile(fileName, "leaf"); // 이미지 파일 이동
             String content = leafBookView.getContent();
-            String changedContent = changeTagImageSrc(content, fileName); // 태그의 이미지 경로 변경
+            String changedContent = imageSaveUtill.changeTagImageSrc(content, fileName); // 태그의 이미지 경로 변경
             leafBookView.setContent(changedContent);
         }
 
@@ -189,6 +182,12 @@ public class LeafBookServiceImpl implements LeafBookService {
         Long leafSaveCheck = leafRepository.save(leaf);
         if (leafSaveCheck == null || leafSaveCheck != 1) {
             throw new IllegalArgumentException("Leaf 저장 실패");
+        }
+
+        // 이미지 DB 저장
+        for (String fileName : filesNames) {
+            LeafImage leafImage = leafMapper.toEntity(leaf.getId(), fileName);
+            leafImageRepository.save(leafImage);
         }
 
         // 도서 리프 저장
@@ -356,50 +355,5 @@ public class LeafBookServiceImpl implements LeafBookService {
             tags.add(leafTag);
         }
         return tags;
-    }
-
-    private String extractFileName(String fullPath) {
-        Path path = Paths.get(fullPath);
-        return path.getFileName().toString();
-    }
-
-    private String moveImageFile(String fileName, String directory) {
-        Path from = Path.of(tmpDir, fileName);
-        Path to = Paths.get(uploadDir, "image", directory, fileName);
-        try {
-            if (!Files.exists(to.getParent())) { // 폴더 경로 존재 확인
-                Files.createDirectories(to.getParent());
-            }
-            Files.move(from, to);
-            return to.toString();
-        } catch (Exception e) {
-            throw new IllegalArgumentException("이미지 파일 이동 실패", e);
-        }
-    }
-
-    private String changeTagImageSrc(String content, String fileName) {
-        String before = "/api/v1/leaf/image-print?filename=" + fileName;
-        String after = "/uploads/image/leaf/" + fileName;
-        return content.replace(before, after);
-    }
-
-    public List<String> extractImageFileNames(String content) {
-        List<String> fileNames = new ArrayList<>();
-        // 문자열에서 이미지 태그 추출
-        String regex = "src\\s*=\\s*\"?(.+?)(\"|\\s|>)"; // 이미지 태그 의 src 속성 추출
-        Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
-
-        // 이미지 태그에서 파일명 추출
-        Matcher matcher = pattern.matcher(content);
-
-        // 리스트에 저장
-        while (matcher.find()) {
-            String srcAttribute = matcher.group();
-            String imagePath = srcAttribute.substring(5, srcAttribute.length() - 1); // src="{}"제거 < 내용만 추출하기 위함
-            String fileName = imagePath.split("filename=")[1]; // 파일 이름 추출
-            fileNames.add(fileName);
-        }
-
-        return fileNames;
     }
 }

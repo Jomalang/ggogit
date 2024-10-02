@@ -9,6 +9,7 @@ import Recorders.ggogit.domain.member.service.MemberService;
 import Recorders.ggogit.domain.member.view.MemberImageView;
 import Recorders.ggogit.domain.tree.entity.Seed;
 import Recorders.ggogit.domain.tree.service.SeedService;
+import Recorders.ggogit.domain.tree.service.TreeService;
 import Recorders.ggogit.domain.tree.service.TreeServiceImpl;
 import Recorders.ggogit.domain.tree.view.CombineTreeView;
 import Recorders.ggogit.domain.tree.view.TreeInfoView;
@@ -38,7 +39,7 @@ import java.util.List;
 public class TreeController {
 
     @Autowired
-    private TreeServiceImpl treeService;
+    private TreeService treeService;
 
     @Autowired
     private BookService bookService;
@@ -270,11 +271,10 @@ public class TreeController {
         Member member = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
         Long memberId= member.getId();
 
-        CombineTreeView combineTreeView = treeService.setCombineTreeView(memberId,treeId);
+        CombineTreeView combineTreeView = treeService.findCombineTreeView(memberId, treeId);
         MemberImageView memberImageView = combineTreeView.getMemberImageView();
         TreeInfoView treeInfoView = combineTreeView.getTreeInfoView();
         List<LeafBranchView> leafList = combineTreeView.getLeafList();
-        System.out.println(leafList.toString());
 
         model.addAttribute("memberImageView", memberImageView);
         model.addAttribute("treeInfoView", treeInfoView);

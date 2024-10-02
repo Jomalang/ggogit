@@ -16,9 +16,9 @@
     <h1 class="none">도서 완독 후 회고록 생성</h1>
 
     <section>
-        <h2 class="none">회고록 생성</h2>
+        <h2 class="none">회고록 수정</h2>
         <!-- 컴포넌트 -->
-        <div th:replace="~{fragments/top-bar :: top-bar-back(title='회고록 생성', link='javascript:history.back()')}">
+        <div th:replace="~{fragments/top-bar :: top-bar-back(title='회고록 수정', link='javascript:history.back()')}">
         </div>
     </section>
 </header>
@@ -45,7 +45,7 @@
     </section>
 <!--    이하는 field를 이용하기 위해 일부러 fragment를 이용하지 않았음.-->
 <!--    검증 오류 이후에 값을 그대로 유지하기 위함.-->
-    <form th:action="@{/memoir/reg(t=${treeId})}" method="POST" th:object="${memoirForm}">
+    <form th:action="@{/memoir/edit(t=${treeId})}" method="POST" th:object="${memoirForm}">
         <section class="register__input-container">
             <h3 class="none">회고록 제목 입력</h3>
             <!-- 컴포넌트 -->
@@ -106,9 +106,9 @@
             </div>
         </section>
         <section class="register__input-container--last">
-            <h3 class="none">회고록 생성 버튼</h3>
+            <h3 class="none">회고록 수정 버튼</h3>
             <!-- 컴포넌트 -->
-            <div onclick = "savePost()" th:insert="~{fragments/button :: submit-btn-full-bar('회고록 생성하기')}" >
+            <div onclick = "savePost()" th:insert="~{fragments/button :: submit-btn-full-bar('회고록 수정하기')}" >
             </div>
         </section>
         <input class="hidden" id="fileNames" th:field = "*{fileNames}" />
@@ -184,7 +184,7 @@
             throw new Error ('editor content is required');
         }
         else{
-            //textaread의 value에 getHTMl() 담아주기
+            //hiddenField value에 getHTMl() 담아주기
             document.getElementById('editor-text').value = editor.getHTML();
         }
 

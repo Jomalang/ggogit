@@ -17,12 +17,12 @@
     <update id="delete">
         UPDATE MEMOIR
         SET IS_DELETED = 1
-        WHERE ID = #{id} AND IS_DELETED = 0
+        WHERE TREE_ID = #{treeId} AND IS_DELETED = 0
     </update>
-    <update id="update" parameterType="Memoir" keyProperty="id" keyColumn="ID">
+    <update id="update" parameterType="Memoir" useGeneratedKeys="true" keyProperty="id" keyColumn="ID">
         UPDATE MEMOIR
         SET TITLE = #{title}, TEXT = #{text}, VISIBILITY = #{visibility}
-        WHERE ID = #{id} AND IS_DELETED = 0
+        WHERE TREE_ID = #{treeId} AND IS_DELETED = 0
     </update>
     <select id="findAll" resultType="Memoir">
         SELECT *

@@ -23,13 +23,13 @@ public interface MemoirService {
      * @return 삭제한 회고록의 id를 반환합니다.
      * 회고록의 id를 입력받아 해당 회고록을 DB에서 찾고 삭제합니다.
      */
-    public long removeMemoir(long id);
+    public long removeMemoir(long treeId);
 
     /**
-     * @param newMemoir, id //수정할 memoir객체와 이전 memoir의 id를 인자로 받습니다.
-     * @return 수정한 회고록의 id를 반환합니다.
+     * @param newMemoir, id //수정할 memoir객체와 이전 Tree의 id를 인자로 받습니다.
+     * @return void입니다.
      */
-    public long modifyMemoir(Memoir newMemoir, long id);
+    public void modifyMemoir(Memoir newMemoir, long treeId);
 
     /**
      * @param treeId

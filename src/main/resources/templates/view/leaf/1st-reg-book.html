@@ -4,10 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
     <link th:href="@{/css/reset.css}" rel="stylesheet" />
     <link th:href="@{/css/fragments.css}" rel="stylesheet" />
     <link th:href="@{/css/layout.css}" rel="stylesheet" />
+
+    <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
     <script th:src="@{/js/leaf-create.js}" defer></script>
+
     <title>도서 리프 생성</title>
 </head>
 <body>
@@ -56,19 +60,25 @@
                 </section>
 
                 <section class="book-tree-input-form__large-input-container">
-                    <h1 class="none">리프 제목 입력</h1>
-                    <div th:replace="~{fragments/input :: textarea-box(label='*내용', placeholder='리프 내용을 입력해 주세요', name='content')}"></div>
+                    <h1 class="none">토스트 에디터</h1>
+                    <div id="editor"></div>
+                </section>
+
+                <section class="book-tree-input-form__large-input-container none">
+                    <h1 class="none">리프 내용 입력</h1>
+                    <label>
+                        <textarea class="hidden" id="editor-text" th:field="*{content}"></textarea>
+                    </label>
                 </section>
 
                 <section class="input-form__input-container">
                     <h1 class="none">공개성 선택</h1>
                     <div th:replace="~{fragments/input :: input-visibility(name='visibility')}"></div>
-
                 </section>
 
                 <section class="book-tree-submit-container">
                     <h1 class="none">리프 생성 버튼</h1>
-                    <div th:replace="~{fragments/button :: submit-btn-full-bar(text='리프 생성')}"></div>
+                    <div onclick="savePost()" th:insert="~{fragments/button :: submit-btn-full-bar(text='리프 생성')}"></div>
                 </section>
             </section>
         </form>
@@ -79,6 +89,57 @@
         <h1 class="none">네비게이션 하단</h1>
         <nav th:replace="~{fragments/nav :: navigation-bar(active='home')}"></nav>
     </aside>
+
+<script>
+    const editor = new toastui.Editor({
+        el: document.querySelector('#editor'),
+        height: '300px',
+        initialEditType: 'wysiwyg',
+        previewStyle: 'vertical',
+        placeholder: '무엇을 느끼셨나요?',
+        usageStatistics: false,
+        hooks: {
+            async addImageBlobHook(blob, callback) {
+                try {
+                    /**
+                     * 에디터에 업로드한 이미지를 FormData 객체에 저장
+                     */
+                    const formData = new FormData();
+                    formData.append('image', blob);
+
+                    // MemoirFileApiController - uploadEditorImage 메서드 호출
+                    const response = await fetch('/api/v1/leaf/image-upload', {
+                        method : 'POST',
+                        body : formData,
+                    });
+                    // 컨트롤러에서 전달받은 디스크에 저장된 파일 명
+                    const filename = await response.text();
+                    console.log('서버에 저장된 파일 명 : ', filename);
+
+                    // addImageBlobHook의 callback을 통해 디스크에 저장된 이미지 에디터에 렌더링
+                    const imageUrl = `/api/v1/leaf/image-print?filename=${filename}`;
+                    callback(imageUrl, 'image alt attribute');
+                    console.log(blob);
+                    console.log(callback);
+                } catch (error){
+                    console.log("업로드 실패 : ", error);
+                }
+            }
+        }
+    });
+
+//게시글 저장
+async function savePost() {
+    //유효성 검사.
+    if(editor.getMarkdown().length < 1 || editor.getHTML().length < 1){
+        alert('내용을 입력해 주세요');
+        throw new Error ('editor content is required');
+    }
+    //textaread의 value에 getHTMl() 담아주기
+    document.getElementById('editor-text').value = editor.getHTML();
+}
+
+</script>
 
 </body>
 </html>

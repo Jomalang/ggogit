@@ -45,7 +45,7 @@ class LeafTree {
             const data = await response.json();
             // console.log(data);
             data.forEach(leaf => {
-                // console.log(leaf);
+                console.log(leaf);
                 this.addNode(leaf);
             });
         } catch (error) {
@@ -364,6 +364,10 @@ class LeafTree {
         }
 
         let template = '';
+        if (leafNode.data.direction === 2) {
+            template = this.templateLeafNode(4, leafNode);
+        }
+
         if (leafNode.data.direction === 3) {
             template = this.templateLeafNode(4, leafNode);
         }

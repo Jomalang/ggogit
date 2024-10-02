@@ -2,6 +2,8 @@ package Recorders.ggogit.api.leaf;
 
 import Recorders.ggogit.domain.leaf.entity.LeafTag;
 import Recorders.ggogit.domain.leaf.service.LeafTagService;
+import Recorders.ggogit.domain.member.entity.Member;
+import Recorders.ggogit.web.member.session.SessionConst;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -33,9 +35,9 @@ public class TagController {
             @RequestBody LeafTag leafTag,
             HttpServletRequest request
     ) {
-//        Member member =
-//                (Member) request.getSession().getAttribute(SessionConst.LOGIN_MEMBER);
-        leafTag.setMemberId(1L); // TODO: 로그인 적용시 제거 필요
+        Member member = (Member) request.getSession().getAttribute(SessionConst.LOGIN_MEMBER);
+        Long memberId = member.getId();
+        leafTag.setMemberId(memberId);
         System.out.println(leafTag);
         LeafTag saved = leafTagService.register(leafTag);
         return ResponseEntity.ok(saved);

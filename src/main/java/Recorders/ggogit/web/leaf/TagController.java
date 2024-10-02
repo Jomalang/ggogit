@@ -29,11 +29,11 @@ public class TagController {
             HttpServletRequest request,
             Model model
     ) {
-//        Member member = (Member) request.getSession()
-//                .getAttribute(SessionConst.LOGIN_MEMBER);
+        Member member = (Member) request.getSession().getAttribute(SessionConst.LOGIN_MEMBER);
+        Long memberId = member.getId();
 
         model.addAttribute("selectedList", List.of());
-        model.addAttribute("list", leafTagService.getLeafTags(1L, page, size));
+        model.addAttribute("list", leafTagService.getLeafTags(memberId, page, size));
         return "view/tag/list";
     }
 
@@ -63,8 +63,10 @@ public class TagController {
             @RequestParam(value = "id") Long tagId,
             HttpSession session
     ) {
-        // Member member = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
-        leafTagService.remove(1L, tagId);
+        Member member = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
+        Long memberId = member.getId();
+
+        leafTagService.remove(memberId, tagId);
         return "redirect:/tag/list";
     }
 }

@@ -38,7 +38,6 @@ public class TreeSaveTmp {
                 .author(author)
                 .publisher(publisher)
                 .imageFile(imageFile)
-                .resourceFrom(false)
                 .publishDate(LocalDateTime.now())
                 .build();
     }
@@ -60,5 +59,13 @@ public class TreeSaveTmp {
         return TreeImage.builder()
                 .name(imageFile)
                 .build();
+    }
+
+    public boolean hasImage() {
+        return imageFile != null && !imageFile.isEmpty();
+    }
+
+    public String getFilePath() {
+        return imageFile; // 여기는 파일 경로가 들어온다.
     }
 }

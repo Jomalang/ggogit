@@ -40,34 +40,7 @@
 
         <section class="log-list-container">
             <h1 class="none">리프 리스트</h1>
-
-<!--            <section th:each="leaf : ${list}" class="log-item-container">-->
-
-<!--                &lt;!&ndash; 오른쪽 왼쪽 리프 아이템 &ndash;&gt;-->
-<!--                <div th:if="${leaf.direction.num == 3}" class="log-item__left-box">-->
-<!--                    <div th:replace="~{fragments/log :: log-item(type=2, title=${leaf.title}, date=${leaf.createTime}, link='#', tags=${leaf.tags})}"></div>-->
-<!--                </div>-->
-<!--                <div th:if="${leaf.direction.num == 7}" class="log-item__left-box">-->
-<!--                    <div th:replace="~{fragments/log :: log-item(type=6, title=${leaf.title}, date=${leaf.createTime}, link='#', tags=${leaf.tags})}"></div>-->
-<!--                </div>-->
-
-<!--                &lt;!&ndash; 실제 나오는 부분 &ndash;&gt;-->
-<!--                <div class="log-item__mid-box">-->
-<!--                    <div th:replace="~{fragments/log :: log-item(type=${leaf.direction.num}, title=${leaf.title}, date=${leaf.createTime}, link='#', tags=${leaf.tags})}"></div>-->
-<!--                </div>-->
-
-<!--                &lt;!&ndash; 오른쪽 리프 아이템 &ndash;&gt;-->
-<!--                <div th:if="${leaf.direction.num == 3}" class="log-item__right-box">-->
-<!--                    <div th:replace="~{fragments/log :: log-item(type=4, title=${leaf.title}, date=${leaf.createTime}, link='#', tags=${leaf.tags})}"></div>-->
-<!--                </div>-->
-<!--                <div th:if="${leaf.direction.num == 6}" class="log-item__right-box">-->
-<!--                    <div th:replace="~{fragments/log :: log-item(type=8, title=${leaf.title}, date=${leaf.createTime}, link='#', tags=${leaf.tags})}"></div>-->
-<!--                </div>-->
-<!--                <div th:if="${leaf.direction.num == 7}" class="log-item__right-box">-->
-<!--                    <div th:replace="~{fragments/log :: log-item(type=8, title=${leaf.title}, date=${leaf.createTime}, link='#', tags=${leaf.tags})}"></div>-->
-<!--                </div>-->
-<!--            </section>-->
-
+            <!-- 리프 리스트 -->
         </section>
 
     </main>

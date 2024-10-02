@@ -236,7 +236,7 @@ home-tree__reg-4--search-book__input
   position: fixed;
   width: 100%;
   bottom: 0;
-  z-index: 10;
+  z-index: 20;
 }
 
 /* /home/tree/search/list.html */
@@ -573,4 +573,20 @@ home-tree__reg-4--search-book__input
   margin-left: 24px;
   padding: 16px 0 16px 0;
   border-top: var(--main1) solid 1px;
+}
+
+
+/*================================
+toast 이미지 팝업 레이아웃 css
+================================*/
+.toastui-editor-popup {
+  position: absolute !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+}
+
+@media (max-width: 480px) {
+  .toastui-editor-popup {
+    transform: translateX(0%) !important;
+  }
 }

@@ -64,7 +64,7 @@ public class TreeSaveTmp {
     }
 
     public boolean hasImage() {
-        return imageFile != null || !imageFile.isEmpty();
+        return imageFile != null && !imageFile.isEmpty();
     }
 
     public String getFilePath() {

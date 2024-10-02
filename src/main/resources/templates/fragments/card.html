@@ -31,7 +31,7 @@
             <img
               class="card-tree__book-cover"
               src="/svg/card-felt__cover.svg"
-              th:src="@{/img/home/{img}(img=*{coverImageName})}"
+              th:src="*{coverImageName}"
               alt="treeCover"
             />
           </div>
@@ -108,7 +108,7 @@
     <a class="card-tree-detail" th:href="@{|/tree/book/reg?auto=true&id=*{id}|}">
         <img class="card-tree__book-cover"
              src="/src/main/resources/static/svg/card-felt__cover.svg"
-             th:src="@{/img/home/{img}(img=*{imageFile})}"
+             th:src="*{imageFile}"
         />
         <div class="card-tree-detail__box">
             <!--반복문으로 넣어야 할듯..-->
@@ -221,9 +221,9 @@ Branch List 사용
 -->
 <div class="card-tree-info-cover-frame" th:fragment="card-tree-info-cover(src,treetitle,booktitle)">
     <div class="card-tree-info-cover">
-        <img class="card-tree-info-cover" th:src="@{'/img/home/'+${src}}" alt="cover">
+        <img class="card-tree-info-cover" th:src="${src}" alt="cover">
     </div>
-    <div>
+    <div class="card-tree-title-frame">
         <p class="card-tree-title" th:text="${treetitle}"></p>
         <p class="card-book-title" th:text="${booktitle}"></p>
     </div>

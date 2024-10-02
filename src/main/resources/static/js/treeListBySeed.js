@@ -5,7 +5,7 @@ function bookCard(value){
     <div class="card-tree-details">
                                 <a class="card-tree-detail" href="/tree/detail/${value.treeId}">
                                     <div class="card-tree__img-frame">
-                                        <img class="card-tree__book-cover" src="/img/home/${value.coverImageName}" alt="treeCover" />
+                                        <img class="card-tree__book-cover" src="${value.coverImageName}" alt="treeCover" />
                                     </div>
                                     <div class="card-tree-detail__box">
                                         <div class="card-tree-detail__tags">
@@ -38,7 +38,7 @@ return`
                             <div class="card-tree-details">
                                 <a class="card-tree-detail" href="/tree/detail/${value.treeId}">
                                     <div class="card-tree__img-frame">
-                                        <img class="card-tree__book-cover" src="/img/home/${value.coverImageName}" alt="treeCover" />
+                                        <img class="card-tree__book-cover" src="${value.coverImageName}" alt="treeCover" />
                                     </div>
                                     <div class="card-tree-detail__box">
                                         <div class="card-tree-detail__tags">
@@ -55,29 +55,11 @@ return`
 }
 // NULL 카드 템플릿
 function nullCard(){
-    return`                 <div class="card-tree__img-frame">
+    return`                        <div class="card-tree__img-frame-no-tree">
                                         <img class="card-tree__book-cover" src="/img/home/no-tree-mid-book.png" alt="treeCover" />
                                     </div>
-                                    <div class="card-tree-detail__box">
-                                        <div class="card-tree-detail__tags">
-                                            <span class="card-tree-detail__tag"></span>
-                                            <span class="card-tree-detail__tag"></span>
-                                        </div>
-                                        <div class="card-tree-detail__slot">
-                                            <p class="card-tree-detail__name">조회된 트리가 없습니다.</p>
-                                        </div>
-                                        <p class="card-tree-detail__explanation"></p>
-                                        <div class="card-tree-detail__info">
-                                            <span class="card-tree-detail__info"></span>
-                                            <span class="card-tree-detail__info"></span>
-                                            <span class="card-tree-detail__info"></span>
-                                            <span class="card-tree-detail__info"></span>
-                                            <span class="card-tree-detail__info" th:if="*{bookTranslator != null}"></span>
-                                            <span class="card-tree-detail__info" th:if="*{bookTranslator != null}"></span>
-                                            <span class="card-tree-detail__info"></span>
-                                        </div>
-                                        <span class="card-tree-detail__info-created-date"></span>
-                                    </div>`;
+                                    <p class="text--title20">조회된 트리가 없습니다.</p>
+                                    `;
 }
 
 // 홈페이지 트리 전체보기 AJAX 요청 함수

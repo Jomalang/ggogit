@@ -41,7 +41,7 @@ public class BookTreeView {
         book = Book.builder()
                 .id(this.getBookId())
                 .memberId(this.getMemberId())
-                .totalPage(this.getBookTotalPage())
+//                .totalPage(this.getBookTotalPage()) // db 에 int 로 저장 받고 있음
                 .title(this.getTitle())
                 .author(this.getBookAuthor())
                 .publisher(this.getBookPublisher())

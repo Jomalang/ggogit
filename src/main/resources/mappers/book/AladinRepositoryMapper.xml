@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Recorders.ggogit.api.book.AladinRepository">
+
+    <insert id="save" parameterType="Book">
+        INSERT INTO BOOK (MEMBER_ID, BOOK_CATEGORY_ID, TITLE, AUTHOR, ISBN, PUBLISHER, PUBLISH_DATE, TOTAL_PAGE, IMAGE_FILE, IS_DELETED, CREATE_TIME, UPDATE_TIME)
+        VALUE (#{memberId}, #{bookCategoryId}, #{title}, #{author}, #{isbn}, #{publisher}, #{publishDate}, #{totalPage}, #{imageFile}, #{isDeleted}, #{createTime}, #{updateTime})
+    </insert>
+
+</mapper>

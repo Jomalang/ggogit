@@ -54,7 +54,7 @@
           <a th:href="@{/tree/detail/{treeId}(treeId=*{treeId})}">
             <img
               class="mid__img"
-              th:src="@{/uploads/image/book/{img}(img=*{coverImageName})}"
+              th:src="*{coverImageName}"
               alt="도서 예시 이미지"
             />
           </a>
@@ -92,7 +92,7 @@
           <a th:href="@{/tree/detail/{treeId}(treeId=*{treeId})}">
             <img
               class="mid__img"
-              th:src="@{/uploads/image/book/{img}(img=*{coverImageName})}"
+              th:src="*{coverImageName}"
               alt="도서 예시 이미지"
             />
           </a>
@@ -133,7 +133,7 @@
           <a th:href="@{/tree/detail/{treeId}(treeId=*{treeId})}">
             <img
               class="mid__img"
-              th:src="@{/uploads/image/book/{img}(img=*{coverImageName})}"
+              th:src="*{coverImageName}"
               alt="도서 예시 이미지"
             />
           </a>

@@ -1604,6 +1604,9 @@ card.html
   line-height: var(--line-height-main);
   letter-spacing: var(--letter-spacing-main);
 }
+.card-tree-title-frame {
+  padding-left : 5px;
+}
 
 .card-book-title {
   font-size: 14px;
@@ -2669,6 +2672,15 @@ card.html
   margin-right: 8px;
   justify-items: center;
 }
+.card-tree__img-frame-no-tree{
+  display: flex;
+  height: 120px;
+  width: 80px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  justify-items: center;
+}
+
 /*  ========================================== /
     FRAGMENT: 나의 트리 카드 리스트
 /   ========================================== */

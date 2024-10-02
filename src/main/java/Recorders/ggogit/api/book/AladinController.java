@@ -14,7 +14,7 @@ public class AladinController {
     @Autowired
     private AladinService aladinService;
 
-    @GetMapping("")
+    @GetMapping
     public String saveForm() {
         return "view/book/aladin";
     }

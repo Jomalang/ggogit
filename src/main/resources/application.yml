@@ -1,9 +1,9 @@
 spring:
   datasource:
-    driver-class-name: oracle.jdbc.driver.OracleDriver
-    url: jdbc:oracle:thin:@//221.148.97.239:1521/XEPDB1
-    username: GGOGIT
-    password: qmfoscl0809
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://221.148.97.239:3306/ggogitdb
+    username: ggogit
+    password: 111
     ##메시지 소스 추가
   messages:
     basename: messages, errors
@@ -42,6 +42,9 @@ logging:
   level:
     Recorders.ggogit.domain: trace
     org.springframework.jdbc: trace
+    org.mybatis: trace
+
 
 file: # 이미지 업로드 경로
-  upload-dir: src/main/webapp/uploads/
+  tmp-dir: src/main/webapp/image/tmp
+  upload-dir: src/main/webapp/uploads

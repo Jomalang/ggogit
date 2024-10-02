@@ -13,14 +13,15 @@ public class Book {
     private Long id;
     private Long memberId;
     private Long bookCategoryId;
-    private Long totalPage; // // 알라딘에서 책의 총 페이지 수 확인을 지원 안함
     private String title;
     private String author;
+    private String translator;
     private String isbn;
     private String publisher;
-    private String imageFile;
-    private Boolean resourceFrom; // 도서 등록 여부 (true: API, false: 직접 등록)
     private Date publishDate; // 출판일 기본 로컬데이트에서 데이트로 변경 < 이거때문에 TreeSaveTmp 에서 주석처리한 부분 있음
+    private Long totalPage; // todo ItemLookUp url 요청을 이용하여 isbn13 으로 itemPage 값을 반복문을 이용해 하나하나 받아와야함
+    private String imageFile;
+    private boolean isDeleted;
     private LocalDateTime updateTime;
     private LocalDateTime createTime;
 }

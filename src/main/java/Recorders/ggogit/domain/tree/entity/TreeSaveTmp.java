@@ -38,7 +38,7 @@ public class TreeSaveTmp {
                 .author(author)
                 .publisher(publisher)
                 .imageFile(imageFile)
-                .resourceFrom(false)
+//                .resourceFrom(false)
 //                .publishDate(LocalDateTime.now())  todo 이부분 Date로 고쳐야함
                 .build();
     }

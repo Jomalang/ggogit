@@ -20,7 +20,7 @@ public class AladinController {
     }
 
     @PostMapping("/save")
-    public String saveBooks(@RequestParam String keyword) {
+    public String saveBooks(@RequestParam("keyword") String keyword) {
         aladinService.saveBooks(keyword);
         return "redirect:/aladin";
     }

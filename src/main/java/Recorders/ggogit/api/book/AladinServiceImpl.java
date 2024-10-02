@@ -75,18 +75,18 @@ public class AladinServiceImpl implements AladinService {
 
     private Book convertToEntity(BookDto dto) { // 위에서 이용하는 BookDto 객체를 Book 엔티티 객체로 변환 시 매핑해주는 코드
         Book book = new Book();
-        book.setId(1L); // 아이디값 임의 지정
-        book.setMemberId(14L); // 멤버아이디 임의 지정
+        book.setMemberId(999L); // 멤버아이디 임의 지정
+        book.setBookCategoryId(1L); // 북카테고리값 임의 지정
         book.setTitle(dto.getTitle());
         book.setAuthor(dto.getAuthor());
+        book.setIsbn(dto.getIsbn());
         book.setPublisher(dto.getPublisher());
-        book.setTotalPage(100L); // 알라딘에서 책의 총 페이지 수 확인을 지원 안하므로 임의 지정 값 넣음
+        book.setPublishDate(dto.getPubDate());
+        book.setTotalPage(999L); // 알라딘에서 책의 총 페이지 수 확인을 지원 안하므로 임의 지정 값 넣음
         book.setImageFile(dto.getCover());
-        book.setResourceFrom(true); // 다 알라딘에서 받은 데이터이므로 true 값 고정
+        book.setDeleted(false); // book entity 에서 isDeleted
         book.setUpdateTime(LocalDateTime.now());
         book.setCreateTime(LocalDateTime.now());
-        book.setIsbn(dto.getIsbn());
-        book.setBookCategoryId(1L); // 북카테고리값 임의 지정
 
         return book; // 여기서 변환된 book 을 위의 코드로 db 에 저장
     }

@@ -5,19 +5,8 @@
 <mapper namespace="Recorders.ggogit.api.book.AladinRepository">
 
     <insert id="save" parameterType="Book">
-        INSERT INTO BOOK (ID, MEMBER_ID, TITLE, AUTHOR, PUBLISHER, PUBLISH_DATE, TOTAL_PAGE, IMAGE_FILE, RESOURCE_FROM, UPDATE_TIME, CREATE_TIME, ISBN, BOOK_CATEGORY_ID)
-        SELECT
-        CASE
-        WHEN EXISTS (SELECT 1 FROM BOOK WHERE ID = #{id})
-        THEN COALESCE((SELECT MAX(ID) + 1 FROM BOOK), 1)
-        ELSE #{id}
-        END,
-        #{memberId}, #{title}, #{author}, #{publisher}, #{publishDate, jdbcType=TIMESTAMP}, #{totalPage}, #{imageFile}, #{resourceFrom}, #{updateTime}, #{createTime}, #{isbn}, #{bookCategoryId}
-        FROM DUAL
+        INSERT INTO BOOK (MEMBER_ID, BOOK_CATEGORY_ID, TITLE, AUTHOR, ISBN, PUBLISHER, PUBLISH_DATE, TOTAL_PAGE, IMAGE_FILE, IS_DELETED, CREATE_TIME, UPDATE_TIME)
+        VALUE (#{memberId}, #{bookCategoryId}, #{title}, #{author}, #{isbn}, #{publisher}, #{publishDate}, #{totalPage}, #{imageFile}, #{isDeleted}, #{createTime}, #{updateTime})
     </insert>
-    <!-- exists 을 사용하여 아이디 1이 존재하는지 확인한다
-         coalesce 을 사용하여 아이디가 없을때 1을 저장한다
-         else 로 둘 다 해당이 안되면 입력받은 숫자를 저장한다
-         insert 문에서 select 절을 서브쿼리로 사용할때 insert 는 value 가 필요하지만
-         select 절에서 value 를 사용 할 수 없어서 FROM DUAL 을 사용한다-->
+
 </mapper>

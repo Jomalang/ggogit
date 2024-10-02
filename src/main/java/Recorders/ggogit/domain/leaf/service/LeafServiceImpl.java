@@ -170,6 +170,8 @@ public class LeafServiceImpl implements LeafService {
             }
         }
 
+
+        System.out.println("leafMap : " + leafMap);
         List<LeafBranchView> leafBranchViews = new ArrayList<>();
         for (Leaf leaf : tmpList){
             pid = leaf.getParentLeafId();
@@ -180,6 +182,8 @@ public class LeafServiceImpl implements LeafService {
                 pid = tmp.getParentLeafId();
                 viewCount += tmp.getViewCount();
                 ++leafCount;
+
+                System.out.println("tmp : " + tmp);
             }
             LeafBranchView leafBranch = LeafBranchView.of(leaf, leafCount, viewCount);
             leafBranchViews.add(leafBranch);

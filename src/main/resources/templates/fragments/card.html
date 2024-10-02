@@ -28,12 +28,11 @@
     >
       <a class="card-tree-detail" th:href="@{/tree/detail/{id}(id=*{treeId})}">
           <div class="card-tree__img-frame">
-            <img
-              class="card-tree__book-cover"
-              src="/svg/card-felt__cover.svg"
-              th:src="*{coverImageName}"
-              alt="treeCover"
-            />
+              <img
+                      class="card-tree__book-cover"
+                      th:src="${!#strings.isEmpty(tree.coverImageName) and !#strings.equals(tree.coverImageName,'null')} ? ${tree.coverImageName} : '/svg/tree-icon--white.svg'"
+                      alt="treeCover"
+              />
           </div>
         <div class="card-tree-detail__box">
           <!--반복문으로 넣어야 할듯..-->
@@ -108,7 +107,7 @@
     <a class="card-tree-detail" th:href="@{|/tree/book/reg?auto=true&id=*{id}|}">
         <img class="card-tree__book-cover"
              src="/src/main/resources/static/svg/card-felt__cover.svg"
-             th:src="*{imageFile}"
+             th:src="${bookPreviewView.imageFile != null and !#strings.equals(bookPreviewView.imageFile,'null')} ? ${bookPreviewView.imageFile} : '/svg/tree-icon--white.svg'"
         />
         <div class="card-tree-detail__box">
             <!--반복문으로 넣어야 할듯..-->
@@ -221,7 +220,7 @@ Branch List 사용
 -->
 <div class="card-tree-info-cover-frame" th:fragment="card-tree-info-cover(src,treetitle,booktitle)">
     <div class="card-tree-info-cover">
-        <img class="card-tree-info-cover" th:src="${src}" alt="cover">
+        <img class="card-tree-info-cover" th:src="${src}" onerror="this.src='/svg/tree-icon--white.svg'" alt="cover">
     </div>
     <div class="card-tree-title-frame">
         <p class="card-tree-title" th:text="${treetitle}"></p>
@@ -278,8 +277,8 @@ Branch List 사용
     </a>
     <div class="branch-card-bottom-info-frame">
         <div class="branch-card-bottom-info">
-            <span>리프<p th:text="${list.leafCount}"></p></span>
-            <span>조회수<p th:text="${list.viewCount}"></p></span></div>
+            <span>리프 <p th:text="${list.leafCount}"></p></span>
+            <span>조회수 <p th:text="${list.viewCount}"></p></span></div>
         <div class="branch-card-bottom-info">
             <p class="branch-detail-info--regdate" th:text="${#temporals.format(list.updateTime, 'yyyy-MM-dd')}"></p>
         </div>

@@ -99,14 +99,6 @@
             ></div>
           </div>
         </section>
-        <section>
-          <h3 class="none">검색 결과 없음</h3>
-          <div
-            class="margin-bottom500"
-            th:if="*{size} eq 0"
-            th:insert="~{fragments/text::text-info(text = '트리가 없습니다.', boldText='트리를 생성해 주세요' )}"
-          ></div>
-        </section>
       </section>
     </main>
 

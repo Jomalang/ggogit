@@ -82,7 +82,7 @@ public class AladinServiceImpl implements AladinService {
         book.setIsbn(dto.getIsbn());
         book.setPublisher(dto.getPublisher());
         book.setPublishDate(dto.getPubDate());
-        book.setTotalPage(999L); // 알라딘에서 책의 총 페이지 수 확인을 지원 안하므로 임의 지정 값 넣음
+        book.setTotalPage(999); // 알라딘에서 책의 총 페이지 수 확인을 지원 안하므로 임의 지정 값 넣음
         book.setImageFile(dto.getCover());
         book.setDeleted(false); // book entity 에서 isDeleted
         book.setUpdateTime(LocalDateTime.now());

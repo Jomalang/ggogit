@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
@@ -33,12 +35,12 @@ public class TreeSaveTmp {
                 .id(bookId)
                 .memberId(memberId)
                 .bookCategoryId(bookCategoryId)
-                .totalPage(totalPage)
+//                .totalPage(totalPage) // db 에 int 로 되어있음 long -> int
                 .title(bookTitle)
                 .author(author)
                 .publisher(publisher)
                 .imageFile(imageFile)
-                .publishDate(LocalDateTime.now())
+                .publishDate(Date.valueOf(LocalDate.now()))
                 .build();
     }
 
@@ -59,5 +61,13 @@ public class TreeSaveTmp {
         return TreeImage.builder()
                 .name(imageFile)
                 .build();
+    }
+
+    public boolean hasImage() {
+        return imageFile != null || !imageFile.isEmpty();
+    }
+
+    public String getFilePath() {
+        return imageFile;
     }
 }

@@ -285,7 +285,7 @@ public class TreeController {
         model.addAttribute("memberImageView", memberImageView);
         model.addAttribute("treeInfoView", treeInfoView);
         model.addAttribute("leafList", leafList);
-        return "view/tree/index";
+        return "view/tree/detail";
     }
 
     @GetMapping("/memoir/register/index")

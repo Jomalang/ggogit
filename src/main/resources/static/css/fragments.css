@@ -245,6 +245,27 @@
 }
 
 /*  ==========================================
+    FRAGMENT: 메인 Title + side Text
+    ========================================== */
+.text-main-title-side-text__frame{
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+}
+
+.text-main-title__listCount {
+  color: var(--main1, #323a27);
+  font-weight: var(--bold, 700);
+  font-size: 24px;
+}
+.text-main-side-text{
+  color: var(--main1, #323a27);
+  font-weight: var(--bold, 700);
+  font-size: 16px;
+}
+
+
+/*  ==========================================
     FRAGMENT: 화면 설명글
     ========================================== */
 
@@ -1910,6 +1931,11 @@ card.html
   display: flex;
 }
 
+.filter-tree-leaf__card-sort {
+  display: flex;
+  align-items: end;
+}
+
 .bar-search-current__detail-input {
   display: none;
   cursor: none;
@@ -1921,6 +1947,7 @@ card.html
   margin-left: auto;
   content: "자세히";
   font-size: 10px;
+  font-weight: var(--bold, 700);
   cursor: pointer;
 }
 
@@ -1962,7 +1989,7 @@ card.html
 
 =======================================*/
 .card-branch__list-frame {
-  padding: 16px 14px;
+  padding: 14px 16px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -2009,11 +2036,12 @@ card.html
 }
 .branch-card-bottom-info {
   display: flex;
-  align-items: center;
+  align-items: end;
   gap: 10px;
 }
-.branch-card-bottom-info > span {
+.branch-card-bottom-info  span {
   display: flex;
+  align-items: end;
   color: var(--text-sub);
   font-size: 14px;
   font-weight: var(--regular);
@@ -2375,6 +2403,18 @@ card.html
   flex-direction: column;
 }
 
+/* ========================
+    디테일 페이지 리프 목록 필터
+  ========================= */
+.filter-tree-leaf__card {
+  margin-top: 14px;
+  display: flex;
+  justify-content: space-between;
+}
+.filter-tree-leaf__gap{
+  display: flex;
+  gap: 5px;
+}
 /*  ========================================== /
      FRAGMENT: 도서 디테일 배경
 /   ========================================== */

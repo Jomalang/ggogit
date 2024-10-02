@@ -145,9 +145,6 @@
               고정된 seed로 정렬합니다.
       ============================== -->
     <div class="filter-tree-list" th:fragment="filter-tree-list(seedList)">
-<!--      <div class="sortIcon">-->
-<!--        <img th:src="@{/svg/sort.svg}" alt="sort-buttons" />-->
-<!--      </div>-->
       <label>
         <input
                 class="filter-tree-list-img seedFilterEvent"
@@ -159,41 +156,60 @@
         />
       </label>
       <label th:each="seed : ${seedList}">
-      <input
-              class="filter-tree-list-btn seedFilterEvent"
-              type="radio"
-              name="treeList"
-              th:data-id="${seed.id}"
-              th:label="${seed.korName}"
-      /></label>
-<!--      <label>-->
-<!--        <input-->
-<!--          class="filter-tree-list-btn"-->
-<!--          type="radio"-->
-<!--          name="treeList"-->
-<!--          label="생각"-->
-<!--      /></label>-->
-<!--      <label>-->
-<!--        <input-->
-<!--          class="filter-tree-list-btn"-->
-<!--          type="radio"-->
-<!--          name="treeList"-->
-<!--          label="문장"-->
-<!--      /></label>-->
-<!--      <label>-->
-<!--        <input-->
-<!--          class="filter-tree-list-btn"-->
-<!--          type="radio"-->
-<!--          name="treeList"-->
-<!--          label="공부"-->
-<!--      /></label>-->
-<!--      <label>-->
-<!--        <input-->
-<!--          class="filter-tree-list-btn"-->
-<!--          type="radio"-->
-<!--          name="treeList"-->
-<!--          label="유튜브"-->
-<!--      /></label>-->
+        <input
+                class="filter-tree-list-btn seedFilterEvent"
+                type="radio"
+                name="treeList"
+                th:data-id="${seed.id}"
+                th:label="${seed.korName}"
+        /></label>
+    </div>
+
+
+    <!-- =============================
+              트리 디테일 페이지 리프 필터
+              고정된 값으로 정렬합니다.
+      ============================== -->
+    <div class="filter-tree-leaf__card" th:fragment="filter-tree-leaf__card()">
+      <div class="filter-tree-leaf__gap">
+      <label>
+        <input
+                class="filter-tree-list-img seedFilterEvent"
+                type="radio"
+                name="treeList"
+                data-id="0"
+                label=""
+                checked
+        />
+      </label>
+      <label>
+        <input
+                class="filter-tree-list-btn seedFilterEvent"
+                type="radio"
+                name="treeList"
+                data-id="1"
+                label="북마크"
+        /></label>
+      <label>
+        <input
+                class="filter-tree-list-btn seedFilterEvent"
+                type="radio"
+                name="treeList"
+                data-id="2"
+                label="라스트 리프"
+        /></label>
+      </div>
+      <div class="filter-tree-leaf__card-sort">
+        <input
+                class="bar-search-current__detail-input"
+                type="checkbox"
+                id="bar-search-current__detail"
+        />
+        <label
+                class="bar-search-current__detail"
+                for="bar-search-current__detail"
+        >최근 수정한 수</label>
+      </div>
     </div>
   </body>
 </html>

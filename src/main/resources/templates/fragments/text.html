@@ -50,6 +50,21 @@
     </div>
 
     <!-- ==========================================
+     FRAGMENT: 메인 Title + 우측 text
+     ========================================== -->
+    <div class="text-main-title-side-text__frame" th:fragment="text-main-title__listCount(title, number)">
+      <span
+              class="text-main-title text--title24"
+              th:text="${title}"
+      >
+        Default Title
+      </span>
+      <span
+              class="text-main-side-text"
+              th:text="|${number} 개|">
+      </span>
+    </div>
+    <!-- ==========================================
      FRAGMENT: 화면 설명글
      ========================================== -->
     <div class="textbox-no-tree" th:fragment="text-info(text, boldText)">

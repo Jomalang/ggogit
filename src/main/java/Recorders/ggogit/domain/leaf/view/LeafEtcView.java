@@ -47,7 +47,7 @@ public class LeafEtcView {
                 .title(title)
                 .content(content)
                 .childLeafCount(childLeafCount)
-                .bookMark(0L)
+                .bookMark(false)
                 .build();
     }
 }

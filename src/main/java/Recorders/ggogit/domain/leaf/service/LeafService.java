@@ -27,4 +27,6 @@ public interface LeafService {
     List<LeafNode> getLeafNodeAll(Long treeId, Long leafId);
 
     BeforeLeafInfoView getBeforeLeafInfoView(Long leafId);
+
+    List<LeafBranchView> findBranchByTreeId(Long treeId);
 }

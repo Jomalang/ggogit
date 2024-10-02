@@ -120,8 +120,8 @@
     <select id="findLeafBranchViewByTreeId" resultType="LeafBranchView">
         SELECT
             ID,
+            PARENT_LEAF_ID,
             TITLE,
-            LIKE_COUNT,
             VIEW_COUNT,
             BOOK_MARK,
             UPDATE_TIME

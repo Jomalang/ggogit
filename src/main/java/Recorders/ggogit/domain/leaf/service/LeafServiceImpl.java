@@ -17,9 +17,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.time.LocalDateTime;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -158,6 +157,39 @@ public class LeafServiceImpl implements LeafService {
     }
 
     @Override
+    public List<LeafBranchView> findBranchByTreeId(Long treeId) {
+        List<Leaf> plainList = leafRepository.findByTreeIdOrderById(treeId);
+        Map<Long,Leaf> leafMap = new HashMap<>();
+        Long pid = null; //부모 ID 값이 없을 경우 DB에서 Null 반환.
+
+        List<Leaf> tmpList = new ArrayList<>();
+        for (Leaf leaf : plainList) {
+            leafMap.put(leaf.getId(), leaf);
+            if (leaf.getBookMark() || leaf.getChildLeafCount() == 0) {
+                tmpList.add(leaf);
+            }
+        }
+
+        List<LeafBranchView> leafBranchViews = new ArrayList<>();
+        for (Leaf leaf : tmpList){
+            pid = leaf.getParentLeafId();
+            Long viewCount = leaf.getViewCount();
+            Long leafCount = 0L;
+            while (pid != null){
+                Leaf tmp = leafMap.get(pid);
+                pid = tmp.getParentLeafId();
+                viewCount += tmp.getViewCount();
+                ++leafCount;
+            }
+            LeafBranchView leafBranch = LeafBranchView.of(leaf, leafCount, viewCount);
+            leafBranchViews.add(leafBranch);
+        }
+
+
+        return leafBranchViews;
+    }
+
+    @Override
     public List<LeafImageCardView> getLeafImageCardViews(Long memberId) {
         return getLeafImageCardViews(memberId, SearchType.NONE, null, SortType.NONE, 1L, 10L);
     }
@@ -185,4 +217,5 @@ public class LeafServiceImpl implements LeafService {
 
         return leafImageCardViews;
     }
+
 }

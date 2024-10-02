@@ -60,7 +60,7 @@ public class LeafBookView {
                 .title(title)
                 .content(content)
                 .childLeafCount(childLeafCount)
-                .bookMark(0L)
+                .bookMark(false)
                 .build();
     }
 
@@ -75,7 +75,7 @@ public class LeafBookView {
                 .title(title)
                 .content(content)
                 .childLeafCount(childLeafCount)
-                .bookMark(0L)
+                .bookMark(false)
                 .build();
     }
 

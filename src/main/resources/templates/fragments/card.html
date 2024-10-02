@@ -273,13 +273,13 @@ Branch List 사용
             <img th:src="@{${list.bookMark} ? '/svg/card-bookmark-icon.svg' : '/svg/card-branch-represent-icon.svg' }" alt="브랜치 이미지">
         </div>
         <div class="branch-detail-info">
-            <p class="branch-detail-info--regdate" th:text="${#dates.format(list.updateTime, 'yyyy-MM-dd')}"></p>
+            <p class="branch-detail-info--regdate" th:text="${#temporals.format(list.updateTime, 'yyyy-MM-dd')}"></p>
             <p class="branch-detail-info--name" th:text="${list.title}"></p>
         </div>
     </a>
     <div class="branch-card-bottom-info-frame">
         <div class="branch-card-bottom-info">
-            <span>리프<p th:text="${list.likeCount}"></p></span>
+            <span>리프<p th:text="${list.leafCount}"></p></span>
             <span>조회수<p th:text="${list.viewCount}"></p></span></div>
         <div class="__like-frame">
             <input

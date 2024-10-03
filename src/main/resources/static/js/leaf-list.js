@@ -801,8 +801,13 @@ function findFocusNode() {
     const item = minNode.closest('.leaf-item');
     // 화면 날짜 적용
     const dateTag = item.querySelector('.log-item__date');
-    focusDate.textContent = formatDate(dateTag.innerText); // 화면 날짜 적용
-    leafRegisterLinkChange(minNode.dataset.id);
+
+    if (dateTag.innerText === '') { // 비공개된 리프인 경우
+        focusDate.textContent = '비공개된 리프입니다.';
+    } else {
+        focusDate.textContent = formatDate(dateTag.innerText); // 화면 날짜 적용
+        leafRegisterLinkChange(minNode.dataset.id);
+    }
 
     // 브래드 크럼 적용
     const branchCrumbs = document.querySelector('.log-path-box__branch-name');

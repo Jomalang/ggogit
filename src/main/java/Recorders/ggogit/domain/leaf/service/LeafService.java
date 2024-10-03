@@ -22,9 +22,9 @@ public interface LeafService {
     List<LeafCardView> getLeafCardViews(Long bookId, Long memberId);
     List<LeafCardView> getLeafCardViews(Long bookId, Long memberId, SearchType searchType, String search, SortType sortType, Long page, Long size);
 
-    List<LeafNode> getLeafNodeFromLeafIdToEnd(Long treeId, Long leafId);
+    List<LeafNode> getLeafNodeFromLeafIdToEnd(Long treeId, Long leafId, boolean isOwner);
 
-    List<LeafNode> getLeafNodeAll(Long treeId, Long leafId);
+    List<LeafNode> getLeafNodeAll(Long treeId, Long leafId, boolean isOwner);
 
     BeforeLeafInfoView getBeforeLeafInfoView(Long leafId);
 }

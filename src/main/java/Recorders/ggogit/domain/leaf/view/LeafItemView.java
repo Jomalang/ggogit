@@ -37,8 +37,9 @@ public class LeafItemView {
                 .createTime(leafNode.getData().getCreateTime())
                 .build();
     }
-
+    
     public Date getCreateTime() {
+        if (createTime == null) { return null; }
         return Date.from(createTime.atZone(java.time.ZoneId.systemDefault()).toInstant());
     }
 }

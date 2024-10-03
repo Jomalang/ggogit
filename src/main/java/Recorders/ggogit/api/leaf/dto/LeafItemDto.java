@@ -32,7 +32,10 @@ public class LeafItemDto {
                 .tags(tags.stream().map(LeafTagDto::of).toList())
                 .focused(false)
                 .direction(node.getDirection().getNum())
-                .createTime(node.getData().getCreateTime().toLocalDate().toString())
+                .createTime(
+                        node.getData().getCreateTime() == null ? "" :
+                        node.getData().getCreateTime().toLocalDate().toString()
+                )
                 .build();
     }
 }

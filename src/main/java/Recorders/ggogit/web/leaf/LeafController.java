@@ -194,13 +194,14 @@ public class LeafController {
         @RequestParam(value = "leaf_id") Long leafId,
         Model model
     ) {
-        List<LeafItemView> list = leafService.getLeafItems(treeId, leafId);
+        Long memberId = 999L;
+        boolean isOwner = leafService.isOwner(treeId, memberId);
+        List<LeafItemView> list = leafService.getLeafItems(treeId, leafId, isOwner);
 
         // 최근 수정 브랜치 이름 정보 넣어야함
         model.addAttribute("focusedTime", list.getLast().getCreateTime());
         model.addAttribute("branch", leafService.getBranchInfo(treeId, list.getLast().getId()));
         model.addAttribute("breadcrumb", leafService.getBreadcrumb(treeId, leafId));
-        model.addAttribute("list", list); // 거꾸로 정렬
         return "view/leaf/list";
     }
 

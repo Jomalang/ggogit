@@ -76,22 +76,28 @@ public class LeafTree {
         return branchLeafs;
     }
 
-    public List<LeafNode> findAll(Long leafId) {
+    public List<LeafNode> findAll(Long leafId, boolean isOwner) {
         List<LeafNode> branchNodes = new ArrayList<>();
-        findToEnd(leafId, branchNodes); // INPUT 리프 부터 말단 리프까지
-        findToRoot(leafId, branchNodes); // INPUT 리프 부터 ROOT까지
+        findToEnd(leafId, branchNodes, isOwner); // INPUT 리프 부터 말단 리프까지
+        findToRoot(leafId, branchNodes, isOwner); // INPUT 리프 부터 ROOT까지
         branchNodes.sort(Comparator.comparing(o -> o.getData().getId())); // 생성 시간 순으로 정렬
         return branchNodes;
     }
 
-    public List<LeafNode> findToEnd(Long leafId) {
+    public List<LeafNode> findToEnd(Long leafId, boolean isOwner) {
         List<LeafNode> branchNodes = new ArrayList<>();
-        branchNodes.add(findParent(leafId));
-        findToEnd(leafId, branchNodes); // INPUT 리프 부터 말단 리프까지
+        LeafNode leafNode = findParent(leafId);
+
+        if (!isOwner && !leafNode.getData().getVisibility()) { // 비공개 리프 노출 X
+            leafNoVisibility(leafNode);
+        }
+
+        branchNodes.add(leafNode);
+        findToEnd(leafId, branchNodes, isOwner); // INPUT 리프 부터 말단 리프까지
         return branchNodes;
     }
 
-    private void findToEnd(Long leafId, List<LeafNode> branchNodes) {
+    private void findToEnd(Long leafId, List<LeafNode> branchNodes, boolean isOwner) {
         LeafNode startEndNode = findParent(leafId);
 
         while (startEndNode.hasChildren()) { // INPUT 리프 부터 말단 리프까지
@@ -104,21 +110,37 @@ public class LeafTree {
             } else if (size == 3) {
                 startEndNode = children.get(1);
             }
+
+            if (!isOwner && !startEndNode.getData().getVisibility()) { // 비공개 리프 노출 X
+                leafNoVisibility(startEndNode);
+            }
+
             branchNodes.add(startEndNode);
         }
     }
 
-    public List<LeafNode> findToRoot(Long leafId) {
+    public List<LeafNode> findToRoot(Long leafId, boolean isOwner) {
         List<LeafNode> branchNodes = new ArrayList<>();
-        findToRoot(leafId, branchNodes); // INPUT 리프 부터 ROOT까지
+        findToRoot(leafId, branchNodes, isOwner); // INPUT 리프 부터 ROOT까지
         return branchNodes;
     }
 
-    private void findToRoot(Long leafId, List<LeafNode> branchNodes) {
+    private void findToRoot(Long leafId, List<LeafNode> branchNodes, boolean isOwner) {
         LeafNode startRootNode = findParent(leafId);
         while (startRootNode != null) { // INPUT 리프 부터 ROOT까지
+
+            if (!isOwner && !startRootNode.getData().getVisibility()) { // 비공개 리프 노출 X
+                leafNoVisibility(startRootNode);
+            }
+
             branchNodes.addLast(startRootNode);
             startRootNode = startRootNode.getParent();
         }
+    }
+
+    private void leafNoVisibility(LeafNode leafNode) {
+        Leaf node = leafNode.getData();
+        node.setTitle("비공개 리프입니다.");
+        node.setCreateTime(null);
     }
 }

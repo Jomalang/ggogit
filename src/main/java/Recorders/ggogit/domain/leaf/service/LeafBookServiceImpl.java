@@ -15,6 +15,7 @@ import Recorders.ggogit.domain.tree.repository.TreeRepository;
 import Recorders.ggogit.domain.tree.repository.TreeSaveTmpRepository;
 import Recorders.ggogit.type.SearchType;
 import Recorders.ggogit.type.SortType;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,42 +25,23 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class LeafBookServiceImpl implements LeafBookService {
 
     private final static int LEAF_MAX_CHILD_COUNT = 3;
 
-    @Autowired
-    private LeafRepository leafRepository;
+    private final LeafRepository leafRepository;
+    private final LeafTagRepository leafTagRepository;
+    private final LeafBookRepository leafBookRepository;
+    private final LeafImageRepository leafImageRepository;
+    private final LeafTagMapRepository leafTagMapRepository;
+    private final BookRepository bookRepository;
+    private final TreeRepository treeRepository;
+    private final TreeSaveTmpRepository treeSaveTmpRepository;
+    private final TreeImageRepository treeImageRepository;
 
-    @Autowired
-    private LeafTagRepository leafTagRepository;
-
-    @Autowired
-    private LeafBookRepository leafBookRepository;
-
-    @Autowired
-    private LeafImageRepository leafImageRepository;
-
-    @Autowired
-    private BookRepository bookRepository;
-
-    @Autowired
-    private LeafTagMapRepository leafTagMapRepository;
-
-    @Autowired
-    private TreeSaveTmpRepository treeSaveTmpRepository;
-
-    @Autowired
-    private TreeRepository treeRepository;
-
-    @Autowired
-    private TreeImageRepository treeImageRepository;
-
-    @Autowired
-    private LeafMapper leafMapper;
-
-    @Autowired
-    private ImageSaveUtill imageSaveUtill;
+    private final LeafMapper leafMapper;
+    private final ImageSaveUtill imageSaveUtill;
 
     @Override
     @Transactional

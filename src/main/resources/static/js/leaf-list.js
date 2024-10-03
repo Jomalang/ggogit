@@ -45,7 +45,7 @@ class LeafTree {
             const data = await response.json();
             // console.log(data);
             data.forEach(leaf => {
-                console.log(leaf);
+                // console.log(leaf);
                 this.addNode(leaf);
             });
         } catch (error) {
@@ -833,17 +833,16 @@ function distance(x1, y1, x2, y2) {
     return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
 }
 
-function throttle(func, limit) { // 쓰로틀링 함수
-    let inThrottle;
-    return function() {
-        const args = arguments;
-        const context = this;
-        if (!inThrottle) {
-            func.apply(context, args);
-            inThrottle = true;
-            setTimeout(() => inThrottle = false, limit);
-        }
-    }
+function getURLLeafId() {
+    const url = window.location.search;
+    const params = new URLSearchParams(url);
+    return parseInt(params.get('leaf_id'));
+}
+
+function focusLeafNode() {
+    const leafId = getURLLeafId();
+    const node = document.querySelector(`.node[data-id="${leafId}"]`);
+    node.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 
 window.addEventListener('resize', () => {
@@ -863,4 +862,5 @@ document.querySelector('body').addEventListener('scroll', () => {
 window.addEventListener('DOMContentLoaded', async () => {
     const leafTree = new LeafTree();
     await leafTree.init();
+    focusLeafNode();
 });

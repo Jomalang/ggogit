@@ -121,6 +121,7 @@ public class LeafController {
             ModelAndView mv = new ModelAndView("view/leaf/reg-book", "form", new LeafBookForm());
             mv.addObject("beforeLeaf", beforeLeafInfoView);
             mv.addObject("memberId", memberId);
+            mv.addObject("treeId", treeId);
             mv.addObject("leafId", leafId);
             mv.addObject("seedId", seedId);
             return mv;
@@ -129,6 +130,7 @@ public class LeafController {
         ModelAndView mv = new ModelAndView("view/leaf/reg-etc", "form", new LeafForm());
         mv.addObject("beforeLeaf", beforeLeafInfoView);
         mv.addObject("memberId", memberId);
+        mv.addObject("treeId", treeId);
         mv.addObject("leafId", leafId);
         mv.addObject("seedId", seedId);
         return mv;
@@ -204,11 +206,10 @@ public class LeafController {
 
     @GetMapping("/detail")
     public String getLeafDetail(
-            @RequestParam(value = "tree_id") Long treeId,
             @RequestParam(value = "leaf_id") Long leafId,
             Model model
     ) {
-        model.addAttribute("breadcrumb", leafService.getBreadcrumb(treeId, leafId));
+        model.addAttribute("breadcrumb", leafService.getBreadcrumb(leafId));
         // TODO: 도서 상세 정보 넣어야함
 
         Long memberId = 1L;

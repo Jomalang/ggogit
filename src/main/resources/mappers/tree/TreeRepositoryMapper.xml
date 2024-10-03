@@ -6,13 +6,13 @@
 <!--트리 생성-->
     <insert id="save" parameterType="Tree"
             useGeneratedKeys="true" keyProperty="id" keyColumn="ID">
-        INSERT INTO TREE(MEMBER_ID, SEED_ID, TITLE, DESCRIPTION, BOOK_MARK_COUNT, VISIBILITY, BOOK_ID)
+        INSERT INTO TREE (MEMBER_ID, SEED_ID, TITLE, DESCRIPTION, BOOK_MARK_COUNT, VISIBILITY, BOOK_ID)
         VALUES(#{memberId}, #{seedId}, #{title}, #{description}, #{bookMarkCount}, #{visibility}, #{bookId})
     </insert>
 
     <insert id="saveEtc" parameterType="Tree"
             useGeneratedKeys="true" keyProperty="id" keyColumn="ID">
-        INSERT INTO TREE(MEMBER_ID, SEED_ID, TITLE, DESCRIPTION, BOOK_MARK_COUNT, VISIBILITY)
+        INSERT INTO TREE (MEMBER_ID, SEED_ID, TITLE, DESCRIPTION, BOOK_MARK_COUNT, VISIBILITY)
         VALUES(#{memberId}, #{seedId}, #{title}, #{description}, #{bookMarkCount}, #{visibility})
     </insert>
 

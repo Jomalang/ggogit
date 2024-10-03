@@ -1260,6 +1260,12 @@ button {
     ========================================== */
 .before-log-box {
   width: 100%;
+  transform: translateY(-100%);
+  transition: transform 0.5s ease;
+}
+
+.before-log-box--show {
+  transform: translateY(0);
 }
 
 .before-log__branch {

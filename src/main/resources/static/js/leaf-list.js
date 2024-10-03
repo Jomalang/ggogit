@@ -773,11 +773,6 @@ class LeafTree {
     }
 }
 
-// 노드 활성화
-window.addEventListener('scroll', throttle(() => {
-    this.findFocusNode();
-}, 100)); // 100ms 간격으로 실행
-
 const focusDate = document.querySelector('section.log-list-date-title-container h1.text--title24');
 
 function findFocusNode() {
@@ -857,9 +852,12 @@ window.addEventListener('resize', () => {
         if (node.children.length === 1) {
             continue; // 자식이 1개인 경우 스크롤 이벤트 추가하지 않음
         }
-
         node.style.transform = `translateX(-${node.dataset.index * window.innerWidth}px)`;
     }
+});
+
+document.querySelector('body').addEventListener('scroll', () => {
+    this.findFocusNode();
 });
 
 window.addEventListener('DOMContentLoaded', async () => {

@@ -61,6 +61,7 @@ public class LeafTree {
                 return parent;
             }
         }
+        System.out.println("leafId = " + leafId);
         throw new IllegalArgumentException("부모 노드가 없습니다.");
     }
 

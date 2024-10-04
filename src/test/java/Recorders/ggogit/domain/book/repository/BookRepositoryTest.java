@@ -27,7 +27,7 @@ class BookRepositoryTest {
         // given 주어진것
         Book book = Book.builder()
                 .memberId(1L) // <
-                .totalPage(999)
+                .totalPage(100)
                 .title("테스트123")
                 .bookCategoryId(1L)
                 .author("테스트")

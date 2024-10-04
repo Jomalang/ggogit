@@ -3,6 +3,7 @@ package Recorders.ggogit.domain.memoir;
 
 import Recorders.ggogit.domain.memoir.entity.Memoir;
 import Recorders.ggogit.domain.memoir.repository.MemoirRepository;
+import Recorders.ggogit.domain.memoir.vIew.MemoirBookView;
 import Recorders.ggogit.domain.memoir.vIew.MemoirCommentLikeView;
 import org.apache.ibatis.logging.slf4j.Slf4jImpl;
 import org.junit.jupiter.api.BeforeEach;
@@ -82,6 +83,13 @@ public class MemoirRepositoryTest {
         MemoirCommentLikeView memoirCntView = memoirRepository.findCntById(testMemoir.getId());
         assertThat(memoirCntView.getCommentCnt()).isEqualTo(0);
         assertThat(memoirCntView.getLikeCnt()).isEqualTo(0);
+    }
+
+    @Test
+    public void MemoirBookTest() {
+        List<MemoirBookView> memoirBookViews = memoirRepository.findMemoirBookViews(999L);
+        for(MemoirBookView memoirBook : memoirBookViews){
+        }
     }
 
     private static Memoir createTestMemoir() {

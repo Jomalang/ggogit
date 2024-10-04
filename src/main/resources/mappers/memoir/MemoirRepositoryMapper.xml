@@ -46,4 +46,10 @@
         WHERE ID = #{id}
     </select>
 
+    <select id="findMemoirBookViews" resultType="MemoirBookView">
+        SELECT *
+        FROM VW_MEMOIR_BOOK
+        WHERE MEMBER_ID = #{memberId}
+    </select>
+
 </mapper>

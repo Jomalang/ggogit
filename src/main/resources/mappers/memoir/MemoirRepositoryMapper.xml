@@ -50,6 +50,8 @@
         SELECT *
         FROM VW_MEMOIR_BOOK
         WHERE MEMBER_ID = #{memberId}
+        ORDER BY UPDATE_TIME DESC
+        LIMIT 10
     </select>
 
 </mapper>

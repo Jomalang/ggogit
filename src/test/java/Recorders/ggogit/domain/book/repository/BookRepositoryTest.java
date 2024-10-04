@@ -34,6 +34,7 @@ class BookRepositoryTest {
                 .isbn("123123132")
                 .publisher("테스트")
                 .imageFile("테스트")
+//                .resourceFrom(true)
 //                .publicDate(LocalDateTime.of(2021, 1, 1, 0, 0))
                 .updateTime(null)
                 .createTime(null)
@@ -50,6 +51,7 @@ class BookRepositoryTest {
         assertThat(savedBook.getAuthor()).isEqualTo(book.getAuthor());
         assertThat(savedBook.getPublisher()).isEqualTo(book.getPublisher());
         assertThat(savedBook.getImageFile()).isEqualTo(book.getImageFile());
+//        assertThat(savedBook.getResourceFrom()).isEqualTo(book.getResourceFrom());
 //        assertThat(savedBook.getPublicDate()).isEqualTo(book.getPublicDate());
     }
 

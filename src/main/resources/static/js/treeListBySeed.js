@@ -100,7 +100,6 @@ seedMenu.addEventListener("change", (e) => {
 fetch(`/api/tree/list?seed=${seedId}`)
     .then(response => response.json())
     .then(list => {
-        console.log(list);
         if (list.length === 0 )
             return treeCardListFrame.innerHTML = nullCard();
 

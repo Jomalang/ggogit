@@ -641,8 +641,17 @@
   transform: translateY(100%); /* 리스트가 아래로 숨겨짐 */
   transition: transform 0.3s ease-in-out;
 }
+.filter-tab__box--30 {
+  background-color: var(--white, #ffffff);
+  border-radius: 18px;
+  border: 1px solid var(--main2--opacity40);
+  height: 100%;
+  transition-property: height;
+  transform: translateY(100%); /* 리스트가 아래로 숨겨짐 */
+  transition: transform 0.3s ease-in-out;
+}
 
-.filter-tab__box.up {
+.filter-tab__box.up, .filter-tab__box--30.up {
   transform: translateY(0); /* 리스트가 위로 슬라이드됨 */
 }
 
@@ -1902,6 +1911,27 @@ card.html
 .filter-category__seed:checked ~ .filter-category__seed__list {
   display: block;
   position: absolute;
+}
+
+.filter-attribute__bg{
+  margin: 10px 20px;
+  padding-top: 20px;
+  background-color: var(--main2--opacity40);
+  border-radius: 8px;
+}
+
+.filter-attribute__title{
+  margin-left: 20px;
+  margin-bottom: 8px;
+  font-size: 16px;
+  font-weight: var(--bold);
+  line-height: var(--line-height-main);
+  letter-spacing: var(--letter-spacing-main);
+}
+.filter-attribute__item{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
 }
 /*===============================================
     bar: class="bar-search-result-frame"

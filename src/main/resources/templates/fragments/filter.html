@@ -170,11 +170,11 @@
               트리 디테일 페이지 리프 필터
               고정된 값으로 정렬합니다.
       ============================== -->
-    <div class="filter-tree-leaf__card" th:fragment="filter-tree-leaf__card()">
+    <div id="branchSortFilter" class="filter-tree-leaf__card" th:fragment="filter-tree-leaf__card()">
       <div class="filter-tree-leaf__gap">
       <label>
         <input
-                class="filter-tree-list-img seedFilterEvent"
+                class="filter-tree-list-img filterEvent"
                 type="radio"
                 name="treeList"
                 data-id="0"
@@ -184,7 +184,7 @@
       </label>
       <label>
         <input
-                class="filter-tree-list-btn seedFilterEvent"
+                class="filter-tree-list-btn filterEvent"
                 type="radio"
                 name="treeList"
                 data-id="1"
@@ -192,14 +192,14 @@
         /></label>
       <label>
         <input
-                class="filter-tree-list-btn seedFilterEvent"
+                class="filter-tree-list-btn filterEvent"
                 type="radio"
                 name="treeList"
                 data-id="2"
                 label="라스트 리프"
         /></label>
       </div>
-      <div class="filter-tree-leaf__card-sort">
+      <div class="filter-tree-leaf__card-sort" id="filter-tree-leaf__card-sort">
         <input
                 class="bar-search-current__detail-input"
                 type="checkbox"
@@ -208,7 +208,7 @@
         <label
                 class="bar-search-current__detail"
                 for="bar-search-current__detail"
-        >최근 수정한 수</label>
+        >최근 수정 내림순</label>
       </div>
     </div>
   </body>

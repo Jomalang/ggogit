@@ -3,6 +3,7 @@ package Recorders.ggogit.web.memoir.controller;
 import Recorders.ggogit.domain.leaf.service.LeafService;
 import Recorders.ggogit.domain.memoir.entity.Memoir;
 import Recorders.ggogit.domain.memoir.service.MemoirService;
+import Recorders.ggogit.domain.memoir.vIew.MemoirBookView;
 import Recorders.ggogit.domain.tree.service.TreeService;
 import Recorders.ggogit.domain.tree.view.TreeInfoView;
 import Recorders.ggogit.web.memoir.form.MemoirForm;
@@ -39,10 +40,13 @@ public class MemoirController {
         model.addAttribute("memoir", memoir);
         model.addAttribute("treeInfo", treeInfo);
 
-
         model.addAttribute("memoirCards", new int[]{1, 1, 1});
         model.addAttribute("leafCards", new int[]{2, 2, 2});
         model.addAttribute("treeCards", new int[]{3, 3, 3});
+
+        //TODO: treeId기반 MemberId찾는 서비스 필요
+        List<MemoirBookView> memoirCards = memoirService.getMemoirCards(999L);
+        model.addAttribute("memoirCards", memoirCards);
 
         return "view/memoir/index";
     }

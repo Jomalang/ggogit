@@ -409,36 +409,35 @@ Branch List 사용
 <!-- ==========================================
      FRAGMENT: another records 리스트
      ========================================== -->
-<div class="card-another-records-box" th:fragment="card-another-records(type)">
-    <div class="card-another-records__top-box">
+<div class="card-another-records-box" th:fragment="card-another-records(item, type)">
+    <div class="card-another-records__top-box" th:object="${item}">
         <a class="card-another-records__top-anker" href="">
 <!--            표지-->
-            <div th:if="${type eq 1}">
+            <div th:if="${type eq 'treeCards'}">
                 <img class="card-another-records__top-cover-box" th:src="@{/img/card/card-book__info-cover.svg}" alt="트리 아이콘">
             </div>
-            <div  th:if="${type eq 2}">
-                <img class="card-another-records__top-cover-box" th:src="@{/img/card/detail-book.png}" alt="회고록 아이콘">
+            <div  th:if="${type eq 'memoirCards'}">
+                <img class="card-another-records__top-cover-box" th:src="*{coverPath}" alt="회고록 아이콘">
             </div>
-            <div th:if="${type eq 3}">
+            <div th:if="${type eq 'leafCards'}">
                 <img class="card-another-records__top-cover-box" th:src="@{/img/card/card-book__log-info-cover.svg}" alt="리프 아이콘">
             </div>
 
 
             <div class="card-another-records__mid-box">
                 <div class="card-another-records__mid-seed-frame"  name="data-xxx">
-                    <span class="card-another-records__mid-seed" name="data-xxx">도서</span>
-                    <span class="card-another-records__mid-seed" name="data-xxx">문학</span>
+                    <span class="card-another-records__mid-seed" th:text="*{bookCategory}">도서</span>
                 </div>
-                <p class="card-another-records__mid-another--title" name="data-xxx" th:if="${type eq 1}">테크트리</p>
-                <p class="card-another-records__mid-another--title" name="data-xxx" th:if="${type eq 2}">HTML이란 무엇인가?</p>
-                <p class="card-another-records__mid-another--title--sub" name="data-xxx" th:if="${type eq 3}">그 남자 과연 나의 운명일까</p>
-                <p class="card-another-records__mid-work-title" name="data-xxx">트리갭의 샘물</p>
+                <p class="card-another-records__mid-another--title" th:text="*{title}" th:if="${type eq 'treeCards'}">테크트리</p>
+                <p class="card-another-records__mid-another--title" th:text="*{title}" th:if="${type eq 'memoirCards'}">HTML이란 무엇인가?</p>
+                <p class="card-another-records__mid-another--title--sub" th:text="*{title}" th:if="${type eq 'leafCards'}">그 남자 과연 나의 운명일까</p>
+                <p class="card-another-records__mid-work-title" th:text="*{bookTitle}">트리갭의 샘물</p>
                 <div class="card-another-records__info">
-                    <span class="card-another-records__info" name="data-XXX">2024</span>
+                    <span class="card-another-records__info" th:text="*{bookPublishedYear}">2024</span>
                     <span class="card-another-records__info" name="data-XXX">/</span>
-                    <span class="card-another-records__info" name="data-XXX">유시민</span>
+                    <span class="card-another-records__info" th:text="*{bookAuthor}">유시민</span>
                     <span class="card-another-records__info" name="data-XXX">/</span>
-                    <span class="card-another-records__info" name="data-XXX">생각의 길</span>
+                    <span class="card-another-records__info" th:thext="*{bookPublisher}">생각의 길</span>
                 </div>
             </div>
 
@@ -461,8 +460,8 @@ Branch List 사용
         </div>
     </div>
 
-    <div class="card-another-records__bot-box">
-        <div class="card-another-records__bot-nickname-box" th:if="${type eq 3}">
+    <div class="card-another-records__bot-box" th:object="${item}">
+        <div class="card-another-records__bot-nickname-box" th:if="${type eq 'leafCards'}">
             <a href="">
                 <div class="card-another-records__log-text-box">
                     <q class="card-another-records-log-title">웹툰이지만 로깅합니다</q>
@@ -471,14 +470,14 @@ Branch List 사용
             </a>
         </div>
         <div class="card-another-records__bot-box-etc-info">
-            <div class="card-another-records__bot-box-etc-date">2024-07-18</div>
+            <div class="card-another-records__bot-box-etc-date" th:text="*{updateTime}">2024-07-18</div>
             <div class="card-another-records__bot-statistics-box">
                 <a href="">
-                <p th:if="${type eq 1}" class="card-another-records__bot-leaf-text">
-                    <span class="card-another-records__bot-leaf-count">999+</span> 리프
+                <p th:if="${type eq 'treeCards'}" class="card-another-records__bot-leaf-text">
+                    <span class="card-another-records__bot-leaf-count" th:text="*{leafNums}">999+</span> 리프
                 </p>
-                <p th:if="${type eq 2}" class="card-another-records__bot-leaf-text">
-                    <span class="card-another-records__bot-leaf-count">999+</span> 리프
+                <p th:if="${type eq 'memoirCards'}" class="card-another-records__bot-leaf-text">
+                    <span class="card-another-records__bot-leaf-count" th:text="*{leafNums}">999+</span> 리프
                 </p>
                 <p class="card-another-records__bot-view-text">
                     <span class="card-another-records__bot-view-count">999+</span> 조회수
@@ -492,10 +491,10 @@ Branch List 사용
 <!-- ==========================================
      FRAGMENT: another records 리스트
      ========================================== -->
-<div class="card-another-records-list-box" th:fragment="card-another-records-list(list)">
+<div class="card-another-records-list-box" th:fragment="card-another-records-list(list, type)">
     <ul class="card-another-records__list">
-        <li class="card-another-records__item" th:each="type : ${list}">
-            <div th:replace="~{fragments/card :: card-another-records(type=${type})}"></div>
+        <li class="card-another-records__item" th:each="item : ${list}">
+            <div th:replace="~{fragments/card :: card-another-records(item=${item}, type=${type})}"></div>
             <!--<div class="card-another-records__list-empty-space" th:if="${type eq 3}"></div> -->
         </li>
     </ul>

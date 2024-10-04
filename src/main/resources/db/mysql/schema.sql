@@ -401,12 +401,13 @@ CREATE TABLE `LEAF_BOOK` (
 -- 리프 이미지 테이블 생성
 -- ============================================ --
 CREATE TABLE `LEAF_IMAGE` (
+    `ID`                BIGINT(20)      NOT NULL AUTO_INCREMENT             COMMENT '리프 이미지 PK',
     `LEAF_ID`           BIGINT(20)      NOT NULL                            COMMENT '리프 FK',
     `NAME`              VARCHAR(255)    NOT NULL                            COMMENT '파일 이름',
     `IS_DELETED`        BOOLEAN         NOT NULL DEFAULT FALSE              COMMENT '삭제 여부',
     `CREATE_TIME`       DATETIME        NOT NULL DEFAULT CURRENT_TIMESTAMP  COMMENT '생성 날짜',
     `UPDATE_TIME`       DATETIME        NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '수정 날짜',
-    PRIMARY KEY (`LEAF_ID`),
+    PRIMARY KEY (`ID`),
     CONSTRAINT `FK_LEAF_IMAGE_LEAF` FOREIGN KEY (`LEAF_ID`) REFERENCES `LEAF` (`ID`) ON DELETE RESTRICT
 ) ENGINE=INNODB DEFAULT CHARSET=UTF8;
 

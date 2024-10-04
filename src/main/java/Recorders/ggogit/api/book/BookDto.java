@@ -33,5 +33,6 @@ public class BookDto {
     private boolean adult;
     private boolean fixedPrice;
     private int customerReviewRank;
+    private int itemPage;
 }
 

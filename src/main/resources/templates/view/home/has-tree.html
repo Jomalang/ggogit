@@ -93,7 +93,8 @@
         <h2 class="none">트리 검색 결과</h2>
         <section class="tree-card-list__main" id="tree-card-list">
           <h3 class="none">트리 검색 리스트</h3>
-          <div th:each="tree : *{treeInfoList}">
+          <div
+                  class="card-tree-details" th:each="tree : *{treeInfoList}">
             <div
               th:replace="~{fragments/card::card-tree-details(tree = ${tree})}"
             ></div>

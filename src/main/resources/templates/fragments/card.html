@@ -266,7 +266,7 @@ Branch List 사용
 </div>
 
 <!---->
-<div class="card-branch__list-frame" th:fragment="card-branch__list(lists)" th:each="list : ${lists}">
+<div class="card-branch__list`-frame" th:fragment="card-branch__list(lists)" th:each="list : ${lists}">
     <a class="branch-info-frame" href="#">
         <div class="branch-img-frame">
             <img th:src="@{${list.bookMark} ? '/svg/card-bookmark-icon.svg' : '/svg/card-branch-represent-icon.svg' }" alt="브랜치 이미지">

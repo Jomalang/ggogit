@@ -29,4 +29,8 @@ public interface LeafService {
     BeforeLeafInfoView getBeforeLeafInfoView(Long leafId);
 
     List<LeafBranchView> findBranchByTreeId(Long treeId);
+
+    List<LeafBranchView> sortBranchList(Long sort, List<LeafBranchView> everyList);
+
+    List<LeafBranchView> filterBranchLsit(Boolean isLeaf, List<LeafBranchView> everyList);
 }

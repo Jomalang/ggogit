@@ -5,6 +5,7 @@ import Recorders.ggogit.domain.leaf.entity.LeafTag;
 import Recorders.ggogit.domain.leaf.service.LeafService;
 import Recorders.ggogit.domain.leaf.service.LeafTagService;
 import Recorders.ggogit.domain.leaf.structure.LeafNode;
+import Recorders.ggogit.domain.leaf.view.LeafBranchView;
 import Recorders.ggogit.domain.leaf.view.LeafListBranchView;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -150,4 +151,21 @@ public class LeafController {
         UUID uuid = UUID.randomUUID();
         return uuid.toString().replaceAll("-", "");
     }
+
+    @GetMapping("/filter")
+    private List<LeafBranchView>  leafFiltering(
+            @RequestParam(value = "treeId") final Long treeId,
+            @RequestParam(value = "isLeaf", required = false) final Boolean isLeaf,
+            @RequestParam(value = "sort", required = false) final  Long sort
+    ){
+        List<LeafBranchView> everyList = leafService.findBranchByTreeId(treeId);
+
+        List<LeafBranchView> isList = leafService.filterBranchLsit(isLeaf,everyList);
+
+        List<LeafBranchView> sortList = leafService.sortBranchList(sort, isList);
+
+        return sortList;
+
+    }
+
 }

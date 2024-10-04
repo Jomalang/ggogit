@@ -6,6 +6,7 @@
 
     <link th:href="@{/css/fragments.css}" rel="stylesheet"/>
     <link th:href="@{/css/layout.css}" rel="stylesheet"/>
+    <script th:src="@{/js/filter-tab.js}" defer></script>
     <title>Document</title>
 </head>
 <body>
@@ -59,6 +60,31 @@
             <!-- 컴포넌트 -->
             <div th:replace="~{fragments/card :: card-branch__list(${leafList})}"></div>
         </section>
+    </section>
+    <section class="filter-tab-container" id="filter-bg-blur">
+        <h2 class="none">정렬 선택</h2>
+        <div
+                id="filter-tab"
+                class="filter-tab__box up"
+        >
+            <div class="filter-tab__header">
+                <button
+                        id="filter-tab-close-btn"
+                        class="filter-tab__btn--back"
+                        type="button"
+                >
+                    <img th:src="@{/svg/tab-back.svg}" alt="뒤로가기 버튼" />
+                </button>
+                <h1 class="filter-tab__header--title" >정렬 선택</h1>
+            </div>
+
+            <ul class="filter-tab__list">
+                <li  class="filter-tab__item">
+                    <label><input name="sort-filter" /></label>
+
+                </li>
+            </ul>
+        </div>
     </section>
 </main>
 

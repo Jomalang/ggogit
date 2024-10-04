@@ -85,6 +85,7 @@ body {
 .book-tree-input-form-container {
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 
 .select-title-container {
@@ -99,7 +100,7 @@ body {
   justify-content: center;
   align-items: center;
   position: absolute;
-  top: 230px;
+  top: 130px;
   left: 50%;
   transform: translateX(-50%);
 }

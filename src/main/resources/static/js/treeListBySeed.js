@@ -55,10 +55,13 @@ return`
 }
 // NULL 카드 템플릿
 function nullCard(){
-    return`                        <div class="card-tree__img-frame-no-tree">
+    return`        
+                                <div class="tree-card-list__main">
+                                    <div class="card-tree__img-frame-no-tree">
                                         <img class="card-tree__book-cover" src="/img/home/no-tree-mid-book.png" alt="treeCover" />
                                     </div>
                                     <p class="text--title20">조회된 트리가 없습니다.</p>
+                                </div>
                                     `;
 }
 

@@ -140,7 +140,7 @@ public class LeafTree {
 
     private void leafNoVisibility(LeafNode leafNode) {
         Leaf node = leafNode.getData();
-        node.setTitle("비공개된 리프입니다.");
+        node.setTitle("비공개 리프입니다.");
         node.setCreateTime(null);
     }
 }

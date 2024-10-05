@@ -8,7 +8,7 @@ import Recorders.ggogit.type.SortType;
 import java.util.List;
 
 public interface LeafService {
-    List<LeafItemView> getLeafItems(Long treeId, Long leafId);
+    List<LeafItemView> getLeafItems(Long treeId, Long leafId, boolean isOwner);
 
     LeafListBranchView getBranchInfo(Long treeId, Long leafId);
 
@@ -27,4 +27,6 @@ public interface LeafService {
     List<LeafNode> getLeafNodeAll(Long treeId, Long leafId, boolean isOwner);
 
     BeforeLeafInfoView getBeforeLeafInfoView(Long leafId);
+
+    boolean isOwner(Long treeId, Long memberId);
 }

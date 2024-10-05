@@ -52,9 +52,9 @@
         </section>
         <section class="branch-tree-another-record-list-container">
             <h1 class="none">트리 리스트</h1>
-            <section class="book-detail-other-tree-card-container">
-                <div th:replace="~{fragments/card :: card-another-records-list(list=${treeCards})}"></div>
-            </section>
+            <!-- <section class="book-detail-other-tree-card-container">
+                <div th:replace="~{fragments/card :: card-another-records-list(list=${treeCards}, type='treeCards')}"></div>
+            </section> -->
         </section>
 
         <section class="branch-tree-other-recode-sub-title-container">
@@ -64,7 +64,7 @@
         <section class="branch-tree-another-record-list-container">
             <h1 class="none">회고록 리스트</h1>
             <section class="book-detail-other-tree-card-container">
-                <div th:replace="~{fragments/card :: card-another-records-list(list=${memoirCards})}"></div>
+                <div th:replace="~{fragments/card :: card-another-records-list(list=${memoirCards}, type='memoirCards')}"></div>
             </section>
         </section>
 
@@ -74,9 +74,9 @@
 
         <section class="branch-tree-another-record-list-container">
             <h1 class="none">리프 리스트</h1>
-            <section class="book-detail-other-tree-card-container">
-                <div th:replace="~{fragments/card :: card-another-records-list(list=${leafCards})}"></div>
-            </section>
+            <!-- <section class="book-detail-other-tree-card-container">
+                <div th:replace="~{fragments/card :: card-another-records-list(list=${leafCards}, type='leafCards')}"></div>
+            </section> -->
         </section>
     </section>
 </main>

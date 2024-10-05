@@ -41,11 +41,8 @@ public class LeafController {
             @PathVariable Long treeId,
             @PathVariable Long leafId
     ) {
-        Long memberId = 999L;
-        boolean isOwner = true;
-
-        // 자신의 권한 확인
-
+        Long memberId = 1L;
+        boolean isOwner = leafService.isOwner(treeId, memberId); // 자신의 권한 확인
         List<LeafNode> leafNodes = leafService.getLeafNodeFromLeafIdToEnd(treeId, leafId, isOwner);
         List<LeafItemDto> leafItemDtos = convertLeafNodesToLeafItemDtos(leafNodes);
         return ResponseEntity.ok(leafItemDtos);
@@ -56,11 +53,8 @@ public class LeafController {
             @PathVariable Long treeId,
             @PathVariable Long leafId
     ) {
-        Long memberId = 999L;
-        boolean isOwner = true;
-
-        // 자신의 권한 확인
-
+        Long memberId = 1L;
+        boolean isOwner = leafService.isOwner(treeId, memberId); // 자신의 권한 확인
         List<LeafNode> leafNodes = leafService.getLeafNodeAll(treeId, leafId, isOwner);
         List<LeafItemDto> leafItemDtos = convertLeafNodesToLeafItemDtos(leafNodes);
         return ResponseEntity.ok(leafItemDtos);

@@ -46,4 +46,12 @@
         WHERE ID = #{id}
     </select>
 
+    <select id="findMemoirBookViews" resultType="MemoirBookView">
+        SELECT *
+        FROM VW_MEMOIR_BOOK
+        WHERE MEMBER_ID = #{memberId}
+        ORDER BY UPDATE_TIME DESC
+        LIMIT 10
+    </select>
+
 </mapper>

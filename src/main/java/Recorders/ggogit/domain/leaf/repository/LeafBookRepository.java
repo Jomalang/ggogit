@@ -18,4 +18,5 @@ public interface LeafBookRepository {
     LeafBookView findLeafBookViewByLeafId(Long leafBookId);
     List<LeafBookView> findLeafBookViewByTreeId(Long treeId);
     List<LeafBookView> findLeafBookViewByTreeId(Long treeId, SearchType searchType, String search, SortType sortType, Long page, Long size);
+    List<LeafBook> findByTreeId(Long treeId);
 }

@@ -70,4 +70,11 @@ public class TreeSaveTmp {
     public String getFilePath() {
         return imageFile;
     }
+
+    public TreeBook of(Long id, Integer readingPage) {
+        return TreeBook.builder()
+                .treeId(id)
+                .readingPage(readingPage)
+                .build();
+    }
 }

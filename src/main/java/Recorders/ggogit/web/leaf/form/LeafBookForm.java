@@ -25,10 +25,10 @@ public class LeafBookForm {
     private Long treeId;
 
     @Nullable // etc Leaf 등록시 null
-    private Long startPage;
+    private Integer startPage;
 
     @Nullable // etc Leaf 등록시 null
-    private Long endPage;
+    private Integer endPage;
 
     @NotNull(message = "태그를 선택해주세요.")
     private List<Long> tagIds;

@@ -5,7 +5,6 @@ import Recorders.ggogit.domain.leaf.repository.LeafTagMapRepository;
 import Recorders.ggogit.domain.leaf.repository.LeafTagRepository;
 import jakarta.annotation.Nullable;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

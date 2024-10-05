@@ -19,8 +19,8 @@ public class LeafBookView {
     private Long treeId;
     @Nullable
     private Long parentLeafId;
-    private Long startPage;
-    private Long endPage;
+    private Integer startPage;
+    private Integer endPage;
     private String title;
     private String content;
     private Boolean visibility;

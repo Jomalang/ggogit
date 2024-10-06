@@ -7,4 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 public interface AladinRepository {
 
     void save(Book book);
+
+    boolean existsByIsbn(String isbn);
+
 }

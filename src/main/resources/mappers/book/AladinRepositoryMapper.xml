@@ -5,8 +5,15 @@
 <mapper namespace="Recorders.ggogit.api.book.AladinRepository">
 
     <insert id="save" parameterType="Book">
-        INSERT INTO BOOK (MEMBER_ID, BOOK_CATEGORY_ID, TITLE, AUTHOR, ISBN, PUBLISHER, PUBLISH_DATE, TOTAL_PAGE, IMAGE_FILE, IS_DELETED, CREATE_TIME, UPDATE_TIME)
-        VALUE (#{memberId}, #{bookCategoryId}, #{title}, #{author}, #{isbn}, #{publisher}, #{publishDate}, #{totalPage}, #{imageFile}, #{isDeleted}, #{createTime}, #{updateTime})
+        INSERT INTO BOOK (MEMBER_ID, BOOK_CATEGORY_ID, TITLE, AUTHOR, TRANSLATOR, ISBN, PUBLISHER, PUBLISH_DATE, TOTAL_PAGE, IMAGE_FILE, IS_DELETED, CREATE_TIME, UPDATE_TIME)
+        VALUE (#{memberId}, #{bookCategoryId}, #{title}, #{author}, #{translator}, #{isbn}, #{publisher}, #{publishDate}, #{totalPage}, #{imageFile}, #{isDeleted}, #{createTime}, #{updateTime})
     </insert>
+
+    <select id="existsByIsbn" parameterType="String" resultType="boolean">
+        SELECT COUNT(*) > 0
+        FROM BOOK
+        WHERE isbn = #{isbn}
+    </select>
+
 
 </mapper>

@@ -122,14 +122,12 @@ public class TreeServiceImpl implements TreeService {
     public CombineTreeView findCombineTreeView(Long memberId, Long treeId) {
         MemberImageView memberImageView = memberRepository.getMemberImageView(memberId);
         TreeInfoView treeInfoView = repository.getTreeInfoViewByTreeId(treeId);
-        List<LeafBranchView> leafList = leafRepository.findLeafBranchViewByTreeId(treeId);
 
         System.out.println(treeInfoView.toString());
 
         CombineTreeView combineTreeView = CombineTreeView.builder()
                 .memberImageView(memberImageView)
                 .treeInfoView(treeInfoView)
-                .leafList(leafList)
                 .build();
 
         return combineTreeView;

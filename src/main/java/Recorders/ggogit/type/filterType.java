@@ -6,12 +6,12 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public enum filterType {
-    ASC(0L, "asc", "오름차순"),
-    DESC(1L, "desc", "내림차순"),
-    UPDATE_TIME(10L, "UPDATE_STANDARD", "최근 수정 기준"),
-    TITLE(11L, "TITLE_STANDARD", "제목 기준"),
-    LEAF_CNT_STANDARD(12L, "LEAF_CNT_STANDARD", "리프 수 기준"),
-    VIEW_COUNT(13L, "VIEW_CNT_STANDARD", "조회 수 기준"),
+    ASC(0L, "ASC", "오름차순"),
+    DESC(1L, "DESC", "내림차순"),
+    UPDATE_TIME(10L, "UPDATE_TIME", "최근 수정 기준"),
+    TITLE(11L, "TITLE", "제목 기준"),
+    LEAF_CNT_(12L, "LEAF_CNT", "리프 수 기준"),
+    VIEW_COUNT(13L, "VIEW_COUNT", "조회 수 기준"),
     ;
     private final Long number;
     private final String value;
@@ -44,6 +44,16 @@ public enum filterType {
             }
         }
         throw new IllegalArgumentException("No filterType with description " + description);
+    }
+
+    // number로 FilterType을 찾는 메서드
+    public static String findNameByNum(Long number) {
+        for (filterType filter : filterType.values()) {
+            if (filter.getNumber().equals(number)) {
+                return filter.getValue();
+            }
+        }
+        throw new IllegalArgumentException("No filterType with number " + number);
     }
 
 }

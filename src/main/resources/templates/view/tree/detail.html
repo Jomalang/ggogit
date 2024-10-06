@@ -6,8 +6,6 @@
 
     <link th:href="@{/css/fragments.css}" rel="stylesheet"/>
     <link th:href="@{/css/layout.css}" rel="stylesheet"/>
-    <script th:src="@{/js/filter-tab.js}" defer></script>
-    <script th:src="@{/js/leafListByfilter.js}" defer></script>
     <title>Document</title>
 </head>
 <body>
@@ -59,7 +57,9 @@
         <section class="branch-filter-result-list__container">
             <h3 class="none">브랜치 리스트</h3>
             <!-- 컴포넌트 -->
-            <div th:replace="~{fragments/card :: card-branch__list(${leafList})}"></div>
+            <div id="card-branch__list-frame" >
+<!--            <div th:replace="~{fragments/card :: card-branch__list(${leafList})}"></div>-->
+            </div>
         </section>
     </section>
     <section class="filter-tab-container--30 none" id="filter-bg-blur">
@@ -85,7 +85,7 @@
                     <li  class="filter-tab__item">
                         <label class="filter-tab__item-label">
                             <input class="filter-tab__item-radio" type="radio" name="filter" value="10" checked>
-                            <span class="filter-tab__item--label-text">최근 수정 기준</span>
+                            <span class="filter-tab__item--label-text">최근 수정</span>
                             <div class="filter-tab__icon-box">
                                 <img class="filter-tab__icon-img" src="/svg/tab-check-btn.svg" alt="필터 버튼">
                             </div>
@@ -94,7 +94,7 @@
                     <li  class="filter-tab__item">
                         <label class="filter-tab__item-label">
                             <input class="filter-tab__item-radio" type="radio" name="filter" value="11">
-                            <span class="filter-tab__item--label-text">제목 기준</span>
+                            <span class="filter-tab__item--label-text">제목</span>
                             <div class="filter-tab__icon-box">
                                 <img class="filter-tab__icon-img" src="/svg/tab-check-btn.svg" alt="필터 버튼">
                             </div>
@@ -103,7 +103,7 @@
                     <li  class="filter-tab__item">
                         <label class="filter-tab__item-label">
                             <input class="filter-tab__item-radio" type="radio" name="filter" value="12">
-                            <span class="filter-tab__item--label-text">리프 수 기준</span>
+                            <span class="filter-tab__item--label-text">리프 수</span>
                             <div class="filter-tab__icon-box">
                                 <img class="filter-tab__icon-img" src="/svg/tab-check-btn.svg" alt="필터 버튼">
                             </div>
@@ -112,7 +112,7 @@
                     <li  class="filter-tab__item">
                         <label class="filter-tab__item-label">
                             <input class="filter-tab__item-radio" type="radio" name="filter" value="13">
-                            <span class="filter-tab__item--label-text">조회 수 기준</span>
+                            <span class="filter-tab__item--label-text">조회 수</span>
                             <div class="filter-tab__icon-box">
                                 <img class="filter-tab__icon-img" src="/svg/tab-check-btn.svg" alt="필터 버튼">
                             </div>
@@ -158,5 +158,6 @@
     </section>
 </aside>
 
+<script th:src="@{/js/leafListByfilter.js}" defer></script>
 </body>
 </html>

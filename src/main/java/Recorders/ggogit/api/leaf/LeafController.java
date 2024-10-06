@@ -160,13 +160,13 @@ public class LeafController {
     @GetMapping("/filter")
     private List<LeafBranchView>  leafFiltering(
             @RequestParam(value = "treeId") final Long treeId,
-            @RequestParam(value = "isLeaf", required = false) final Boolean isLeaf,
+            @RequestParam(value = "bookMark", required = false) final Boolean bookMark,
             @RequestParam(value = "filter", required = false) final  Long filter,
             @RequestParam(value = "sort", required = false) final  Long sort
     ){
 
         int page = 10;
-        List<LeafBranchView> list = leafService.findBranch(treeId, isLeaf, filter, sort, page);
+        List<LeafBranchView> list = leafService.findBranch(treeId, bookMark, filter, sort, page);
 
         return list;
 

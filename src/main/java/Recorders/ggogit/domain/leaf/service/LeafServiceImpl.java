@@ -12,14 +12,13 @@ import Recorders.ggogit.domain.tree.entity.Tree;
 import Recorders.ggogit.domain.tree.repository.TreeRepository;
 import Recorders.ggogit.type.SearchType;
 import Recorders.ggogit.type.SortType;
+import Recorders.ggogit.type.filterType;
 import jakarta.annotation.Nullable;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -206,18 +205,20 @@ public class LeafServiceImpl implements LeafService {
     }
 
     @Override
-    public List<LeafBranchView> findBranch(Long treeId, Boolean isLeaf, Long filter, Long sort, int page) {
-        filterType filterEnum = filterType.fromNumber(filter);
-        filterType sortEnum = filterType.fromNumber(sort);
+    public List<LeafBranchView> findBranch(Long treeId, Boolean bookMark, Long filter, Long sort, int page) {
+        String filterName = filterType.findNameByNum(filter);
+        String sortName = filterType.findNameByNum(sort);
 
-        System.out.println("filterEnum : " + filterEnum);
-        System.out.println("sortEnum : " + sortEnum);
+        System.out.println("treeId : " + treeId);
+        System.out.println("bookMark : " + bookMark);
+        System.out.println("filterName : " + filterName);
+        System.out.println("sortName : " + sortName);
 
         List<LeafBranchView> branchList;
-        if(isLeaf == null)
-            branchList = leafRepository.findBranchlist(null,treeId,filterEnum,sortEnum,page);
+        if(bookMark == null)
+            branchList = leafRepository.findBranchlist(null, treeId, filterName, sortName, page);
         else
-            branchList = leafRepository.findBranchlist(isLeaf,treeId,filterEnum,sortEnum,page);
+            branchList = leafRepository.findBranchlist(bookMark, treeId, filterName, sortName, page);
 
         return branchList;
     }

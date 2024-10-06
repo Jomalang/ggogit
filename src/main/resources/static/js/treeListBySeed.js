@@ -22,8 +22,7 @@ function bookCard(value){
                                             <span class="card-tree-detail__info">/</span>
                                             <span class="card-tree-detail__info">${value.bookAuthor}</span>
                                             <span class="card-tree-detail__info">/</span>
-                                            <span class="card-tree-detail__info" th:if="*{bookTranslator != null}">${value.bookTranslator}</span>
-                                            <span class="card-tree-detail__info" th:if="*{bookTranslator != null}">/</span>
+                    ${value.bookTranslator ? `<span class="card-tree-detail__info">${value.bookTranslator}</span><span class="card-tree-detail__info">/</span>` : ''}
                                             <span class="card-tree-detail__info">${value.bookPublisher}</span>
                                         </div>
                                         <span class="card-tree-detail__info-created-date">${new Date(value.leafCreatedAt).toISOString().split('T')[0]}</span>
@@ -65,25 +64,30 @@ function nullCard(){
                                     `;
 }
 
+//
+function generateTreeCardListHTML(list) {
+    if (list.length === 0)
+        return nullCard();
+
+    return list.map(value => {
+        if (value.seedId < 2) {
+            return bookCard(value);
+        } else {
+            return etcCard(value);
+        }
+    });
+}
+
 // 홈페이지 트리 전체보기 AJAX 요청 함수
 function listLoad(){
     fetch(`/api/tree/list?seed=0`)
         .then(response => response.json())
         .then(list => {
-            treeCardListFrame.innerHTML = list.map(value => {
-                if (value.seedId < 2) {
-                    return bookCard(value);
-                } else {
-                    return etcCard(value);
-                }
-            }).join('');
+            treeCardListFrame.innerHTML =generateTreeCardListHTML(list).join('');
         })
         .catch(error => console.error('Error:', error));
 }
-// 홈페이지 처음 로딩 시 AJAX 요청
-window.onload = function (){
-    listLoad();
-}
+
 
 // --------------------------------------------------------------------------------------
 //                          홈페이지 시드 별 트리 요청 AJAX
@@ -97,19 +101,16 @@ seedMenu.addEventListener("change", (e) => {
 
     const seedId = e.target.dataset.id;
 
-fetch(`/api/tree/list?seed=${seedId}`)
-    .then(response => response.json())
-    .then(list => {
-        if (list.length === 0 )
-            return treeCardListFrame.innerHTML = nullCard();
-
-        treeCardListFrame.innerHTML = list.map(value => {
-            if (value.seedId < 2) {
-                return bookCard(value);
-            } else {
-                return etcCard(value);
-            }
-        }).join('');
-    })
-    .catch(error => console.error('Error:', error));
+    fetch(`/api/tree/list?seed=${seedId}`)
+        .then(response => response.json())
+        .then(list => {
+            treeCardListFrame.innerHTML = generateTreeCardListHTML(list).join('');
+        })
+        .catch(error => console.error('Error:', error));
 });
+// --------------------------------------------------------------------------------------
+//                          홈페이지 처음 로딩 시 AJAX 요청
+//---------------------------------------------------------------------------------------
+window.onload = function (){
+    listLoad();
+}

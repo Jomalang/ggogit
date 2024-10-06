@@ -63,50 +63,35 @@
 //     })
 // })
 
-
 document.addEventListener("DOMContentLoaded", () => {
     const filterTabBtn = document.getElementById("filter-tree-leaf__card-sort");
     const filterTabCloseBtn = document.getElementById("filter-tab-close-btn");
     const filterBg = document.getElementById("filter-bg-blur");
     const filterTab = document.getElementById("filter-tab");
 
+    //필터 이름 변경 함수
     function updateFilterName(standard, sort) {
-        const filterElement = document.getElementById("filter-tree-leaf__card-sort");
-        if (filterElement) {
-            filterElement.innerHTML = `
-                <input
-                    class="bar-search-current__detail-input"
-                    type="checkbox"
-                    id="bar-search-current__detail"
-                />
-                <label
-                    class="bar-search-current__detail"
-                    for="bar-search-current__detail"
-                >${standard || ''} ${sort || ''}</label>
-            `;
-        }
+        filterTabBtn.innerHTML = `
+            <input
+                class="bar-search-current__detail-input"
+                type="checkbox"
+                id="bar-search-current__detail"
+            />
+            <label
+                class="bar-search-current__detail"
+                for="bar-search-current__detail"
+            >${standard || ''} ${sort || ''}</label>
+        `;
     }
 
-    function setupFilterListeners() {
-        let standard, sort;
-
-        document.querySelectorAll("input[name='filter']").forEach((radio) => {
-            radio.addEventListener("change", (e) => {
-                if (e.currentTarget.checked) {
-                    standard = e.currentTarget.value;
-                    updateFilterName(standard, sort);
-                }
-            });
-        });
-
-        document.querySelectorAll("input[name='sort']").forEach((radio) => {
-            radio.addEventListener("change", (e) => {
-                if (e.currentTarget.checked) {
-                    sort = e.currentTarget.value;
-                    updateFilterName(standard, sort);
-                }
-            });
-        });
+    function setupFilter() {
+        let filter, sort;
+        filter = document.querySelector("input[type='radio'][name='filter']:checked");
+        sort = document.querySelector("input[type='radio'][name='sort']:checked");
+        updateFilterName(
+            filter ? filter.value : '',
+            sort ? sort.value : ''
+        );
     }
 
     filterTabBtn.addEventListener("click", () => {
@@ -117,11 +102,12 @@ document.addEventListener("DOMContentLoaded", () => {
     filterTabCloseBtn.addEventListener("click", () => {
         filterTab.classList.remove("up");
         filterTab.addEventListener("transitionend", function handler() {
+            setupFilter();
             filterBg.classList.add("none");
             filterTab.removeEventListener("transitionend", handler);
         });
     });
 
     // 초기 설정
-    setupFilterListeners();
+    setupFilter();
 });

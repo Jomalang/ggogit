@@ -12,6 +12,7 @@ import Recorders.ggogit.domain.tree.entity.Tree;
 import Recorders.ggogit.domain.tree.repository.TreeRepository;
 import Recorders.ggogit.type.SearchType;
 import Recorders.ggogit.type.SortType;
+import Recorders.ggogit.type.filterType;
 import jakarta.annotation.Nullable;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -193,57 +194,24 @@ public class LeafServiceImpl implements LeafService {
         return leafBranchViews;
     }
 
-
     @Override
-    public List<LeafBranchView> filterBranchLsit(Boolean isLeaf, List<LeafBranchView> everyList) {
-        /*
-        * 리스트 분류
-        * null = 모두
-        * true = 책갈피
-        * false = 라스트 리프
-        * */
-        List<LeafBranchView> filteredList = new ArrayList<>();
-        if(isLeaf == null){
-            return everyList;
-        }else if (isLeaf){
-            for (LeafBranchView leafBranchView : everyList)
-                if(leafBranchView.getBookMark())
-                    filteredList.add(leafBranchView);
-        }else {
-            for (LeafBranchView leafBranchView : everyList)
-                if(!leafBranchView.getBookMark())
-                    filteredList.add(leafBranchView);
-        }
-        return filteredList;
+    public List<LeafBranchView> findBranch(Long treeId, Boolean isLeaf, Long filter, Long sort, int page) {
+        filterType filterEnum = filterType.fromNumber(filter);
+        filterType sortEnum = filterType.fromNumber(sort);
+
+        System.out.println("filterEnum : " + filterEnum);
+        System.out.println("sortEnum : " + sortEnum);
+
+        List<LeafBranchView> branchList;
+        if(isLeaf == null)
+            branchList = leafRepository.findBranchlist(null,treeId,filterEnum,sortEnum,page);
+        else
+            branchList = leafRepository.findBranchlist(isLeaf,treeId,filterEnum,sortEnum,page);
+
+        return branchList;
     }
 
-    @Override
-    public List<LeafBranchView> sortBranchList(Long sort, List<LeafBranchView> everyList) {
-        /*
-        * 브랜치 및 책갈피 정렬 메서드
-        * 브랜치와 책갈피, 브랜치, 책갈피
-        * 0. 업데이트 날짜 / LeafBranchView.getUpdateTime() / 내림순
-        * 1. 업데이트 날짜 / LeafBranchView.getUpdateTime() / 오름순 /
-        * 2. 제목 / LeafBranchView.getTitle() / 내림순
-        * 3. 제목 / LeafBranchView.getTitle() / 오름순
-        * 4. 리프 수 / LeafBranchView.getLeafCount() / 내림순
-        * 5. 리프 수 / LeafBranchView.getLeafCount() / 오름순
-        * 6. 조회 수 / LeafBranchView.getViewCount() / 내림순
-        * 7. 조회 수 / LeafBranchView.getViewCount() / 오름순
-        */
-        switch (sort.intValue()) {
-            case 0 -> everyList.sort((o1, o2) -> o2.getUpdateTime().compareTo(o1.getUpdateTime()));
-            case 1 -> everyList.sort(Comparator.comparing(LeafBranchView::getUpdateTime));
-            case 2 -> everyList.sort((o1, o2) -> o2.getTitle().compareTo(o1.getTitle()));
-            case 3 -> everyList.sort(Comparator.comparing(LeafBranchView::getTitle));
-            case 4 -> everyList.sort((o1, o2) -> o2.getLeafCount().compareTo(o1.getLeafCount()));
-            case 5 -> everyList.sort(Comparator.comparing(LeafBranchView::getLeafCount));
-            case 6 -> everyList.sort((o1, o2) -> o2.getViewCount().compareTo(o1.getViewCount()));
-            case 7 -> everyList.sort(Comparator.comparing(LeafBranchView::getViewCount));
 
-        }
-        return everyList;
-    }
 
     @Override
     public List<LeafImageCardView> getLeafImageCardViews(Long memberId) {

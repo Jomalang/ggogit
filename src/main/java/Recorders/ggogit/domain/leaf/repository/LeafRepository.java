@@ -4,6 +4,7 @@ import Recorders.ggogit.domain.leaf.entity.Leaf;
 import Recorders.ggogit.domain.leaf.view.*;
 import Recorders.ggogit.type.SearchType;
 import Recorders.ggogit.type.SortType;
+import Recorders.ggogit.type.filterType;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -25,4 +26,5 @@ public interface LeafRepository {
     LeafBreadcrumbView findLeafBreadcrumbViewByTreeIdAndLeafId(Long treeId, Long leafId);
     List<Leaf> findByTreeIdOrderById(Long treeId);
     List<LeafBranchView> findLeafBranchViewByTreeId(Long treeId);
+    List<LeafBranchView> findBranchlist(Boolean isLeaf, Long treeId, filterType filter, filterType sort, int page);
 }

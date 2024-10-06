@@ -156,15 +156,14 @@ public class LeafController {
     private List<LeafBranchView>  leafFiltering(
             @RequestParam(value = "treeId") final Long treeId,
             @RequestParam(value = "isLeaf", required = false) final Boolean isLeaf,
+            @RequestParam(value = "filter", required = false) final  Long filter,
             @RequestParam(value = "sort", required = false) final  Long sort
     ){
-        List<LeafBranchView> everyList = leafService.findBranchByTreeId(treeId);
 
-        List<LeafBranchView> isList = leafService.filterBranchLsit(isLeaf,everyList);
+        int page = 10;
+        List<LeafBranchView> list = leafService.findBranch(treeId, isLeaf, filter, sort, page);
 
-        List<LeafBranchView> sortList = leafService.sortBranchList(sort, isList);
-
-        return sortList;
+        return list;
 
     }
 

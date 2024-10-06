@@ -117,6 +117,28 @@
         </select>
 
 
+    <select id="findBranchlist" resultType="LeafBranchView">
+        SELECT
+            ID,
+            PARENT_LEAF_ID,
+            TITLE,
+            VIEW_COUNT,
+            BOOK_MARK,
+            UPDATE_TIME
+        FROM
+            LEAF
+        WHERE
+            TREE_ID = #{treeId}
+            AND IS_DELETED = FALSE
+        <choose>
+            <when test="isLeaf == null">AND CHILD_LEAF_COUNT = 0 OR BOOK_MARK = 1</when>
+            <when test="isLeaf == 'true'">AND CHILD_LEAF_COUNT = 0</when>
+            <when test="isLeaf == 'false'">AND BOOK_MARK = 1</when>
+        </choose>
+        ORDER BY ${filter} ${sort}
+    </select>
+
+
     <select id="findLeafBranchViewByTreeId" resultType="LeafBranchView">
         SELECT
             ID,
@@ -127,8 +149,11 @@
             UPDATE_TIME
         FROM
             LEAF
-        WHERE CHILD_LEAF_COUNT = 0 OR BOOK_MARK = 1
-            AND IS_DELETED = FALSE
+        WHERE
+        TREE_ID = #{treeId}
+        AND CHILD_LEAF_COUNT = 0 OR BOOK_MARK = 1
+        AND IS_DELETED = FALSE
+
     </select>
 
 </mapper>

@@ -1293,6 +1293,12 @@ button {
     ========================================== */
 .before-log-box {
   width: 100%;
+  transform: translateY(-100%);
+  transition: transform 0.5s ease;
+}
+
+.before-log-box--show {
+  transform: translateY(0);
 }
 
 .before-log__branch {
@@ -1407,6 +1413,8 @@ button {
 }
 
 .log-item__title {
+  display: flex;
+  align-items: center;
   font-size: 16px;
   color: var(--main1, #323a27);
   font-weight: var(--bold, 700);

@@ -4,7 +4,7 @@ import Recorders.ggogit.domain.leaf.entity.LeafTag;
 import Recorders.ggogit.domain.leaf.repository.LeafTagMapRepository;
 import Recorders.ggogit.domain.leaf.repository.LeafTagRepository;
 import jakarta.annotation.Nullable;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,13 +12,11 @@ import java.util.Optional;
 
 
 @Service
+@RequiredArgsConstructor
 public class LeafTagServiceImpl implements LeafTagService {
 
-    @Autowired
-    private LeafTagRepository leafTagRepository;
-
-    @Autowired
-    private LeafTagMapRepository leafTagMapRepository;
+    private final LeafTagRepository leafTagRepository;
+    private final LeafTagMapRepository leafTagMapRepository;
 
     @Override
     public LeafTag register(LeafTag leafTag) {

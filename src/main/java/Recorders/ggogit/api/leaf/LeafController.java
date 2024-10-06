@@ -42,14 +42,10 @@ public class LeafController {
             @PathVariable Long treeId,
             @PathVariable Long leafId
     ) {
-        List<LeafNode> leafNodes = leafService.getLeafNodeFromLeafIdToEnd(treeId, leafId);
-
-        List<LeafItemDto> leafItemDtos = new ArrayList<>();
-        for (LeafNode leafNode : leafNodes) {
-            List<LeafTag> leafTags = leafTagService.getLeafTagsByLeafId(leafNode.getData().getId());
-            leafItemDtos.add(LeafItemDto.of(leafNode, leafTags));
-        }
-
+        Long memberId = 1L;
+        boolean isOwner = leafService.isOwner(treeId, memberId); // 자신의 권한 확인
+        List<LeafNode> leafNodes = leafService.getLeafNodeFromLeafIdToEnd(treeId, leafId, isOwner);
+        List<LeafItemDto> leafItemDtos = convertLeafNodesToLeafItemDtos(leafNodes);
         return ResponseEntity.ok(leafItemDtos);
     }
 
@@ -58,14 +54,10 @@ public class LeafController {
             @PathVariable Long treeId,
             @PathVariable Long leafId
     ) {
-        List<LeafNode> leafNodes = leafService.getLeafNodeAll(treeId, leafId);
-
-        List<LeafItemDto> leafItemDtos = new ArrayList<>();
-        for (LeafNode leafNode : leafNodes) {
-            List<LeafTag> leafTags = leafTagService.getLeafTagsByLeafId(leafNode.getData().getId());
-            leafItemDtos.add(LeafItemDto.of(leafNode, leafTags));
-        }
-
+        Long memberId = 1L;
+        boolean isOwner = leafService.isOwner(treeId, memberId); // 자신의 권한 확인
+        List<LeafNode> leafNodes = leafService.getLeafNodeAll(treeId, leafId, isOwner);
+        List<LeafItemDto> leafItemDtos = convertLeafNodesToLeafItemDtos(leafNodes);
         return ResponseEntity.ok(leafItemDtos);
     }
 
@@ -127,6 +119,19 @@ public class LeafController {
         } catch (IOException e) {
             throw new RuntimeException("파일 읽기 실패", e);
         }
+    }
+
+    private List<LeafItemDto> convertLeafNodesToLeafItemDtos(List<LeafNode> leafNodes) {
+        List<LeafItemDto> leafItemDtos = new ArrayList<>();
+        for (LeafNode leafNode : leafNodes) {
+            if (leafNode.getData().getVisibility()) {
+                List<LeafTag> leafTags = leafTagService.getLeafTagsByLeafId(leafNode.getData().getId());
+                leafItemDtos.add(LeafItemDto.of(leafNode, leafTags));
+            } else {
+                leafItemDtos.add(LeafItemDto.of(leafNode, List.of()));
+            }
+        }
+        return leafItemDtos;
     }
 
     private String changeFileNameToUUID(String fileName) {

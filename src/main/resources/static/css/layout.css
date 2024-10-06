@@ -284,6 +284,7 @@ home-tree__reg-4--search-book__input
 .first-log-img-container {
   width: 100%;
   overflow: hidden;
+  margin: 0 16px;
 }
 
 .first-log_page-input-container {

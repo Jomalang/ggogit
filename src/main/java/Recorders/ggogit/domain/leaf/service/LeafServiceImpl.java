@@ -12,14 +12,14 @@ import Recorders.ggogit.domain.tree.entity.Tree;
 import Recorders.ggogit.domain.tree.repository.TreeRepository;
 import Recorders.ggogit.type.SearchType;
 import Recorders.ggogit.type.SortType;
-import Recorders.ggogit.type.filterType;
 import jakarta.annotation.Nullable;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -38,18 +38,19 @@ public class LeafServiceImpl implements LeafService {
     private LeafTagRepository leafTagRepository;
 
     @Override
-    public List<LeafItemView> getLeafItems(Long treeId, @Nullable Long leafId) {
+    public List<LeafItemView> getLeafItems(Long treeId, @Nullable Long leafId, boolean isOwner) {
         List<Leaf> leafs =  leafRepository.findByTreeIdOrderById(treeId);
-        LeafTree leafTree = new LeafTree(leafs); // Tree 자료구조
-        List<LeafNode> branchNodes = leafTree.findAll(leafId);
+        LeafTree leafTree = new LeafTree(leafs);
+        List<LeafNode> branchNodes = leafTree.findAll(leafId, isOwner);
 
         List<LeafItemView> leafItemViews = new ArrayList<>();
         for (LeafNode leafNode : branchNodes) {
+            if (!leafNode.getData().getVisibility()) {
+                continue; // 비공개 리프는 제외
+            }
             List<LeafTag> leafTags = leafTagRepository.findByLeafId(leafNode.getData().getId());
-
             leafItemViews.add(LeafItemView.of(leafNode, leafTags));
         }
-        leafItemViews.getLast().setFocused(true); // 마지막 리프에 포커스
 
         // 트리 조회
         return leafItemViews;
@@ -136,17 +137,17 @@ public class LeafServiceImpl implements LeafService {
     }
 
     @Override
-    public List<LeafNode> getLeafNodeFromLeafIdToEnd(Long treeId, Long leafId) {
+    public List<LeafNode> getLeafNodeFromLeafIdToEnd(Long treeId, Long leafId, boolean isOwner) {
         List<Leaf> leafs =  leafRepository.findByTreeIdOrderById(treeId);
         LeafTree leafTree = new LeafTree(leafs); // Tree 자료구조
-        return leafTree.findToEnd(leafId);
+        return leafTree.findToEnd(leafId, isOwner);
     }
 
     @Override
-    public List<LeafNode> getLeafNodeAll(Long treeId, Long leafId) {
+    public List<LeafNode> getLeafNodeAll(Long treeId, Long leafId, boolean isOwner) {
         List<Leaf> leafs =  leafRepository.findByTreeIdOrderById(treeId);
         LeafTree leafTree = new LeafTree(leafs); // Tree 자료구조
-        return leafTree.findAll(leafId);
+        return leafTree.findAll(leafId, isOwner);
     }
 
     @Override
@@ -155,6 +156,16 @@ public class LeafServiceImpl implements LeafService {
                 .orElseThrow(() -> new IllegalArgumentException("Leaf 조회 실패"));
         List<LeafTag> leafTags = leafTagRepository.findByLeafId(leafId);
         return BeforeLeafInfoView.of(leaf, leafTags);
+    }
+
+    @Override
+    public boolean isOwner(Long treeId, Long memberId) {
+        // 트리 검색
+        Tree tree = Optional.ofNullable(treeRepository.findById(treeId))
+                .orElseThrow(() -> new IllegalArgumentException("Tree 존재하지 않는 트리 아이디 입니다."));
+
+        // 멤버 아이디 확인
+        return Objects.equals(tree.getMemberId(), memberId);
     }
 
     @Override

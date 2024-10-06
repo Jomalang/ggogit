@@ -8,6 +8,6 @@ import lombok.*;
 @Builder
 public class LeafBook {
     private Long leafId; // TODO: entity 수정
-	private Long startPage;
-	private Long endPage;
+	private Integer startPage;
+	private Integer endPage;
 }

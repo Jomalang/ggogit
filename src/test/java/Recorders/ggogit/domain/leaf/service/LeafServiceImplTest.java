@@ -26,6 +26,6 @@ class LeafServiceImplTest {
     void getLeafItems() {
         Long treeId = 1L;
         Long leafId = 2L;
-        List<LeafItemView> leafItems = leafServiceImpl.getLeafItems(treeId, leafId);
+        List<LeafItemView> leafItems = leafServiceImpl.getLeafItems(treeId, leafId, true);
     }
 }

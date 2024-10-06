@@ -45,7 +45,7 @@ class LeafTree {
             const data = await response.json();
             // console.log(data);
             data.forEach(leaf => {
-                console.log(leaf);
+                // console.log(leaf);
                 this.addNode(leaf);
             });
         } catch (error) {
@@ -388,7 +388,20 @@ class LeafTree {
     }
 
     templateLeafNode(direction, leafNode) {
+
+        const data = leafNode.data;
         let template = '';
+
+        let title = data.title;
+        if (data.visibility === false) { // 비공개인 경우
+            title = `
+                <p class="log-item__title">
+                    <span><img src="/svg/lock.svg" alt="lock"></span>
+                    ${data.title}
+                </p>
+            `;
+        }
+
         if (direction === 0) {
             template = `
                 <div class="log-item-box leaf-item"">
@@ -397,7 +410,7 @@ class LeafTree {
                     </div>
                     <div class="log-item__mid-branch">
                         <div class="log-item__line-top hidden"></div>
-                        <div class="log-item__circle node" data-id="${leafNode.data.id}"></div>
+                        <div class="log-item__circle node" data-id="${data.id}"></div>
                         <div class="log-item__line-bot hidden"></div>
                     </div>
                     <div class="log-item__info-box">
@@ -406,10 +419,10 @@ class LeafTree {
                         </div>
                         <a class="log-item__link">
                             <div class="log-item__text-box">
-                                <p class="log-item__title"">${leafNode.data.title}</p>
-                                <p class="log-item__date">${leafNode.data.createTime}</p>
+                                <p class="log-item__title">${title}</p>
+                                <p class="log-item__date">${data.createTime}</p>
                                 <ul class="log-item__tags">
-                                    ${this.templateLeafNodeTags(leafNode.data.tags)}
+                                    ${this.templateLeafNodeTags(data.tags)}
                                 </ul>
                             </div>
                         </a>
@@ -428,7 +441,7 @@ class LeafTree {
             
                     <div class="log-item__mid-branch">
                         <div class="log-item__line-top hidden"></div>
-                        <div class="log-item__circle node" data-id="${leafNode.data.id}"></div>
+                        <div class="log-item__circle node" data-id="${data.id}"></div>
                         <div class="log-item__line-bot"></div>
                     </div>
                     <div class="log-item__info-box">
@@ -437,10 +450,10 @@ class LeafTree {
                         </div>
                         <a class="log-item__link">
                             <div class="log-item__text-box">
-                                <p class="log-item__title">${leafNode.data.title}</p>
-                                <p class="log-item__date">${leafNode.data.createTime}</p>
+                                <p class="log-item__title">${title}</p>
+                                <p class="log-item__date">${data.createTime}</p>
                                 <ul class="log-item__tags">
-                                    ${this.templateLeafNodeTags(leafNode.data.tags)}
+                                    ${this.templateLeafNodeTags(data.tags)}
                                 </ul>
                             </div>
                         </a>
@@ -459,7 +472,7 @@ class LeafTree {
             
                     <div class="log-item__mid-branch">
                         <div class="log-item__line-top hidden"></div>
-                        <div class="log-item__circle node" data-id="${leafNode.data.id}"></div>
+                        <div class="log-item__circle node" data-id="${data.id}"></div>
                         <div class="log-item__line-bot"></div>
                     </div>
                     <div class="log-item__info-box">
@@ -468,10 +481,10 @@ class LeafTree {
                         </div>
                         <a class="log-item__link">
                             <div class="log-item__text-box">
-                                <p class="log-item__title">${leafNode.data.title}</p>
-                                <p class="log-item__date">${leafNode.data.createTime}</p>
+                                <p class="log-item__title">${title}</p>
+                                <p class="log-item__date">${data.createTime}</p>
                                 <ul class="log-item__tags">
-                                    ${this.templateLeafNodeTags(leafNode.data.tags)}
+                                    ${this.templateLeafNodeTags(data.tags)}
                                 </ul>
                             </div>
                         </a>
@@ -490,7 +503,7 @@ class LeafTree {
                     
                     <div class="log-item__mid-branch">
                         <div class="log-item__line-top hidden"></div>
-                        <div class="log-item__circle node" data-id="${leafNode.data.id}"></div>
+                        <div class="log-item__circle node" data-id="${data.id}"></div>
                         <div class="log-item__line-bot"></div>
                     </div>
                     <div class="log-item__info-box">
@@ -499,10 +512,10 @@ class LeafTree {
                         </div>
                         <a class="log-item__link">
                             <div class="log-item__text-box">
-                                <p class="log-item__title">${leafNode.data.title}</p>
-                                <p class="log-item__date">${leafNode.data.createTime}</p>
+                                <p class="log-item__title">${title}</p>
+                                <p class="log-item__date">${data.createTime}</p>
                                 <ul class="log-item__tags">
-                                    ${this.templateLeafNodeTags(leafNode.data.tags)}
+                                    ${this.templateLeafNodeTags(data.tags)}
                                 </ul>
                             </div>
                         </a>
@@ -521,7 +534,7 @@ class LeafTree {
             
                     <div class="log-item__mid-branch">
                         <div class="log-item__line-top hidden"></div>
-                        <div class="log-item__circle node" data-id="${leafNode.data.id}"></div>
+                        <div class="log-item__circle node" data-id="${data.id}"></div>
                         <div class="log-item__line-bot"></div>
                     </div>
                     <div class="log-item__info-box">
@@ -530,10 +543,10 @@ class LeafTree {
                         </div>
                         <a class="log-item__link">
                             <div class="log-item__text-box">
-                                <p class="log-item__title">${leafNode.data.title}</p>
-                                <p class="log-item__date">${leafNode.data.createTime}</p>
+                                <p class="log-item__title">${title}</p>
+                                <p class="log-item__date">${data.createTime}</p>
                                 <ul class="log-item__tags">
-                                    ${this.templateLeafNodeTags(leafNode.data.tags)}
+                                    ${this.templateLeafNodeTags(data.tags)}
                                 </ul>
                             </div>
                         </a>
@@ -552,7 +565,7 @@ class LeafTree {
             
                     <div class="log-item__mid-branch">
                         <div class="log-item__line-top"></div>
-                        <div class="log-item__circle node" data-id="${leafNode.data.id}"></div>
+                        <div class="log-item__circle node" data-id="${data.id}"></div>
                         <div class="log-item__line-bot"></div>
                     </div>
                     <div class="log-item__info-box">
@@ -561,10 +574,10 @@ class LeafTree {
                         </div>
                         <a class="log-item__link">
                             <div class="log-item__text-box">
-                                <p class="log-item__title">${leafNode.data.title}</p>
-                                <p class="log-item__date">${leafNode.data.createTime}</p> 
+                                <p class="log-item__title">${title}</p>
+                                <p class="log-item__date">${data.createTime}</p> 
                                 <ul class="log-item__tags">
-                                    ${this.templateLeafNodeTags(leafNode.data.tags)}
+                                    ${this.templateLeafNodeTags(data.tags)}
                                 </ul>
                             </div>
                         </a>
@@ -583,7 +596,7 @@ class LeafTree {
             
                     <div class="log-item__mid-branch">
                         <div class="log-item__line-top"></div>
-                        <div class="log-item__circle node" data-id="${leafNode.data.id}"></div>
+                        <div class="log-item__circle node" data-id="${data.id}"></div>
                         <div class="log-item__line-bot"></div>
                     </div>
                     <div class="log-item__info-box">
@@ -592,10 +605,10 @@ class LeafTree {
                         </div>
                         <a class="log-item__link">
                             <div class="log-item__text-box">
-                                <p class="log-item__title">${leafNode.data.title}</p>
-                                <p class="log-item__date">${leafNode.data.createTime}</p>
+                                <p class="log-item__title">${title}</p>
+                                <p class="log-item__date">${data.createTime}</p>
                                 <ul class="log-item__tags">
-                                    ${this.templateLeafNodeTags(leafNode.data.tags)}
+                                    ${this.templateLeafNodeTags(data.tags)}
                                 </ul>
                             </div>
                         </a>
@@ -614,7 +627,7 @@ class LeafTree {
             
                     <div class="log-item__mid-branch">
                         <div class="log-item__line-top"></div>
-                        <div class="log-item__circle node" data-id="${leafNode.data.id}"></div>
+                        <div class="log-item__circle node" data-id="${data.id}"></div>
                         <div class="log-item__line-bot"></div>
                     </div>
                     <div class="log-item__info-box">
@@ -623,10 +636,10 @@ class LeafTree {
                         </div>
                         <a class="log-item__link">
                             <div class="log-item__text-box">
-                                <p class="log-item__title">${leafNode.data.title}</p>
-                                <p class="log-item__date">${leafNode.data.createTime}</p>
+                                <p class="log-item__title">${title}</p>
+                                <p class="log-item__date">${data.createTime}</p>
                                 <ul class="log-item__tags">
-                                    ${this.templateLeafNodeTags(leafNode.data.tags)}
+                                    ${this.templateLeafNodeTags(data.tags)}
                                 </ul>
                             </div>
                         </a>
@@ -645,7 +658,7 @@ class LeafTree {
             
                     <div class="log-item__mid-branch">
                         <div class="log-item__line-top"></div>
-                        <div class="log-item__circle node" data-id="${leafNode.data.id}"></div>
+                        <div class="log-item__circle node" data-id="${data.id}"></div>
                         <div class="log-item__line-bot"></div>
                     </div>
                     <div class="log-item__info-box">
@@ -654,10 +667,10 @@ class LeafTree {
                         </div>
                         <a class="log-item__link">
                             <div class="log-item__text-box">
-                                <p class="log-item__title">${leafNode.data.title}</p>
-                                <p class="log-item__date">${leafNode.data.createTime}</p>
+                                <p class="log-item__title">${title}</p>
+                                <p class="log-item__date">${data.createTime}</p>
                                 <ul class="log-item__tags">
-                                    ${this.templateLeafNodeTags(leafNode.data.tags)}
+                                    ${this.templateLeafNodeTags(data.tags)}
                                 </ul>
                             </div>
                         </a>
@@ -676,7 +689,7 @@ class LeafTree {
             
                     <div class="log-item__mid-branch">
                         <div class="log-item__line-top hidden"></div>
-                        <div class="log-item__circle node" data-id="${leafNode.data.id}"></div>
+                        <div class="log-item__circle node" data-id="${data.id}"></div>
                         <div class="log-item__line-bot hidden"></div>
                     </div>
                     <div class="log-item__info-box">
@@ -685,10 +698,10 @@ class LeafTree {
                         </div>
                         <a class="log-item__link">
                             <div class="log-item__text-box">
-                                <p class="log-item__title">${leafNode.data.title}</p>
-                                <p class="log-item__date">${leafNode.data.createTime}</p>
+                                <p class="log-item__title">${title}</p>
+                                <p class="log-item__date">${data.createTime}</p>
                                 <ul class="log-item__tags">
-                                    ${this.templateLeafNodeTags(leafNode.data.tags)}
+                                    ${this.templateLeafNodeTags(data.tags)}
                                 </ul>
                             </div>
                         </a>
@@ -707,7 +720,7 @@ class LeafTree {
             
                     <div class="log-item__mid-branch">
                         <div class="log-item__line-top hidden"></div>
-                        <div class="log-item__circle node" data-id="${leafNode.data.id}"></div>
+                        <div class="log-item__circle node" data-id="${data.id}"></div>
                         <div class="log-item__line-bot hidden"></div>
                     </div>
                     <div class="log-item__info-box">
@@ -716,10 +729,10 @@ class LeafTree {
                         </div>
                         <a class="log-item__link">
                             <div class="log-item__text-box">
-                                <p class="log-item__title">${leafNode.data.title}</p>
-                                <p class="log-item__date">${leafNode.data.createTime}</p>
+                                <p class="log-item__title">${title}</p>
+                                <p class="log-item__date">${data.createTime}</p>
                                 <ul class="log-item__tags">
-                                    ${this.templateLeafNodeTags(leafNode.data.tags)}
+                                    ${this.templateLeafNodeTags(data.tags)}
                                 </ul>
                             </div>
                         </a>
@@ -738,7 +751,7 @@ class LeafTree {
             
                     <div class="log-item__mid-branch">
                         <div class="log-item__line-top"></div>
-                        <div class="log-item__circle node" data-id="${leafNode.data.id}"></div>
+                        <div class="log-item__circle node" data-id="${data.id}"></div>
                         <div class="log-item__line-bot hidden"></div>
                     </div>
                     <div class="log-item__info-box">
@@ -747,10 +760,10 @@ class LeafTree {
                         </div>
                         <a class="log-item__link">
                             <div class="log-item__text-box">
-                                <p class="log-item__title">${leafNode.data.title}</p>
-                                <p class="log-item__date">${leafNode.data.createTime}</p>
+                                <p class="log-item__title">${title}</p>
+                                <p class="log-item__date">${data.createTime}</p>
                                 <ul class="log-item__tags">
-                                    ${this.templateLeafNodeTags(leafNode.data.tags)}
+                                    ${this.templateLeafNodeTags(data.tags)}
                                 </ul>
                             </div>
                         </a>
@@ -773,17 +786,12 @@ class LeafTree {
     }
 }
 
-// 노드 활성화
-window.addEventListener('scroll', throttle(() => {
-    this.findFocusNode();
-}, 100)); // 100ms 간격으로 실행
-
 const focusDate = document.querySelector('section.log-list-date-title-container h1.text--title24');
 
 function findFocusNode() {
     const nodes = document.querySelectorAll('.node');
-    const focusY = (window.innerHeight / 2) - 100;
-    const focusX = (window.innerWidth / 2) - 100;
+    const focusY = (window.innerHeight / 2);
+    const focusX = (window.innerWidth / 2);
 
     // console.log('start > scroll');
     let minDistance = Number.MAX_SAFE_INTEGER;
@@ -806,13 +814,22 @@ function findFocusNode() {
     const item = minNode.closest('.leaf-item');
     // 화면 날짜 적용
     const dateTag = item.querySelector('.log-item__date');
-    focusDate.textContent = formatDate(dateTag.innerText); // 화면 날짜 적용
-    leafRegisterLinkChange(minNode.dataset.id);
+
+    if (dateTag.innerText === '') {
+        focusDate.textContent = '비공개 리프입니다.';
+    } else {
+        focusDate.textContent = formatDate(dateTag.innerText); // 화면 날짜 적용
+        leafRegisterLinkChange(minNode.dataset.id);
+    }
 
     // 브래드 크럼 적용
     const branchCrumbs = document.querySelector('.log-path-box__branch-name');
     const titleTag = item.querySelector('.log-item__title');
-    branchCrumbs.innerText = titleTag.innerText;
+    if (titleTag.innerText === '') {
+        branchCrumbs.innerText = '비공개 리프입니다.';
+    } else {
+        branchCrumbs.innerText = titleTag.innerText;
+    }
 }
 
 function formatLocalDateTimeToDate(dateString) {
@@ -838,18 +855,18 @@ function distance(x1, y1, x2, y2) {
     return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
 }
 
-function throttle(func, limit) { // 쓰로틀링 함수
-    let inThrottle;
-    return function() {
-        const args = arguments;
-        const context = this;
-        if (!inThrottle) {
-            func.apply(context, args);
-            inThrottle = true;
-            setTimeout(() => inThrottle = false, limit);
-        }
-    }
+function getURLLeafId() {
+    const url = window.location.search;
+    const params = new URLSearchParams(url);
+    return parseInt(params.get('leaf_id'));
 }
+
+function focusLeafNode() {
+    const leafId = getURLLeafId();
+    const node = document.querySelector(`.node[data-id="${leafId}"]`);
+    node.scrollIntoView({block: 'center', behavior: 'smooth'});
+}
+
 
 window.addEventListener('resize', () => {
     const nodes = document.querySelectorAll('.log-item-container');
@@ -857,12 +874,16 @@ window.addEventListener('resize', () => {
         if (node.children.length === 1) {
             continue; // 자식이 1개인 경우 스크롤 이벤트 추가하지 않음
         }
-
         node.style.transform = `translateX(-${node.dataset.index * window.innerWidth}px)`;
     }
+});
+
+document.querySelector('body').addEventListener('scroll', () => {
+    this.findFocusNode();
 });
 
 window.addEventListener('DOMContentLoaded', async () => {
     const leafTree = new LeafTree();
     await leafTree.init();
+    focusLeafNode();
 });

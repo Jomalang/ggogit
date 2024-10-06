@@ -4,6 +4,7 @@ import lombok.Getter;
 
 @Getter
 public enum LeafDirectionType {
+    
     INIT("INIT", "초기화", 0),
     START_DOWN("START_DOWN", "아래로 시작", 1),
     START_RIGHT("START_RIGHT", "오른쪽으로 시작", 2),

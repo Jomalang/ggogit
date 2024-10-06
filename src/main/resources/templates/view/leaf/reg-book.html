@@ -27,12 +27,12 @@
 <main>
     <section class="first-log-img-container">
         <h1 class="none">이전 리프 생성 이미지</h1>
-        <div th:replace="~{fragments/log :: frist-log}"></div>
+        <div th:replace="~{fragments/log :: before-log(leafInfo=${beforeLeaf})}"></div>
     </section>
 
     <section class="first-log-title-container">
         <h1 class="none"></h1>
-        <div th:replace="~{fragments/text :: text-main-title-center(title='트리 첫번째 기록', size=28)}"></div>
+        <div th:replace="~{fragments/text :: text-main-title(title='리프 생성', size=28)}"></div>
     </section>
 
     <form th:action="@{/leaf/reg}" th:object="${form}" method="post" class="input-form" id="input-leaf-register-form-id">
@@ -42,6 +42,16 @@
             <section class="none">
                 <h1>씨앗 데이터 타입</h1>
                 <label><input type="number" name="seedId" value="1"></label>
+            </section>
+
+            <section class="none">
+                <h1>이전 트리 번호</h1>
+                <label><input type="number" name="treeId" th:value="${treeId}"></label>
+            </section>
+
+            <section class="none">
+                <h1>이전 리프 번호</h1>
+                <label><input type="number" name="parentId" th:value="${leafId}"></label>
             </section>
 
             <section class="first-log_page-input-container">

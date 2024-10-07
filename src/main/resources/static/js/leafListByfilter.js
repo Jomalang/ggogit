@@ -2,6 +2,7 @@
 const pathname = window.location.pathname;
 const lastSegments = (pathname) => pathname.split('/').pop();
 const treeId = lastSegments(pathname);
+let bookMark;
 
 //필터 이름 변경 함수
 function updateFilterName(standard, sort, filterTabBtn) {
@@ -32,6 +33,10 @@ function setupFilter(filterTabBtn) {
     updateFilterName(filterName, sortName, filterTabBtn);
 }
 
+function updateBookmark(sortBtn) {
+    return  sortBtn.querySelector(" input[type='radio'][name='bookMark']:checked").value;
+}
+
 function updateFilter(filterFrame) {
     return  filterFrame.querySelector(" input[type='radio'][name='filter']:checked").value;
 }
@@ -48,7 +53,7 @@ function generateBranchList(list){
     });
 }
 
-function listLoad(filterFrame,branchListFrame){
+function listLoad(filterFrame, branchListFrame, filterCount){
     let filter, sort;
     filter = updateFilter(filterFrame);
     sort = updateSort(filterFrame);
@@ -57,6 +62,7 @@ function listLoad(filterFrame,branchListFrame){
         .then(list =>{
             if (branchListFrame) {
                 branchListFrame.innerHTML = generateBranchList(list).join('');
+                filterCount.innerHTML = branchCount(list);
             } else {
                 console.error("branchListFrame element not found");
             }
@@ -64,6 +70,81 @@ function listLoad(filterFrame,branchListFrame){
 }
 
 
+function branchListByFilter(bookMark, filterFrame, sortBtn, branchListFrame, filterCount) {
+
+    let filter, sort;
+    filter = updateFilter(filterFrame);
+    sort = updateSort(filterFrame);
+
+    branchListFrame.innerHTML = ``;
+
+    if (bookMark != null)
+        fetch(`/api/v1/filter?treeId=${treeId}&bookMark=${bookMark}&filter=${filter}&sort=${sort}`)
+            .then(response => response.json())
+            .then(list => {
+                if (branchListFrame) {
+                    branchListFrame.innerHTML = generateBranchList(list).join('');
+                    filterCount.innerHTML = branchCount(list);
+                } else {
+                    console.error("branchListFrame element not found");
+                }
+            })
+            .catch(error => console.error('Error: ', error));
+    else
+        fetch(`/api/v1/filter?treeId=${treeId}&filter=${filter}&sort=${sort}`)
+            .then(response => response.json())
+            .then(list => {
+                if (branchListFrame) {
+                    branchListFrame.innerHTML = generateBranchList(list).join('');
+                    filterCount.innerHTML = branchCount(list);
+                } else {
+                    console.error("branchListFrame element not found");
+                }
+            })
+            .catch(error => console.error('Error: ', error));
+
+}
+
+function updateBookMark(e){
+    return e.target.dataset.id;
+}
+
+
+function branchListByBookmark(e,bookMark,filterFrame, branchListFrame, filterCount) {
+
+    let filter, sort;
+    filter = updateFilter(filterFrame);
+    sort = updateSort(filterFrame);
+
+    bookMark = e.target.dataset.id;
+    branchListFrame.innerHTML = ``;
+
+    if (bookMark != null)
+        fetch(`/api/v1/filter?treeId=${treeId}&bookMark=${bookMark}&filter=${filter}&sort=${sort}`)
+            .then(response => response.json())
+            .then(list => {
+                if (branchListFrame) {
+                    branchListFrame.innerHTML = generateBranchList(list).join('');
+                    filterCount.innerHTML = branchCount(list);
+                } else {
+                    console.error("branchListFrame element not found");
+                }
+            })
+            .catch(error => console.error('Error: ', error));
+    else
+        fetch(`/api/v1/filter?treeId=${treeId}&filter=${filter}&sort=${sort}`)
+            .then(response => response.json())
+            .then(list => {
+                if (branchListFrame) {
+                    branchListFrame.innerHTML = generateBranchList(list).join('');
+                    filterCount.innerHTML = branchCount(list);
+                } else {
+                    console.error("branchListFrame element not found");
+                }
+            })
+            .catch(error => console.error('Error: ', error));
+
+}
 //===============================================================
 //                         TEMPLATE
 //===============================================================
@@ -100,45 +181,18 @@ function nullTemplate(){
 `;
 }
 
-
-function inputBranchInfo(e,filterFrame, branchListFrame) {
-
-    let filter, sort;
-    filter = updateFilter(filterFrame);
-    sort = updateSort(filterFrame);
-
-    const bookMark = e.target.dataset.id;
-    branchListFrame.innerHTML = ``;
-
-    console.log("tree: " + treeId);
-    console.log("bookMark: " + bookMark);
-    console.log("filter: " + filter);
-    console.log("sort: " + sort);
-
-    if (bookMark != null)
-        fetch(`/api/v1/filter?treeId=${treeId}&bookMark=${bookMark}&filter=${filter}&sort=${sort}`)
-            .then(response => response.json())
-            .then(list => {
-                if (branchListFrame) {
-                    branchListFrame.innerHTML = generateBranchList(list).join('');
-                } else {
-                    console.error("branchListFrame element not found");
-                }
-            })
-            .catch(error => console.error('Error: ', error));
-    else
-        fetch(`/api/v1/filter?treeId=${treeId}&filter=${filter}&sort=${sort}`)
-            .then(response => response.json())
-            .then(list => {
-                if (branchListFrame) {
-                    branchListFrame.innerHTML = generateBranchList(list).join('');
-                } else {
-                    console.error("branchListFrame element not found");
-                }
-            })
-            .catch(error => console.error('Error: ', error));
-
+function branchCount(list) {
+    return`
+    <span
+              class="text-main-side-text"
+              id="branch-count">
+              ${list.length} 개
+      </span>
+    `;
+    
 }
+
+
 
 
 //==========================================================================================
@@ -149,9 +203,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const filterTabCloseBtn = document.getElementById("filter-tab-close-btn");
     const filterBg = document.getElementById("filter-bg-blur");
     const filterTab = document.getElementById("filter-tab");
-
-    const selectFilter = document.getElementById("filter-tab__list1");
-    const selectSort = document.getElementById("filter-tab__list2");
+    const filterCount = document.getElementById("branch-count");
 
 
     filterTabBtn.addEventListener("click", () => {
@@ -182,29 +234,32 @@ document.addEventListener("DOMContentLoaded", () => {
         console.error("id : " + branchListFrame)
     const sortBtn = document.getElementById("branchSortFilter");
     const filterFrame = document.getElementById("filter-bg-blur");
+    const selectFilter = document.getElementById("filter-tab__list1");
+    const selectSort = document.getElementById("filter-tab__list2");
 
 //===============================================================
 //                     AJAX 구현
 //===============================================================
 
     //초기 필터값 브랜치 list
-    listLoad(filterFrame,branchListFrame);
+    listLoad(filterFrame, branchListFrame, filterCount);
 
     //버튼 필터값 브랜치 list (전체, 북마크, 리프)
     sortBtn.addEventListener("click", (e) => {
         if (!e.target.checked) return
-        inputBranchInfo(e,filterFrame, branchListFrame);
+        branchListByBookmark(e,bookMark,filterFrame, branchListFrame, filterCount);
+        bookMark = updateBookMark(e);
     });
 
     //팝업 필터값 브랜치1 list (최신 수정, 기준,...)
     selectFilter.addEventListener("click", (e) => {
         if (!e.target.checked) return
-        inputBranchInfo(e,filterFrame, branchListFrame);
+        branchListByFilter(bookMark, filterFrame, sortBtn, branchListFrame, filterCount);
     });
 
     //팝업 필터값 브랜치2 list (오름순, 내림순)
     selectSort.addEventListener("click", (e) => {
         if (!e.target.checked) return
-        inputBranchInfo(e,filterFrame, branchListFrame);
+        branchListByFilter(bookMark, filterFrame, sortBtn, branchListFrame, filterCount);
     });
 });

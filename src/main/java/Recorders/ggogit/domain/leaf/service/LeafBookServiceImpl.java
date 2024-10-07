@@ -106,6 +106,13 @@ public class LeafBookServiceImpl implements LeafBookService {
             treeImageRepository.save(treeImage);
         }
 
+        // 트리 북 저장 로직
+        TreeBook treeBook = TreeBook.builder()
+                .treeId(tree.getId())
+                .readingPage(0)
+                .build();
+        treeBookRepository.save(treeBook);
+
         // 트리 저장 TMP 삭제
         treeSaveTmpRepository.deleteByMemberId(memberId);
 
@@ -144,7 +151,6 @@ public class LeafBookServiceImpl implements LeafBookService {
     }
 
     private LeafBookView registerLogic(LeafBookView leafBookView) {
-        Long leafId = leafBookView.getLeafId();
         Long treeId = leafBookView.getTreeId();
         String content = leafBookView.getContent();
 
@@ -173,12 +179,11 @@ public class LeafBookServiceImpl implements LeafBookService {
 
         // 이미지 DB 저장
         for (String fileName : filesNames) {
-            LeafImage leafImage = leafMapper.toEntity(leafId, fileName);
+            LeafImage leafImage = leafMapper.toEntity(leaf.getId(), fileName);
             leafImageRepository.save(leafImage);
         }
 
-        // 도서 리프 저장
-        leafBookView.setLeafId(leafId);
+        leafBookView.setLeafId(leaf.getId());
         LeafBook leafBook = leafBookView.toLeafBook();
         Long bookSaveCheck = leafBookRepository.save(leafBook);
         if (bookSaveCheck == null || bookSaveCheck != 1) {
@@ -192,9 +197,12 @@ public class LeafBookServiceImpl implements LeafBookService {
         });
 
         // 도서 리프 읽은 페이지 수정
+        Tree tree = treeRepository.findById(treeId);
         TreeBook treeBook = treeBookRepository.findById(treeId);
+
+        Book book = bookRepository.findById(tree.getBookId());
         List<LeafBook> leafBooks = leafBookRepository.findByTreeId(treeId);
-        int readingPage = readingPage(treeBook, leafBooks);
+        int readingPage = readingPage(book.getTotalPage(), leafBooks);
         treeBook.setReadingPage(readingPage);
 
         // 도서 리프 읽은 페이지 저장
@@ -204,8 +212,8 @@ public class LeafBookServiceImpl implements LeafBookService {
         return leafBookView;
     }
 
-    private int readingPage(TreeBook treeBook, List<LeafBook> leafBooks) {
-        boolean[] isRead = new boolean[leafBooks.size()]; // 읽은 페이지 체크
+    private int readingPage(int totalPage, List<LeafBook> leafBooks) {
+        boolean[] isRead = new boolean[totalPage]; // 읽은 페이지 체크
         int readPage = 0; // 읽은 페이지 수
         for (LeafBook book : leafBooks) {
             for (int i = book.getStartPage(); i <= book.getEndPage(); i++) {

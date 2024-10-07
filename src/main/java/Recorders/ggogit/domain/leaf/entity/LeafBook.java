@@ -7,7 +7,7 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 public class LeafBook {
-    private Long leafId; // TODO: entity 수정
+    private Long leafId;
 	private Integer startPage;
 	private Integer endPage;
 }

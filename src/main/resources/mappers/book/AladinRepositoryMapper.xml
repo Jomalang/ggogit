@@ -4,9 +4,22 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="Recorders.ggogit.api.book.AladinRepository">
 
+<!--    <insert id="save" parameterType="Book">-->
+<!--        INSERT IGNORE INTO BOOK (MEMBER_ID, BOOK_CATEGORY_ID, TITLE, AUTHOR, ISBN, PUBLISHER, PUBLISH_DATE, TOTAL_PAGE, IMAGE_FILE, IS_DELETED, CREATE_TIME, UPDATE_TIME)-->
+<!--        VALUE (#{memberId}, #{bookCategoryId}, #{title}, #{author}, #{isbn}, #{publisher}, #{publishDate}, #{totalPage}, #{imageFile}, #{isDeleted}, #{createTime}, #{updateTime})-->
+<!--    </insert>-->
+
     <insert id="save" parameterType="Book">
         INSERT INTO BOOK (MEMBER_ID, BOOK_CATEGORY_ID, TITLE, AUTHOR, ISBN, PUBLISHER, PUBLISH_DATE, TOTAL_PAGE, IMAGE_FILE, IS_DELETED, CREATE_TIME, UPDATE_TIME)
-        VALUE (#{memberId}, #{bookCategoryId}, #{title}, #{author}, #{isbn}, #{publisher}, #{publishDate}, #{totalPage}, #{imageFile}, #{isDeleted}, #{createTime}, #{updateTime})
+        SELECT #{memberId}, #{bookCategoryId}, #{title}, #{author}, #{isbn}, #{publisher}, #{publishDate}, #{totalPage}, #{imageFile}, #{isDeleted}, #{createTime}, #{updateTime}
+        FROM DUAL
+        WHERE NOT EXISTS (
+        SELECT 1 FROM BOOK WHERE ISBN = #{isbn}
+        )
     </insert>
+
+    <select id="findByIsbn" parameterType="string" resultType="Book">
+        SELECT * FROM BOOK WHERE ISBN = #{isbn}
+    </select>
 
 </mapper>

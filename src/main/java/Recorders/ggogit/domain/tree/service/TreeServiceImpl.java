@@ -1,10 +1,8 @@
 package Recorders.ggogit.domain.tree.service;
 
-import Recorders.ggogit.domain.book.entity.Book;
 import Recorders.ggogit.domain.book.repository.BookRepository;
 import Recorders.ggogit.domain.book.view.BookInfoView;
 import Recorders.ggogit.domain.leaf.repository.LeafRepository;
-import Recorders.ggogit.domain.leaf.view.LeafBranchView;
 import Recorders.ggogit.domain.member.repository.MemberRepository;
 import Recorders.ggogit.domain.member.view.MemberImageView;
 import Recorders.ggogit.domain.tree.entity.Tree;
@@ -16,7 +14,6 @@ import Recorders.ggogit.web.tree.form.TreeEtcSaveTmpForm;
 import Recorders.ggogit.web.tree.form.TreeSaveTmpForm;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -28,23 +25,15 @@ import java.util.List;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class TreeServiceImpl implements TreeService {
+public abstract class TreeServiceImpl implements TreeService {
 
-    @Autowired
-    TreeRepository repository;
-
-    @Autowired
-    TreeSaveTmpRepository treeSaveTmpRepository;
-    @Autowired
-    private MemberRepository memberRepository;
-    @Autowired
-    private LeafRepository leafRepository;
-    @Autowired
-    private TreeRepository treeRepository;
-    @Autowired
-    private BookRepository bookRepository;
-    @Autowired
-    private SeedRepository seedRepository;
+     private final TreeRepository repository;
+     private final TreeSaveTmpRepository treeSaveTmpRepository;
+     private final MemberRepository memberRepository;
+     private final LeafRepository leafRepository;
+     private final TreeRepository treeRepository;
+     private final BookRepository bookRepository;
+     private final SeedRepository seedRepository;
 
     @Override
     public void register(Tree tree) {
@@ -142,6 +131,12 @@ public class TreeServiceImpl implements TreeService {
     public Long getSeedId(Long treeId) {
         Tree tree = repository.findById(treeId);
         return tree.getSeedId();
+    }
+
+    @Override
+    public Long toMemberId(Long treeId){
+        Tree tree = repository.findById(treeId);
+        return tree.getMemberId();
     }
 
     @Override

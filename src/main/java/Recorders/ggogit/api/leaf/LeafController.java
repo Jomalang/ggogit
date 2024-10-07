@@ -8,14 +8,12 @@ import Recorders.ggogit.domain.leaf.structure.LeafNode;
 import Recorders.ggogit.domain.leaf.view.LeafBranchView;
 import Recorders.ggogit.domain.leaf.view.LeafListBranchView;
 import Recorders.ggogit.domain.member.entity.Member;
-import Recorders.ggogit.domain.member.service.MemberService;
 import Recorders.ggogit.domain.tree.service.TreeService;
 import Recorders.ggogit.web.member.session.SessionConst;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +26,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @RestController("apiLeafController")
@@ -174,10 +173,15 @@ public class LeafController {
         HttpSession session = request.getSession();
         Member member = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
         Long memberId= member.getId();
-        Long memberIdByTreeId = treeService.
+        Long memberIdByTreeId = treeService.toMemberId(treeId);
 
+        List<LeafBranchView> list;
         int page = 10;
-        List<LeafBranchView> list = leafService.findBranch(treeId, bookMark, filter, sort, page);
+
+        if (Objects.equals(memberId, memberIdByTreeId))
+            list = leafService.toBranch(treeId, bookMark, filter, sort, page);
+        else
+            list = leafService.toBranchForNeighbor(treeId, filter, sort, page);
 
         return list;
 

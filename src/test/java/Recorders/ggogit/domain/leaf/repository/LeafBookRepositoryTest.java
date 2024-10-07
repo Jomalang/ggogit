@@ -26,8 +26,8 @@ class LeafBookRepositoryTest {
         // given
         LeafBook leafBook = LeafBook.builder()
                 .leafId(7771L)
-                .startPage(1L)
-                .endPage(10L)
+                .startPage(1)
+                .endPage(10)
                 .build();
 
         // when
@@ -56,8 +56,8 @@ class LeafBookRepositoryTest {
         // given
         LeafBook leafBook = LeafBook.builder()
                 .leafId(7770L)
-                .startPage(1L)
-                .endPage(11L)
+                .startPage(1)
+                .endPage(11)
                 .build();
 
         // when

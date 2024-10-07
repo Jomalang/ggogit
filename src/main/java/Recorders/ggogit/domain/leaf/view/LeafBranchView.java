@@ -20,6 +20,7 @@ public class LeafBranchView {
     Long leafCount;
     Long viewCount;
     Boolean bookMark;
+    Boolean visibility;
     LocalDateTime updateTime;
 
     public static LeafBranchView of(Leaf leaf, Long viewCount, Long leafCount){

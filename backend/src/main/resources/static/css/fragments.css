@@ -2042,6 +2042,10 @@ card.html
   border-radius: 8px;
   background: var(--main2--opacity40);
 }
+.card-branch__list-frame-flex {
+  display: flex;
+  justify-content: space-between;
+}
 .branch-info-frame {
   display: flex;
   gap: 4px;
@@ -2055,6 +2059,13 @@ card.html
   flex-shrink: 0;
   border-radius: 4px;
   background: var(--main1);
+}
+.branch-img-frame-lock{
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: end;
+  align-items: start;
 }
 .branch-detail-info {
   padding-top: 1px;
@@ -2353,6 +2364,7 @@ card.html
 }
 .filter-tree-list-img:checked {
   background-color: var(--btn-active);
+  background-image: url("/svg/sort-white.svg");
   color: var(--white);
 }
 .filter-tree-list-btn {

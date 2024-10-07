@@ -8,6 +8,7 @@ import Recorders.ggogit.domain.leaf.structure.LeafNode;
 import Recorders.ggogit.domain.leaf.view.LeafBranchView;
 import Recorders.ggogit.domain.leaf.view.LeafListBranchView;
 import Recorders.ggogit.domain.member.entity.Member;
+import Recorders.ggogit.domain.member.service.LoginService;
 import Recorders.ggogit.domain.member.service.MemberService;
 import Recorders.ggogit.domain.tree.service.TreeService;
 import Recorders.ggogit.web.member.session.SessionConst;
@@ -38,7 +39,7 @@ public class LeafController {
 
     private final LeafService leafService;
     private final LeafTagService leafTagService;
-    private final TreeService treeService;
+    private final LoginService loginService;
 
     @Value("${file.tmp-dir}")
     private String tmpDir;
@@ -171,13 +172,14 @@ public class LeafController {
             @RequestParam(value = "sort", required = false) final  Long sort,
             HttpServletRequest request
     ){
-        HttpSession session = request.getSession();
-        Member member = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
-        Long memberId = member.getId();
-//        Long memberIdByTreeId = treeService.
 
+        List<LeafBranchView> list;
         int page = 10;
-        List<LeafBranchView> list = leafService.findBranch(treeId, bookMark, filter, sort, page);
+
+        if (loginService.isOnner(request,treeId))
+            list = leafService.toBranch(treeId, bookMark, filter, sort, page);
+        else
+            list = leafService.toBranchForNeighbor(treeId, filter, sort, page);
 
         return list;
 

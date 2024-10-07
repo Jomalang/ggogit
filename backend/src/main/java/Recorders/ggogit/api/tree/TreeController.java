@@ -6,6 +6,7 @@ import Recorders.ggogit.domain.tree.view.TreeCardView;
 import Recorders.ggogit.web.member.session.SessionConst;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,10 +17,10 @@ import java.util.List;
 
 @RestController("apiTreeController")
 @RequestMapping("/api/tree/")
+@RequiredArgsConstructor
 public class TreeController {
 
-    @Autowired
-    TreeService treeService;
+    private final TreeService treeService;
 
     @GetMapping("/list")
     private List<TreeCardView> list(

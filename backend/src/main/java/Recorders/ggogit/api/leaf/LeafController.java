@@ -173,8 +173,8 @@ public class LeafController {
     ){
         HttpSession session = request.getSession();
         Member member = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
-        Long memberId= member.getId();
-        Long memberIdByTreeId = treeService.
+        Long memberId = member.getId();
+//        Long memberIdByTreeId = treeService.
 
         int page = 10;
         List<LeafBranchView> list = leafService.findBranch(treeId, bookMark, filter, sort, page);

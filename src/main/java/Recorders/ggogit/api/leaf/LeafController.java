@@ -5,7 +5,15 @@ import Recorders.ggogit.domain.leaf.entity.LeafTag;
 import Recorders.ggogit.domain.leaf.service.LeafService;
 import Recorders.ggogit.domain.leaf.service.LeafTagService;
 import Recorders.ggogit.domain.leaf.structure.LeafNode;
+import Recorders.ggogit.domain.leaf.view.LeafBranchView;
 import Recorders.ggogit.domain.leaf.view.LeafListBranchView;
+import Recorders.ggogit.domain.member.entity.Member;
+import Recorders.ggogit.domain.member.service.MemberService;
+import Recorders.ggogit.domain.tree.service.TreeService;
+import Recorders.ggogit.web.member.session.SessionConst;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,13 +33,12 @@ import java.util.UUID;
 @RestController("apiLeafController")
 @RequestMapping("/api/v1/")
 @Slf4j
+@RequiredArgsConstructor
 public class LeafController {
 
-    @Autowired
-    private LeafService leafService;
-
-    @Autowired
-    private LeafTagService leafTagService;
+    private final LeafService leafService;
+    private final LeafTagService leafTagService;
+    private final TreeService treeService;
 
     @Value("${file.tmp-dir}")
     private String tmpDir;
@@ -155,4 +162,25 @@ public class LeafController {
         UUID uuid = UUID.randomUUID();
         return uuid.toString().replaceAll("-", "");
     }
+
+    @GetMapping("/filter")
+    private List<LeafBranchView>  leafFiltering(
+            @RequestParam(value = "treeId") final Long treeId,
+            @RequestParam(value = "bookMark", required = false) final Boolean bookMark,
+            @RequestParam(value = "filter", required = false) final  Long filter,
+            @RequestParam(value = "sort", required = false) final  Long sort,
+            HttpServletRequest request
+    ){
+        HttpSession session = request.getSession();
+        Member member = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
+        Long memberId= member.getId();
+        Long memberIdByTreeId = treeService.
+
+        int page = 10;
+        List<LeafBranchView> list = leafService.findBranch(treeId, bookMark, filter, sort, page);
+
+        return list;
+
+    }
+
 }

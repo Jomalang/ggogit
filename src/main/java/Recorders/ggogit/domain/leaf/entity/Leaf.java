@@ -18,7 +18,7 @@ public class Leaf {
     private String title;
     private String content;
     private Long childLeafCount;
-    private Long bookMark;
+    private Boolean bookMark;
     private LocalDateTime updateTime;
     private LocalDateTime createTime;
 }

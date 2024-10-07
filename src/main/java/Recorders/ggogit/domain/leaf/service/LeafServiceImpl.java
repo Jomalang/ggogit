@@ -12,15 +12,13 @@ import Recorders.ggogit.domain.tree.entity.Tree;
 import Recorders.ggogit.domain.tree.repository.TreeRepository;
 import Recorders.ggogit.type.SearchType;
 import Recorders.ggogit.type.SortType;
+import Recorders.ggogit.type.filterType;
 import jakarta.annotation.Nullable;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -170,6 +168,64 @@ public class LeafServiceImpl implements LeafService {
     }
 
     @Override
+    public List<LeafBranchView> findBranchByTreeId(Long treeId) {
+        List<Leaf> plainList = leafRepository.findByTreeIdOrderById(treeId);
+        Map<Long,Leaf> leafMap = new HashMap<>();
+        Long pid = null; //부모 ID 값이 없을 경우 DB에서 Null 반환.
+
+        List<Leaf> tmpList = new ArrayList<>();
+        for (Leaf leaf : plainList) {
+            leafMap.put(leaf.getId(), leaf);
+            if (leaf.getBookMark() || leaf.getChildLeafCount() == 0) {
+                tmpList.add(leaf);
+            }
+        }
+
+
+        System.out.println("leafMap : " + leafMap);
+        List<LeafBranchView> leafBranchViews = new ArrayList<>();
+        for (Leaf leaf : tmpList){
+            pid = leaf.getParentLeafId();
+            Long viewCount = leaf.getViewCount();
+            Long leafCount = 0L;
+            while (pid != null){
+                Leaf tmp = leafMap.get(pid);
+                pid = tmp.getParentLeafId();
+                viewCount += tmp.getViewCount();
+                ++leafCount;
+
+                System.out.println("tmp : " + tmp);
+            }
+            LeafBranchView leafBranch = LeafBranchView.of(leaf, leafCount, viewCount);
+            leafBranchViews.add(leafBranch);
+        }
+
+
+        return leafBranchViews;
+    }
+
+    @Override
+    public List<LeafBranchView> findBranch(Long treeId, Boolean bookMark, Long filter, Long sort, int page) {
+        String filterName = filterType.findNameByNum(filter);
+        String sortName = filterType.findNameByNum(sort);
+
+        System.out.println("treeId : " + treeId);
+        System.out.println("bookMark : " + bookMark);
+        System.out.println("filterName : " + filterName);
+        System.out.println("sortName : " + sortName);
+
+        List<LeafBranchView> branchList;
+        if(bookMark == null)
+            branchList = leafRepository.findBranchlist(null, treeId, filterName, sortName, page);
+        else
+            branchList = leafRepository.findBranchlist(bookMark, treeId, filterName, sortName, page);
+
+        return branchList;
+    }
+
+
+
+    @Override
     public List<LeafImageCardView> getLeafImageCardViews(Long memberId) {
         return getLeafImageCardViews(memberId, SearchType.NONE, null, SortType.NONE, 1L, 10L);
     }
@@ -197,4 +253,5 @@ public class LeafServiceImpl implements LeafService {
 
         return leafImageCardViews;
     }
+
 }

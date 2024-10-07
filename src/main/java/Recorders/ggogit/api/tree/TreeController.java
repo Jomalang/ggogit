@@ -22,7 +22,7 @@ public class TreeController {
     TreeService treeService;
 
     @GetMapping("/list")
-    public List<TreeCardView> list(
+    private List<TreeCardView> list(
             @RequestParam(value = "seed", required = false) Long seedId,
             HttpServletRequest request
     ) {
@@ -32,12 +32,7 @@ public class TreeController {
 
         Long memberId = member.getId();
 
-
-
         List<TreeCardView> list = treeService.findTreeCardView(seedId,memberId);
-
-        System.out.println("test : " + seedId);
-        System.out.println("list : " + list.toString());
         return list;
     }
 }

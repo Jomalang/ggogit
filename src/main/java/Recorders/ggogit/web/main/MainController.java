@@ -63,6 +63,8 @@ public class MainController {
 
             List<TreeInfoView> treeInfoList = treeService.getTreeInfoView(member.getId());
 
+            System.out.println(treeInfoList);
+
             model.addAttribute("treeInfoList", treeInfoList);
             model.addAttribute("seedList", seedList);
 

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Recorders.ggogit.domain.leaf.repository.LeafBookRepository">
+
+    <insert id="save" parameterType="LeafBook"
+            useGeneratedKeys="true" keyProperty="leafId" keyColumn="LEAF_ID">
+        INSERT INTO LEAF_BOOK (LEAF_ID, START_PAGE, END_PAGE)
+        VALUES (#{leafId}, #{startPage}, #{endPage})
+    </insert>
+
+    <update id="update" parameterType="LeafBook">
+        UPDATE LEAF_BOOK
+        SET START_PAGE = #{startPage},
+        END_PAGE = #{endPage}
+        WHERE LEAF_ID = #{leafId}
+    </update>
+
+    <delete id="delete" parameterType="LeafBook">
+        DELETE FROM LEAF_BOOK
+        WHERE LEAF_ID = #{leafId}
+    </delete>
+
+    <select id="findByLeafId" parameterType="Long" resultType="LeafBook">
+        SELECT LEAF_ID, START_PAGE, END_PAGE
+        FROM LEAF_BOOK
+        WHERE LEAF_ID = #{leafId}
+    </select>
+
+    <select id="findByTreeId" parameterType="Long" resultType="LeafBook">
+        SELECT LEAF_ID, START_PAGE, END_PAGE
+        FROM LEAF_BOOK
+        WHERE LEAF_ID IN (
+            SELECT ID
+            FROM LEAF
+            WHERE TREE_ID = #{treeId}
+                AND IS_DELETED = 0
+        )
+    </select>
+
+    <select id="findById" parameterType="Long" resultType="LeafBook">
+        SELECT LEAF_ID, START_PAGE, END_PAGE
+        FROM LEAF_BOOK
+        WHERE LEAF_ID = #{leafId}
+    </select>
+
+<!--    LookBookView 못찾는 문제를 해결해야함-->
+<!--    <select id="findLeafBookViewByLeafId" parameterType="Long" resultType="LookBookView">-->
+<!--        SELECT * FROM LEAF-->
+<!--        LEFT JOIN (-->
+<!--            SELECT * FROM LEAF_BOOK WHERE LEAF_ID = #{leafId}-->
+<!--        )-->
+<!--        ON LEAF.LEAF_ID = LEAF_BOOK.LEAF_ID-->
+<!--    </select>-->
+
+</mapper>

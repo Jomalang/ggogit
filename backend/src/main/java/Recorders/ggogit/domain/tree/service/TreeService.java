@@ -5,9 +5,7 @@ import Recorders.ggogit.domain.tree.entity.Tree;
 import Recorders.ggogit.domain.tree.view.*;
 import Recorders.ggogit.web.tree.form.TreeEtcSaveTmpForm;
 import Recorders.ggogit.web.tree.form.TreeSaveTmpForm;
-
 import java.util.List;
-
 
 public interface TreeService {
 
@@ -126,4 +124,6 @@ TreeInfoView getTreeInfoViewByTreeId(Long treeId);
     Long getSeedId(Long treeId);
 
     List<TreeCardView> findTreeCardView(Long seedId, Long memberId);
+
+    Long toMemberId(Long treeId);
 }

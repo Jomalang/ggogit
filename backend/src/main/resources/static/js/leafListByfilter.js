@@ -45,9 +45,6 @@ function updateSort(filterFrame) {
 }
 
 function generateBranchList(list){
-    if (list.length === 0)
-        return nullTemplate();
-
     return list.map(value => {
         return template(value);
     });
@@ -61,8 +58,12 @@ function listLoad(filterFrame, branchListFrame, filterCount){
         .then(response => response.json())
         .then(list =>{
             if (branchListFrame) {
-                branchListFrame.innerHTML = generateBranchList(list).join('');
-                filterCount.innerHTML = branchCount(list);
+                if(list.length === 0)
+                    branchListFrame.innerHTML = nullTemplate();
+                else {
+                    branchListFrame.innerHTML = generateBranchList(list).join('');
+                    filterCount.innerHTML = branchCount(list);
+                }
             } else {
                 console.error("branchListFrame element not found");
             }
@@ -83,8 +84,12 @@ function branchListByFilter(bookMark, filterFrame, sortBtn, branchListFrame, fil
             .then(response => response.json())
             .then(list => {
                 if (branchListFrame) {
-                    branchListFrame.innerHTML = generateBranchList(list).join('');
-                    filterCount.innerHTML = branchCount(list);
+                    if(list.length === 0)
+                        branchListFrame.innerHTML = nullTemplate();
+                    else {
+                        branchListFrame.innerHTML = generateBranchList(list).join('');
+                        filterCount.innerHTML = branchCount(list);
+                    }
                 } else {
                     console.error("branchListFrame element not found");
                 }
@@ -95,8 +100,12 @@ function branchListByFilter(bookMark, filterFrame, sortBtn, branchListFrame, fil
             .then(response => response.json())
             .then(list => {
                 if (branchListFrame) {
-                    branchListFrame.innerHTML = generateBranchList(list).join('');
-                    filterCount.innerHTML = branchCount(list);
+                    if(list.length === 0)
+                        branchListFrame.innerHTML = nullTemplate();
+                    else {
+                        branchListFrame.innerHTML = generateBranchList(list).join('');
+                        filterCount.innerHTML = branchCount(list);
+                    }
                 } else {
                     console.error("branchListFrame element not found");
                 }
@@ -152,14 +161,19 @@ function template(value){
     const formattedDate = new Date(value.updateTime).toISOString().split('T')[0];
     return `
     <div class="card-branch__list-frame" >
-    <a class="branch-info-frame" href="#">
-        <div class="branch-img-frame">
-            <img src="${value.bookMark ? '/svg/card-bookmark-icon.svg' : '/svg/card-branch-represent-icon.svg' }" alt="브랜치 이미지">
+    <div class="card-branch__list-frame-flex">
+        <a class="branch-info-frame" href="#">
+            <div class="branch-img-frame">
+                <img src="${value.bookMark ? '/svg/card-bookmark-icon.svg' : '/svg/card-branch-represent-icon.svg' }" alt="브랜치 이미지">
+            </div>
+            <div class="branch-detail-info">
+                <p class="branch-detail-info--name">${value.title}</p>
+            </div>
+        </a>
+        <div class="branch-img-frame-lock">
+                <img src="${value.visibility ? '' : '/svg/lock.svg' }" >
         </div>
-        <div class="branch-detail-info">
-            <p class="branch-detail-info--name">${value.title}</p>
-        </div>
-    </a>
+    </div>
     <div class="branch-card-bottom-info-frame">
         <div class="branch-card-bottom-info">
             <span>리프 <p>${value.leafCount}</p></span>

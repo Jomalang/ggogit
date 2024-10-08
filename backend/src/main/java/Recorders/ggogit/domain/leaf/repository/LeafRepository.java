@@ -26,10 +26,6 @@ public interface LeafRepository {
     LeafListBranchView findLeafListBranchViewByTreeId(Long treeId);
     LeafBreadcrumbView findLeafBreadcrumbViewByTreeIdAndLeafId(Long treeId, Long leafId);
     List<Leaf> findByTreeIdOrderById(Long treeId);
-    List<LeafBranchView> findBranchlist(
-            @Param("bookMark") Boolean bookMark,
-            @Param("treeId") Long treeId,
-            @Param("filterName") String  filterName,
-            @Param("sortName") String  sortName,
-            @Param("page")int page);
+    List<LeafBranchView> toBranchlist(Boolean bookMark, Long treeId, String filterName, String sortName, int page);
+    List<LeafBranchView> toBranchlistForNeighbor(Long treeId, String filterName, String sortName, int page);
 }

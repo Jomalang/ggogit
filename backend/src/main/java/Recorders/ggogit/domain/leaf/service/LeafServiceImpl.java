@@ -205,24 +205,28 @@ public class LeafServiceImpl implements LeafService {
     }
 
     @Override
-    public List<LeafBranchView> findBranch(Long treeId, Boolean bookMark, Long filter, Long sort, int page) {
+    public List<LeafBranchView> toBranch(Long treeId, Boolean bookMark, Long filter, Long sort, int page) {
         String filterName = filterType.findNameByNum(filter);
         String sortName = filterType.findNameByNum(sort);
 
-        System.out.println("treeId : " + treeId);
-        System.out.println("bookMark : " + bookMark);
-        System.out.println("filterName : " + filterName);
-        System.out.println("sortName : " + sortName);
-
         List<LeafBranchView> branchList;
         if(bookMark == null)
-            branchList = leafRepository.findBranchlist(null, treeId, filterName, sortName, page);
+            branchList = leafRepository.toBranchlist(null, treeId, filterName, sortName, page);
         else
-            branchList = leafRepository.findBranchlist(bookMark, treeId, filterName, sortName, page);
+            branchList = leafRepository.toBranchlist(bookMark, treeId, filterName, sortName, page);
 
         return branchList;
     }
 
+    @Override
+    public List<LeafBranchView> toBranchForNeighbor(Long treeId, Long filter, Long sort, int page) {
+        String filterName = filterType.findNameByNum(filter);
+        String sortName = filterType.findNameByNum(sort);
+
+        List<LeafBranchView> branchList = leafRepository.toBranchlistForNeighbor(treeId, filterName, sortName, page);
+
+        return branchList;
+    }
 
 
     @Override

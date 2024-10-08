@@ -4,9 +4,9 @@ import Recorders.ggogit.domain.leaf.structure.LeafNode;
 import Recorders.ggogit.domain.leaf.view.*;
 import Recorders.ggogit.type.SearchType;
 import Recorders.ggogit.type.SortType;
-import Recorders.ggogit.type.filterType;
 
 import java.util.List;
+
 
 public interface LeafService {
     List<LeafItemView> getLeafItems(Long treeId, Long leafId, boolean isOwner);
@@ -33,5 +33,7 @@ public interface LeafService {
 
     List<LeafBranchView> findBranchByTreeId(Long treeId);
 
-    List<LeafBranchView> findBranch(Long treeId, Boolean isLeaf, Long filter, Long sort, int page);
+    List<LeafBranchView> toBranch(Long treeId, Boolean isLeaf, Long filter, Long sort, int page);
+
+    List<LeafBranchView> toBranchForNeighbor(Long treeId, Long filter, Long sort, int page);
 }

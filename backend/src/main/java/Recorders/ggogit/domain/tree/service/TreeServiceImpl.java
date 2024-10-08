@@ -1,10 +1,8 @@
 package Recorders.ggogit.domain.tree.service;
 
-import Recorders.ggogit.domain.book.entity.Book;
 import Recorders.ggogit.domain.book.repository.BookRepository;
 import Recorders.ggogit.domain.book.view.BookInfoView;
 import Recorders.ggogit.domain.leaf.repository.LeafRepository;
-import Recorders.ggogit.domain.leaf.view.LeafBranchView;
 import Recorders.ggogit.domain.member.repository.MemberRepository;
 import Recorders.ggogit.domain.member.view.MemberImageView;
 import Recorders.ggogit.domain.tree.entity.Tree;
@@ -16,7 +14,6 @@ import Recorders.ggogit.web.tree.form.TreeEtcSaveTmpForm;
 import Recorders.ggogit.web.tree.form.TreeSaveTmpForm;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -30,25 +27,16 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TreeServiceImpl implements TreeService {
 
-    @Autowired
-    TreeRepository repository;
-
-    @Autowired
-    TreeSaveTmpRepository treeSaveTmpRepository;
-    @Autowired
-    private MemberRepository memberRepository;
-    @Autowired
-    private LeafRepository leafRepository;
-    @Autowired
-    private TreeRepository treeRepository;
-    @Autowired
-    private BookRepository bookRepository;
-    @Autowired
-    private SeedRepository seedRepository;
+     private final TreeRepository treeRepository;
+     private final TreeSaveTmpRepository treeSaveTmpRepository;
+     private final MemberRepository memberRepository;
+     private final LeafRepository leafRepository;
+     private final BookRepository bookRepository;
+     private final SeedRepository seedRepository;
 
     @Override
     public void register(Tree tree) {
-        repository.save(tree);
+        treeRepository.save(tree);
     }
 
     @Override
@@ -58,19 +46,19 @@ public class TreeServiceImpl implements TreeService {
 
     @Override
     public long hasTreeNumById(Long id) {
-        return repository.hasTreeNumById(id);
+        return treeRepository.hasTreeNumById(id);
     }
 
     @Override
     public List<TreeInfoView> getTreeInfoView(Long memberId) {
 
-        return repository.getTreeInfoBookView(null,memberId);
+        return treeRepository.getTreeInfoBookView(null,memberId);
     }
 
     @Override
     public List<TreeInfoView> getTreeInfoView(Long seedId,Long memberId) {
 
-        return repository.getTreeInfoBookView(seedId,memberId);
+        return treeRepository.getTreeInfoBookView(seedId,memberId);
     }
 
     @Override
@@ -115,13 +103,13 @@ public class TreeServiceImpl implements TreeService {
     @Override
     public TreeInfoView getTreeInfoViewByTreeId(Long treeId) {
 
-        return repository.getTreeInfoViewByTreeId(treeId);
+        return treeRepository.getTreeInfoViewByTreeId(treeId);
     }
 
     @Override
     public CombineTreeView findCombineTreeView(Long memberId, Long treeId) {
         MemberImageView memberImageView = memberRepository.getMemberImageView(memberId);
-        TreeInfoView treeInfoView = repository.getTreeInfoViewByTreeId(treeId);
+        TreeInfoView treeInfoView = treeRepository.getTreeInfoViewByTreeId(treeId);
 
         System.out.println(treeInfoView.toString());
 
@@ -135,13 +123,19 @@ public class TreeServiceImpl implements TreeService {
 
     @Override
     public Integer getTreeCount(Long id) {
-        return repository.getTreeCountByMemberId(id);
+        return treeRepository.getTreeCountByMemberId(id);
     }
 
     @Override
     public Long getSeedId(Long treeId) {
-        Tree tree = repository.findById(treeId);
+        Tree tree = treeRepository.findById(treeId);
         return tree.getSeedId();
+    }
+
+    @Override
+    public Long toMemberId(Long treeId){
+        Tree tree = treeRepository.findById(treeId);
+        return tree.getMemberId();
     }
 
     @Override
@@ -156,7 +150,7 @@ public class TreeServiceImpl implements TreeService {
 
 
                 Long totalPage = book.getTotalPage();
-                Long readingPage = repository.findReadPageById(tree.getId());
+                Long readingPage = treeRepository.findReadPageById(tree.getId());
                 String seedKorName = seedRepository.findById(tree.getSeedId()).getKorName();
 
                 if(readingPage == null)
@@ -186,7 +180,7 @@ public class TreeServiceImpl implements TreeService {
                         .build();
                 treeCardViews.add(tmp);
             }else {
-                String coverImage = repository.findTreeImageById(tree.getId());
+                String coverImage = treeRepository.findTreeImageById(tree.getId());
                 String seedKorName = seedRepository.findById(tree.getSeedId()).getKorName();
                 String nickname = memberRepository.findById(tree.getMemberId()).getNickname();
                 TreeCardView tmp = TreeCardView.builder()

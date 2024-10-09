@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://www.newlecture.com/dist/v0.2.2/style.min.css" crossorigin="" type="text/css">
+    <link rel="stylesheet" href="/admintest/css/root.css" type="text/css">
+    
+</head>
+<body>
+    <div class="n-layout n-aside-size:full1 n-aside-float1 n-aside-pos:right1">
+        <header class="">
+            <div class="n-content xl:w:xlarge">
+                <div>
+                    <label class="n-icon n-icon:list n-icon-size:6 mr:3 cursor:pointer">
+                        <span>사이드메뉴버튼</span>
+                        <input class="d:none n-aside-hider" type="checkbox">
+                    </label>
+                </div>
+                <h1 class="n-heading:2">Rland</h1>
+                <nav class="ml:auto">
+                    <h1 class="d:none">헤더메뉴</h1>
+                    <ul class="n-bar">
+                        <li><a class="n-btn" href="">대시보드</a></li>
+                        <li><a class="n-btn" href="">로그아웃</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+
+        <div class="xl:w:xlarge">
+            <aside class="">
+                <header class="n-aside-menu">
+                    <h1 class="d:none"><a href="">관리자 메뉴</a></h1>
+                    <ul>
+                        <li class=""><a class="n-icon n-icon:dashboard n-deco n-deco-pos:top lg:n-deco-pos:left" href="/admintest/index.html">대시보드</a></li>
+                    </ul>
+                </header>
+                <nav class="n-aside-menu">
+                    <h1>재품관리</h1>
+                    <ul>
+                        <li class="active"><a class="n-icon n-icon:local_cafe n-deco n-deco-pos:top lg:n-deco-pos:left" href="/admintest/menu/list.html">메뉴관리</a></li>
+                        <li><a class="n-icon n-icon:household_supplies n-deco n-deco-pos:top lg:n-deco-pos:left" href="/admintest/supplies/list.html">비품관리</a></li>
+                    </ul>
+                </nav>
+                <nav class="n-aside-menu">
+                    <h1>고객관리</h1>
+                    <ul>
+                        <li><a class="n-icon n-icon:bell n-deco n-deco-pos:top lg:n-deco-pos:left" href="/admintest/notice/list.html">공지관리</a></li>
+                        <li><a class="n-icon n-icon:group n-deco n-deco-pos:top lg:n-deco-pos:left" href="/admintest/member/list.html">회원관리</a></li>
+                    </ul>
+                </nav>
+                <nav class="n-aside-menu">
+                    <h1>통계관리</h1>
+                    <ul>
+                        <li><a class="n-icon n-icon:cardio_load n-deco n-deco-pos:top lg:n-deco-pos:left" href="">좋아요</a></li>
+                        <li><a class="n-icon n-icon:bookmarks n-deco n-deco-pos:top lg:n-deco-pos:left" href="">짐목록</a></li>
+                    </ul>
+                </nav>
+
+            </aside>
+            <main class="">
+                <section class="">
+                    <header class="n-bar">
+                        <h1 class="n-heading:5">관리자 / 대시보드</h1>
+                    </header>
+                    <section class="n-panel n-panel:card-grid">
+                        <h1 class="d:none">통계 자료</h1>
+                        <div>
+                            <section class="n-frame:rounded-shadow">
+                                <h1>사용자 가입</h1>
+                                <div class="n-panel">
+                                    <canvas class="user-chart w:100p" width="500" height="300"></canvas>
+                                </div>
+                                <script>
+                                    const canvas = document.querySelector('.user-chart');
+                                    const ctx = canvas.getContext('2d');
+
+                                    // 데이터 (요일별 가입자 수)
+                                    const data = {
+                                        월: 25,
+                                        화: 40,
+                                        수: 15,
+                                        목: 30,
+                                        금: 50,
+                                        토: 20,
+                                        일: 10
+                                    };
+
+                                    // 그래프 설정
+                                    const barWidth = 50;
+                                    const barSpacing = 20;
+                                    const graphHeight = canvas.height - 50; // 여유 공간 확보
+                                    const maxSubscribers = 50;
+
+                                    // X축 레이블 및 막대 그리기
+                                    let x = barSpacing;
+                                    for (const day in data) {
+                                        const subscribers = data[day];
+                                        const barHeight = (subscribers / maxSubscribers) * graphHeight;
+                                        const y = canvas.height - barHeight - 20; // 아래 여백 확보
+
+                                        ctx.fillStyle = 'blue';
+                                        ctx.fillRect(x, y, barWidth, barHeight);
+
+                                        ctx.fillStyle = 'black';
+                                        ctx.fillText(day, x + barWidth / 2, canvas.height - 10);
+
+                                        x += barWidth + barSpacing;
+                                    }
+
+                                    // Y축 레이블 그리기
+                                    for (let i = 0; i <= maxSubscribers; i += 10) {
+                                        const y = canvas.height - (i / maxSubscribers) * graphHeight - 20;
+                                        ctx.fillText(i, 10, y);
+                                    }
+                                </script>
+                            </section>
+                            <section class="n-frame:rounded-shadow">
+                                <h1>방문자 빈도</h1>
+                                <div>
+                                    <canvas class="hit-chart"></canvas>
+                                </div>
+                            </section>
+                            <section class="n-frame:rounded-shadow">
+                                <h1>주문빈도</h1>
+                                <div>
+                                    <canvas class="order-chart"></canvas>
+                                </div>
+                            </section>
+                        </div>
+                    </section>
+                </section>
+            </main>
+        </div>
+        <footer class="">
+
+        </footer>
+    </div>
+</body>
+</html>

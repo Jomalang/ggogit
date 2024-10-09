@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://www.newlecture.com/dist/v0.2.2/style.min.css" crossorigin="" type="text/css">
+    <link rel="stylesheet" href="/admintest/css/root.css" type="text/css">
+</head>
+<body>
+    <div class="n-layout n-aside-size:full1 n-aside-float1 n-aside-pos:right1">
+        <header class="">
+            <div class="n-content xl:w:xlarge">
+                <div>
+                    <label class="n-icon n-icon:list n-icon-size:6 mr:3 cursor:pointer">
+                        <span>사이드메뉴버튼</span>
+                        <input class="d:none n-aside-hider" type="checkbox">
+                    </label>
+                </div>
+                <h1 class="n-heading:2">Rland</h1>
+                <nav class="ml:auto">
+                    <h1 class="d:none">헤더메뉴</h1>
+                    <ul class="n-bar">
+                        <li><a class="n-btn" href="">대시보드</a></li>
+                        <li><a class="n-btn" href="">로그아웃</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+
+        <div class="xl:w:xlarge">
+            <aside class="">
+                <header class="n-aside-menu">
+                    <h1 class="d:none"><a href="">관리자 메뉴</a></h1>
+                    <ul>
+                        <li class=""><a class="n-icon n-icon:dashboard n-deco n-deco-pos:top lg:n-deco-pos:left" href="/admintest/index.html">대시보드</a></li>
+                    </ul>
+                </header>
+                <nav class="n-aside-menu">
+                    <h1>재품관리</h1>
+                    <ul>
+                        <li class="active"><a class="n-icon n-icon:local_cafe n-deco n-deco-pos:top lg:n-deco-pos:left" href="/admintest/menu/list.html">메뉴관리</a></li>
+                        <li><a class="n-icon n-icon:household_supplies n-deco n-deco-pos:top lg:n-deco-pos:left" href="/admintest/supplies/list.html">비품관리</a></li>
+                    </ul>
+                </nav>
+                <nav class="n-aside-menu">
+                    <h1>고객관리</h1>
+                    <ul>
+                        <li><a class="n-icon n-icon:bell n-deco n-deco-pos:top lg:n-deco-pos:left" href="/admintest/notice/list.html">공지관리</a></li>
+                        <li><a class="n-icon n-icon:group n-deco n-deco-pos:top lg:n-deco-pos:left" href="/admintest/member/list.html">회원관리</a></li>
+                    </ul>
+                </nav>
+                <nav class="n-aside-menu">
+                    <h1>통계관리</h1>
+                    <ul>
+                        <li><a class="n-icon n-icon:cardio_load n-deco n-deco-pos:top lg:n-deco-pos:left" href="">좋아요</a></li>
+                        <li><a class="n-icon n-icon:bookmarks n-deco n-deco-pos:top lg:n-deco-pos:left" href="">짐목록</a></li>
+                    </ul>
+                </nav>
+
+            </aside>
+            <main class="">
+
+                <section class="">
+                    <header class="n-bar">
+                        <h1 class="n-heading:5">고객관리 / 회원관리</h1>
+                        <div class="ml:3 d:flex">
+                            <a href="reg.html" class="n-icon n-icon:plus n-btn n-btn:rounded n-btn-size:small">추가</a>
+                        </div>
+                    </header>
+
+                    <section class="n-frame:rounded-shadow">
+                        <header>
+                            <h1><span class="n-icon n-icon:search n-deco">검색</span></h1>
+                            <div class="ml:auto">
+                                <label class="n-icon n-icon:caret_down cursor:pointer">
+                                    <span>확장버튼</span>
+                                    <input class="d:none n-panel-expander" type="checkbox">
+                                </label>
+                            </div>
+                        </header>
+                        <form class="n-form n-label-pos:left">
+                            <div>
+                                <label>
+                                    <span>회원이름</span>
+                                    <input type="text">
+                                </label>
+                                <div class="d:flex justify-content:end">
+                                    <button class="n-btn n-btn-color:main">검색</button>
+                                    <button class="n-btn ml:1">취소</button>
+                                </div>
+                            </div>
+                        </form>
+                    </section>
+
+                    <section class="n-frame:rounded-shadow">
+                        <header>
+                            <h1 class="d:none2"><span class="n-icon n-icon:group n-deco n-deco-gap:2">회원목록</span></h1>
+                            <div>
+                                <span class="ml:1 n-heading:6">(2)</span>
+                            </div>
+                        </header>
+
+                        <table class="n-table n-table:expandable1">
+                            <thead>
+                                <tr>
+                                    <th class="w:1">번호</th>
+                                    <th class="w:3">사진</th>
+                                    <th class="w:3 n-heading-truncate">아이디</th>
+                                    <th class="w:0 md:w:auto n-heading-truncate">이메일주소</th>
+                                    <th class="w:3">비고</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="vertical-align:middle">
+                                    <td>2</td>
+                                    <td class="w:0 md:w:3"><img class="w:3" src="/image/profile/profile1.webp"></td>
+                                    <td class="n-heading-truncate"><a href="detail.html">newlec</a></td>
+                                    <td class="w:0 md:w:auto n-heading-truncate">newlec@newlecture.com</td>
+                                    <td class="w:4">
+                                        <span class="d:inline-flex align-items:center">
+                                            <a class="n-icon n-icon:edit_square n-icon-color:base-6" href="detail.html">수정</a>
+                                            <form class="d:flex ai:center">
+                                                <input type="hidden" name="id" value="1">
+                                                <button class="n-icon n-icon:delete n-icon-color:base-6" type="submit">삭제</button>
+                                            </form>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td class="w:0 md:w:3"><img class="w:3" src="/image/profile/profile2.webp"></td>
+                                    <td class="n-heading-truncate"><a href="detail.html">newlec</a></td>
+                                    <td class="w:0 md:w:auto n-heading-truncate">newlec@newlecture.com</td>
+                                    <td class="w:4">
+                                        <span class="d:inline-flex align-items:center">
+                                            <a class="n-icon n-icon:edit_square n-icon-color:base-6" href="edit.html">수정</a>
+                                            <form class="d:flex ai:center">
+                                                <input type="hidden" name="id" value="1">
+                                                <button class="n-icon n-icon:delete n-icon-color:base-6" type="submit">삭제</button>
+                                            </form>                    
+                                        </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="mt:4 text-align:center">
+                            <ul class="n-bar">
+                                <li><a class="n-btn active" href="">1</a></li>
+                                <li><a class="n-btn" href="">2</a></li>
+                                <li><a class="n-btn" href="">3</a></li>
+                                <li><a class="n-btn" href="">4</a></li>
+                                <li><a class="n-btn" href="">5</a></li>
+                            </ul>
+                        </div>
+                    </section>
+
+                </section>
+            </main>
+        </div>
+        <footer class="">
+
+        </footer>
+    </div>
+</body>
+</html>

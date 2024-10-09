@@ -1,0 +1,7 @@
+.n-icon\:menu-book:before {
+    mask-image: url("/public/admin/icon/menu-book.svg");
+}
+
+.n-icon\:books:before {
+    mask-image: url("/public/admin/icon/book2.svg");
+}

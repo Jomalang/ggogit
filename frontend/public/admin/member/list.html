@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/newtil-css@0.1.49/dist/style.css" />
+    <link rel="stylesheet" href="/admin/css/root.css" type="text/css">
+    <link rel="stylesheet" href="/admin/css/icon.css" type="text/css">
+
+</head>
+<body>
+<div class="n-layout n-aside-size:full1 n-aside-float1 n-aside-pos:right1">
+    <header class="">
+        <div class="n-content xl:w:xlarge">
+            <div>
+                <label class="n-icon n-icon:list n-icon-size:6 mr:3 cursor:pointer">
+                    <span>사이드 메뉴 버튼</span>
+                    <input class="d:none n-aside-hider" type="checkbox">
+                </label>
+            </div>
+            <h1 class="n-heading:2">GGogit</h1>
+            <nav class="ml:auto">
+                <h1 class="d:none">헤더메뉴</h1>
+                <ul class="n-bar">
+                    <li><a class="n-btn" href="">대시보드</a></li>
+                    <li><a class="n-btn" href="">로그아웃</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="xl:w:xlarge">
+        <aside class="">
+            <header class="n-aside-menu">
+                <h1 class="d:none"><a href="">관리자 메뉴</a></h1>
+                <ul>
+                    <li class=""><a class="n-icon n-icon:dashboard n-deco n-deco-pos:top lg:n-deco-pos:left" href="/admin/index.html">대시보드</a></li>
+                </ul>
+            </header>
+            <nav class="n-aside-menu">
+                <h1>사용자</h1>
+                <ul>
+                    <li class="active"><a class="n-icon n-icon:user n-deco n-deco-pos:top lg:n-deco-pos:left" href="/admin/member/list.html">사용자 관리</a></li>
+                </ul>
+            </nav>
+            <nav class="n-aside-menu">
+                <h1>도서</h1>
+                <ul>
+                    <li><a class="n-icon n-icon:menu-book n-deco n-deco-pos:top lg:n-deco-pos:left" href="/admin/book/api-list.html">API 도서 관리</a></li>
+                    <li><a class="n-icon n-icon:books n-deco n-deco-pos:top lg:n-deco-pos:left" href="/admin/member/list.html">직접 등록 도서 관리</a></li>
+                    <li><a class="n-icon n-icon:cardio_load n-deco n-deco-pos:top lg:n-deco-pos:left" href="">좋아요</a></li>
+                </ul>
+            </nav>
+            <nav class="n-aside-menu">
+                <h1>트리</h1>
+                <ul>
+                    <li><a class="n-icon n-icon:cardio_load n-deco n-deco-pos:top lg:n-deco-pos:left" href="/admin/tree/list.html">트리 관리</a></li>
+                    <li><a class="n-icon n-icon:cardio_load n-deco n-deco-pos:top lg:n-deco-pos:left" href="/admin/tree/like-list.html">좋아요</a></li>
+                </ul>
+            </nav>
+            <nav class="n-aside-menu">
+                <h1>회고록</h1>
+                <ul>
+                    <li><a class="n-icon n-icon:cardio_load n-deco n-deco-pos:top lg:n-deco-pos:left" href="/admin/memoir/list.html">회고록 관리</a></li>
+                    <li><a class="n-icon n-icon:cardio_load n-deco n-deco-pos:top lg:n-deco-pos:left" href="/admin/memoir/like-list.html">좋아요</a></li>
+                    <li><a class="n-icon n-icon:cardio_load n-deco n-deco-pos:top lg:n-deco-pos:left" href="/admin/tree/comment-list.html">댓글</a></li>
+                    <li><a class="n-icon n-icon:cardio_load n-deco n-deco-pos:top lg:n-deco-pos:left" href="/admin/tree/comment-like-list.html">댓글</a></li>
+                </ul>
+            </nav>
+            <nav class="n-aside-menu">
+                <h1>리프</h1>
+                <ul>
+                    <li><a class="n-icon n-icon:cardio_load n-deco n-deco-pos:top lg:n-deco-pos:left" href="/admin/leaf/list.html">리프 관리</a></li>
+                    <li><a class="n-icon n-icon:bookmarks n-deco n-deco-pos:top lg:n-deco-pos:left" href="/admin/leaf/like-list.html">짐목록</a></li>
+                </ul>
+            </nav>
+        </aside>
+        <main class="">
+
+            <section class="">
+                <header class="n-bar">
+                    <h1 class="n-heading:5">사용자 / 사용자 관리</h1>
+                    <div class="ml:3 d:flex">
+                        <a href="reg.html" class="n-icon n-icon:plus n-btn n-btn:rounded n-btn-size:small">추가</a>
+                    </div>
+                </header>
+
+                <section class="n-frame:rounded-shadow">
+                    <header>
+                        <h1><span class="n-icon n-icon:search n-deco">검색</span></h1>
+                        <div class="ml:auto">
+                            <label class="n-icon n-icon:caret_down cursor:pointer">
+                                <span>확장버튼</span>
+                                <input class="d:none n-panel-expander" type="checkbox">
+                            </label>
+                        </div>
+                    </header>
+                    <form class="n-form n-label-pos:left">
+                        <div>
+                            <label>
+                                <span>한글명</span>
+                                <input type="text">
+                            </label>
+                            <div class="d:flex justify-content:end">
+                                <button class="n-btn n-btn-color:main">검색</button>
+                                <button class="n-btn ml:1">취소</button>
+                            </div>
+                        </div>
+                    </form>
+                </section>
+
+                <section class="n-frame:rounded-shadow">
+
+                    <header>
+                        <h1 class="d:none2"><span class="n-icon n-icon:view_list n-deco n-deco-gap:2">사용자 목록</span>
+                        </h1>
+                        <div>
+                            <span class="ml:1 n-heading:6">(2)</span>
+                        </div>
+                    </header>
+
+                    <table class="n-table n-table:expandable">
+                        <thead>
+                            <tr>
+                                <th class="w:1">PK</th>
+                                <th class="w:1">이메일</th>
+                                <th class="w:0 md:w:1 n-heading-truncate">닉네임</th>
+                                <th class="w:1">이름</th>
+                                <th class="w:0 md:w:1 n-heading-truncate">소개</th>
+                                <th class="w:0 md:w:1 n-heading-truncate">삭제 여부</th>
+                                <th class="w:1">생성 시각</th>
+                                <th class="w:1">수정 시각</th>
+                                <th class="w:1">비고</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="vertical-align:middle">
+                                <td>2</td>
+                                <td>test@google.com</td>
+                                <td class="w:0 md:w:1 n-heading-truncate">테스트 닉네임</td>
+                                <td class="w:0 md:w:1 n-heading-truncate">테스트 이름</td>
+                                <td class="n-heading-truncate">테스트 소개글 입니다. ㅎㅎㅎㅎㅎㅎㅎ</td>
+                                <td class="w:0 md:w:1 n-heading-truncate">X</td>
+                                <td>2024-10-09 17:12</td>
+                                <td>2024-10-09 17:12</td>
+                                <td>
+                                    <span class="d:inline-flex align-items:center">
+                                        <a class="n-icon n-icon:edit_square n-icon-color:base-6"href="detail.html">수정</a>
+                                        <form class="d:flex ai:center">
+                                            <input type="hidden" name="id" value="1">
+                                            <button class="n-icon n-icon:delete n-icon-color:base-6"type="submit">삭제</button>
+                                        </form>
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="mt:4 text-align:center">
+                        <ul class="n-bar">
+                            <li><a class="n-btn active" href="">1</a></li>
+                            <li><a class="n-btn" href="">2</a></li>
+                            <li><a class="n-btn" href="">3</a></li>
+                            <li><a class="n-btn" href="">4</a></li>
+                            <li><a class="n-btn" href="">5</a></li>
+                        </ul>
+                    </div>
+                </section>
+
+            </section>
+        </main>
+    </div>
+    <footer class="n-panel">
+        <section class="">
+            <h1 class="d:none">푸터</h1>
+            <p class="d:flex jc:center color:base-3">ⓒ 2020 Rland. All rights reserved.</p>
+        </section>
+    </footer>
+</div>
+</body>
+</html>

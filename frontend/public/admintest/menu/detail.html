@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://www.newlecture.com/dist/v0.2.2/style.min.css" crossorigin="" type="text/css">
+    <link rel="stylesheet" href="/admintest/css/root.css" type="text/css">
+</head>
+<body>
+    <div class="n-layout n-aside-size:full1 n-aside-float1 n-aside-pos:right1">
+        <header class="">
+            <div class="n-content xl:w:xlarge">
+                <div>
+                    <label class="n-icon n-icon:list n-icon-size:6 mr:3 cursor:pointer">
+                        <span>사이드메뉴버튼</span>
+                        <input class="d:none n-aside-hider" type="checkbox">
+                    </label>
+                </div>
+                <h1 class="n-heading:2">Rland</h1>
+                <nav class="ml:auto">
+                    <h1 class="d:none">헤더메뉴</h1>
+                    <ul class="n-bar">
+                        <li><a class="n-btn" href="">대시보드</a></li>
+                        <li><a class="n-btn" href="">로그아웃</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+
+        <div class="xl:w:xlarge">
+            <aside class="">
+                <header class="n-aside-menu">
+                    <h1 class="d:none"><a href="">관리자 메뉴</a></h1>
+                    <ul>
+                        <li class=""><a class="n-icon n-icon:dashboard n-deco n-deco-pos:top lg:n-deco-pos:left"
+                                href="/admintest/index.html">대시보드</a></li>
+                    </ul>
+                </header>
+                <nav class="n-aside-menu">
+                    <h1>재품관리</h1>
+                    <ul>
+                        <li class="active"><a class="n-icon n-icon:local_cafe n-deco n-deco-pos:top lg:n-deco-pos:left"
+                                href="/admintest/menu/list.html">메뉴관리</a></li>
+                        <li><a class="n-icon n-icon:household_supplies n-deco n-deco-pos:top lg:n-deco-pos:left"
+                                href="/admintest/supplies/list.html">비품관리</a></li>
+                    </ul>
+                </nav>
+                <nav class="n-aside-menu">
+                    <h1>고객관리</h1>
+                    <ul>
+                        <li><a class="n-icon n-icon:bell n-deco n-deco-pos:top lg:n-deco-pos:left"
+                                href="/admintest/notice/list.html">공지관리</a></li>
+                        <li><a class="n-icon n-icon:group n-deco n-deco-pos:top lg:n-deco-pos:left"
+                                href="/admintest/member/list.html">회원관리</a></li>
+                    </ul>
+                </nav>
+                <nav class="n-aside-menu">
+                    <h1>통계관리</h1>
+                    <ul>
+                        <li><a class="n-icon n-icon:cardio_load n-deco n-deco-pos:top lg:n-deco-pos:left"
+                                href="">좋아요</a></li>
+                        <li><a class="n-icon n-icon:bookmarks n-deco n-deco-pos:top lg:n-deco-pos:left" href="">짐목록</a>
+                        </li>
+                    </ul>
+                </nav>
+
+            </aside>
+            <main class="">
+
+                <section class="">
+                    <header class="n-bar">
+                        <h1 class="n-heading:5">제품관리 / 메뉴관리</h1>
+                        <div class="ml:3 d:flex ai:center">
+                            <a href="list.html"
+                                class="n-icon n-icon:arrow_left n-btn n-btn:rounded n-btn-size:small">추가</a>
+                        </div>
+                    </header>
+
+                    <section class="n-frame:rounded-shadow n-panel-detail">
+                        <header>
+                            <h1><span class="n-icon n-icon:description n-deco">메뉴상세</span></h1>
+                            <div>
+                                <a href="edit.html" class="n-icon n-icon:edit_square n-btn n-btn:rounded ml:3">수정</a>
+                            </div>
+                        </header>
+                        <dl class="n-list:dash-lined">
+                            <div>
+                                <dt>영문명</dt>
+                                <dd class="ml:1">Cafe Latte</dd>
+                            </div>
+                            <div>
+                                <dt>사진</dt>
+                                <dd class="ml:1">
+                                    <ul class="n-bar flex-wrap:wrap">
+                                        <li class=""><img src="/image/product/americano.svg"></li>
+                                        <li class="active:border"><img src="/image/product/cafe-latte.svg"></li>
+                                    </ul>
+                                </dd>
+                            </div>
+                            <div>
+                                <dt>가격</dt>
+                                <dd class="ml:1">1,000원</dd>
+                            </div>
+                            <div>
+                                <dt>등록일자</dt>
+                                <dd class="ml:1">2024-12-25 12:00:00</dd>
+                            </div>
+                        </dl>
+
+                    </section>
+
+                    <section class="n-frame:rounded-shadow n-panel:card-grid">
+                        <header>
+                            <h1><span class="n-icon n-icon:recommend n-deco">추천목록</span></h1>
+                            <div class="ml:3 d:flex ai:center">
+                                <a href="list.html"
+                                    class="n-icon n-icon:plus n-btn n-btn:rounded n-btn-size:small">추가</a>
+                            </div>
+                        </header>
+                        <section class="n-frame:rounded-shadow n-panel:card-list bg-color:base-2 margin-bottom:7">
+                            <header class="d:flex">
+                                <h1>추천메뉴 추가 패널</h1>
+                                <div class="d:flex flex-grow:1">
+                                    <button
+                                        class="ml:3 n-icon n-icon:add_task n-btn n-btn:rounded n-btn-size:small">추가</button>
+                                    <button class="n-icon n-icon:x n-btn n-btn:rounded n-btn-size:small">추가</button>
+                                    <button
+                                        class="ml:auto n-icon n-icon:arrow_left n-btn n-btn:rounded n-btn-size:small">추가</button>
+                                    <button
+                                        class="ml:2 n-icon n-icon:arrow_right n-btn n-btn:rounded n-btn-size:small">추가</button>
+                                </div>
+                                <nav class="w:100p mt:3">
+                                    <h1 class="d:none">필터링</h1>
+                                    <ul class="n-bar">
+                                        <li><a class="n-btn active" href="">전체</a></li>
+                                        <li><a class="n-btn" href="">커피</a></li>
+                                        <li><a class="n-btn" href="">케익</a></li>
+                                        <li><a class="n-btn" href="">수제청</a></li>
+                                        <li><a class="n-btn" href="">쿠키</a></li>
+                                    </ul>
+                                </nav>
+                            </header>
+                            <div>
+                                <!---- 추천 메뉴 목록 ------------------------------------------>
+                                <section>
+                                    <header>
+                                        <h1 class="d:none">아메리카노</h1>
+                                        <label class="mb:5">
+                                            <input type="checkbox"
+                                                class="n-toggle n-toggle-type:check-box n-toggle-size:1">
+                                            <span>선택</span>
+                                        </label>
+                                    </header>
+                                    <div><img src="/image/product/latte.svg"></div>
+                                    <dl class="n-list:dash-lined">
+                                        <div>
+                                            <dt>한글명</dt>
+                                            <dd>아메리카노</dd>
+                                        </div>
+                                        <div>
+                                            <dt>등록일자</dt>
+                                            <dd>2024-08-24</dd>
+                                        </div>
+                                    </dl>
+                                </section>
+                                <section>
+                                    <header>
+                                        <h1 class="d:none">아메리카노</h1>
+                                        <label class="mb:5">
+                                            <input type="checkbox"
+                                                class="n-toggle n-toggle-type:check-box n-toggle-size:1">
+                                            <span>선택</span>
+                                        </label>
+                                    </header>
+                                    <div><img src="/image/product/latte.svg"></div>
+                                    <dl class="n-list:dash-lined">
+                                        <div>
+                                            <dt>한글명</dt>
+                                            <dd>아메리카노</dd>
+                                        </div>
+                                        <div>
+                                            <dt>등록일자</dt>
+                                            <dd>2024-08-24</dd>
+                                        </div>
+                                    </dl>
+                                </section>
+                                <section>
+                                    <header>
+                                        <h1 class="d:none">아메리카노</h1>
+                                        <label class="mb:5">
+                                            <input type="checkbox"
+                                                class="n-toggle n-toggle-type:check-box n-toggle-size:1">
+                                            <span>선택</span>
+                                        </label>
+                                    </header>
+                                    <div><img src="/image/product/latte.svg"></div>
+                                    <dl class="n-list:dash-lined">
+                                        <div>
+                                            <dt>한글명</dt>
+                                            <dd>아메리카노</dd>
+                                        </div>
+                                        <div>
+                                            <dt>등록일자</dt>
+                                            <dd>2024-08-24</dd>
+                                        </div>
+                                    </dl>
+                                </section>
+                                <section>
+                                    <header>
+                                        <h1 class="d:none">아메리카노</h1>
+                                        <label class="mb:5">
+                                            <input type="checkbox"
+                                                class="n-toggle n-toggle-type:check-box n-toggle-size:1">
+                                            <span>선택</span>
+                                        </label>
+                                    </header>
+                                    <div><img src="/image/product/latte.svg"></div>
+                                    <dl class="n-list:dash-lined">
+                                        <div>
+                                            <dt>한글명</dt>
+                                            <dd>아메리카노</dd>
+                                        </div>
+                                        <div>
+                                            <dt>등록일자</dt>
+                                            <dd>2024-08-24</dd>
+                                        </div>
+                                    </dl>
+                                </section>
+                                <section>
+                                    <header>
+                                        <h1 class="d:none">아메리카노</h1>
+                                        <label class="mb:5">
+                                            <input type="checkbox"
+                                                class="n-toggle n-toggle-type:check-box n-toggle-size:1">
+                                            <span>선택</span>
+                                        </label>
+                                    </header>
+                                    <div><img src="/image/product/latte.svg"></div>
+                                    <dl class="n-list:dash-lined">
+                                        <div>
+                                            <dt>한글명</dt>
+                                            <dd>아메리카노</dd>
+                                        </div>
+                                        <div>
+                                            <dt>등록일자</dt>
+                                            <dd>2024-08-24</dd>
+                                        </div>
+                                    </dl>
+                                </section>
+                                <!-- ---------------------------------------------- -->
+                            </div>
+                        </section>
+                        <div>
+                            <section>
+                                <header>
+                                    <h1 class="d:none">아메리카노</h1>
+                                    <form method="post" class="mb:5 n-icon n-icon:remove_selection n-deco">
+                                        <input type="hidden" value="1">
+                                        <button>삭제</button>
+                                    </form>
+                                </header>
+                                <div><img src="/image/product/latte.svg"></div>
+                                <dl class="n-list:dash-lined">
+                                    <div>
+                                        <dt>한글명</dt>
+                                        <dd>아메리카노</dd>
+                                    </div>
+                                    <div>
+                                        <dt>등록일자</dt>
+                                        <dd>2024-08-24</dd>
+                                    </div>
+                                </dl>
+                            </section>
+                            <section>
+                                <header>
+                                    <h1 class="d:none">아메리카노</h1>
+                                    <form method="post" class="mb:5 n-icon n-icon:remove_selection n-deco">
+                                        <input type="hidden" value="1">
+                                        <button>삭제</button>
+                                    </form>
+                                </header>
+                                <div><img src="/image/product/latte.svg"></div>
+                                <dl class="n-list:dash-lined">
+                                    <div>
+                                        <dt>한글명</dt>
+                                        <dd>아메리카노</dd>
+                                    </div>
+                                    <div>
+                                        <dt>등록일자</dt>
+                                        <dd>2024-08-24</dd>
+                                    </div>
+                                </dl>
+                            </section>
+                            <section>
+                                <header>
+                                    <h1 class="d:none">아메리카노</h1>
+                                    <form method="post" class="mb:5 n-icon n-icon:remove_selection n-deco">
+                                        <input type="hidden" value="1">
+                                        <button>삭제</button>
+                                    </form>
+                                </header>
+                                <div><img src="/image/product/latte.svg"></div>
+                                <dl class="n-list:dash-lined">
+                                    <div>
+                                        <dt>한글명</dt>
+                                        <dd>아메리카노</dd>
+                                    </div>
+                                    <div>
+                                        <dt>등록일자</dt>
+                                        <dd>2024-08-24</dd>
+                                    </div>
+                                </dl>
+                            </section>
+                            <section>
+                                <header>
+                                    <h1 class="d:none">아메리카노</h1>
+                                    <form method="post" class="mb:5 n-icon n-icon:remove_selection n-deco">
+                                        <input type="hidden" value="1">
+                                        <button>삭제</button>
+                                    </form>
+                                </header>
+                                <div><img src="/image/product/latte.svg"></div>
+                                <dl class="n-list:dash-lined">
+                                    <div>
+                                        <dt>한글명</dt>
+                                        <dd>아메리카노</dd>
+                                    </div>
+                                    <div>
+                                        <dt>등록일자</dt>
+                                        <dd>2024-08-24</dd>
+                                    </div>
+                                </dl>
+                            </section>
+                        </div>
+                    </section>
+
+                </section>
+            </main>
+        </div>
+        <footer class="n-panel">
+            <section class="">
+                <h1 class="d:none">푸터</h1>
+                <p class="d:flex jc:center color:base-3">ⓒ 2020 Rland. All rights reserved.</p>
+            </section>
+        </footer>
+</body>
+</html>

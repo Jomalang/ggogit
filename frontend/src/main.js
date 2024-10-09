@@ -34,10 +34,15 @@ import MemberIndex from "@/pages/app/member/MemberIndex.vue";
 import LeafIndex from "@/pages/app/leaf/LeafIndex.vue";
 import TagIndex from "@/pages/app/leaf/TagIndex.vue";
 import TreeIndex from "@/pages/app/tree/TreeIndex.vue";
+import Test from "@/pages/Test.vue";
 
 const router = createRouter({
     history: createWebHistory(),
     routes: [
+        {
+            path: '/test',
+            component: Test
+        },
         {
             path: '/', component: Index
         },

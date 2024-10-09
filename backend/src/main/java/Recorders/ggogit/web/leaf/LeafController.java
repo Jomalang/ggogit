@@ -81,7 +81,7 @@ public class LeafController {
             if (bindingResult.hasErrors()) {
                 return new ModelAndView("view/leaf/1st-reg-book", "form", form);
             }
-            LeafBookView leafBookView = leafBookService.register(form.toLeafBookView(), seedId, memberId); // 도서 리프 등록
+            LeafBookView leafBookView = leafBookService.register(form.toLeafBookView(), memberId); // 도서 리프 등록
 
             String url = UriComponentsBuilder.fromPath("/leaf/list")
                     .queryParam("tree_id", leafBookView.getTreeId())
@@ -151,7 +151,7 @@ public class LeafController {
                 return new ModelAndView("view/leaf/reg-book", "form", form);
             }
 
-            LeafBookView leafBookView = leafBookService.register(form.toLeafBookView(), seedId, memberId); // 도서 리프 등록
+            LeafBookView leafBookView = leafBookService.register(form.toLeafBookView(), memberId); // 도서 리프 등록
 
             String url = UriComponentsBuilder.fromPath("/leaf/list")
                     .queryParam("tree_id", leafBookView.getTreeId())

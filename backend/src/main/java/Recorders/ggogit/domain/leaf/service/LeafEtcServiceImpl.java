@@ -16,7 +16,6 @@ import Recorders.ggogit.domain.tree.repository.TreeSaveTmpRepository;
 import Recorders.ggogit.type.SearchType;
 import Recorders.ggogit.type.SortType;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -247,6 +246,42 @@ public class LeafEtcServiceImpl implements LeafEtcService {
         }
 
         return leafEtcViews;
+    }
+
+    @Override
+    public boolean isOwner(Long leafId, Long memberId) {
+        Leaf leaf = Optional.ofNullable(leafRepository.findById(leafId))
+                .orElseThrow(() -> new IllegalArgumentException("Leaf 조회 실패"));
+
+        Tree tree = Optional.ofNullable(treeRepository.findById(leaf.getTreeId()))
+                .orElseThrow(() -> new IllegalArgumentException("Tree 조회 실패"));
+
+        return tree.getMemberId().equals(memberId);
+    }
+
+    @Override
+    public LeafEtcView update(Long leafId, LeafEtcView leafEtcView, Long memberId) {
+
+        Leaf leaf = Optional.ofNullable(leafRepository.findById(leafId))
+                .orElseThrow(() -> new IllegalArgumentException("Leaf 조회 실패"));
+
+        Leaf toLeaf = leafEtcView.toLeaf();
+        leaf.setTitle(toLeaf.getTitle());
+        leaf.setContent(toLeaf.getContent());
+        leaf.setVisibility(toLeaf.getVisibility());
+        leafRepository.update(leaf);
+
+        List<LeafTagMap> leafTagMap = leafTagMapRepository.findByLeafId(leafId);
+        for (LeafTagMap tagMap : leafTagMap) { // 기존 태그 맵핑 삭제
+            leafTagMapRepository.delete(tagMap);
+        }
+
+        List<Long> tagIds = leafEtcView.getTagIds();
+        for (Long tagId : tagIds) { // 새로운 태그 맵핑 추가
+            leafTagMapRepository.save(LeafTagMap.of(leafId, tagId));
+        }
+
+        return null;
     }
 
     private List<LeafTag> getLeafTags(List<LeafTagMap> leafTagMaps) { // 리프 태그 조회

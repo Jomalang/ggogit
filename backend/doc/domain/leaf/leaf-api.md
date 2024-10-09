@@ -23,12 +23,23 @@ POST `/api/v1/leafs/parent/:leafId`
 - Response: LeafCreateResponse
 
 ## 2. 리프 수정
-### 1.1 리프 수정
+
+### 2.1 도서 리프 수정
+PUT `/api/v1/leafs/book/:leafId`
+- Request: LeafBookUpdateRequest
+- Response: LeafBookUpdateResponse
+
+### 2.2 리프 수정
 PUT `/api/v1/leafs/:leafId`
 - Request: LeafUpdateRequest
 - Response: LeafUpdateResponse
 
 ## 3. 리프 삭제
+
+### 3.1 도서 리프 삭제
+DELETE `/api/v1/leafs/book/:leafId`
+
+### 3.2 리프 삭제
 DELETE `/api/v1/leafs/:leafId`
 
 ## 4. 리프 조회

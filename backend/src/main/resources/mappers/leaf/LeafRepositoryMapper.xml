@@ -28,10 +28,9 @@
             WHERE ID = #{id}
         </update>
 
-        <delete id="delete" parameterType="int">
+        <delete id="delete" parameterType="Long">
             DELETE FROM LEAF
             WHERE ID = #{id}
-                AND IS_DELETED = FALSE
         </delete>
 
         <select id="existsById" parameterType="Long" resultType="Boolean">

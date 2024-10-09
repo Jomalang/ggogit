@@ -16,4 +16,8 @@ public interface LeafEtcService {
     List<LeafEtcView> getLeafEtcViews(Long treeId);
     List<LeafEtcView> getLeafEtcViews(Long treeId, SearchType searchType, String search);
     List<LeafEtcView> getLeafEtcViews(Long treeId, SearchType searchType, String search, SortType sortType, Long page, Long size);
+
+    boolean isOwner(Long leafId, Long memberId);
+
+    LeafEtcView update(Long leafId, LeafEtcView leafEtcView, Long memberId);
 }

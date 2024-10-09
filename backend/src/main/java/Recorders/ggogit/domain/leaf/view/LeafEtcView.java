@@ -19,8 +19,12 @@ public class LeafEtcView {
     private Long parentLeafId;
     private String title;
     private String content;
+    private Long viewCount;
+    private Long likeCount;
     private Boolean visibility;
+    private Boolean bookMark;
     private Long childLeafCount;
+    private List<Long> tagIds;
     private List<LeafTag> tags;
 
     public static LeafEtcView of(Leaf leaf, List<LeafTag> tags) {
@@ -42,12 +46,12 @@ public class LeafEtcView {
                 .treeId(treeId)
                 .parentLeafId(parentLeafId)
                 .visibility(visibility)
-                .viewCount(0L)
-                .likeCount(0L)
+                .viewCount(viewCount)
+                .likeCount(likeCount)
                 .title(title)
                 .content(content)
                 .childLeafCount(childLeafCount)
-                .bookMark(false)
+                .bookMark(bookMark)
                 .build();
     }
 }

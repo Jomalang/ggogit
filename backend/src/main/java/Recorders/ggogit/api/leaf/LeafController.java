@@ -7,16 +7,10 @@ import Recorders.ggogit.domain.leaf.service.LeafTagService;
 import Recorders.ggogit.domain.leaf.structure.LeafNode;
 import Recorders.ggogit.domain.leaf.view.LeafBranchView;
 import Recorders.ggogit.domain.leaf.view.LeafListBranchView;
-import Recorders.ggogit.domain.member.entity.Member;
 import Recorders.ggogit.domain.member.service.LoginService;
-import Recorders.ggogit.domain.member.service.MemberService;
-import Recorders.ggogit.domain.tree.service.TreeService;
-import Recorders.ggogit.web.member.session.SessionConst;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -44,6 +38,12 @@ public class LeafController {
     @Value("${file.tmp-dir}")
     private String tmpDir;
 
+    /**
+     * 리프 아이디의 End까지의 노드들을 조회한다.
+     * @param treeId: 트리 아이디
+     * @param leafId: 검색 기준 리프 아이디
+     * @return List<LeafItemDto>
+     */
     @GetMapping("/trees/{treeId}/leafs/{leafId}/children")
     public ResponseEntity<List<LeafItemDto>> getLeafNodesToEnd(
             @PathVariable Long treeId,
@@ -56,6 +56,12 @@ public class LeafController {
         return ResponseEntity.ok(leafItemDtos);
     }
 
+    /**
+     * 리프 아이디의 Root부터 End까지의 노드들을 조회한다.
+     * @param treeId: 트리 아이디
+     * @param leafId: 검색 기준 리프 아이디
+     * @return List<LeafItemDto>
+     */
     @GetMapping("/trees/{treeId}/leafs/{leafId}")
     public ResponseEntity<List<LeafItemDto>> getLeafNodes(
             @PathVariable Long treeId,
@@ -68,6 +74,12 @@ public class LeafController {
         return ResponseEntity.ok(leafItemDtos);
     }
 
+    /**
+     * 리프 아이디의 Branch 정보를 조회한다.
+     * @param treeId: 트리 아이디
+     * @param leafId: 리프 아이디
+     * @return LeafListBranchView
+     */
     @GetMapping("/trees/{treeId}/leafs/{leafId}/branch")
     public ResponseEntity<LeafListBranchView> getLeafBranch(
             @PathVariable Long treeId,

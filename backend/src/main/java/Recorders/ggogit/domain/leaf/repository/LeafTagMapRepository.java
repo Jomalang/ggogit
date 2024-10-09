@@ -15,6 +15,7 @@ public interface LeafTagMapRepository {
      */
     Long save(LeafTagMap leaf);
     LeafTagMap findByPk(Long leafId, Long leafTagId);
+    LeafTagMap findByLeafIdAndLeafTagId(Long leafId, Long leafTagId);
     List<LeafTagMap> findByLeafId(Long leafId);
     List<LeafTagMap> findByLeafTagId(Long tagId);
     void delete(LeafTagMap leafTagMap);

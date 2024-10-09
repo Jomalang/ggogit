@@ -1,5 +1,7 @@
 package Recorders.ggogit.domain.leaf.service;
 
+import Recorders.ggogit.api.leaf.dto.request.LeafBookFirstCreateRequest;
+import Recorders.ggogit.domain.leaf.entity.Leaf;
 import Recorders.ggogit.domain.leaf.structure.LeafNode;
 import Recorders.ggogit.domain.leaf.view.*;
 import Recorders.ggogit.type.SearchType;

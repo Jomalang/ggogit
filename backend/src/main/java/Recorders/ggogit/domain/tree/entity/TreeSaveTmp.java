@@ -77,4 +77,12 @@ public class TreeSaveTmp {
                 .readingPage(readingPage)
                 .build();
     }
+
+    public boolean isBookTree() {
+        return seedId == 1;
+    }
+
+    public boolean hasBookid() {
+        return bookId != null;
+    }
 }

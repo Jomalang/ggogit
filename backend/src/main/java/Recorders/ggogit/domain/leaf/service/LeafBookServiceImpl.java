@@ -9,10 +9,8 @@ import Recorders.ggogit.domain.leaf.utill.ImageSaveUtill;
 import Recorders.ggogit.domain.leaf.view.LeafBookView;
 import Recorders.ggogit.domain.tree.entity.Tree;
 import Recorders.ggogit.domain.tree.entity.TreeBook;
-import Recorders.ggogit.domain.tree.entity.TreeImage;
 import Recorders.ggogit.domain.tree.entity.TreeSaveTmp;
 import Recorders.ggogit.domain.tree.repository.TreeBookRepository;
-import Recorders.ggogit.domain.tree.repository.TreeImageRepository;
 import Recorders.ggogit.domain.tree.repository.TreeRepository;
 import Recorders.ggogit.domain.tree.repository.TreeSaveTmpRepository;
 import Recorders.ggogit.type.SearchType;
@@ -26,6 +24,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class LeafBookServiceImpl implements LeafBookService {
 
@@ -39,7 +38,6 @@ public class LeafBookServiceImpl implements LeafBookService {
     private final BookRepository bookRepository;
     private final TreeRepository treeRepository;
     private final TreeSaveTmpRepository treeSaveTmpRepository;
-    private final TreeImageRepository treeImageRepository;
 
     private final LeafMapper leafMapper;
     private final ImageSaveUtill imageSaveUtill;
@@ -47,71 +45,60 @@ public class LeafBookServiceImpl implements LeafBookService {
 
     @Override
     @Transactional
-    public LeafBookView register(LeafBookView leafBookView, Long seedId, Long memberId) {
+    public LeafBookView register(LeafBookView leafBookView, Long memberId) {
         if (leafBookView.getParentLeafId() == null && leafBookView.getTreeId() == null) {
-            return registerRoot(leafBookView, seedId, memberId);
+            return registerRoot(leafBookView, memberId);
         } else {
-            return registerNode(leafBookView, seedId, memberId);
+            return registerNode(leafBookView, memberId);
         }
     }
 
     @Override
     @Transactional
-    public LeafBookView registerRoot(LeafBookView leafBookView, Long seedId, Long memberId) {
+    public LeafBookView registerRoot(LeafBookView leafBookView, Long memberId) {
         assert leafBookView.getParentLeafId() == null; // 부모 리프가 없어야 함
 
-        // TMP트리 존재 확인
         TreeSaveTmp treeSaveTmp = Optional.ofNullable(treeSaveTmpRepository.findById(memberId))
                 .orElseThrow(() -> new IllegalArgumentException("TMP Tree가 존재하지 않습니다."));
 
-        // 트리 생성 로직
         Tree tree = treeSaveTmp.toTree();
+        Long bookId = treeSaveTmp.getBookId();
+        Long seedId = treeSaveTmp.getSeedId();
 
-        if (seedId == 1) { // 도서 트리인 경우 도서 생성
-            Long bookId = treeSaveTmp.getBookId();
-
-            Book book; // 도서 조회
-            if (bookId != null) {
-                book = Optional.ofNullable(bookRepository.findById(bookId))
-                        .orElseThrow(() -> new IllegalArgumentException("Book 조회 실패"));
-
-            }
-            else { // 도서 없는 경우 생성
-                book = treeSaveTmp.toBook();
-                bookRepository.save(book);
-                treeSaveTmp.setBookId(book.getId());
-
-                if (treeSaveTmp.hasImage()) { // 이미지가 있는 경우 저장
-                    String fileName = imageSaveUtill.extractFileName(treeSaveTmp.getFilePath());
-                    String toFileName = imageSaveUtill.moveImageFile(fileName,"book", true);
-                    book.setImageFile(toFileName);
-                    bookRepository.update(book);
-                }
-            }
-
-            tree.setBookId(book.getId());
+        if (seedId != 1) {
+            throw new IllegalArgumentException("도서 트리가 아닙니다.");
         }
 
-        // 트리 저장 로직
-        treeRepository.save(tree);
+        Book book; // 도서 조회
+        if (bookId != null) {
+            book = Optional.ofNullable(bookRepository.findById(bookId))
+                    .orElseThrow(() -> new IllegalArgumentException("Book 조회 실패"));
+
+        }
+        else { // 도서 없는 경우 생성
+            book = treeSaveTmp.toBook();
+            bookRepository.save(book);
+            treeSaveTmp.setBookId(book.getId());
+
+            if (treeSaveTmp.hasImage()) { // 이미지가 있는 경우 저장
+                String fileName = imageSaveUtill.extractFileName(treeSaveTmp.getFilePath());
+                String toFileName = imageSaveUtill.moveImageFile(fileName,"book", true);
+                book.setImageFile(toFileName);
+                bookRepository.update(book);
+            }
+        }
+
+        tree.setBookId(book.getId());
+
+        treeRepository.save(tree); // 트리 저장 로직
         leafBookView.setTreeId(tree.getId());
 
-        // 트리 이미지 저장 로직
-        if (seedId != 1) {
-            String toFileName = imageSaveUtill.moveImageFile(treeSaveTmp.getImageFile(),"book", true);
-            TreeImage treeImage = TreeImage.builder()
-                    .name(toFileName)
-                    .treeId(tree.getId())
-                    .build();
-            treeImageRepository.save(treeImage);
-        }
 
-        // 트리 북 저장 로직
         TreeBook treeBook = TreeBook.builder()
                 .treeId(tree.getId())
                 .readingPage(0)
                 .build();
-        treeBookRepository.save(treeBook);
+        treeBookRepository.save(treeBook); // 트리 북 저장 로직
 
         // 트리 저장 TMP 삭제
         treeSaveTmpRepository.deleteByMemberId(memberId);
@@ -121,7 +108,7 @@ public class LeafBookServiceImpl implements LeafBookService {
 
     @Override
     @Transactional
-    public LeafBookView registerNode(LeafBookView leafBookView, Long seedId, Long memberId) {
+    public LeafBookView registerNode(LeafBookView leafBookView, Long memberId) {
 
         // 부모 리프 조회
         Leaf parentLeaf = Optional.ofNullable(leafRepository.findById(leafBookView.getParentLeafId()))
@@ -364,6 +351,53 @@ public class LeafBookServiceImpl implements LeafBookService {
         }
 
         return leafBookViews;
+    }
+
+    @Override
+    public LeafBookView update(Long leafId, LeafBookView leafBookView, Long memberId) {
+
+        // 도서 리프 수정
+        LeafBook leafBook = Optional.ofNullable(leafBookRepository.findByLeafId(leafId))
+                .orElseThrow(() -> new IllegalArgumentException("Leaf Book 데이터가 존재하지 않습니다."));
+
+        LeafBook toLeafBook = leafBookView.toLeafBook();
+        leafBook.setEndPage(toLeafBook.getEndPage());
+        leafBook.setStartPage(toLeafBook.getStartPage());
+        leafBookRepository.update(leafBook);
+
+        // 리프 수정
+        Leaf leaf = Optional.ofNullable(leafRepository.findById(leafId))
+                .orElseThrow(() -> new IllegalArgumentException("Leaf 데이터가 존재하지 않습니다."));
+
+        Leaf toLeaf = leafBookView.toLeaf();
+        leaf.setTitle(toLeaf.getTitle());
+        leaf.setContent(toLeaf.getContent());
+        leaf.setVisibility(toLeaf.getVisibility());
+        leafRepository.update(leaf);
+
+        // 리프 태그 맵핑 수정
+        List<LeafTagMap> leafTagMap = leafTagMapRepository.findByLeafId(leafId);
+        for (LeafTagMap tagMap : leafTagMap) { // 기존 태그 맵핑 삭제
+            leafTagMapRepository.delete(tagMap);
+        }
+
+        List<Long> tagIds = leafBookView.getTagIds();
+        for (Long tagId : tagIds) { // 새로운 태그 맵핑 추가
+            leafTagMapRepository.save(LeafTagMap.of(leafId, tagId));
+        }
+
+        return leafBookView;
+    }
+
+    @Override
+    public boolean isOwner(Long leafId, Long memberId) {
+        Leaf leaf = Optional.ofNullable(leafRepository.findById(leafId))
+                .orElseThrow(() -> new IllegalArgumentException("Leaf 조회 실패"));
+
+        Tree tree = Optional.ofNullable(treeRepository.findById(leaf.getTreeId()))
+                .orElseThrow(() -> new IllegalArgumentException("Tree 조회 실패"));
+
+        return tree.getMemberId().equals(memberId);
     }
 
     private List<LeafTag> getLeafTags(List<LeafTagMap> leafTagMaps) { // 리프 태그 조회

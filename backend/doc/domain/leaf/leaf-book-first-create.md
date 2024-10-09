@@ -80,6 +80,11 @@ PostCondition:
 ### API
 POST `/api/v1/leafs/book/first`
 - Request: LeafBookFirstCreateRequest
+{
+
+}
+
+
 - Response: LeafBookFirstCreateResponse
 
 ## <> 시퀀스 다이어그램

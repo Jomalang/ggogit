@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
-interface Props {
+interface Branch {
   branch: string;
   log: number;
   like: number;
@@ -9,38 +9,38 @@ interface Props {
   date: Date;
 }
 
-const props = defineProps<Props>();
+const props = defineProps<{
+  branches: Branch[]
+}>();
 
-const formattedDate = computed(() => {
-  return new Date(props.date).toISOString().split('T')[0];
-});
+const formatDate = (date: Date) => {
+  return new Date(date).toISOString().split('T')[0];
+};
 </script>
 
 <template>
-  <!-- ==========================================
-       FRAGMENT: 브랜치 정보 하단바
-       (branch, log, like, view, date)
-       ========================================== -->
-  <div class="branch-state-main">
-    <div class="branch-state__header">
-      <div class="branch-state__icon-box">
-        <div>
-          <img
-            class="branch-state__box-image"
-            src="'/svg/branch-box--icon.svg'"
-            alt="브랜치 아이콘"
-          />
+  <div class="log-list-bot-bar-info-container">
+    <div class="branch-state-main" v-for="branch in branches" :key="branch.branch">
+      <div class="branch-state__header">
+        <div class="branch-state__icon-box">
+          <div>
+            <img
+                class="branch-state__box-image"
+                src='/svg/branch-box--icon.svg'
+                alt="브랜치 아이콘"
+            />
+          </div>
         </div>
+        <p class="branch-state__name">{{ branch.branch }}</p>
       </div>
-      <p class="branch-state__name">{{ props.branch }}</p>
-    </div>
-    <div class="branch-state__info">
-      <div class="branch-state__stats">
-        <p>로그<span class="branch-state__nums">{{ props.log }}</span></p>
-        <p>좋아요<span class="branch-state__nums">{{ props.like }}</span></p>
-        <p>조회<span class="branch-state__nums">{{ props.view }}</span></p>
+      <div class="branch-state__info">
+        <div class="branch-state__stats">
+          <p>로그<span class="branch-state__nums">{{ branch.log }}</span></p>
+          <p>좋아요<span class="branch-state__nums">{{ branch.like }}</span></p>
+          <p>조회<span class="branch-state__nums">{{ branch.view }}</span></p>
+        </div>
+        <p class="branch-state__date">{{ formatDate(branch.date) }}</p>
       </div>
-      <p class="branch-state__date">{{ formattedDate }}</p>
     </div>
   </div>
 </template>
@@ -49,6 +49,9 @@ const formattedDate = computed(() => {
 /*  ==========================================
     FRAGMENT: 브랜치 정보 하단바
     ========================================== */
+.log-list-bot-bar-info-container {
+  z-index: 10;
+}
 .branch-state-main {
   box-shadow: var(--shadow-basic);
   transition: all 0.2s linear;

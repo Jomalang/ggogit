@@ -7,97 +7,124 @@ interface Comment {
   memberImage: string;
   memberNickname: string;
   commentContent: string;
+  likeCount: number;
   createTime: Date;
 }
 
 const props = defineProps<{
-  comment: Comment
+  comments: Comment[]
 }>();
 
-const timeSince = computed(() => {
+const timeSince = (createTime: Date | string) => {
   const now = new Date();
-  const createAt = new Date(props.comment.createTime);
+  const createAt = new Date(createTime);
   const afterAt = Math.floor((now.getTime() - createAt.getTime()) / 1000);
 
   if (afterAt < 60) return `${afterAt}초 전`;
   else if (afterAt < 3600) return `${Math.floor(afterAt / 60)}분 전`;
   else if (afterAt < 86400) return `${Math.floor(afterAt / 3600)}시간 전`;
   else if (afterAt < 2592000) return `${Math.floor(afterAt / 86400)}일 전`;
-  else if (afterAt < 31104000) return `${Math.floor(afterAt / 2592000)}월 전`;
+  else if (afterAt < 31104000) return `${Math.floor(afterAt / 2592000)}개월 전`;
   else return `${Math.floor(afterAt / 31104000)}년 전`;
-});
+};
 </script>
 
 <template>
   <!-- ==========================================
      FRAGMENT: 댓글 리스트 (memberImage, memberNickname, createTime, commentContent, )
      ========================================== -->
-  <div class="tab-comment-list-box">
-    <ul class="tab-comment__list">
-      <li class="tab-comment__item">
-        <div>
-          <a :href="`${comment.memberId}`">
-            <div class="card-log__author-img-frame">
-              <img
-                class="card-log__author-img"
-                :src="`/public/svg/${comment.memberImage}`"
-                alt="author-img"
+  <section id="comment-filter-tab-id" class="book-detail-comment-tab-container book-detail-comment-tab-container--active">
+    <div class="tab-comment-list-box">
+      <ul class="tab-comment__list">
+        <li class="tab-comment__item" v-for="comment in comments" :key="comments.commentId">
+          <div>
+            <a :href="`${comment.memberId}`">
+              <div class="card-log__author-img-frame">
+                <img
+                  class="card-log__author-img"
+                  :src="`${comment.memberImage}`"
+                  alt="author-img"
+                />
+              </div>
+            </a>
+          </div>
+          <div class="card-log__info" >
+              <div class="card-log__create">
+                <a :href="`${comment.memberImage}`">
+                <span class="card-log__create-info">{{ comment.memberNickname }}</span>
+                <span class="card-log__create-info">·</span>
+                <span class="card-log__create-info">{{ timeSince(comment.createTime) }}</span>
+                </a>
+            <div class="card-log__content-form">
+              <input
+                class="card-log__content-detail-show"
+                type="checkbox"
+                id="card-log__content-detail"
               />
+              <label
+                class="card-log__content-detail"
+                for="card-log__content-detail"
+              ></label>
+              <p class="card-log__content">
+                {{ comment.commentContent }}
+              </p>
+            </div>
+            <div class="card-log__like-info">
+              <input
+                  :name="String(comment.commentId)"
+                  :id="'card-log__like-' + comment.commentId"
+                  class="card-log__like"
+                  type="checkbox"
+              />
+              <label
+                  class="card-log__like-frame"
+                  :for="'card-log__like-' + comment.commentId"
+              >
+                <img
+                  class="card-log__like-icon"
+                  src="/svg/tumbsup-off.svg"
+                  alt="like"
+                />
+              </label>
+              <p class="card-log__like-num">{{comment.likeCount}}</p>
+            </div>
+              </div>
+          </div>
+          <a class="card-log__detail-frame-link" href="#">
+            <div class="card-log__detail-frame">
+              <img src="/svg/card-detail.svg" alt="detail" />
             </div>
           </a>
-        </div>
-        <div class="card-log__info">
-          <a href="#">
-            <div class="card-log__create">
-              <span class="card-log__create-info">{{ comment.memberNickname }}</span>
-              <span class="card-log__create-info">·</span>
-              <span class="card-log__create-info">{{ timeSince }}</span>
-            </div>
-          </a>
-          <div class="card-log__content-form">
-            <input
-              class="card-log__content-detail-show"
-              type="checkbox"
-              id="card-log__content-detail"
-            />
-            <label
-              class="card-log__content-detail"
-              for="card-log__content-detail"
-            ></label>
-            <p class="card-log__content">
-              {{ comment.commentContent }}
-            </p>
-          </div>
-          <div class="card-log__like-info">
-            <input class="card-log__like" type="checkbox" id="card-log__like" />
-            <label class="card-log__like-frame" for="card-log__like" :id={{ comment.commentId }}>
-              <img
-                class="card-log__like-icon"
-                src="/svg/tumbsup-on.svg"
-                alt="like"
-              />
-            </label>
-            <p class="card-log__like-num">26</p>
-          </div>
-        </div>
-        <a class="card-log__detail-frame-link" href="#">
-          <div class="card-log__detail-frame">
-            <img src="/svg/card-detail.svg" alt="detail" />
-          </div>
-        </a>
-      </li>
-    </ul>
-  </div>
+        </li>
+      </ul>
+    </div>
+  </section>
 </template>
 
 <style>
 /*/////////////*/
 /* CommentList */
 /*/////////////*/
+.book-detail-comment-tab-container {
+  position: fixed;
+  top: 100%;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 20;
+  overflow: hidden;
+  transition: all 0.5s ease;
+}
+
+.book-detail-comment-tab-container--active {
+  top: 265px; /* 최종 위치 */
+  transform: translateY(0); /* 원래 위치로 이동 */
+}
+
 .tab-comment-list-box {
   display: flex;
   position: absolute;
-  width: auto;
+  width: 100%;
   top: 103px;
   bottom: 0;
   gap: 16px;
@@ -108,15 +135,15 @@ const timeSince = computed(() => {
 
 .tab-comment__list {
   display: flex;
-  width: auto;
   gap: 24px;
+  width: 100%;
   flex-direction: column;
 }
 
 .tab-comment__item {
   width: auto;
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-content: center;
 }
 
@@ -138,8 +165,14 @@ const timeSince = computed(() => {
 .card-log__author-img {
   object-fit: cover;
 }
+.card-log__info{
+  display: flex;
+  flex-grow: 1;
+
+}
 .card-log__create {
   display: flex;
+  flex-direction: column;
   gap: 2px;
 }
 .card-log__create-info {
@@ -226,15 +259,6 @@ const timeSince = computed(() => {
 .card-log__like {
   display: none;
 }
-
-.card-log__like:disabled + .card-log__like-frame {
-  background-image: url('/src/main/resources/static/svg/tumbsup-on.svg');
-}
-
-.card-log__like:checked + .card-log__like-frame {
-  background-image: url('/src/main/resources/static/svg/tumbsup-on.svg');
-}
-
 .card-log__like-frame {
   display: flex;
   height: 14px;
@@ -244,6 +268,15 @@ const timeSince = computed(() => {
   justify-content: center;
 }
 
+.card-log__like:disabled + .card-log__like-frame {
+  background-image: url('/public/svg/tumbsup-off.svg');
+}
+
+.card-log__like:checked + .card-log__like-frame {
+  background-image: url('/public/svg/tumbsup-on.svg');
+}
+
+
 .card-log__detail-frame-link {
   height: 24px;
 }
@@ -251,6 +284,6 @@ const timeSince = computed(() => {
 .card-log__detail-frame {
   height: 24px;
   width: 24px;
-  padding-left: 13px;
+  margin-right: 10px;
 }
 </style>

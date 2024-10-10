@@ -1,6 +1,4 @@
-<script setup>
-import { computed } from 'vue'
-
+<script setup  lang="ts">
 interface Props {
   bookId: number;
 }

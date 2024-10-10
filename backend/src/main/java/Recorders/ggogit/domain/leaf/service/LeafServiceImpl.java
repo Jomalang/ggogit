@@ -209,11 +209,14 @@ public class LeafServiceImpl implements LeafService {
         String filterName = filterType.findNameByNum(filter);
         String sortName = filterType.findNameByNum(sort);
 
+        int limit = 10;
+        Integer offset = limit * page;
         List<LeafBranchView> branchList;
         if(bookMark == null)
-            branchList = leafRepository.toBranchlist(null, treeId, filterName, sortName, page);
+            branchList = leafRepository.toBranchlist(null, treeId, filterName, sortName, limit, offset);
         else
-            branchList = leafRepository.toBranchlist(bookMark, treeId, filterName, sortName, page);
+            branchList = leafRepository.toBranchlist(bookMark, treeId, filterName, sortName, limit, offset);
+
 
         return branchList;
     }
@@ -223,7 +226,10 @@ public class LeafServiceImpl implements LeafService {
         String filterName = filterType.findNameByNum(filter);
         String sortName = filterType.findNameByNum(sort);
 
-        List<LeafBranchView> branchList = leafRepository.toBranchlistForNeighbor(treeId, filterName, sortName, page);
+        int limit = 10;
+        Integer offset = limit * page;
+
+        List<LeafBranchView> branchList = leafRepository.toBranchlistForNeighbor(treeId, filterName, sortName, page, offset);
 
         return branchList;
     }

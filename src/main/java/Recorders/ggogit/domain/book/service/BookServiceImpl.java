@@ -58,4 +58,8 @@ public class BookServiceImpl implements BookService{
     public BookInfoView getBookbyId(Long bookId) {
         return bookRepository.findBookCategoryViewById(bookId);
     }
+
+    public Book findBookByIsbn(String isbn) {
+        return bookRepository.findByIsbn(isbn);
+    }
 }

@@ -21,7 +21,7 @@ public class TreeSaveTmp {
     private String bookTitle;
     private String author;
     private String publisher;
-    private Long totalPage;
+    private Integer totalPage;
     private Long bookId;
     private Long seedId;
     private String treeTitle;
@@ -35,7 +35,7 @@ public class TreeSaveTmp {
                 .id(bookId)
                 .memberId(memberId)
                 .bookCategoryId(bookCategoryId)
-//                .totalPage(totalPage) // db 에 int 로 되어있음 long -> int
+                .totalPage(totalPage) // db 에 int 로 되어있음 long -> int
                 .title(bookTitle)
                 .author(author)
                 .publisher(publisher)
@@ -69,5 +69,12 @@ public class TreeSaveTmp {
 
     public String getFilePath() {
         return imageFile;
+    }
+
+    public TreeBook of(Long id, Integer readingPage) {
+        return TreeBook.builder()
+                .treeId(id)
+                .readingPage(readingPage)
+                .build();
     }
 }

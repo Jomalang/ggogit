@@ -29,6 +29,17 @@
         WHERE LEAF_ID = #{leafId}
     </select>
 
+    <select id="findByTreeId" parameterType="Long" resultType="LeafBook">
+        SELECT LEAF_ID, START_PAGE, END_PAGE
+        FROM LEAF_BOOK
+        WHERE LEAF_ID IN (
+            SELECT ID
+            FROM LEAF
+            WHERE TREE_ID = #{treeId}
+                AND IS_DELETED = 0
+        )
+    </select>
+
     <select id="findById" parameterType="Long" resultType="LeafBook">
         SELECT LEAF_ID, START_PAGE, END_PAGE
         FROM LEAF_BOOK

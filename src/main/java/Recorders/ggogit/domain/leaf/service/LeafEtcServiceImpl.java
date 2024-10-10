@@ -15,6 +15,7 @@ import Recorders.ggogit.domain.tree.repository.TreeRepository;
 import Recorders.ggogit.domain.tree.repository.TreeSaveTmpRepository;
 import Recorders.ggogit.type.SearchType;
 import Recorders.ggogit.type.SortType;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -28,26 +29,18 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class LeafEtcServiceImpl implements LeafEtcService {
 
     private final static int LEAF_MAX_CHILD_COUNT = 3;
 
-    @Autowired
-    private LeafRepository leafRepository;
+    private final LeafRepository leafRepository;
+    private final LeafTagRepository leafTagRepository;
+    private final LeafTagMapRepository leafTagMapRepository;
 
-    @Autowired
-    private LeafTagRepository leafTagRepository;
-
-    @Autowired
-    private LeafTagMapRepository leafTagMapRepository;
-
-    @Autowired
-    private TreeSaveTmpRepository treeSaveTmpRepository;
-
-    @Autowired
-    private TreeRepository treeRepository;
-    @Autowired
-    private TreeImageRepository treeImageRepository;
+    private final TreeRepository treeRepository;
+    private final TreeSaveTmpRepository treeSaveTmpRepository;
+    private final TreeImageRepository treeImageRepository;
 
     @Value("${file.upload-dir}")
     private String uploadDir;

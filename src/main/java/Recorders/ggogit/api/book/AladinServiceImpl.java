@@ -23,7 +23,7 @@ public class AladinServiceImpl implements AladinService {
     private AladinRepository aladinRepository;
 
     private final String ALADIN_ITEM_SEARCH_URL = "https://www.aladin.co.kr/ttb/api/" +
-            "ItemSearch.aspx?ttbkey=ttbrhkddlr982013001&Query=%s&MaxResults=100&Cover=Big&Output=JS&Version=20131101";
+            "ItemSearch.aspx?ttbkey=ttbrhkddlr982013001&Query=%s&MaxResults=10&Cover=Big&Output=JS&Version=20131101";
             // 여기서 Query= 뒤에 들어간 %s 에 html 뷰의 input 이름의 keyword 값이 맵핑 됨, 검색 결과 값 MaxResults=100 으로 했는데 그보다 적게 저장되는 것 같음
     private final String ALADIN_ITEM_LOOKUP_URL = "https://www.aladin.co.kr/ttb/api/" +
             "ItemLookUp.aspx?ttbkey=ttbrhkddlr982013001&itemIdType=ISBN&ItemId=%s&Cover=Big&output=JS&Version=20131101";

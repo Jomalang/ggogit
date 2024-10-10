@@ -16,15 +16,19 @@ import java.util.List;
 @Data
 public class LeafBookForm {
 
+    private Long leafId;
+
     private Long seedId;
 
     private Long parentId;
 
-    @Nullable // etc Leaf 등록시 null
-    private Long startPage;
+    private Long treeId;
 
     @Nullable // etc Leaf 등록시 null
-    private Long endPage;
+    private Integer startPage;
+
+    @Nullable // etc Leaf 등록시 null
+    private Integer endPage;
 
     @NotNull(message = "태그를 선택해주세요.")
     private List<Long> tagIds;
@@ -39,9 +43,11 @@ public class LeafBookForm {
 
     public LeafBookView toLeafBookView() {
         return LeafBookView.builder()
+                .leafId(leafId)
+                .treeId(treeId)
+                .parentLeafId(parentId)
                 .startPage(startPage)
                 .endPage(endPage)
-                .parentLeafId(parentId)
                 .tags(getTags())
                 .title(title)
                 .content(content)
@@ -51,8 +57,10 @@ public class LeafBookForm {
 
     public LeafEtcView toLeafEtcView() {
         return LeafEtcView.builder()
-                .tags(getTags())
+                .treeId(treeId)
+                .leafId(leafId)
                 .parentLeafId(parentId)
+                .tags(getTags())
                 .title(title)
                 .content(content)
                 .visibility(visibility)

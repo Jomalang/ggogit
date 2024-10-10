@@ -117,18 +117,44 @@
         </select>
 
 
-    <select id="findLeafBranchViewByTreeId" resultType="LeafBranchView">
+    <select id="findBranchlist" resultType="LeafBranchView">
         SELECT
             ID,
+            PARENT_LEAF_ID,
             TITLE,
-            LIKE_COUNT,
+<!--            LEAF_COUNT,-->
             VIEW_COUNT,
             BOOK_MARK,
             UPDATE_TIME
         FROM
             LEAF
-        WHERE CHILD_LEAF_COUNT = 0 OR BOOK_MARK = 1
+        WHERE
+            TREE_ID = #{treeId}
             AND IS_DELETED = FALSE
+        <choose>
+            <when test="bookMark == null">
+                AND (CHILD_LEAF_COUNT = 0 OR BOOK_MARK = 1)
+            </when>
+            <when test="bookMark == true">
+                AND CHILD_LEAF_COUNT = 0
+            </when>
+            <when test="bookMark == false">
+                AND BOOK_MARK = 1
+            </when>
+        </choose>
+        ORDER BY
+        <choose>
+            <when test="filterName == 'UPDATE_TIME'">UPDATE_TIME</when>
+            <when test="filterName == 'TITLE'">TITLE</when>
+            <when test="filterName == 'VIEW_COUNT'">VIEW_COUNT</when>
+            <otherwise>UPDATE_TIME</otherwise>
+        </choose>
+        <choose>
+            <when test="sortName == 'ASC'">ASC</when>
+            <when test="sortName == 'DESC'">DESC</when>
+            <otherwise>DESC</otherwise>
+        </choose>
     </select>
+
 
 </mapper>

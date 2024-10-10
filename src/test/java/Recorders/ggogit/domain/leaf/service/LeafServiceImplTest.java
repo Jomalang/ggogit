@@ -1,5 +1,6 @@
 package Recorders.ggogit.domain.leaf.service;
 
+import Recorders.ggogit.domain.leaf.view.LeafBranchView;
 import Recorders.ggogit.domain.leaf.view.LeafItemView;
 import Recorders.ggogit.domain.leaf.view.LeafListBranchView;
 import org.junit.jupiter.api.Test;
@@ -26,6 +27,16 @@ class LeafServiceImplTest {
     void getLeafItems() {
         Long treeId = 1L;
         Long leafId = 2L;
-        List<LeafItemView> leafItems = leafServiceImpl.getLeafItems(treeId, leafId);
+        List<LeafItemView> leafItems = leafServiceImpl.getLeafItems(treeId, leafId, true);
+    }
+
+    @Test
+    void findBranchByTreeId() {
+        //given
+        Long treeId = 1L;
+        //when
+        List<LeafBranchView> list =  leafServiceImpl.findBranchByTreeId(treeId);
+        //then
+        System.out.println(list);
     }
 }

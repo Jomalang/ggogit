@@ -84,7 +84,7 @@ class LeafRepositoryTest {
         leaf.setLikeCount(1L);
         leaf.setViewCount(1L);
         leaf.setChildLeafCount(1L);
-        leaf.setBookMark(1L);
+        leaf.setBookMark(true);
 
         // when
         leafRepository.update(leaf);

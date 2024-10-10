@@ -3,6 +3,8 @@ package Recorders.ggogit.web.tree;
 import Recorders.ggogit.domain.book.service.BookService;
 import Recorders.ggogit.domain.book.view.BookInfoView;
 import Recorders.ggogit.domain.book.view.BookPreviewView;
+import Recorders.ggogit.domain.leaf.repository.LeafRepository;
+import Recorders.ggogit.domain.leaf.service.LeafService;
 import Recorders.ggogit.domain.leaf.view.LeafBranchView;
 import Recorders.ggogit.domain.member.entity.Member;
 import Recorders.ggogit.domain.member.service.MemberService;
@@ -52,6 +54,8 @@ public class TreeController {
 
     @Autowired
     private MemberService memberService;
+    @Autowired
+    private LeafService leafService;
 
     @GetMapping("/search")
     public String treeSearch() {
@@ -274,12 +278,14 @@ public class TreeController {
         CombineTreeView combineTreeView = treeService.findCombineTreeView(memberId, treeId);
         MemberImageView memberImageView = combineTreeView.getMemberImageView();
         TreeInfoView treeInfoView = combineTreeView.getTreeInfoView();
-        List<LeafBranchView> leafList = combineTreeView.getLeafList();
+
+        List<LeafBranchView> leafList = leafService.findBranchByTreeId(treeId);
+        System.out.println(leafList);
 
         model.addAttribute("memberImageView", memberImageView);
         model.addAttribute("treeInfoView", treeInfoView);
         model.addAttribute("leafList", leafList);
-        return "view/tree/index";
+        return "view/tree/detail";
     }
 
     @GetMapping("/memoir/register/index")

@@ -28,4 +28,6 @@ public interface BookRepository {
     List<BookPreviewView> findBookCategoryViewByAuthor(String author);
 
     BookInfoView findBookCategoryViewById(Long bookId);
+
+    Book findByIsbn(String isbn);
 }

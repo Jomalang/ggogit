@@ -219,7 +219,7 @@ CREATE TABLE `TREE_SAVE_TMP` (
 CREATE TABLE `TREE` (
     `ID`                BIGINT(20)      NOT NULL AUTO_INCREMENT             COMMENT '트리 PK',
     `MEMBER_ID`         BIGINT(20)      NOT NULL                            COMMENT '회원 FK',
-    `BOOK_ID`           BIGINT(20)      NOT NULL                            COMMENT '도서 FK',
+    `BOOK_ID`           BIGINT(20)      NULL                                COMMENT '도서 FK',
     `SEED_ID`           BIGINT(20)      NOT NULL                            COMMENT '씨앗 FK',
     `TITLE`             VARCHAR(3000)   NOT NULL                            COMMENT '트리 제목',
     `DESCRIPTION`       VARCHAR(3000)   NOT NULL                            COMMENT '트리 설명',

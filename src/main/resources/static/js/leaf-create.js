@@ -142,4 +142,9 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelector('.first-log-box')
             .classList.add('first-log-box--show');
     }, 500); // 0.5초 뒤에 이벤트를 등록한다.
+
+    setTimeout(() => {
+        document.querySelector('.before-log-box')
+            .classList.add('before-log-box--show');
+    }, 500); // 0.5초 뒤에 이벤트를 등록한다.
 });

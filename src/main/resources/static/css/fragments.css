@@ -245,6 +245,27 @@
 }
 
 /*  ==========================================
+    FRAGMENT: 메인 Title + side Text
+    ========================================== */
+.text-main-title-side-text__frame{
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+}
+
+.text-main-title__listCount {
+  color: var(--main1, #323a27);
+  font-weight: var(--bold, 700);
+  font-size: 24px;
+}
+.text-main-side-text{
+  color: var(--main1, #323a27);
+  font-weight: var(--bold, 700);
+  font-size: 16px;
+}
+
+
+/*  ==========================================
     FRAGMENT: 화면 설명글
     ========================================== */
 
@@ -620,8 +641,17 @@
   transform: translateY(100%); /* 리스트가 아래로 숨겨짐 */
   transition: transform 0.3s ease-in-out;
 }
+.filter-tab__box--30 {
+  background-color: var(--white, #ffffff);
+  border-radius: 18px;
+  border: 1px solid var(--main2--opacity40);
+  height: 100%;
+  transition-property: height;
+  transform: translateY(100%); /* 리스트가 아래로 숨겨짐 */
+  transition: transform 0.3s ease-in-out;
+}
 
-.filter-tab__box.up {
+.filter-tab__box.up, .filter-tab__box--30.up {
   transform: translateY(0); /* 리스트가 위로 슬라이드됨 */
 }
 
@@ -945,6 +975,9 @@ button {
 .card-tree__book-cover {
   height: 120px;
   width: 80px;
+  border-radius: 4px;
+  background-color: var(--main1);
+
   object-fit: cover;
 }
 
@@ -1260,6 +1293,12 @@ button {
     ========================================== */
 .before-log-box {
   width: 100%;
+  transform: translateY(-100%);
+  transition: transform 0.5s ease;
+}
+
+.before-log-box--show {
+  transform: translateY(0);
 }
 
 .before-log__branch {
@@ -1374,6 +1413,8 @@ button {
 }
 
 .log-item__title {
+  display: flex;
+  align-items: center;
   font-size: 16px;
   color: var(--main1, #323a27);
   font-weight: var(--bold, 700);
@@ -1593,6 +1634,8 @@ card.html
 .card-tree-info-cover {
   width: 60px;
   height: 90px;
+  background-color: var(--main1);
+  border-radius: 8px;
   position: absolute;
   top: 0;
   left: 0;
@@ -1877,6 +1920,27 @@ card.html
   display: block;
   position: absolute;
 }
+
+.filter-attribute__bg{
+  margin: 10px 20px;
+  padding-top: 20px;
+  background-color: var(--main2--opacity40);
+  border-radius: 8px;
+}
+
+.filter-attribute__title{
+  margin-left: 20px;
+  margin-bottom: 8px;
+  font-size: 16px;
+  font-weight: var(--bold);
+  line-height: var(--line-height-main);
+  letter-spacing: var(--letter-spacing-main);
+}
+.filter-attribute__item{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
 /*===============================================
     bar: class="bar-search-result-frame"
 ===============================================*/
@@ -1910,6 +1974,11 @@ card.html
   display: flex;
 }
 
+.filter-tree-leaf__card-sort {
+  display: flex;
+  align-items: end;
+}
+
 .bar-search-current__detail-input {
   display: none;
   cursor: none;
@@ -1921,6 +1990,7 @@ card.html
   margin-left: auto;
   content: "자세히";
   font-size: 10px;
+  font-weight: var(--bold, 700);
   cursor: pointer;
 }
 
@@ -1962,7 +2032,7 @@ card.html
 
 =======================================*/
 .card-branch__list-frame {
-  padding: 16px 14px;
+  padding: 14px 16px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -1982,6 +2052,7 @@ card.html
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-shrink: 0;
   border-radius: 4px;
   background: var(--main1);
 }
@@ -1989,7 +2060,10 @@ card.html
   padding-top: 1px;
   padding-bottom: 1px;
   display: flex;
-  flex-direction: column;
+  flex-grow: 1;
+  min-width: 0;
+  align-items: center;
+  text-align: left;
 }
 .branch-detail-info--regdate {
   font-size: 12px;
@@ -2000,6 +2074,9 @@ card.html
 .branch-detail-info--name {
   font-size: 18px;
   font-weight: var(--bold);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   line-height: var(--line-height-main);
   letter-spacing: var(--letter-spacing-main);
 }
@@ -2009,23 +2086,21 @@ card.html
 }
 .branch-card-bottom-info {
   display: flex;
-  align-items: center;
+  align-items: end;
   gap: 10px;
 }
-.branch-card-bottom-info > span {
+.branch-card-bottom-info  span {
   display: flex;
+  align-items: end;
   color: var(--text-sub);
   font-size: 14px;
   font-weight: var(--regular);
-  line-height: var(--line-height-sub);
-  letter-spacing: var(--letter-spacing-sub);
 }
-.branch-card-bottom-info p {
+.branch-card-bottom-info span > p {
+  margin-left: 2px;
   color: var(--text-sub);
   font-size: 14px;
   font-weight: var(--bold);
-  line-height: var(--line-height-main);
-  letter-spacing: var(--letter-spacing-main);
 }
 .branch-card-bottom__like-frame {
   width: 24px;
@@ -2375,6 +2450,18 @@ card.html
   flex-direction: column;
 }
 
+/* ========================
+    디테일 페이지 리프 목록 필터
+  ========================= */
+.filter-tree-leaf__card {
+  margin-top: 14px;
+  display: flex;
+  justify-content: space-between;
+}
+.filter-tree-leaf__gap{
+  display: flex;
+  gap: 5px;
+}
 /*  ========================================== /
      FRAGMENT: 도서 디테일 배경
 /   ========================================== */

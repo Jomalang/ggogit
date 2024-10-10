@@ -4,7 +4,8 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="Recorders.ggogit.api.book.AladinRepository">
 
-    <insert id="save" parameterType="Book">
+<insert id="save" parameterType="Book">
+
         INSERT INTO BOOK (MEMBER_ID, BOOK_CATEGORY_ID, TITLE, AUTHOR, TRANSLATOR, ISBN, PUBLISHER, PUBLISH_DATE, TOTAL_PAGE, IMAGE_FILE, IS_DELETED, CREATE_TIME, UPDATE_TIME)
         VALUE (#{memberId}, #{bookCategoryId}, #{title}, #{author}, #{translator}, #{isbn}, #{publisher}, #{publishDate}, #{totalPage}, #{imageFile}, #{isDeleted}, #{createTime}, #{updateTime})
     </insert>
@@ -14,6 +15,4 @@
         FROM BOOK
         WHERE isbn = #{isbn}
     </select>
-
-
 </mapper>

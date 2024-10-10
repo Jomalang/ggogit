@@ -121,6 +121,7 @@ public class LeafController {
             ModelAndView mv = new ModelAndView("view/leaf/reg-book", "form", new LeafBookForm());
             mv.addObject("beforeLeaf", beforeLeafInfoView);
             mv.addObject("memberId", memberId);
+            mv.addObject("treeId", treeId);
             mv.addObject("leafId", leafId);
             mv.addObject("seedId", seedId);
             return mv;
@@ -129,6 +130,7 @@ public class LeafController {
         ModelAndView mv = new ModelAndView("view/leaf/reg-etc", "form", new LeafForm());
         mv.addObject("beforeLeaf", beforeLeafInfoView);
         mv.addObject("memberId", memberId);
+        mv.addObject("treeId", treeId);
         mv.addObject("leafId", leafId);
         mv.addObject("seedId", seedId);
         return mv;
@@ -192,23 +194,23 @@ public class LeafController {
         @RequestParam(value = "leaf_id") Long leafId,
         Model model
     ) {
-        List<LeafItemView> list = leafService.getLeafItems(treeId, leafId);
+        Long memberId = 999L;
+        boolean isOwner = leafService.isOwner(treeId, memberId);
+        List<LeafItemView> list = leafService.getLeafItems(treeId, leafId, isOwner);
 
         // 최근 수정 브랜치 이름 정보 넣어야함
         model.addAttribute("focusedTime", list.getLast().getCreateTime());
         model.addAttribute("branch", leafService.getBranchInfo(treeId, list.getLast().getId()));
         model.addAttribute("breadcrumb", leafService.getBreadcrumb(treeId, leafId));
-        model.addAttribute("list", list); // 거꾸로 정렬
         return "view/leaf/list";
     }
 
     @GetMapping("/detail")
     public String getLeafDetail(
-            @RequestParam(value = "tree_id") Long treeId,
             @RequestParam(value = "leaf_id") Long leafId,
             Model model
     ) {
-        model.addAttribute("breadcrumb", leafService.getBreadcrumb(treeId, leafId));
+        model.addAttribute("breadcrumb", leafService.getBreadcrumb(leafId));
         // TODO: 도서 상세 정보 넣어야함
 
         Long memberId = 1L;

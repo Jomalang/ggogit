@@ -122,14 +122,12 @@ public class TreeServiceImpl implements TreeService {
     public CombineTreeView findCombineTreeView(Long memberId, Long treeId) {
         MemberImageView memberImageView = memberRepository.getMemberImageView(memberId);
         TreeInfoView treeInfoView = repository.getTreeInfoViewByTreeId(treeId);
-        List<LeafBranchView> leafList = leafRepository.findLeafBranchViewByTreeId(treeId);
 
         System.out.println(treeInfoView.toString());
 
         CombineTreeView combineTreeView = CombineTreeView.builder()
                 .memberImageView(memberImageView)
                 .treeInfoView(treeInfoView)
-                .leafList(leafList)
                 .build();
 
         return combineTreeView;
@@ -152,9 +150,10 @@ public class TreeServiceImpl implements TreeService {
         List<TreeCardView> treeCardViews = new ArrayList<>();
         List<Tree> treeList = treeRepository.findByMemberIdAndSeeedId(seedId,memberId);
 
-        for(Tree tree : treeList){
-            if(seedId == 0 || seedId == 1){
+        for (Tree tree : treeList){
+            if (tree.getSeedId() == 1){
                 BookInfoView book = bookRepository.findBookCategoryViewById(tree.getBookId());
+
 
                 Long totalPage = book.getTotalPage();
                 Long readingPage = repository.findReadPageById(tree.getId());
@@ -188,7 +187,7 @@ public class TreeServiceImpl implements TreeService {
                 treeCardViews.add(tmp);
             }else {
                 String coverImage = repository.findTreeImageById(tree.getId());
-                String seedKorName = seedRepository.findById(seedId).getKorName();
+                String seedKorName = seedRepository.findById(tree.getSeedId()).getKorName();
                 String nickname = memberRepository.findById(tree.getMemberId()).getNickname();
                 TreeCardView tmp = TreeCardView.builder()
                         .coverImageName(coverImage)

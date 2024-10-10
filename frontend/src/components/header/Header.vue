@@ -3,12 +3,11 @@
 </script>
 
 <template>
-    <!-- header-search-link, /tree/book/select, /svg/lens.svg -->
     <div class="header-search-link">
-        <a class="header-search-link__link" href="">
+        <a class="header-search-link__link" href="/tree/book/select">
             <div class="header-search-link__input-box">
                 <p class="header-search-link__placeholder">나의 트리 검색</p>
-                <img class="header-search-link__icon" src="" alt="lens.svg"/>
+                <img class="header-search-link__icon" src="/svg/lens.svg" alt="lens.svg"/>
             </div>
         </a>
     </div>
@@ -57,26 +56,3 @@
     overflow: visible;
 }
 </style>
-
-
-<template>
-    <div class="header-search-link">
-        <a class="header-search-link__link" :href="searchUrl">
-            <div class="header-search-link__input-box">
-                <p class="header-search-link__placeholder">나의 트리 검색</p>
-                <img class="header-search-link__icon" :src="iconSrc" alt="lens.svg"/>
-            </div>
-        </a>
-    </div>
-</template>
-<script>
-export default {
-    name: 'HeaderSearchLink',
-    data() {
-        return {
-            searchUrl: '/tree/book/select',
-            iconSrc: '/svg/lens.svg'
-        }
-    }
-}
-</script>

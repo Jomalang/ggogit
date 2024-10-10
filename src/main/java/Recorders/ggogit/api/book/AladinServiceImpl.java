@@ -13,6 +13,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 public class AladinServiceImpl implements AladinService {
@@ -62,14 +64,19 @@ public class AladinServiceImpl implements AladinService {
         }
     }
 
-    private void saveBooksToDB(List<BookDto> books) { // 위에서 만든 books 을 매개변수로 사용하여 디비에 저장하는 코드
+    private void saveBooksToDB(List<BookDto> books) {  // 위에서 만든 books 을 매개변수로 사용하여 디비에 저장하는 코드
         for (BookDto bookDto : books) {
             try {
-                Book book = convertToEntity(bookDto); // BookDto 객체를 Book 엔티티 객체로 변환
-                aladinRepository.save(book); // 알라딘 레포지로 넘겨 멥퍼가 작동하게 해서 데이터베이스에 저장
-                System.out.println("Saved book: " + book.getTitle());
+                String isbn = bookDto.getIsbn13();
+                if (!aladinRepository.existsByIsbn(isbn)) { // @@@@@중복데이터 검사 (isbn 이 이미 존재하지 않으면)
+                    Book book = convertToEntity(bookDto);  // BookDto 객체를 Book 엔티티 객체로 변환
+                    aladinRepository.save(book);  // 알라딘 레포지로 넘겨 멥퍼가 작동하게 해서 데이터베이스에 저장
+                    System.out.println("Saved book: " + book.getTitle());
+                } else {
+                    System.out.println("Book already exists: " + bookDto.getTitle());
+                }
             } catch (Exception e) {
-                System.err.println("Error saving book: " + bookDto.getTitle());
+                System.err.println("Error processing book: " + bookDto.getTitle());
                 e.printStackTrace();
             }
         }
@@ -80,7 +87,9 @@ public class AladinServiceImpl implements AladinService {
         book.setMemberId(999L); // 멤버아이디 임의 지정
         book.setBookCategoryId(1L); // 북카테고리값 임의 지정
         book.setTitle(dto.getTitle());
-        book.setAuthor(dto.getAuthor());
+        String[] authorInfo = separateAuthorAndTranslator(dto.getAuthor()); // author 와 translator 분리
+        book.setAuthor(authorInfo[0]);
+        book.setTranslator(authorInfo[1]);
         book.setIsbn(dto.getIsbn13());  // 알라딘에서 isbn 보다 isbn13 를 사용하는 것을 권장하므로 수정하였습니다
         book.setPublisher(dto.getPublisher());
         book.setPublishDate(dto.getPubDate());
@@ -90,8 +99,48 @@ public class AladinServiceImpl implements AladinService {
         book.setUpdateTime(LocalDateTime.now());
         book.setCreateTime(LocalDateTime.now());
 
-
         return book; // 여기서 변환된 book 을 위의 코드로 db 에 저장
+    }
+
+    private String[] separateAuthorAndTranslator(String authorString) {  // 저자 데이터에서 translator 분리
+        StringBuilder authors = new StringBuilder(); // 데이터를 분리할 그릇 생성
+        StringBuilder translators = new StringBuilder();
+
+        Pattern pattern = Pattern.compile("(.*?)\\s*\\((지은이|저자|그림|저|옮긴이|감수|번역|엮은이|역|편역)\\)"); // 데이터 분리하는 정규식
+        Matcher matcher = pattern.matcher(authorString); // 분리된 데이터에서 패턴을 찾기 위해 Matcher 객체 생성
+
+        while (matcher.find()) { // 패턴에 맞는 모든 항목을 반복적으로 찾아서 처리
+            String name = matcher.group(1).trim(); // 모든 이름 데이터를 처리하고
+            String role = matcher.group(2); // 모든 역할 데이터를 처리한다
+
+            if (role.matches("지은이|저자|그림|저")) { // 역할에 따라 저자와 번역가에 저장한다
+                authors.append(name).append(" (").append(role).append("), ");
+            } else if (role.matches("옮긴이|감수|번역|엮은이|역|편역")) {
+                translators.append(name).append(" (").append(role).append("), ");
+            }
+        }
+
+        // 마지막의 쉼표 및 공백 제거
+        if (authors.length() > 0) {
+            authors.setLength(authors.length() - 2); // 마지막 쉼표 제거
+        }
+
+        // 번역가가 없으면 null 반환
+        String translatorResult = translators.length() > 0 ? translators.substring(0, translators.length() - 2) : null;
+
+        // 최종적으로 저자와 번역가 문자열에서 불필요한 쉼표 및 공백 제거
+        String finalAuthors = authors.toString().replaceAll(",\\s*,", ", ").trim();
+        String finalTranslators = translatorResult != null ? translatorResult.replaceAll(",\\s*,", ", ").trim() : null;
+
+        // 문자열의 처음에 쉼표가 있는 경우 제거
+        if (finalAuthors.startsWith(",")) {
+            finalAuthors = finalAuthors.substring(1).trim();
+        }
+        if (finalTranslators != null && finalTranslators.startsWith(",")) {
+            finalTranslators = finalTranslators.substring(1).trim();
+        }
+
+        return new String[]{finalAuthors, finalTranslators}; // 각각 문자열 형태로 반환한다
     }
 
     private int getTotalPage(String isbn) {
@@ -121,6 +170,6 @@ public class AladinServiceImpl implements AladinService {
             e.printStackTrace();
         }
 
-        return 0; // 페이지 수를 가져오지 못한 경우 0 반환
+        return 0; // 디비에서 totalPage 가 not null 이기 때문에 페이지 수를 가져오지 못한 경우 0 반환
     }
 }

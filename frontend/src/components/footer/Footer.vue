@@ -1,19 +1,37 @@
-<script setup lang="ts">
+<script setup>
+import { defineProps } from 'vue'
+import { useRouter } from 'vue-router'
 
-const props = defineProps<{
-    noticeText: String;
-}>();
+const props = defineProps({
+    noticeText: {
+        type: String,
+        default: '서비스 개발 진행중'
+    }
+})
 
+const router = useRouter()
+
+const handleLogout = async () => {
+    try {
+        // 로그아웃 API 호출
+        await fetch('/member/logout', { method: 'POST' })
+        // 로그아웃 성공 후 처리
+        router.push('/index')
+    } catch (error) {
+        console.error('로그아웃 실패:', error)
+    }
+}
 </script>
 
 <template>
+    <!-- footer(noticeText) -->
     <footer class="tree-footer" notice-text="">
         <header class="tree-footer-header">
             <h1 class="tree-footer-header__title">공지사항</h1>
-            <p class="tree-footer-header__added">{{noticeText}}</p>
+            <p class="tree-footer-header__added">{{ props.noticeText }}</p>
         </header>
         <div class="tree-footer__membership">
-            <form class="display__inline" method="post" action="/member/logout" >
+            <form class="display__inline" @submit.prevent="handleLogout">
                 <button class="membership-login">로그아웃</button>
             </form>
             <a href="#" class="membership-asking">문의하기</a>

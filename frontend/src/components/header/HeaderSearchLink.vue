@@ -3,13 +3,14 @@
 </script>
 
 <template>
+    <!-- header-search-link -->
     <div class="header-search-link">
-        <a class="header-search-link__link" href="/tree/book/select">
+        <router-link class="header-search-link__link" to="/tree/book/select">
             <div class="header-search-link__input-box">
                 <p class="header-search-link__placeholder">나의 트리 검색</p>
                 <img class="header-search-link__icon" src="/svg/lens.svg" alt="lens.svg"/>
             </div>
-        </a>
+        </router-link>
     </div>
 </template>
 

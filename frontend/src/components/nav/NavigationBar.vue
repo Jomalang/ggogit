@@ -15,56 +15,56 @@ const props = defineProps({
             <!-- 홈 -->
             <li class="nav-box__item">
                 <a class="nav-box__link" href="/">
-                    <div class="nav-box__img-box" :class="{ 'nav-box__img-box--active': active === 'home' }">
+                    <div class="nav-box__img-box" :class="{ 'nav-box__img-box--active': props.active === 'home' }">
                         <img
                             class="main-nav__icon"
-                            :src="active === 'home' ? '/svg/nav-home--active.svg' : '/svg/nav-home.svg'"
+                            :src="props.active === 'home' ? '/svg/nav-home--active.svg' : '/svg/nav-home.svg'"
                             alt="홈 네비게이션 이미지"
                         />
                     </div>
-                    <p class="nav-box__text" :class="{ 'nav-box__text--active': active === 'home' }">홈</p>
+                    <p class="nav-box__text" :class="{ 'nav-box__text--active': props.active === 'home' }">홈</p>
                 </a>
             </li>
 
             <!-- 탐색 -->
             <li class="nav-box__item">
                 <a class="nav-box__link" href="#">
-                    <div class="nav-box__img-box" :class="{ 'nav-box__img-box--active': active === 'search' }">
+                    <div class="nav-box__img-box" :class="{ 'nav-box__img-box--active': props.active === 'search' }">
                         <img
                             class="main-nav__icon"
-                            :src="active === 'search' ? '/svg/nav-search--active.svg' : '/svg/nav-search.svg'"
+                            :src="props.active === 'search' ? '/svg/nav-search--active.svg' : '/svg/nav-search.svg'"
                             alt="탐색 네비게이션 이미지"
                         />
                     </div>
-                    <p class="nav-box__text" :class="{ 'nav-box__text--active': active === 'search' }">탐색</p>
+                    <p class="nav-box__text" :class="{ 'nav-box__text--active': props.active === 'search' }">탐색</p>
                 </a>
             </li>
 
             <!-- 커뮤니티 -->
             <li class="nav-box__item">
                 <a class="nav-box__link" href="#">
-                    <div class="nav-box__img-box" :class="{ 'nav-box__img-box--active': active === 'cummunity' }">
+                    <div class="nav-box__img-box" :class="{ 'nav-box__img-box--active': props.active === 'community' }">
                         <img
                             class="main-nav__icon"
-                            :src="active === 'cummunity' ? '/svg/nav-cummunity--active.svg' : '/svg/nav-cummunity.svg'"
+                            :src="props.active === 'community' ? '/svg/nav-community--active.svg' : '/svg/nav-community.svg'"
                             alt="커뮤니티 네비게이션 이미지"
                         />
                     </div>
-                    <p class="nav-box__text" :class="{ 'nav-box__text--active': active === 'cummunity' }">커뮤니티</p>
+                    <p class="nav-box__text" :class="{ 'nav-box__text--active': props.active === 'community' }">커뮤니티</p>
                 </a>
             </li>
 
             <!-- 마이페이지 -->
             <li class="nav-box__item">
                 <a class="nav-box__link" href="#">
-                    <div class="nav-box__img-box" :class="{ 'nav-box__img-box--active': active === 'mypage' }">
+                    <div class="nav-box__img-box" :class="{ 'nav-box__img-box--active': props.active === 'mypage' }">
                         <img
                             class="main-nav__icon"
-                            :src="active === 'mypage' ? '/svg/nav-mypage--active.svg' : '/svg/nav-mypage.svg'"
+                            :src="props.active === 'mypage' ? '/svg/nav-mypage--active.svg' : '/svg/nav-mypage.svg'"
                             alt="마이페이지 네비게이션 이미지"
                         />
                     </div>
-                    <p class="nav-box__text" :class="{ 'nav-box__text--active': active === 'mypage' }">나의 꼬깃</p>
+                    <p class="nav-box__text" :class="{ 'nav-box__text--active': props.active === 'mypage' }">나의 꼬깃</p>
                 </a>
             </li>
         </ul>

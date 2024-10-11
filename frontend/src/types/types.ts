@@ -93,6 +93,27 @@ export interface SnsCardTreeProps {
     viewCount: number;
 }
 
+export interface FilterItemProps {
+    name: string;
+    value: number;
+    description: string;
+}
+
+export interface SeedFilterProps {
+    engName: string;
+    korName: string;
+}
+
+export interface SeedFilterTabProps {
+    filterName: string;
+    filterItems: SeedFilterProps[];
+}
+
+export interface FilterTabProps {
+    filterName: string;
+    filterItems: FilterItemProps[];
+}
+
 export enum Direction {
     INIT,
     START_DOWN,

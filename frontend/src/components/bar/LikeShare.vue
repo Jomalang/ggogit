@@ -5,7 +5,7 @@ interface Props{
   shareLink: string;
 }
 
-const props = defineProps<{Props}>
+const props = defineProps<Props>();
 </script>
 
 <template>
@@ -35,6 +35,7 @@ const props = defineProps<{Props}>
   padding: 0 24px;
   display: flex;
   justify-content: flex-end;
+  background-color: black;
 }
 
 .bar-like-share-box--none {

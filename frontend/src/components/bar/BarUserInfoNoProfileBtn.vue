@@ -4,7 +4,7 @@ interface Props {
     username: string;
     userid: string;
 }
-const props = defineProps<{Props}>
+const props = defineProps<Props>();
 </script>
 
 <template>
@@ -29,6 +29,15 @@ const props = defineProps<{Props}>
       user info bar - no profile, btn
       user tree memoir index 사용
   ========================================== */
+.bar-user-info-frame {
+  display: flex;
+  justify-content: space-between;
+  background-color: black;
+}
+.bar-user-info__left-content {
+  display: flex;
+  gap: 8px;
+}
 .bar-user-info__user-name {
   color: var(--white);
   font-size: 14px;

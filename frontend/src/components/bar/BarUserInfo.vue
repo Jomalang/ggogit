@@ -6,7 +6,7 @@ interface Props {
     userid: string;
     userurl: string;
 }
-const props = defineProps<{Props}>
+const props = defineProps<Props>();
 </script>
 
 <template>

@@ -4,7 +4,7 @@ interface Props {
   profileImg: string;
 }
 
-const props = defineProps<{Props}>
+const props = defineProps<Props>();
 </script>
 
 <template>

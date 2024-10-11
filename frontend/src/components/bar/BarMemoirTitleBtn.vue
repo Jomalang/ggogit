@@ -1,10 +1,9 @@
 <script setup lang="ts">
-
 interface Props {
     memoirtitle: string;
     userurl: string;
 }
-const props = defineProps<{Props}>
+const props = defineProps<Props>()
 </script>
 
 <template>
@@ -22,11 +21,11 @@ const props = defineProps<{Props}>
           <input
                   class="__like-bold-input"
                   type="checkbox"
-                  th:id="bar-user-info__like"
+                  id="bar-user-info__like"
           />
           <label
                   class="__like-bold"
-                  th:for="bar-user-info__like"
+                  for="bar-user-info__like"
           ></label>
           <a class="bar-user-info__set-btn" :href="`${props.userurl}`"></a>
       </div>
@@ -48,7 +47,7 @@ const props = defineProps<{Props}>
   gap: 8px;
 }
 .bar-memoir-title {
-  color: var(--white);
+  color: var(--main1);
   font-size: 24px;
   font-weight: var(--bold);
   line-height: var(--line-height-main);
@@ -75,7 +74,7 @@ const props = defineProps<{Props}>
   content: "";
   display: flex;
   align-items: center;
-  background-image: url("/svg/like-bold.svg");
+  background-image: url("/public/svg/like-bold.svg");
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
@@ -87,7 +86,7 @@ const props = defineProps<{Props}>
   content: "";
   display: flex;
   align-items: center;
-  background-image: url("/svg/like-fill.svg");
+  background-image: url("/public/svg/like-fill.svg");
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;

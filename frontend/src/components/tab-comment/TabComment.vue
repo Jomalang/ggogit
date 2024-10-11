@@ -7,6 +7,7 @@ import CommentInput from '../input/CommentInput';
 <template>
   <!-- ==========================================
       FRAGMENT: 댓글 탭
+      TabComment는 나눠서 쓸것!
       ========================================== -->
   <div class="tab-comment-box">
     <TopBarComment />

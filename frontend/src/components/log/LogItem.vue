@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {ref} from "vue";
-import {Direction} from "@/types/Direction";
+import {Direction} from "@/types/types";
 import LogItemInit from "@/components/log/logItem/LogItemInit.vue";
 import LogItemStartDown from "@/components/log/logItem/LogItemStartDown.vue";
 import LogItemStartRight from "@/components/log/logItem/LogItemStartRight.vue";

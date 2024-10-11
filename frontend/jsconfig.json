@@ -1,7 +1,8 @@
 {
   "compilerOptions": {
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@svg/*": ["./public/svg/*"]
     }
   },
   "exclude": ["node_modules", "dist"]

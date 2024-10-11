@@ -5,10 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5a2fe156-71d6-40c5-b39c-eb901e7dea3d" name="ggogit-121 현진 - input, top-bar, tag, link" comment="">
-      <change afterPath="$PROJECT_DIR$/frontend/src/components/input/InputSelectBox.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/input/1.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -101,10 +98,10 @@
     &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;Spring Boot.GgogitApplication.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;migration/input-121&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;migration/top-bar-121&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/WorkSpace_Spring/Study/exception&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/ggogit&quot;,
     &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -230,17 +227,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="JetRunConfigurationType">
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <option name="filePath" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="GgogitApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
       <module name="ggogit.main" />
@@ -262,8 +248,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-b114ca120d71-intellij.indexing.shared.core-IU-242.20224.300" />
-        <option value="bundled-js-predefined-d6986cc7102b-410509235cf1-JavaScript-IU-242.20224.300" />
+        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.18968.26" />
+        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-IU-241.18968.26" />
       </set>
     </attachedChunks>
   </component>
@@ -271,7 +257,6 @@
   <component name="TaskManager">
     <task id="Default" summary="Default task">
       <branch name="dev2" repository="C:\ggogit" />
-      <changelist id="" name="Changes" comment="" />
       <created>1723036603235</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -410,6 +395,8 @@
       <option name="type" value="BUG" />
       <updated>1728486954972</updated>
       <workItem from="1728486955732" duration="2453000" />
+      <workItem from="1728623698491" duration="187000" />
+      <workItem from="1728623900725" duration="24000" />
     </task>
     <option name="localTasksCounter" value="12" />
     <servers>

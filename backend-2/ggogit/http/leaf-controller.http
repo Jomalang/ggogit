@@ -1,0 +1,12 @@
+### API 테스트
+GET {{host}}/api/v1/hello
+
+> {%
+    client.test("Response status is 200", function() {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+
+    client.test("Response contains Hello, World!", function() {
+        client.assert(response.body === "Hello, World!", "Response does not contain expected message");
+    });
+%}

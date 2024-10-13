@@ -2,13 +2,14 @@ package io.ggogit.ggogit.domain.leaf.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-@Getter
-@Setter
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "LEAF_TAG_MAP")
@@ -27,6 +28,7 @@ public class LeafTagMap {
     private LeafTag leafTag;
 
     @NotNull
+    @Builder.Default
     @ColumnDefault("1")
     @Column(name = "ACTIVE", nullable = false)
     private Boolean active = false;

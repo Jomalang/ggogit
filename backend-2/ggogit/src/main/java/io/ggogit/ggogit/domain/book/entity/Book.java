@@ -4,8 +4,7 @@ import io.ggogit.ggogit.domain.member.entity.Member;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
@@ -16,9 +15,11 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.time.LocalDateTime;
 import java.time.LocalDate;
 
-@Getter
-@Setter
+@Data
 @Entity
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 @SQLDelete(sql = "update book set is_deleted = true where id = ?")
 @SQLRestriction("is_deleted = false")
@@ -73,6 +74,7 @@ public class Book {
     private String imageFile;
 
     @NotNull
+    @Builder.Default
     @ColumnDefault("0")
     @Column(name = "IS_DELETED", nullable = false)
     private Boolean isDeleted = false;

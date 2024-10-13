@@ -3,14 +3,16 @@ package io.ggogit.ggogit.domain.leaf.entity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.validation.constraints.NotNull;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.Hibernate;
 
 import java.util.Objects;
 
-@Getter
-@Setter
+@Data
+@AllArgsConstructor(staticName = "of")
+@NoArgsConstructor
 @Embeddable
 public class LeafTagMapId implements java.io.Serializable {
     private static final long serialVersionUID = -4006769675286114456L;

@@ -4,8 +4,7 @@ import io.ggogit.ggogit.domain.tree.entity.Tree;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
@@ -15,9 +14,11 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
-@Getter
-@Setter
+@Data
 @Entity
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @SQLDelete(sql = "update leaf set is_deleted = 1 where id = ?")
 @SQLRestriction("is_deleted = false")
 @EntityListeners(AuditingEntityListener.class)
@@ -62,16 +63,19 @@ public class Leaf {
     private Integer childLeafCount;
 
     @NotNull
+    @Builder.Default
     @ColumnDefault("1")
     @Column(name = "VISIBILITY", nullable = false)
     private Boolean visibility = false;
 
     @NotNull
+    @Builder.Default
     @ColumnDefault("0")
     @Column(name = "BOOK_MARK", nullable = false)
     private Boolean bookMark = false;
 
     @NotNull
+    @Builder.Default
     @ColumnDefault("0")
     @Column(name = "IS_DELETED", nullable = false)
     private Boolean isDeleted = false;

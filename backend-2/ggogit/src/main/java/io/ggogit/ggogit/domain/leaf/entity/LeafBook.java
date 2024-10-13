@@ -2,16 +2,17 @@ package io.ggogit.ggogit.domain.leaf.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-@Getter
-@Setter
+@Data
 @Entity
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @SQLDelete(sql = "update leaf_book set is_deleted = true where leaf_id = ?")
 @SQLRestriction("is_deleted = false")
 @EntityListeners(AuditingEntityListener.class)
@@ -35,6 +36,7 @@ public class LeafBook {
     private Integer endPage;
 
     @NotNull
+    @Builder.Default
     @ColumnDefault("0")
     @Column(name = "IS_DELETED", nullable = false)
     private Boolean isDeleted = false;

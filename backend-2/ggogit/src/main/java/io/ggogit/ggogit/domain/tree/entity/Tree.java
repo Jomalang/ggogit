@@ -5,8 +5,7 @@ import io.ggogit.ggogit.domain.member.entity.Member;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
@@ -16,8 +15,10 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
-@Getter
-@Setter
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Entity
 @SQLDelete(sql = "update tree set is_deleted = true where id = ?")
 @SQLRestriction("is_deleted = false")
@@ -58,11 +59,13 @@ public class Tree {
     private Integer bookMarkCount;
 
     @NotNull
+    @Builder.Default
     @ColumnDefault("1")
     @Column(name = "VISIBILITY", nullable = false)
     private Boolean visibility = false;
 
     @NotNull
+    @Builder.Default
     @ColumnDefault("0")
     @Column(name = "IS_DELETED", nullable = false)
     private Boolean isDeleted = false;

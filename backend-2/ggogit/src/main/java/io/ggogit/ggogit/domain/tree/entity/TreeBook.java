@@ -2,8 +2,7 @@ package io.ggogit.ggogit.domain.tree.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
@@ -13,8 +12,10 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
-@Getter
-@Setter
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @SQLDelete(sql = "update tree_book set is_deleted = true where tree_id = ?")
 @SQLRestriction("is_deleted = false")
@@ -31,10 +32,11 @@ public class TreeBook {
     private Tree tree;
 
     @NotNull
-    @Column(name = "READING_PAGE", nullable = false)
+    @Column(name = "READING_PAGE", columnDefinition = "BIGINT default 0", nullable = false)
     private Long readingPage;
 
     @NotNull
+    @Builder.Default
     @ColumnDefault("0")
     @Column(name = "IS_DELETED", nullable = false)
     private Boolean isDeleted = false;

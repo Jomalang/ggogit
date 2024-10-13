@@ -1,7 +1,5 @@
 package io.ggogit.ggogit.domain.leaf.service;
 
-import java.util.List;
-
 
 public interface LeafService {
 //    List<LeafItemView> getLeafItems(Long treeId, Long leafId, boolean isOwner);

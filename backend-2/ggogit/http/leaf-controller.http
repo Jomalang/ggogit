@@ -1,12 +1,55 @@
-### API 테스트
-GET {{host}}/api/v1/hello
+# ================================================== #
+# 내부 변수
+@leafId = 1
+@seedBookId = 1
+@seddEtcId = 1
+# ================================================== #
 
-> {%
-    client.test("Response status is 200", function() {
-        client.assert(response.status === 200, "Response status is not 200");
-    });
+# ================================================== #
+# 도서 리프
 
-    client.test("Response contains Hello, World!", function() {
-        client.assert(response.body === "Hello, World!", "Response does not contain expected message");
-    });
-%}
+### 첫번쨰 도서 리프 생성
+POST {{host}}/api/v1/book/first/leafs
+
+### 도서 리프 생성
+POST {{host}}/api/v1/book/leafs
+
+### 도서 리프 수정
+PUT {{host}}/api/v1/book/leafs/{{leafId}}
+
+### 도서 리프 삭제
+DELETE {{host}}/api/v1/leafs/{{leafId}}
+
+# ================================================== #
+# 도서 리프
+### 첫번째 기타 리프 생성
+POST {{host}}/api/v1/etc/first/leafs
+
+### 기타 리프 생성
+POST {{host}}/api/v1/etc/leafs
+
+### 기타 리프 수정
+PUT {{host}}/api/v1/etc/leafs/{{leafId}}
+
+### 기타 리프 삭제
+DELETE {{host}}/api/v1/etc/leafs/{{leafId}}
+
+# ================================================== #
+
+# ================================================== #
+# 리프 조회
+### 리프 조회
+
+# ================================================== #
+
+#GET {{host}}/api/v1/hello
+#
+#> {%
+#    client.test("Response status is 200", function() {
+#        client.assert(response.status === 200, "Response status is not 200");
+#    });
+#
+#    client.test("Response contains Hello, World!", function() {
+#        client.assert(response.body === "Hello, World!", "Response does not contain expected message");
+#    });
+#%}

@@ -4,3 +4,7 @@ spring:
     url: jdbc:mariadb://221.148.97.239:3306/ggogitdb
     username: ggogit
     password: 111
+
+file: # 이미지 업로드 경로
+  tmp-dir: src/main/webapp/image/tmp
+  upload-dir: src/main/webapp/uploads

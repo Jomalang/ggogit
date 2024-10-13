@@ -1,8 +1,13 @@
 <script setup lang="ts">
-import LInkOneImageDetail from "@/components/link/LInkOneImageDetail.vue";
-import SocialLogin from "@/components/link/SocialLogin.vue";
 </script>
+
 <template>
-  <SocialLogin />
+  
 </template>
-<style scoped></style>
+
+<style scoped>
+  @import url('/src/assets/css/common/effect.css');
+  @import url('/src/assets/css/common/reset.css');
+  @import url('/src/assets/css/common/text.css');
+  @import url('/src/assets/css/common/variables.css');
+</style>

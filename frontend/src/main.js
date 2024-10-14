@@ -45,7 +45,7 @@ const router = createRouter({
         },
         {
             path: '/', component: Index
-        },
+           },
         {
             path: '/home', component: HomeIndex
         },

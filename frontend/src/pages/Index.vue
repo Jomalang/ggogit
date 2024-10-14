@@ -4,7 +4,6 @@
 
 <template>
   Index Page
-  <RouterView />
 </template>
 
 <style scoped>

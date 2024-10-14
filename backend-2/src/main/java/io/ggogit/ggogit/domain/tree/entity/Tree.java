@@ -1,6 +1,7 @@
 package io.ggogit.ggogit.domain.tree.entity;
 
 import io.ggogit.ggogit.domain.book.entity.Book;
+import io.ggogit.ggogit.domain.leaf.entity.Leaf;
 import io.ggogit.ggogit.domain.member.entity.Member;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -26,6 +27,7 @@ import java.time.LocalDateTime;
 @Table(name = "TREE")
 public class Tree {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false)
     private Long id;
 
@@ -37,6 +39,14 @@ public class Tree {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "BOOK_ID")
     private Book book;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "TREEBOOK_ID")
+    private TreeBook treeBook;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "LEAF_ID")
+    private Leaf leaf;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

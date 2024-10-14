@@ -23,6 +23,7 @@ import java.time.LocalDateTime;
 @Table(name = "TREE_BOOK")
 public class TreeBook {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "TREE_ID", nullable = false)
     private Long id;
 

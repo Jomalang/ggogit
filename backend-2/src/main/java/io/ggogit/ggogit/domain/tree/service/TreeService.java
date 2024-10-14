@@ -2,7 +2,7 @@ package io.ggogit.ggogit.domain.tree.service;
 
 import io.ggogit.ggogit.domain.tree.entity.Tree;
 
-public interface TreeService {
+public interface TreeService  {
 
     /***
      * 트리 생성 메서드
@@ -18,17 +18,6 @@ public interface TreeService {
      * @param memberId
      * @return
      */
-//    List<TreeInfoView> getTreeInfoView(String str);
-
-
-
-    /***
-     * 멤버 ID 별 트리 갯수 조회
-     *
-     * @param memberId
-     * @return
-     */
-    long hasTreeNumById(Long id);
 
     /***
      * 멤버 ID 별 트리 전체 정보 조회

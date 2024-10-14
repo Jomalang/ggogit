@@ -1,6 +1,9 @@
 package io.ggogit.ggogit.domain.leaf.service;
 
 
+import org.springframework.stereotype.Service;
+
+@Service
 public interface LeafService {
 //    List<LeafItemView> getLeafItems(Long treeId, Long leafId, boolean isOwner);
 //

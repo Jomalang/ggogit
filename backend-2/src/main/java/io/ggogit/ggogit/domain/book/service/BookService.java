@@ -2,9 +2,11 @@ package io.ggogit.ggogit.domain.book.service;
 
 
 import io.ggogit.ggogit.domain.book.entity.Book;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public interface BookService {
 
     /**

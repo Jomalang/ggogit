@@ -1,9 +1,11 @@
 package io.ggogit.ggogit.domain.tree.service;
 
 import io.ggogit.ggogit.domain.tree.entity.Seed;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public interface SeedService {
 
     boolean isBook(String name);

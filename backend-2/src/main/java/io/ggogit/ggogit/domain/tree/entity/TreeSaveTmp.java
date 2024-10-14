@@ -21,6 +21,7 @@ import java.time.LocalDateTime;
 @Table(name = "TREE_SAVE_TMP")
 public class TreeSaveTmp {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false)
     private Long id;
 

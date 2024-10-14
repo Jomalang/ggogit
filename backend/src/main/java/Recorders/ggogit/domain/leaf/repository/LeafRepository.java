@@ -5,6 +5,7 @@ import Recorders.ggogit.domain.leaf.view.*;
 import Recorders.ggogit.type.SearchType;
 import Recorders.ggogit.type.SortType;
 import Recorders.ggogit.type.filterType;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -26,6 +27,7 @@ public interface LeafRepository {
     LeafListBranchView findLeafListBranchViewByTreeId(Long treeId);
     LeafBreadcrumbView findLeafBreadcrumbViewByTreeIdAndLeafId(Long treeId, Long leafId);
     List<Leaf> findByTreeIdOrderById(Long treeId);
-    List<LeafBranchView> toBranchlist(Boolean bookMark, Long treeId, String filterName, String sortName, int page);
-    List<LeafBranchView> toBranchlistForNeighbor(Long treeId, String filterName, String sortName, int page);
+    List<LeafBranchView> toBranchlist(Boolean bookMark, Long treeId, String filterName, String sortName, int page, Integer offset);
+    List<LeafBranchView> toBranchlistForNeighbor(Long treeId, String filterName, String sortName, int page, Integer offset);
+    Integer countByLeaf(Boolean bookMark, Long treeId);
 }

@@ -1,7 +1,6 @@
 package io.ggogit.ggogit.domain.leaf.service;
 
 import io.ggogit.ggogit.domain.book.entity.Book;
-import io.ggogit.ggogit.domain.book.mapper.BookMapper;
 import io.ggogit.ggogit.domain.book.repository.BookRepository;
 import io.ggogit.ggogit.domain.leaf.entity.*;
 import io.ggogit.ggogit.domain.leaf.mapper.LeafImageMapper;
@@ -10,11 +9,11 @@ import io.ggogit.ggogit.domain.leaf.repository.*;
 import io.ggogit.ggogit.domain.leaf.util.ImageSaveUtil;
 import io.ggogit.ggogit.domain.member.entity.Member;
 import io.ggogit.ggogit.domain.member.repository.MemberRepository;
+import io.ggogit.ggogit.domain.tree.entity.Seed;
 import io.ggogit.ggogit.domain.tree.entity.Tree;
 import io.ggogit.ggogit.domain.tree.entity.TreeBook;
 import io.ggogit.ggogit.domain.tree.entity.TreeSaveTmp;
-import io.ggogit.ggogit.domain.tree.mapper.TreeBookMapper;
-import io.ggogit.ggogit.domain.tree.mapper.TreeMapper;
+import io.ggogit.ggogit.domain.tree.repository.SeedRepository;
 import io.ggogit.ggogit.domain.tree.repository.TreeBookRepository;
 import io.ggogit.ggogit.domain.tree.repository.TreeRepository;
 import io.ggogit.ggogit.domain.tree.repository.TreeSaveTmpRepository;
@@ -42,14 +41,13 @@ public class LeafBookServiceImpl implements LeafBookService {
     private final LeafTagRepository leafTagRepository;
     private final LeafTagMapRepository leafTagMapRepository;
 
-    private final BookMapper bookMapper;
-    private final TreeMapper treeMapper;
-    private final TreeBookMapper treeBookMapper;
+
     private final LeafImageMapper leafImageMapper;
     private final LeafTagMapMapper leafTagMapMapper;
 
     private final ImageSaveUtil imageSaveUtil;
     private final LeafBookRepository leafBookRepository;
+    private final SeedRepository seedRepository;
 
     @Override
     public LeafBook createFirstLeafBook(Long memberId, Leaf leaf, LeafBook leafBook, List<Long> leafTagIds) {
@@ -64,27 +62,30 @@ public class LeafBookServiceImpl implements LeafBookService {
         // `System`은 `TreeSaveTmp`에서 `Book` 데이터를 조회한다.
         Book book = treeSaveTmp.getBook();
         if (book == null) { // 직접 등록 도서 처리
-            book = bookMapper.toEntity(treeSaveTmp, member);
+            book = Book.of(treeSaveTmp, member);
 
             if (book.getImageFile() != null) { // 직접 등록 도서의 이미지가 있는 경우
                 String filePath = book.getImageFile();
                 String fileName = imageSaveUtil.extractFileName(filePath);
                 String toFileName = imageSaveUtil.moveImageFile(fileName,"book", true);
                 book.setImageFile(toFileName);
-                bookRepository.save(book);
+                book = bookRepository.save(book);
             }
         }
 
+        Seed seed = seedRepository.findById(1L)
+                .orElseThrow(() -> new IllegalArgumentException("Seed 데이터가 없습니다."));
+
         // `System`은 `TreeSaveTmp`에서 `Tree` 데이터를 생성후 저장한다.
-        Tree tree = treeMapper.toEntity(treeSaveTmp, book, member);
+        Tree tree = Tree.of(treeSaveTmp, book, member, seed);
         treeRepository.save(tree);
+        leaf.setTree(tree);
 
         // `System`은 `TreeBook` 데이터를 생성후 저장한다.
-        TreeBook treeBook = treeBookMapper.toEntity(tree);
+        TreeBook treeBook = TreeBook.of(tree);
         treeBookRepository.save(treeBook);
 
         LeafBook savedLeafBook = createLogic(memberId, leaf, leafBook, leafTagIds);
-        // 여기 진행중 // << 확인해야함
 
         // `System`은 `TreeSaveTmp` 데이터를 삭제한다.
         treeSaveTmpRepository.delete(treeSaveTmp);
@@ -145,7 +146,7 @@ public class LeafBookServiceImpl implements LeafBookService {
         leafRepository.save(leaf);
 
         // `System`은 `Leaf` 이미지를 저장한다.
-        for (String fileName : filesNames) {
+        for (String fileName : filesNames) { // TODO: 이미지 파일이 없는 경우 예외 처리
             LeafImage leafImage = leafImageMapper.toEntity(leaf.getId(), fileName);
             leafImageRepository.save(leafImage);
         }
@@ -174,7 +175,7 @@ public class LeafBookServiceImpl implements LeafBookService {
     }
 
     private long readingPage(int totalPage, List<LeafBook> leafBooks) {
-        boolean[] isRead = new boolean[totalPage]; // 읽은 페이지 체크
+        boolean[] isRead = new boolean[totalPage + 1]; // 읽은 페이지 체크
         long readPage = 0L; // 읽은 페이지 수
         for (LeafBook book : leafBooks) {
             for (int i = book.getStartPage(); i <= book.getEndPage(); i++) {

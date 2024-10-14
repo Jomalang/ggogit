@@ -23,6 +23,7 @@ import java.time.LocalDateTime;
 @Table(name = "LEAF_IMAGE")
 public class LeafImage {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false)
     private Long id;
 

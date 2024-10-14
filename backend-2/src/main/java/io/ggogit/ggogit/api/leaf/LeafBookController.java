@@ -1,7 +1,7 @@
 package io.ggogit.ggogit.api.leaf;
 
-import io.ggogit.ggogit.api.leaf.dto.request.BookLeafRequest;
-import io.ggogit.ggogit.api.leaf.dto.response.BookLeafResponse;
+import io.ggogit.ggogit.api.leaf.dto.BookLeafRequest;
+import io.ggogit.ggogit.api.leaf.dto.BookLeafResponse;
 import io.ggogit.ggogit.domain.leaf.entity.Leaf;
 import io.ggogit.ggogit.domain.leaf.entity.LeafBook;
 import io.ggogit.ggogit.domain.leaf.service.LeafBookService;
@@ -25,7 +25,7 @@ public class LeafBookController {
         @Valid @RequestBody BookLeafRequest dto
     ) {
         dto.isValidate(); // 논리 오류 확인
-        Long memberId = 1L; // TODO: 로그인 정보에서 memberId 가져오기
+        Long memberId = 1000L; // TODO: 로그인 정보에서 memberId 가져오기
         Leaf leaf = dto.toLeaf();
         LeafBook LeafBook = dto.toLeafBook();
         List<Long> leafTagIds = dto.getTagIds();

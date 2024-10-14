@@ -19,6 +19,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Table(name = "LEAF_BOOK")
 public class LeafBook {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "LEAF_ID", nullable = false)
     private Long id;
 

@@ -1,4 +1,4 @@
-package io.ggogit.ggogit.api.leaf.dto.request;
+package io.ggogit.ggogit.api.leaf.dto;
 
 import io.ggogit.ggogit.domain.leaf.entity.Leaf;
 import jakarta.validation.constraints.NotBlank;

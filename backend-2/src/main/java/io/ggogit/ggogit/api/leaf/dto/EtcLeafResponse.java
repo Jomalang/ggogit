@@ -1,7 +1,6 @@
-package io.ggogit.ggogit.api.leaf.dto.response;
+package io.ggogit.ggogit.api.leaf.dto;
 
 import io.ggogit.ggogit.domain.leaf.entity.Leaf;
-import io.ggogit.ggogit.domain.leaf.entity.LeafBook;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

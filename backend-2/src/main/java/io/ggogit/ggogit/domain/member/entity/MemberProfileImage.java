@@ -23,6 +23,7 @@ import java.time.LocalDateTime;
 @Table(name = "MEMBER_PROFILE_IMAGE")
 public class MemberProfileImage {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "MEMBER_ID", nullable = false)
     private Long id;
 

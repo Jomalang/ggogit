@@ -23,6 +23,7 @@ import java.time.LocalDateTime;
 @Table(name = "tree_image")
 public class TreeImage {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "TREE_ID", nullable = false)
     private Long id;
 

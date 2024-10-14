@@ -174,7 +174,7 @@ public class LeafController {
     ){
 
         List<LeafBranchView> list;
-        int page = 10;
+        int page = 0;
 
         if (loginService.isOnner(request,treeId))
             list = leafService.toBranch(treeId, bookMark, filter, sort, page);

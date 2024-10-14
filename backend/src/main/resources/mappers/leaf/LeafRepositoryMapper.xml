@@ -137,10 +137,10 @@
                 AND (CHILD_LEAF_COUNT = 0 OR BOOK_MARK = 1)
             </when>
             <when test="bookMark == true">
-                AND CHILD_LEAF_COUNT = 0
+                AND BOOK_MARK = 1
             </when>
             <when test="bookMark == false">
-                AND BOOK_MARK = 1
+                AND CHILD_LEAF_COUNT = 0
             </when>
         </choose>
         ORDER BY
@@ -155,6 +155,7 @@
             <when test="sortName == 'DESC'">DESC</when>
             <otherwise>DESC</otherwise>
         </choose>
+        LIMIT #{page} OFFSET #{offset}
     </select>
 
 
@@ -189,5 +190,22 @@
         </choose>
     </select>
 
+    <select id="countByLeaf" resultType="Long">
+        SELECT COUNT(ID)
+        FROM
+        LEAF
+        WHERE ID = #{treeId}
+        <choose>
+            <when test="bookMark == null">
+                AND (CHILD_LEAF_COUNT = 0 OR BOOK_MARK = 1)
+            </when>
+            <when test="bookMark == true">
+                AND BOOK_MARK = 1
+            </when>
+            <when test="bookMark == false">
+                AND CHILD_LEAF_COUNT = 0
+            </when>
+        </choose>
+    </select>
 
 </mapper>

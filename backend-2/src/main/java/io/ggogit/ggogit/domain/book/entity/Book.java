@@ -63,8 +63,7 @@ public class Book {
     @Column(name = "PUBLISHER", nullable = false)
     private String publisher;
 
-    @NotNull
-    @Column(name = "PUBLISH_DATE", nullable = false)
+    @Column(name = "PUBLISH_DATE")
     private LocalDate publishDate;
 
     @NotNull

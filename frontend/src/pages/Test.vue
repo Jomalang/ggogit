@@ -1,8 +1,9 @@
 <script setup lang="ts">
+import BgTreeBookCovers from "@/components/background/BgTreeBookCovers.vue";
 </script>
 
 <template>
-  
+  <BgTreeBookCovers/>
 </template>
 
 <style scoped>

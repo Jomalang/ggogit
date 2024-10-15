@@ -22,7 +22,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-@SQLDelete(sql = "update book set is_deleted = true where id = ?")
+@SQLDelete(sql = "update book set is_deleted = true where id = ? and version = ?")
 @SQLRestriction("is_deleted = false")
 @Table(name = "BOOK")
 public class Book {

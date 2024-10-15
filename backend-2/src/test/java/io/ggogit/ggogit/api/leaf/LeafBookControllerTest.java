@@ -6,6 +6,7 @@ import io.ggogit.ggogit.domain.book.entity.Book;
 import io.ggogit.ggogit.domain.book.entity.BookCategory;
 import io.ggogit.ggogit.domain.book.repository.BookCategoryRepository;
 import io.ggogit.ggogit.domain.leaf.entity.Leaf;
+import io.ggogit.ggogit.domain.leaf.repository.LeafBookRepository;
 import io.ggogit.ggogit.domain.leaf.repository.LeafRepository;
 import io.ggogit.ggogit.domain.member.entity.Member;
 import io.ggogit.ggogit.domain.member.repository.MemberRepository;
@@ -31,7 +32,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -58,6 +59,8 @@ class LeafBookControllerTest {
     private SeedRepository seedRepository;
     @Autowired
     private LeafRepository leafRepository;
+    @Autowired
+    private LeafBookRepository leafBookRepository;
 
     @Test
     @DisplayName("첫번째 도서 리프 생성")
@@ -175,8 +178,59 @@ class LeafBookControllerTest {
                 .andExpect(jsonPath("$.message").value("도서 리프 생성 성공"))
                 .andExpect(jsonPath("$.leafId").isNumber());
 
+        // then
+    }
 
+    @Test
+    @DisplayName("도서 리프 수정")
+    void updateBookLeaf() throws Exception {
+        // given
+        long leafId = 10000L;
+        String validRequest = """
+                {
+                    "startPage": 2,
+                    "endPage": 200,
+                    "tagIds": [10004, 10005, 10006],
+                    "title": "제목 수정 성공",
+                    "content": "내용 수정 성공",
+                    "visibility": false
+                }
+                """;
 
+        // when
+        mockMvc.perform(put("/api/v1/book/leafs/" + leafId)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(validRequest))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.message").value("도서 리프 수정 성공"))
+                .andExpect(jsonPath("$.leafId").isNumber());
+
+        // then
+        leafRepository.findById(leafId).ifPresent(leaf -> {
+            // 수정된 값 확인
+            assert leaf.getTitle().equals("제목 수정 성공");
+            assert leaf.getContent().equals("내용 수정 성공");
+            assert !leaf.getVisibility();
+        });
+
+        leafBookRepository.findById(leafId).ifPresent(leafBook -> {
+            // 수정된 값 확인
+            assert leafBook.getStartPage() == 2;
+            assert leafBook.getEndPage() == 200;
+        });
+    }
+
+    @Test
+    @DisplayName("도서 리프 삭제")
+    void deleteBookLeaf() throws Exception {
+        // given
+        long leafId = 10001L;
+
+        // when
+        mockMvc.perform(delete("/api/v1/book/leafs/" + leafId))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.message").value("도서 리프 삭제 성공"));
         // then
     }
 }
+

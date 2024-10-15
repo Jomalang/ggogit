@@ -13,7 +13,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@SQLDelete(sql = "update leaf_book set is_deleted = true where leaf_id = ?")
+@SQLDelete(sql = "update leaf_book set is_deleted = true where leaf_id = ? and version = ?")
 @SQLRestriction("is_deleted = false")
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "LEAF_BOOK")

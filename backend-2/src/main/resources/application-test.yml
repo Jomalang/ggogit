@@ -4,6 +4,9 @@ spring:
     url: jdbc:h2:mem:testdb
     username: sa
     password: 111
+  h2:
+    console:
+      enabled: true
 
   jpa:
     generate-ddl: true
@@ -14,6 +17,7 @@ spring:
         use_sql_comments: true
         dialect: org.hibernate.dialect.H2Dialect
     defer-datasource-initialization: true
+
 
 file: # 이미지 업로드 경로
   tmp-dir: src/main/webapp/image/tmp

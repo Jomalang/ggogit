@@ -1,40 +1,56 @@
 package io.ggogit.ggogit.domain.memoir.service;
 
 import io.ggogit.ggogit.domain.memoir.entity.Memoir;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.util.List;
 
-@Transactional
 public interface MemoirService {
 
     /**
-     * @param memoir, id
-     * @return 저장한 회고록의 id를 반환합니다.
+     * @param memoir 회고록 엔티티입니다.
+     * @return void 반환값은 void입니다.
+     * memoir엔티티를 영속화합니다.
      */
-    long regMemoir(Memoir memoir);
+    void regMemoir(Memoir memoir);
 
     /**
-     * @param id
-     * @return 삭제한 회고록의 id를 반환합니다.
-     * 회고록의 id를 입력받아 해당 회고록을 DB에서 찾고 삭제합니다.
+     * @param memoirId 회고록의 식별자입니다.
+     * @return void 반환값은 void입니다.
+     * memoirId를 통해 논리적 삭제를 진행합니다.
+     * 논리적 삭제를 위한 SQL은 memoir 엔티티에 정의되어 있습니다.
      */
-    long removeMemoir(long treeId);
+    void removeMemoir(Long memoirId);
 
     /**
-     * @param newMemoir, id //수정할 memoir객체와 이전 Tree의 id를 인자로 받습니다.
-     * @return void입니다.
+     * @param newMemoir, memoirId
+     * @return void
+     * 수정할 회고록객체와 회고록의 식별자를 인자로 받고, 회고록을 수정합니다.
      */
-    void modifyMemoir(Memoir newMemoir, long treeId);
+    void modifyMemoir(Memoir newMemoir, Long memoirId);
+
+    /**
+     * @param memoirId
+     * @return Memoir엔티티
+     * 회고록 식별자로 조회한 회고록을 반환합니다.
+     */
+    Memoir getMemoir(Long memoirId);
+
+    /**
+     * @param fileNames
+     * @throws IOException
+     */
+    void saveImage(List<String> fileNames) throws IOException;
+
 
     /**
      * @param treeId
-     * @return treeId로 조회한 회고록을 반환합니다.
+     * @return boolean
+     * 이미 회고록이 생성되었는지 확인합니다.
      */
-    Memoir getMemoir(long treeId);
-
-    void imageSave(List<String> fileNames) throws IOException;
+    boolean isMemoirExist(Long treeId);
 
 //    List<MemoirBookView> getMemoirCards(Long memberId);
 }

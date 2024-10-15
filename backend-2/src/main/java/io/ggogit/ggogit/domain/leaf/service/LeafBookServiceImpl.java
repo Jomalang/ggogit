@@ -27,8 +27,9 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class LeafBookServiceImpl implements LeafBookService {
 
-    private final BookRepository bookRepository;
+    private final static int LEAF_MAX_CHILD_COUNT = 3;
 
+    private final BookRepository bookRepository;
     private final MemberRepository memberRepository;
 
     private final TreeRepository treeRepository;
@@ -95,11 +96,11 @@ public class LeafBookServiceImpl implements LeafBookService {
         Leaf parentLeaf = leafRepository.findById(parentLeafId)
                 .orElseThrow(() -> new IllegalArgumentException("Leaf 부모 데이터가 없습니다."));
 
-        int LEAF_MAX_CHILD_COUNT = 3;
         if (LEAF_MAX_CHILD_COUNT <= parentLeaf.getChildLeafCount()) {
             throw new IllegalArgumentException("부모 Leaf의 자식 개수가 최대치 3개를 초과했습니다.");
         }
 
+        leaf.setParentLeaf(parentLeaf);
         leaf.setTree(parentLeaf.getTree());
 
         // `System`은 `Leaf` 데이터를 저장한다.
@@ -229,15 +230,6 @@ public class LeafBookServiceImpl implements LeafBookService {
     }
 
     @Override
-    public boolean isOwner(Long memberId, Long leafId) {
-
-        Leaf leaf = leafRepository.findById(leafId)
-                .orElseThrow(() -> new IllegalArgumentException("Leaf 데이터가 없습니다."));
-
-        return Objects.equals(leaf.getTree().getMember().getId(), memberId);
-    }
-
-    @Override
     public void deleteLeafBook(Long leafId) {
 
         Leaf leaf = leafRepository.findById(leafId)
@@ -260,6 +252,15 @@ public class LeafBookServiceImpl implements LeafBookService {
 
         // Leaf 삭제
         leafRepository.delete(leaf);
+    }
+
+    @Override
+    public boolean isOwner(Long memberId, Long leafId) {
+
+        Leaf leaf = leafRepository.findById(leafId)
+                .orElseThrow(() -> new IllegalArgumentException("Leaf 데이터가 없습니다."));
+
+        return Objects.equals(leaf.getTree().getMember().getId(), memberId);
     }
 
     private long readingPage(int totalPage, List<LeafBook> leafBooks) {

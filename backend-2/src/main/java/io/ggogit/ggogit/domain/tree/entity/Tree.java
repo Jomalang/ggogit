@@ -97,4 +97,15 @@ public class Tree {
                 .visibility(treeSaveTmp.getVisibility())
                 .build();
     }
+
+    public static Tree of(TreeSaveTmp treeSaveTmp, Member member, Seed seed) {
+        return Tree.builder()
+                .seed(seed)
+                .member(member)
+                .bookMarkCount(0)
+                .title(treeSaveTmp.getTreeTitle())
+                .description(treeSaveTmp.getDescription())
+                .visibility(treeSaveTmp.getVisibility())
+                .build();
+    }
 }

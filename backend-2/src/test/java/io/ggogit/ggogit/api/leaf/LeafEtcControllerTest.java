@@ -2,18 +2,16 @@ package io.ggogit.ggogit.api.leaf;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.ggogit.ggogit.domain.book.entity.Book;
-import io.ggogit.ggogit.domain.book.entity.BookCategory;
-import io.ggogit.ggogit.domain.book.repository.BookCategoryRepository;
 import io.ggogit.ggogit.domain.leaf.entity.Leaf;
-import io.ggogit.ggogit.domain.leaf.repository.LeafBookRepository;
 import io.ggogit.ggogit.domain.leaf.repository.LeafRepository;
 import io.ggogit.ggogit.domain.member.entity.Member;
 import io.ggogit.ggogit.domain.member.repository.MemberRepository;
 import io.ggogit.ggogit.domain.tree.entity.Seed;
 import io.ggogit.ggogit.domain.tree.entity.Tree;
+import io.ggogit.ggogit.domain.tree.entity.TreeImage;
 import io.ggogit.ggogit.domain.tree.entity.TreeSaveTmp;
 import io.ggogit.ggogit.domain.tree.repository.SeedRepository;
+import io.ggogit.ggogit.domain.tree.repository.TreeImageRepository;
 import io.ggogit.ggogit.domain.tree.repository.TreeSaveTmpRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -36,13 +34,15 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+
 @Profile("test")
 @SpringBootTest
 @AutoConfigureMockMvc
-class LeafBookControllerTest {
+class LeafEtcControllerTest {
 
     @Value("${file.upload-dir}")
     private String uploadDir;
+
     @Value("${file.tmp-dir}")
     private String tmpDir;
 
@@ -54,27 +54,24 @@ class LeafBookControllerTest {
     @Autowired
     private TreeSaveTmpRepository treeSaveTmpRepository;
     @Autowired
-    private BookCategoryRepository bookCategoryRepository;
-    @Autowired
     private SeedRepository seedRepository;
     @Autowired
     private LeafRepository leafRepository;
     @Autowired
-    private LeafBookRepository leafBookRepository;
+    private TreeImageRepository treeImageRepository;
 
     @Test
-    @DisplayName("첫번째 도서 리프 생성")
+    @DisplayName("첫번째 기타 리프 생성 성공")
     @Transactional
-    void createFirstBookLeaf() throws Exception {
+    void createFirstEtcLeaf() throws Exception {
         // given
         Member member = memberRepository.findById(1000L).orElseThrow();
         Seed seed = seedRepository.findById(1L).orElseThrow();
-        BookCategory bookCategory = bookCategoryRepository.findById(1L).orElseThrow();
-        String imageFilePath = createImageFile("firstBookTest.png", tmpDir);
+        String imageFilePath = createImageFile("firstTest.png", tmpDir);
         TreeSaveTmp treeSaveTmp = TreeSaveTmp.builder()
                 .member(member)
                 .book(null)
-                .bookCategory(bookCategory)
+                .bookCategory(null)
                 .seed(seed)
                 .bookTitle("나의 첫번째 도서 제목")
                 .treeTitle("나의 첫번째 트리 제목")
@@ -90,8 +87,7 @@ class LeafBookControllerTest {
 
         String validRequest = """
                 {
-                    "startPage": 1,
-                    "endPage": 100,
+                    "seedId": 2,
                     "tagIds": [10001, 10002, 10003],
                     "title": "나의 첫번째 리프 제목 기록 성공",
                     "content": "나의 첫번째 리프 내용 성공",
@@ -100,14 +96,15 @@ class LeafBookControllerTest {
                 """;
 
         // when
-        ResultActions resultActions = mockMvc.perform(post("/api/v1/book/first/leafs")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(validRequest))
+        ResultActions resultActions = mockMvc.perform(post("/api/v1/etc/first/leafs")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(validRequest))
                 // then
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.message").value("첫번째 도서 리프 생성 성공"))
+                .andExpect(jsonPath("$.message").value("첫번째 기타 리프 생성 성공"))
                 .andExpect(jsonPath("$.leafId").isNumber());
 
+        // then
         // leafId 값 추출
         String responseJson = resultActions.andReturn().getResponse().getContentAsString();
         ObjectMapper objectMapper = new ObjectMapper();
@@ -117,47 +114,42 @@ class LeafBookControllerTest {
         // end
         Leaf leaf = leafRepository.findById(extractedLeafId).orElseThrow();
         Tree tree = leaf.getTree();
-        Book book = tree.getBook();
-        removeImageFile(book.getImageFile(), "book"); // 이미지 제거
+        TreeImage treeImage = treeImageRepository.findById(tree.getId()).orElseThrow();
+        removeImageFile(treeImage.getName(), "tree"); // 이미지 제거
     }
 
     @Test
-    @DisplayName("도서 리프 생성")
-    void createBookLeaf() throws Exception {
+    @DisplayName("기타 리프 생성 성공")
+    void createEtcLeaf() throws Exception {
         // given
         String validRequest = """
                 {
-                    "startPage": 1,
-                    "endPage": 100,
+                    "seedId": 2,
                     "tagIds": [10001, 10002, 10003],
-                    "title": "리프 제목 기록 성공",
-                    "content": "리프 내용 성공",
+                    "title": "나의 첫번째 리프 제목 기록 성공",
+                    "content": "나의 첫번째 리프 내용 성공",
                     "visibility": true
                 }
                 """;
-        long parentLeafId = 1L;
-
+        long parentLeafId = 20_000L;
         // when
-        ResultActions resultActions = mockMvc.perform(post("/api/v1/book/leafs/" + parentLeafId)
+        ResultActions resultActions = mockMvc.perform(post("/api/v1/etc/leafs/" + parentLeafId)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(validRequest))
                 // then
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.message").value("도서 리프 생성 성공"))
+                .andExpect(jsonPath("$.message").value("기타 리프 생성 성공"))
                 .andExpect(jsonPath("$.leafId").isNumber());
-
-        // then
     }
 
     @Test
-    @DisplayName("도서 리프 수정")
-    void updateBookLeaf() throws Exception {
+    @DisplayName("기타 리프 수정 성공")
+    void updateEtcLeaf() throws Exception {
         // given
         long leafId = 10000L;
         String validRequest = """
                 {
-                    "startPage": 2,
-                    "endPage": 200,
+                    "seedId": 2,
                     "tagIds": [10004, 10005, 10006],
                     "title": "제목 수정 성공",
                     "content": "내용 수정 성공",
@@ -166,11 +158,11 @@ class LeafBookControllerTest {
                 """;
 
         // when
-        mockMvc.perform(put("/api/v1/book/leafs/" + leafId)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(validRequest))
+        mockMvc.perform(put("/api/v1/etc/leafs/" + leafId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(validRequest))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.message").value("도서 리프 수정 성공"))
+                .andExpect(jsonPath("$.message").value("기타 리프 수정 성공"))
                 .andExpect(jsonPath("$.leafId").isNumber());
 
         // then
@@ -180,24 +172,19 @@ class LeafBookControllerTest {
             assert leaf.getContent().equals("내용 수정 성공");
             assert !leaf.getVisibility();
         });
-
-        leafBookRepository.findById(leafId).ifPresent(leafBook -> {
-            // 수정된 값 확인
-            assert leafBook.getStartPage() == 2;
-            assert leafBook.getEndPage() == 200;
-        });
     }
 
     @Test
-    @DisplayName("도서 리프 삭제")
-    void deleteBookLeaf() throws Exception {
+    @DisplayName("기타 리프 삭제 성공")
+    void deleteEtcLeaf() throws Exception {
         // given
-        long leafId = 10001L;
+        long leafId = 20001L;
 
         // when
-        mockMvc.perform(delete("/api/v1/book/leafs/" + leafId))
+        mockMvc.perform(delete("/api/v1/etc/leafs/" + leafId))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.message").value("도서 리프 삭제 성공"));
+                .andExpect(jsonPath("$.message").value("기타 리프 삭제 성공"));
+
         // then
         assert leafRepository.findById(leafId).isEmpty();
     }
@@ -232,5 +219,5 @@ class LeafBookControllerTest {
         }
         throw new IllegalArgumentException("이미지 파일 생성 실패");
     }
-}
 
+}

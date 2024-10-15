@@ -518,6 +518,10 @@ VALUES
 -- VALUES
 --     (200, TRUE, 1, NULL, '2024-01-01 10:00:00', 1000, 1000, 1, 1, '태규의 테스트', '태규의 테스트 제목', '태규 작가', '도서 제목', 'C:\Users\gksxo\Desktop\github\ggogit\backend-2\src\main\webapp\image\tmp\test.jpg', '첫 번째 출판사');
 
+-- ====================================================== --
+-- 도서 트리 테스트
+-- ====================================================== --
+
 INSERT INTO `tree`
 (`id`, `book_mark_count`, `create_time`, `description`, `is_deleted`, `title`, `update_time`, `version`, `visibility`, `book_id`, `member_id`, `seed_id`)
 VALUES
@@ -544,8 +548,20 @@ VALUES
     (10005, '2024-10-02 10:00:00', false, '태그 5', '2024-10-02 10:00:00', 1, 1000),
     (10006, '2024-10-03 11:00:00', false, '태그 6', '2024-10-03 11:00:00', 1, 1000);
 
+-- ====================================================== --
+-- 기타 트리 테스트
+-- ====================================================== --
 
+INSERT INTO `tree`
+(`id`, `book_mark_count`, `create_time`, `description`, `is_deleted`, `title`, `update_time`, `version`, `visibility`, `book_id`, `member_id`, `seed_id`)
+VALUES
+    (20000, 0, '2024-10-01 10:00:00', '테스트 데이터', false, '토마토 나무', '2024-10-01 10:00:00', 1, true, 1, 1000, 2);
 
+INSERT INTO `leaf`
+(`id`, `book_mark`, `child_leaf_count`, `content`, `create_time`, `is_deleted`, `like_count`, `title`, `update_time`, `version`, `view_count`, `visibility`, `parent_leaf_id`, `tree_id`)
+VALUES
+    (20000, false, 1, '첫 번째 잎의 내용입니다. 이 잎은 나무의 생장에 중요한 역할을 합니다.', '2024-10-01 08:00:00', false, 10, '첫 번째 잎', '2024-10-01 08:00:00', 1, 50, true, null, 20000),
+    (20001, false, 0, '첫 번째 잎의 내용입니다. 이 잎은 나무의 생장에 중요한 역할을 합니다.', '2024-10-01 08:00:00', false, 10, '첫 번째 잎', '2024-10-01 08:00:00', 1, 50, true, null, 20000);
 
 -- ====================================================== --
 -- 태규의 테스트 END

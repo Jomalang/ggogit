@@ -27,6 +27,7 @@ import java.time.LocalDateTime;
 @Table(name = "TREE")
 public class Tree {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false)
     private Long id;
 
@@ -55,9 +56,10 @@ public class Tree {
     private String description;
 
     @NotNull
+    @Builder.Default
     @ColumnDefault("0")
     @Column(name = "BOOK_MARK_COUNT", nullable = false)
-    private Integer bookMarkCount;
+    private Integer bookMarkCount = 0;
 
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "tree")
     private Memoir memoir;
@@ -87,4 +89,16 @@ public class Tree {
     @Version
     @Column(name = "VERSION", nullable = false)
     private Long version;
+
+    public static Tree of(TreeSaveTmp treeSaveTmp, Book book, Member member, Seed seed) {
+        return Tree.builder()
+                .seed(seed)
+                .book(book)
+                .member(member)
+                .bookMarkCount(0)
+                .title(treeSaveTmp.getTreeTitle())
+                .description(treeSaveTmp.getDescription())
+                .visibility(treeSaveTmp.getVisibility())
+                .build();
+    }
 }

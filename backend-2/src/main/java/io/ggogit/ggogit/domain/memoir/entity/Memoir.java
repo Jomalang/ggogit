@@ -26,7 +26,6 @@ import java.time.LocalDateTime;
 @Table(name = "MEMOIR")
 public class Memoir {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false)
     @GeneratedValue
     private Long id;

@@ -94,7 +94,7 @@ class MemoirServiceImplTest {
 
           // then
           assertThat(memoirService.isMemoirExist(treeId1)).isTrue();
-//          assertThat(memoirService.isMemoirExist(treeId2)).isFalse();
+          assertThat(memoirService.isMemoirExist(treeId2)).isFalse();
        }
     
 

@@ -39,6 +39,8 @@ public interface BookService {
      */
     void remove(Long bookId);
 
+    Book findById(Long bookId);
+
     /**
      * 타이틀로 도서 검색
      * @param title

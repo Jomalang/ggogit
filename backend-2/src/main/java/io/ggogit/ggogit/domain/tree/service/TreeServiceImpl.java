@@ -6,6 +6,8 @@ import io.ggogit.ggogit.domain.tree.repository.TreeSaveTmpRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 @Service
@@ -22,7 +24,16 @@ public class TreeServiceImpl implements TreeService {
 
     @Override
     public Boolean getComplate(Long treeId) {
-        return null;
+        Tree tree = treeRepository.findById(treeId).orElse(null);
+        Long totalPage = null;
+        Long readingPage = null;
+
+        if (tree != null) {
+            totalPage = tree.getBook().getTotalPage();
+            readingPage = tree.getTreeBook().getReadingPage();
+            return (readingPage * 100.0) / totalPage >= 80;
+        }
+        else return false;
     }
 
     @Override
@@ -36,17 +47,12 @@ public class TreeServiceImpl implements TreeService {
     }
 
     @Override
-    public Integer getTreeCount(Long memberId) {
-        return treeRepository.findByMemberId(memberId).stream().count();
-    }
+    public Integer getTreeCount(Long memberId) { return (treeRepository.findByMemberId(memberId)).size(); }
 
     @Override
-    public Long getSeedId(Long treeId) {
-        return 0;
-    }
+    public Long getSeedId(Long treeId) { return (treeRepository.findByTreeId(treeId)).getSeed().getId(); }
 
     @Override
     public Long toMemberId(Long treeId) {
-        return 0;
-    }
+        return (treeRepository.findByTreeId(treeId)).getMember().getId(); }
 }

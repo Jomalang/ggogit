@@ -8,37 +8,35 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
-public class TreeInfoResponse {
+public class BookTreeResponse {
 
-    private Long bookId;
-    private String bookCategory;
+    private Long bookId;        //nullable 일수도 있을것같음
+    private String bookCategory; //Book entity와 자료형 다름
+    private Integer bookTotalPage;
     private String bookTitle;
     private String bookAuthor;
-    private String bookTranslator;
+    private String bookTranslator; //Book entity에 없음
     private String bookPublisher;
     private String bookPublishedYear;
-    private Long bookTotalPage;
+    private Boolean bookComplete;
     private Long treeId;
-    private Long memberId ;
+    private Long memberId;
     private Long seedId;
     private String title;
     private String description;
     private Boolean visibility;
-    private String  leafCreatedAt;
-    private String  createdAt;
-    private Long readingPage ;
+    private String createdAt;
+    private Long readingPage;
     private String coverImageName;
-    private Long treeLeafCnt;
-    private Long treeLikeCnt;
-    private Long treeViewCnt;
 
-    public static TreeInfoResponse of(Tree tree, LocalDate latestLeafDate, Long leafCnt, Long likeCnt, Long viewCnt) {
-        return TreeInfoResponse.builder()
+    public static BookTreeResponse of(Tree tree) {
+        return BookTreeResponse.builder()
                 .bookId(tree.getBook().getId())
                 .bookCategory(tree.getBook().getBookCategory().getName())
                 .bookTitle(tree.getBook().getTitle())
@@ -54,12 +52,8 @@ public class TreeInfoResponse {
                 .description(tree.getDescription())
                 .visibility(tree.getVisibility())
                 .createdAt(tree.getLeaf().getCreateTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
-                .leafCreatedAt(latestLeafDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
                 .readingPage(tree.getTreeBook().getReadingPage())
                 .coverImageName(tree.getBook().getImageFile())
-                .treeLeafCnt(leafCnt)
-                .treeLikeCnt(likeCnt)
-                .treeViewCnt(viewCnt)
                 .build();
     }
 }

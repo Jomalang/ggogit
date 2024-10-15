@@ -67,7 +67,7 @@ public class Book {
 
     @NotNull
     @Column(name = "TOTAL_PAGE", nullable = false)
-    private Integer totalPage;
+    private Long totalPage;
 
     @Size(max = 255)
     @Column(name = "IMAGE_FILE")

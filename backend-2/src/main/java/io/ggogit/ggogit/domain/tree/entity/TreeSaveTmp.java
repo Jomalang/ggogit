@@ -1,25 +1,31 @@
 package io.ggogit.ggogit.domain.tree.entity;
 
+import io.ggogit.ggogit.api.tree.dto.TreeSaveTmpRequest;
 import io.ggogit.ggogit.domain.book.entity.Book;
 import io.ggogit.ggogit.domain.book.entity.BookCategory;
 import io.ggogit.ggogit.domain.member.entity.Member;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Getter
 @Setter
+@Builder
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "TREE_SAVE_TMP")
+@NoArgsConstructor
+@AllArgsConstructor
 public class TreeSaveTmp {
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false)
@@ -47,7 +53,7 @@ public class TreeSaveTmp {
     private String publisher;
 
     @Column(name = "TOTAL_PAGE")
-    private Integer totalPage;
+    private Long totalPage;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "BOOK_ID")
@@ -80,9 +86,37 @@ public class TreeSaveTmp {
     @NotNull
     @CreatedDate
     @Column(name = "CREATE_TIME", nullable = false)
-    private LocalDateTime createTime;
+    private Data createTime;
 
     @Version
     @Column(name = "VERSION", nullable = false)
     private Long version;
+
+    public static TreeSaveTmp ofBook(TreeSaveTmpRequest request,Book book,Seed seed, Member member) {
+        return  TreeSaveTmp.builder()
+                .id(request.getId())
+                .member(member)
+                .bookCategory(book.getBookCategory())
+                .bookTitle(book.getTitle())
+                .author(book.getAuthor())
+                .publisher(book.getPublisher())
+                .totalPage(book.getTotalPage())
+                .book(book)
+                .seed(seed)
+                .treeTitle(request.getTreeTitle())
+                .description(request.getDescription())
+                .imageFile(request.getImageFile())
+                .visibility(request.getVisibility())
+                .build();
+    }
+    public static TreeSaveTmp ofEtc(TreeSaveTmpRequest request,Seed seed, Member member) {
+        return  TreeSaveTmp.builder()
+                .member(member)
+                .seed(seed)
+                .treeTitle(request.getTreeTitle())
+                .description(request.getDescription())
+                .imageFile(request.getImageFile())
+                .visibility(request.getVisibility())
+                .build();
+    }
 }

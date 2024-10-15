@@ -12,14 +12,6 @@ public interface TreeService  {
     void register(Tree tree);
 
     /***
-     * 트리 문자열 탐색 전체 정보 조회
-     * 도서 테이블 + 트리 테이블 + 트리 소속 리프 마지막 수정시간
-     *
-     * @param memberId
-     * @return
-     */
-
-    /***
      * 멤버 ID 별 트리 전체 정보 조회
      * 도서 테이블 + 트리 테이블 + 트리 소속 리프 마지막 수정시간
      *

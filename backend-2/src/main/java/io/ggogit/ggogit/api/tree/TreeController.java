@@ -1,5 +1,7 @@
 package io.ggogit.ggogit.api.tree;
 
+import io.ggogit.ggogit.api.tree.dto.TreeInfoResponse;
+import io.ggogit.ggogit.api.tree.dto.TreeSaveTmpRequest;
 import io.ggogit.ggogit.domain.book.service.BookService;
 import io.ggogit.ggogit.domain.leaf.service.LeafService;
 import io.ggogit.ggogit.domain.member.entity.Member;
@@ -11,7 +13,6 @@ import io.ggogit.ggogit.domain.tree.service.TreeUtilService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -98,7 +99,7 @@ public class TreeController {
     @PostMapping("/book/reg")
     public String postBookReg(
             @RequestParam(required = false) MultipartFile img,
-            @ModelAttribute TreeSaveTmpForm form,
+            @ModelAttribute TreeSaveTmpRequest form,
             @RequestParam(value = "auto") boolean auto,
             HttpServletRequest request
     ) throws IOException {
@@ -257,13 +258,13 @@ public class TreeController {
 
         CombineTreeView combineTreeView = treeService.findCombineTreeView(memberId, treeId);
         MemberImageView memberImageView = combineTreeView.getMemberImageView();
-        TreeInfoView treeInfoView = combineTreeView.getTreeInfoView();
+        TreeInfoResponse treeInfoResponse = combineTreeView.getTreeInfoResponse();
 
         List<LeafBranchView> leafList = leafService.findBranchByTreeId(treeId);
         System.out.println(leafList);
 
         model.addAttribute("memberImageView", memberImageView);
-        model.addAttribute("treeInfoView", treeInfoView);
+        model.addAttribute("treeInfoView", treeInfoResponse);
         model.addAttribute("leafList", leafList);
         return "view/tree/detail";
     }

@@ -101,7 +101,9 @@ public class Book {
                 .member(member)
                 .bookCategory(treeSaveTmp.getBookCategory())
                 .title(treeSaveTmp.getBookTitle())
+                .imageFile(treeSaveTmp.getImageFile())
                 .author(treeSaveTmp.getAuthor())
+                .publishDate(LocalDate.now())
                 .publisher(treeSaveTmp.getPublisher())
                 .totalPage(treeSaveTmp.getTotalPage())
                 .build();

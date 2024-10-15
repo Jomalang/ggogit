@@ -36,4 +36,12 @@ public class LeafTagMap {
     @Version
     @Column(name = "VERSION", nullable = false)
     private Long version;
+
+    public static LeafTagMap of(Leaf leaf, LeafTag leafTag) {
+        return LeafTagMap.builder()
+                .id(LeafTagMapId.of(leaf.getId(), leafTag.getId()))
+                .leaf(leaf)
+                .leafTag(leafTag)
+                .build();
+    }
 }

@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.ggogit.ggogit.domain.book.entity.Book;
 import io.ggogit.ggogit.domain.book.entity.BookCategory;
 import io.ggogit.ggogit.domain.book.repository.BookCategoryRepository;
-import io.ggogit.ggogit.domain.book.repository.BookRepository;
 import io.ggogit.ggogit.domain.leaf.entity.Leaf;
 import io.ggogit.ggogit.domain.leaf.repository.LeafRepository;
 import io.ggogit.ggogit.domain.member.entity.Member;
@@ -14,7 +13,6 @@ import io.ggogit.ggogit.domain.tree.entity.Seed;
 import io.ggogit.ggogit.domain.tree.entity.Tree;
 import io.ggogit.ggogit.domain.tree.entity.TreeSaveTmp;
 import io.ggogit.ggogit.domain.tree.repository.SeedRepository;
-import io.ggogit.ggogit.domain.tree.repository.TreeRepository;
 import io.ggogit.ggogit.domain.tree.repository.TreeSaveTmpRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -120,7 +118,7 @@ class LeafBookControllerTest {
 
     private boolean removeImageFile(String fileName, String folder) {
         String projectPath = System.getProperty("user.dir");
-        File file = new File(projectPath, folder + File.separator + fileName);
+        File file = new File(projectPath,  uploadDir + File.separator + "image" + File.separator + folder + File.separator + fileName);
         System.out.println("file = " + file);
         return file.delete();
     }

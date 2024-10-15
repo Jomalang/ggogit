@@ -56,4 +56,11 @@ public class LeafImage {
     @Version
     @Column(name = "VERSION", nullable = false)
     private Long version;
+
+    public static LeafImage of(Long id, String fileName) {
+        return LeafImage.builder()
+                .id(id)
+                .name(fileName)
+                .build();
+    }
 }

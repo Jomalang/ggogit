@@ -3,8 +3,6 @@ package io.ggogit.ggogit.domain.leaf.service;
 import io.ggogit.ggogit.domain.book.entity.Book;
 import io.ggogit.ggogit.domain.book.repository.BookRepository;
 import io.ggogit.ggogit.domain.leaf.entity.*;
-import io.ggogit.ggogit.domain.leaf.mapper.LeafImageMapper;
-import io.ggogit.ggogit.domain.leaf.mapper.LeafTagMapMapper;
 import io.ggogit.ggogit.domain.leaf.repository.*;
 import io.ggogit.ggogit.domain.leaf.util.ImageSaveUtil;
 import io.ggogit.ggogit.domain.member.entity.Member;
@@ -41,10 +39,6 @@ public class LeafBookServiceImpl implements LeafBookService {
     private final LeafTagRepository leafTagRepository;
     private final LeafTagMapRepository leafTagMapRepository;
 
-
-    private final LeafImageMapper leafImageMapper;
-    private final LeafTagMapMapper leafTagMapMapper;
-
     private final ImageSaveUtil imageSaveUtil;
     private final LeafBookRepository leafBookRepository;
     private final SeedRepository seedRepository;
@@ -69,8 +63,8 @@ public class LeafBookServiceImpl implements LeafBookService {
                 String fileName = imageSaveUtil.extractFileName(filePath);
                 String toFileName = imageSaveUtil.moveImageFile(fileName,"book", true);
                 book.setImageFile(toFileName);
-                book = bookRepository.save(book);
             }
+            book = bookRepository.save(book);
         }
 
         Seed seed = seedRepository.findById(1L)
@@ -147,7 +141,7 @@ public class LeafBookServiceImpl implements LeafBookService {
 
         // `System`은 `Leaf` 이미지를 저장한다.
         for (String fileName : filesNames) { // TODO: 이미지 파일이 없는 경우 예외 처리
-            LeafImage leafImage = leafImageMapper.toEntity(leaf.getId(), fileName);
+            LeafImage leafImage = LeafImage.of(leaf.getId(), fileName);
             leafImageRepository.save(leafImage);
         }
 
@@ -157,7 +151,7 @@ public class LeafBookServiceImpl implements LeafBookService {
 
         // `System`은 `LeafTagMap` 데이터를 생성후 저장한다.
         for (LeafTag leafTag : leafTags) {
-            LeafTagMap leafTagMap = leafTagMapMapper.toEntity(leaf, leafTag);
+            LeafTagMap leafTagMap = LeafTagMap.of(leaf, leafTag);
             leafTagMapRepository.save(leafTagMap);
         }
 
@@ -165,27 +159,19 @@ public class LeafBookServiceImpl implements LeafBookService {
         TreeBook treeBook = treeBookRepository.findById(leaf.getTree().getId())
                 .orElseThrow(() -> new IllegalArgumentException("TreeBook 데이터가 없습니다."));
 
-        Tree tree = treeBook.getTree();
-        List<LeafBook> leafBooks = leafBookRepository.findByLeaf_Tree_Id(tree.getId());
+        Tree tree = leaf.getTree();
+        List<LeafBook> leafBooks = new ArrayList<>();
+        leafRepository.findByTree(tree).forEach(lf -> {
+            LeafBook lb = leafBookRepository.findByLeaf(lf)
+                    .orElseThrow(() -> new IllegalArgumentException("LeafBook 데이터가 없습니다."));
+            leafBooks.add(lb);
+        });
+
         Long readPage = readingPage(tree.getBook().getTotalPage(), leafBooks);
         treeBook.setReadingPage(readPage);
         treeBookRepository.save(treeBook);
 
         return leafBook;
-    }
-
-    private long readingPage(int totalPage, List<LeafBook> leafBooks) {
-        boolean[] isRead = new boolean[totalPage + 1]; // 읽은 페이지 체크
-        long readPage = 0L; // 읽은 페이지 수
-        for (LeafBook book : leafBooks) {
-            for (int i = book.getStartPage(); i <= book.getEndPage(); i++) {
-                if (!isRead[i]) { // 읽지 않은 페이지만
-                    isRead[i] = true;
-                    readPage++;
-                }
-            }
-        }
-        return readPage;
     }
 
     @Override
@@ -204,6 +190,19 @@ public class LeafBookServiceImpl implements LeafBookService {
 
     @Override
     public void deleteLeafBook(Long leafId) {
+    }
 
+    private long readingPage(int totalPage, List<LeafBook> leafBooks) {
+        boolean[] isRead = new boolean[totalPage + 1]; // 읽은 페이지 체크
+        long readPage = 0L; // 읽은 페이지 수
+        for (LeafBook book : leafBooks) {
+            for (int i = book.getStartPage(); i <= book.getEndPage(); i++) {
+                if (!isRead[i]) { // 읽지 않은 페이지만
+                    isRead[i] = true;
+                    readPage++;
+                }
+            }
+        }
+        return readPage;
     }
 }

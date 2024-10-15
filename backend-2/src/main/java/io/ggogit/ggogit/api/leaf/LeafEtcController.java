@@ -1,7 +1,7 @@
 package io.ggogit.ggogit.api.leaf;
 
-import io.ggogit.ggogit.api.leaf.dto.request.EtcLeafRequest;
-import io.ggogit.ggogit.api.leaf.dto.response.EtcLeafResponse;
+import io.ggogit.ggogit.api.leaf.dto.EtcLeafRequest;
+import io.ggogit.ggogit.api.leaf.dto.EtcLeafResponse;
 import io.ggogit.ggogit.domain.leaf.entity.Leaf;
 import io.ggogit.ggogit.domain.leaf.service.LeafEtcService;
 import jakarta.validation.Valid;

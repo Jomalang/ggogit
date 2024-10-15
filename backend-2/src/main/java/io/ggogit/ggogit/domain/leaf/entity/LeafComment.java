@@ -24,6 +24,7 @@ import java.time.LocalDateTime;
 @Table(name = "LEAF_COMMENT")
 public class LeafComment {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false)
     private Long id;
 

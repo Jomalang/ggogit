@@ -1,6 +1,7 @@
 package io.ggogit.ggogit.domain.book.entity;
 
 import io.ggogit.ggogit.domain.member.entity.Member;
+import io.ggogit.ggogit.domain.tree.entity.TreeSaveTmp;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -26,6 +27,7 @@ import java.time.LocalDate;
 @Table(name = "BOOK")
 public class Book {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false)
     private Long id;
 
@@ -93,4 +95,17 @@ public class Book {
     @Version
     @Column(name = "VERSION", nullable = false)
     private Long version;
+
+    public static Book of(TreeSaveTmp treeSaveTmp, Member member) {
+        return Book.builder()
+                .member(member)
+                .bookCategory(treeSaveTmp.getBookCategory())
+                .title(treeSaveTmp.getBookTitle())
+                .imageFile(treeSaveTmp.getImageFile())
+                .author(treeSaveTmp.getAuthor())
+                .publishDate(LocalDate.now())
+                .publisher(treeSaveTmp.getPublisher())
+                .totalPage(treeSaveTmp.getTotalPage())
+                .build();
+    }
 }

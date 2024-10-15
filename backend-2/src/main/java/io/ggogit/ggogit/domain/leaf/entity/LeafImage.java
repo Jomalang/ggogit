@@ -23,6 +23,7 @@ import java.time.LocalDateTime;
 @Table(name = "LEAF_IMAGE")
 public class LeafImage {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false)
     private Long id;
 
@@ -55,4 +56,11 @@ public class LeafImage {
     @Version
     @Column(name = "VERSION", nullable = false)
     private Long version;
+
+    public static LeafImage of(Long id, String fileName) {
+        return LeafImage.builder()
+                .id(id)
+                .name(fileName)
+                .build();
+    }
 }

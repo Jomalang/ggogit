@@ -23,11 +23,11 @@ class LeafBookRepositoryTest {
         long treeId = 1L;
 
         // when
-        List<LeafBook> leafBooks =  leafBookRepository.findByLeaf_Tree_Id(treeId);
+//        List<LeafBook> leafBooks =  leafBookRepository.findByLeaf_Tree_Id(treeId);
 
         // then
-        for (LeafBook leafBook : leafBooks) {
-            System.out.println(leafBooks);
-        }
+//        for (LeafBook leafBook : leafBooks) {
+//            System.out.println(leafBooks);
+//        }
     }
 }

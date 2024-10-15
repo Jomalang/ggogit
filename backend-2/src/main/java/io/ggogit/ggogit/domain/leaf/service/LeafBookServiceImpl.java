@@ -94,12 +94,12 @@ public class LeafBookServiceImpl implements LeafBookService {
         Leaf parentLeaf = leafRepository.findById(parentLeafId)
                 .orElseThrow(() -> new IllegalArgumentException("Leaf 부모 데이터가 없습니다."));
 
-        leaf.setTree(parentLeaf.getTree());
-
         int LEAF_MAX_CHILD_COUNT = 3;
         if (LEAF_MAX_CHILD_COUNT <= parentLeaf.getChildLeafCount()) {
             throw new IllegalArgumentException("부모 Leaf의 자식 개수가 최대치 3개를 초과했습니다.");
         }
+
+        leaf.setTree(parentLeaf.getTree());
 
         // `System`은 `Leaf` 데이터를 저장한다.
         LeafBook savedLeafBook = createLogic(memberId, leaf, leafBook, leafTagIds);

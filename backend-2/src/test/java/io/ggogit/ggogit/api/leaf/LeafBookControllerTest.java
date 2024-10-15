@@ -14,6 +14,7 @@ import io.ggogit.ggogit.domain.tree.entity.Tree;
 import io.ggogit.ggogit.domain.tree.entity.TreeSaveTmp;
 import io.ggogit.ggogit.domain.tree.repository.SeedRepository;
 import io.ggogit.ggogit.domain.tree.repository.TreeSaveTmpRepository;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -59,13 +60,14 @@ class LeafBookControllerTest {
     private LeafRepository leafRepository;
 
     @Test
+    @DisplayName("첫번째 도서 리프 생성")
     @Transactional
     void createFirstBookLeaf() throws Exception {
-        // when
+        // given
         Member member = memberRepository.findById(1000L).orElseThrow();
         Seed seed = seedRepository.findById(1L).orElseThrow();
         BookCategory bookCategory = bookCategoryRepository.findById(1L).orElseThrow();
-        String imageFilePath = createImageFile("firstBookTest.png");
+        String imageFilePath = createImageFile("firstBookTest.png", tmpDir);
         TreeSaveTmp treeSaveTmp = TreeSaveTmp.builder()
                 .member(member)
                 .book(null)
@@ -94,7 +96,7 @@ class LeafBookControllerTest {
                 }
                 """;
 
-        // given
+        // when
         ResultActions resultActions = mockMvc.perform(post("/api/v1/book/first/leafs")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(validRequest))
@@ -123,7 +125,7 @@ class LeafBookControllerTest {
         return file.delete();
     }
 
-    private String createImageFile(String fileName) {
+    private String createImageFile(String fileName, String folder) {
         int width = 200;  // 이미지 너비
         int height = 200; // 이미지 높이
 
@@ -137,7 +139,7 @@ class LeafBookControllerTest {
 
         // 이미지 파일로 저장
         try {
-            File outputfile = new File(tmpDir, fileName);
+            File outputfile = new File(folder, fileName);
             ImageIO.write(image, "png", outputfile);
             String projectPath = System.getProperty("user.dir");
             return projectPath + File.separator + outputfile;
@@ -145,5 +147,36 @@ class LeafBookControllerTest {
             e.printStackTrace();
         }
         throw new IllegalArgumentException("이미지 파일 생성 실패");
+    }
+
+
+    @Test
+    @DisplayName("도서 리프 생성")
+    void createBookLeaf() throws Exception {
+        // given
+        String validRequest = """
+                {
+                    "startPage": 1,
+                    "endPage": 100,
+                    "tagIds": [10001, 10002, 10003],
+                    "title": "리프 제목 기록 성공",
+                    "content": "리프 내용 성공",
+                    "visibility": true
+                }
+                """;
+        long parentLeafId = 1L;
+
+        // when
+        ResultActions resultActions = mockMvc.perform(post("/api/v1/book/leafs/" + parentLeafId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(validRequest))
+                // then
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.message").value("도서 리프 생성 성공"))
+                .andExpect(jsonPath("$.leafId").isNumber());
+
+
+
+        // then
     }
 }

@@ -13,6 +13,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.awt.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -73,4 +74,10 @@ public class Member {
 
     @OneToMany(mappedBy = "trees",fetch = FetchType.LAZY)
     private List<Tree> trees;
+
+    @OneToOne
+    private MemberProfileImage memberProfileImage;
+
+    @OneToOne
+    private MemberBackgroundImage memberBackgroundImage;
 }

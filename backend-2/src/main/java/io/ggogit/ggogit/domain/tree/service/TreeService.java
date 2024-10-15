@@ -1,5 +1,6 @@
 package io.ggogit.ggogit.domain.tree.service;
 
+import io.ggogit.ggogit.api.tree.dto.TreeSaveTmpRequest;
 import io.ggogit.ggogit.domain.tree.entity.Tree;
 
 public interface TreeService  {
@@ -18,6 +19,7 @@ public interface TreeService  {
      * @param memberId
      * @return
      */
+    //TreeInfoDto 생성
 //    List<TreeInfoView> getTreeInfoView(Long memberId);
 
     /***
@@ -71,7 +73,7 @@ public interface TreeService  {
      * @param TreeSaveTmpForm
      * @return
      */
-//    void tmpTreeSave(TreeSaveTmpForm form);
+    void tmpTreeSave(TreeSaveTmpRequest request);
 
     /***
      * 트리 생성 TMP 테이블 생성

@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/tree")
 @RequiredArgsConstructor
 public class TreeController {
 
@@ -246,7 +246,7 @@ public class TreeController {
         return "redirect:/tree/book/select";
     }
 
-    @RequestMapping("/detail/{treeId}")
+    @RequestMapping("/index/{treeId}")
     public String getTreeDetail(
             Model model,
             @PathVariable(name = "treeId") Long treeId,
@@ -261,12 +261,8 @@ public class TreeController {
         TreeInfoResponse treeInfoResponse = combineTreeView.getTreeInfoResponse();
 
         List<LeafBranchView> leafList = leafService.findBranchByTreeId(treeId);
-        System.out.println(leafList);
 
-        model.addAttribute("memberImageView", memberImageView);
-        model.addAttribute("treeInfoView", treeInfoResponse);
-        model.addAttribute("leafList", leafList);
-        return "view/tree/detail";
+        return ;
     }
 
     @GetMapping("/memoir/register/index")

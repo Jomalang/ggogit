@@ -1,14 +1,13 @@
 package io.ggogit.ggogit.domain.tree.service;
 
+import io.ggogit.ggogit.api.tree.dto.TreeSaveTmpRequest;
 import io.ggogit.ggogit.domain.tree.entity.Tree;
+import io.ggogit.ggogit.domain.tree.entity.TreeSaveTmp;
 import io.ggogit.ggogit.domain.tree.repository.TreeRepository;
 import io.ggogit.ggogit.domain.tree.repository.TreeSaveTmpRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -55,4 +54,7 @@ public class TreeServiceImpl implements TreeService {
     @Override
     public Long toMemberId(Long treeId) {
         return (treeRepository.findByTreeId(treeId)).getMember().getId(); }
+
+    @Override
+    public void tmpTreeSave(TreeSaveTmp treeSaveTmp) {treeSaveTmpRepository.save(treeSaveTmp);}
 }

@@ -21,7 +21,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 @Entity
-@SQLDelete(sql = "update tree set is_deleted = true where id = ?")
+@SQLDelete(sql = "update tree set is_deleted = true where id = ? and version = ?")
 @SQLRestriction("is_deleted = false")
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "TREE")
@@ -94,6 +94,17 @@ public class Tree {
         return Tree.builder()
                 .seed(seed)
                 .book(book)
+                .member(member)
+                .bookMarkCount(0)
+                .title(treeSaveTmp.getTreeTitle())
+                .description(treeSaveTmp.getDescription())
+                .visibility(treeSaveTmp.getVisibility())
+                .build();
+    }
+
+    public static Tree of(TreeSaveTmp treeSaveTmp, Member member, Seed seed) {
+        return Tree.builder()
+                .seed(seed)
                 .member(member)
                 .bookMarkCount(0)
                 .title(treeSaveTmp.getTreeTitle())

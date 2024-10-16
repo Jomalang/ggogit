@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping
 @RequiredArgsConstructor
 public class LeafBookController {
 
@@ -43,6 +43,11 @@ public class LeafBookController {
     ) {
         dto.isValidate(); // 논리 오류 확인
         Long memberId = 1000L; // TODO: 로그인 정보에서 memberId 가져오기
+
+        if (!leafBookService.isOwner(memberId, parentLeafId)) {
+            throw new IllegalArgumentException("해당 리프에 대한 권한이 없습니다.");
+        }
+
         Leaf leaf = dto.toLeaf();
         LeafBook LeafBook = dto.toLeafBook();
         List<Long> leafTagIds = dto.getTagIds();
@@ -59,8 +64,13 @@ public class LeafBookController {
             @Valid @RequestBody BookLeafRequest dto
     ) {
         dto.isValidate(); // 논리 오류 확인
+        Long memberId = 1000L; // TODO: 로그인 정보에서 memberId 가져오기;
+
+        if (!leafBookService.isOwner(memberId, leafId)) {
+            throw new IllegalArgumentException("해당 리프에 대한 권한이 없습니다.");
+        }
+
         Leaf leaf = dto.toLeaf();
-        Long memberId = 1L; // TODO: 로그인 정보에서 memberId 가져오기;
         LeafBook LeafBook = dto.toLeafBook();
         List<Long> leafTagIds = dto.getTagIds();
 
@@ -74,6 +84,12 @@ public class LeafBookController {
     public ResponseEntity<BookLeafResponse> deleteBookLeaf(
             @PathVariable Long leafId
     ) {
+        Long memberId = 1000L; // TODO: 로그인 정보에서 memberId 가져오기
+
+        if (!leafBookService.isOwner(memberId, leafId)) {
+            throw new IllegalArgumentException("해당 리프에 대한 권한이 없습니다.");
+        }
+
         leafBookService.deleteLeafBook(leafId);
         BookLeafResponse response = BookLeafResponse.of(leafId, "도서 리프 삭제 성공");
         return new ResponseEntity<>(response, HttpStatus.OK);

@@ -15,7 +15,7 @@ import java.util.UUID;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping
 public class LeafImageController {
 
     @Value("${file.tmp-dir}")
@@ -53,7 +53,11 @@ public class LeafImageController {
 
     @GetMapping(
             value = "/leaf/image-print",
-            produces = {MediaType.IMAGE_GIF_VALUE, MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE}
+            produces = {
+                    MediaType.IMAGE_GIF_VALUE,
+                    MediaType.IMAGE_JPEG_VALUE,
+                    MediaType.IMAGE_PNG_VALUE
+            }
     )
     public byte[] printEditorImage(
             @RequestParam final String filename

@@ -4,8 +4,7 @@ import io.ggogit.ggogit.domain.member.entity.Member;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
@@ -15,10 +14,12 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
-@Getter
-@Setter
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
-@SQLDelete(sql = "update leaf_image set is_deleted = true where id = ?")
+@SQLDelete(sql = "update leaf_tag set is_deleted = true where id = ? and version = ?")
 @SQLRestriction("is_deleted = false")
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "LEAF_TAG")
@@ -40,6 +41,7 @@ public class LeafTag {
 
     @NotNull
     @ColumnDefault("0")
+    @Builder.Default
     @Column(name = "IS_DELETED", nullable = false)
     private Boolean isDeleted = false;
 
@@ -56,4 +58,11 @@ public class LeafTag {
     @Version
     @Column(name = "VERSION", nullable = false)
     private Long version;
+
+    public static LeafTag of(Member member, String name) {
+        return LeafTag.builder()
+                .member(member)
+                .name(name)
+                .build();
+    }
 }

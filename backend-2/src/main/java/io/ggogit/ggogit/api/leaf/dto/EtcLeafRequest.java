@@ -18,6 +18,9 @@ public class EtcLeafRequest {
 
     private List<Long> tagIds;
 
+    @NotNull(message = "seedId는 필수값입니다.")
+    private Long seedId;
+
     @NotBlank(message = "title은 필수값입니다.")
     private String title;
 
@@ -38,6 +41,10 @@ public class EtcLeafRequest {
     public void isValidate() {
         if (tagIds == null) {
             tagIds = List.of();
+        }
+
+        if (seedId == 1L) {
+            throw new IllegalArgumentException("시드 리프는 기타 리프로 생성할 수 없습니다.");
         }
     }
 }

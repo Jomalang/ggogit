@@ -34,18 +34,18 @@ class MemoirServiceImplTest {
         Memoir memoir = createMemoir();
 
         //when
-        memoirService.regMemoir(memoir);
+        memoirService.regMemoir(memoir, 1L);
         Memoir findMemoir = memoirService.getMemoir(memoir.getId());
 
         //then
-        assertThat(findMemoir.getText()).isEqualTo("testText");
+        assertThat(memoir).isEqualTo(findMemoir);
     }
 
     @Test
     void removeMemoirTest() {
         //given
         Memoir memoir = createMemoir();
-        memoirService.regMemoir(memoir);
+        memoirService.regMemoir(memoir, 1L);
         //when
         memoirService.removeMemoir(memoir.getId());
 
@@ -57,7 +57,7 @@ class MemoirServiceImplTest {
     public void modifyMemoirTest () {
         //given
         Memoir memoir = createMemoir();
-        memoirService.regMemoir(memoir);
+        memoirService.regMemoir(memoir, 1L);
         Memoir newMemoir = new Memoir();
         newMemoir.setText("update");
         newMemoir.setVisibility(true);
@@ -90,7 +90,7 @@ class MemoirServiceImplTest {
           Long treeId2 = 2L;
           // when
           Memoir memoir = createMemoir();
-          memoirService.regMemoir(memoir); //treeId = 1L로 저장
+          memoirService.regMemoir(memoir, treeId1); //treeId = 1L로 저장
 
           // then
           assertThat(memoirService.isMemoirExist(treeId1)).isTrue();
@@ -99,9 +99,7 @@ class MemoirServiceImplTest {
     
 
     public Memoir createMemoir(){
-        Tree tree = treeRepository.findById(1L).get();
         Memoir memoir = new Memoir();
-        memoir.setTree(tree);
         memoir.setTitle("testTitle");
         memoir.setText("testText");
         memoir.setVisibility(true);

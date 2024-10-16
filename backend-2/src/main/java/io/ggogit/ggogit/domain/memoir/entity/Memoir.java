@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.SQLDelete;
@@ -24,14 +25,17 @@ import java.time.LocalDateTime;
 @SQLRestriction("is_deleted = false")
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "MEMOIR")
+@NoArgsConstructor
 public class Memoir {
     @Id
     @Column(name = "ID", nullable = false)
-    @GeneratedValue
+    //TODO: 사용중인 DB에 맞춰 식별자 생성 전략 수정해야 함.
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name ="memoir_seq", sequenceName = "memoir_seq", allocationSize = 50)
     private Long id;
 
     @NotNull
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @OneToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.REFRESH)
     @JoinColumn(name = "TREE_ID", nullable = false)
     @JsonIgnore
     private Tree tree;
@@ -69,4 +73,11 @@ public class Memoir {
     @Version
     @Column(name = "VERSION", nullable = false)
     private Long version;
+
+    //------------연관관계 편의 메서드-----------------
+    //--------연관관계의 주인에만 만들어야 한다----------
+    public void changeTree(Tree tree) {
+        this.tree = tree;
+        tree.setMemoir(this);
+    }
 }

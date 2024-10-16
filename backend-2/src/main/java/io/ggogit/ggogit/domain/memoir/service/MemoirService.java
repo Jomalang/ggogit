@@ -10,11 +10,11 @@ import java.util.List;
 public interface MemoirService {
 
     /**
-     * @param memoir 회고록 엔티티입니다.
-     * @return void 반환값은 void입니다.
+     * @param memoir, treeId 회고록 엔티티와 연관관계에 있는 treeId를 받습니다.
+     * @return void
      * memoir엔티티를 영속화합니다.
      */
-    void regMemoir(Memoir memoir);
+    void regMemoir(Memoir memoir, Long TreeId);
 
     /**
      * @param memoirId 회고록의 식별자입니다.

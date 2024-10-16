@@ -16,7 +16,12 @@ spring:
         format_sql: true
         use_sql_comments: true
         dialect: org.hibernate.dialect.H2Dialect
+        hbm2ddl:
+          auto: update # 테스트마다 스키마 생성
     defer-datasource-initialization: true
+  sql:
+    init:
+      encoding: utf-8
 
 
 file: # 이미지 업로드 경로

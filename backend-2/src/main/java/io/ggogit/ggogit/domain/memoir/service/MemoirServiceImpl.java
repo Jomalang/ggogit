@@ -27,7 +27,9 @@ public class MemoirServiceImpl implements MemoirService {
     private final TreeRepository treeRepository;
 
     @Override
-    public void regMemoir(Memoir memoir) {
+    public void regMemoir(Memoir memoir, Long treeId) {
+        Optional<Tree> opTree = treeRepository.findById(treeId);
+        memoir.changeTree(opTree.orElseThrow(()->new IllegalArgumentException("트리가 없습니다.")));
         memoirRepository.save(memoir);
     }
 
@@ -76,7 +78,6 @@ public class MemoirServiceImpl implements MemoirService {
         }
 
     }
-
 
     //TODO: getxxx() 시도시 값이 null일경우 검증 로직을 서비스에 추가해야하나?
     private static void ChangeMemoir(Memoir newMemoir, Memoir memoir) {

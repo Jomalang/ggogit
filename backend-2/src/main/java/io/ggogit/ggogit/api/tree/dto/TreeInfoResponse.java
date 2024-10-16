@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @Data
@@ -37,7 +38,7 @@ public class TreeInfoResponse {
     private Long treeLikeCnt;
     private Long treeViewCnt;
 
-    public static TreeInfoResponse of(Tree tree, LocalDate latestLeafDate, Long leafCnt, Long likeCnt, Long viewCnt) {
+    public static TreeInfoResponse of(Tree tree, LocalDateTime latestLeafDate, Long leafCnt, Long likeCnt, Long viewCnt) {
         return TreeInfoResponse.builder()
                 .bookId(tree.getBook().getId())
                 .bookCategory(tree.getBook().getBookCategory().getName())

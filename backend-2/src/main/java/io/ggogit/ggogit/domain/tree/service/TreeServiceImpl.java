@@ -1,11 +1,14 @@
 package io.ggogit.ggogit.domain.tree.service;
 
+import io.ggogit.ggogit.api.tree.dto.TreeInfoResponse;
 import io.ggogit.ggogit.domain.member.entity.Member;
 import io.ggogit.ggogit.domain.tree.entity.Seed;
 import io.ggogit.ggogit.domain.tree.entity.Tree;
 import io.ggogit.ggogit.domain.tree.repository.TreeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 
 @Service
@@ -16,27 +19,40 @@ public class TreeServiceImpl implements TreeService {
 
     @Override
     public void register(Tree tree) {
-        treeRepository.save(tree);
+        if (tree != null)
+            treeRepository.save(tree);
     }
+    @Override
+    public void update(Tree tree) {
+        if (tree != null)
+            treeRepository.save(tree);
+    }
+    @Override
+    public void delete(Long treeId) {
+        Tree tree = treeRepository.findById(treeId).orElse(null);
+        if (tree != null) {
+            tree.setIsDeleted(true);
+            treeRepository.save(tree);
+        }
+    }
+    @Override
+    public Tree get(Long treeId) {return treeRepository.findById(treeId).orElse(null);}
+
+    @Override
+    public List<Tree> findAllByMemberId(Long memberId) { return  treeRepository.findByMemberId(memberId); }
 
     @Override
     public Boolean getComplate(Long treeId) {
         Tree tree = treeRepository.findById(treeId).orElse(null);
-        Integer totalPage = null;
-        Integer readingPage = null;
+        Integer totalPage = tree.getBook().getTotalPage();
+        Integer readingPage = tree.getTreeBook().getReadingPage();
 
-        if (tree != null) {
-            totalPage = tree.getBook().getTotalPage();
-            readingPage = tree.getTreeBook().getReadingPage();
+        if (totalPage != null && readingPage != null) {
             return (readingPage * 100.0) / totalPage >= 80;
         }
         else return false;
     }
 
-    @Override
-    public void delete(Long treeId) {
-        treeRepository.deleteById(treeId);
-    }
 
     @Override
     public Boolean isOwner(Long treeId, Long userId) {
@@ -59,6 +75,7 @@ public class TreeServiceImpl implements TreeService {
 
     @Override
     public Seed getSeedByTreeId(Long treeId) { return (treeRepository.findByTreeId(treeId)).getSeed(); }
+
 
     @Override
     public Long getMemberId(Long treeId) {

@@ -1,5 +1,6 @@
 package io.ggogit.ggogit.domain.memoir.service;
 
+import io.ggogit.ggogit.domain.leaf.entity.Leaf;
 import io.ggogit.ggogit.domain.memoir.entity.Memoir;
 import io.ggogit.ggogit.domain.memoir.repository.MemoirRepository;
 import io.ggogit.ggogit.domain.tree.entity.Tree;
@@ -15,6 +16,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Slf4j
@@ -27,10 +29,11 @@ public class MemoirServiceImpl implements MemoirService {
     private final TreeRepository treeRepository;
 
     @Override
-    public void regMemoir(Memoir memoir, Long treeId) {
+    public Long regMemoir(Memoir memoir, Long treeId) {
         Optional<Tree> opTree = treeRepository.findById(treeId);
         memoir.changeTree(opTree.orElseThrow(()->new IllegalArgumentException("트리가 없습니다.")));
         memoirRepository.save(memoir);
+        return memoir.getId();
     }
 
     @Override
@@ -86,4 +89,13 @@ public class MemoirServiceImpl implements MemoirService {
         //visibility는 DB에 default값이 있음.
         memoir.setVisibility(newMemoir.getVisibility());
     }
+    @Override
+    public boolean isOwner(Long memberId, Long memoirId) {
+
+        Memoir memoir = memoirRepository.findById(memoirId)
+                .orElseThrow(() -> new IllegalArgumentException("회고록이 없습니다."));
+
+        return Objects.equals(memoir.getTree().getMember().getId(), memberId);
+    }
+
 }

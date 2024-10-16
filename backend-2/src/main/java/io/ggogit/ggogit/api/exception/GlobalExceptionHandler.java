@@ -11,7 +11,7 @@ public class GlobalExceptionHandler {
     /**
      * 들어온 데이터 값이 잘못되었을 때 처리하는 핸들러
      * */
-    @ExceptionHandler(IllegalArgumentException.class)
+//    @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<ErrorResponse> handleIllegalArgumentException(IllegalArgumentException ex) {
         ErrorResponse response = new ErrorResponse(HttpStatus.BAD_REQUEST.value(), ex.getMessage());
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
@@ -20,7 +20,7 @@ public class GlobalExceptionHandler {
     /**
     * 내부 서버 오류가 발생했을 때 처리하는 핸들러
     * */
-    @ExceptionHandler(RuntimeException.class)
+//    @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<ErrorResponse> handleRuntimeException(RuntimeException ex) {
         ErrorResponse response = new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), ex.getMessage());
         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);

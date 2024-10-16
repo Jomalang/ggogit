@@ -5,10 +5,9 @@ import io.ggogit.ggogit.domain.tree.entity.Tree;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 import org.springframework.data.annotation.CreatedDate;
@@ -26,12 +25,13 @@ import java.time.LocalDateTime;
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "MEMOIR")
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Memoir {
     @Id
     @Column(name = "ID", nullable = false)
     //TODO: 사용중인 DB에 맞춰 식별자 생성 전략 수정해야 함.
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(name ="memoir_seq", sequenceName = "memoir_seq", allocationSize = 50)
+    @GeneratedValue
     private Long id;
 
     @NotNull
@@ -50,22 +50,20 @@ public class Memoir {
     @Column(name = "TEXT", nullable = false, length = 3000)
     private String text;
 
-    @NotNull
     @ColumnDefault("1")
+    @Generated
     @Column(name = "VISIBILITY", nullable = false)
     private Boolean visibility = false;
 
-    @NotNull
     @ColumnDefault("0")
+    @Generated
     @Column(name = "IS_DELETED", nullable = false)
     private Boolean isDeleted = false;
 
-    @NotNull
     @CreatedDate
     @Column(name = "CREATE_TIME", nullable = false)
     private LocalDateTime createTime;
 
-    @NotNull
     @LastModifiedDate
     @Column(name = "UPDATE_TIME", nullable = false)
     private LocalDateTime updateTime;

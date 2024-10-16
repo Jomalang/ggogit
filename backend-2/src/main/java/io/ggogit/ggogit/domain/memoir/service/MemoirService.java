@@ -11,10 +11,10 @@ public interface MemoirService {
 
     /**
      * @param memoir, treeId 회고록 엔티티와 연관관계에 있는 treeId를 받습니다.
-     * @return void
+     * @return memoiId
      * memoir엔티티를 영속화합니다.
      */
-    void regMemoir(Memoir memoir, Long TreeId);
+    Long regMemoir(Memoir memoir, Long TreeId);
 
     /**
      * @param memoirId 회고록의 식별자입니다.
@@ -51,6 +51,15 @@ public interface MemoirService {
      * 이미 회고록이 생성되었는지 확인합니다.
      */
     boolean isMemoirExist(Long treeId);
+
+    /**
+     *
+     * @param memberId
+     * @param memoirId
+     * @return
+     * 회고록의 소유자인지 검사합니다.
+     */
+    boolean isOwner(Long memberId, Long memoirId);
 
 //    List<MemoirBookView> getMemoirCards(Long memberId);
 }

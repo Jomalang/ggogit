@@ -1,6 +1,7 @@
 package io.ggogit.ggogit.domain.book.service;
 
 
+import io.ggogit.ggogit.api.book.dto.BookInfoResponse;
 import io.ggogit.ggogit.domain.book.entity.Book;
 import io.ggogit.ggogit.domain.book.entity.BookCategory;
 import org.springframework.stereotype.Service;
@@ -64,4 +65,6 @@ public interface BookService {
 //    BookInfoView getBookbyId(Long bookId);
 
     BookCategory getBookCategory(Long bookId);
+
+    BookInfoResponse getBookbyId(Long id);
 }

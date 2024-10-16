@@ -24,7 +24,7 @@ public class TreeTmpRequest {
     private String bookTitle;
     private String author;
     private String publisher;
-    private Long totalPage;
+    private Integer totalPage;
 
     private Long seedId;
 
@@ -33,6 +33,7 @@ public class TreeTmpRequest {
     private String imageFile;
     private Boolean visibility;
     private Date createTime;
+
 
     public static TreeTmp toEtcTreeTmp(TreeTmpRequest request, Member member, Seed seed) {
         return TreeTmp.builder()

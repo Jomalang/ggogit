@@ -1,10 +1,13 @@
 package io.ggogit.ggogit.domain.tree.service;
 
+import io.ggogit.ggogit.api.member.session.SessionConst;
 import io.ggogit.ggogit.api.tree.dto.TreeInfoResponse;
 import io.ggogit.ggogit.domain.member.entity.Member;
 import io.ggogit.ggogit.domain.tree.entity.Seed;
 import io.ggogit.ggogit.domain.tree.entity.Tree;
 import io.ggogit.ggogit.domain.tree.repository.TreeRepository;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -55,12 +58,13 @@ public class TreeServiceImpl implements TreeService {
 
 
     @Override
-    public Boolean isOwner(Long treeId, Long userId) {
+    public Boolean isOwner(Long treeId, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        Member member = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
+        Long memberId = member.getId();
         Tree tree = treeRepository.findById(treeId).orElse(null);
-        Member member = null;
         if (tree != null && userId != null) {
-            member = tree.getMember();
-            return userId.equals(member.getId());
+            return memberId.equals(tree.getMember().getId());
         }
         return false;
     }

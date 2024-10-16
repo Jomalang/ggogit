@@ -64,7 +64,7 @@ public class Book {
     private String publisher;
 
     @Column(name = "PUBLISH_DATE")
-    private LocalDate publishDate;
+    private LocalDateTime publishDate;
 
     @NotNull
     @Column(name = "TOTAL_PAGE", nullable = false)

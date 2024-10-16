@@ -1,10 +1,13 @@
 package io.ggogit.ggogit.api.tree;
 
+import io.ggogit.ggogit.api.book.dto.BookInfoResponse;
 import io.ggogit.ggogit.api.member.session.SessionConst;
+import io.ggogit.ggogit.api.tree.dto.TreeEtcTmpRequest;
 import io.ggogit.ggogit.api.tree.dto.TreeInfoResponse;
 import io.ggogit.ggogit.api.tree.dto.TreeTmpRequest;
 import io.ggogit.ggogit.domain.book.entity.BookCategory;
 import io.ggogit.ggogit.domain.book.service.BookService;
+import io.ggogit.ggogit.domain.leaf.entity.Leaf;
 import io.ggogit.ggogit.domain.leaf.service.LeafService;
 import io.ggogit.ggogit.domain.member.entity.Member;
 import io.ggogit.ggogit.domain.member.service.MemberService;
@@ -14,9 +17,15 @@ import io.ggogit.ggogit.domain.tree.service.SeedService;
 import io.ggogit.ggogit.domain.tree.service.TreeService;
 import io.ggogit.ggogit.domain.tree.service.TreeTmpService;
 import io.ggogit.ggogit.domain.tree.service.TreeUtilService;
+import io.ggogit.ggogit.type.BookCategoryType;
+import io.ggogit.ggogit.type.filterType;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -89,7 +98,7 @@ public class TreeController {
         treeTmpService.deleteTmpById(memberId);
 
         if (auto) {
-            BookInfoView book = bookService.getBookbyId(id);
+            BookInfoResponse book = bookService.getBookbyId(id);
             model.addAttribute("book", book);
             return "view/tree/book/reg-auto";
         } else {
@@ -152,7 +161,7 @@ public class TreeController {
     public String postTreeEtcReg(
             @RequestParam(value = "type", required = false) String type,
             @RequestParam(required = false) MultipartFile img,
-            @ModelAttribute TreeEtcSaveTmpForm form,
+            @ModelAttribute TreeTmpRequest tmp,
             HttpServletRequest request
     ) throws IOException  {
 
@@ -164,23 +173,40 @@ public class TreeController {
 
         Long memberId= member.getId();
 
-        form.setMemberId(memberId);
+        tmp.setMemberId(memberId);
         Seed seed = seedService.getByEngName(type);
-        form.setSeedId(seed.getId());
+        tmp.setSeedId(seed.getId());
 
         if(img != null && !img.isEmpty()){
-            form.setImageFile(treeUtilService.updateImageFile(img,request.getSession().getServletContext().getRealPath("/image/tmp")));
+            tmp.setImageFile(treeUtilService.updateImageFile(img,request.getSession().getServletContext().getRealPath("/image/tmp")));
         }
 
-        treeService.tmpEtcTreeSave(form);
+        treeTmpService.tmpTreeSave(TreeTmpRequest.toEtcTreeTmp(tmp,member,seed));
         return "redirect:/leaf/first/reg?seed=" + seed.getEngName();
     }
 
 
-    @GetMapping
-    public List<Tree> getBranchList() {
-        Sort sort =
-        return "view/tree/list";
+    @GetMapping("/{treeId}/leafs")
+    public List<Tree> getBranchList(
+            @PathVariable Long treeId,,
+            @RequestParam(value = "bookMark", required = false) final Boolean bookMark,
+            @RequestParam(value = "filter", required = false) final  Long filter,
+            @RequestParam(value = "sort", required = false) final  Long sort,
+            @RequestParam(value = "p", defaultValue = "1") final int page,
+            HttpServletRequest request
+            ) {
+        int size = 10;
+
+
+        filterType filterName = filterType.fromNumber(filter);
+        filterType sortName = filterType.fromNumber(sort);
+        Sort s = filterType.createSort(filterName,sortName);
+
+        Pageable pageable = PageRequest.of(page, size, s);
+
+        Boolean hasOwner = treeService.isOwner(treeId, request)
+
+        Page<Leaf> pageList = leafService.findBranchByFilter(treeId, hasOwner, bookMark, pageable);
     }
 
 

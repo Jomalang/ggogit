@@ -15,34 +15,38 @@ import java.util.List;
 @NoArgsConstructor
 public class LeafTagListResponse {
 
-    private List<LeafTagResponse> tags;
+    private List<LeafTagDto> tags;
     private int totalPages;
-    private long totalElements;
     private int currentPage;
+    private int size;
+    private long totalElements;
+    private String message;
 
-    public static LeafTagListResponse of(Page<LeafTag> leafTags) {
+    public static LeafTagListResponse of(Page<LeafTag> leafTagsPage, String message) {
 
-        List<LeafTagResponse> tags = leafTags.stream()
-                .map(LeafTagResponse::of)
+        List<LeafTagDto> tags = leafTagsPage.stream()
+                .map(LeafTagDto::of)
                 .toList();
 
         return LeafTagListResponse.builder()
                 .tags(tags)
-                .totalPages(leafTags.getTotalPages())
-                .totalElements(leafTags.getTotalElements())
-                .currentPage(leafTags.getNumber())
+                .totalPages(leafTagsPage.getTotalPages())
+                .totalElements(leafTagsPage.getTotalElements())
+                .currentPage(leafTagsPage.getNumber() + 1)
+                .size(leafTagsPage.getSize())
+                .message(message)
                 .build();
     }
 
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class LeafTagResponse {
+    public static class LeafTagDto {
         private Long id;
         private String name;
 
-        public static LeafTagResponse of(LeafTag leafTag) {
-            return new LeafTagResponse(leafTag.getId(), leafTag.getName());
+        public static LeafTagDto of(LeafTag leafTag) {
+            return new LeafTagDto(leafTag.getId(), leafTag.getName());
         }
     }
 }

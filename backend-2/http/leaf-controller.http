@@ -42,8 +42,22 @@ DELETE {{host}}/api/v1/etc/leafs/{{leafId}}
 
 # ================================================== #
 
-#GET {{host}}/api/v1/hello
-#
+# ================================================== #
+# 리프 태그
+
+### 리프 태그 생성
+POST {{host}}/api/v1/leaf/tags
+Content-Type: application/json
+
+{
+  "name": "태그 생성1"
+}
+
+### 리프 태그 조회
+GET {{host}}/api/v1/leaf/tags
+
+
+### 리프 태그 생성
 #> {%
 #    client.test("Response status is 200", function() {
 #        client.assert(response.status === 200, "Response status is not 200");
@@ -53,3 +67,4 @@ DELETE {{host}}/api/v1/etc/leafs/{{leafId}}
 #        client.assert(response.body === "Hello, World!", "Response does not contain expected message");
 #    });
 #%}
+

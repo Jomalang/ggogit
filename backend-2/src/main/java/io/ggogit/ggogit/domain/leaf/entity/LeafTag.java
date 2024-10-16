@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@SQLDelete(sql = "update leaf_image set is_deleted = true where id = ? and version = ?")
+@SQLDelete(sql = "update leaf_tag set is_deleted = true where id = ? and version = ?")
 @SQLRestriction("is_deleted = false")
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "LEAF_TAG")

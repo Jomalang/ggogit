@@ -50,7 +50,7 @@ public class LeafTagController {
     }
 
     // 삭제
-    @DeleteMapping("/leaf/tags")
+    @DeleteMapping("/leaf/tags/{tagId}")
     public ResponseEntity<LeafTagResponse> remove(
             @PathVariable Long tagId
     ) {
@@ -62,19 +62,19 @@ public class LeafTagController {
 
         leafTagService.remove(memberId, tagId);
         LeafTagResponse response = LeafTagResponse.of(tagId, "태그 삭제 성공");
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     // 조회
     @GetMapping("/leaf/tags")
-    public ResponseEntity<Object> list(
+    public ResponseEntity<LeafTagListResponse> list(
             @RequestParam(value = "search", required = false) String search,
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "size", defaultValue = "20") int size
     ) {
         Long memberId = 1000L; // TODO: 로그인 정보에서 가져오기
         Page<LeafTag> leafTags = leafTagService.list(memberId, search, page, size);
-        LeafTagListResponse response = LeafTagListResponse.of(leafTags);
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
+        LeafTagListResponse response = LeafTagListResponse.of(leafTags, "태그 목록 조회 성공");
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

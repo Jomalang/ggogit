@@ -12,19 +12,19 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class LeafTagResponse {
 
-    private Long tagId;
+    private Long id;
     private String message;
 
     public static LeafTagResponse of(LeafTag leafTag, String message) {
         return LeafTagResponse.builder()
-                .tagId(leafTag.getId())
+                .id(leafTag.getId())
                 .message(message)
                 .build();
     }
 
     public static LeafTagResponse of(Long leafTagId, String message) {
         return LeafTagResponse.builder()
-                .tagId(leafTagId)
+                .id(leafTagId)
                 .message(message)
                 .build();
     }

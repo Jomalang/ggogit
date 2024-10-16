@@ -13,7 +13,7 @@ public interface LeafTagService {
 
     void remove(Long memberId, Long tagId);
 
-    Page<LeafTag> list(Long memberId, String search, int page, int size);
+    Page<LeafTag> list(Long memberId, String searchName, int page, int size);
 
 //    /**
 //     * LeafTag를 등록한다.

@@ -10,13 +10,15 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.Optional;
 
 public interface LeafTagRepository extends JpaRepository<LeafTag, Long> {
+
     Optional<LeafTag> findByMemberAndNameContaining(Member member, String name);
 
+    Optional<LeafTag> findByMemberAndName(Member member, String name);
+
     @Query("""
-        select t
-        from LeafTag t
-        where t.member = :member
-            and (t.name is null or t.name like %:name%)
+        FROM LeafTag
+        WHERE member = :member
+            AND (:name IS NULL OR name LIKE concat('%', :name, '%'))
     """)
     Page<LeafTag> findByMemberAndName(Member member, String name, Pageable pageable);
 }

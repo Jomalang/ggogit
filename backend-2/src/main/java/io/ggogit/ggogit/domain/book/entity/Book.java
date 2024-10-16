@@ -22,7 +22,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-@SQLDelete(sql = "update book set is_deleted = true where id = ?")
+@SQLDelete(sql = "update book set is_deleted = true where id = ? and version = ?")
 @SQLRestriction("is_deleted = false")
 @Table(name = "BOOK")
 public class Book {
@@ -63,8 +63,7 @@ public class Book {
     @Column(name = "PUBLISHER", nullable = false)
     private String publisher;
 
-    @NotNull
-    @Column(name = "PUBLISH_DATE", nullable = false)
+    @Column(name = "PUBLISH_DATE")
     private LocalDate publishDate;
 
     @NotNull
@@ -103,7 +102,7 @@ public class Book {
                 .title(treeSaveTmp.getBookTitle())
                 .imageFile(treeSaveTmp.getImageFile())
                 .author(treeSaveTmp.getAuthor())
-                .publishDate(LocalDate.now())
+                .publishDate(null)
                 .publisher(treeSaveTmp.getPublisher())
                 .totalPage(treeSaveTmp.getTotalPage())
                 .build();

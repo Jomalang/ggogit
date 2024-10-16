@@ -17,6 +17,7 @@ import io.ggogit.ggogit.domain.tree.repository.TreeRepository;
 import io.ggogit.ggogit.domain.tree.repository.TreeSaveTmpRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,8 +27,9 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class LeafBookServiceImpl implements LeafBookService {
 
-    private final BookRepository bookRepository;
+    private final static int LEAF_MAX_CHILD_COUNT = 3;
 
+    private final BookRepository bookRepository;
     private final MemberRepository memberRepository;
 
     private final TreeRepository treeRepository;
@@ -94,11 +96,11 @@ public class LeafBookServiceImpl implements LeafBookService {
         Leaf parentLeaf = leafRepository.findById(parentLeafId)
                 .orElseThrow(() -> new IllegalArgumentException("Leaf 부모 데이터가 없습니다."));
 
-        int LEAF_MAX_CHILD_COUNT = 3;
         if (LEAF_MAX_CHILD_COUNT <= parentLeaf.getChildLeafCount()) {
             throw new IllegalArgumentException("부모 Leaf의 자식 개수가 최대치 3개를 초과했습니다.");
         }
 
+        leaf.setParentLeaf(parentLeaf);
         leaf.setTree(parentLeaf.getTree());
 
         // `System`은 `Leaf` 데이터를 저장한다.
@@ -175,21 +177,90 @@ public class LeafBookServiceImpl implements LeafBookService {
     }
 
     @Override
-    public LeafBook updateLeafBook(Long memberId, Long leafId, Leaf toLeaf, LeafBook leafBook, List<Long> leafTagIds) {
+    @Transactional
+    public LeafBook updateLeafBook(Long memberId, Long leafId, Leaf toLeaf, LeafBook toLeafBook, List<Long> toLeafTagIds) {
 
         Leaf leaf = leafRepository.findById(leafId)
                 .orElseThrow(() -> new IllegalArgumentException("Leaf 데이터가 없습니다."));
 
-        // 리프 수정 권한 확인
-        if (!Objects.equals(leaf.getTree().getMember().getId(), memberId)) {
-            throw new IllegalArgumentException("Leaf 데이터의 MemberId와 입력받은 MemberId가 일치하지 않습니다.");
+        // 리프 수정
+        leaf.setTitle(toLeaf.getTitle());
+        leaf.setContent(toLeaf.getContent()); // TODO: 이미지 저장 및 경로 변경
+        leaf.setVisibility(toLeaf.getVisibility());
+        leafRepository.save(leaf);
+
+        LeafBook leafBook = leafBookRepository.findByLeaf(leaf)
+                .orElseThrow(() -> new IllegalArgumentException("LeafBook 데이터가 없습니다."));
+
+        // 리프 도서 수정
+        leafBook.setStartPage(toLeafBook.getStartPage());
+        leafBook.setEndPage(toLeafBook.getEndPage());
+        leafBookRepository.save(leafBook);
+
+        List<LeafTagMap> leafTagMaps = leafTagMapRepository.findByLeaf(leaf);
+        for (LeafTagMap leafTagMap : leafTagMaps) {
+            leafTagMap.setActive(false);
+            leafTagMapRepository.save(leafTagMap);
         }
 
-        return null;
+        for (Long leafTagId : toLeafTagIds) {
+            LeafTag leafTag = leafTagRepository.findById(leafTagId)
+                    .orElseThrow(() -> new IllegalArgumentException("LeafTag 데이터가 없습니다."));
+
+            if (!Objects.equals(leafTag.getMember().getId(), memberId)) {
+                throw new IllegalArgumentException("LeafTag 데이터의 권한이 없습니다.");
+            }
+
+            // 리프 태그 맵핑 수정
+            LeafTagMapId leafTagMapId = LeafTagMapId.of(leaf.getId(), leafTag.getId());
+            leafTagMapRepository.findById(leafTagMapId).ifPresentOrElse(
+                leafTagMap -> { // 이미 있는 경우 활성화
+                    leafTagMap.setActive(true);
+                    leafTagMapRepository.save(leafTagMap);
+                },
+                () -> { // 없는 경우 생성
+                    LeafTagMap leafTagMap = LeafTagMap.of(leaf, leafTag);
+                    leafTagMapRepository.save(leafTagMap);
+                }
+            );
+
+        }
+
+        return leafBook;
     }
 
     @Override
     public void deleteLeafBook(Long leafId) {
+
+        Leaf leaf = leafRepository.findById(leafId)
+                .orElseThrow(() -> new IllegalArgumentException("Leaf 데이터가 없습니다."));
+
+        // LeafTagMap 비활성화
+        List<LeafTagMap> leafTagMaps = leafTagMapRepository.findByLeaf(leaf);
+        for (LeafTagMap leafTagMap : leafTagMaps) {
+            leafTagMap.setActive(false);
+            leafTagMapRepository.save(leafTagMap);
+        }
+
+        // LeafImage 삭제
+        leafImageRepository.findById(leafId)
+                .ifPresent(leafImageRepository::delete);
+
+        // LeafBook 삭제
+        leafBookRepository.findByLeaf(leaf)
+                .ifPresent(leafBookRepository::delete);
+
+        // Leaf 삭제
+        leafRepository.delete(leaf);
+    }
+
+    @Override
+    public boolean isOwner(Long memberId, Long leafId) {
+
+        Leaf leaf = leafRepository.findById(leafId)
+                .orElseThrow(() -> new IllegalArgumentException("Leaf 데이터가 없습니다."));
+
+        return Objects.equals(leaf.getTree().getMember().getId(), memberId);
     }
 
     private long readingPage(int totalPage, List<LeafBook> leafBooks) {

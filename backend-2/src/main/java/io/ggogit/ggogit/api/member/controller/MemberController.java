@@ -1,29 +1,25 @@
 package io.ggogit.ggogit.api.member.controller;
 
-import Recorders.ggogit.domain.member.entity.Member;
-import Recorders.ggogit.domain.member.service.EmailService;
-import Recorders.ggogit.domain.member.service.LoginService;
-import Recorders.ggogit.web.member.form.LoginForm;
-import Recorders.ggogit.web.member.form.LoginRegForm;
-import Recorders.ggogit.web.member.session.SessionConst;
-import Recorders.ggogit.web.member.validation.LoginRegValidator;
-import Recorders.ggogit.web.member.validation.LoginValidator;
-import jakarta.mail.MessagingException;
+import io.ggogit.ggogit.api.member.dto.LoginRequest;
+import io.ggogit.ggogit.api.member.dto.LoginResponse;
+import io.ggogit.ggogit.api.member.validation.LoginRegValidator;
+import io.ggogit.ggogit.api.member.validation.LoginValidator;
+import io.ggogit.ggogit.domain.member.entity.Member;
+import io.ggogit.ggogit.domain.member.service.EmailService;
+import io.ggogit.ggogit.domain.member.service.LoginService;
+import io.ggogit.ggogit.domain.member.service.MemberService;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Optional;
 
-@Controller
+@RestController
 @RequestMapping("/member")
 @RequiredArgsConstructor
 @Slf4j
@@ -33,76 +29,56 @@ public class MemberController {
     private final EmailService emailService;
     private final LoginRegValidator loginRegValidator;
     private final LoginValidator loginValidator;
+    private final MemberService memberService;
 
 
     @GetMapping("/login")
-    public String getMemberLogin(Model model ,@RequestParam(value = "j", required = false) boolean isNewMember) {
-        model.addAttribute("member", new LoginRegForm());
-        model.addAttribute("isNewMember", isNewMember);
-        return "view/member/index";
+    public ResponseEntity<LoginResponse> getMemberLogin(@RequestParam(value = "j", required = false) Boolean isNewMember) {
+        LoginResponse response = memberService.getMemberLogin(isNewMember);
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/login")
-    public String postMemberLogin(@Validated @ModelAttribute("member") LoginForm loginForm,
-                                  BindingResult bindingResult,
-                                  RedirectAttributes redirectAttributes
-                                  , Model model
-                                ,HttpServletRequest request
-                                ,@RequestParam(value = "redirectURL", required = false) String redirectURL) {
+    public ResponseEntity<LoginResponse> postMemberLogin(@Valid @RequestBody LoginRequest loginRequest, HttpServletRequest request) {
+        try {
+            // 로그인 처리
+            Member loginMember = memberService.login(loginRequest.getUsername(), loginRequest.getPassword());
 
-        //공백 검사
-        if(bindingResult.hasErrors()){
-            log.info("errors: {}", bindingResult.getAllErrors());
-            return "view/member/index";
+            // 세션 생성 및 사용자 정보 저장
+            HttpSession session = request.getSession();
+            session.setAttribute("LOGIN_MEMBER", loginMember);
+
+            // 성공 응답 반환
+            LoginResponse response = new LoginResponse();
+            response.setNickname(loginMember.getNickname());
+            response.setMessage("Login successful");
+            return ResponseEntity.ok(response);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(new LoginResponse("Error", e.getMessage()));
         }
-
-        //유효성 검사
-        if(loginValidator.supports(loginForm.getClass())){
-            loginValidator.validate(loginForm, bindingResult);
-            if(bindingResult.hasErrors()){
-                log.info("errors: {}", bindingResult.getAllErrors());
-                return "view/member/index";
-            }
-        }
-
-        Member member = loginForm.toMember();
-        Member loginMember = loginService.login(member);
-
-        //로그인 성공
-        //세션 생성
-        HttpSession session = request.getSession();
-        session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember);
-
-        //redirectURL이 있다면 로그인 후 바로 원래 페이지로 보내기
-        if(redirectURL != null) {
-            return"redirect:" + redirectURL;
-        }
-
-        redirectAttributes.addAttribute("nickName", loginMember.getNickname());
-        return "redirect:/home/{nickName}";
     }
 
     @PostMapping("/logout")
-    public String postMemberLogout(Model model, HttpServletRequest request) {
+    public ResponseEntity<String> logout(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
-        if(session != null) {
-            session.invalidate();
+        if (session != null) {
+            session.invalidate(); // 세션 무효화
         }
-        return"redirect:/member/login";
+        return ResponseEntity.ok("Logout successful");
     }
 
     @GetMapping("/join-input")
-    public String getMemberJoinInput(Model model, HttpServletRequest request) {
-        LoginRegForm loginRegForm = new LoginRegForm();
-        Optional<String> emailCookie = emailService.getEmailCookie(request);
+    public ResponseEntity<LoginResponse> getMemberJoinInput(HttpServletRequest request) {
+        LoginResponse loginResponse = new LoginResponse();
 
-        //만약 /member/join에서 입력한 쿠키가 있다면 쿠키에서 이메일 값을 받아서 모델에 전송해준다.
-        //뷰에서는 전송받은 email은 read-only로 처리해준다.
-        if(emailCookie.isPresent()){
-            loginRegForm.setEmail(emailCookie.get());
-        }
-        model.addAttribute("loginRegForm", loginRegForm);
-        return "view/member/join-input";
+        // 이메일 쿠키에서 이메일 값을 가져옵니다.
+        Optional<String> emailCookie = memberService.getEmailFromCookie(request);
+
+        // 쿠키가 존재하면 이메일 값을 설정합니다.
+        emailCookie.ifPresent(loginResponse::setEmail);
+
+        // JSON 응답 반환
+        return ResponseEntity.ok(loginResponse);
     }
 
     @PostMapping("/join-input")

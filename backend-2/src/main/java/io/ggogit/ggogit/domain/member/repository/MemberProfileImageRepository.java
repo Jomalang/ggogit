@@ -1,7 +1,17 @@
 package io.ggogit.ggogit.domain.member.repository;
 
-import io.ggogit.ggogit.domain.member.entity.MemberProfileImage;
-import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface MemberProfileImageRepository extends JpaRepository<MemberProfileImage, Long> {
+public interface MemberProfileImageRepository {
+
+    void save(MemberProfileImage memberProfileImage);
+
+    void update(MemberProfileImage memberProfileImage);
+
+    void delete(MemberProfileImage memberProfileImage);
+
+    List<MemberProfileImage> findAll();
+
+    MemberProfileImage findById(Long id);
+
+    MemberProfileImage findByName(String name);
 }

@@ -1,8 +1,9 @@
 package io.ggogit.ggogit.api.member.validation;
 
-import Recorders.ggogit.domain.member.entity.Member;
-import Recorders.ggogit.domain.member.service.LoginService;
-import Recorders.ggogit.web.member.form.LoginForm;
+
+import io.ggogit.ggogit.api.member.dto.LoginResponse;
+import io.ggogit.ggogit.domain.member.entity.Member;
+import io.ggogit.ggogit.domain.member.service.LoginService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -17,12 +18,12 @@ public class LoginValidator implements Validator {
     private final LoginService loginService;
     @Override
     public boolean supports(Class<?> clazz) {
-        return LoginForm.class.isAssignableFrom(clazz);
+        return LoginResponse.class.isAssignableFrom(clazz);
     }
 
     @Override
     public void validate(Object target, Errors errors) {
-        LoginForm loginForm = (LoginForm) target;
+        LoginResponse loginForm = (LoginResponse) target;
         Member member = loginForm.toMember();
 
         //검증 로직

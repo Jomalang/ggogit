@@ -18,12 +18,14 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Entity
-@SQLDelete(sql = "update memoir_comment set is_deleted = true where id = ?")
+@SQLDelete(sql = "update memoir_comment set is_deleted = true where id = ? and version = ?")
 @SQLRestriction("is_deleted = false")
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "MEMOIR_COMMENT")
 public class MemoirComment {
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name ="memoir_comment_seq", sequenceName = "memoir_comment_seq", allocationSize = 50)
     @Column(name = "ID", nullable = false)
     private Long id;
 

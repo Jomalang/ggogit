@@ -1,25 +1,23 @@
 package io.ggogit.ggogit.domain.leaf.service;
 
 import io.ggogit.ggogit.domain.book.entity.Book;
-import io.ggogit.ggogit.domain.book.mapper.BookMapper;
 import io.ggogit.ggogit.domain.book.repository.BookRepository;
 import io.ggogit.ggogit.domain.leaf.entity.*;
-import io.ggogit.ggogit.domain.leaf.mapper.LeafImageMapper;
-import io.ggogit.ggogit.domain.leaf.mapper.LeafTagMapMapper;
 import io.ggogit.ggogit.domain.leaf.repository.*;
 import io.ggogit.ggogit.domain.leaf.util.ImageSaveUtil;
 import io.ggogit.ggogit.domain.member.entity.Member;
 import io.ggogit.ggogit.domain.member.repository.MemberRepository;
+import io.ggogit.ggogit.domain.tree.entity.Seed;
 import io.ggogit.ggogit.domain.tree.entity.Tree;
 import io.ggogit.ggogit.domain.tree.entity.TreeBook;
+import io.ggogit.ggogit.domain.tree.repository.SeedRepository;
 import io.ggogit.ggogit.domain.tree.entity.TreeTmp;
-import io.ggogit.ggogit.domain.tree.mapper.TreeBookMapper;
-import io.ggogit.ggogit.domain.tree.mapper.TreeMapper;
 import io.ggogit.ggogit.domain.tree.repository.TreeBookRepository;
 import io.ggogit.ggogit.domain.tree.repository.TreeRepository;
 import io.ggogit.ggogit.domain.tree.repository.TreeTmpRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,8 +27,9 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class LeafBookServiceImpl implements LeafBookService {
 
-    private final BookRepository bookRepository;
+    private final static int LEAF_MAX_CHILD_COUNT = 3;
 
+    private final BookRepository bookRepository;
     private final MemberRepository memberRepository;
 
     private final TreeRepository treeRepository;
@@ -42,14 +41,9 @@ public class LeafBookServiceImpl implements LeafBookService {
     private final LeafTagRepository leafTagRepository;
     private final LeafTagMapRepository leafTagMapRepository;
 
-    private final BookMapper bookMapper;
-    private final TreeMapper treeMapper;
-    private final TreeBookMapper treeBookMapper;
-    private final LeafImageMapper leafImageMapper;
-    private final LeafTagMapMapper leafTagMapMapper;
-
     private final ImageSaveUtil imageSaveUtil;
     private final LeafBookRepository leafBookRepository;
+    private final SeedRepository seedRepository;
 
     @Override
     public LeafBook createFirstLeafBook(Long memberId, Leaf leaf, LeafBook leafBook, List<Long> leafTagIds) {
@@ -64,30 +58,33 @@ public class LeafBookServiceImpl implements LeafBookService {
         // `System`은 `TreeTmp`에서 `Book` 데이터를 조회한다.
         Book book = treeTmp.getBook();
         if (book == null) { // 직접 등록 도서 처리
-            book = bookMapper.toEntity(treeTmp, member);
+            book = Book.of(treeSaveTmp, member);
 
             if (book.getImageFile() != null) { // 직접 등록 도서의 이미지가 있는 경우
                 String filePath = book.getImageFile();
                 String fileName = imageSaveUtil.extractFileName(filePath);
                 String toFileName = imageSaveUtil.moveImageFile(fileName,"book", true);
                 book.setImageFile(toFileName);
-                bookRepository.save(book);
             }
+            book = bookRepository.save(book);
         }
 
-        // `System`은 `TreeTmp`에서 `Tree` 데이터를 생성후 저장한다.
-        Tree tree = treeMapper.toEntity(treeTmp, book, member);
+        Seed seed = seedRepository.findById(1L)
+                .orElseThrow(() -> new IllegalArgumentException("Seed 데이터가 없습니다."));
+
+        // `System`은 `TreeSaveTmp`에서 `Tree` 데이터를 생성후 저장한다.
+        Tree tree = Tree.of(treeSaveTmp, book, member, seed);
         treeRepository.save(tree);
+        leaf.setTree(tree);
 
         // `System`은 `TreeBook` 데이터를 생성후 저장한다.
-        TreeBook treeBook = treeBookMapper.toEntity(tree);
+        TreeBook treeBook = TreeBook.of(tree);
         treeBookRepository.save(treeBook);
 
         LeafBook savedLeafBook = createLogic(memberId, leaf, leafBook, leafTagIds);
-        // 여기 진행중 // << 확인해야함
 
-        // `System`은 `TreeTmp` 데이터를 삭제한다.
-        treeTmpRepository.delete(treeTmp);
+        // `System`은 `TreeSaveTmp` 데이터를 삭제한다.
+        treeSaveTmpRepository.delete(treeSaveTmp);
 
         return savedLeafBook;
     }
@@ -99,12 +96,12 @@ public class LeafBookServiceImpl implements LeafBookService {
         Leaf parentLeaf = leafRepository.findById(parentLeafId)
                 .orElseThrow(() -> new IllegalArgumentException("Leaf 부모 데이터가 없습니다."));
 
-        leaf.setTree(parentLeaf.getTree());
-
-        int LEAF_MAX_CHILD_COUNT = 3;
         if (LEAF_MAX_CHILD_COUNT <= parentLeaf.getChildLeafCount()) {
             throw new IllegalArgumentException("부모 Leaf의 자식 개수가 최대치 3개를 초과했습니다.");
         }
+
+        leaf.setParentLeaf(parentLeaf);
+        leaf.setTree(parentLeaf.getTree());
 
         // `System`은 `Leaf` 데이터를 저장한다.
         LeafBook savedLeafBook = createLogic(memberId, leaf, leafBook, leafTagIds);
@@ -145,8 +142,8 @@ public class LeafBookServiceImpl implements LeafBookService {
         leafRepository.save(leaf);
 
         // `System`은 `Leaf` 이미지를 저장한다.
-        for (String fileName : filesNames) {
-            LeafImage leafImage = leafImageMapper.toEntity(leaf.getId(), fileName);
+        for (String fileName : filesNames) { // TODO: 이미지 파일이 없는 경우 예외 처리
+            LeafImage leafImage = LeafImage.of(leaf.getId(), fileName);
             leafImageRepository.save(leafImage);
         }
 
@@ -156,7 +153,7 @@ public class LeafBookServiceImpl implements LeafBookService {
 
         // `System`은 `LeafTagMap` 데이터를 생성후 저장한다.
         for (LeafTag leafTag : leafTags) {
-            LeafTagMap leafTagMap = leafTagMapMapper.toEntity(leaf, leafTag);
+            LeafTagMap leafTagMap = LeafTagMap.of(leaf, leafTag);
             leafTagMapRepository.save(leafTagMap);
         }
 
@@ -164,8 +161,14 @@ public class LeafBookServiceImpl implements LeafBookService {
         TreeBook treeBook = treeBookRepository.findById(leaf.getTree().getId())
                 .orElseThrow(() -> new IllegalArgumentException("TreeBook 데이터가 없습니다."));
 
-        Tree tree = treeBook.getTree();
-        List<LeafBook> leafBooks = leafBookRepository.findByLeaf_Tree_Id(tree.getId());
+        Tree tree = leaf.getTree();
+        List<LeafBook> leafBooks = new ArrayList<>();
+        leafRepository.findByTree(tree).forEach(lf -> {
+            LeafBook lb = leafBookRepository.findByLeaf(lf)
+                    .orElseThrow(() -> new IllegalArgumentException("LeafBook 데이터가 없습니다."));
+            leafBooks.add(lb);
+        });
+
         Long readPage = readingPage(tree.getBook().getTotalPage(), leafBooks);
         treeBook.setReadingPage(readPage);
         treeBookRepository.save(treeBook);
@@ -173,8 +176,95 @@ public class LeafBookServiceImpl implements LeafBookService {
         return leafBook;
     }
 
+    @Override
+    @Transactional
+    public LeafBook updateLeafBook(Long memberId, Long leafId, Leaf toLeaf, LeafBook toLeafBook, List<Long> toLeafTagIds) {
+
+        Leaf leaf = leafRepository.findById(leafId)
+                .orElseThrow(() -> new IllegalArgumentException("Leaf 데이터가 없습니다."));
+
+        // 리프 수정
+        leaf.setTitle(toLeaf.getTitle());
+        leaf.setContent(toLeaf.getContent()); // TODO: 이미지 저장 및 경로 변경
+        leaf.setVisibility(toLeaf.getVisibility());
+        leafRepository.save(leaf);
+
+        LeafBook leafBook = leafBookRepository.findByLeaf(leaf)
+                .orElseThrow(() -> new IllegalArgumentException("LeafBook 데이터가 없습니다."));
+
+        // 리프 도서 수정
+        leafBook.setStartPage(toLeafBook.getStartPage());
+        leafBook.setEndPage(toLeafBook.getEndPage());
+        leafBookRepository.save(leafBook);
+
+        List<LeafTagMap> leafTagMaps = leafTagMapRepository.findByLeaf(leaf);
+        for (LeafTagMap leafTagMap : leafTagMaps) {
+            leafTagMap.setActive(false);
+            leafTagMapRepository.save(leafTagMap);
+        }
+
+        for (Long leafTagId : toLeafTagIds) {
+            LeafTag leafTag = leafTagRepository.findById(leafTagId)
+                    .orElseThrow(() -> new IllegalArgumentException("LeafTag 데이터가 없습니다."));
+
+            if (!Objects.equals(leafTag.getMember().getId(), memberId)) {
+                throw new IllegalArgumentException("LeafTag 데이터의 권한이 없습니다.");
+            }
+
+            // 리프 태그 맵핑 수정
+            LeafTagMapId leafTagMapId = LeafTagMapId.of(leaf.getId(), leafTag.getId());
+            leafTagMapRepository.findById(leafTagMapId).ifPresentOrElse(
+                leafTagMap -> { // 이미 있는 경우 활성화
+                    leafTagMap.setActive(true);
+                    leafTagMapRepository.save(leafTagMap);
+                },
+                () -> { // 없는 경우 생성
+                    LeafTagMap leafTagMap = LeafTagMap.of(leaf, leafTag);
+                    leafTagMapRepository.save(leafTagMap);
+                }
+            );
+
+        }
+
+        return leafBook;
+    }
+
+    @Override
+    public void deleteLeafBook(Long leafId) {
+
+        Leaf leaf = leafRepository.findById(leafId)
+                .orElseThrow(() -> new IllegalArgumentException("Leaf 데이터가 없습니다."));
+
+        // LeafTagMap 비활성화
+        List<LeafTagMap> leafTagMaps = leafTagMapRepository.findByLeaf(leaf);
+        for (LeafTagMap leafTagMap : leafTagMaps) {
+            leafTagMap.setActive(false);
+            leafTagMapRepository.save(leafTagMap);
+        }
+
+        // LeafImage 삭제
+        leafImageRepository.findById(leafId)
+                .ifPresent(leafImageRepository::delete);
+
+        // LeafBook 삭제
+        leafBookRepository.findByLeaf(leaf)
+                .ifPresent(leafBookRepository::delete);
+
+        // Leaf 삭제
+        leafRepository.delete(leaf);
+    }
+
+    @Override
+    public boolean isOwner(Long memberId, Long leafId) {
+
+        Leaf leaf = leafRepository.findById(leafId)
+                .orElseThrow(() -> new IllegalArgumentException("Leaf 데이터가 없습니다."));
+
+        return Objects.equals(leaf.getTree().getMember().getId(), memberId);
+    }
+
     private long readingPage(int totalPage, List<LeafBook> leafBooks) {
-        boolean[] isRead = new boolean[totalPage]; // 읽은 페이지 체크
+        boolean[] isRead = new boolean[totalPage + 1]; // 읽은 페이지 체크
         long readPage = 0L; // 읽은 페이지 수
         for (LeafBook book : leafBooks) {
             for (int i = book.getStartPage(); i <= book.getEndPage(); i++) {
@@ -185,24 +275,5 @@ public class LeafBookServiceImpl implements LeafBookService {
             }
         }
         return readPage;
-    }
-
-    @Override
-    public LeafBook updateLeafBook(Long memberId, Long leafId, Leaf toLeaf, LeafBook leafBook, List<Long> leafTagIds) {
-
-        Leaf leaf = leafRepository.findById(leafId)
-                .orElseThrow(() -> new IllegalArgumentException("Leaf 데이터가 없습니다."));
-
-        // 리프 수정 권한 확인
-        if (!Objects.equals(leaf.getTree().getMember().getId(), memberId)) {
-            throw new IllegalArgumentException("Leaf 데이터의 MemberId와 입력받은 MemberId가 일치하지 않습니다.");
-        }
-
-        return null;
-    }
-
-    @Override
-    public void deleteLeafBook(Long leafId) {
-
     }
 }

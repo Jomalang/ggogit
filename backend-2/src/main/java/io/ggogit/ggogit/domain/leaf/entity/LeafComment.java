@@ -18,12 +18,13 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Entity
-@SQLDelete(sql = "update leaf_comment set is_deleted = true where id = ?")
+@SQLDelete(sql = "update leaf_comment set is_deleted = true where id = ? and version = ?")
 @SQLRestriction("is_deleted = false")
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "LEAF_COMMENT")
 public class LeafComment {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false)
     private Long id;
 

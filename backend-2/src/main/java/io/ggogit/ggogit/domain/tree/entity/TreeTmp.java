@@ -12,8 +12,9 @@ import org.hibernate.annotations.ColumnDefault;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-@Getter
-@Setter
+import java.time.LocalDateTime;
+
+@Data
 @Builder
 @Entity
 @EntityListeners(AuditingEntityListener.class)
@@ -76,14 +77,15 @@ public class TreeTmp {
     private String imageFile;
 
     @NotNull
+    @Builder.Default
     @ColumnDefault("1")
     @Column(name = "VISIBILITY", nullable = false)
-    private Boolean visibility = false;
+    private Boolean visibility = true;
 
     @NotNull
     @CreatedDate
     @Column(name = "CREATE_TIME", nullable = false)
-    private Data createTime;
+    private LocalDateTime createTime;
 
     @Version
     @Column(name = "VERSION", nullable = false)

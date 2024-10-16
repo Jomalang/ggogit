@@ -19,11 +19,12 @@ import java.time.LocalDateTime;
 @Setter
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-@SQLDelete(sql = "update book_comment set is_deleted = true where id = ?")
+@SQLDelete(sql = "update book_comment set is_deleted = true where id = ? and version = ?")
 @SQLRestriction("is_deleted = false")
 @Table(name = "BOOK_COMMENT")
 public class BookComment {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false)
     private Long id;
 

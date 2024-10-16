@@ -17,12 +17,13 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@SQLDelete(sql = "update tree_book set is_deleted = true where tree_id = ?")
+@SQLDelete(sql = "update tree_book set is_deleted = true where id = ? and version = ?")
 @SQLRestriction("is_deleted = false")
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "TREE_BOOK")
 public class TreeBook {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "TREE_ID", nullable = false)
     private Long id;
 
@@ -54,4 +55,11 @@ public class TreeBook {
     @Version
     @Column(name = "VERSION", nullable = false)
     private Long version;
+
+    public static TreeBook of(Tree tree) {
+        return TreeBook.builder()
+                .tree(tree)
+                .readingPage(0L)
+                .build();
+    }
 }

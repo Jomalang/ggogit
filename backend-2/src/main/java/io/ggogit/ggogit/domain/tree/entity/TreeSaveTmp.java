@@ -6,21 +6,23 @@ import io.ggogit.ggogit.domain.member.entity.Member;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
-@Getter
-@Setter
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "TREE_SAVE_TMP")
 public class TreeSaveTmp {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false)
     private Long id;
 
@@ -72,9 +74,10 @@ public class TreeSaveTmp {
     private String imageFile;
 
     @NotNull
+    @Builder.Default
     @ColumnDefault("1")
     @Column(name = "VISIBILITY", nullable = false)
-    private Boolean visibility = false;
+    private Boolean visibility = true;
 
     @NotNull
     @CreatedDate

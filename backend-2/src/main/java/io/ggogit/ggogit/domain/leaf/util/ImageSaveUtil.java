@@ -40,7 +40,7 @@ public class ImageSaveUtil {
                 Files.createDirectories(to.getParent());
             }
             Files.move(from, to);
-            return to.toString();
+            return fileName;
         } catch (Exception e) {
             throw new IllegalArgumentException("이미지 파일 이동 실패", e);
         }

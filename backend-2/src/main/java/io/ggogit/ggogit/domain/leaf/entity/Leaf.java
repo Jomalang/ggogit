@@ -19,12 +19,13 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@SQLDelete(sql = "update leaf set is_deleted = 1 where id = ?")
+@SQLDelete(sql = "update leaf set is_deleted = 1 where id = ? and version = ?")
 @SQLRestriction("is_deleted = false")
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "LEAF")
 public class Leaf {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false)
     private Long id;
 
@@ -48,19 +49,22 @@ public class Leaf {
     private String content;
 
     @NotNull
+    @Builder.Default
     @ColumnDefault("0")
     @Column(name = "VIEW_COUNT", nullable = false)
-    private Integer viewCount;
+    private Integer viewCount = 0;
 
     @NotNull
+    @Builder.Default
     @ColumnDefault("0")
     @Column(name = "LIKE_COUNT", nullable = false)
-    private Integer likeCount;
+    private Integer likeCount = 0;
 
     @NotNull
+    @Builder.Default
     @ColumnDefault("0")
     @Column(name = "CHILD_LEAF_COUNT", nullable = false)
-    private Integer childLeafCount;
+    private Integer childLeafCount = 0;
 
     @NotNull
     @Builder.Default

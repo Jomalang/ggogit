@@ -5,7 +5,10 @@ spring:
     username: ggogit
     password: 111
 
-leaf-count: 3 # 리프 노드의 수를 설정합니다.
+server:
+  servlet:
+    context-path: /api/v1
+
 file: # 이미지 업로드 경로
   tmp-dir: src/main/webapp/image/tmp
   upload-dir: src/main/webapp/uploads

@@ -22,7 +22,7 @@ public class TreeInfoResponse {
     private String bookTranslator;
     private String bookPublisher;
     private String bookPublishedYear;
-    private Long bookTotalPage;
+    private Integer bookTotalPage;
     private Long treeId;
     private Long memberId ;
     private Long seedId;
@@ -31,7 +31,7 @@ public class TreeInfoResponse {
     private Boolean visibility;
     private String  leafCreatedAt;
     private String  createdAt;
-    private Long readingPage ;
+    private Integer readingPage ;
     private String coverImageName;
     private Long treeLeafCnt;
     private Long treeLikeCnt;

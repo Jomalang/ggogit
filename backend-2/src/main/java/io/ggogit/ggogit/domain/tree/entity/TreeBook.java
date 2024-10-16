@@ -34,7 +34,7 @@ public class TreeBook {
 
     @NotNull
     @Column(name = "READING_PAGE", columnDefinition = "BIGINT default 0", nullable = false)
-    private Long readingPage;
+    private Integer readingPage;
 
     @NotNull
     @Builder.Default

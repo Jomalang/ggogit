@@ -1,18 +1,23 @@
 package io.ggogit.ggogit.api.tree;
 
+import io.ggogit.ggogit.api.member.session.SessionConst;
 import io.ggogit.ggogit.api.tree.dto.TreeInfoResponse;
-import io.ggogit.ggogit.api.tree.dto.TreeSaveTmpRequest;
+import io.ggogit.ggogit.api.tree.dto.TreeTmpRequest;
+import io.ggogit.ggogit.domain.book.entity.BookCategory;
 import io.ggogit.ggogit.domain.book.service.BookService;
 import io.ggogit.ggogit.domain.leaf.service.LeafService;
 import io.ggogit.ggogit.domain.member.entity.Member;
 import io.ggogit.ggogit.domain.member.service.MemberService;
 import io.ggogit.ggogit.domain.tree.entity.Seed;
+import io.ggogit.ggogit.domain.tree.entity.Tree;
 import io.ggogit.ggogit.domain.tree.service.SeedService;
 import io.ggogit.ggogit.domain.tree.service.TreeService;
+import io.ggogit.ggogit.domain.tree.service.TreeTmpService;
 import io.ggogit.ggogit.domain.tree.service.TreeUtilService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,18 +28,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/tree")
+@RequestMapping("/trees")
 @RequiredArgsConstructor
 public class TreeController {
 
     private final TreeService treeService;
-
+    private final TreeTmpService treeTmpService;
     private final BookService bookService;
-
     private final SeedService seedService;
-
     private final TreeUtilService treeUtilService;
-
     private final MemberService memberService;
     private final LeafService leafService;
 
@@ -84,7 +86,7 @@ public class TreeController {
 
         Long memberId = member.getId();
 
-        treeService.deleteTmpFormById(memberId);
+        treeTmpService.deleteTmpById(memberId);
 
         if (auto) {
             BookInfoView book = bookService.getBookbyId(id);
@@ -99,7 +101,7 @@ public class TreeController {
     @PostMapping("/book/reg")
     public String postBookReg(
             @RequestParam(required = false) MultipartFile img,
-            @ModelAttribute TreeSaveTmpRequest form,
+            @ModelAttribute TreeTmpRequest tmp,
             @RequestParam(value = "auto") boolean auto,
             HttpServletRequest request
     ) throws IOException {
@@ -110,18 +112,19 @@ public class TreeController {
 
         Long memberId= member.getId();
 
-        form.setMemberId(memberId);
-        form.setSeedId(1L);
+        BookCategory bookCategory = bookService.getBookCategory(tmp.getBookCategoryId());
 
-        System.out.println(form.toString());
+
+        tmp.setMemberId(memberId);
+        Seed seed = seedService.get(1L);
+
 
         if(!auto && img != null && !img.isEmpty()){
             //이미지 저장 서비스 : path 경로에 img 저장 후 fullpath 경로 String 리턴
-            form.setImageFile(treeUtilService.updateImageFile(img,request.getSession().getServletContext().getRealPath("/image/tmp")));
+            tmp.setImageFile(treeUtilService.updateImageFile(img,request.getSession().getServletContext().getRealPath("/image/tmp")));
         }
 
-        treeService.tmpTreeSave(form);
-        Seed seed = seedService.get(form.getSeedId());
+        treeTmpService.tmpTreeSave(TreeTmpRequest.toBookTreeTmp(tmp,member,bookCategory,seed));
 
         return "redirect:/leaf/first/reg?seed=" + seed.getEngName();
     }
@@ -138,7 +141,7 @@ public class TreeController {
 
         Long memberId= member.getId();
 
-        treeService.deleteTmpFormById(memberId);
+        treeTmpService.deleteTmpById(memberId);
 
         Seed seed = seedService.getByEngName(type);
         model.addAttribute("seed", seed);
@@ -174,8 +177,9 @@ public class TreeController {
     }
 
 
-    @GetMapping("/list")
-    public String getBranchList(Model model) {
+    @GetMapping
+    public List<Tree> getBranchList() {
+        Sort sort =
         return "view/tree/list";
     }
 

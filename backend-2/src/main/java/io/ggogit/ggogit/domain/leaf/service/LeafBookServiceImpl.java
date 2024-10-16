@@ -12,12 +12,12 @@ import io.ggogit.ggogit.domain.member.entity.Member;
 import io.ggogit.ggogit.domain.member.repository.MemberRepository;
 import io.ggogit.ggogit.domain.tree.entity.Tree;
 import io.ggogit.ggogit.domain.tree.entity.TreeBook;
-import io.ggogit.ggogit.domain.tree.entity.TreeSaveTmp;
+import io.ggogit.ggogit.domain.tree.entity.TreeTmp;
 import io.ggogit.ggogit.domain.tree.mapper.TreeBookMapper;
 import io.ggogit.ggogit.domain.tree.mapper.TreeMapper;
 import io.ggogit.ggogit.domain.tree.repository.TreeBookRepository;
 import io.ggogit.ggogit.domain.tree.repository.TreeRepository;
-import io.ggogit.ggogit.domain.tree.repository.TreeSaveTmpRepository;
+import io.ggogit.ggogit.domain.tree.repository.TreeTmpRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -35,7 +35,7 @@ public class LeafBookServiceImpl implements LeafBookService {
 
     private final TreeRepository treeRepository;
     private final TreeBookRepository treeBookRepository;
-    private final TreeSaveTmpRepository treeSaveTmpRepository;
+    private final TreeTmpRepository treeTmpRepository;
 
     private final LeafRepository leafRepository;
     private final LeafImageRepository leafImageRepository;
@@ -57,14 +57,14 @@ public class LeafBookServiceImpl implements LeafBookService {
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new IllegalArgumentException("Member 데이터가 없습니다."));
 
-        // `System`은 `TreeSaveTmp`에 데이터를 조회한다.
-        TreeSaveTmp treeSaveTmp = treeSaveTmpRepository.findByMemberId(memberId)
-                .orElseThrow(() -> new IllegalArgumentException("TreeSaveTmp 데이터가 없습니다."));
+        // `System`은 `TreeTmp`에 데이터를 조회한다.
+        TreeTmp treeTmp = treeTmpRepository.findByMemberId(memberId)
+                .orElseThrow(() -> new IllegalArgumentException("TreeTmp 데이터가 없습니다."));
 
-        // `System`은 `TreeSaveTmp`에서 `Book` 데이터를 조회한다.
-        Book book = treeSaveTmp.getBook();
+        // `System`은 `TreeTmp`에서 `Book` 데이터를 조회한다.
+        Book book = treeTmp.getBook();
         if (book == null) { // 직접 등록 도서 처리
-            book = bookMapper.toEntity(treeSaveTmp, member);
+            book = bookMapper.toEntity(treeTmp, member);
 
             if (book.getImageFile() != null) { // 직접 등록 도서의 이미지가 있는 경우
                 String filePath = book.getImageFile();
@@ -75,8 +75,8 @@ public class LeafBookServiceImpl implements LeafBookService {
             }
         }
 
-        // `System`은 `TreeSaveTmp`에서 `Tree` 데이터를 생성후 저장한다.
-        Tree tree = treeMapper.toEntity(treeSaveTmp, book, member);
+        // `System`은 `TreeTmp`에서 `Tree` 데이터를 생성후 저장한다.
+        Tree tree = treeMapper.toEntity(treeTmp, book, member);
         treeRepository.save(tree);
 
         // `System`은 `TreeBook` 데이터를 생성후 저장한다.
@@ -86,8 +86,8 @@ public class LeafBookServiceImpl implements LeafBookService {
         LeafBook savedLeafBook = createLogic(memberId, leaf, leafBook, leafTagIds);
         // 여기 진행중 // << 확인해야함
 
-        // `System`은 `TreeSaveTmp` 데이터를 삭제한다.
-        treeSaveTmpRepository.delete(treeSaveTmp);
+        // `System`은 `TreeTmp` 데이터를 삭제한다.
+        treeTmpRepository.delete(treeTmp);
 
         return savedLeafBook;
     }

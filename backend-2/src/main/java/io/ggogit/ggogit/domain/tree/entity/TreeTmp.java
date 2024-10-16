@@ -1,6 +1,6 @@
 package io.ggogit.ggogit.domain.tree.entity;
 
-import io.ggogit.ggogit.api.tree.dto.TreeSaveTmpRequest;
+import io.ggogit.ggogit.api.tree.dto.TreeTmpRequest;
 import io.ggogit.ggogit.domain.book.entity.Book;
 import io.ggogit.ggogit.domain.book.entity.BookCategory;
 import io.ggogit.ggogit.domain.member.entity.Member;
@@ -12,9 +12,6 @@ import org.hibernate.annotations.ColumnDefault;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.time.LocalDateTime;
-import java.util.Date;
-
 @Getter
 @Setter
 @Builder
@@ -23,7 +20,7 @@ import java.util.Date;
 @Table(name = "TREE_SAVE_TMP")
 @NoArgsConstructor
 @AllArgsConstructor
-public class TreeSaveTmp {
+public class TreeTmp {
 
 
     @Id
@@ -53,7 +50,7 @@ public class TreeSaveTmp {
     private String publisher;
 
     @Column(name = "TOTAL_PAGE")
-    private Long totalPage;
+    private Integer totalPage;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "BOOK_ID")
@@ -92,8 +89,8 @@ public class TreeSaveTmp {
     @Column(name = "VERSION", nullable = false)
     private Long version;
 
-    public static TreeSaveTmp ofBook(TreeSaveTmpRequest request,Book book,Seed seed, Member member) {
-        return  TreeSaveTmp.builder()
+    public static TreeTmp ofBook(TreeTmpRequest request, Book book, Seed seed, Member member) {
+        return  TreeTmp.builder()
                 .id(request.getId())
                 .member(member)
                 .bookCategory(book.getBookCategory())
@@ -109,8 +106,8 @@ public class TreeSaveTmp {
                 .visibility(request.getVisibility())
                 .build();
     }
-    public static TreeSaveTmp ofEtc(TreeSaveTmpRequest request,Seed seed, Member member) {
-        return  TreeSaveTmp.builder()
+    public static TreeTmp ofEtc(TreeTmpRequest request, Seed seed, Member member) {
+        return  TreeTmp.builder()
                 .member(member)
                 .seed(seed)
                 .treeTitle(request.getTreeTitle())

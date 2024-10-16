@@ -1,4 +1,4 @@
-package io.ggogit.ggogit.api.leaf.dto.response;
+package io.ggogit.ggogit.api.leaf.dto;
 
 import io.ggogit.ggogit.domain.leaf.entity.Leaf;
 import lombok.AllArgsConstructor;
@@ -12,18 +12,18 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class leafBranchResponse {
-    Long id;
-    Long parentLeafId;
-    String title;
-    Long leafCount;
-    Long viewCount;
-    Boolean bookMark;
-    Boolean visibility;
-    LocalDateTime updateTime;
+public class LeafBranchResponse {
+    private Long id;
+    private Long parentLeafId;
+    private String title;
+    private Long leafCount;
+    private Long viewCount;
+    private Boolean bookMark;
+    private Boolean visibility;
+    private LocalDateTime updateTime;
 
-    public static leafBranchResponse of(Leaf leaf, Long viewCount, Long leafCount){
-        return leafBranchResponse.builder()
+    public static LeafBranchResponse of(Leaf leaf, Long viewCount, Long leafCount){
+        return LeafBranchResponse.builder()
                 .id(leaf.getId())
                 .title(leaf.getTitle())
                 .bookMark(leaf.getBookMark())

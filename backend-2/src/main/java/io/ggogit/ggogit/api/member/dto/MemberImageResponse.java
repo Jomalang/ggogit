@@ -10,15 +10,15 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class MemberImageDto {
+public class MemberImageResponse {
     private Long id;
     private String nickName;
     private String userName;
     private String profileImageUrl;
     private String backgroundImageUrl;
 
-    public MemberImageDto of(Member member) {
-        return MemberImageDto.builder()
+    public MemberImageResponse of(Member member) {
+        return MemberImageResponse.builder()
                 .id(member.getId())
                 .nickName(member.getNickname())
                 .userName(member.getUsername())

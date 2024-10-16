@@ -2,6 +2,7 @@ package io.ggogit.ggogit.domain.tree.entity;
 
 import io.ggogit.ggogit.domain.book.entity.Book;
 import io.ggogit.ggogit.domain.member.entity.Member;
+import io.ggogit.ggogit.domain.memoir.entity.Memoir;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -59,6 +60,9 @@ public class Tree {
     @ColumnDefault("0")
     @Column(name = "BOOK_MARK_COUNT", nullable = false)
     private Integer bookMarkCount = 0;
+
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "tree")
+    private Memoir memoir;
 
     @NotNull
     @Builder.Default

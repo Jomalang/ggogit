@@ -24,7 +24,8 @@ import java.time.LocalDateTime;
 @Table(name = "MEMOIR_COMMENT")
 public class MemoirComment {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name ="memoir_comment_seq", sequenceName = "memoir_comment_seq", allocationSize = 50)
     @Column(name = "ID", nullable = false)
     private Long id;
 

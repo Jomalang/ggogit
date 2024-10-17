@@ -34,9 +34,8 @@ public class Memoir {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
     @OneToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "TREE_ID", nullable = false)
+    @JoinColumn(name = "TREE_ID")
     @JsonIgnore
     private Tree tree;
 
@@ -77,6 +76,8 @@ public class Memoir {
     //--------연관관계의 주인에만 만들어야 한다----------
     public void changeTree(Tree tree) {
         this.tree = tree;
-        tree.setMemoir(this);
+
+        if(tree != null)
+            tree.setMemoir(this);
     }
 }

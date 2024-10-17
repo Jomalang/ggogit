@@ -15,11 +15,18 @@ public class MemoirResponse {
     private String text;
     @NotNull(message = "공개여부를 설정해주세요.")
     private Boolean visibility;
+    private Boolean isOwner;
+    private String message;
 
-    public static MemoirResponse of(Memoir memoir) {
+    public static MemoirResponse of(Memoir memoir, String message) {
         return MemoirResponse.builder()
                 .title(memoir.getTitle())
                 .text(memoir.getText())
-                .visibility(memoir.getVisibility()).build();
+                .visibility(memoir.getVisibility())
+                .message(message).build();
+    }
+
+    public void ChangeOwnership(boolean ownership) {
+        this.isOwner = ownership;
     }
 }

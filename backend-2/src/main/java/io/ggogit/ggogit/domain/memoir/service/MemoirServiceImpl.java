@@ -38,6 +38,11 @@ public class MemoirServiceImpl implements MemoirService {
 
     @Override
     public void removeMemoir(Long memoirId) {
+        //트리 연결 해제
+        Optional<Memoir> opMemoir = memoirRepository.findById(memoirId);
+        Memoir memoir = opMemoir.orElseThrow(() -> new IllegalArgumentException("회고록이 없습니다."));
+        memoir.getTree().setMemoir(null);
+        memoir.changeTree(null);
         memoirRepository.deleteById(memoirId);
     }
 

@@ -17,7 +17,7 @@ spring:
         use_sql_comments: true
         dialect: org.hibernate.dialect.H2Dialect
         hbm2ddl:
-          auto: update # 테스트마다 스키마 생성
+          auto: create
     defer-datasource-initialization: true
   sql:
     init:

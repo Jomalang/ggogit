@@ -28,6 +28,10 @@ server:
   servlet:
     context-path: /api/v1
 
+aladin:
+  api:
+    key: ttbrhkddlr982013001
+
 file: # 이미지 업로드 경로
   tmp-dir: src/main/webapp/image/tmp
   upload-dir: src/main/webapp/uploads

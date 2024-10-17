@@ -13,7 +13,8 @@ VALUES
     (7, '2024-10-07 16:00:00', 'user7@example.com', 'Introduction of user7', false, 'nickname7', 'password7hash', '2024-10-07 16:00:00', 'user7', 1),
     (8, '2024-10-08 17:00:00', 'user8@example.com', 'Introduction of user8', false, 'nickname8', 'password8hash', '2024-10-08 17:00:00', 'user8', 1),
     (9, '2024-10-09 18:00:00', 'user9@example.com', 'Introduction of user9', false, 'nickname9', 'password9hash', '2024-10-09 18:00:00', 'user9', 1),
-    (10, '2024-10-10 19:00:00', 'user10@example.com', 'Introduction of user10', false, 'nickname10', 'password10hash', '2024-10-10 19:00:00', 'user10', 1);
+    (10, '2024-10-10 19:00:00', 'user10@example.com', 'Introduction of user10', false, 'nickname10', 'password10hash', '2024-10-10 19:00:00', 'user10', 1),
+    (999, '2024-10-10 19:00:00', 'user10@example.com', 'Introduction of user10', false, 'API', 'API', '2024-10-10 19:00:00', 'API', 1);
 
 ALTER TABLE `member` ALTER COLUMN id RESTART WITH 100000;
 

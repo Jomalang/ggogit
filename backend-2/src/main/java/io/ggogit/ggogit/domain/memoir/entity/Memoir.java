@@ -3,13 +3,13 @@ package io.ggogit.ggogit.domain.memoir.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.ggogit.ggogit.domain.tree.entity.Tree;
 import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.*;
 import org.hibernate.annotations.Generated;
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.SQLRestriction;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -31,7 +31,7 @@ public class Memoir {
     @Id
     @Column(name = "ID", nullable = false)
     //TODO: 사용중인 DB에 맞춰 식별자 생성 전략 수정해야 함.
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotNull
@@ -51,25 +51,26 @@ public class Memoir {
     private String text;
 
     @ColumnDefault("1")
-    @Generated
     @Column(name = "VISIBILITY", nullable = false)
-    private Boolean visibility = false;
+    private Boolean visibility = true;
 
     @ColumnDefault("0")
+    @Column(name = "IS_DELETED")
     @Generated
-    @Column(name = "IS_DELETED", nullable = false)
     private Boolean isDeleted = false;
 
     @CreatedDate
-    @Column(name = "CREATE_TIME", nullable = false)
+    @ColumnDefault("current_timestamp()")
+    @Column(name = "CREATE_TIME", updatable = false)
     private LocalDateTime createTime;
 
     @LastModifiedDate
-    @Column(name = "UPDATE_TIME", nullable = false)
+    @ColumnDefault("current_timestamp()")
+    @Column(name = "UPDATE_TIME")
     private LocalDateTime updateTime;
 
     @Version
-    @Column(name = "VERSION", nullable = false)
+    @Column(name = "VERSION")
     private Long version;
 
     //------------연관관계 편의 메서드-----------------

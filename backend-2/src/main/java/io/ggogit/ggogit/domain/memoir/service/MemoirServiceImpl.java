@@ -59,8 +59,8 @@ public class MemoirServiceImpl implements MemoirService {
         Optional<Tree> opTree = treeRepository.findById(treeId);
         Tree tree = opTree.orElseThrow(() -> new IllegalArgumentException("트리가 없습니다."));
 
-        Long memoirId = tree.getMemoir().getId();
-        return memoirRepository.existsById(memoirId);
+       Optional<Memoir> opMemoir = Optional.ofNullable(tree.getMemoir());
+       return opMemoir.isPresent();
     }
     //TODO:나중에 폴더 통합되면 경로 수정해야 함.
     @Override

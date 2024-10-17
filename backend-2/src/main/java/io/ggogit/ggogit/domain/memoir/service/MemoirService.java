@@ -48,7 +48,7 @@ public interface MemoirService {
     /**
      * @param treeId
      * @return boolean
-     * 이미 회고록이 생성되었는지 확인합니다.
+     * 이미 회고록이 생성되어있으면 true를 반환합니다.
      */
     boolean isMemoirExist(Long treeId);
 

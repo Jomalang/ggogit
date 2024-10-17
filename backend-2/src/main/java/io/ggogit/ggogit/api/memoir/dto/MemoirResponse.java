@@ -1,5 +1,6 @@
 package io.ggogit.ggogit.api.memoir.dto;
 
+import io.ggogit.ggogit.api.book.dto.BookDetailResponse;
 import lombok.Builder;
 import lombok.Data;
 
@@ -7,10 +8,19 @@ import lombok.Data;
 @Builder
 public class MemoirResponse {
 
-    private MemoirDto memoirdto;
-    private BookDto bookDto;
-    private TreeDto treeDto;
+    private MemoirDto memoirDto;
+    private BookDetailResponse bookDto;
     private String message;
+    private boolean isOwner;
 
-    public static of(MemoirDto, BookDto,)
+    //TODO:TREE DTO 추가하기
+    public static MemoirResponse of(MemoirDto memoirDto, BookDetailResponse bookDto){
+        return MemoirResponse.builder()
+                .memoirDto(memoirDto)
+                .bookDto(bookDto)
+                .build();
+    }
+    public void ChangeOwnership(boolean ownership) {
+        this.isOwner = ownership;
+    }
 }

@@ -1,7 +1,11 @@
 package io.ggogit.ggogit.api.memoir;
 
+import io.ggogit.ggogit.api.book.dto.BookDetailResponse;
 import io.ggogit.ggogit.api.memoir.dto.MemoirRequest;
 import io.ggogit.ggogit.api.memoir.dto.MemoirDto;
+import io.ggogit.ggogit.api.memoir.dto.MemoirResponse;
+import io.ggogit.ggogit.domain.book.entity.Book;
+import io.ggogit.ggogit.domain.book.service.BookService;
 import io.ggogit.ggogit.domain.member.entity.Member;
 import io.ggogit.ggogit.domain.member.session.SessionConst;
 import io.ggogit.ggogit.domain.memoir.entity.Memoir;
@@ -13,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("memoir")
@@ -20,15 +25,19 @@ import java.util.List;
 public class MemoirController {
 
     private final MemoirService memoirService;
+    private final BookService bookService;
 
     //memoir 조회 - 소유권 할당
     @GetMapping("{id}")
-    public ResponseEntity<MemoirDto> getMemoir(@PathVariable(name="id") long memoirId,
-                                               @SessionAttribute(name=SessionConst.LOGIN_MEMBER, required = false) Member member) {
+    public ResponseEntity<MemoirResponse> getMemoir(@PathVariable(name="id") long memoirId,
+                                                    @SessionAttribute(name=SessionConst.LOGIN_MEMBER, required = false) Member member) {
 
         Memoir memoir = memoirService.getMemoir(memoirId);
-        MemoirDto memoirResponse = MemoirDto.of(memoir, "");
+        MemoirDto memoirDto = MemoirDto.of(memoir, "");
+        Book book = bookService.findById(memoir.getTree().getBook().getId());
+        BookDetailResponse BookDto = BookDetailResponse.of(book);
 
+        MemoirResponse memoirResponse = MemoirResponse.of(memoirDto, BookDto);
             //소유권 할당
             if (member != null && memoirService.isOwner(memoirId, member.getId())) {
                 memoirResponse.ChangeOwnership(true);
@@ -57,10 +66,13 @@ public class MemoirController {
         Memoir memoir = requestDto.toMemoir();
         Long savedId = memoirService.regMemoir(memoir, treeId);
 
-        try { memoirService.saveImage(fileNames);
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new IllegalArgumentException("이미지가 존재하지 않습니다.");
+        if(fileNames!=null && !fileNames.isEmpty()) {
+            try {
+                memoirService.saveImage(fileNames);
+            } catch (IOException e) {
+                e.printStackTrace();
+                throw new IllegalArgumentException("이미지가 존재하지 않습니다.");
+            }
         }
 
         Memoir result = memoirService.getMemoir(savedId);
@@ -78,10 +90,6 @@ public class MemoirController {
 
         if(!requestDto.validate()){
             throw new IllegalArgumentException("올바른 입력이 아닙니다.");
-        }
-
-        if(!memoirService.isMemoirExist(memoirId)){
-           throw new IllegalStateException("회고록이 없습니다.");
         }
 
         if(member == null || !memoirService.isOwner(memoirId, member.getId())){

@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 @Setter
 @Entity
 //TODO: SQLDelte내의 JPQL에서, bool<->int 타입컨버팅 지원하는지 확인
-@SQLDelete(sql = "update memoir m set m.is_deleted = true where m.id = ? and version = ?") //위치 기반 바인딩..
+//@SQLDelete(sql = "update memoir m set m.is_deleted = true where m.id = ? and version = ?") //위치 기반 바인딩..
 @SQLRestriction("is_deleted = false")
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "MEMOIR")
@@ -34,7 +34,7 @@ public class Memoir {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.REFRESH)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
     @JoinColumn(name = "TREE_ID")
     @JsonIgnore
     private Tree tree;
@@ -54,8 +54,7 @@ public class Memoir {
     private Boolean visibility = true;
 
     @ColumnDefault("0")
-    @Column(name = "IS_DELETED")
-    @Generated
+    @Column(name = "IS_DELETED", nullable = false, insertable = false)
     private Boolean isDeleted = false;
 
     @CreatedDate

@@ -38,12 +38,14 @@ public class MemoirServiceImpl implements MemoirService {
 
     @Override
     public void removeMemoir(Long memoirId) {
-        //트리 연결 해제
         Optional<Memoir> opMemoir = memoirRepository.findById(memoirId);
         Memoir memoir = opMemoir.orElseThrow(() -> new IllegalArgumentException("회고록이 없습니다."));
+
+        //트리 연결 해제
         memoir.getTree().setMemoir(null);
         memoir.changeTree(null);
-        memoirRepository.deleteById(memoirId);
+        //is_deleted true로 변경
+        memoir.setIsDeleted(true);
     }
 
     @Override
@@ -65,6 +67,7 @@ public class MemoirServiceImpl implements MemoirService {
         Tree tree = opTree.orElseThrow(() -> new IllegalArgumentException("트리가 없습니다."));
 
        Optional<Memoir> opMemoir = Optional.ofNullable(tree.getMemoir());
+       log.info("opMemoir.get() = {}", opMemoir);
        return opMemoir.isPresent();
     }
     //TODO:나중에 폴더 통합되면 경로 수정해야 함.

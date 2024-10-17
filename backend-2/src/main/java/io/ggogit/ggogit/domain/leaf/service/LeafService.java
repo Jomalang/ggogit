@@ -1,7 +1,10 @@
 package io.ggogit.ggogit.domain.leaf.service;
 
 
+import io.ggogit.ggogit.api.leaf.dto.LeafItemResponse;
+
 public interface LeafService {
+    LeafItemResponse getLeafsByTreeId(Long treeId);
 //    List<LeafItemView> getLeafItems(Long treeId, Long leafId, boolean isOwner);
 //
 //    LeafListBranchView getBranchInfo(Long treeId, Long leafId);

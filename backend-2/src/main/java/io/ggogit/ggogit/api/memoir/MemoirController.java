@@ -1,7 +1,7 @@
 package io.ggogit.ggogit.api.memoir;
 
 import io.ggogit.ggogit.api.memoir.dto.MemoirRequest;
-import io.ggogit.ggogit.api.memoir.dto.MemoirResponse;
+import io.ggogit.ggogit.api.memoir.dto.MemoirDto;
 import io.ggogit.ggogit.domain.member.entity.Member;
 import io.ggogit.ggogit.domain.member.session.SessionConst;
 import io.ggogit.ggogit.domain.memoir.entity.Memoir;
@@ -23,11 +23,11 @@ public class MemoirController {
 
     //memoir 조회 - 소유권 할당
     @GetMapping("{id}")
-    public ResponseEntity<MemoirResponse> getMemoir(@PathVariable(name="id") long memoirId,
-                                                    @SessionAttribute(name=SessionConst.LOGIN_MEMBER, required = false) Member member) {
+    public ResponseEntity<MemoirDto> getMemoir(@PathVariable(name="id") long memoirId,
+                                               @SessionAttribute(name=SessionConst.LOGIN_MEMBER, required = false) Member member) {
 
         Memoir memoir = memoirService.getMemoir(memoirId);
-        MemoirResponse memoirResponse = MemoirResponse.of(memoir, "");
+        MemoirDto memoirResponse = MemoirDto.of(memoir, "");
 
             //소유권 할당
             if (member != null && memoirService.isOwner(memoirId, member.getId())) {
@@ -41,7 +41,7 @@ public class MemoirController {
 
     //memoir 등록
     @PostMapping("{id}")
-    public ResponseEntity<MemoirResponse> createMemoirResponse(
+    public ResponseEntity<MemoirDto> createMemoirResponse(
             @PathVariable(name="id") long treeId,
             @RequestBody MemoirRequest requestDto,
             @RequestParam(name="f", required = false) List<String> fileNames) throws IOException {
@@ -65,13 +65,13 @@ public class MemoirController {
 
         Memoir result = memoirService.getMemoir(savedId);
 
-        MemoirResponse memoirResponse = MemoirResponse.of(result, "회고록이 등록되었습니다.");
+        MemoirDto memoirResponse = MemoirDto.of(result, "회고록이 등록되었습니다.");
         return new ResponseEntity<>(memoirResponse, HttpStatus.CREATED);
     }
 
     //수정 - 소유권이 있을때만 요청 가능
     @PutMapping("{id}")
-    public ResponseEntity<MemoirResponse> updateMemoirResponse(
+    public ResponseEntity<MemoirDto> updateMemoirResponse(
             @PathVariable(name="id") Long memoirId,
             @RequestBody MemoirRequest requestDto,
             @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member member) throws IllegalAccessException {
@@ -92,14 +92,14 @@ public class MemoirController {
         memoirService.modifyMemoir(newMemoir, memoirId);
 
         Memoir result = memoirService.getMemoir(memoirId);
-        MemoirResponse memoirResponse = MemoirResponse.of(result, "회고록이 수정되었습니다.");
+        MemoirDto memoirResponse = MemoirDto.of(result, "회고록이 수정되었습니다.");
 
         return new ResponseEntity<>(memoirResponse, HttpStatus.OK);
     }
 
     //삭제 - 204 NoContent
     @DeleteMapping("{id}")
-    public ResponseEntity<MemoirResponse> deleteMemoirResponse(
+    public ResponseEntity<MemoirDto> deleteMemoirResponse(
             @PathVariable(name="id") Long memoirId,
             @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member member) throws IllegalAccessException {
 

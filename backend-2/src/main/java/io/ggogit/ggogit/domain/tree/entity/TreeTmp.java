@@ -31,7 +31,7 @@ public class TreeTmp {
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "MEMBER_ID", nullable = false)
+    @JoinColumn(name = "MEMBER", nullable = false)
     private Member member;
 
     @ManyToOne(fetch = FetchType.LAZY)

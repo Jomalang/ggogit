@@ -5,14 +5,17 @@ import io.ggogit.ggogit.domain.tree.repository.TreeTmpRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class TreeTmpServiceImpl implements TreeTmpService {
 
     private final TreeTmpRepository treeTmpRepository;
     @Override
-    public void tmpTreeSave(TreeTmp treeTmp) {
+    public Optional<TreeTmp> tmpTreeSave(TreeTmp treeTmp) {
         treeTmpRepository.save(treeTmp);
+        return treeTmpRepository.findByMemberId(treeTmp.getMember().getId());
     }
 
     @Override

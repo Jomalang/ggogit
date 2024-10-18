@@ -6,6 +6,7 @@ import io.ggogit.ggogit.api.member.session.SessionConst;
 import io.ggogit.ggogit.api.tree.dto.TreeEtcTmpRequest;
 import io.ggogit.ggogit.api.tree.dto.TreeInfoResponse;
 import io.ggogit.ggogit.api.tree.dto.TreeTmpRequest;
+import io.ggogit.ggogit.api.tree.dto.TreeTmpResponse;
 import io.ggogit.ggogit.domain.book.entity.BookCategory;
 import io.ggogit.ggogit.domain.book.service.BookService;
 import io.ggogit.ggogit.domain.leaf.entity.Leaf;
@@ -14,6 +15,7 @@ import io.ggogit.ggogit.domain.member.entity.Member;
 import io.ggogit.ggogit.domain.member.service.MemberService;
 import io.ggogit.ggogit.domain.tree.entity.Seed;
 import io.ggogit.ggogit.domain.tree.entity.Tree;
+import io.ggogit.ggogit.domain.tree.entity.TreeTmp;
 import io.ggogit.ggogit.domain.tree.service.SeedService;
 import io.ggogit.ggogit.domain.tree.service.TreeService;
 import io.ggogit.ggogit.domain.tree.service.TreeTmpService;
@@ -28,6 +30,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -110,8 +113,8 @@ public class TreeController {
 //        }
 //    }
 
-    @PostMapping("/book/reg")
-    public String  postBookReg(
+    @PostMapping("/treeTmp/reg")
+    public ResponseEntity<TreeTmpResponse> createBookTreeTmp(
             @RequestParam(required = false) MultipartFile img,
             @ModelAttribute TreeTmpRequest tmp,
             @RequestParam(value = "auto") boolean auto,
@@ -124,37 +127,44 @@ public class TreeController {
         BookCategory bookCategory = bookService.getBookCategory(tmp.getBookCategoryId());
 
         tmp.setMemberId(memberId);
-        Seed seed = seedService.get(1L);
-
+        Seed seed = seedService.get(tmp.getSeedId());
 
         if(!auto && img != null && !img.isEmpty()){
             //이미지 저장 서비스 : path 경로에 img 저장 후 fullpath 경로 String 리턴
             tmp.setImageFile(treeUtilService.updateImageFile(img,request.getSession().getServletContext().getRealPath("/image/tmp")));
         }
 
-        treeTmpService.tmpTreeSave(TreeTmpRequest.toBookTreeTmp(tmp,member,bookCategory,seed));
+        TreeTmp treeTmp;
+        if(seed.getId() == 1) // TRUE: 도서 트리 /False: etc 트리
+            treeTmp = treeTmpService.tmpTreeSave(TreeTmpRequest.toBookTreeTmp(tmp,member,bookCategory,seed))
+                    .orElseThrow(() -> new IllegalArgumentException("도서 트리 임시 저장 실패"));
+        else
+            treeTmp = treeTmpService.tmpTreeSave(TreeTmpRequest.toEtcTreeTmp(tmp,member,seed))
+                .orElseThrow(() -> new IllegalArgumentException("도서 트리 임시 저장 실패"));
 
-        return "redirect:/leaf/first/reg?seed=" + seed.getEngName();
+        TreeTmpResponse resp = TreeTmpResponse.of(treeTmp, "도서 트리 임시 저장 성공");
+
+        return new ResponseEntity<TreeTmpResponse>(resp, HttpStatus.CREATED);
     }
 
-    @GetMapping("/etc/reg")
-    public String getTreeEtcReg(
-            @RequestParam(value = "type", required = false) String type,
-            HttpServletRequest request,
-            Model model
-    ) {
-        HttpSession session = request.getSession();
-
-        Member member = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
-
-        Long memberId= member.getId();
-
-        treeTmpService.deleteTmpById(memberId);
-
-        Seed seed = seedService.getByEngName(type);
-        model.addAttribute("seed", seed);
-        return "view/tree/reg-etc";
-    }
+//    @GetMapping("/etc/reg")
+//    public String getTreeEtcReg(
+//            @RequestParam(value = "type", required = false) String type,
+//            HttpServletRequest request,
+//            Model model
+//    ) {
+//        HttpSession session = request.getSession();
+//
+//        Member member = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
+//
+//        Long memberId= member.getId();
+//
+//        treeTmpService.deleteTmpById(memberId);
+//
+//        Seed seed = seedService.getByEngName(type);
+//        model.addAttribute("seed", seed);
+//        return "view/tree/reg-etc";
+//    }
 
     @PostMapping("/etc/reg")
     public String postTreeEtcReg(

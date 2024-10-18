@@ -1,45 +1,52 @@
 package io.ggogit.ggogit.domain.member.service;
 
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.server.Cookie;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.support.SessionStatus;
+
+import java.util.Optional;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class EmailService {
 
-    private final JavaMailSender emailSender;
+    private final JavaMailSender mailSender;
 
-    public void sendEmail(String email) throws MessagingException {
+    @Value("${spring.mail.username}")
+    private String fromEmail;
 
-        //발신자, 수신자, 제목 설정
-        MimeMessage mimeMessage = emailSender.createMimeMessage();
-        mimeMessage.setFrom(new InternetAddress("rhkddlr9899@gmail.com"));
-        mimeMessage.addRecipients(Message.RecipientType.TO, String.valueOf(new InternetAddress(email)));
-        mimeMessage.setSubject("꼬깃 회원가입 URL 안내");
+    public void sendEmail(String to) throws MessagingException {
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, true);
 
-        //본문
-        mimeMessage.setContent("<html><h1 style='color:#323a27'>꼬깃에 오신걸 환영합니다!<h1></br><h3>아래의 링크로 접속해 회원가입을 진행해 주세요!<h3></br><a target='_blank' href='http://ggogit.io/member/join-input'>꼬깃 회원가입 바로 가기</a></html>", "text/html; charset=utf-8" );
-        emailSender.send(mimeMessage);
+        helper.setFrom(fromEmail);
+        helper.setTo(to);
+        helper.setSubject("회원 가입 확인 이메일");
+        helper.setText("회원 가입을 환영합니다. 이 이메일은 회원 가입 확인용입니다.", false);
 
+        mailSender.send(message);
     }
-    public void createEmailCookie(HttpServletResponse response, String email) {
-        Cookie cookie = new Cookie("ggogitEmail", email);
-        //회원가입 페이지에만 쿠키를 보내도록 설정
-        cookie.setPath("/member/join-input");
-        cookie.setMaxAge(10*60); //10분동안 쿠키 유지
-        response.addCookie(cookie);
+
+    public void createEmailCookie(Model model, String email) {
+        model.addAttribute("email", email);
+    }
+
+    public void removeEmailCookie(SessionStatus sessionStatus) {
+        sessionStatus.setComplete();
     }
 
     public Optional<String> getEmailCookie(HttpServletRequest request) {
-        Cookie[] cookies = request.getCookies();
-        Optional<String> emailCookie = Optional.empty();
-        for (Cookie cookie : cookies) {
-            if(cookie.getName().equals("ggogitEmail")) {
-                emailCookie = Optional.ofNullable(cookie.getValue());
-            }
-        }
-        return emailCookie;
+        return null;
     }
 }

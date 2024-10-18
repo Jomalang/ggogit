@@ -108,4 +108,8 @@ public class Tree {
                 .visibility(treeSaveTmp.getVisibility())
                 .build();
     }
+
+    public Long getMemberId() {
+        return member != null ? member.getId() : null;
+    }
 }

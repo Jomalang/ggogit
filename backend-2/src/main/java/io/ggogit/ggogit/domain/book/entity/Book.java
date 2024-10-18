@@ -1,5 +1,6 @@
 package io.ggogit.ggogit.domain.book.entity;
 
+import io.ggogit.ggogit.domain.book.api.dto.ApiBookDto;
 import io.ggogit.ggogit.domain.member.entity.Member;
 import io.ggogit.ggogit.domain.tree.entity.TreeSaveTmp;
 import jakarta.persistence.*;
@@ -37,7 +38,7 @@ public class Book {
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "BOOK_CATEGORY_ID", nullable = false)
+    @JoinColumn(name = "BOOK_CATEGORY_ID")
     private BookCategory bookCategory;
 
     @Size(max = 255)
@@ -94,6 +95,19 @@ public class Book {
     @Version
     @Column(name = "VERSION", nullable = false)
     private Long version;
+
+    public static Book of(ApiBookDto dto) {
+        return Book.builder()
+                .bookCategory(null)
+                .title(dto.getTitle())
+                .author(dto.getAuthor())
+                .isbn(dto.getIsbn13())
+                .publisher(dto.getPublisher())
+                .publishDate(LocalDate.parse(dto.getPubDate()))
+                .totalPage(0)
+                .imageFile(dto.getCover())
+                .build();
+    }
 
     public static Book of(TreeSaveTmp treeSaveTmp, Member member) {
         return Book.builder()

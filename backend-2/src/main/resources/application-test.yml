@@ -17,7 +17,7 @@ spring:
         use_sql_comments: true
         dialect: org.hibernate.dialect.H2Dialect
         hbm2ddl:
-          auto: update # 테스트마다 스키마 생성
+          auto: create
     defer-datasource-initialization: true
   sql:
     init:
@@ -27,6 +27,10 @@ spring:
 server:
   servlet:
     context-path: /api/v1
+
+aladin:
+  api:
+    key: ttbrhkddlr982013001
 
 file: # 이미지 업로드 경로
   tmp-dir: src/main/webapp/image/tmp

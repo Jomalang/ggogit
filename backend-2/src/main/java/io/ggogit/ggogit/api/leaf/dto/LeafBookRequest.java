@@ -16,7 +16,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class BookLeafRequest {
+public class LeafBookRequest {
 
     @NotNull(message = "startPage는 필수값입니다.")
     @Min(value = 1, message = "startPage는 1 이상이어야 합니다.")

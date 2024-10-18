@@ -100,7 +100,7 @@ class LeafBookControllerTest {
                 """;
 
         // when
-        ResultActions resultActions = mockMvc.perform(post("/api/v1/book/first/leafs")
+        ResultActions resultActions = mockMvc.perform(post("/api/v1/book/first/leaves")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(validRequest))
                 // then
@@ -138,7 +138,7 @@ class LeafBookControllerTest {
         long parentLeafId = 1L;
 
         // when
-        ResultActions resultActions = mockMvc.perform(post("/api/v1/book/leafs/" + parentLeafId)
+        ResultActions resultActions = mockMvc.perform(post("/api/v1/book/leaves/" + parentLeafId)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(validRequest))
                 // then
@@ -166,7 +166,7 @@ class LeafBookControllerTest {
                 """;
 
         // when
-        mockMvc.perform(put("/api/v1/book/leafs/" + leafId)
+        mockMvc.perform(put("/api/v1/book/leaves/" + leafId)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(validRequest))
                 .andExpect(status().isOk())
@@ -195,7 +195,7 @@ class LeafBookControllerTest {
         long leafId = 10001L;
 
         // when
-        mockMvc.perform(delete("/api/v1/book/leafs/" + leafId))
+        mockMvc.perform(delete("/api/v1/book/leaves/" + leafId))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.message").value("도서 리프 삭제 성공"));
         // then

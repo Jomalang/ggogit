@@ -10,20 +10,20 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class EtcLeafResponse {
+public class LeafEtcResponse {
 
     private Long leafId;
     private String message;
 
-    public static EtcLeafResponse of(Leaf saved, String message) {
-        return EtcLeafResponse.builder()
+    public static LeafEtcResponse of(Leaf saved, String message) {
+        return LeafEtcResponse.builder()
                 .leafId(saved.getId())
                 .message(message)
                 .build();
     }
 
-    public static EtcLeafResponse of(Long leafId, String message) {
-        return EtcLeafResponse.builder()
+    public static LeafEtcResponse of(Long leafId, String message) {
+        return LeafEtcResponse.builder()
                 .leafId(leafId)
                 .message(message)
                 .build();

@@ -1,4 +1,4 @@
-package io.ggogit.ggogit.domain.image;
+package io.ggogit.ggogit.domain.image.repository;
 
 import io.ggogit.ggogit.type.UploadFolderType;
 import lombok.AllArgsConstructor;

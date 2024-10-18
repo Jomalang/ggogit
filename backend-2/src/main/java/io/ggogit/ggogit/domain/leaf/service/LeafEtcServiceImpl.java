@@ -1,11 +1,11 @@
 package io.ggogit.ggogit.domain.leaf.service;
 
+import io.ggogit.ggogit.domain.image.repository.ImageRepository;
 import io.ggogit.ggogit.domain.leaf.entity.*;
 import io.ggogit.ggogit.domain.leaf.repository.LeafImageRepository;
 import io.ggogit.ggogit.domain.leaf.repository.LeafRepository;
 import io.ggogit.ggogit.domain.leaf.repository.LeafTagMapRepository;
 import io.ggogit.ggogit.domain.leaf.repository.LeafTagRepository;
-import io.ggogit.ggogit.domain.leaf.util.ImageSaveUtil;
 import io.ggogit.ggogit.domain.member.entity.Member;
 import io.ggogit.ggogit.domain.member.repository.MemberRepository;
 import io.ggogit.ggogit.domain.tree.entity.Seed;
@@ -16,6 +16,7 @@ import io.ggogit.ggogit.domain.tree.repository.SeedRepository;
 import io.ggogit.ggogit.domain.tree.repository.TreeImageRepository;
 import io.ggogit.ggogit.domain.tree.repository.TreeRepository;
 import io.ggogit.ggogit.domain.tree.repository.TreeSaveTmpRepository;
+import io.ggogit.ggogit.type.UploadFolderType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -38,8 +39,7 @@ public class LeafEtcServiceImpl implements LeafEtcService {
     private final LeafTagRepository leafTagRepository;
     private final TreeRepository treeRepository;
     private final TreeImageRepository treeImageRepository;
-
-    private final ImageSaveUtil imageSaveUtil;
+    private final ImageRepository imageRepository;
 
     @Override
     public Leaf createFirstLeafEtc(Long memberId, Leaf leaf, List<Long> leafTagIds, Long seedId) {
@@ -61,16 +61,30 @@ public class LeafEtcServiceImpl implements LeafEtcService {
         // 트리 이미지 저장
         String treeImagePath = treeSaveTmp.getImageFile();
         if (treeImagePath != null) {
-            String fileName = imageSaveUtil.extractFileName(treeImagePath);
-            String toFileName = imageSaveUtil.moveImageFile(fileName,"tree", true);
-            TreeImage treeImage = TreeImage.of(tree, toFileName);
-            treeImageRepository.save(treeImage);
+            treeImageRepository.save(TreeImage.of(tree, treeSaveTmp.getImageFile()));
         }
 
         Leaf savedLeaf = createLogic(memberId, leaf, leafTagIds);
 
         // `System`은 `TreeSaveTmp` 데이터를 삭제한다.
         treeSaveTmpRepository.delete(treeSaveTmp);
+
+//        // `System`은 입력받은 데이터에서 `Leaf` 컨텐츠의 이미지 이동 및 경로 변경.
+//        String content = leaf.getContent();
+//        List<String> filesNames = imageSaveUtil.extractImageFileNames(content);
+//        for (String fileName : filesNames) {
+//            imageSaveUtil.moveImageFile(fileName, "leaf"); // 이미지 파일 이동
+//            String changedContent = imageSaveUtil.changeTagImageSrc(content, fileName); // 태그의 이미지 경로 변경
+//            leaf.setContent(changedContent);
+//        }
+
+//        // `System`은 `Leaf` 이미지를 저장한다.
+//        for (String fileName : filesNames) { // TODO: 이미지 파일이 없는 경우 예외 처리
+//            LeafImage leafImage = LeafImage.of(leaf.getId(), fileName);
+//            leafImageRepository.save(leafImage);
+//        }
+
+        imageRepository.moveImage(treeSaveTmp.getImageFile(), UploadFolderType.TMP, UploadFolderType.TREE);
 
         return savedLeaf;
     }
@@ -87,23 +101,8 @@ public class LeafEtcServiceImpl implements LeafEtcService {
             leafTags.add(leafTag);
         }
 
-        // `System`은 입력받은 데이터에서 `Leaf` 컨텐츠의 이미지 이동 및 경로 변경.
-        String content = leaf.getContent();
-        List<String> filesNames = imageSaveUtil.extractImageFileNames(content);
-        for (String fileName : filesNames) {
-            imageSaveUtil.moveImageFile(fileName, "leaf"); // 이미지 파일 이동
-            String changedContent = imageSaveUtil.changeTagImageSrc(content, fileName); // 태그의 이미지 경로 변경
-            leaf.setContent(changedContent);
-        }
-
         // `System`은 `Leaf` 데이터 저장
         leafRepository.save(leaf);
-
-        // `System`은 `Leaf` 이미지를 저장한다.
-        for (String fileName : filesNames) { // TODO: 이미지 파일이 없는 경우 예외 처리
-            LeafImage leafImage = LeafImage.of(leaf.getId(), fileName);
-            leafImageRepository.save(leafImage);
-        }
 
         // `System`은 `LeafTagMap` 데이터를 생성후 저장한다.
         for (LeafTag leafTag : leafTags) {

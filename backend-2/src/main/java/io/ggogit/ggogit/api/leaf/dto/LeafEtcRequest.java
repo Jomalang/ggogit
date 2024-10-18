@@ -14,7 +14,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class EtcLeafRequest {
+public class LeafEtcRequest {
 
     private List<Long> tagIds;
 

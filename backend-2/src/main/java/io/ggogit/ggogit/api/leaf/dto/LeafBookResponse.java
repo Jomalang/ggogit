@@ -10,20 +10,20 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class BookLeafResponse {
+public class LeafBookResponse {
 
     private Long leafId;
     private String message;
 
-    public static BookLeafResponse of(LeafBook saved, String message) {
-        return BookLeafResponse.builder()
+    public static LeafBookResponse of(LeafBook saved, String message) {
+        return LeafBookResponse.builder()
                 .leafId(saved.getLeaf().getId())
                 .message(message)
                 .build();
     }
 
-    public static BookLeafResponse of(Long leafId, String message) {
-        return BookLeafResponse.builder()
+    public static LeafBookResponse of(Long leafId, String message) {
+        return LeafBookResponse.builder()
                 .leafId(leafId)
                 .message(message)
                 .build();

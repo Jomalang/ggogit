@@ -96,7 +96,7 @@ class LeafEtcControllerTest {
                 """;
 
         // when
-        ResultActions resultActions = mockMvc.perform(post("/api/v1/etc/first/leafs")
+        ResultActions resultActions = mockMvc.perform(post("/api/v1/etc/first/leaves")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(validRequest))
                 // then
@@ -133,7 +133,7 @@ class LeafEtcControllerTest {
                 """;
         long parentLeafId = 20_000L;
         // when
-        ResultActions resultActions = mockMvc.perform(post("/api/v1/etc/leafs/" + parentLeafId)
+        ResultActions resultActions = mockMvc.perform(post("/api/v1/etc/leaves/" + parentLeafId)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(validRequest))
                 // then
@@ -158,7 +158,7 @@ class LeafEtcControllerTest {
                 """;
 
         // when
-        mockMvc.perform(put("/api/v1/etc/leafs/" + leafId)
+        mockMvc.perform(put("/api/v1/etc/leaves/" + leafId)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(validRequest))
                 .andExpect(status().isOk())
@@ -181,7 +181,7 @@ class LeafEtcControllerTest {
         long leafId = 20001L;
 
         // when
-        mockMvc.perform(delete("/api/v1/etc/leafs/" + leafId))
+        mockMvc.perform(delete("/api/v1/etc/leaves/" + leafId))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.message").value("기타 리프 삭제 성공"));
 

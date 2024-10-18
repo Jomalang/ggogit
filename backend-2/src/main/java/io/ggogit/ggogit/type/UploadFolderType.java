@@ -5,6 +5,7 @@ public enum UploadFolderType {
     TREE("tree"),
     MEMBER("member"),
     MEMOIR("memoir"),
+    BOOK("book"),
     LEAF("leaf");
 
     private final String value;

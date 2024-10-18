@@ -2,9 +2,9 @@ package io.ggogit.ggogit.domain.leaf.service;
 
 import io.ggogit.ggogit.domain.book.entity.Book;
 import io.ggogit.ggogit.domain.book.repository.BookRepository;
+import io.ggogit.ggogit.domain.image.repository.ImageRepository;
 import io.ggogit.ggogit.domain.leaf.entity.*;
 import io.ggogit.ggogit.domain.leaf.repository.*;
-import io.ggogit.ggogit.domain.leaf.util.ImageSaveUtil;
 import io.ggogit.ggogit.domain.member.entity.Member;
 import io.ggogit.ggogit.domain.member.repository.MemberRepository;
 import io.ggogit.ggogit.domain.tree.entity.Seed;
@@ -15,6 +15,7 @@ import io.ggogit.ggogit.domain.tree.repository.SeedRepository;
 import io.ggogit.ggogit.domain.tree.repository.TreeBookRepository;
 import io.ggogit.ggogit.domain.tree.repository.TreeRepository;
 import io.ggogit.ggogit.domain.tree.repository.TreeSaveTmpRepository;
+import io.ggogit.ggogit.type.UploadFolderType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,7 +42,8 @@ public class LeafBookServiceImpl implements LeafBookService {
     private final LeafTagRepository leafTagRepository;
     private final LeafTagMapRepository leafTagMapRepository;
 
-    private final ImageSaveUtil imageSaveUtil;
+    private final ImageRepository imageRepository;
+
     private final LeafBookRepository leafBookRepository;
     private final SeedRepository seedRepository;
 
@@ -58,15 +60,7 @@ public class LeafBookServiceImpl implements LeafBookService {
         // `System`은 `TreeSaveTmp`에서 `Book` 데이터를 조회한다.
         Book book = treeSaveTmp.getBook();
         if (book == null) { // 직접 등록 도서 처리
-            book = Book.of(treeSaveTmp, member);
-
-            if (book.getImageFile() != null) { // 직접 등록 도서의 이미지가 있는 경우
-                String filePath = book.getImageFile();
-                String fileName = imageSaveUtil.extractFileName(filePath);
-                String toFileName = imageSaveUtil.moveImageFile(fileName,"book", true);
-                book.setImageFile(toFileName);
-            }
-            book = bookRepository.save(book);
+            book = bookRepository.save(Book.of(treeSaveTmp, member));
         }
 
         Seed seed = seedRepository.findById(1L)
@@ -85,6 +79,25 @@ public class LeafBookServiceImpl implements LeafBookService {
 
         // `System`은 `TreeSaveTmp` 데이터를 삭제한다.
         treeSaveTmpRepository.delete(treeSaveTmp);
+
+        // TODO: 이미지 파일이 없는 경우 예외 처리
+//        // `System`은 입력받은 데이터에서 `Leaf` 컨텐츠의 이미지 이동 및 경로 변경.
+//        String content = leaf.getContent();
+//        List<String> filesNames = imageSaveUtil.extractImageFileNames(content);
+//        for (String fileName : filesNames) {
+//            imageSaveUtil.moveImageFile(fileName, "leaf"); // 이미지 파일 이동
+//            String changedContent = imageSaveUtil.changeTagImageSrc(content, fileName); // 태그의 이미지 경로 변경
+//            leaf.setContent(changedContent);
+//        }
+//
+//        //  `System`은 `Leaf` 이미지를 저장한다.
+//        for (String fileName : filesNames) {
+//            LeafImage leafImage = LeafImage.of(leaf.getId(), fileName);
+//            leafImageRepository.save(leafImage);
+//        }
+
+        // 도서 이미지 저장
+        imageRepository.moveImage(book.getImageFile(), UploadFolderType.TMP, UploadFolderType.BOOK);
 
         return savedLeafBook;
     }
@@ -129,23 +142,8 @@ public class LeafBookServiceImpl implements LeafBookService {
             leafTags.add(leafTag);
         }
 
-        // `System`은 입력받은 데이터에서 `Leaf` 컨텐츠의 이미지 이동 및 경로 변경.
-        String content = leaf.getContent();
-        List<String> filesNames = imageSaveUtil.extractImageFileNames(content);
-        for (String fileName : filesNames) {
-            imageSaveUtil.moveImageFile(fileName, "leaf"); // 이미지 파일 이동
-            String changedContent = imageSaveUtil.changeTagImageSrc(content, fileName); // 태그의 이미지 경로 변경
-            leaf.setContent(changedContent);
-        }
-
         // `System`은 `Leaf` 데이터 저장
         leafRepository.save(leaf);
-
-        // `System`은 `Leaf` 이미지를 저장한다.
-        for (String fileName : filesNames) { // TODO: 이미지 파일이 없는 경우 예외 처리
-            LeafImage leafImage = LeafImage.of(leaf.getId(), fileName);
-            leafImageRepository.save(leafImage);
-        }
 
         // `System`은 `LeafBook` 데이터를 생성후 저장한다.
         leafBook.setLeaf(leaf);

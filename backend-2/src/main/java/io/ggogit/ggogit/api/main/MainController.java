@@ -67,7 +67,7 @@ public class MainController {
             List<Seed> seedList = seedService.list();
             List<Tree> trees = treeService.findAllByMemberId(member.getId());
             for (Tree tree : trees) {
-                
+
                 LocalDateTime latestLeafDate = tree.getLeaf().;
                 Long leafCnt;
                 Long likeCnt;

@@ -16,13 +16,14 @@ public class LeafBranchResponse {
     private Long id;
     private Long parentLeafId;
     private String title;
-    private Long leafCount;
-    private Long viewCount;
+    private Integer leafCount;
+    private Integer viewCount;
+    private Integer likeCount;
     private Boolean bookMark;
     private Boolean visibility;
     private LocalDateTime updateTime;
 
-    public static LeafBranchResponse of(Leaf leaf, Long viewCount, Long leafCount){
+    public static LeafBranchResponse of(Leaf leaf,Integer likeCount, Integer viewCount, Integer leafCount){
         return LeafBranchResponse.builder()
                 .id(leaf.getId())
                 .title(leaf.getTitle())
@@ -31,6 +32,7 @@ public class LeafBranchResponse {
                 .parentLeafId(leaf.getParentLeaf().getId())
                 .viewCount(viewCount)
                 .leafCount(leafCount)
+                .likeCount(likeCount)
                 .build();
     }
 }

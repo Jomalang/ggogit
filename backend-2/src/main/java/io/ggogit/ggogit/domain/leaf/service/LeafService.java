@@ -5,6 +5,10 @@ import io.ggogit.ggogit.domain.leaf.entity.Leaf;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Objects;
+
 
 public interface LeafService {
 //    List<LeafItemView> getLeafItems(Long treeId, Long leafId, boolean isOwner);
@@ -35,7 +39,7 @@ public interface LeafService {
 //
 //    List<LeafBranchView> toBranchForNeighbor(Long treeId, Long filter, Long sort, int page);
 
-
-    Page<Leaf> findBranchByFilter(Long treeId, Boolean owner,Boolean bookMark, Pageable pageable);
+    HashMap<String ,Integer> nodeCountToRoot(Leaf leaf);
+    List<Leaf> findBranchByFilter(Long treeId, Boolean owner, Boolean bookMark);
 }
 

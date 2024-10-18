@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 import org.springframework.data.annotation.CreatedDate;
@@ -49,7 +50,7 @@ public class Leaf {
     private String content;
 
     @NotNull
-    @Builder.Default
+    @Generated
     @ColumnDefault("0")
     @Column(name = "VIEW_COUNT", nullable = false)
     private Integer viewCount = 0;

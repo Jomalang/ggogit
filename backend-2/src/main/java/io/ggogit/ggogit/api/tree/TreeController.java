@@ -1,6 +1,7 @@
 package io.ggogit.ggogit.api.tree;
 
 import io.ggogit.ggogit.api.book.dto.BookInfoResponse;
+import io.ggogit.ggogit.api.leaf.dto.LeafBranchResponse;
 import io.ggogit.ggogit.api.member.session.SessionConst;
 import io.ggogit.ggogit.api.tree.dto.TreeEtcTmpRequest;
 import io.ggogit.ggogit.api.tree.dto.TreeInfoResponse;
@@ -27,6 +28,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -34,6 +36,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -82,47 +85,43 @@ public class TreeController {
         return "redirect:/tree/search/result/{treeSearchText}";
     }
 
-    @GetMapping("/book/reg")
-    public String getBookReg(
-            @RequestParam(value = "auto", required = false) boolean auto,
-            @RequestParam(value = "id", required = false) Long id,
-            HttpServletRequest request,
-            Model model
-    ) {
-        HttpSession session = request.getSession();
-
-        Member member = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
-
-        Long memberId = member.getId();
-
-        treeTmpService.deleteTmpById(memberId);
-
-        if (auto) {
-            BookInfoResponse book = bookService.getBookbyId(id);
-            model.addAttribute("book", book);
-            return "view/tree/book/reg-auto";
-        } else {
-            model.addAttribute("categories", BookCategoryType.values());
-            return "view/tree/book/reg";
-        }
-    }
+//    @GetMapping("/book/reg")
+//    public String getBookReg(
+//            @RequestParam(value = "auto", required = false) boolean auto,
+//            @RequestParam(value = "id", required = false) Long id,
+//            HttpServletRequest request,
+//            Model model
+//    ) {
+//        HttpSession session = request.getSession();
+//
+//        Member member = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
+//
+//        Long memberId = member.getId();
+//
+//        treeTmpService.deleteTmpById(memberId);
+//
+//        if (auto) {
+//            BookInfoResponse book = bookService.getBookbyId(id);
+//            model.addAttribute("book", book);
+//            return "view/tree/book/reg-auto";
+//        } else {
+//            model.addAttribute("categories", BookCategoryType.values());
+//            return "view/tree/book/reg";
+//        }
+//    }
 
     @PostMapping("/book/reg")
-    public String postBookReg(
+    public String  postBookReg(
             @RequestParam(required = false) MultipartFile img,
             @ModelAttribute TreeTmpRequest tmp,
             @RequestParam(value = "auto") boolean auto,
+            @SessionAttribute Member member,
             HttpServletRequest request
     ) throws IOException {
-
-        HttpSession session = request.getSession();
-
-        Member member = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
 
         Long memberId= member.getId();
 
         BookCategory bookCategory = bookService.getBookCategory(tmp.getBookCategoryId());
-
 
         tmp.setMemberId(memberId);
         Seed seed = seedService.get(1L);
@@ -193,10 +192,10 @@ public class TreeController {
             @RequestParam(value = "filter", required = false) final  Long filter,
             @RequestParam(value = "sort", required = false) final  Long sort,
             @RequestParam(value = "p", defaultValue = "1") final int page,
+            @SessionAttribute Member member,
             HttpServletRequest request
             ) {
         int size = 10;
-
 
         filterType filterName = filterType.fromNumber(filter);
         filterType sortName = filterType.fromNumber(sort);
@@ -204,9 +203,19 @@ public class TreeController {
 
         Pageable pageable = PageRequest.of(page, size, s);
 
-        Boolean hasOwner = treeService.isOwner(treeId, request)
+        Boolean hasOwner = treeService.isOwner(treeId, member.getId());
 
-        Page<Leaf> pageList = leafService.findBranchByFilter(treeId, hasOwner, bookMark, pageable);
+        List<Leaf> leafList = leafService.findBranchByFilter(treeId, hasOwner, bookMark);
+        List<LeafBranchResponse> pageList = new ArrayList<>();
+        for (Leaf leaf : leafList) {
+            HashMap<String ,Integer> counts = leafService.nodeCountToRoot(leaf);
+            Integer likeCnt = counts.get("like");
+            Integer viewCnt = counts.get("view");
+            Integer leafCnt = counts.get("leaf");
+            pageList.add(LeafBranchResponse.of(leaf,likeCnt,viewCnt,leafCnt));
+        }
+
+        Page<LeafBranchResponse> resultPage = pageList,pageable
     }
 
 

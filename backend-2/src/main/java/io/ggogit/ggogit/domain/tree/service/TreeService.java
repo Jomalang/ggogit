@@ -1,5 +1,6 @@
 package io.ggogit.ggogit.domain.tree.service;
 
+import io.ggogit.ggogit.domain.member.entity.Member;
 import io.ggogit.ggogit.domain.tree.entity.Seed;
 import io.ggogit.ggogit.domain.tree.entity.Tree;
 import jakarta.servlet.http.HttpServletRequest;
@@ -15,7 +16,7 @@ public interface TreeService  {
     List<Tree> findAllByMemberId(Long memberId);
 
     Boolean getComplate(Long treeId);
-    Boolean isOwner(Long treeId, HttpServletRequest request);
+    Boolean isOwner(Long treeId, Long memberId);
     Integer getTreeCount(Long id);
     Integer getLeafCount(Long treeId);
     Long getMemberId(Long treeId);

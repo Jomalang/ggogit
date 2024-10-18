@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import java.util.List;
 
@@ -58,15 +59,10 @@ public class TreeServiceImpl implements TreeService {
 
 
     @Override
-    public Boolean isOwner(Long treeId, HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        Member member = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
-        Long memberId = member.getId();
-        Tree tree = treeRepository.findById(treeId).orElse(null);
-        if (tree != null && userId != null) {
-            return memberId.equals(tree.getMember().getId());
-        }
-        return false;
+
+    public Boolean isOwner(Long treeId, Long memberId) {
+        Tree tree = treeRepository.findById(treeId).orElseThrow(()-> new IllegalArgumentException("tree not found"));
+        return memberId.equals(tree.getMember().getId());
     }
 
     @Override

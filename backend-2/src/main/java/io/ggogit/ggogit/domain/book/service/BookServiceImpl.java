@@ -3,6 +3,9 @@ package io.ggogit.ggogit.domain.book.service;
 import io.ggogit.ggogit.domain.book.entity.Book;
 import io.ggogit.ggogit.domain.book.repository.BookRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,6 +17,24 @@ import java.util.List;
 public class BookServiceImpl implements BookService {
 
     private final BookRepository bookRepository;
+
+
+    //목록 조회 + 페이징, 정렬, 검색 기능
+    @Override
+    public List<Book> getBooks(int page, String query, String filter) {
+        int size = 10;
+        int offset = (page - 1) * size;
+
+        //TODO: 정렬기준 추가
+        Sort sort = Sort.by(Sort.Order.desc("id"));
+        Pageable pageable = PageRequest.of(offset, size, sort);
+
+        if (query == null) {
+            return bookRepository.findAll(pageable).getContent();
+        } else{
+            return bookRepository.findByQuery(query, filter);
+        }
+    }
 
     @Override
     public int saveAll(List<Book> books) {
@@ -55,4 +76,6 @@ public class BookServiceImpl implements BookService {
         return bookRepository.findById(bookId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 책입니다."));
     }
+
+
 }

@@ -26,7 +26,18 @@ public interface BookService {
      * 책 목록 조회
      * @return
      */
-    // List<Book> gets(); // TODO: 페이징 기능, 검색 기능 추가
+    // TODO: 페이징 기능, 검색 기능 추가
+    //public List<Book> getBooks(int page, String query, String sort);
+
+    /**
+     *
+     * @param page 페이지 수
+     * @param query 검색어
+     * @param filter 검색 조건(제목, 저자, 출판사)
+     * @return
+     */
+    //목록 조회 + 페이징, 정렬, 검색 기능
+    List<Book> getBooks(int page, String query, String filter);
 
     int saveAll(List<Book> books);
 

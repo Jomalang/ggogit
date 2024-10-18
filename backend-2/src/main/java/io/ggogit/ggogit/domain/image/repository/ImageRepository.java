@@ -1,4 +1,4 @@
-package io.ggogit.ggogit.domain.image;
+package io.ggogit.ggogit.domain.image.repository;
 
 import io.ggogit.ggogit.type.UploadFolderType;
 import lombok.AllArgsConstructor;
@@ -18,7 +18,6 @@ public class ImageRepository {
     @Value("${file.upload-path}")
     private String uploadPath;
 
-    // 이미지 존재 확인
     // 이미지 존재 확인
     public boolean isImageExists(String imageName, UploadFolderType folderType) {
         File file = new File(uploadPath + File.separator + folderType.getFolderName() + File.separator + imageName);

@@ -1,6 +1,7 @@
 package io.ggogit.ggogit.domain.leaf.service;
 
 
+import io.ggogit.ggogit.api.leaf.dto.LeafBranchResponse;
 import io.ggogit.ggogit.domain.leaf.entity.Leaf;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -40,6 +41,6 @@ public interface LeafService {
 //    List<LeafBranchView> toBranchForNeighbor(Long treeId, Long filter, Long sort, int page);
 
     HashMap<String ,Integer> nodeCountToRoot(Leaf leaf);
-    List<Leaf> findBranchByFilter(Long treeId, Boolean owner, Boolean bookMark);
+    List<LeafBranchResponse> findBranchByFilter(Long treeId, Boolean owner, Boolean bookMark);
 }
 

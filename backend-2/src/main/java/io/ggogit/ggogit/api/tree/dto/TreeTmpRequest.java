@@ -35,31 +35,18 @@ public class TreeTmpRequest {
     private Date createTime;
 
 
-    public static TreeTmp toEtcTreeTmp(TreeTmpRequest request, Member member, Seed seed) {
+    public TreeTmp toTreeTmp(Member member) {
         return TreeTmp.builder()
+                .id(this.id)
                 .member(member)
-                .seed(seed)
-                .treeTitle(request.getTreeTitle())
-                .description(request.getDescription())
-                .imageFile(request.getImageFile())
-                .visibility(request.getVisibility())
-                .build();
-
-    }
-    public static TreeTmp toBookTreeTmp(TreeTmpRequest request, Member member, BookCategory bookCategory, Seed seed) {
-        return TreeTmp.builder()
-                .id(request.getId())
-                .member(member)
-                .bookCategory(bookCategory)
-                .bookTitle(request.getBookTitle())
-                .author(request.getAuthor())
-                .publisher(request.getPublisher())
-                .totalPage(request.getTotalPage())
-                .seed(seed)
-                .treeTitle(request.getTreeTitle())
-                .description(request.getDescription())
-                .imageFile(request.getImageFile())
-                .visibility(request.getVisibility())
+                .bookTitle(this.bookTitle)
+                .author(this.author)
+                .publisher(this.publisher)
+                .totalPage(this.totalPage)
+                .treeTitle(this.treeTitle)
+                .description(this.description)
+                .imageFile(this.imageFile)
+                .visibility(this.visibility)
                 .build();
 
     }

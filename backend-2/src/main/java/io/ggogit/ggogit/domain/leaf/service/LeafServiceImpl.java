@@ -1,5 +1,6 @@
 package io.ggogit.ggogit.domain.leaf.service;
 
+import io.ggogit.ggogit.api.leaf.dto.LeafBranchResponse;
 import io.ggogit.ggogit.domain.leaf.entity.Leaf;
 import io.ggogit.ggogit.domain.leaf.repository.LeafRepository;
 import io.ggogit.ggogit.type.filterType;
@@ -10,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -47,7 +49,21 @@ public class LeafServiceImpl implements LeafService {
     }
 
     @Override
-    public List<Leaf> findBranchByFilter(Long treeId, Boolean owner, Boolean bookMark) {
-        return leafRepository.findByBranchQuery(treeId, owner, bookMark);
+    public List<LeafBranchResponse> findBranchByFilter(Long treeId, Boolean owner, Boolean bookMark) {
+        List<Leaf> leafList = leafRepository.findByBranchQuery(treeId, owner, bookMark);
+
+        List<LeafBranchResponse> responseList = new ArrayList<>();
+        for (Leaf leaf : leafList) {
+            HashMap<String, Integer> result = nodeCountToRoot(leaf);
+
+            Integer likeCnt = result.get("like");
+            Integer viewCnt = result.get("view");
+            Integer leafCnt = result.get("leaf");
+
+            responseList.add(LeafBranchResponse.of(leaf, likeCnt, viewCnt, leafCnt));
+        }
+
+
+        return responseList;
     }
 }

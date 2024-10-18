@@ -1,6 +1,9 @@
 package io.ggogit.ggogit.domain.book.service;
 
+import io.ggogit.ggogit.api.book.dto.BookInfoResponse;
 import io.ggogit.ggogit.domain.book.entity.Book;
+import io.ggogit.ggogit.domain.book.entity.BookCategory;
+import io.ggogit.ggogit.domain.book.repository.BookCategoryRepository;
 import io.ggogit.ggogit.domain.book.repository.BookRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.lang.Nullable;
@@ -14,6 +17,7 @@ import java.util.List;
 public class BookServiceImpl implements BookService {
 
     private final BookRepository bookRepository;
+    private final BookCategoryRepository bookCategoryRepository;
 
     @Override
     public int saveAll(List<Book> books) {
@@ -55,12 +59,12 @@ public class BookServiceImpl implements BookService {
         return bookRepository.findById(bookId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 책입니다."));
     }
-    }
 
-    @Override
-    public void remove(Long bookId) {
 
-    }
+//    @Override
+//    public void remove(Long bookId) {
+//
+//    }
 
     @Override
     public BookCategory getBookCategory(Long bookId) {

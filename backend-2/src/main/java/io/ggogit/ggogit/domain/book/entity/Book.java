@@ -2,7 +2,7 @@ package io.ggogit.ggogit.domain.book.entity;
 
 import io.ggogit.ggogit.domain.book.api.dto.ApiBookDto;
 import io.ggogit.ggogit.domain.member.entity.Member;
-import io.ggogit.ggogit.domain.tree.entity.TreeSaveTmp;
+import io.ggogit.ggogit.domain.tree.entity.TreeTmp;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -103,22 +103,22 @@ public class Book {
                 .author(dto.getAuthor())
                 .isbn(dto.getIsbn13())
                 .publisher(dto.getPublisher())
-                .publishDate(LocalDate.parse(dto.getPubDate()))
+                .publishDate(LocalDateTime.parse(dto.getPubDate()))
                 .totalPage(0)
                 .imageFile(dto.getCover())
                 .build();
     }
 
-    public static Book of(TreeSaveTmp treeSaveTmp, Member member) {
+    public static Book of(TreeTmp treeTmp, Member member) {
         return Book.builder()
                 .member(member)
-                .bookCategory(treeSaveTmp.getBookCategory())
-                .title(treeSaveTmp.getBookTitle())
-                .imageFile(treeSaveTmp.getImageFile())
-                .author(treeSaveTmp.getAuthor())
+                .bookCategory(treeTmp.getBookCategory())
+                .title(treeTmp.getBookTitle())
+                .imageFile(treeTmp.getImageFile())
+                .author(treeTmp.getAuthor())
                 .publishDate(null)
-                .publisher(treeSaveTmp.getPublisher())
-                .totalPage(treeSaveTmp.getTotalPage())
+                .publisher(treeTmp.getPublisher())
+                .totalPage(treeTmp.getTotalPage())
                 .build();
     }
 }

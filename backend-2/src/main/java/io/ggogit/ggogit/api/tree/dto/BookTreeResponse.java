@@ -32,7 +32,7 @@ public class BookTreeResponse {
     private String description;
     private Boolean visibility;
     private String createdAt;
-    private Long readingPage;
+    private Integer readingPage;
     private String coverImageName;
 
     public static BookTreeResponse of(Tree tree) {

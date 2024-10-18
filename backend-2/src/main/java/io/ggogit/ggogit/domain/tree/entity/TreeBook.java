@@ -59,7 +59,7 @@ public class TreeBook {
     public static TreeBook of(Tree tree) {
         return TreeBook.builder()
                 .tree(tree)
-                .readingPage(0L)
+                .readingPage(0)
                 .build();
     }
 }

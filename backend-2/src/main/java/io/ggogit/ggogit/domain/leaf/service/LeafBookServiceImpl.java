@@ -58,7 +58,7 @@ public class LeafBookServiceImpl implements LeafBookService {
         // `System`은 `TreeTmp`에서 `Book` 데이터를 조회한다.
         Book book = treeTmp.getBook();
         if (book == null) { // 직접 등록 도서 처리
-            book = Book.of(treeSaveTmp, member);
+            book = Book.of(treeTmp, member);
 
             if (book.getImageFile() != null) { // 직접 등록 도서의 이미지가 있는 경우
                 String filePath = book.getImageFile();
@@ -72,8 +72,8 @@ public class LeafBookServiceImpl implements LeafBookService {
         Seed seed = seedRepository.findById(1L)
                 .orElseThrow(() -> new IllegalArgumentException("Seed 데이터가 없습니다."));
 
-        // `System`은 `TreeSaveTmp`에서 `Tree` 데이터를 생성후 저장한다.
-        Tree tree = Tree.of(treeSaveTmp, book, member, seed);
+        // `System`은 `TreeTmp`에서 `Tree` 데이터를 생성후 저장한다.
+        Tree tree = Tree.of(treeTmp, book, member, seed);
         treeRepository.save(tree);
         leaf.setTree(tree);
 
@@ -83,8 +83,8 @@ public class LeafBookServiceImpl implements LeafBookService {
 
         LeafBook savedLeafBook = createLogic(memberId, leaf, leafBook, leafTagIds);
 
-        // `System`은 `TreeSaveTmp` 데이터를 삭제한다.
-        treeSaveTmpRepository.delete(treeSaveTmp);
+        // `System`은 `TreeTmp` 데이터를 삭제한다.
+        treeTmpRepository.delete(treeTmp);
 
         return savedLeafBook;
     }
@@ -170,7 +170,8 @@ public class LeafBookServiceImpl implements LeafBookService {
         });
 
         Long readPage = readingPage(tree.getBook().getTotalPage(), leafBooks);
-        treeBook.setReadingPage(readPage);
+
+        treeBook.setReadingPage(Integer.parseInt(String.valueOf(readPage)));//TODO: Long -> Integer
         treeBookRepository.save(treeBook);
 
         return leafBook;

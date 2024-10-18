@@ -99,26 +99,26 @@ public class Tree {
     @Column(name = "VERSION", nullable = false)
     private Long version;
 
-    public static Tree of(TreeSaveTmp treeSaveTmp, Book book, Member member, Seed seed) {
+    public static Tree of(TreeTmp treeTmp, Book book, Member member, Seed seed) {
         return Tree.builder()
                 .seed(seed)
                 .book(book)
                 .member(member)
                 .bookMarkCount(0)
-                .title(treeSaveTmp.getTreeTitle())
-                .description(treeSaveTmp.getDescription())
-                .visibility(treeSaveTmp.getVisibility())
+                .title(treeTmp.getTreeTitle())
+                .description(treeTmp.getDescription())
+                .visibility(treeTmp.getVisibility())
                 .build();
     }
 
-    public static Tree of(TreeSaveTmp treeSaveTmp, Member member, Seed seed) {
+    public static Tree of(TreeTmp treeTmp, Member member, Seed seed) {
         return Tree.builder()
                 .seed(seed)
                 .member(member)
                 .bookMarkCount(0)
-                .title(treeSaveTmp.getTreeTitle())
-                .description(treeSaveTmp.getDescription())
-                .visibility(treeSaveTmp.getVisibility())
+                .title(treeTmp.getTreeTitle())
+                .description(treeTmp.getDescription())
+                .visibility(treeTmp.getVisibility())
                 .build();
     }
 }

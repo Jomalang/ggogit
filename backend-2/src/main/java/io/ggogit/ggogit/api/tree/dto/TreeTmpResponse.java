@@ -11,18 +11,18 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class TreeTmpResponse {
-    private Long treeTmpid;
+    private Long treeTmpId;
     private String message;
 
     public static TreeTmpResponse of(Long id, String message) {
         return  TreeTmpResponse.builder()
-                .treeTmpid(id)
+                .treeTmpId(id)
                 .message(message)
                 .build();
     }
     public static TreeTmpResponse of(TreeTmp treeTmp, String message) {
         return  TreeTmpResponse.builder()
-                .treeTmpid(treeTmp.getId())
+                .treeTmpId(treeTmp.getId())
                 .message(message)
                 .build();
     }

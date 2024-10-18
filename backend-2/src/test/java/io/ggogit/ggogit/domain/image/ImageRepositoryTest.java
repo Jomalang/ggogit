@@ -1,5 +1,6 @@
 package io.ggogit.ggogit.domain.image;
 
+import io.ggogit.ggogit.domain.image.repository.ImageRepository;
 import io.ggogit.ggogit.type.UploadFolderType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

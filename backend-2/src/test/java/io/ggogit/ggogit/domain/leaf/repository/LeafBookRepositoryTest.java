@@ -25,7 +25,7 @@ class LeafBookRepositoryTest {
         // when
 //        List<LeafBook> leafBooks =  leafBookRepository.findByLeaf_Tree_Id(treeId);
 
-        // then
+        // then hock test
 //        for (LeafBook leafBook : leafBooks) {
 //            System.out.println(leafBooks);
 //        }

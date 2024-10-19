@@ -1,0 +1,38 @@
+version: '3'
+services:
+  backend:
+    container_name: spring-boot
+    build: 
+      context: ./backend-2  # 백엔드 Dockerfile 위치
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./backend/src:/app/src  # 백엔드 소스 코드만 마운트
+    working_dir: /app
+    networks:
+      - internal_network
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod # (prod: 배포, dev: 개발, test: 테스트)
+      - FRONTEND_URL=http://frontend:5173
+
+  frontend:
+    container_name: vue-app
+    build:
+      context: ./frontend  # 프론트엔드 Dockerfile 위치
+      dockerfile: Dockerfile
+    depends_on:
+      - backend
+    ports:
+      - "80:80"  # Nginx의 기본 포트
+    volumes:
+      - ./frontend:/app  # 프론트엔드 전체 디렉토리를 마운트 (개발 중 변경사항 반영을 위해)
+    working_dir: /app
+    networks:
+      - internal_network
+    environment:
+      - VITE_BACKEND_URL=http://backend:8080
+
+networks:
+  internal_network:
+    driver: bridge

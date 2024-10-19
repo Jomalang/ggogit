@@ -4,6 +4,7 @@ import io.ggogit.ggogit.api.book.dto.BookDetailResponse;
 import io.ggogit.ggogit.api.book.dto.BookListResponse;
 import io.ggogit.ggogit.api.book.dto.BookRequest;
 import io.ggogit.ggogit.api.book.dto.BookResponse;
+import io.ggogit.ggogit.api.book.filter.BookFilterType;
 import io.ggogit.ggogit.domain.book.entity.Book;
 import io.ggogit.ggogit.domain.book.service.BookService;
 import lombok.RequiredArgsConstructor;
@@ -26,18 +27,17 @@ public class BookController {
     // 목록 조회
     @GetMapping
     public ResponseEntity<BookListResponse> getList(
-            @RequestParam(name="p", required=false, defaultValue="1") int page,
+            @RequestParam(name="p", required=true, defaultValue="1") int page,
             @RequestParam(name="q", required=false) String query,
-            //TODO: BookFilterType enum으로 추가
-            @RequestParam(name="f", required=false, defaultValue="title") BookFilterType filter
+            //TODO: 한글은 안될거같음.. 영어쓰면서도 상수화시켜야함.
+            @RequestParam(name="f", required=true, defaultValue="제목") String filterName
     ) {
         log.info("query={}", query);
 
         if(query == null || query.length() < 2) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-
-        //TODO: BookFilterType enum으로 변경
+        String filter = BookFilterType.findNameByDecription(filterName);
         List<Book> books = bookService.getBooks(page, query, filter);
         if(books.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);

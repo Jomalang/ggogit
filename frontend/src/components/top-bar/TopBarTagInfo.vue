@@ -1,7 +1,7 @@
 <script setup lang="ts"></script>
 
 <template>
-  <div class="top-bar__tag-info-box" th:fragment="top-bar-tag-info">
+  <div class="top-bar__tag-info-box">
     <p class="top-bar__tag-info-text">옵션 선택 또는 생성</p>
   </div>
 </template>

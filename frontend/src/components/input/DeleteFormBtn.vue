@@ -1,11 +1,9 @@
 <script setup lang="ts"></script>
 
 <template>
-  /
-
-  <div class="delete-seed__form" th:fragment="delete__form-btn">
+  <div class="delete-seed__form">
     <button class="delete-seed__btn" type="submit">
-      <img src="{/public/svg/delete.svg}" alt="delete" />
+      <img src="/public/svg/delete.svg" alt="delete" />
       <p class="delete-seed__btn-msg">삭제</p>
     </button>
   </div>

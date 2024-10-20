@@ -1,6 +1,6 @@
 # ================================================== #
 # 내부 변수
-@leafId = 1
+@leafId = 47
 @seedBookId = 1
 @seddEtcId = 1
 # ================================================== #
@@ -9,36 +9,39 @@
 # 도서 리프
 
 ### 첫번쨰 도서 리프 생성
-POST {{host}}/api/v1/book/first/leafs
+POST {{host}}/api/v1/book/first/leaves
 
 ### 도서 리프 생성
-POST {{host}}/api/v1/book/leafs
+POST {{host}}/api/v1/book/leaves
 
 ### 도서 리프 수정
-PUT {{host}}/api/v1/book/leafs/{{leafId}}
+PUT {{host}}/api/v1/book/leaves/{{leafId}}
 
 ### 도서 리프 삭제
-DELETE {{host}}/api/v1/leafs/{{leafId}}
+DELETE {{host}}/api/v1/leaves/{{leafId}}
 
 # ================================================== #
 # 도서 리프
 ### 첫번째 기타 리프 생성
-POST {{host}}/api/v1/etc/first/leafs
+POST {{host}}/api/v1/etc/first/leaves
 
 ### 기타 리프 생성
-POST {{host}}/api/v1/etc/leafs
+POST {{host}}/api/v1/etc/leaves
 
 ### 기타 리프 수정
-PUT {{host}}/api/v1/etc/leafs/{{leafId}}
+PUT {{host}}/api/v1/etc/leaves/{{leafId}}
 
 ### 기타 리프 삭제
-DELETE {{host}}/api/v1/etc/leafs/{{leafId}}
+DELETE {{host}}/api/v1/etc/leaves/{{leafId}}
 
 # ================================================== #
 
 # ================================================== #
 # 리프 조회
 ### 리프 조회
+
+GET {{host}}/api/v1/leaves/{{leafId}}/all
+
 
 # ================================================== #
 

@@ -1,9 +1,10 @@
 <script setup lang="ts">
 
+import TopBarBack from "@/components/top-bar/TopBarBack.vue";
 </script>
 
 <template>
-  Leaf Edit
+
 </template>
 
 <style scoped>

@@ -1,19 +1,13 @@
 package io.ggogit.ggogit.api.tree;
 
 import io.ggogit.ggogit.api.leaf.dto.LeafBranchResponse;
-import io.ggogit.ggogit.api.tree.dto.TreeInfoResponse;
 import io.ggogit.ggogit.api.tree.dto.TreeTmpRequest;
 import io.ggogit.ggogit.api.tree.dto.TreeTmpResponse;
-import io.ggogit.ggogit.domain.book.service.BookService;
 import io.ggogit.ggogit.domain.leaf.service.LeafService;
 import io.ggogit.ggogit.domain.member.entity.Member;
-import io.ggogit.ggogit.domain.member.service.MemberService;
 import io.ggogit.ggogit.domain.tree.entity.TreeTmp;
-import io.ggogit.ggogit.domain.tree.service.SeedService;
 import io.ggogit.ggogit.domain.tree.service.TreeService;
 import io.ggogit.ggogit.domain.tree.service.TreeTmpService;
-import io.ggogit.ggogit.domain.tree.service.TreeUtilService;
-import io.ggogit.ggogit.type.BookCategoryType;
 import io.ggogit.ggogit.type.filterType;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -36,10 +30,6 @@ public class TreeController {
 
     private final TreeService treeService;
     private final TreeTmpService treeTmpService;
-    private final BookService bookService;
-    private final SeedService seedService;
-    private final TreeUtilService treeUtilService;
-    private final MemberService memberService;
     private final LeafService leafService;
 
     @GetMapping("/search")

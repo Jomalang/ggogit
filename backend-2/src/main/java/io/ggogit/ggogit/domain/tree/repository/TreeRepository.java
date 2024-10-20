@@ -7,5 +7,4 @@ import java.util.List;
 
 public interface TreeRepository extends JpaRepository<Tree, Long> {
     List<Tree> findByMemberId(Long memberId);
-    Tree findByTreeId(Long treeId);
 }

@@ -31,7 +31,7 @@ public class Leaf {
     private Long id;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne( fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "TREE_ID", nullable = false)
     private Tree tree;
 

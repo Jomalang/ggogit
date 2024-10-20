@@ -74,7 +74,7 @@ public class Member {
     @Column(name = "VERSION", nullable = false)
     private Long version;
 
-    @OneToMany(mappedBy = "trees",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
     private List<Tree> trees;
 
     @OneToOne

@@ -19,13 +19,13 @@ public class SeedServiceImpl implements SeedService {
 
     @Override
     public Seed getByEngName(String name) {
-        return Optional.ofNullable(seedRepository.getSeedByKorName(name))
+        return Optional.ofNullable(seedRepository.findByKorName(name))
                 .orElseThrow(() -> new IllegalArgumentException("해당하는 Seed가 없습니다."));
     }
 
     @Override
-    public Seed get(Long id) {
-        return Optional.ofNullable(seedRepository.getSeedById(id))
+    public Optional<Seed> get(Long id) {
+        return Optional.ofNullable(seedRepository.findById(id))
                 .orElseThrow(() -> new IllegalArgumentException("해당하는 Seed가 없습니다."));
     }
 

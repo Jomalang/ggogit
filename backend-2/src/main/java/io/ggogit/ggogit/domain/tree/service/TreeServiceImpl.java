@@ -74,11 +74,14 @@ public class TreeServiceImpl implements TreeService {
     }
 
     @Override
-    public Seed getSeedByTreeId(Long treeId) { return (treeRepository.findByTreeId(treeId)).getSeed(); }
+    public Seed getSeedByTreeId(Long treeId) {
+        return (treeRepository.findById(treeId)
+                .orElseThrow(()-> new  IllegalArgumentException("해당하는 Tree가 없습니다."))).getSeed(); }
 
 
     @Override
     public Long getMemberId(Long treeId) {
-        return (treeRepository.findByTreeId(treeId)).getMember().getId(); }
+        return (treeRepository.findById(treeId)
+                .orElseThrow(()-> new IllegalArgumentException("해당하는 Tree가 없습니다."))).getMember().getId(); }
 
 }

@@ -3,8 +3,7 @@ package io.ggogit.ggogit.domain.tree.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
@@ -14,10 +13,12 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
-@Getter
-@Setter
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
-@SQLDelete(sql = "update tree_image set is_deleted = true where tree_id = ?")
+@SQLDelete(sql = "update tree_image set is_deleted = true where id = ? and version = ?")
 @SQLRestriction("is_deleted = false")
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "tree_image")
@@ -39,6 +40,7 @@ public class TreeImage {
 
     @NotNull
     @ColumnDefault("0")
+    @Builder.Default
     @Column(name = "IS_DELETED", nullable = false)
     private Boolean isDeleted = false;
 
@@ -55,4 +57,11 @@ public class TreeImage {
     @Version
     @Column(name = "VERSION", nullable = false)
     private Long version;
+
+    public static TreeImage of(Tree tree, String toFileName) {
+        return TreeImage.builder()
+                .tree(tree)
+                .name(toFileName)
+                .build();
+    }
 }

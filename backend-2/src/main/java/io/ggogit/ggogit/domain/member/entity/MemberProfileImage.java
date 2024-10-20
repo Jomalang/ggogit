@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Entity
-@SQLDelete(sql = "update member_profile_image set is_deleted = true where member_id = ?")
+@SQLDelete(sql = "update member_profile_image set is_deleted = true where id = ? and version = ?")
 @SQLRestriction("is_deleted = false")
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "MEMBER_PROFILE_IMAGE")

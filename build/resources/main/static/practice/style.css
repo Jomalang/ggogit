@@ -1,0 +1,89 @@
+@import "static/common/text.css";
+
+.tree-input-text__form {
+    display: flex;
+    justify-content: center;
+}
+.tree-input-text__subject {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    font-size: 16px;
+    font-weight: var(--semi-bold);
+}
+.tree-input-text__radius {
+    display: flex;
+    flex-grow: 1;
+    height: 56px;
+    border: none;
+    border-radius: 20px;
+    font-size: 16px;
+    font-weight: var(--regular);
+    color: var(--text-sub);
+    background-color: var(--main3);
+    padding-left: 16px;
+}
+.tree-input-text__radius:focus {
+    outline: none;
+}
+.tree-input-text__radius:not(:placeholder-shown) {
+    color: var(--text-main);
+    border: 1px solid var(--filter-checked);
+    outline: none;
+}
+.tree-input-text__radius__re-enter {
+    display: block;
+    height: 56px;
+    border-color: var(--warning);
+    border-radius: 20px;
+    font-size: 16px;
+    font-weight: var(--regular);
+    color: var(--warning);
+    background-color: var(--main3);
+    padding-left: 16px;
+}
+
+.tree-create__link-btn--green:focus {
+    outline: 0;
+}
+.tree-create__link-btn--green:hover {
+    background-color: var(--main1);
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+}
+
+.social-login {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.social-login__icons {
+    display: flex;
+    justify-content: center;
+    gap: 48px;
+}
+
+.text-login__page-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.login-screen-container {
+    padding-top: 60px;
+}
+
+.join-guide {
+    display: flex;
+    gap: 4px;
+    white-space: nowrap;
+}
+
+.join-guide-container {
+    padding: 277px 24px 40px 185px;
+}
+
+.login-memeber__join-page-container {
+    padding: 50px 24px 0 24px
+}

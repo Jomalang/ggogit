@@ -1,0 +1,50 @@
+spring:
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://221.148.97.239:3306/ggogitdb
+    username: ggogit
+    password: 111
+    ##메시지 소스 추가
+  messages:
+    basename: messages, errors
+  servlet:
+    multipart:
+      max-file-size: 10MB
+    ## 메일 발송
+  mail:
+    host: smtp.gmail.com #SMTP 서버 호스트
+    port: 587 # SMTP 서버 포트
+    username:  # SMTP 서버 로그인 아이디
+    password:  #SMTP 서버 비밀번호
+    properties:
+      mail:
+        smtp:
+          auth: true #사용자 인증 시도 여부(기본값은 false)
+          timeout: 5000 #socket read timeout
+          starttls:
+            enable: true #starttls 활성화 여부
+server:
+  servlet:
+    session:
+      #최초 로그인시 URL에 SID표현 x
+      tracking-modes: cookie
+      # 세션 타임아웃 1800초
+      timeout: 1800
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+  type-aliases-package: Recorders.ggogit.domain.**
+  # 공용 핸들러 패키지 경로 추가 -----------------------------
+  type-handlers-package: Recorders.ggogit.web.CommonTypeHandler
+  # -----------------------------------------------------
+  mapper-locations: mappers/**/*Mapper.xml
+logging:
+  level:
+    Recorders.ggogit.domain: trace
+    org.springframework.jdbc: trace
+    org.mybatis: trace
+
+
+file: # 이미지 업로드 경로
+  tmp-dir: src/main/webapp/image/tmp
+  upload-dir: src/main/webapp/uploads

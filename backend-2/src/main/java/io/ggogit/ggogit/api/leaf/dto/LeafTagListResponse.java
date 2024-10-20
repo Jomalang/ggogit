@@ -41,7 +41,7 @@ public class LeafTagListResponse {
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class LeafTagDto {
+    private static class LeafTagDto {
         private Long id;
         private String name;
 

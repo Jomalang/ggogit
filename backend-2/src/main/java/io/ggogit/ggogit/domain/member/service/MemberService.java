@@ -37,7 +37,19 @@ public interface MemberService {
      */
     boolean getPassword(String password);
 
+    /**
+     * ID로 회원 정보 조회
+     *
+     * @param id 회원 ID
+     * @return Member
+     */
     Member getMember(Long id);
 
+    /**
+     * 회원 ID로 회원 이미지 정보 조회
+     *
+     * @param memberId 회원 ID
+     * @return MemberImageDto
+     */
     MemberImageDto getMemberImageDto(Long memberId);
 }

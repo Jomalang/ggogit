@@ -4,6 +4,9 @@ spring:
     url: jdbc:h2:mem:testdb
     username: sa
     password: 111
+  h2:
+    console:
+      enabled: true
 
   messages:
     basename: messages, errors
@@ -32,8 +35,23 @@ spring:
         format_sql: true
         use_sql_comments: true
         dialect: org.hibernate.dialect.H2Dialect
+        hbm2ddl:
+          auto: create
     defer-datasource-initialization: true
+  sql:
+    init:
+      encoding: utf-8
+
+
+server:
+  servlet:
+    context-path: /api/v1
+
+aladin:
+  api:
+    key: ttbrhkddlr982013001
 
 file: # 이미지 업로드 경로
   tmp-dir: src/main/webapp/image/tmp
   upload-dir: src/main/webapp/uploads
+  upload-path: src/main/resources/static/uploads

@@ -134,3 +134,21 @@ export enum CardType {
     MEMOIR,
     LEAF
 }
+
+export interface Branch {
+    branch: string;
+    log: number;
+    like: number;
+    view: number;
+    date: String;
+}
+
+export interface TextMainTitleRightProps {
+    title: string;
+    size: number;
+}
+
+export interface TextBtnGreenProps {
+    text: string;
+    link: string;
+}

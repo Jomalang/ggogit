@@ -2,6 +2,7 @@ package io.ggogit.ggogit.domain.tree.entity;
 
 import io.ggogit.ggogit.domain.book.entity.Book;
 import io.ggogit.ggogit.domain.member.entity.Member;
+import io.ggogit.ggogit.domain.memoir.entity.Memoir;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -20,7 +21,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 @Entity
-@SQLDelete(sql = "update tree set is_deleted = true where id = ?")
+@SQLDelete(sql = "update tree set is_deleted = true where id = ? and version = ?")
 @SQLRestriction("is_deleted = false")
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "TREE")
@@ -60,6 +61,9 @@ public class Tree {
     @Column(name = "BOOK_MARK_COUNT", nullable = false)
     private Integer bookMarkCount = 0;
 
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "tree")
+    private Memoir memoir;
+
     @NotNull
     @Builder.Default
     @ColumnDefault("1")
@@ -90,6 +94,17 @@ public class Tree {
         return Tree.builder()
                 .seed(seed)
                 .book(book)
+                .member(member)
+                .bookMarkCount(0)
+                .title(treeSaveTmp.getTreeTitle())
+                .description(treeSaveTmp.getDescription())
+                .visibility(treeSaveTmp.getVisibility())
+                .build();
+    }
+
+    public static Tree of(TreeSaveTmp treeSaveTmp, Member member, Seed seed) {
+        return Tree.builder()
+                .seed(seed)
                 .member(member)
                 .bookMarkCount(0)
                 .title(treeSaveTmp.getTreeTitle())

@@ -13,7 +13,8 @@ VALUES
     (7, '2024-10-07 16:00:00', 'user7@example.com', 'Introduction of user7', false, 'nickname7', 'password7hash', '2024-10-07 16:00:00', 'user7', 1),
     (8, '2024-10-08 17:00:00', 'user8@example.com', 'Introduction of user8', false, 'nickname8', 'password8hash', '2024-10-08 17:00:00', 'user8', 1),
     (9, '2024-10-09 18:00:00', 'user9@example.com', 'Introduction of user9', false, 'nickname9', 'password9hash', '2024-10-09 18:00:00', 'user9', 1),
-    (10, '2024-10-10 19:00:00', 'user10@example.com', 'Introduction of user10', false, 'nickname10', 'password10hash', '2024-10-10 19:00:00', 'user10', 1);
+    (10, '2024-10-10 19:00:00', 'user10@example.com', 'Introduction of user10', false, 'nickname10', 'password10hash', '2024-10-10 19:00:00', 'user10', 1),
+    (999, '2024-10-10 19:00:00', 'user10@example.com', 'Introduction of user10', false, 'API', 'API', '2024-10-10 19:00:00', 'API', 1);
 
 ALTER TABLE `member` ALTER COLUMN id RESTART WITH 100000;
 
@@ -218,7 +219,8 @@ VALUES
     (7, 6, '2024-10-07 16:00:00', '브로콜리 나무의 성장 과정을 나타내는 나무입니다.', false, '브로콜리 나무', '2024-10-07 16:00:00', 1, true, 7, 4, 7),
     (8, 1, '2024-10-08 17:00:00', '호박 나무의 성장 과정을 나타내는 나무입니다.', true, '호박 나무', '2024-10-08 17:00:00', 1, true, 8, 4, 8),  -- is_deleted = true
     (9, 9, '2024-10-09 18:00:00', '가지 나무의 성장 과정을 나타내는 나무입니다.', false, '가지 나무', '2024-10-09 18:00:00', 1, true, 9, 5, 9),
-    (10, 8, '2024-10-10 19:00:00', '무 나무의 성장 과정을 나타내는 나무입니다.', false, '무 나무', '2024-10-10 19:00:00', 1, true, 10, 5, 10);
+    (10, 8, '2024-10-10 19:00:00', '무 나무의 성장 과정을 나타내는 나무입니다.', false, '무 나무', '2024-10-10 19:00:00', 1, true, 10, 5, 10),
+    (11, 8, '2024-10-10 19:00:00', '무 나무의 성장 과정을 나타내는 나무입니다.', false, '무 나무', '2024-10-10 19:00:00', 1, true, 10, 5, 10);
 
 ALTER TABLE `tree` ALTER COLUMN id RESTART WITH 100000;
 
@@ -420,38 +422,39 @@ VALUES
 -- ====================================================== --
 -- 회고록
 -- ====================================================== --
-INSERT INTO `memoir`
-(`id`, `create_time`, `is_deleted`, `text`, `title`, `update_time`, `version`, `visibility`, `tree_id`)
-VALUES
-    (1, '2024-10-01 10:00:00', false, '어렸을 때 나무 밑에서 놀았던 추억이 떠오른다.', '나무 아래의 추억', '2024-10-01 10:00:00', 1, true, 1),
-    (2, '2024-10-02 11:00:00', false, '가을의 나무는 항상 마음을 편안하게 해준다.', '가을 나무', '2024-10-02 11:00:00', 1, true, 2),
-    (3, '2024-10-03 12:00:00', false, '나무 한 그루에도 수백 년의 역사가 담겨 있다.', '나무의 역사', '2024-10-03 12:00:00', 1, true, 3),
-    (4, '2024-10-04 13:00:00', false, '나무가 주는 그늘에서 하루를 보내고 싶다.', '나무 그늘', '2024-10-04 13:00:00', 1, true, 4),
-    (5, '2024-10-05 14:00:00', false, '어느 날 나무를 바라보며 새로운 영감을 얻었다.', '나무에서 온 영감', '2024-10-05 14:00:00', 1, true, 5),
-    (6, '2024-10-06 15:00:00', false, '겨울이 오면 나무들은 어떻게 변할까 궁금하다.', '겨울의 나무', '2024-10-06 15:00:00', 1, true, 6),
-    (7, '2024-10-07 16:00:00', false, '나무를 바라보며 느낀 감정들을 글로 적어본다.', '나무와의 대화', '2024-10-07 16:00:00', 1, true, 7),
-    (8, '2024-10-08 17:00:00', false, '한 그루의 나무가 자라나는 과정을 지켜봤다.', '나무의 성장', '2024-10-08 17:00:00', 1, true, 8),
-    (9, '2024-10-09 18:00:00', false, '나무 아래서 책을 읽는 시간이 참 좋다.', '나무와 책', '2024-10-09 18:00:00', 1, true, 9),
-    (10, '2024-10-10 19:00:00', false, '나무와 자연에 대해 더 깊이 생각하게 되었다.', '나무와 자연', '2024-10-10 19:00:00', 1, true, 10);
+ INSERT INTO `memoir`
+ (`id`, `create_time`, `is_deleted`, `text`, `title`, `update_time`, `version`, `visibility`, `tree_id`)
+ VALUES
+     (1, '2024-10-01 10:00:00', false, '어렸을 때 나무 밑에서 놀았던 추억이 떠오른다.', '나무 아래의 추억', '2024-10-01 10:00:00', 1, true, 1),
+     (2, '2024-10-02 11:00:00', false, '가을의 나무는 항상 마음을 편안하게 해준다.', '가을 나무', '2024-10-02 11:00:00', 1, true, 2),
+     (3, '2024-10-03 12:00:00', false, '나무 한 그루에도 수백 년의 역사가 담겨 있다.', '나무의 역사', '2024-10-03 12:00:00', 1, true, 3),
+     (4, '2024-10-04 13:00:00', false, '나무가 주는 그늘에서 하루를 보내고 싶다.', '나무 그늘', '2024-10-04 13:00:00', 1, true, 4),
+     (5, '2024-10-05 14:00:00', false, '어느 날 나무를 바라보며 새로운 영감을 얻었다.', '나무에서 온 영감', '2024-10-05 14:00:00', 1, true, 5),
+     (6, '2024-10-06 15:00:00', false, '겨울이 오면 나무들은 어떻게 변할까 궁금하다.', '겨울의 나무', '2024-10-06 15:00:00', 1, true, 6),
+     (7, '2024-10-07 16:00:00', false, '나무를 바라보며 느낀 감정들을 글로 적어본다.', '나무와의 대화', '2024-10-07 16:00:00', 1, true, 7),
+     (8, '2024-10-08 17:00:00', false, '한 그루의 나무가 자라나는 과정을 지켜봤다.', '나무의 성장', '2024-10-08 17:00:00', 1, true, 8),
+     (9, '2024-10-09 18:00:00', false, '나무 아래서 책을 읽는 시간이 참 좋다.', '나무와 책', '2024-10-09 18:00:00', 1, true, 9),
+     (10, '2024-10-10 19:00:00', false, '나무와 자연에 대해 더 깊이 생각하게 되었다.', '나무와 자연', '2024-10-10 19:00:00', 1, true, 10);
 
-ALTER TABLE `memoir` ALTER COLUMN id RESTART WITH 100000;
+ALTER TABLE `memoir` ALTER COLUMN id RESTART WITH 11;
+
 
 -- ====================================================== --
 -- 회고록 좋아요
 -- ====================================================== --
-INSERT INTO `memoir_like`
-(`active`, `create_time`, `update_time`, `version`, `MEMBER_ID`, `MEMOIR_ID`)
-VALUES
-    (true, '2024-10-01 09:00:00', '2024-10-01 09:00:00', 1, 1, 1),
-    (true, '2024-10-02 10:00:00', '2024-10-02 10:00:00', 1, 2, 2),
-    (true, '2024-10-03 11:00:00', '2024-10-03 11:00:00', 1, 3, 3),
-    (true, '2024-10-04 12:00:00', '2024-10-04 12:00:00', 1, 4, 4),
-    (true, '2024-10-05 13:00:00', '2024-10-05 13:00:00', 1, 5, 5),
-    (true, '2024-10-06 14:00:00', '2024-10-06 14:00:00', 1, 6, 6),
-    (true, '2024-10-07 15:00:00', '2024-10-07 15:00:00', 1, 7, 7),
-    (true, '2024-10-08 16:00:00', '2024-10-08 16:00:00', 1, 8, 8),
-    (true, '2024-10-09 17:00:00', '2024-10-09 17:00:00', 1, 9, 9),
-    (true, '2024-10-10 18:00:00', '2024-10-10 18:00:00', 1, 10, 10);
+ INSERT INTO `memoir_like`
+ (`active`, `create_time`, `update_time`, `version`, `MEMBER_ID`, `MEMOIR_ID`)
+ VALUES
+     (true, '2024-10-01 09:00:00', '2024-10-01 09:00:00', 1, 1, 1),
+     (true, '2024-10-02 10:00:00', '2024-10-02 10:00:00', 1, 2, 2),
+     (true, '2024-10-03 11:00:00', '2024-10-03 11:00:00', 1, 3, 3),
+     (true, '2024-10-04 12:00:00', '2024-10-04 12:00:00', 1, 4, 4),
+     (true, '2024-10-05 13:00:00', '2024-10-05 13:00:00', 1, 5, 5),
+     (true, '2024-10-06 14:00:00', '2024-10-06 14:00:00', 1, 6, 6),
+     (true, '2024-10-07 15:00:00', '2024-10-07 15:00:00', 1, 7, 7),
+     (true, '2024-10-08 16:00:00', '2024-10-08 16:00:00', 1, 8, 8),
+     (true, '2024-10-09 17:00:00', '2024-10-09 17:00:00', 1, 9, 9),
+     (true, '2024-10-10 18:00:00', '2024-10-10 18:00:00', 1, 10, 10);
 
 -- ====================================================== --
 -- 회고록 댓글
@@ -488,6 +491,7 @@ VALUES
     (true, '2024-10-08 16:00:00', '2024-10-08 16:00:00', 1, 8, 8),
     (true, '2024-10-09 17:00:00', '2024-10-09 17:00:00', 1, 9, 9),
     (true, '2024-10-10 18:00:00', '2024-10-10 18:00:00', 1, 10, 10);
+
 
 -- ====================================================== --
 -- 트리 생성 임시 데이터
@@ -546,7 +550,11 @@ VALUES
     (10003, '2024-10-03 11:00:00', false, '태그 3', '2024-10-03 11:00:00', 1, 1000),
     (10004, '2024-10-01 09:00:00', false, '태그 4', '2024-10-01 09:00:00', 1, 1000),
     (10005, '2024-10-02 10:00:00', false, '태그 5', '2024-10-02 10:00:00', 1, 1000),
-    (10006, '2024-10-03 11:00:00', false, '태그 6', '2024-10-03 11:00:00', 1, 1000);
+    (10006, '2024-10-03 11:00:00', false, '태그 6', '2024-10-03 11:00:00', 1, 1000),
+    (10011, '2024-10-02 10:00:00', false, '조회 테스트 5', '2024-10-02 10:00:00', 1, 1000),
+    (10012, '2024-10-03 11:00:00', false, '조회 테스트 6', '2024-10-03 11:00:00', 1, 1000),
+    (30000, '2024-10-03 11:00:00', false, '태그 수정 테스트 1', '2024-10-03 11:00:00', 1, 1000),
+    (30001, '2024-10-03 11:00:00', false, '태그 삭제 테스트 1', '2024-10-03 11:00:00', 1, 1000);
 
 -- ====================================================== --
 -- 기타 트리 테스트
@@ -562,6 +570,79 @@ INSERT INTO `leaf`
 VALUES
     (20000, false, 1, '첫 번째 잎의 내용입니다. 이 잎은 나무의 생장에 중요한 역할을 합니다.', '2024-10-01 08:00:00', false, 10, '첫 번째 잎', '2024-10-01 08:00:00', 1, 50, true, null, 20000),
     (20001, false, 0, '첫 번째 잎의 내용입니다. 이 잎은 나무의 생장에 중요한 역할을 합니다.', '2024-10-01 08:00:00', false, 10, '첫 번째 잎', '2024-10-01 08:00:00', 1, 50, true, null, 20000);
+
+INSERT INTO tree (id, member_id, seed_id, title, description, book_mark_count, visibility, update_time, create_time, book_id, version) VALUES (3000, 1000, 1, 'testTree2', 'test입니다.2', 0, 1, '2024-09-16 22:28:47.000000', '2024-09-16 22:28:48.000000', 10, 1);
+
+INSERT INTO leaf (id, tree_id, parent_leaf_id, visibility, view_count, like_count, title, content, child_leaf_count, book_mark, update_time, create_time, version) VALUES (31, 3000, null, 1, 1, 1, 'node1', 'node1', 3, 1, '2024-09-16 09:17:19.994000', '2024-09-16 09:17:19.994000', 1);
+INSERT INTO leaf (id, tree_id, parent_leaf_id, visibility, view_count, like_count, title, content, child_leaf_count, book_mark, update_time, create_time, version) VALUES (32, 3000, 31, 0, 2, 2, 'node2', 'node2', 3, 0, '2024-09-16 09:17:19.994000', '2024-09-17 09:17:19.994000', 1);
+INSERT INTO leaf (id, tree_id, parent_leaf_id, visibility, view_count, like_count, title, content, child_leaf_count, book_mark, update_time, create_time, version) VALUES (33, 3000, 32, 1, 3, 3, 'node3', 'node3', 2, 1, '2024-09-16 09:17:19.994000', '2024-09-18 09:17:19.994000', 1);
+INSERT INTO leaf (id, tree_id, parent_leaf_id, visibility, view_count, like_count, title, content, child_leaf_count, book_mark, update_time, create_time, version) VALUES (34, 3000, 33, 1, 4, 4, 'node4', 'node4', 0, 0, '2024-09-16 09:17:19.994000', '2024-09-19 09:17:19.994000', 1);
+INSERT INTO leaf (id, tree_id, parent_leaf_id, visibility, view_count, like_count, title, content, child_leaf_count, book_mark, update_time, create_time, version) VALUES (35, 3000, 32, 1, 5, 5, 'node5', 'node5', 1, 0, '2024-09-16 09:17:19.994000', '2024-09-20 09:17:19.994000', 1);
+INSERT INTO leaf (id, tree_id, parent_leaf_id, visibility, view_count, like_count, title, content, child_leaf_count, book_mark, update_time, create_time, version) VALUES (36, 3000, 33, 1, 6, 6, 'node6', 'node6', 0, 0, '2024-09-16 09:17:19.994000', '2024-09-21 09:17:19.994000', 1);
+INSERT INTO leaf (id, tree_id, parent_leaf_id, visibility, view_count, like_count, title, content, child_leaf_count, book_mark, update_time, create_time, version) VALUES (37, 3000, 35, 0, 7, 7, 'node7', 'node7', 2, 1, '2024-09-16 09:17:19.994000', '2024-09-22 09:17:19.994000', 1);
+INSERT INTO leaf (id, tree_id, parent_leaf_id, visibility, view_count, like_count, title, content, child_leaf_count, book_mark, update_time, create_time, version) VALUES (38, 3000, 37, 1, 8, 8, 'node8', 'node8', 0, 0, '2024-09-16 09:17:19.994000', '2024-09-23 09:17:19.994000', 1);
+INSERT INTO leaf (id, tree_id, parent_leaf_id, visibility, view_count, like_count, title, content, child_leaf_count, book_mark, update_time, create_time, version) VALUES (39, 3000, 32, 1, 9, 9, 'node9', 'node9', 0, 0, '2024-09-16 09:17:19.994000', '2024-09-24 09:17:19.994000', 1);
+INSERT INTO leaf (id, tree_id, parent_leaf_id, visibility, view_count, like_count, title, content, child_leaf_count, book_mark, update_time, create_time, version) VALUES (40, 3000, 37, 1, 10, 10, 'node10', 'node10', 0, 0, '2024-09-16 09:17:19.994000', '2024-09-25 09:17:19.994000', 1);
+INSERT INTO leaf (id, tree_id, parent_leaf_id, visibility, view_count, like_count, title, content, child_leaf_count, book_mark, update_time, create_time, version) VALUES (41, 3000, 31, 1, 11, 11, 'node11', 'node11', 1, 0, '2024-09-16 09:17:19.994000', '2024-09-26 09:17:19.994000', 1);
+INSERT INTO leaf (id, tree_id, parent_leaf_id, visibility, view_count, like_count, title, content, child_leaf_count, book_mark, update_time, create_time, version) VALUES (42, 3000, 31, 1, 12, 12, 'node12', 'node12', 2, 1, '2024-09-16 09:17:19.994000', '2024-09-27 09:17:19.994000', 1);
+INSERT INTO leaf (id, tree_id, parent_leaf_id, visibility, view_count, like_count, title, content, child_leaf_count, book_mark, update_time, create_time, version) VALUES (43, 3000, 42, 1, 13, 13, 'node13', 'node13', 0, 0, '2024-09-16 09:17:19.994000', '2024-09-28 09:17:19.994000', 1);
+INSERT INTO leaf (id, tree_id, parent_leaf_id, visibility, view_count, like_count, title, content, child_leaf_count, book_mark, update_time, create_time, version) VALUES (44, 3000, 42, 1, 14, 14, 'node14', 'node14', 0, 0, '2024-09-16 09:17:19.994000', '2024-09-29 09:17:19.994000', 1);
+INSERT INTO leaf (id, tree_id, parent_leaf_id, visibility, view_count, like_count, title, content, child_leaf_count, book_mark, update_time, create_time, version) VALUES (45, 3000, 41, 1, 15, 15, 'node15', 'node15', 2, 1, '2024-09-16 09:17:19.994000', '2024-09-30 09:17:19.994000', 1);
+INSERT INTO leaf (id, tree_id, parent_leaf_id, visibility, view_count, like_count, title, content, child_leaf_count, book_mark, update_time, create_time, version) VALUES (46, 3000, 45, 1, 16, 16, 'node16', 'node16', 0, 0, '2024-09-16 09:17:19.994000', '2024-09-30 10:17:19.994000', 1);
+INSERT INTO leaf (id, tree_id, parent_leaf_id, visibility, view_count, like_count, title, content, child_leaf_count, book_mark, update_time, create_time, version) VALUES (47, 3000, 45, 1, 17, 17, 'node17', 'node17', 0, 0, '2024-09-16 09:17:19.994000', '2024-09-30 11:17:19.994000', 1);
+
+
+INSERT INTO leaf_tag_map (leaf_id, leaf_tag_id, version) VALUES (31, 10001, 1);
+INSERT INTO leaf_tag_map (leaf_id, leaf_tag_id, version) VALUES (31, 10002, 1);
+INSERT INTO leaf_tag_map (leaf_id, leaf_tag_id, version) VALUES (31, 10003, 1);
+INSERT INTO leaf_tag_map (leaf_id, leaf_tag_id, version) VALUES (32, 10001, 1);
+INSERT INTO leaf_tag_map (leaf_id, leaf_tag_id, version) VALUES (32, 10002, 1);
+INSERT INTO leaf_tag_map (leaf_id, leaf_tag_id, version) VALUES (32, 10003, 1);
+INSERT INTO leaf_tag_map (leaf_id, leaf_tag_id, version) VALUES (33, 10001, 1);
+INSERT INTO leaf_tag_map (leaf_id, leaf_tag_id, version) VALUES (33, 10002, 1);
+INSERT INTO leaf_tag_map (leaf_id, leaf_tag_id, version) VALUES (33, 10003, 1);
+INSERT INTO leaf_tag_map (leaf_id, leaf_tag_id, version) VALUES (34, 10001, 1);
+INSERT INTO leaf_tag_map (leaf_id, leaf_tag_id, version) VALUES (34, 10002, 1);
+INSERT INTO leaf_tag_map (leaf_id, leaf_tag_id, version) VALUES (34, 10003, 1);
+INSERT INTO leaf_tag_map (leaf_id, leaf_tag_id, version) VALUES (35, 10001, 1);
+INSERT INTO leaf_tag_map (leaf_id, leaf_tag_id, version) VALUES (35, 10002, 1);
+INSERT INTO leaf_tag_map (leaf_id, leaf_tag_id, version) VALUES (35, 10003, 1);
+INSERT INTO leaf_tag_map (leaf_id, leaf_tag_id, version) VALUES (36, 10001, 1);
+INSERT INTO leaf_tag_map (leaf_id, leaf_tag_id, version) VALUES (36, 10002, 1);
+INSERT INTO leaf_tag_map (leaf_id, leaf_tag_id, version) VALUES (36, 10003, 1);
+INSERT INTO leaf_tag_map (leaf_id, leaf_tag_id, version) VALUES (37, 10001, 1);
+INSERT INTO leaf_tag_map (leaf_id, leaf_tag_id, version) VALUES (37, 10002, 1);
+INSERT INTO leaf_tag_map (leaf_id, leaf_tag_id, version) VALUES (37, 10003, 1);
+INSERT INTO leaf_tag_map (leaf_id, leaf_tag_id, version) VALUES (38, 10001, 1);
+INSERT INTO leaf_tag_map (leaf_id, leaf_tag_id, version) VALUES (38, 10002, 1);
+INSERT INTO leaf_tag_map (leaf_id, leaf_tag_id, version) VALUES (38, 10003, 1);
+INSERT INTO leaf_tag_map (leaf_id, leaf_tag_id, version) VALUES (39, 10001, 1);
+INSERT INTO leaf_tag_map (leaf_id, leaf_tag_id, version) VALUES (39, 10002, 1);
+INSERT INTO leaf_tag_map (leaf_id, leaf_tag_id, version) VALUES (39, 10003, 1);
+INSERT INTO leaf_tag_map (leaf_id, leaf_tag_id, version) VALUES (40, 10001, 1);
+INSERT INTO leaf_tag_map (leaf_id, leaf_tag_id, version) VALUES (40, 10002, 1);
+INSERT INTO leaf_tag_map (leaf_id, leaf_tag_id, version) VALUES (40, 10003, 1);
+INSERT INTO leaf_tag_map (leaf_id, leaf_tag_id, version) VALUES (41, 10001, 1);
+INSERT INTO leaf_tag_map (leaf_id, leaf_tag_id, version) VALUES (41, 10002, 1);
+INSERT INTO leaf_tag_map (leaf_id, leaf_tag_id, version) VALUES (41, 10003, 1);
+INSERT INTO leaf_tag_map (leaf_id, leaf_tag_id, version) VALUES (42, 10001, 1);
+INSERT INTO leaf_tag_map (leaf_id, leaf_tag_id, version) VALUES (42, 10002, 1);
+INSERT INTO leaf_tag_map (leaf_id, leaf_tag_id, version) VALUES (42, 10003, 1);
+INSERT INTO leaf_tag_map (leaf_id, leaf_tag_id, version) VALUES (43, 10001, 1);
+INSERT INTO leaf_tag_map (leaf_id, leaf_tag_id, version) VALUES (43, 10002, 1);
+INSERT INTO leaf_tag_map (leaf_id, leaf_tag_id, version) VALUES (43, 10003, 1);
+INSERT INTO leaf_tag_map (leaf_id, leaf_tag_id, version) VALUES (44, 10001, 1);
+INSERT INTO leaf_tag_map (leaf_id, leaf_tag_id, version) VALUES (44, 10002, 1);
+INSERT INTO leaf_tag_map (leaf_id, leaf_tag_id, version) VALUES (44, 10003, 1);
+INSERT INTO leaf_tag_map (leaf_id, leaf_tag_id, version) VALUES (45, 10001, 1);
+INSERT INTO leaf_tag_map (leaf_id, leaf_tag_id, version) VALUES (45, 10002, 1);
+INSERT INTO leaf_tag_map (leaf_id, leaf_tag_id, version) VALUES (45, 10003, 1);
+INSERT INTO leaf_tag_map (leaf_id, leaf_tag_id, version) VALUES (46, 10001, 1);
+INSERT INTO leaf_tag_map (leaf_id, leaf_tag_id, version) VALUES (46, 10002, 1);
+INSERT INTO leaf_tag_map (leaf_id, leaf_tag_id, version) VALUES (46, 10003, 1);
+INSERT INTO leaf_tag_map (leaf_id, leaf_tag_id, version) VALUES (47, 10001, 1);
+INSERT INTO leaf_tag_map (leaf_id, leaf_tag_id, version) VALUES (47, 10002, 1);
+INSERT INTO leaf_tag_map (leaf_id, leaf_tag_id, version) VALUES (47, 10003, 1);
 
 -- ====================================================== --
 -- 태규의 테스트 END

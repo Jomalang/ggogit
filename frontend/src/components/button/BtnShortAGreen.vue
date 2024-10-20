@@ -1,18 +1,20 @@
 <script setup lang="ts">
+
+import {TextBtnGreenProps} from "@/types/types";
+
 const props = defineProps<{
-  text: String;
+  btn: TextBtnGreenProps
 }>();
 </script>
 
 <template>
-  <a class="text__btn--green" :type="type">{{ text }}</a>
+  <a class="text__btn--green" :href="`${ btn.link}`">{{ btn.text }}</a>
 </template>
 
 <style>
 .text__btn--green {
   width: fit-content;
   min-width: 56px;
-  height: 62px;
   background-color: var(--main1);
   color: var(--white);
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);

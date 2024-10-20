@@ -7,6 +7,7 @@ import io.ggogit.ggogit.domain.leaf.repository.LeafTagMapRepository;
 import io.ggogit.ggogit.domain.leaf.repository.LeafTagRepository;
 import io.ggogit.ggogit.domain.leaf.util.ImageSaveUtil;
 import io.ggogit.ggogit.domain.member.entity.Member;
+import io.ggogit.ggogit.domain.member.repository.MemberRepository;
 import io.ggogit.ggogit.domain.tree.entity.Seed;
 import io.ggogit.ggogit.domain.tree.entity.Tree;
 import io.ggogit.ggogit.domain.tree.entity.TreeImage;

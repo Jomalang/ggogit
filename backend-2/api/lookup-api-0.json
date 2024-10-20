@@ -1,0 +1,48 @@
+{
+  "version": "20131101",
+  "logo": "http://image.aladin.co.kr/img/header/2011/aladin_logo_new.gif",
+  "title": "알라딘 상품정보 - 자바 ORM 표준 JPA 프로그래밍",
+  "link": "https:\/\/www.aladin.co.kr\/shop\/wproduct.aspx?ItemId=62681446&amp;partner=openAPI",
+  "pubDate": "Wed, 16 Oct 2024 13:07:11 GMT",
+  "totalResults": 1,
+  "startIndex": 1,
+  "itemsPerPage": 1,
+  "query": "isbn13=9788960777330",
+  "searchCategoryId": 0,
+  "searchCategoryName": "",
+  "item": [
+    {
+      "title": "자바 ORM 표준 JPA 프로그래밍 - 스프링 데이터 예제 프로젝트로 배우는 전자정부 표준 데이터베이스 프레임워크",
+      "link": "http:\/\/www.aladin.co.kr\/shop\/wproduct.aspx?ItemId=62681446&amp;partner=openAPI&amp;start=api",
+      "author": "김영한 (지은이)",
+      "pubDate": "2015-07-28",
+      "description": "에이콘 오픈 소스 프로그래밍 시리즈. 이 책은 JPA 기초 이론과 핵심 원리, 그리고 실무에 필요한 성능 최적화 방법까지 JPA에 대한 모든 것을 다룬다.",
+      "isbn": "8960777331",
+      "isbn13": "9788960777330",
+      "itemId": 62681446,
+      "priceSales": 38700,
+      "priceStandard": 43000,
+      "mallType": "BOOK",
+      "stockStatus": "",
+      "mileage": 2150,
+      "cover": "https:\/\/image.aladin.co.kr\/product\/6268\/14\/cover200\/8960777331_1.jpg",
+      "categoryId": 2502,
+      "categoryName": "국내도서>컴퓨터\/모바일>프로그래밍 언어>자바",
+      "publisher": "에이콘출판",
+      "salesPoint": 4320,
+      "adult": false,
+      "fixedPrice": true,
+      "customerReviewRank": 9,
+      "seriesInfo": {
+        "seriesId": 15805,
+        "seriesLink": "http://www.aladin.co.kr/shop/common/wseriesitem.aspx?SRID=15805&amp;partner=openAPI",
+        "seriesName": "에이콘 오픈소스 프로그래밍 시리즈 "
+      },
+      "subInfo": {
+        "subTitle": "스프링 데이터 예제 프로젝트로 배우는 전자정부 표준 데이터베이스 프레임워크",
+        "originalTitle": "",
+        "itemPage": 736
+      }
+    }
+  ]
+}

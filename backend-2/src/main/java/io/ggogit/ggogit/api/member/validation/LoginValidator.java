@@ -29,6 +29,5 @@ public class LoginValidator implements Validator {
         if(loginService.login(loginForm) == null) {
             errors.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다.");
         }
-
     }
 }

@@ -1,13 +1,8 @@
 package io.ggogit.ggogit.domain.member.repository;
 
-public interface FollowRepository {
+import io.ggogit.ggogit.domain.member.entity.Follow;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-    void save(Follow follow);
-
-    void delete(Follow follow);
-
-    List<Follow> findAll();
-
-    Follow findByMemberId(String memberId);
+public interface FollowRepository extends JpaRepository<Follow, Long> {
 
 }

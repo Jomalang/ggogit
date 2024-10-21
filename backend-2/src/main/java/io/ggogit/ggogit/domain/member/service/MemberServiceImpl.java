@@ -44,6 +44,7 @@ public class MemberServiceImpl implements MemberService {
     public Member getMember(Long id) {
         Optional<Member> memberOptional = memberRepository.findById(id); // Optional 처리
         if (memberOptional.isPresent()) {
+
             return memberOptional.get(); // Member 객체 반환
         } else {
 

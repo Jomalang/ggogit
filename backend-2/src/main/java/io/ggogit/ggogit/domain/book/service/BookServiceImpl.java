@@ -32,7 +32,16 @@ public class BookServiceImpl implements BookService {
         if (query == null) {
             return bookRepository.findAll(pageable).getContent();
         } else{
-            return bookRepository.findByQuery(query, filter);
+            switch (filter) {
+                case "title":
+                    return bookRepository.findByTitle(query, pageable);
+                case "author":
+                    return bookRepository.findByAuthor(query, pageable);
+                case "publisher":
+                    return bookRepository.findByPublisher(query, pageable);
+                default:
+                    return bookRepository.findByTitle(query, pageable);
+            }
         }
     }
 

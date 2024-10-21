@@ -29,15 +29,15 @@ public class BookController {
     public ResponseEntity<BookListResponse> getList(
             @RequestParam(name="p", required=true, defaultValue="1") int page,
             @RequestParam(name="q", required=false) String query,
-            //TODO: 한글은 안될거같음.. 영어쓰면서도 상수화시켜야함.
-            @RequestParam(name="f", required=true, defaultValue="제목") String filterName
+            @RequestParam(name="f", required=true, defaultValue="title") String filter
     ) {
         log.info("query={}", query);
+        log.info("filter={}", filter);
+        log.info("page={}", page);
 
         if(query == null || query.length() < 2) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        String filter = BookFilterType.findNameByDecription(filterName);
         List<Book> books = bookService.getBooks(page, query, filter);
         if(books.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);

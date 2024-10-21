@@ -1,7 +1,9 @@
 package io.ggogit.ggogit.domain.member.service;
 
 import io.ggogit.ggogit.domain.member.entity.Member;
+import org.springframework.stereotype.Service;
 
+@Service
 public interface MemberService {
 
     /**

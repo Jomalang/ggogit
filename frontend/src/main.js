@@ -37,6 +37,8 @@ import LeafBookFirstRegister from "@/pages/app/leaf/LeafBookFirstRegister.vue";
 import LeafEtcFirstRegister from "@/pages/app/leaf/LeafEtcFirstRegister.vue";
 import LeafBookRegister from "@/pages/app/leaf/LeafBookRegister.vue";
 import LeafEtcRegister from "@/pages/app/leaf/LeafEtcRegister.vue";
+import BookCategoryList from "@/pages/app/book/BookCategoryList.vue";
+import TreeBookAutoRegister from "@/pages/app/tree/TreeBookAutoRegister.vue";
 
 let router;
 
@@ -64,7 +66,8 @@ router = createRouter({
         },
         {
             path: '/book', children: [
-                {path: 'detail', component: BookDetail}
+                { path: 'detail', component: BookDetail },
+                { path: 'category/list', component: BookCategoryList }
             ],
             component: BookIndex
         },
@@ -103,6 +106,7 @@ router = createRouter({
                 { path: 'search', component: TreeSearch },
                 { path: 'search/result:treeSearchText', component: TreeSearchResult },
                 { path: 'book/reg', component: TreeBookRegister },
+                { path: 'book/auto/reg', component: TreeBookAutoRegister },
                 { path: 'etc/reg', component: TreeEtcRegister },
                 { path: 'list', component: TreeList },
                 { path: 'book/search', component: TreeBookSearch },

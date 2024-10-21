@@ -1,5 +1,6 @@
 package io.ggogit.ggogit.domain.member.entity;
 
+import io.ggogit.ggogit.domain.tree.entity.Tree;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -11,7 +12,9 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.awt.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Builder
@@ -70,4 +73,13 @@ public class Member {
     @Version
     @Column(name = "VERSION", nullable = false)
     private Long version;
+
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
+    private List<Tree> trees;
+
+    @OneToOne
+    private MemberProfileImage memberProfileImage;
+
+    @OneToOne
+    private MemberBackgroundImage memberBackgroundImage;
 }

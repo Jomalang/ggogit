@@ -10,11 +10,11 @@ import io.ggogit.ggogit.domain.member.entity.Member;
 import io.ggogit.ggogit.domain.tree.entity.Seed;
 import io.ggogit.ggogit.domain.tree.entity.Tree;
 import io.ggogit.ggogit.domain.tree.entity.TreeImage;
-import io.ggogit.ggogit.domain.tree.entity.TreeSaveTmp;
+import io.ggogit.ggogit.domain.tree.entity.TreeTmp;
 import io.ggogit.ggogit.domain.tree.repository.SeedRepository;
 import io.ggogit.ggogit.domain.tree.repository.TreeImageRepository;
 import io.ggogit.ggogit.domain.tree.repository.TreeRepository;
-import io.ggogit.ggogit.domain.tree.repository.TreeSaveTmpRepository;
+import io.ggogit.ggogit.domain.tree.repository.TreeTmpRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -30,7 +30,7 @@ public class LeafEtcServiceImpl implements LeafEtcService {
 
     private final MemberRepository memberRepository;
     private final SeedRepository seedRepository;
-    private final TreeSaveTmpRepository treeSaveTmpRepository;
+    private final TreeTmpRepository treeTmpRepository;
     private final LeafTagMapRepository leafTagMapRepository;
     private final LeafImageRepository leafImageRepository;
     private final LeafRepository leafRepository;
@@ -46,19 +46,19 @@ public class LeafEtcServiceImpl implements LeafEtcService {
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new IllegalArgumentException("Member 데이터가 없습니다."));
 
-        // `System`은 `TreeSaveTmp`에 데이터를 조회한다.
-        TreeSaveTmp treeSaveTmp = treeSaveTmpRepository.findByMemberId(memberId)
-                .orElseThrow(() -> new IllegalArgumentException("TreeSaveTmp 데이터가 없습니다."));
+        // `System`은 `TreeTmp`에 데이터를 조회한다.
+        TreeTmp treeTmp = treeTmpRepository.findByMemberId(memberId)
+                .orElseThrow(() -> new IllegalArgumentException("TreeTmp 데이터가 없습니다."));
 
         Seed seed = seedRepository.findById(seedId)
                 .orElseThrow(() -> new IllegalArgumentException("Seed 데이터가 없습니다."));
 
-        Tree tree = Tree.of(treeSaveTmp, member, seed);
+        Tree tree = Tree.of(treeTmp, member, seed);
         treeRepository.save(tree);
         leaf.setTree(tree);
 
         // 트리 이미지 저장
-        String treeImagePath = treeSaveTmp.getImageFile();
+        String treeImagePath = treeTmp.getImageFile();
         if (treeImagePath != null) {
             String fileName = imageSaveUtil.extractFileName(treeImagePath);
             String toFileName = imageSaveUtil.moveImageFile(fileName,"tree", true);
@@ -68,8 +68,8 @@ public class LeafEtcServiceImpl implements LeafEtcService {
 
         Leaf savedLeaf = createLogic(memberId, leaf, leafTagIds);
 
-        // `System`은 `TreeSaveTmp` 데이터를 삭제한다.
-        treeSaveTmpRepository.delete(treeSaveTmp);
+        // `System`은 `TreeTmp` 데이터를 삭제한다.
+        treeTmpRepository.delete(treeTmp);
 
         return savedLeaf;
     }

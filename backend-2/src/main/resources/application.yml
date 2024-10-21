@@ -1,22 +1,3 @@
 spring:
   profiles:
     active: test
-
-  messages:
-    basename: messages, errors
-  servlet:
-    multipart:
-      max-file-size: 10MB
-    ## 메일 발송
-  mail:
-    host: smtp.gmail.com #SMTP 서버 호스트
-    port: 587 # SMTP 서버 포트
-    username:  # SMTP 서버 로그인 아이디
-    password:  #SMTP 서버 비밀번호
-    properties:
-      mail:
-        smtp:
-          auth: true #사용자 인증 시도 여부(기본값은 false)
-          timeout: 5000 #socket read timeout
-          starttls:
-            enable: true #starttls 활성화 여부

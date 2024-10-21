@@ -12,7 +12,6 @@ public class MemoirResponse {
     private BookDetailResponse bookDto;
     private String message;
     private boolean isOwner;
-
     //TODO:TREE DTO 추가하기
     public static MemoirResponse of(MemoirDto memoirDto, BookDetailResponse bookDto){
         return MemoirResponse.builder()

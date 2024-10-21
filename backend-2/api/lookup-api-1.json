@@ -1,0 +1,43 @@
+{
+  "version": "20131101",
+  "logo": "http://image.aladin.co.kr/img/header/2011/aladin_logo_new.gif",
+  "title": "알라딘 상품정보 - 윤성우의 열혈 C 프로그래밍",
+  "link": "https:\/\/www.aladin.co.kr\/shop\/wproduct.aspx?ItemId=8016119&amp;partner=openAPI",
+  "pubDate": "Wed, 16 Oct 2024 12:48:03 GMT",
+  "totalResults": 1,
+  "startIndex": 1,
+  "itemsPerPage": 1,
+  "query": "isbn13=9788996094050",
+  "searchCategoryId": 0,
+  "searchCategoryName": "",
+  "item": [
+    {
+      "title": "윤성우의 열혈 C 프로그래밍 - 개정판",
+      "link": "http:\/\/www.aladin.co.kr\/shop\/wproduct.aspx?ItemId=8016119&amp;partner=openAPI&amp;start=api",
+      "author": "윤성우 (지은이)",
+      "pubDate": "2010-11-01",
+      "description": "2003년 발행된「열혈 C 프로그래밍」의 개정판으로, 강의가 필요 없을 만큼 쉽게 설명되어 있는 책이다. 하지만 강의가 필요한 독자들을 위해서 저자가 직접 본 도서의 내용을 강의한다. 책만큼 유명한 이 강의와 함께 한다면 누구나 C언어를 쉽게 공부할 수 있을 것이다.",
+      "isbn": "8996094056",
+      "isbn13": "9788996094050",
+      "itemId": 8016119,
+      "priceSales": 22500,
+      "priceStandard": 25000,
+      "mallType": "BOOK",
+      "stockStatus": "",
+      "mileage": 1250,
+      "cover": "https:\/\/image.aladin.co.kr\/product\/801\/61\/cover200\/8996094056_1.jpg",
+      "categoryId": 6385,
+      "categoryName": "국내도서>컴퓨터\/모바일>프로그래밍 언어>C",
+      "publisher": "오렌지미디어",
+      "salesPoint": 24036,
+      "adult": false,
+      "fixedPrice": true,
+      "customerReviewRank": 9,
+      "subInfo": {
+        "subTitle": "개정판",
+        "originalTitle": "",
+        "itemPage": 620
+      }
+    }
+  ]
+}

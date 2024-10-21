@@ -1,6 +1,8 @@
 package io.ggogit.ggogit.domain.book.entity;
 
+import io.ggogit.ggogit.domain.book.api.dto.ApiBookDto;
 import io.ggogit.ggogit.domain.member.entity.Member;
+import io.ggogit.ggogit.domain.tree.entity.TreeSaveTmp;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -21,11 +23,12 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-@SQLDelete(sql = "update book set is_deleted = true where id = ?")
+@SQLDelete(sql = "update book set is_deleted = true where id = ? and version = ?")
 @SQLRestriction("is_deleted = false")
 @Table(name = "BOOK")
 public class Book {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false)
     private Long id;
 
@@ -35,7 +38,7 @@ public class Book {
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "BOOK_CATEGORY_ID", nullable = false)
+    @JoinColumn(name = "BOOK_CATEGORY_ID")
     private BookCategory bookCategory;
 
     @Size(max = 255)
@@ -61,8 +64,7 @@ public class Book {
     @Column(name = "PUBLISHER", nullable = false)
     private String publisher;
 
-    @NotNull
-    @Column(name = "PUBLISH_DATE", nullable = false)
+    @Column(name = "PUBLISH_DATE")
     private LocalDate publishDate;
 
     @NotNull
@@ -93,4 +95,30 @@ public class Book {
     @Version
     @Column(name = "VERSION", nullable = false)
     private Long version;
+
+    public static Book of(ApiBookDto dto) {
+        return Book.builder()
+                .bookCategory(null)
+                .title(dto.getTitle())
+                .author(dto.getAuthor())
+                .isbn(dto.getIsbn13())
+                .publisher(dto.getPublisher())
+                .publishDate(LocalDate.parse(dto.getPubDate()))
+                .totalPage(0)
+                .imageFile(dto.getCover())
+                .build();
+    }
+
+    public static Book of(TreeSaveTmp treeSaveTmp, Member member) {
+        return Book.builder()
+                .member(member)
+                .bookCategory(treeSaveTmp.getBookCategory())
+                .title(treeSaveTmp.getBookTitle())
+                .imageFile(treeSaveTmp.getImageFile())
+                .author(treeSaveTmp.getAuthor())
+                .publishDate(null)
+                .publisher(treeSaveTmp.getPublisher())
+                .totalPage(treeSaveTmp.getTotalPage())
+                .build();
+    }
 }

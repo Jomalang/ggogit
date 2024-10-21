@@ -2,6 +2,7 @@ package io.ggogit.ggogit.domain.book.service;
 
 
 import io.ggogit.ggogit.domain.book.entity.Book;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -12,7 +13,7 @@ public interface BookService {
      * @param book
      * @return bookId
      */
-    Long register(Book book);
+//    Long register(Book book);
 
     /**
      * 책 상세 조회
@@ -25,19 +26,27 @@ public interface BookService {
      * 책 목록 조회
      * @return
      */
-    List<Book> gets(); // TODO: 페이징 기능, 검색 기능 추가
+    // List<Book> gets(); // TODO: 페이징 기능, 검색 기능 추가
+
+    int saveAll(List<Book> books);
+
+    Book modify(Long bookId, Book entity, MultipartFile imageFile);
+
+    boolean isOwner(Long bookId, Long memberId);
+
+    Book findById(Long bookId);
 
     /**
      * 책 수정
      * @param book
      */
-    void modify(Book book);
+//    void modify(Book book);
 
     /**
      * 책 삭제
      * @param bookId
      */
-    void remove(Long bookId);
+//    void remove(Long bookId);
 
     /**
      * 타이틀로 도서 검색

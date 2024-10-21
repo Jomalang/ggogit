@@ -16,6 +16,16 @@ spring:
         dialect: org.hibernate.dialect.MariaDBDialect
     defer-datasource-initialization: true
 
+server:
+  servlet:
+    context-path: /api/v1
+
 file: # 이미지 업로드 경로
   tmp-dir: src/main/webapp/image/tmp
   upload-dir: src/main/webapp/uploads
+  upload-path: src/main/resources/static/uploads
+
+
+aladin:
+  api:
+    key: ttbrhkddlr982013001

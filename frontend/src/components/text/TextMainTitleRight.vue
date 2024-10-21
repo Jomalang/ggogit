@@ -1,4 +1,5 @@
-<script setup>
+<script setup lang="ts">
+
 const props = defineProps({
     title: {
         type: String,
@@ -9,7 +10,8 @@ const props = defineProps({
         default: 28,
         validator: (value) => [28, 24, 20, 18, 16, 14].includes(value)
     }
-})
+});
+
 </script>
 
 <template>

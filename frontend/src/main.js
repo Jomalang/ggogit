@@ -14,9 +14,7 @@ import MemberPasswordReset from "@/pages/app/member/MemberPasswordReset.vue";
 import MemoirIndex from "@/pages/app/memoir/MemoirIndex.vue";
 import MemoirRegister from "@/pages/app/memoir/MemoirRegister.vue";
 import MemoirEdit from "@/pages/app/memoir/MemoirEdit.vue";
-import LeafFirstRegister from "@/pages/app/leaf/LeafFirstRegister.vue";
-import LeafRegister from "@/pages/app/leaf/LeafRegister.vue";
-import LeafEdit from "@/pages/app/leaf/LeafEdit.vue";
+import LeafEdit from "@/pages/app/leaf/LeafBookEdit.vue";
 import LeafList from "@/pages/app/leaf/LeafList.vue";
 import LeafDetail from "@/pages/app/leaf/LeafDetail.vue";
 import TagList from "@/pages/app/leaf/TagList.vue";
@@ -35,8 +33,14 @@ import LeafIndex from "@/pages/app/leaf/LeafIndex.vue";
 import TagIndex from "@/pages/app/leaf/TagIndex.vue";
 import TreeIndex from "@/pages/app/tree/TreeIndex.vue";
 import Test from "@/pages/Test.vue";
+import LeafBookFirstRegister from "@/pages/app/leaf/LeafBookFirstRegister.vue";
+import LeafEtcFirstRegister from "@/pages/app/leaf/LeafEtcFirstRegister.vue";
+import LeafBookRegister from "@/pages/app/leaf/LeafBookRegister.vue";
+import LeafEtcRegister from "@/pages/app/leaf/LeafEtcRegister.vue";
 
-const router = createRouter({
+let router;
+
+router = createRouter({
     history: createWebHistory(),
     routes: [
         {
@@ -45,7 +49,7 @@ const router = createRouter({
         },
         {
             path: '/', component: Index
-           },
+        },
         {
             path: '/home', component: HomeIndex
         },
@@ -60,7 +64,7 @@ const router = createRouter({
         },
         {
             path: '/book', children: [
-                { path: 'detail', component: BookDetail }
+                {path: 'detail', component: BookDetail}
             ],
             component: BookIndex
         },
@@ -73,9 +77,12 @@ const router = createRouter({
         },
         {
             path: '/leaf', children: [
-                { path: 'first/reg', component: LeafFirstRegister },
-                { path: 'reg', component: LeafRegister },
-                { path: 'edit', component: LeafEdit },
+                { path: 'book/first/reg', component: LeafBookFirstRegister },
+                { path: 'etc/first/reg', component: LeafEtcFirstRegister },
+                { path: 'book/reg', component: LeafBookRegister },
+                { path: 'etc/reg', component: LeafEtcRegister },
+                { path: 'book/edit', component: LeafEdit },
+                { path: 'book/edit', component: LeafEdit },
                 { path: 'list', component: LeafList },
                 { path: 'detail', component: LeafDetail }
             ],

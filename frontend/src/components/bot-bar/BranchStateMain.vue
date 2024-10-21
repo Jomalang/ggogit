@@ -1,46 +1,29 @@
 <script setup lang="ts">
-import { computed } from 'vue'
 
-interface Branch {
-  branch: string;
-  log: number;
-  like: number;
-  view: number;
-  date: Date;
-}
+import {Branch} from "@/types/types";
 
 const props = defineProps<{
-  branches: Branch[]
+  branch: Branch;
 }>();
-
-const formatDate = (date: Date) => {
-  return new Date(date).toISOString().split('T')[0];
-};
 </script>
 
 <template>
-  <div class="log-list-bot-bar-info-container">
-    <div class="branch-state-main" v-for="branch in branches" :key="branch.branch">
-      <div class="branch-state__header">
-        <div class="branch-state__icon-box">
-          <div>
-            <img
-                class="branch-state__box-image"
-                src='/svg/branch-box--icon.svg'
-                alt="브랜치 아이콘"
-            />
-          </div>
+  <div class="branch-state-main">
+    <div class="branch-state__header">
+      <div class="branch-state__icon-box">
+        <div>
+          <img class="branch-state__box-image" src='/svg/branch-box--icon.svg' alt="브랜치 아이콘"/>
         </div>
-        <p class="branch-state__name">{{ branch.branch }}</p>
       </div>
-      <div class="branch-state__info">
-        <div class="branch-state__stats">
-          <p>로그<span class="branch-state__nums">{{ branch.log }}</span></p>
-          <p>좋아요<span class="branch-state__nums">{{ branch.like }}</span></p>
-          <p>조회<span class="branch-state__nums">{{ branch.view }}</span></p>
-        </div>
-        <p class="branch-state__date">{{ formatDate(branch.date) }}</p>
+      <p class="branch-state__name">{{ branch.branch }}</p>
+    </div>
+    <div class="branch-state__info">
+      <div class="branch-state__stats">
+        <p>로그<span class="branch-state__nums">{{ branch.log }}</span></p>
+        <p>좋아요<span class="branch-state__nums">{{ branch.like }}</span></p>
+        <p>조회<span class="branch-state__nums">{{ branch.view }}</span></p>
       </div>
+      <p class="branch-state__date">{{ branch.date }}</p>
     </div>
   </div>
 </template>

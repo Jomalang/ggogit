@@ -2,6 +2,7 @@ package io.ggogit.ggogit.domain.tree.entity;
 
 import io.ggogit.ggogit.domain.book.entity.Book;
 import io.ggogit.ggogit.domain.member.entity.Member;
+import io.ggogit.ggogit.domain.memoir.entity.Memoir;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -20,12 +21,13 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 @Entity
-@SQLDelete(sql = "update tree set is_deleted = true where id = ?")
+@SQLDelete(sql = "update tree set is_deleted = true where id = ? and version = ?")
 @SQLRestriction("is_deleted = false")
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "TREE")
 public class Tree {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false)
     private Long id;
 
@@ -54,9 +56,13 @@ public class Tree {
     private String description;
 
     @NotNull
+    @Builder.Default
     @ColumnDefault("0")
     @Column(name = "BOOK_MARK_COUNT", nullable = false)
-    private Integer bookMarkCount;
+    private Integer bookMarkCount = 0;
+
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "tree")
+    private Memoir memoir;
 
     @NotNull
     @Builder.Default
@@ -83,4 +89,27 @@ public class Tree {
     @Version
     @Column(name = "VERSION", nullable = false)
     private Long version;
+
+    public static Tree of(TreeSaveTmp treeSaveTmp, Book book, Member member, Seed seed) {
+        return Tree.builder()
+                .seed(seed)
+                .book(book)
+                .member(member)
+                .bookMarkCount(0)
+                .title(treeSaveTmp.getTreeTitle())
+                .description(treeSaveTmp.getDescription())
+                .visibility(treeSaveTmp.getVisibility())
+                .build();
+    }
+
+    public static Tree of(TreeSaveTmp treeSaveTmp, Member member, Seed seed) {
+        return Tree.builder()
+                .seed(seed)
+                .member(member)
+                .bookMarkCount(0)
+                .title(treeSaveTmp.getTreeTitle())
+                .description(treeSaveTmp.getDescription())
+                .visibility(treeSaveTmp.getVisibility())
+                .build();
+    }
 }

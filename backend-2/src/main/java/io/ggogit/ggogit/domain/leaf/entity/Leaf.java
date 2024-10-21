@@ -1,5 +1,7 @@
 package io.ggogit.ggogit.domain.leaf.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.ggogit.ggogit.domain.tree.entity.Tree;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -14,27 +16,31 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@SQLDelete(sql = "update leaf set is_deleted = 1 where id = ?")
+@SQLDelete(sql = "update leaf set is_deleted = 1 where id = ? and version = ?")
 @SQLRestriction("is_deleted = false")
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "LEAF")
 public class Leaf {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false)
     private Long id;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "TREE_ID", nullable = false)
+    @JsonManagedReference
     private Tree tree;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PARENT_LEAF_ID")
+    @JsonBackReference
     private Leaf parentLeaf;
 
     @Size(max = 255)
@@ -48,19 +54,22 @@ public class Leaf {
     private String content;
 
     @NotNull
+    @Builder.Default
     @ColumnDefault("0")
     @Column(name = "VIEW_COUNT", nullable = false)
-    private Integer viewCount;
+    private Integer viewCount = 0;
 
     @NotNull
+    @Builder.Default
     @ColumnDefault("0")
     @Column(name = "LIKE_COUNT", nullable = false)
-    private Integer likeCount;
+    private Integer likeCount = 0;
 
     @NotNull
+    @Builder.Default
     @ColumnDefault("0")
     @Column(name = "CHILD_LEAF_COUNT", nullable = false)
-    private Integer childLeafCount;
+    private Integer childLeafCount = 0;
 
     @NotNull
     @Builder.Default

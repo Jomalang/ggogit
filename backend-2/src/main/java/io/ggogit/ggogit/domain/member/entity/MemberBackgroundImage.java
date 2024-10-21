@@ -17,12 +17,13 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Entity
-@SQLDelete(sql = "update member_background_image set is_deleted = true where member_id = ?")
+@SQLDelete(sql = "update member_background_image set is_deleted = true where id = ? and version = ?")
 @SQLRestriction("is_deleted = false")
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "MEMBER_BACKGROUND_IMAGE")
 public class MemberBackgroundImage {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "MEMBER_ID", nullable = false)
     private Long id;
 

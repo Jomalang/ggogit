@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<body>
+
+<!-- ==========================================
+     FRAGMENT: 댓글 탭
+     ========================================== -->
+<div class="tab-comment-box" th:fragment="tab-comment">
+    <header th:replace="~{fragments/top-bar :: top-bar-comment}"></header>
+    <div th:replace="~{fragments/tab-comment :: comment-list}"></div>
+    <div th:replace="~{fragments/input :: comment-input}"></div>
+</div>
+
+<!-- ==========================================
+     FRAGMENT: 댓글 리스트
+     ========================================== -->
+<div class="tab-comment-list-box" th:fragment="comment-list">
+    <ul class="tab-comment__list">
+        <li class="tab-comment__item">
+            <div>
+                <a href="#">
+                    <div class="card-log__author-img-frame">
+                        <img class="card-log__author-img" id="data-xxx" th:src="@{/svg/card-commet-author.svg}" alt="author-img"/>
+                    </div>
+                </a>
+            </div>
+            <div class="card-log__info">
+                <a href="#">
+                    <div class="card-log__create">
+                        <span class="card-log__create-info" id="data-xxx">@SeaDragon</span>
+                        <span class="card-log__create-info">·</span>
+                        <span class="card-log__create-info" id="data-xxx">3분전</span>
+                    </div>
+                </a>
+                <div class="card-log__content-form">
+                    <input class="card-log__content-detail-show"  type="checkbox"  id="card-log__content-detail"/>
+                    <label class="card-log__content-detail" for="card-log__content-detail"></label>
+                    <p class="card-log__content">
+                        돈의 속성은 현대 사회에서 중요한 역할을 한다. 돈은 교환 수단이자
+                        가치 저장의 수단이며, 경제적 자유와 선택을 가능하게 한다. 그러나
+                        돈의 추구가 삶의 목적이 되어선 안 되며, 균형 있는 경제적 목표와
+                        윤리적 가치가 중요하다.
+                    </p>
+                </div>
+                <div class="card-log__like-info">
+                    <input class="card-log__like" type="checkbox" id="card-log__like"/>
+                    <label class="card-log__like-frame" for="card-log__like">
+                        <img class="card-log__like-icon" th:src="@{/svg/tumbsup-on.svg}" alt="like"/>
+                    </label>
+                    <p class="card-log__like-num" id="data-XXX">26</p>
+                </div>
+            </div>
+            <a class="card-log__detail-frame-link" href="#">
+                <div class="card-log__detail-frame">
+                    <img th:src="@{/svg/card-detail.svg}" alt="detail"/>
+                </div>
+            </a>
+        </li>
+
+
+        <li class="tab-comment__item">
+            <div>
+                <a href="#">
+                    <div class="card-log__author-img-frame">
+                        <img class="card-log__author-img" id="data-xxx" th:src="@{/svg/card-commet-author.svg}" alt="author-img"/>
+                    </div>
+                </a>
+            </div>
+            <div class="card-log__info">
+                <a href="#">
+                    <div class="card-log__create">
+                        <span class="card-log__create-info" id="data-xxx">@SeaDragon</span>
+                        <span class="card-log__create-info">·</span>
+                        <span class="card-log__create-info" id="data-xxx">3분전</span>
+                    </div>
+                </a>
+                <div class="card-log__content-form">
+                    <input class="card-log__content-detail-show"  type="checkbox"  id="card-log__content-detail"/>
+                    <label class="card-log__content-detail" for="card-log__content-detail"></label>
+                    <p class="card-log__content">
+                        돈의 속성은 현대 사회에서 중요한 역할을 한다. 돈은 교환 수단이자
+                        가치 저장의 수단이며, 경제적 자유와 선택을 가능하게 한다. 그러나
+                        돈의 추구가 삶의 목적이 되어선 안 되며, 균형 있는 경제적 목표와
+                        윤리적 가치가 중요하다.
+                    </p>
+                </div>
+                <div class="card-log__like-info">
+                    <input class="card-log__like" type="checkbox" id="card-log__like"/>
+                    <label class="card-log__like-frame" for="card-log__like">
+                        <img class="card-log__like-icon" th:src="@{/svg/tumbsup-on.svg}" alt="like"/>
+                    </label>
+                    <p class="card-log__like-num" id="data-XXX">26</p>
+                </div>
+            </div>
+            <a class="card-log__detail-frame-link" href="#">
+                <div class="card-log__detail-frame">
+                    <img th:src="@{/svg/card-detail.svg}" alt="detail"/>
+                </div>
+            </a>
+        </li>
+
+        <li class="tab-comment__item">
+            <div>
+                <a href="#">
+                    <div class="card-log__author-img-frame">
+                        <img class="card-log__author-img" id="data-xxx" th:src="@{/svg/card-commet-author.svg}" alt="author-img"/>
+                    </div>
+                </a>
+            </div>
+            <div class="card-log__info">
+                <a href="#">
+                    <div class="card-log__create">
+                        <span class="card-log__create-info" id="data-xxx">@SeaDragon</span>
+                        <span class="card-log__create-info">·</span>
+                        <span class="card-log__create-info" id="data-xxx">3분전</span>
+                    </div>
+                </a>
+                <div class="card-log__content-form">
+                    <input class="card-log__content-detail-show"  type="checkbox"  id="card-log__content-detail"/>
+                    <label class="card-log__content-detail" for="card-log__content-detail"></label>
+                    <p class="card-log__content">
+                        돈의 속성은 현대 사회에서 중요한 역할을 한다. 돈은 교환 수단이자
+                        가치 저장의 수단이며, 경제적 자유와 선택을 가능하게 한다. 그러나
+                        돈의 추구가 삶의 목적이 되어선 안 되며, 균형 있는 경제적 목표와
+                        윤리적 가치가 중요하다.
+                    </p>
+                </div>
+                <div class="card-log__like-info">
+                    <input class="card-log__like" type="checkbox" id="card-log__like"/>
+                    <label class="card-log__like-frame" for="card-log__like">
+                        <img class="card-log__like-icon" th:src="@{/svg/tumbsup-on.svg}" alt="like"/>
+                    </label>
+                    <p class="card-log__like-num" id="data-XXX">26</p>
+                </div>
+            </div>
+            <a class="card-log__detail-frame-link" href="#">
+                <div class="card-log__detail-frame">
+                    <img th:src="@{/svg/card-detail.svg}" alt="detail"/>
+                </div>
+            </a>
+        </li>
+
+        <li class="tab-comment__item">
+            <div>
+                <a href="#">
+                    <div class="card-log__author-img-frame">
+                        <img class="card-log__author-img" id="data-xxx" th:src="@{/svg/card-commet-author.svg}" alt="author-img"/>
+                    </div>
+                </a>
+            </div>
+            <div class="card-log__info">
+                <a href="#">
+                    <div class="card-log__create">
+                        <span class="card-log__create-info" id="data-xxx">@SeaDragon</span>
+                        <span class="card-log__create-info">·</span>
+                        <span class="card-log__create-info" id="data-xxx">3분전</span>
+                    </div>
+                </a>
+                <div class="card-log__content-form">
+                    <input class="card-log__content-detail-show"  type="checkbox"  id="card-log__content-detail"/>
+                    <label class="card-log__content-detail" for="card-log__content-detail"></label>
+                    <p class="card-log__content">
+                        돈의 속성은 현대 사회에서 중요한 역할을 한다. 돈은 교환 수단이자
+                        가치 저장의 수단이며, 경제적 자유와 선택을 가능하게 한다. 그러나
+                        돈의 추구가 삶의 목적이 되어선 안 되며, 균형 있는 경제적 목표와
+                        윤리적 가치가 중요하다.
+                    </p>
+                </div>
+                <div class="card-log__like-info">
+                    <input class="card-log__like" type="checkbox" id="card-log__like"/>
+                    <label class="card-log__like-frame" for="card-log__like">
+                        <img class="card-log__like-icon" th:src="@{/svg/tumbsup-on.svg}" alt="like"/>
+                    </label>
+                    <p class="card-log__like-num" id="data-XXX">26</p>
+                </div>
+            </div>
+            <a class="card-log__detail-frame-link" href="#">
+                <div class="card-log__detail-frame">
+                    <img th:src="@{/svg/card-detail.svg}" alt="detail"/>
+                </div>
+            </a>
+        </li>
+
+        <li class="tab-comment__item">
+            <div>
+                <a href="#">
+                    <div class="card-log__author-img-frame">
+                        <img class="card-log__author-img" id="data-xxx" th:src="@{/svg/card-commet-author.svg}" alt="author-img"/>
+                    </div>
+                </a>
+            </div>
+            <div class="card-log__info">
+                <a href="#">
+                    <div class="card-log__create">
+                        <span class="card-log__create-info" id="data-xxx">@SeaDragon</span>
+                        <span class="card-log__create-info">·</span>
+                        <span class="card-log__create-info" id="data-xxx">3분전</span>
+                    </div>
+                </a>
+                <div class="card-log__content-form">
+                    <input class="card-log__content-detail-show"  type="checkbox"  id="card-log__content-detail"/>
+                    <label class="card-log__content-detail" for="card-log__content-detail"></label>
+                    <p class="card-log__content">
+                        돈의 속성은 현대 사회에서 중요한 역할을 한다. 돈은 교환 수단이자
+                        가치 저장의 수단이며, 경제적 자유와 선택을 가능하게 한다. 그러나
+                        돈의 추구가 삶의 목적이 되어선 안 되며, 균형 있는 경제적 목표와
+                        윤리적 가치가 중요하다.
+                    </p>
+                </div>
+                <div class="card-log__like-info">
+                    <input class="card-log__like" type="checkbox" id="card-log__like"/>
+                    <label class="card-log__like-frame" for="card-log__like">
+                        <img class="card-log__like-icon" th:src="@{/svg/tumbsup-on.svg}" alt="like"/>
+                    </label>
+                    <p class="card-log__like-num" id="data-XXX">26</p>
+                </div>
+            </div>
+            <a class="card-log__detail-frame-link" href="#">
+                <div class="card-log__detail-frame">
+                    <img th:src="@{/svg/card-detail.svg}" alt="detail"/>
+                </div>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+</body>
+</html>

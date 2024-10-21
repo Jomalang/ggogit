@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<body>
+
+<!-- ==========================================
+     FRAGMENT: 브랜치 정보 하단바
+     ========================================== -->
+<div class="branch-state-main" th:fragment="branch-state-main(branch, log, like, view, date)">
+    <div class="branch-state__header">
+        <div class="branch-state__icon-box">
+            <div>
+                <img
+                        class="branch-state__box-image"
+                        th:src="@{/svg/branch-box--icon.svg}"
+                        alt="브랜치 아이콘"
+                />
+            </div>
+        </div>
+        <p class="branch-state__name" th:text="${branch}">브랜치 이름</p>
+    </div>
+    <div class="branch-state__info">
+        <div class="branch-state__stats">
+            <p>로그<span class="branch-state__nums" th:text="${log}">999</span></p>
+            <p>좋아요<span class="branch-state__nums" th:text="${like}">32</span></p>
+            <p>조회<span class="branch-state__nums" th:text="${view}">32</span></p>
+        </div>
+        <p class="branch-state__date" th:text="${#dates.format(date, 'yyyy-MM-dd')}">2024-07-18</p>
+    </div>
+</div>
+
+<!-- ==========================================
+     FRAGMENT: 트리생성 하단바
+     ========================================== -->
+<div class="bot-bar-create-tree-box" th:fragment="create-tree">
+    <div id="bot-bar-create-tree__icon-box-id" class="bot-bar-create-tree__icon-box">
+        <img class="bot-bar-create-tree__comment-icon" th:src="@{/svg/comment--white.svg}" alt="댓글 아이콘"/>
+    </div>
+    <div class="bot-bar-create-tree__icon-box">
+        <img class="bot-bar-create-tree__like-icon" th:src="@{/svg/like--white.svg}" alt="좋아요 아이콘"/>
+    </div>
+    <a href="#" class="bot-bar-create-tree__link">
+        <p class="bot-bar-create-tree__tree-create-btn">
+            트리 생성
+        </p>
+    </a>
+</div>
+
+</body>
+</html>

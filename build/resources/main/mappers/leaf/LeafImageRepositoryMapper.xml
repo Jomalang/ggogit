@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Recorders.ggogit.domain.leaf.repository.LeafImageRepository">
+
+    <insert id="save" parameterType="LeafImage"
+            useGeneratedKeys="true" keyProperty="id" keyColumn="ID">
+        INSERT INTO LEAF_IMAGE (LEAF_ID, NAME)
+        VALUES (#{leafId}, #{name})
+    </insert>
+
+</mapper>

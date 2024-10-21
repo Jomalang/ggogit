@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Centered Placeholder</title>
+    <style>
+        .textarea-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            width: 300px;
+            height: 150px;
+            border: 1px solid #ccc;
+        }
+
+        .textarea-container textarea {
+            width: 100%;
+            height: 100%;
+            padding: 10px;
+            font-size: 16px;
+            resize: none; /* 사용자가 크기 조절 불가 */
+            border: none;
+            outline: none;
+            background: transparent;
+            z-index: 1;
+        }
+
+        .textarea-container .placeholder {
+            position: absolute;
+            color: #aaa;
+            font-size: 16px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .textarea-container textarea:not(:placeholder-shown) + .placeholder {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div class="textarea-container">
+    <textarea placeholder=" "></textarea>
+    <div class="placeholder">Enter your text here...</div>
+</div>
+</body>
+</html>

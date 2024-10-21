@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link th:href="@{/css/reset.css}" rel="stylesheet" />
+    <link th:href="@{/css/fragments.css}" rel="stylesheet" />
+    <link th:href="@{/css/layout.css}" rel="stylesheet" />
+
+    <title>Document</title>
+</head>
+<body>
+
+<header>
+    <h1 class="none">리프 수정 페이지</h1>
+    <section class="tob-bar-back-container">
+        <h1 class="none">리프 수정 상단 바</h1>
+        <div th:replace="~{fragments/top-bar :: top-bar-back(title='리프 수정', link='javascript:history.back()')}"></div>
+    </section>
+</header>
+
+<main>
+
+    <section class="before-log-title-container">
+        <h1 class="none"></h1>
+        <div th:replace="~{fragments/text :: text-main-title(title='리프 수정', size=28)}"></div>
+    </section>
+
+    <section>
+        <h1 class="none">리프 수정 데이터 입력</h1>
+        <section class="before-log_page-input-container">
+            <h1 class="none">리프 페이지</h1>
+            <div th:replace="~{fragments/input :: page-number}"></div>
+        </section>
+
+        <section class="input-form__select-tag-input-container">
+            <h1 class="none">리프 태그 입력</h1>
+            <div th:replace="~{fragments/input :: tag-select}"></div>
+        </section>
+
+        <section class="input-form__input-container">
+            <h1 class="none">리프이름 입력</h1>
+            <div th:replace="~{fragments/input :: text-box(label='*제목', placeholder='리프 제목을 입력해 주세요', name='title')}"></div>
+        </section>
+
+        <section class="book-tree-input-form__large-input-container">
+            <h1 class="none">리프 제목 입력</h1>
+            <div th:replace="~{fragments/input :: textarea-box(label='*내용', placeholder='리프 내용을 입력해 주세요', name='content')}"></div>
+        </section>
+
+        <section class="input-form__input-container">
+            <h1 class="none">공개성 선택</h1>
+            <div th:replace="~{fragments/input :: input-visibility(name='visibility')}"></div>
+        </section>
+
+        <section class="book-tree-submit-container">
+            <h1 class="none">리프 수정 버튼</h1>
+            <div th:replace="~{fragments/button :: submit-btn-full-bar(text='리프 수정 완료', id='submit-btn')}"></div>
+        </section>
+    </section>
+</main>
+
+<aside class="nav-container">
+    <h1 class="none">네비게이션 하단</h1>
+    <nav th:replace="~{fragments/nav :: navigation-bar(active='home')}"></nav>
+</aside>
+
+</body>
+</html>

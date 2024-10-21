@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Recorders.ggogit.domain.tree.repository.TreeImageRepository">
+<!--트리 이미지 row 생성-->
+    <insert id="save" parameterType="TreeImage">
+        INSERT INTO TREE_IMAGE(TREE_ID, NAME)
+        VALUES(#{treeId}, #{name})
+    </insert>
+
+
+
+    <!--ID 별 트리 도서 정보 조회-->
+    <select id="findById" parameterType="TreeImage">
+        SELECT * FROM TREE_IMAGE WHERE TREE_ID = #{treeId}
+    </select>
+
+
+    <!--ID 뱔 트리 도서 정보 수정-->
+    <update id="update" parameterType="TreeImage">
+        UPDATE TREE_IMAGE SET NAME = #{name}
+        WHERE TREE_ID = #{treeId}
+    </update>
+
+    <delete id="delete" parameterType="TreeImage">
+        DELETE FROM TREE_IMAGE WHERE TREE_ID = #{treeId}
+    </delete>
+</mapper>

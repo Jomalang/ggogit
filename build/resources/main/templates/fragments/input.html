@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="" lang="ko">
+  <body>
+    <!-- ==========================================
+     FRAGMENT: 필터 선택 박스
+     ========================================== -->
+    <div class="input-select-box" th:fragment="input-select-box(label, id)">
+      <label class="input-select__subject">
+        <span th:text="${label}">label</span>
+        <div class="input-select--select__selected">
+          <p class="input-select--select__selected-description">선택해주세요</p>
+          <button class="input-next-button" th:id="${id}" type="button" >
+            <img th:src="@{/svg/next.svg}" alt="next-button" />
+          </button>
+        </div>
+      </label>
+    </div>
+
+    <!-- ==========================================
+     FRAGMENT: 트리 직접 입력 도서 이미지 받기
+     ========================================== -->
+    <div class="input-book-img-box" th:fragment="book-input-img">
+      <label class="input-book-img-box__label">
+        <input
+          type="file"
+          name="img"
+          id="input-book-img-box__input-id"
+          class="input-book-img-box__input"
+          accept="image/*"
+        />
+        <img
+          id="input-book-img-box__img-id"
+          th:src="@{/svg/book-photo-form.svg}"
+          alt="Upload Image"
+          class="input-book-img-box__img"
+        />
+      </label>
+    </div>
+
+    <!-- ==========================================
+     FRAGMENT: 공개성 여부 체크
+     ========================================== -->
+    <div class="input-visibility" th:fragment="input-visibility(name)">
+      <p class="input-visibility__name">공개 여부</p>
+      <div class="input-visibility__btns">
+        <label class="input-visibility__label">
+          <input
+            class="input-visibility__btn"
+            label="공개"
+            type="radio"
+            th:name="${name}"
+            id="public"
+            value="1"
+            checked
+          />
+        </label>
+        <label class="input-visibility__label">
+          <input
+            class="input-visibility__btn"
+            label="비공개"
+            type="radio"
+            th:name="${name}"
+            id="private"
+            value="0"
+          />
+        </label>
+      </div>
+    </div>
+
+    <!-- ==========================================
+     FRAGMENT: 텍스트 입력 바
+     ========================================== -->
+    <div
+      class="input-text__bar"
+      th:fragment="text-box(label, placeholder, name)"
+    >
+      <label class="input-text__label">
+        <span class="input-text__label-text" th:text="${label}">지은이</span>
+        <input
+          class="input-text__input"
+          th:name="${name}"
+          th:placeholder="${placeholder}"
+          autocomplete="off"
+        />
+      </label>
+    </div>
+
+    <!-- ==========================================
+     FRAGMENT: 많은 텍스트 입력
+     ========================================== -->
+    <div
+      class="input-textarea__box"
+      th:fragment="textarea-box(label, placeholder, name)"
+    >
+      <label class="input-textarea__label tree-input__large-text-label">
+        <span th:text="${label}">트리 설명</span>
+        <!-- textarea  태그 사이에 공백 X > placeholder 동작안함-->
+        <textarea
+          class="input-textarea__textarea tree-input__large-textarea"
+          th:name="${name}"
+          th:placeholder="${placeholder}"
+        ></textarea>
+      </label>
+    </div>
+
+    <!-- ===================================
+                input-back-search - anchor
+            검색버튼 - 뒤로 가기 버튼 있음. - 앵커버전
+      ==================================== -->
+    <div
+      class="search__form"
+      th:fragment="input-back-search(placeholder, href)"
+    >
+      <div>
+        <a th:href="@{|${href}|}">
+          <img th:src="@{/svg/back.svg}" alt="back button" />
+        </a>
+      </div>
+      <form class="search-bar" action="#" method="get">
+        <label class="search-bar--label">
+          <input
+            class="search-bar--input"
+            type="text"
+            th:placeholder="${placeholder}"
+          />
+          <button class="search-bar--close" type="reset">
+            <img th:src="@{/svg/close-button.svg}" alt="close-btn" />
+          </button>
+        </label>
+        <button>
+          <img
+            src="/src/main/resources/static/svg/lens.svg"
+            th:src="@{/svg/lens.svg}"
+            alt="lens"
+          />
+        </button>
+      </form>
+    </div>
+
+    <!-- ===================================
+                input-back-search - input
+            검색버튼 - 뒤로 가기 버튼 있음. - text input(post)버전
+      ==================================== -->
+    <div
+      class="search__form"
+      th:fragment="input-back-search-text(placeholder, action, name, href)"
+    >
+      <div>
+        <a th:href="${href}">
+          <img
+            src="/src/main/resources/static/svg/back.svg"
+            th:src="@{/svg/back.svg}"
+            alt="back button"
+          />
+        </a>
+      </div>
+      <form class="search-bar" action="" th:action="${action}" method="post">
+        <label class="search-bar--label">
+          <input
+            class="search-bar--input"
+            type="text"
+            th:name="${name}"
+            th:id="${name}"
+            th:placeholder="${placeholder}"
+            autocomplete="off"
+          />
+          <button class="search-bar--close" type="reset">
+            <img
+              src="/src/main/resources/static/svg/close-button.svg"
+              th:src="@{/svg/close-button.svg}"
+              alt="close-btn"
+            />
+          </button>
+        </label>
+        <button type="submit">
+          <img
+            src="/src/main/resources/static/svg/lens.svg"
+            th:src="@{/svg/lens.svg}"
+            alt="lens"
+          />
+        </button>
+      </form>
+    </div>
+    <!--  ==========================================
+      FRAGMENT: 고정 데이터 화면에 안보임
+      ========================================== -->
+    <div class="input-none none" th:fragment="default-data(name, values)">
+      <label class="input-none__label">
+        <input
+          class="input-none__input"
+          type="text"
+          th:each="value:${values}"
+          th:name="${name}"
+          th:value="${value}"
+        />
+      </label>
+    </div>
+    <!--  ==========================================
+      FRAGMENT: 리프 페이지 구간 기록
+      ========================================== -->
+    <div class="input-page-number-box" th:fragment="page-number(startPage, endPage)">
+      <p class="input-page-number__title">페이지</p>
+      <div class="input-page-number__frame">
+        <label class="input-page-number__label">
+          <input
+            class="input-page-number__input input-page-number__input--start"
+            id="input-page-number__input--start-id"
+            th:field="*{startPage}"
+            name="startPage"
+            type="number"
+            placeholder="시작 페이지"
+            min="0"
+          />
+        </label>
+        <label class="input-page-number__label">
+          <input
+            class="input-page-number__input input-page-number__input--end"
+            id="input-page-number__input--end-id"
+            th:field="*{endPage}"
+            name="endPage"
+            type="number"
+            placeholder="마지막 페이지"
+            min="0"
+          />
+        </label>
+      </div>
+    </div>
+
+    <!--  ==========================================
+      FRAGMENT: 태그 선택 입력 박스
+      ========================================== -->
+    <div class="input-tag-select-box" th:fragment="tag-select(memberId)">
+      <p class="input-tag-select__label-text">태그 선택</p>
+      <label class="input-tag-select__bg">
+        <div class="input-tag-select__button-box">
+          <div class="input-tag-select__tag-box">
+            <ul class="input-tag-select__tags">
+              <!-- 태그들 들어감 -->
+            </ul>
+            <p class="input-tag-select__placeholder">태그를 선택해주세요</p>
+          </div>
+
+          <a class="input-tag-select__button" id="input-tag-select__button-id" href="javascript:void(0)">
+            <img th:src="@{/svg/next.svg}" alt="next-button" />
+          </a>
+        </div>
+      </label>
+    </div>
+
+<!--  ==========================================
+      FRAGMENT: 댓글 입력 박스
+      ========================================== -->
+<div class="input-comment-input-box" th:fragment="comment-input">
+  <form class="input-comment-input__form" action="">
+    <label class="input-comment-input__label">
+      <img class="input-comment-input__profile-img" th:src="@{/svg/comment-profile.svg}" alt="프로필 이미지">
+      <textarea id="input-comment-input__input-id" rows="1" class="input-comment-input__input" placeholder="댓글 추가..." type="text"></textarea>
+    </label>
+    <button id="input-comment-input__submit-id" class="input-comment-input__submit" type="submit">
+      <img th:src="@{/svg/comment-send.svg}" alt="send-button">
+    </button>
+  </form>
+</div>
+
+<!--  ==========================================
+    FRAGMENT: 초록색 긴 버튼
+    ========================================== -->
+<div class="tree-create__link-btn" th:fragment="green-wide-btn(label)">
+    <button class="tree-create__link-btn--green" th:text="${label}">버튼 내용</button>
+</div>
+
+  <!-- ===================================
+     FRAGMENT: 태그 검색 및 생성
+  =================================== -->
+    <div class="tree-input-text__form" th:fragment="tag-search-or-register-bar(tag)">
+      <label class="tree-input-text__subject">
+        <input th:if="${tag}" id="tree-input-text__rectangle-id" name="name" class="tree-input-text__rectangle"  placeholder="태그 생성 및 옵션 선택" th:value="${tag.name}"/>
+        <input th:unless="${tag}" id="tree-input-text__rectangle-id" name="name" class="tree-input-text__rectangle"  placeholder="태그 생성 및 옵션 선택"/>
+      </label>
+    </div>
+
+<!--  ===================================
+      FRAGMENT: 삭제 버튼
+      =================================== -->
+    <div class="delete-seed__form" th:fragment="delete__form-btn">
+        <button class="delete-seed__btn" type="submit">
+          <img  th:src="@{/svg/delete.svg}" alt="delete" />
+          <p class="delete-seed__btn-msg">삭제</p>
+        </button>
+    </div>
+
+    <!-- ==========================================
+     FRAGMENT: 체크박스 버튼
+     ==================================== -->
+    <div class="checkbox" th:fragment="checkbox">
+      <label>
+      <!-- 아래 p 영역에 텍스트 입력가능 ex)저는 한국인 입니다 -->
+      <input type="checkbox" class="checkbox__input" />
+      <span class="checkbox__check"></span>
+      <!-- 아래 p 영역에 텍스트 입력가능 ex)동의합니다. -->
+      <p></p>
+    </label>
+    </div>
+
+  </body>
+</html>
+

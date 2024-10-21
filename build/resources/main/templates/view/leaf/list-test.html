@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link th:href="@{/css/reset.css}" rel="stylesheet" />
+    <link th:href="@{/css/fragments.css}" rel="stylesheet" />
+    <link th:href="@{/css/layout.css}" rel="stylesheet" />
+
+    <title>리프 리스트</title>
+</head>
+
+<body>
+
+<header class="log-list-header-container">
+    <h1 class="none">리프 목록</h1>
+    <section>
+        <h1 class="none">뒤로가기 상단바</h1>
+        <div th:replace="~{fragments/top-bar :: top-bar-back(title='브랜치', link='#')}"></div>
+    </section>
+
+    <section>
+        <h1 class="none">현재 포커싱 리프 정보</h1>
+        <section class="log-path-container">
+            <h1 class="none">리프 경로</h1>
+<!--            <div th:replace="~{fragments/bar :: log-path(tree=${breadcrumb.treeName}, branch=${breadcrumb.branchName})}"></div>-->
+        </section>
+
+        <section class="log-list-date-title-container">
+            <h1 class="none">리프 날짜</h1>
+            <div th:replace="~{fragments/text :: text-main-title-right(title=${#dates.format(focusedTime, 'yyyy년 MM월 dd일')}, size=24)}"></div>
+        </section>
+    </section>
+</header>
+
+<main>
+
+    <section class="log-list-container">
+        <h1 class="none">리프 리스트</h1>
+
+        <section>
+            <h1 class="none">리프 ROW</h1>
+            <section>
+                <h1 class="none">리프 Item</h1>
+                <div th:replace="~{fragments/log :: log-item(type=0, title='리프 제목입니다. 0', date='2024-07-18', link='#', tags='태그')}"></div>
+            </section>
+
+            <section>
+                <h1 class="none">리프 Item</h1>
+                <div th:replace="~{fragments/log :: log-item(type=1, title='리프 제목입니다. 1', date='2024-07-18', link='#', tags='태그')}"></div>
+            </section>
+
+            <section>
+                <h1 class="none">리프 Item</h1>
+                <div th:replace="~{fragments/log :: log-item(type=2, title='리프 제목입니다. 2', date='2024-07-18', link='#', tags='태그')}"></div>
+            </section>
+
+            <section>
+                <h1 class="none">리프 Item</h1>
+                <div th:replace="~{fragments/log :: log-item(type=3, title='리프 제목입니다. 3', date='2024-07-18', link='#', tags='태그')}"></div>
+            </section>
+
+            <section>
+                <h1 class="none">리프 Item</h1>
+                <div th:replace="~{fragments/log :: log-item(type=4, title='리프 제목입니다. 4', date='2024-07-18', link='#', tags='태그')}"></div>
+            </section>
+
+            <section>
+                <h1 class="none">리프 Item</h1>
+                <div th:replace="~{fragments/log :: log-item(type=5, title='리프 제목입니다. 5', date='2024-07-18', link='#', tags='태그')}"></div>
+            </section>
+
+            <section>
+                <h1 class="none">리프 Item</h1>
+                <div th:replace="~{fragments/log :: log-item(type=6, title='리프 제목입니다. 6', date='2024-07-18', link='#', tags='태그')}"></div>
+            </section>
+
+            <section>
+                <h1 class="none">리프 Item</h1>
+                <div th:replace="~{fragments/log :: log-item(type=7, title='리프 제목입니다. 7', date='2024-07-18', link='#', tags='태그')}"></div>
+            </section>
+
+            <section>
+                <h1 class="none">리프 Item</h1>
+                <div th:replace="~{fragments/log :: log-item(type=8, title='리프 제목입니다. 8', date='2024-07-18', link='#', tags='태그')}"></div>
+            </section>
+
+            <section>
+                <h1 class="none">리프 Item</h1>
+                <div th:replace="~{fragments/log :: log-item(type=9, title='리프 제목입니다. 9', date='2024-07-18', link='#', tags='태그')}"></div>
+            </section>
+
+            <section>
+                <h1 class="none">리프 Item</h1>
+                <div th:replace="~{fragments/log :: log-item(type=10, title='리프 제목입니다. 10', date='2024-07-18', link='#', tags='태그')}"></div>
+            </section>
+
+            <section>
+                <h1 class="none">리프 Item</h1>
+                <div th:replace="~{fragments/log :: log-item(type=11, title='리프 제목입니다. 11', date='2024-07-18', link='#', tags='태그')}"></div>
+            </section>
+
+        </section>
+
+    </section>
+
+</main>
+
+<aside class="log-list-bot-bar-container">
+    <h1 class="none">브랜치 정보 알림 하단 바</h1>
+    <section class="log-list-bot-btn-container">
+        <h1 class="none">리프 생성 버튼</h1>
+        <a th:replace="~{fragments/button :: btn-short-a--green(href='#', text='리프 생성')}"></a>
+    </section>
+
+    <section class="log-list-bot-bar-info-container">
+        <h1 class="none">브랜치 정보 하단 바</h1>
+<!--        <div th:replace="~{fragments/bot-bar :: branch-state-main(branch=${branch.branchName}, log=${branch.leafCount}, like=${branch.likeCount}, view=${branch.viewCount}, date=${branch.updateTime})}"></div>-->
+    </section>
+</aside>
+
+</body>
+</html>

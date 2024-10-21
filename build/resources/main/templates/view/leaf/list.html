@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link th:href="@{/css/reset.css}" rel="stylesheet" />
+    <link th:href="@{/css/fragments.css}" rel="stylesheet" />
+    <link th:href="@{/css/layout.css}" rel="stylesheet" />
+    <script th:src="@{/js/leaf-list.js}" defer></script>
+
+    <title>리프 리스트</title>
+</head>
+
+<body>
+
+    <header class="log-list-header-container">
+        <h1 class="none">리프 목록</h1>
+        <section>
+            <h1 class="none">뒤로가기 상단바</h1>
+            <div th:replace="~{fragments/top-bar :: top-bar-back(title='브랜치', link='javascript:history.back()')}"></div>
+        </section>
+
+        <section>
+            <h1 class="none">현재 포커싱 리프 정보</h1>
+            <section class="log-path-container">
+                <h1 class="none">리프 경로</h1>
+                <div th:replace="~{fragments/bar :: log-path(tree=${breadcrumb.treeName}, branch=${breadcrumb.branchName})}"></div>
+            </section>
+
+            <section class="log-list-date-title-container">
+                <h1 class="none">리프 날짜</h1>
+                <div th:replace="~{fragments/text :: text-main-title-right(title=${#dates.format(focusedTime, 'yyyy년 MM월 dd일')}, size=24)}"></div>
+            </section>
+        </section>
+    </header>
+
+    <main>
+
+        <section class="log-list-container">
+            <h1 class="none">리프 리스트</h1>
+            <!-- 리프 리스트 -->
+        </section>
+
+    </main>
+
+    <aside class="log-list-bot-bar-container">
+        <h1 class="none">브랜치 정보 알림 하단 바</h1>
+        <section class="log-list-bot-btn-container">
+            <h1 class="none">리프 생성 버튼</h1>
+            <a th:replace="~{fragments/button :: btn-short-a--green(href='#', text='리프 생성')}"></a>
+        </section>
+
+        <section class="log-list-bot-bar-info-container">
+            <h1 class="none">브랜치 정보 하단 바</h1>
+            <div th:replace="~{fragments/bot-bar :: branch-state-main(branch=${branch.branchName}, log=${branch.leafCount}, like=${branch.likeCount}, view=${branch.viewCount}, date=${branch.updateTime})}"></div>
+        </section>
+    </aside>
+
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link th:href="@{/css/reset.css}" rel="stylesheet" />
+    <link th:href="@{/css/fragments.css}" rel="stylesheet" />
+    <link th:href="@{/css/layout.css}" rel="stylesheet" />
+
+    <title>home</title>
+</head>
+<body>
+
+    <header>
+        <h1 class="none">트리 수정 페이지</h1>
+      
+        <form th:action="@{/tag/edit}" method="post" th:object="${leafTagForm}">
+            <section>
+                <h2 class="none">뒤로가기 및 완료 바</h2>
+                <div th:replace="~{/fragments/top-bar::top-bar-tag-edit(tag=${tag}, memberId=${memberId})}"></div>
+            </section>
+
+            <section class="none">
+                <h2>태그 아이디</h2>
+                <label><input type="text" name="id" th:value="${tag.id}" /></label>
+            </section>
+
+            <section>
+                <h2 class="none">태그 입력</h2>
+                <div th:replace="~{fragments/input::tag-search-or-register-bar(tag=${tag})}"></div>
+            </section>
+        </form>
+    </header>
+
+    <main>
+        <section>
+            <h2 class="none">태그 기능 알림</h2>
+            <div th:replace="~{fragments/top-bar::top-bar-tag-info}"></div>
+        </section>
+
+        <form id="tag-delete-form-id" th:action="@{/tag/delete}" method="post">
+            <section>
+                <h1 class="none">삭제 데이터</h1>
+                <div th:replace="~{fragments/input::default-data(name='id', values=${tag.id})}"></div>
+            </section>
+
+            <section>
+                <h1 class="none">삭제 버튼</h1>
+                <div th:replace="~{fragments/input::delete__form-btn}"></div>
+            </section>
+        </form>
+    </main>
+
+    <script th:src="@{/js/pop-up.js}"></script>
+
+    <script>
+
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // 태그 삭제 팝업
+            const tagDeleteForm = document.getElementById('tag-delete-form-id');
+            const tagDeletePopUp = new PopUp('tag-delete-form-id');
+
+            tagDeleteForm.addEventListener('submit', function (event) {
+                event.preventDefault();
+                tagDeletePopUp.show('태그를 정말 삭제하시겠습니까?');
+            });
+        });
+    </script>
+
+</body>
+</html>

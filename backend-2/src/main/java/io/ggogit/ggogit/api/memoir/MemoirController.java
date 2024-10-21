@@ -7,7 +7,7 @@ import io.ggogit.ggogit.api.memoir.dto.MemoirResponse;
 import io.ggogit.ggogit.domain.book.entity.Book;
 import io.ggogit.ggogit.domain.book.service.BookService;
 import io.ggogit.ggogit.domain.member.entity.Member;
-import io.ggogit.ggogit.domain.member.session.SessionConst;
+import io.ggogit.ggogit.api.member.session.SessionConst;
 import io.ggogit.ggogit.domain.memoir.entity.Memoir;
 import io.ggogit.ggogit.domain.memoir.service.MemoirService;
 import lombok.RequiredArgsConstructor;

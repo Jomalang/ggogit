@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Recorders.ggogit.domain.book.repository.BookRepository">
+
+    <insert id="save" parameterType="Book"
+            useGeneratedKeys="true" keyProperty="id" keyColumn="ID">
+        INSERT INTO BOOK (MEMBER_ID, BOOK_CATEGORY_ID, TITLE, AUTHOR, TRANSLATOR, PUBLISHER, PUBLISH_DATE, TOTAL_PAGE, IMAGE_FILE)
+        VALUES (#{memberId}, #{bookCategoryId}, #{title}, #{author}, #{translator}, #{publisher}, #{publishDate}, #{totalPage}, #{imageFile})
+    </insert>
+
+    <update id="update" parameterType="Book">
+        UPDATE BOOK
+        SET
+            TOTAL_PAGE = #{totalPage},
+            TITLE = #{title},
+            AUTHOR = #{author},
+            PUBLISHER = #{publisher},
+            IMAGE_FILE = #{imageFile},
+            PUBLISH_DATE = #{publishDate}
+        WHERE ID = #{id}
+    </update>
+
+    <select id="findAll" resultType="Book">
+        SELECT * FROM BOOK
+    </select>
+
+    <select id="findById" resultType="Book" parameterType="Long">
+        SELECT * FROM BOOK WHERE ID = #{id}
+    </select>
+
+    <select id="findByTitle" resultType="Book" parameterType="String">
+        SELECT * FROM BOOK WHERE TITLE = #{title}
+    </select>
+
+    <delete id="deleteById" parameterType="Long">
+        DELETE FROM BOOK WHERE ID = #{id}
+    </delete>
+
+    <delete id="delete" parameterType="Book">
+        DELETE FROM BOOK WHERE ID = #{id}
+    </delete>
+
+    <!-- VW_BOOK_CATEGORY_LIST -->
+    <select id="findBookCategoryViewByTitle" resultType="BookPreviewView">
+        SELECT *
+        FROM VW_BOOK_CATEGORY_LIST
+        WHERE TITLE LIKE '%${title}%'
+    </select>
+
+    <select id="findBookCategoryViewByAuthor" resultType="BookPreviewView">
+        SELECT *
+        FROM VW_BOOK_CATEGORY_LIST
+        WHERE AUTHOR LIKE '%${author}%'
+    </select>
+
+    <select id="findBookCategoryViewById" resultType="BookInfoView">
+        SELECT *
+        FROM VW_BOOK_INFO
+        WHERE ID = #{id}
+    </select>
+
+</mapper>

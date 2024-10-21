@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Recorders.ggogit.domain.tree.repository.TreeBookRepository">
+<!--트리 도서 row 생성-->
+    <insert id="save" parameterType="TreeBook">
+        INSERT INTO TREE_BOOK(TREE_ID,READING_PAGE)
+        VALUES(#{treeId},#{readingPage})
+    </insert>
+
+
+
+    <!--ID 별 트리 도서 정보 조회-->
+    <select id="findById" parameterType="TreeBook">
+        SELECT * FROM TREE_BOOK WHERE TREE_ID = #{treeId}
+    </select>
+
+
+    <!--ID 뱔 트리 도서 정보 수정-->
+    <update id="update" parameterType="TreeBook">
+        UPDATE TREE_BOOK SET READING_PAGE = #{readingPage}
+        WHERE TREE_ID = #{treeId}
+    </update>
+
+    <delete id="delete" parameterType="TreeBook">
+        DELETE FROM TREE_BOOK WHERE TREE_ID = #{treeId}
+    </delete>
+</mapper>

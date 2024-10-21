@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Recorders.ggogit.domain.member.repository.FollowRepository">
+
+    <insert id="save" parameterType="Follow">
+        INSERT INTO FOLLOW(MEMBER_ID, FOLLOW_ID)
+        VALUES(#{memberId}, #{followId})
+    </insert>
+
+    <update id="delete" parameterType="Follow">
+        UPDATE FROM FOLLOW
+        SET ACTIVE = 0
+        WHERE MEMBER_ID = #{memberId}
+    </update>
+
+    <select id="findAll" resultType="Follow">
+        SELECT * FROM FOLLOW
+        WHERE ACTIVE = 1
+    </select>
+
+    <select id="findByMemberId" resultType="String">
+        SELECT * FROM FOLLOW
+        WHERE MEMBER_ID LIKE '%${memberId}%' AND ACTIVE = 1
+    </select>
+
+</mapper>

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" th:href="@{/css/fragments.css}" />
+  </head>
+  <body>
+    <!-- ==========================================
+     FRAGMENT: 3개의 임시 도서 이미지
+     설명: 나의 트리 홈 - 트리 없는 경우 배경 3개의 초록생 도서 이미지
+     ========================================== -->
+    <div class="bg-no-tree-book" th:fragment="bg-no-tree-book">
+      <ul class="bg-no-tree-book__list">
+        <li class="bg-no-tree-book__item">
+          <img
+            class="bg-no-tree-book__image"
+            th:src="@{/img/home/no-tree-left-book.png}"
+            alt="트리 없음 왼쪽 이미지"
+          />
+        </li>
+        <li class="bg-no-tree-book__item">
+          <img
+            class="bg-no-tree-book__image"
+            th:src="@{/img/home/no-tree-mid-book.png}"
+            alt="트리 없음 중앙 이미지"
+          />
+        </li>
+        <li class="bg-no-tree-book__item">
+          <img
+            class="bg-no-tree-book__image"
+            th:src="@{/img/home/no-tree-right-book.png}"
+            alt="트리 없음 오른쪽 이미지"
+          />
+        </li>
+      </ul>
+    </div>
+
+    <!-- ==========================================
+                FRAGMENT: 도서 캐러셀
+                 bg-tree-book-covers
+            설명 : 인자인 trees는 List<tree>를 아규먼트로 받습니다.
+                캐러셀을 의도했습니다. js파일과 함께 사용해야 합니다.
+     ========================================== -->
+    <div class="tree-book-bg" th:fragment="bg-tree-book-covers(trees)">
+      <ul class="tree-book-bg__list">
+        <li
+          class="mid__item"
+          th:each="tree : ${trees}"
+          th:object="${tree}"
+          th:with="coverIdx=${treeStat.index}"
+          th:classappend="${coverIdx}"
+        >
+          <a th:href="@{/tree/detail/{treeId}(treeId=*{treeId})}">
+            <img
+              class="mid__img"
+              th:src="*{coverImageName}"
+              alt="도서 예시 이미지"
+            />
+          </a>
+        </li>
+          <li th:if="${trees.size() == 1}"
+              class="mid__item"
+              th:classappend="1">
+              <a th:href="@{/seed/index}">
+              <img
+                      class="mid__img"
+                      th:src="@{/uploads/image/book/tree-book-blank.png}"
+                      alt="도서 예시 이미지"
+              />
+              </a>
+          </li>
+          <li th:if="${trees.size() == 1 || trees.size() == 2}"
+              class="mid__item"
+              th:classappend="2">
+
+              <a th:href="@{/seed/index}">
+              <img
+                      class="mid__img"
+                      th:src="@{/uploads/image/book/tree-book-blank.png}"
+                      alt="도서 예시 이미지"
+              />
+              </a>
+          </li>
+        <li
+          class="mid__item"
+          th:each="tree : ${trees}"
+          th:object="${tree}"
+          th:with="coverIdx=${treeStat.index}"
+          th:classappend="${coverIdx}"
+        >
+          <a th:href="@{/tree/detail/{treeId}(treeId=*{treeId})}">
+            <img
+              class="mid__img"
+              th:src="*{coverImageName}"
+              alt="도서 예시 이미지"
+            />
+          </a>
+        </li>
+
+          <li th:if="${trees.size() == 1}"
+              class="mid__item"
+              th:classappend="1">
+
+              <a th:href="@{/seed/index}">
+              <img
+                      class="mid__img"
+                      th:src="@{/uploads/image/book/tree-book-blank.png}"
+                      alt="도서 예시 이미지"
+              />
+              </a>
+          </li>
+          <li th:if="${trees.size() == 1 || trees.size() == 2}"
+              class="mid__item"
+              th:classappend="2">
+
+              <a th:href="@{/seed/index}">
+              <img
+                      class="mid__img"
+                      th:src="@{/uploads/image/book/tree-book-blank.png}"
+                      alt="도서 예시 이미지"
+              />
+              </a>
+          </li>
+
+        <li
+          class="mid__item"
+          th:each="tree : ${trees}"
+          th:object="${tree}"
+          th:with="coverIdx=${treeStat.index}"
+          th:classappend="${coverIdx}"
+        >
+          <a th:href="@{/tree/detail/{treeId}(treeId=*{treeId})}">
+            <img
+              class="mid__img"
+              th:src="*{coverImageName}"
+              alt="도서 예시 이미지"
+            />
+          </a>
+        </li>
+          <li th:if="${trees.size() == 1}"
+              class="mid__item"
+              th:classappend="1">
+
+              <a th:href="@{/seed/index}">
+              <img
+                      class="mid__img"
+                      th:src="@{/uploads/image/book/tree-book-blank.png}"
+                      alt="도서 예시 이미지"
+              />
+              </a>
+          </li>
+          <li th:if="${trees.size() == 1 || trees.size() == 2}"
+              class="mid__item"
+              th:classappend="2">
+
+              <a th:href="@{/seed/index}">
+              <img
+                      class="mid__img"
+                      th:src="@{/uploads/image/book/tree-book-blank.png}"
+                      alt="도서 예시 이미지"
+              />
+              </a>
+          </li>
+
+      </ul>
+    </div>
+  </body>
+
+<!-- ==========================================
+     FRAGMENT: 도서 디테일 배경
+     ========================================== -->
+<div id="bg-book-detail-box-id" class="bg-book-detail-box" th:fragment="book-detail(imgSrc)">
+    <img class="bg-book-detail__image" th:src="@{${imgSrc}}" alt="도서 이미지" />
+    <div id="bg-book-detail__front-img-box-id" class="bg-book-detail__front-img-box">
+        <img class="bg-book-detail__front-img" th:src="@{${imgSrc}}" alt="도서 이미지" />
+    </div>
+<div class="user-tree-user-info-container" th:fragment="user-info-back-header(src,backimgpath,userimg,username,userid,userurl)" th:style="'background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(' + @{'/uploads/image/book/'+${backimgpath}} + ');'">
+    <section class="user-info__top-bar-container">
+        <div th:replace="~{fragments/top-bar :: top-bar__transparent(${src})}"></div>
+    </section>
+    <section class="user-info__user-info-bar-container">
+        <div th:replace="~{fragments/bar :: bar-user-info(${userimg},${username},${userid},${userurl})}"></div>
+    </section>
+</div>
+
+<!-- ==========================================
+     FRAGMENT: 사용자 정보, 회고록 제목 화면 - 상단바 + 바 / 회고록 제목
+     설명: 사용자 트리 정보 user/memoir/index
+     ========================================== -->
+<div class="user-tree-user-info-container" th:fragment="user-info-back-header-memoir-title(edit,backimgpath,username,userid,memoirtitle,userurl)" th:style="'background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(' + @{'/uploads/image/book/'+${backimgpath}} + ');'">
+    <section class="user-info__top-bar-container">
+        <div th:replace="~{fragments/top-bar :: top-bar__transparent(edit=${edit})}"></div>
+    </section>
+    <section class="user-info__user-info-bar-container">
+        <div th:replace="~{fragments/bar :: bar-user-info-no-profile-btn(${username},${userid})}"></div>
+        <div th:replace="~{fragments/bar :: bar-memoir-title-btn(${memoirtitle},${userurl})}"></div>
+    </section>
+</div>
+
+</body>
+</html>

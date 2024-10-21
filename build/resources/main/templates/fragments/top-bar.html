@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" lang="ko">
+  <body>
+    <!-- ==========================================
+     FRAGMENT: 뒤로가기 상단바 -- 오른쪽 버튼 없음
+     ========================================== -->
+    <div class="top-bar--green" th:fragment="top-bar-back(title, link)">
+      <div class="top-bar__frame">
+        <p class="top-bar__title" th:text="${title}">트리 생성</p>
+        <a class="tob-bar__back-link" href="#" th:href="${link}">
+          <img
+            th:src="@{/svg/back-arrow-icon.svg}"
+            alt="top-bar--backarrow.svg"
+          />
+        </a>
+        <div class="top-bar__text"></div>
+      </div>
+    </div>
+    <!-- =========================
+       topbar-search-result-num
+            검색 결과 개수 
+    ========================== -->
+    <div
+      class="top-bar-search-result-num"
+      th:fragment="topbar-search-result-num(num)"
+    >
+      <p class="top-bar-search-result-number" id="data-XXX" th:text="${num}">
+        10
+      </p>
+      <span class="top-bar-search-result-number">개</span>
+      <p class="top-bar-search-result-text">의 검색 결과</p>
+    </div>
+    <!-- =========================
+       topbar-search-result-num
+            검색 결과 개수  - 최신순 정렬 버튼
+    ========================== -->
+    <div
+      class="top-bar-search-result-num"
+      th:fragment="topbar-search-result-num-recent(num)"
+    >
+      <p class="top-bar-search-result-number" id="data-XXX" th:text="${num}">
+        10
+      </p>
+      <span class="top-bar-search-result-number">개</span>
+      <p class="top-bar-search-result-text">의 검색 결과</p>
+    </div>
+
+<!-- ==========================================
+     FRAGMENT: 투명 뒤로가기 상단 바
+     ========================================== -->
+<div id="top-bar-clear-back-id" class="top-bar-clear-back-box" th:fragment="clear-back">
+  <div class="top-bar-clear-back__left-box">
+    <a href="#">
+      <div class="top-bar-clear-back__icon-box">
+        <img th:src="@{/svg/back--white.svg}" alt="">
+      </div>
+    </a>
+    <a href="#">
+      <div class="top-bar-clear-back__icon-box">
+        <img th:src="@{/svg/home--white.svg}" alt="">
+      </div>
+    </a>
+  </div>
+  <div class="top-bar-clear-back__right-box">
+    <a href="#">
+      <div class="top-bar-clear-back__icon-box">
+        <img th:src="@{/svg/search--white.svg}" alt="">
+      </div>
+    </a>
+  </div>
+</div>
+
+<!-- ==========================================
+     FRAGMENT: 댓글 탭 상단 바
+     ==========================================-->
+<header class="top-bar-comment-box" th:fragment="top-bar-comment">
+
+  <h1 class="none">댓글 상단 바</h1>
+
+  <div class="top-bar-comment__line-box">
+    <div class="top-bar-comment__line"></div>
+  </div>
+
+  <div class="top-bar-comment__back-box">
+    <p class="top-bar-comment__back-text">댓글</p>
+    <div id="top-bar-comment__back-icon-box-id" class="top-bar-comment__back-icon-box">
+      <img th:src="@{/svg/tab-back-icon.svg}" alt="탭 뒤로가기 아이콘">
+    </div>
+  </div>
+
+  <div class="top-bar-comment__check-box">
+    <input id="sort-popular" class="top-bar-comment__input" type="radio" name="commentSort" checked>
+    <label for="sort-popular" class="top-bar-comment__label">인기순</label>
+    <input id="sort-latest" class="top-bar-comment__input" type="radio" name="commentSort">
+    <label for="sort-latest" class="top-bar-comment__label">최신순</label>
+  </div>
+
+</header>
+
+    <!-- =========================
+       top-bar__transparent
+      사용자 정보 상단 바
+    ========================== -->
+<div class="top-bar__transparent-frame" th:fragment="top-bar__transparent(edit)">
+  <a class="top-bar__transparent-back-btn" href='javascript:history.back()' ></a>
+  <a class="top-bar__transparent-setting-btn" th:href="${edit}"></a>
+</div>
+
+<!-- ===================================
+      FRAGMENT: 리프 태그 선택 디테일 상단 바
+     =================================== -->
+      <div class="top-bar--green" th:fragment="top-bar-tag-edit(tag, memberId)">
+        <div class="top-bar__frame">
+          <a class="tob-bar__back-link" th:href="@{/tag/list(id=${memberId})}">
+            <img th:src="@{/svg/back-arrow-icon.svg}" alt="top-bar--backarrow.svg"/>
+          </a>
+          <div class="tree-input-text--select__tag" th:text="${tag.name}">즐거움</div>
+            <button class="top-bar__text" type="submit">완료</button>
+        </div>
+      </div>
+
+<!-- ===================================
+      FRAGMENT: 리프 태그 선택 디테일 상단 바
+     =================================== -->
+    <div class="top-bar--green" th:fragment="top-bar-title(title)">
+      <div class="top-bar__frame">
+        <a class="tob-bar__back-link" href="prevPage">
+          <img th:src="@{/svg/back-arrow-icon.svg}" alt="top-bar--backarrow.svg"/>
+        </a>
+        <p class="tob-bar__title" th:text="${title}">즐거운 텍스트</p>
+        <a class="top-bar__success-link" href="prevPage">
+          <div class="top-bar__text" type="submit">완료</div>
+        </a>
+      </div>
+    </div>
+
+
+    <!-- =========================
+       FRAGMENT: 옵션 선택 및 생성 상단 박스
+    ===========================  -->
+    <div class="top-bar__tag-info-box" th:fragment="top-bar-tag-info">
+      <p class="top-bar__tag-info-text">옵션 선택 또는 생성</p>
+    </div>
+
+  </body>
+</html>

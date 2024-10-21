@@ -34,5 +34,6 @@ public class BookDto {
     private boolean fixedPrice;
     private int customerReviewRank;
     private int itemPage;
+    private String translator;
 }
 

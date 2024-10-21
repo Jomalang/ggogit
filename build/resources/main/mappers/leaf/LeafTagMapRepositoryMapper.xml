@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Recorders.ggogit.domain.leaf.repository.LeafTagMapRepository">
+
+        <insert id="save" parameterType="LeafTagMap">
+            INSERT INTO LEAF_TAG_MAP (LEAF_ID, LEAF_TAG_ID)
+            VALUES (#{leafId}, #{leafTagId})
+        </insert>
+
+        <select id="findByLeafId" parameterType="Long" resultType="LeafTagMap">
+            SELECT * FROM LEAF_TAG_MAP
+            WHERE LEAF_ID = #{leafId}
+        </select>
+
+        <select id="findByLeafTagId" parameterType="Long" resultType="LeafTagMap">
+            SELECT * FROM LEAF_TAG_MAP
+            WHERE LEAF_TAG_ID = #{leafTagId}
+        </select>
+
+        <select id="findByLeafIdAndLeafTagId" resultType="LeafTagMap">
+            SELECT * FROM LEAF_TAG_MAP
+            WHERE LEAF_TAG_ID = #{leafTagId} AND LEAF_ID = #{leafId}
+        </select>
+
+        <delete id="deleteByLeafTagId" parameterType="Long">
+            DELETE FROM LEAF_TAG_MAP
+            WHERE LEAF_TAG_ID = #{leafTagId}
+        </delete>
+
+</mapper>

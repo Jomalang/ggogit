@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <link th:href="@{/css/fragments.css}" rel="stylesheet"/>
+    <link th:href="@{/css/layout.css}" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor-viewer.min.css" />
+    <title>Document</title>
+</head>
+<body>
+<header th:object="${treeInfo}">
+    <div th:replace="~{fragments/background :: user-info-back-header-memoir-title(edit=('/memoir/edit?t='+*{treeId}),backimgpath=*{coverImageName},username='조현진',userid='hyeonjin',memoirtitle=*{bookTitle},userurl='hi')}">
+    </div>
+</header>
+<main>
+<!-- 에디터 뷰어-->
+    <section class="my-tree-list" th:object="${memoir}">
+        <div class="memoir-title" th:insert ="~{fragments/text:: text-main-title(title=*{title}, size=28)}"></div>
+        <h2 class="none">에디터 뷰어</h2>
+        <input class="viewer-content hidden" th:value="*{text}"/>
+        <div id="viewer"></div>
+    </section>
+   <!-- 작성자 -->
+    <!-- TODO: 프레그먼트 내부에서 사용되는 팔로우 메서드 만들기 -->
+    <section class="bar-user-info-container">
+        <h2 class="none">사용자 정보</h2>
+        <div th:replace="~{fragments/bar :: bar-user-info-follow-btn(userimg='', username='조현진', userid='hyeonjin')}"></div>
+    </section>
+
+    <!-- 댓글 -->
+    <section class="tree-index-comment-container">
+        <h1 class="none">댓글</h1>
+        <div th:replace="~{fragments/bar :: comment(profileImg=@{/svg/comment-profile.svg}, commentCount='199')}"></div>
+
+        <section id="comment-filter-tab-id"
+                 class="book-detail-comment-tab-container">
+            <h1 class="none">댓글 탭</h1>
+            <div th:replace="~{fragments/tab-comment :: tab-comment}"></div>
+        </section>
+    </section>
+
+    <section class="user-another-records">
+        <h2 class="none">작성자 다른 기록들</h2>
+        <!-- 컴포넌트 -->
+        <section class="user-another-records-title-container">
+            <div th:replace="~{fragments/text :: text-main-title(title=(${username}+'의 다른 최근 기록들'), size=28)}"></div>
+        </section>
+        <section class="branch-tree-other-recode-sub-title-container">
+            <h1 th:replace="~{fragments/text :: text-main-title(title='트리', size=24)}"></h1>
+        </section>
+        <section class="branch-tree-another-record-list-container">
+            <h1 class="none">트리 리스트</h1>
+            <!-- <section class="book-detail-other-tree-card-container">
+                <div th:replace="~{fragments/card :: card-another-records-list(list=${treeCards}, type='treeCards')}"></div>
+            </section> -->
+        </section>
+
+        <section class="branch-tree-other-recode-sub-title-container">
+            <h1 th:replace="~{fragments/text :: text-main-title(title='회고록', size=24)}"></h1>
+        </section>
+
+        <section class="branch-tree-another-record-list-container">
+            <h1 class="none">회고록 리스트</h1>
+            <section class="book-detail-other-tree-card-container">
+                <div th:replace="~{fragments/card :: card-another-records-list(list=${memoirCards}, type='memoirCards')}"></div>
+            </section>
+        </section>
+
+        <section class="branch-tree-other-recode-sub-title-container">
+            <h1 th:replace="~{fragments/text :: text-main-title(title='로그', size=24)}"></h1>
+        </section>
+
+        <section class="branch-tree-another-record-list-container">
+            <h1 class="none">리프 리스트</h1>
+            <!-- <section class="book-detail-other-tree-card-container">
+                <div th:replace="~{fragments/card :: card-another-records-list(list=${leafCards}, type='leafCards')}"></div>
+            </section> -->
+        </section>
+    </section>
+</main>
+
+<footer>
+    <div th:replace="~{fragments/footer::footer('개발 중입니다~')}"></div>
+</footer>
+
+<section class="nav-back-container">
+    <h2 class="none">네비바 뒤 공백</h2>
+</section>
+<aside>
+    <section class="nav-container">
+        <h2 class="none">네비게이션</h2>
+        <!-- 트리 생성 언더바  -->
+        <div th:replace="~{fragments/nav :: navigation-bar(active='home')}"></div>
+    </section>
+</aside>
+
+<!--toast view CDN-->
+<script src="https://uicdn.toast.com/editor/latest/toastui-editor-viewer.js"></script>
+<script>
+    const viewer = new toastui.Editor({
+        el: document.querySelector('#viewer'),
+        viewer: true,
+        height: '500px',
+        initialValue: "hello"
+    });
+    let elem = document.querySelector('.viewer-content');
+    console.log(elem.value);
+    viewer.setMarkdown(elem.value);
+</script>
+
+<script th:src="@{/js/comment-popup.js}" type="module" defer></script>
+
+</body>
+</html>

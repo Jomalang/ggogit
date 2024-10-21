@@ -1,0 +1,16 @@
+<svg
+      class="a__div-icon-box"
+      width="16"
+      height="24"
+      viewBox="0 0 11 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M11 23.5L1.50804e-06 12L11 0.5"
+        stroke="#323A27"
+        stroke-width="3"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+</svg>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<link rel="stylesheet" href="../../static/css/fragments.css">
+<body>
+
+<!-- ==========================================
+     FRAGMENT: 네비게이션바
+     ========================================== -->
+<nav class="nav-box" th:fragment="navigation-bar(active)">
+    <h1 class="none">네비게이션</h1>
+    <ul class="nav-box__list">
+        <li class="nav-box__item">
+            <a class="nav-box__link" href="/">
+                <div class="nav-box__img-box" th:classappend="${active == 'home'} ? 'nav-box__img-box--active' : ''">
+                    <img class="main-nav__icon" th:if="${active == 'home'}" th:src="@{/svg/nav-home--active.svg}"
+                         alt="홈 네비게이션 이미지"/>
+                    <img class="main-nav__icon" th:if="${active != 'home'}" th:src="@{/svg/nav-home.svg}"
+                         alt="홈 네비게이션 이미지"/>
+                </div>
+                <p class="nav-box__text" th:classappend="${active == 'home'} ? 'nav-box__text--active' : ''">홈</p>
+            </a>
+        </li>
+        <li class="nav-box__item">
+            <a class="nav-box__link" href="#">
+                <div class="nav-box__img-box" th:classappend="${active == 'search'} ? 'nav-box__img-box--active' : ''">
+                    <img class="main-nav__icon" th:if="${active == 'search'}" th:src="@{/svg/nav-search--active.svg}"
+                         alt="탐색 네비게이션 이미지"/>
+                    <img class="main-nav__icon" th:if="${active != 'search'}" th:src="@{/svg/nav-search.svg}"
+                         alt="탐색 네비게이션 이미지"/>
+                </div>
+                <p class="nav-box__text" th:classappend="${active == 'search'} ? 'nav-box__text--active' : ''">탐색</p>
+            </a>
+        </li>
+        <li class="nav-box__item">
+            <a class="nav-box__link" href="#">
+                <div class="nav-box__img-box"
+                     th:classappend="${active == 'cummunity'} ? 'nav-box__img-box--active' : ''">
+                    <img class="main-nav__icon" th:if="${active == 'cummunity'}"
+                         th:src="@{/svg/nav-cummunity--active.svg}" alt="커뮤니티 네비게이션 이미지"/>
+                    <img class="main-nav__icon" th:if="${active != 'cummunity'}" th:src="@{/svg/nav-cummunity.svg}"
+                         alt="커뮤니티 네비게이션 이미지"/>
+                </div>
+                <p class="nav-box__text" th:classappend="${active == 'cummunity'} ? 'nav-box__text--active' : ''">
+                    커뮤니티</p>
+            </a>
+        </li>
+        <li class="nav-box__item">
+            <a class="nav-box__link" href="#">
+                <div class="nav-box__img-box" th:classappend="${active == 'mypage'} ? 'nav-box__img-box--active' : ''">
+                    <img class="main-nav__icon" th:if="${active == 'mypage'}" th:src="@{/svg/nav-mypage--active.svg}"
+                         alt="마이페이지 네비게이션 이미지"/>
+                    <img class="main-nav__icon" th:if="${active != 'mypage'}" th:src="@{/svg/nav-mypage.svg}"
+                         alt="마이페이지 네비게이션 이미지"/>
+                </div>
+                <p class="nav-box__text" th:classappend="${active == 'mypage'} ? 'nav-box__text--active' : ''">나의 꼬깃</p>
+            </a>
+        </li>
+    </ul>
+</nav>
+<!-- END: 네비게이션 바 -->
+
+</body>
+</html>

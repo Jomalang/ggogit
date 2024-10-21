@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link th:href="@{/common/variables.css}" rel="stylesheet" />
+    <link th:href="@{/css/fragments.css}" rel="stylesheet" />
+    <link th:href="@{/css/layout.css}" rel="stylesheet" />
+
+    <title>나의 트리 검색</title>
+  </head>
+
+  <body>
+    <header class="reg-book-search-container">
+      <h1 class="none">나의 트리</h1>
+      <section>
+        <h2 class="none">트리 검색</h2>
+        <!-- 컴포넌트 start -->
+        <div
+          th:replace="~{fragments/input::input-back-search-text(placeholder='검색할 트리를 입력해주세요', action='', name='treeSearchText', href='/home/{nickname}')}"
+        ></div>
+      </section>
+
+      <section>
+        <h2 class="none">검색 필터 리스트</h2>
+        <div
+          th:replace="~{fragments/filter:: search-filter-log('리프 전체 검색')}"
+        ></div>
+      </section>
+
+      <section>
+        <h1 class="none">검색 결과 및 최근 수정한 순서</h1>
+        <div
+          th:replace="~{fragments/top-bar::topbar-search-result-num(0)}"
+        ></div>
+      </section>
+    </header>
+
+    <main>
+      <section class="margin-bottom500">
+        <h1 class="none">트리 검색 결과</h1>
+      </section>
+    </main>
+
+    <aside class="nav-container">
+      <div th:replace="~{fragments/nav :: navigation-bar(home)}"></div>
+    </aside>
+  </body>
+</html>

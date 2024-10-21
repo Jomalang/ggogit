@@ -1,7 +1,39 @@
 package io.ggogit.ggogit.domain.leaf.service;
 
 
-public interface LeafService {
+import io.ggogit.ggogit.api.leaf.dto.LeafBranchResponse;
+import io.ggogit.ggogit.domain.leaf.entity.Leaf;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Objects;
+
+
+import io.ggogit.ggogit.api.leaf.dto.LeafBranchInfoResponse;
+import io.ggogit.ggogit.api.leaf.dto.LeafItemResponse;
+
+import java.util.List;
+
+public interface LeafDtoService {
+
+    /**
+     * 리프 노드의 Root 부터 End 까지 조회
+     */
+    LeafItemResponse getLeafNodeRootToEnd(Long leafId, boolean isOwner);
+
+
+    /**
+     * 리프 노드의 Root 부터 End 까지 의 브랜치 정보 조회
+     */
+    LeafBranchInfoResponse getBranchInfo(Long leafId);
+
+    /**
+     * 리프 노드의 End 까지 조회
+     */
+    LeafItemResponse getLeafNodeToEnd(Long leafId, boolean isOwner);
+
 //    List<LeafItemView> getLeafItems(Long treeId, Long leafId, boolean isOwner);
 //
 //    LeafListBranchView getBranchInfo(Long treeId, Long leafId);
@@ -29,4 +61,7 @@ public interface LeafService {
 //    List<LeafBranchView> toBranch(Long treeId, Boolean isLeaf, Long filter, Long sort, int page);
 //
 //    List<LeafBranchView> toBranchForNeighbor(Long treeId, Long filter, Long sort, int page);
+
+    HashMap<String ,Integer> nodeCountToRoot(Leaf leaf);
+    List<LeafBranchResponse> findBranchByFilter(Long treeId, Boolean owner, Boolean bookMark);
 }

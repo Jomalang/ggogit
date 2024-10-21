@@ -1,5 +1,6 @@
 package io.ggogit.ggogit.domain.tree.entity;
 
+import io.ggogit.ggogit.api.tree.dto.TreeTmpRequest;
 import io.ggogit.ggogit.domain.book.entity.Book;
 import io.ggogit.ggogit.domain.book.entity.BookCategory;
 import io.ggogit.ggogit.domain.member.entity.Member;
@@ -15,12 +16,14 @@ import java.time.LocalDateTime;
 
 @Data
 @Builder
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "TREE_SAVE_TMP")
-public class TreeSaveTmp {
+@NoArgsConstructor
+@AllArgsConstructor
+public class TreeTmp {
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false)
@@ -28,7 +31,7 @@ public class TreeSaveTmp {
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "MEMBER_ID", nullable = false)
+    @JoinColumn(name = "MEMBER", nullable = false)
     private Member member;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -87,4 +90,32 @@ public class TreeSaveTmp {
     @Version
     @Column(name = "VERSION", nullable = false)
     private Long version;
+
+    public static TreeTmp ofBook(TreeTmpRequest request, Book book, Seed seed, Member member) {
+        return  TreeTmp.builder()
+                .id(request.getId())
+                .member(member)
+                .bookCategory(book.getBookCategory())
+                .bookTitle(book.getTitle())
+                .author(book.getAuthor())
+                .publisher(book.getPublisher())
+                .totalPage(book.getTotalPage())
+                .book(book)
+                .seed(seed)
+                .treeTitle(request.getTreeTitle())
+                .description(request.getDescription())
+                .imageFile(request.getImageFile())
+                .visibility(request.getVisibility())
+                .build();
+    }
+    public static TreeTmp ofEtc(TreeTmpRequest request, Seed seed, Member member) {
+        return  TreeTmp.builder()
+                .member(member)
+                .seed(seed)
+                .treeTitle(request.getTreeTitle())
+                .description(request.getDescription())
+                .imageFile(request.getImageFile())
+                .visibility(request.getVisibility())
+                .build();
+    }
 }

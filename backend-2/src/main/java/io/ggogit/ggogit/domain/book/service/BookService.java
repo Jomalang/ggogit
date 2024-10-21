@@ -1,11 +1,15 @@
 package io.ggogit.ggogit.domain.book.service;
 
 
+import io.ggogit.ggogit.api.book.dto.BookInfoResponse;
 import io.ggogit.ggogit.domain.book.entity.Book;
 import org.springframework.web.multipart.MultipartFile;
+import io.ggogit.ggogit.domain.book.entity.BookCategory;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public interface BookService {
 
     /**
@@ -79,4 +83,8 @@ public interface BookService {
      * @return
      */
 //    BookInfoView getBookbyId(Long bookId);
+
+    BookCategory getBookCategory(Long bookId);
+
+    BookInfoResponse getBookbyId(Long id);
 }

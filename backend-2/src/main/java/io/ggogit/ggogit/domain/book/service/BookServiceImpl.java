@@ -1,6 +1,9 @@
 package io.ggogit.ggogit.domain.book.service;
 
+import io.ggogit.ggogit.api.book.dto.BookInfoResponse;
 import io.ggogit.ggogit.domain.book.entity.Book;
+import io.ggogit.ggogit.domain.book.entity.BookCategory;
+import io.ggogit.ggogit.domain.book.repository.BookCategoryRepository;
 import io.ggogit.ggogit.domain.book.repository.BookRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -17,6 +20,7 @@ import java.util.List;
 public class BookServiceImpl implements BookService {
 
     private final BookRepository bookRepository;
+    private final BookCategoryRepository bookCategoryRepository;
 
 
     //목록 조회 + 페이징, 정렬, 검색 기능
@@ -87,4 +91,16 @@ public class BookServiceImpl implements BookService {
     }
 
 
+    @Override
+    public BookCategory getBookCategory(Long bookId) {
+        return bookCategoryRepository.findById(bookId).orElse(null);
+    }
+
+    @Override
+    public BookInfoResponse getBookbyId(Long id) {
+        Book book = bookRepository.findById(id).orElse(null);
+        if (book != null)
+            return BookInfoResponse.of(book);
+        return null;
+    }
 }

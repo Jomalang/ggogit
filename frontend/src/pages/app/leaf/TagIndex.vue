@@ -3,7 +3,6 @@
 </script>
 
 <template>
-  Tag Index
   <RouterView />
 </template>
 

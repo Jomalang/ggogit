@@ -7,10 +7,6 @@ import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class TreeSaveTmpForm {
     private Long id;
     private Long memberId;

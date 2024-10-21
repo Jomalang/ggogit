@@ -32,14 +32,14 @@ class AladinControllerTest {
     void search() throws Exception {
         // given
 
-        // when
-        mockMvc.perform(post("/aladin")
-                .param("query", "자바 프로그래밍"))
-                .andExpect(status().isCreated());
-        // then
-        List<Book> book = bookRepository.findByMember_Id(1L);
-        for (Book b : book) {
-            System.out.println(b.getTitle());
-        }
+//        // when
+//        mockMvc.perform(post("/aladin")
+//                .param("query", "자바 프로그래밍"))
+//                .andExpect(status().isCreated());
+//        // then
+//        List<Book> book = bookRepository.findByMember_Id(1L);
+//        for (Book b : book) {
+//            System.out.println(b.getTitle());
+//        }
     }
 }

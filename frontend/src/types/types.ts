@@ -1,6 +1,7 @@
 export interface LeafTagProps {
   id: Number;
-  name: String;
+  name: string;
+  placeholder: string;
 }
 
 export interface LeafItemProps {

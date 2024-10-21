@@ -3,7 +3,6 @@
 </script>
 
 <template>
-  Tree Index
   <RouterView />
 </template>
 

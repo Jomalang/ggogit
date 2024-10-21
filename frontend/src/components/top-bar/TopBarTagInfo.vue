@@ -1,8 +1,14 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+
+const props = defineProps<{
+  text: string;
+}>();
+
+</script>
 
 <template>
   <div class="top-bar__tag-info-box">
-    <p class="top-bar__tag-info-text">옵션 선택 또는 생성</p>
+    <p class="top-bar__tag-info-text">{{ text }}</p>
   </div>
 </template>
 

@@ -25,7 +25,7 @@ import TagListBox from "@/components/tag/TagListBox.vue";
 
     <section>
       <h2 class="none">태그 기능 알림</h2>
-      <TopBarTagInfo></TopBarTagInfo>
+      <TopBarTagInfo text="옵션 선택 또는 생성"></TopBarTagInfo>
     </section>
 
     <section>

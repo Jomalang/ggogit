@@ -3,6 +3,7 @@
 interface Props {
   tree: string;
   branch: string;
+  leaf: string;
 }
 
 const props = defineProps<Props>();
@@ -17,6 +18,8 @@ const props = defineProps<Props>();
         <span class="log-path-box__tree-name" >{{props.tree}}</span>
         /
         <span class="log-path-box__branch-name" >{{props.branch}}</span>
+        /
+      <span class="log-path-box__branch-name" >{{props.leaf}}</span>
     </p>
 </div>
 </template>

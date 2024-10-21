@@ -9,7 +9,7 @@ import io.ggogit.ggogit.domain.member.entity.Member;
 import io.ggogit.ggogit.domain.tree.entity.TreeTmp;
 import io.ggogit.ggogit.domain.tree.service.TreeService;
 import io.ggogit.ggogit.domain.tree.service.TreeTmpService;
-import io.ggogit.ggogit.type.filterType;
+import io.ggogit.ggogit.type.FilterType;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
@@ -22,7 +22,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/trees")
@@ -172,15 +174,15 @@ public class TreeController {
         }
 
         int size = 10;
-        filterType filterName = filterType.fromNumber(filter);
-        filterType sortName = filterType.fromNumber(sort);
-        Sort s = filterType.createSort(filterName, sortName);
+        FilterType filterName = FilterType.fromNumber(filter);
+        FilterType sortName = FilterType.fromNumber(sort);
+        Sort s = FilterType.createSort(filterName, sortName);
         Pageable pageable = PageRequest.of(page, size, s);
 
         Boolean hasOwner = true;
         System.out.println("bookMark = " + bookMark);
         List<LeafBranchResponse> leafList = leafDtoService.findBranchByFilter(treeId, hasOwner, bookMark);
-
+        leafList = sortLeafList(leafList, filterName.getValue(), sortName.getValue());
         for (LeafBranchResponse leaf : leafList) {
             System.out.println(leaf.toString());
         }
@@ -203,6 +205,32 @@ public class TreeController {
             System.out.println("Paging error: " + e.getMessage());
             return Page.empty(pageable);
         }
+    }
+    private List<LeafBranchResponse> sortLeafList(List<LeafBranchResponse> leafList, String filterName, String sortName) {
+        Comparator<LeafBranchResponse> comparator;
+        switch (filterName) {
+            case "TITLE":
+                comparator = Comparator.comparing(LeafBranchResponse::getTitle);
+                break;
+            case "VIEW_COUNT":
+                comparator = Comparator.comparing(LeafBranchResponse::getViewCount);
+                break;
+            case "LIKE_COUNT":
+                comparator = Comparator.comparing(LeafBranchResponse::getLikeCount);
+                break;
+            case "LEAF_CNT":
+                comparator = Comparator.comparing(LeafBranchResponse::getLeafCount);
+                break;
+            default:
+                comparator = Comparator.comparing(LeafBranchResponse::getUpdateTime);
+                break;
+        }
+
+        if (sortName.equals("DESC")) {
+            comparator = comparator.reversed();
+        }
+
+        return leafList.stream().sorted(comparator).collect(Collectors.toList());
     }
 //
 //    @GetMapping("/{treeId}/leafs")

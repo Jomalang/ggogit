@@ -37,7 +37,7 @@ const props = defineProps<{
 
 .input-text__label-text {
   font-weight: var(--semi-bold);
-  font-size: 20px;
+  font-size: 18px;
 }
 
 .input-text__input {

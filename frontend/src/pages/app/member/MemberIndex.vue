@@ -3,7 +3,6 @@
 </script>
 
 <template>
-  Member Index
   <RouterView />
 </template>
 

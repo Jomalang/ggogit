@@ -2,6 +2,7 @@ package io.ggogit.ggogit.type;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.springframework.data.domain.Sort;
 
 @AllArgsConstructor
 @Getter
@@ -54,6 +55,30 @@ public enum filterType {
             }
         }
         throw new IllegalArgumentException("No filterType with number " + number);
+    }
+    public static Sort createSort(filterType filter, filterType sort) {
+        switch (filter) {
+            case UPDATE_TIME:
+                if (sort == ASC)
+                    return Sort.by("updateTime").ascending();
+                return Sort.by("updateTime").descending();
+            case TITLE:
+                if (sort == ASC)
+                    return Sort.by("title").ascending();
+                return Sort.by("title").descending();
+            case LEAF_CNT_:
+                if (sort == ASC)
+                    return Sort.by("leafCount").ascending();
+                return Sort.by("leafCount").descending();
+            case VIEW_COUNT:
+                if (sort == ASC)
+                    return Sort.by("viewCount").ascending();
+                return Sort.by("viewCount").descending();
+            default:
+                if (sort == ASC)
+                    return Sort.by("updateTime").ascending();
+                return Sort.by("updateTime").descending();
+        }
     }
 
 }

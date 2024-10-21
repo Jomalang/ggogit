@@ -1,6 +1,7 @@
 package io.ggogit.ggogit.domain.tree.entity;
 
 import io.ggogit.ggogit.domain.book.entity.Book;
+import io.ggogit.ggogit.domain.leaf.entity.Leaf;
 import io.ggogit.ggogit.domain.member.entity.Member;
 import io.ggogit.ggogit.domain.memoir.entity.Memoir;
 import jakarta.persistence.*;
@@ -39,6 +40,14 @@ public class Tree {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "BOOK_ID")
     private Book book;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "TREEBOOK_ID")
+    private TreeBook treeBook;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "LEAF_ID")
+    private Leaf leaf;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -90,26 +99,26 @@ public class Tree {
     @Column(name = "VERSION", nullable = false)
     private Long version;
 
-    public static Tree of(TreeSaveTmp treeSaveTmp, Book book, Member member, Seed seed) {
+    public static Tree of(TreeTmp treeTmp, Book book, Member member, Seed seed) {
         return Tree.builder()
                 .seed(seed)
                 .book(book)
                 .member(member)
                 .bookMarkCount(0)
-                .title(treeSaveTmp.getTreeTitle())
-                .description(treeSaveTmp.getDescription())
-                .visibility(treeSaveTmp.getVisibility())
+                .title(treeTmp.getTreeTitle())
+                .description(treeTmp.getDescription())
+                .visibility(treeTmp.getVisibility())
                 .build();
     }
 
-    public static Tree of(TreeSaveTmp treeSaveTmp, Member member, Seed seed) {
+    public static Tree of(TreeTmp treeTmp, Member member, Seed seed) {
         return Tree.builder()
                 .seed(seed)
                 .member(member)
                 .bookMarkCount(0)
-                .title(treeSaveTmp.getTreeTitle())
-                .description(treeSaveTmp.getDescription())
-                .visibility(treeSaveTmp.getVisibility())
+                .title(treeTmp.getTreeTitle())
+                .description(treeTmp.getDescription())
+                .visibility(treeTmp.getVisibility())
                 .build();
     }
 }

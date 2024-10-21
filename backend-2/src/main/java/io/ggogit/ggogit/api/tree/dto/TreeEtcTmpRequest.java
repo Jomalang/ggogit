@@ -1,4 +1,4 @@
-package Recorders.ggogit.web.tree.form;
+package io.ggogit.ggogit.api.tree.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,15 +7,12 @@ import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
-public class TreeSaveTmpForm {
-    private Long id;
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class TreeEtcTmpRequest {
     private Long memberId;
-    private Long bookId;
-    private Long bookCategoryId;
-    private String bookTitle;
-    private String author;
-    private String publisher;
-    private Long totalPage;
 
     private Long seedId;
 
@@ -24,6 +21,4 @@ public class TreeSaveTmpForm {
     private String imageFile;
     private Boolean visibility;
     private Date createTime;
-
-
 }

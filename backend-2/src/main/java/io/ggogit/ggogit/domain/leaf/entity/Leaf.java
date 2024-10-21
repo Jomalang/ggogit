@@ -1,5 +1,7 @@
 package io.ggogit.ggogit.domain.leaf.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.ggogit.ggogit.domain.tree.entity.Tree;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -14,7 +16,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Builder
 @AllArgsConstructor
@@ -32,10 +35,12 @@ public class Leaf {
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "TREE_ID", nullable = false)
+    @JsonManagedReference
     private Tree tree;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PARENT_LEAF_ID")
+    @JsonBackReference
     private Leaf parentLeaf;
 
     @Size(max = 255)

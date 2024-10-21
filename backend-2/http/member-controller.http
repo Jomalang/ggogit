@@ -1,80 +1,46 @@
 # ================================================== #
-# 내부 변수
-@memberId = 1
-# ================================================== #
+# Member API
 
-# ================================================== #
-# 회원 관리
+### 회원 가입 이메일 전송
+POST {{host}}/api/v1/member/join
+Content-Type: application/json
+
+{
+  "email": "test@example.com"
+}
+
 ### 회원 가입
-POST {{host}}/api/v1/members
+POST {{host}}/api/v1/member/join-input
 Content-Type: application/json
 
 {
-  "username": "test123",
-  "email": "test123@ggogit.io",
-  "password": "123"
+  "email": "test@example.com",
+  "password": "password123",
+  "nickname": "testNickname",
+  "username": "testUsername",
+  "introduction": "test introduction",
+  "policyAgreement": true
 }
 
-> {%
-    client.test("Response status is 201", function() {
-        client.assert(response.status === 201, "Response status is not 201");
-    });
-
-    client.test("Response contains member ID", function() {
-        client.assert(response.body.id !== undefined, "Response does not contain member ID");
-    });
-%}
-
-### 회원 정보 조회
-GET {{host}}/api/v1/members/{{memberId}}
-
-> {%
-    client.test("Response status is 200", function() {
-        client.assert(response.status === 200, "Response status is not 200");
-    });
-
-    client.test("Response contains member details", function() {
-        client.assert(response.body.username !== undefined, "Response does not contain username");
-        client.assert(response.body.email !== undefined, "Response does not contain email");
-    });
-%}
-
-### 회원 정보 수정
-PUT {{host}}/api/v1/members/{{memberId}}
+### 로그인
+POST {{host}}/api/v1/member/login
 Content-Type: application/json
 
 {
-  "email": "updated@example.com"
+  "email": "test@example.com",
+  "password": "password123"
 }
 
-> {%
-    client.test("Response status is 200", function() {
-        client.assert(response.status === 200, "Response status is not 200");
-    });
+### 로그아웃
+POST {{host}}/api/v1/member/logout
 
-    client.test("Email is updated", function() {
-        client.assert(response.body.email === "updated@example.com", "Email is not updated correctly");
-    });
-%}
+### 비밀번호 재설정 페이지
+GET {{host}}/api/v1/member/pw/rst
 
-### 회원 삭제
-DELETE {{host}}/api/v1/members/{{memberId}}
+### 비밀번호 재설정 요청
+POST {{host}}/api/v1/member/pw/rst
 
-> {%
-    client.test("Response status is 204", function() {
-        client.assert(response.status === 204, "Response status is not 204");
-    });
-%}
+### 회원 이미지 조회
+GET {{host}}/api/v1/member/image/{memberId}
 
-### 모든 회원 조회
-GET {{host}}/api/v1/members
-
-> {%
-    client.test("Response status is 200", function() {
-        client.assert(response.status === 200, "Response status is not 200");
-    });
-
-    client.test("Response is an array", function() {
-        client.assert(Array.isArray(response.body), "Response is not an array");
-    });
-%}
+# ================================================== #

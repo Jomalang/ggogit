@@ -5,6 +5,12 @@ spring:
     username: ggogit
     password: 111
 
+  messages:
+    basename: messages, errors
+  servlet:
+    multipart:
+      max-file-size: 10MB
+    ## 메일 발송
   mail:
     host: smtp.gmail.com #SMTP 서버 호스트
     port: 587 # SMTP 서버 포트
@@ -29,9 +35,16 @@ spring:
         dialect: org.hibernate.dialect.MariaDBDialect
     defer-datasource-initialization: true
 
+server:
+  servlet:
+    context-path: /api/v1
 
-
-leaf-count: 3 # 리프 노드의 수를 설정합니다.
 file: # 이미지 업로드 경로
   tmp-dir: src/main/webapp/image/tmp
   upload-dir: src/main/webapp/uploads
+  upload-path: src/main/resources/static/uploads
+
+
+aladin:
+  api:
+    key: ttbrhkddlr982013001

@@ -4,6 +4,28 @@ spring:
     url: jdbc:h2:mem:testdb
     username: sa
     password: 111
+  h2:
+    console:
+      enabled: true
+
+  messages:
+    basename: messages, errors
+  servlet:
+    multipart:
+      max-file-size: 10MB
+    ## 메일 발송
+  mail:
+    host: smtp.gmail.com #SMTP 서버 호스트
+    port: 587 # SMTP 서버 포트
+    username:  # SMTP 서버 로그인 아이디
+    password:  #SMTP 서버 비밀번호
+    properties:
+      mail:
+        smtp:
+          auth: true #사용자 인증 시도 여부(기본값은 false)
+          timeout: 5000 #socket read timeout
+          starttls:
+            enable: true #starttls 활성화 여부
 
   mail:
     host: smtp.gmail.com #SMTP 서버 호스트
@@ -26,9 +48,23 @@ spring:
         format_sql: true
         use_sql_comments: true
         dialect: org.hibernate.dialect.H2Dialect
+        hbm2ddl:
+          auto: create
     defer-datasource-initialization: true
+  sql:
+    init:
+      encoding: utf-8
 
-leaf-count: 3 # 리프 노드의 수를 설정합니다.
+
+server:
+  servlet:
+    context-path: /api/v1
+
+aladin:
+  api:
+    key: ttbrhkddlr982013001
+
 file: # 이미지 업로드 경로
   tmp-dir: src/main/webapp/image/tmp
   upload-dir: src/main/webapp/uploads
+  upload-path: src/main/resources/static/uploads

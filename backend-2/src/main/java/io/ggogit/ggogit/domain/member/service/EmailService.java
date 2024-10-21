@@ -2,51 +2,44 @@ package io.ggogit.ggogit.domain.member.service;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.web.server.Cookie;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.support.SessionStatus;
 
-import java.util.Optional;
-
-@Slf4j
 @Service
-@RequiredArgsConstructor
+@Slf4j
 public class EmailService {
 
-    private final JavaMailSender mailSender;
-
     @Value("${spring.mail.username}")
-    private String fromEmail;
+    private String sender;
 
-    public void sendEmail(String to) throws MessagingException {
-        MimeMessage message = mailSender.createMimeMessage();
+    private final JavaMailSender javaMailSender;
+
+    public EmailService(JavaMailSender javaMailSender) {
+        this.javaMailSender = javaMailSender;
+    }
+
+    public void sendEmail(String toEmail) throws MessagingException {
+        MimeMessage message = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
 
-        helper.setFrom(fromEmail);
-        helper.setTo(to);
-        helper.setSubject("회원 가입 확인 이메일");
-        helper.setText("회원 가입을 환영합니다. 이 이메일은 회원 가입 확인용입니다.", false);
+        helper.setFrom(sender);
+        helper.setTo(toEmail);
+        helper.setSubject("Ggogit 회원가입 인증");
+        helper.setText("<h1>Ggogit</h1>" +
+                "<br/>" +
+                "<p>안녕하세요. Ggogit입니다. Ggogit에 가입해주셔서 진심으로 감사드립니다.</p>" +
+                "<br/>" +
+                "<p>아래 링크를 클릭하여 회원가입을 완료해주세요.</p>" +
+                "<br/>" +
+                "<a href='http://localhost:8080/member/join-input'>회원가입 완료하기</a>" +
+                "<br/>" +
+                "<p>감사합니다.</p>" +
+                "<br/>" +
+                "<p>Ggogit 드림</p>", true);
 
-        mailSender.send(message);
-    }
-
-    public void createEmailCookie(Model model, String email) {
-        model.addAttribute("email", email);
-    }
-
-    public void removeEmailCookie(SessionStatus sessionStatus) {
-        sessionStatus.setComplete();
-    }
-
-    public Optional<String> getEmailCookie(HttpServletRequest request) {
-        return null;
+        javaMailSender.send(message);
     }
 }

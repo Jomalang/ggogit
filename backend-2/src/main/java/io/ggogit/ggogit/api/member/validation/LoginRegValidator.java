@@ -1,8 +1,7 @@
 package io.ggogit.ggogit.api.member.validation;
 
+import io.ggogit.ggogit.api.member.dto.MemberRegRequestDto;
 import io.ggogit.ggogit.domain.member.service.LoginService;
-import io.ggogit.ggogit.api.member.form.LoginRegForm;
-import io.ggogit.ggogit.api.member.dto.LoginRegRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -16,45 +15,71 @@ import java.util.regex.Pattern;
 @Component
 public class LoginRegValidator implements Validator {
 
+    private final LoginService loginService;
+
+    //검증가능한 대상(LoginRedForm.class)인지 검사
     @Override
     public boolean supports(Class<?> clazz) {
-        return LoginRegRequest.class.isAssignableFrom(clazz);
+        return MemberRegRequestDto.class.isAssignableFrom(clazz);
     }
 
     @Override
     public void validate(Object target, Errors errors) {
-        LoginRegRequest request = (LoginRegRequest) target;
+        MemberRegRequestDto loginRegForm = (MemberRegRequestDto) target;
 
-        // 이메일 유효성 검사
-        if (request.getEmail() == null || request.getEmail().trim().isEmpty()) {
-            errors.rejectValue("email", "email.empty", "이메일을 입력해주세요.");
-        } else if (!isValidEmail(request.getEmail())) {
-            errors.rejectValue("email", "email.invalid", "올바른 이메일 형식이 아닙니다.");
+        //유효성 검증 로직 시작
+
+        //동의 하지 않은 경우 검증
+        if(loginRegForm.getPolicyAgreement() != null && !loginRegForm.getPolicyAgreement()){
+            errors.rejectValue("policyAgreement", "NotAgree");
+            log.info("errors: {}", errors.getAllErrors());
         }
 
-        // 비밀번호 유효성 검사
-        if (request.getPassword() == null || request.getPassword().trim().isEmpty()) {
-            errors.rejectValue("password", "password.empty", "비밀번호를 입력해주세요.");
-        } else if (request.getPassword().length() < 8) {
-            errors.rejectValue("password", "password.tooShort", "비밀번호는 8자 이상이어야 합니다.");
+        //이메일
+        if(loginRegForm.getEmail() != null){
+            String email = loginRegForm.getEmail();
+            String ValidEmail = "^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
+
+            //중복되는 이메일 검증
+            if(loginService.getMemberByEmail(email) != null){
+                errors.rejectValue("email","Duplicate");
+            }
+            // 이메일 유효성 확인
+            else if(!Pattern.matches(ValidEmail, email)){
+                errors.rejectValue("email","NotValid");
+            }
         }
 
-        // 비밀번호 확인 유효성 검사 (비밀번호 확인 필드가 있다고 가정)
-        if (request.getConfirmPassword() != null && !request.getConfirmPassword().equals(request.getPassword())) {
-            errors.rejectValue("confirmPassword", "password.mismatch", "비밀번호가 일치하지 않습니다.");
+        //닉네임
+        if(loginRegForm.getNickname() != null){
+            String nickname = loginRegForm.getNickname();
+            String ValidNickname = "^[a-zA-Z0-9가-힣_]+$";
+            //중복되는 닉네임 검증
+            if(loginService.getMemberByNickname(nickname) != null){
+                errors.rejectValue("nickname","Duplicate");
+            }
+            // 닉네임 유효성 확인
+            else if(!Pattern.matches(ValidNickname, nickname)){
+                errors.rejectValue("nickname","NotValid");
+            }
+            // 닉네임 길이 검사 (2자 이상, 10자 이하)
+            else if (nickname.length() < 2 || nickname.length() > 10) {
+                errors.rejectValue("nickname", "Length");
+            }
         }
 
-        // 이름 유효성 검사 (이름 필드가 있다고 가정)
-        if (request.getName() == null || request.getName().trim().isEmpty()) {
-            errors.rejectValue("name", "name.empty", "이름을 입력해주세요.");
+        //비밀번호
+        if(loginRegForm.getPassword() != null){
+            String password = loginRegForm.getPassword();
+            //비밀번호 유효성 확인
+            String ValidPassword = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*()?\\-_+=\\[\\]{}|;:,.<>]).{8,32}$";
+            if(!Pattern.matches(ValidPassword, password)){
+                errors.rejectValue("password","NotValid");
+            }
+            // 허용되지 않는 특수 문자 검사
+            else if (password.contains("<") || password.contains(">")) {
+                errors.rejectValue("password", "NotAllowedChar");
+            }
         }
-
-        // 추가적인 유효성 검사 규칙들...
-    }
-
-    private boolean isValidEmail(String email) {
-        // 간단한 이메일 형식 검사
-        String emailRegex = "^[A-Za-z0-9+_.-]+@(.+)$";
-        return email.matches(emailRegex);
     }
 }

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<body>
+
+
+<!-- ==========================================
+     FRAGMENT: 헤더 검색 링크
+     ========================================== -->
+    <div class="header-search-link" th:fragment="header-search-link">
+        <a class="header-search-link__link" th:href="@{/tree/book/select}">
+            <div class="header-search-link__input-box">
+                <p class="header-search-link__placeholder">나의 트리 검색</p>
+                <img class="header-search-link__icon" th:src="@{/svg/lens.svg}" alt="lens.svg"/>
+            </div>
+        </a>
+    </div>
+
+</body>
+</html>

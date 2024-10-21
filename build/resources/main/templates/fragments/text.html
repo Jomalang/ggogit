@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="" lang="en">
+  <body>
+    <!-- ==========================================
+     FRAGMENT: 메인 Title
+     ========================================== -->
+    <div th:fragment="text-main-title(title, size)">
+      <h1
+        class="text-main-title text--title28"
+        th:if="${size == 28}"
+        th:text="${title}"
+      >
+        Default Title
+      </h1>
+      <h1
+        class="text-main-title text--title24"
+        th:if="${size == 24}"
+        th:text="${title}"
+      >
+        Default Title
+      </h1>
+      <h1
+        class="text-main-title text--title20"
+        th:if="${size == 20}"
+        th:text="${title}"
+      >
+        Default Title
+      </h1>
+      <h1
+        class="text-main-title text--title18"
+        th:if="${size == 18}"
+        th:text="${title}"
+      >
+        Default Title
+      </h1>
+      <h1
+        class="text-main-title text--title16"
+        th:if="${size == 16}"
+        th:text="${title}"
+      >
+        Default Title
+      </h1>
+      <h1
+        class="text-main-title text--title14"
+        th:if="${size == 14}"
+        th:text="${title}"
+      >
+        Default Title
+      </h1>
+    </div>
+
+    <!-- ==========================================
+     FRAGMENT: 화면 설명글
+     ========================================== -->
+    <div class="textbox-no-tree" th:fragment="text-info(text, boldText)">
+      <p class="textbox-no-tree__text-top" th:text="${text}">
+        현재 기록중인 트리가 없습니다
+      </p>
+      <p class="textbox-no-tree__text-bottom" th:text="${boldText}">
+        트리를 검색해주세요
+      </p>
+    </div>
+  </body>
+</html>
+<!-- ==========================================
+     FRAGMENT: 도서 정보
+     설명: 트리 생성 시 검색된 도서 정보 표현 화면
+     ========================================== -->
+<div
+  class="text-book-info"
+  th:fragment="text-book-info(seed, title, author, translators, publisher)">
+  <div class="text-book-info__frame">
+    <p class="text-book-info__seed" th:text="${seed}">카테고리</p>
+  </div>
+  <div class="text-book-info__category">
+    <p class="text-book-info__title" th:text="${title}">제목</p>
+  </div>
+  <div class="text-book-info__create-frame">
+    <div class="text-book-info__create">
+    <span class="text-book-info-create-info" th:text="${author}" >저자</span>
+    <span class="text-book-info-create-info">·</span>
+    </div>
+    <div class="text-book-info__create" th:if="${translators != null}" th:each="translator :${translators}">
+      <span class="text-book-info-create-info" th:text="${translator}">번역자</span>
+      <span class="text-book-info-create-info">·</span>
+    </div>
+    <span class="text-book-info-create-info" th:text="${publisher}">출판사</span>
+  </div>
+</div>
+
+<!-- ==========================================
+     FRAGMENT: 메인 중앙 Title
+     ========================================== -->
+<div class="text-main-title-box" th:fragment="text-main-title-center(title, size)">
+  <h1 class="text-main-title--center text--title38" th:if="${size == 38}" th:text="${title}">Default Title</h1>
+  <h1 class="text-main-title--center text--title28" th:if="${size == 28}" th:text="${title}">Default Title</h1>
+  <h1 class="text-main-title--center text--title24" th:if="${size == 24}" th:text="${title}">Default Title</h1>
+  <h1 class="text-main-title--center text--title20" th:if="${size == 20}" th:text="${title}">Default Title</h1>
+  <h1 class="text-main-title--center text--title18" th:if="${size == 18}" th:text="${title}">Default Title</h1>
+  <h1 class="text-main-title--center text--title16" th:if="${size == 16}" th:text="${title}">Default Title</h1>
+  <h1 class="text-main-title--center text--title14" th:if="${size == 14}" th:text="${title}">Default Title</h1>
+</div>
+
+<!-- ==========================================
+     FRAGMENT: 메인 오른족 Title
+     ========================================== -->
+<div
+  class="text-main-title-box--right"
+  th:fragment="text-main-title-right(title, size)"
+>
+  <h1
+    class="text-main-title--right text--title28"
+    th:if="${size == 28}"
+    th:text="${title}"
+  >
+    Default Title
+  </h1>
+  <h1
+    class="text-main-title--right text--title24"
+    th:if="${size == 24}"
+    th:text="${title}"
+  >
+    Default Title
+  </h1>
+  <h1
+    class="text-main-title--right text--title20"
+    th:if="${size == 20}"
+    th:text="${title}"
+  >
+    Default Title
+  </h1>
+  <h1
+    class="text-main-title--right text--title18"
+    th:if="${size == 18}"
+    th:text="${title}"
+  >
+    Default Title
+  </h1>
+  <h1
+    class="text-main-title--right text--title16"
+    th:if="${size == 16}"
+    th:text="${title}"
+  >
+    Default Title
+  </h1>
+  <h1
+    class="text-main-title--right text--title14"
+    th:if="${size == 14}"
+    th:text="${title}"
+  >
+    Default Title
+  </h1>
+</div>
+
+<!-- ==========================================
+     FRAGMENT: 최근 트리 정보
+     ========================================== -->
+<div
+  class="textbox-recent-tree-info"
+  th:fragment="recent-tree-info(tree)"
+  th:object="${tree}"
+>
+  <div class="textbox-recent-tree-info__a">
+    <h2 class="textbox-recent-tree-info__tree-title" th:text="*{title}">
+      나의 첫번째 트리
+    </h2>
+    <div
+      class="textbox-recent-tree-info__tag tag"
+      th:text="*{bookCategory}"
+    >
+      시/에세이
+    </div>
+    <p class="textbox-recent-tree-info__book-title" th:text="*{bookTitle}">
+      무정형의 삶
+    </p>
+    <div class="textbox-recent-tree-info__items">
+      <p class="textbox-recent-tree-info__author" th:text="*{bookAuthor}">김민철</p>
+      <p class="textbox-recent-tree-info__publisher" th:text="*{bookPublisher}">
+        위즈덤 하우스
+      </p>
+    </div>
+    <p class="textbox-recent-tree-info__date" th:text="*{#dates.format(createdAt, 'yyyy-MM-dd')}">
+      2024.07.15
+    </p>
+  </div>
+</div>
+
+<!-- ==========================================
+     FRAGMENT: 최근 트리 설명
+     ========================================== -->
+<div class="textbox-recent-tree-ex" th:fragment="recent-tree-ex(text)">
+  <h2 class="textbox-recent-tree-ex__h2">트리 설명</h2>
+  <p class="textbox-recent-tree-ex__p" th:text="${text}">
+    코딩 테스트 합격자 되기 자바스크립트 편의 영감 기록을 남기는 이유는 다음과
+    같습니다. 영감 기록을 작성하면 책에서 배운 내용을 정리하고 이해도를 높일 수
+    있습니다.
+  </p>
+</div>
+
+<!-- ==========================================
+     FRAGMENT: 트리 리스트 트리 개수
+     ========================================== -->
+<div class="textbox-tree-count" th:fragment="tree-count(num)">
+  <h2 class="textbox-tree-count__h2">트리 목록</h2>
+  <p class="textbox-tree-count__p">
+    <span class="textbox-tree-count__num" th:text="${num}">14</span>그루
+  </p>
+</div>
+<!-- ==========================================
+     FRAGMENT: 도서 정보
+     설명: 트리 생성 시 검색된 도서 정보 표현 화면
+     ========================================== -->
+<div
+  class="text-book-info--no-title"
+  th:fragment="text-book-info--no-title(authors,translators, publisher, page,seed)"
+>
+  <div class="text-book-info--no-title__creaters">
+    <div
+      class="text-book-info--no-title__creaters"
+      th:each="author :${authors}"
+    >
+      <span class="text-book-info-create-info" th:text="${author}"></span>
+      <span class="text-book-info-create-info">|</span>
+    </div>
+    <div
+      class="text-book-info--no-title__creaters"
+      th:if="${translators}"
+      th:each="translator :${translators}"
+    >
+      <span class="text-book-info-create-info" th:text="${translator}"></span>
+      <span class="text-book-info-create-info">|</span>
+    </div>
+
+    <span class="text-book-info-create-info" th:text="${publisher}"></span>
+  </div>
+  <div>
+    <span class="text-book-info--no-title__page">총 페이지 수:</span>
+    <span class="text-book-info--no-title__page" th:text="${page}"></span>
+  </div>
+  <div>
+    <p class="text-book-info--no-title__seed" th:text="${seed}"></p>
+  </div>
+</div>
+
+<!-- ==========================================
+     FRAGMENT: 로그인 페이지 안내 텍스트
+     설명 : 로그인 메인 페이지, 이메일 입력하라는 안내 텍스트
+     ========================================== -->
+<div class="text-login__page-info" th:fragment="text-login__page-info(label, infoText)">
+  <p class="text--title28" th:text="${label}">로그인</p>
+  <p class="text--explain" th:text="${infoText}">사용하는 이메일을 입력해주세요</p>
+</div>
+<!-- ==========================================
+     FRAGMENT: 회원가입 페이지 안내 텍스트
+     설명 : 회원가입시 안내 메시지
+     ========================================== -->
+<div class="text-login__page-info" th:fragment="text-join__page-info(label, infoText)">
+  <p class="text--title38" th:text="${label}">로그인</p>
+  <p class="text--explain" th:text="${infoText}">사용하는 이메일을 입력해주세요</p>
+</div>
+
+<!-- ==========================================
+     FRAGMENT: 로그인 페이지 안내 텍스트
+     설명 : 로그인 메인 페이지, 계정 없다면 회원가입하라는 텍스트
+     ========================================== -->
+<div class="join-guide" th:fragment="join-guide(infoText, label, href)">
+  <p class="text--title14" th:text="${infoText}">계정이 없으신가요?</p>
+  <a th:href="${href}"><p class="text--title16" th:text="${label}">회원가입</p></a>
+</div>

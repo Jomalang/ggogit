@@ -1,17 +1,7 @@
 package io.ggogit.ggogit.domain.member.repository;
 
-public interface MemberBackgroundImageRepository {
+import io.ggogit.ggogit.domain.member.entity.MemberBackgroundImage;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-    void save(MemberBackgroundImage memberBackgroundImage);
-
-    void update(MemberBackgroundImage memberBackgroundImage);
-
-    void delete(MemberBackgroundImage memberBackgroundImage);
-
-    List<MemberBackgroundImage> findAll();
-
-    MemberBackgroundImage findById(Long id);
-
-    MemberBackgroundImage findByName(String name);
-
+public interface MemberBackgroundImageRepository extends JpaRepository<MemberBackgroundImage, Long> {
 }

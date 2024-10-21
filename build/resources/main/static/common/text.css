@@ -1,0 +1,102 @@
+/*프리텐다드*/
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
+
+/* Formating */
+abbr, address, b, bdi,
+  bdo, blockquote, cite, code, del, dfn, em, i, ins, kbd, mark, meter, pre,
+  progress, q, rp, rt, ruby, s, samp, small, strong, sub, sup, template, time, u,
+  var, wbr, /* Forms and Input */ form, input, textarea, button, select,
+  optgroup, option, label, fieldset, legend, datalist, output, /* Images */ img,
+  map, area, canvas, figcaption, figure, picture, svg, /* Links */ a, link, nav,
+  /* Lists */ ul, ol, li, dl, dt, dd, /* Tables */ table, caption, th, tr, td,
+  thead, tbody, tfoot, col, colgroup, /* Styles and Semantics */ div, span,
+  header, footer, main, section, article, aside, details, dialog, summary, data {
+  /* 자간 -2.5괜찮은지? em사용하지 않아도 될지?*/
+  letter-spacing: var(--letter-spacing-main);
+  font-family: "Pretendard", sans-serif;
+  color: var(--main1);
+}
+
+.text--title38 {
+  font-size: 38px;
+  font-weight: var(--bold);
+  line-height: var(--line-height-main);
+  letter-spacing: var(--letter-spacing-main);
+}
+.text--title28 {
+  font-size: 28px;
+  font-weight: var(--bold);
+  line-height: var(--line-height-main);
+  letter-spacing: var(--letter-spacing-main);
+}
+
+.text--title24 {
+  font-size: 24px;
+  font-weight: var(--bold);
+  line-height: var(--line-height-main);
+  letter-spacing: var(--letter-spacing-main);
+}
+.text--title20 {
+  font-size: 20px;
+  font-weight: var(--bold);
+  line-height: var(--line-height-main);
+  letter-spacing: var(--letter-spacing-main);
+}
+.text--title18 {
+  font-size: 18px;
+  font-weight: var(--bold);
+  line-height: var(--line-height-main);
+  letter-spacing: var(--letter-spacing-main);
+}
+
+.text--title16 {
+  font-size: 16px;
+  font-weight: var(--bold);
+  line-height: var(--line-height-main);
+  letter-spacing: var(--letter-spacing-main);
+}
+
+.text--title14 {
+  font-size: 14px;
+  font-weight: var(--bold);
+  line-height: var(--line-height-main);
+  letter-spacing: var(--letter-spacing-main);
+}
+
+.text--tag {
+  font-size: 10px;
+  color: var(--text-icon);
+  font-weight: var(--medium);
+  line-height: var(--line-height-main);
+  letter-spacing: var(--letter-spacing-main);
+}
+
+.text--alert {
+  font-size: 16px;
+  font-weight: var(--bold);
+  line-height: var(--line-height-main);
+  letter-spacing: var(--letter-spacing-main);
+  color: var(--main1);
+}
+
+.text--explain {
+  font-size: 16px;
+  font-weight: var(--regular);
+  line-height: var(--line-height-main);
+  letter-spacing: var(--letter-spacing-main);
+  color: var(--text-sub);
+}
+
+.text--errors{
+  padding-top: 5px;
+  font-size: 16px;
+  color: var(--warning);
+  font-weight: var(--medium);
+  line-height: var(--line-height-main);
+  letter-spacing: var(--letter-spacing-main);
+}
+
+.text--underline{
+  text-decoration: underline;
+  font-weight: var(--bold);
+}

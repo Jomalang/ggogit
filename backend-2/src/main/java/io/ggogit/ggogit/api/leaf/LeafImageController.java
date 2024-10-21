@@ -15,7 +15,7 @@ import java.util.UUID;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping
 public class LeafImageController {
 
     @Value("${file.tmp-dir}")

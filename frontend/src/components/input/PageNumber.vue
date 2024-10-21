@@ -8,7 +8,7 @@ const props = defineProps<{
 <template>
   <!-- page-number(startPage, endPage) -->
   <div class="input-page-number-box">
-    <p class="input-page-number__title">페이지</p>
+    <p class="input-page-number__title">*페이지</p>
     <div class="input-page-number__frame">
       <label class="input-page-number__label">
         <input

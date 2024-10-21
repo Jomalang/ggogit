@@ -3,7 +3,8 @@ package io.ggogit.ggogit.api.tree;
 import io.ggogit.ggogit.api.leaf.dto.LeafBranchResponse;
 import io.ggogit.ggogit.api.tree.dto.TreeTmpRequest;
 import io.ggogit.ggogit.api.tree.dto.TreeTmpResponse;
-import io.ggogit.ggogit.domain.leaf.service.LeafService;
+
+import io.ggogit.ggogit.domain.leaf.service.LeafDtoService;
 import io.ggogit.ggogit.domain.member.entity.Member;
 import io.ggogit.ggogit.domain.tree.entity.TreeTmp;
 import io.ggogit.ggogit.domain.tree.service.TreeService;
@@ -30,7 +31,7 @@ public class TreeController {
 
     private final TreeService treeService;
     private final TreeTmpService treeTmpService;
-    private final LeafService leafService;
+    private final LeafDtoService leafDtoService;
 
     @GetMapping("/search")
     public String treeSearch() {
@@ -157,36 +158,83 @@ public class TreeController {
 //        return "redirect:/leaf/first/reg?seed=" + seed.getEngName();
 //    }
 
-
     @GetMapping("/{treeId}/leafs")
     public Page<LeafBranchResponse> getBranchList(
             @PathVariable Long treeId,
             @RequestParam(value = "bookMark", required = false) final Boolean bookMark,
-            @RequestParam(value = "filter", required = false) final  Long filter,
-            @RequestParam(value = "sort", required = false) final  Long sort,
-            @RequestParam(value = "p", defaultValue = "1") final int page,
-            @SessionAttribute Member member,
-            HttpServletRequest request
-            ) {
-        int size = 10;
+            @RequestParam(value = "filter", defaultValue = "10") final Long filter,
+            @RequestParam(value = "sort", defaultValue = "1") final Long sort,
+            @RequestParam(value = "p", defaultValue = "0") final int page,
+            HttpServletRequest request) {
 
+        if (page < 0) {
+            throw new IllegalArgumentException("Page index must not be less than zero");
+        }
+
+        int size = 10;
         filterType filterName = filterType.fromNumber(filter);
         filterType sortName = filterType.fromNumber(sort);
-        Sort s = filterType.createSort(filterName,sortName);
-
+        Sort s = filterType.createSort(filterName, sortName);
         Pageable pageable = PageRequest.of(page, size, s);
 
-        Boolean hasOwner = treeService.isOwner(treeId, member.getId());
+        Boolean hasOwner = true;
+        List<LeafBranchResponse> leafList = leafDtoService.findBranchByFilter(treeId, hasOwner, bookMark);
 
-        List<LeafBranchResponse> leafList = leafService.findBranchByFilter(treeId, hasOwner, bookMark);
+        if (leafList.isEmpty()) {
+            return Page.empty(pageable);
+        }
 
         int start = (int) pageable.getOffset();
-        int end = Math.min((start + pageable.getPageSize()), leafList.size());
-        Page<LeafBranchResponse> leafCard = new PageImpl<>(leafList.subList(start, end), pageable, leafList.size());
+        if (start >= leafList.size()) {
+            return Page.empty(pageable);
+        }
 
-        return leafCard;
+        int end = Math.min(start + pageable.getPageSize(), leafList.size());
 
+//        log.debug("Paging: start={}, end={}, listSize={}", start, end, leafList.size());
+        System.out.println("Paging: start=" + start + ", end=" + end + ", listSize=" + leafList.size());
+        try {
+            Page<LeafBranchResponse> leafCard = new PageImpl<>(
+                    leafList.subList(start, end), pageable, leafList.size());
+            return leafCard;
+        } catch (IllegalArgumentException e) {
+//            log.error("Paging error: " + e.getMessage());
+            System.out.println("Paging error: " + e.getMessage());
+            return Page.empty(pageable);
+        }
     }
+//
+//    @GetMapping("/{treeId}/leafs")
+//    public Page<LeafBranchResponse> getBranchList(
+//            @PathVariable Long treeId,
+//            @RequestParam(value = "bookMark", required = false) final Boolean bookMark,
+//            @RequestParam(value = "filter",defaultValue = "10") final  Long filter,
+//            @RequestParam(value = "sort", defaultValue = "1") final  Long sort,
+//            @RequestParam(value = "p", defaultValue = "1") final int page,
+////            @SessionAttribute Member member,
+//            HttpServletRequest request
+//            ) {
+//        int size = 10;
+//
+//        filterType filterName = filterType.fromNumber(filter);
+//        filterType sortName = filterType.fromNumber(sort);
+//        Sort s = filterType.createSort(filterName,sortName);
+//
+//        Pageable pageable = PageRequest.of(page, size, s);
+//
+////        Boolean hasOwner = treeService.isOwner(treeId, member.getId());
+//
+//        Boolean hasOwner = true;
+//
+//        List<LeafBranchResponse> leafList = leafDtoService.findBranchByFilter(treeId, hasOwner, bookMark);
+//
+//        int start = (int) pageable.getOffset();
+//        int end = Math.min((start + pageable.getPageSize()), leafList.size());
+//        Page<LeafBranchResponse> leafCard = new PageImpl<>(leafList.subList(start, end), pageable, leafList.size());
+//
+//        return leafCard;
+//
+//    }
 
 
 //    @GetMapping("/book/select")
@@ -264,7 +312,7 @@ public class TreeController {
 //        MemberImageView memberImageView = combineTreeView.getMemberImageView();
 //        TreeInfoResponse treeInfoResponse = combineTreeView.getTreeInfoResponse();
 //
-//        List<LeafBranchView> leafList = leafService.findBranchByTreeId(treeId);
+//        List<LeafBranchView> leafList = leafDtoService.findBranchByTreeId(treeId);
 //
 //        return ;
 //    }

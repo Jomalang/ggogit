@@ -10,4 +10,4 @@
 # 도서 리프
 
 ### 트리 리프 조회
-GET {{host}}/trees/{{treeId}}/leafs
+GET {{host}}/api/v1/trees/{{treeId}}/leafs

@@ -19,6 +19,7 @@ spring:
     port: 587 # SMTP 서버 포트
     username:  # SMTP 서버 로그인 아이디
     password:  #SMTP 서버 비밀번호
+    protocol: smtp
     properties:
       mail:
         smtp:
@@ -26,6 +27,7 @@ spring:
           timeout: 5000 #socket read timeout
           starttls:
             enable: true #starttls 활성화 여부
+            required: true
 
   jpa:
     generate-ddl: true

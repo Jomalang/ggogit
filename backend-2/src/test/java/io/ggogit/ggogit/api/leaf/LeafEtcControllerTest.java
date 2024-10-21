@@ -5,13 +5,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.ggogit.ggogit.domain.leaf.entity.Leaf;
 import io.ggogit.ggogit.domain.leaf.repository.LeafRepository;
 import io.ggogit.ggogit.domain.member.entity.Member;
+import io.ggogit.ggogit.domain.member.repository.MemberRepository;
 import io.ggogit.ggogit.domain.tree.entity.Seed;
 import io.ggogit.ggogit.domain.tree.entity.Tree;
 import io.ggogit.ggogit.domain.tree.entity.TreeImage;
-import io.ggogit.ggogit.domain.tree.entity.TreeSaveTmp;
+//import io.ggogit.ggogit.domain.tree.entity.TreeSaveTmp;
 import io.ggogit.ggogit.domain.tree.repository.SeedRepository;
 import io.ggogit.ggogit.domain.tree.repository.TreeImageRepository;
-import io.ggogit.ggogit.domain.tree.repository.TreeSaveTmpRepository;
+//import io.ggogit.ggogit.domain.tree.repository.TreeSaveTmpRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,8 +51,8 @@ class LeafEtcControllerTest {
 
     @Autowired
     private MemberRepository memberRepository;
-    @Autowired
-    private TreeSaveTmpRepository treeSaveTmpRepository;
+//    @Autowired
+//    private TreeSaveTmpRepository treeSaveTmpRepository;
     @Autowired
     private SeedRepository seedRepository;
     @Autowired
@@ -67,22 +68,22 @@ class LeafEtcControllerTest {
         Member member = memberRepository.findById(1000L).orElseThrow();
         Seed seed = seedRepository.findById(1L).orElseThrow();
         String imageFilePath = createImageFile("firstTest.png", tmpDir);
-        TreeSaveTmp treeSaveTmp = TreeSaveTmp.builder()
-                .member(member)
-                .book(null)
-                .bookCategory(null)
-                .seed(seed)
-                .bookTitle("나의 첫번째 도서 제목")
-                .treeTitle("나의 첫번째 트리 제목")
-                .visibility(true)
-                .description("나의 첫번째 도서 설명")
-                .author("나의 첫번째 도서 저자")
-                .imageFile(imageFilePath)
-                .publisher("나의 첫번째 도서 출판사")
-                .totalPage(100)
-                .build();
-
-        treeSaveTmpRepository.save(treeSaveTmp);
+//        TreeSaveTmp treeSaveTmp = TreeSaveTmp.builder()
+//                .member(member)
+//                .book(null)
+//                .bookCategory(null)
+//                .seed(seed)
+//                .bookTitle("나의 첫번째 도서 제목")
+//                .treeTitle("나의 첫번째 트리 제목")
+//                .visibility(true)
+//                .description("나의 첫번째 도서 설명")
+//                .author("나의 첫번째 도서 저자")
+//                .imageFile(imageFilePath)
+//                .publisher("나의 첫번째 도서 출판사")
+//                .totalPage(100)
+//                .build();
+//
+//        treeSaveTmpRepository.save(treeSaveTmp);
 
         String validRequest = """
                 {

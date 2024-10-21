@@ -13,6 +13,7 @@ public enum filterType {
     TITLE(11L, "TITLE", "제목 기준"),
     LEAF_CNT_(12L, "LEAF_CNT", "리프 수 기준"),
     VIEW_COUNT(13L, "VIEW_COUNT", "조회 수 기준"),
+    LIKE_COUNT(13L, "LIKE_COUNT", "좋아요 수 기준")
     ;
     private final Long number;
     private final String value;
@@ -58,10 +59,6 @@ public enum filterType {
     }
     public static Sort createSort(filterType filter, filterType sort) {
         switch (filter) {
-            case UPDATE_TIME:
-                if (sort == ASC)
-                    return Sort.by("updateTime").ascending();
-                return Sort.by("updateTime").descending();
             case TITLE:
                 if (sort == ASC)
                     return Sort.by("title").ascending();

@@ -65,7 +65,7 @@ public class Book {
     private String publisher;
 
     @Column(name = "PUBLISH_DATE")
-    private LocalDateTime publishDate;
+    private LocalDate publishDate;
 
     @NotNull
     @Column(name = "TOTAL_PAGE", nullable = false)
@@ -103,7 +103,7 @@ public class Book {
                 .author(dto.getAuthor())
                 .isbn(dto.getIsbn13())
                 .publisher(dto.getPublisher())
-                .publishDate(LocalDateTime.parse(dto.getPubDate()))
+                .publishDate(LocalDate.parse(dto.getPubDate()))
                 .totalPage(0)
                 .imageFile(dto.getCover())
                 .build();

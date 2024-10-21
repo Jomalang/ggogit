@@ -5,6 +5,7 @@ import io.ggogit.ggogit.domain.book.entity.BookCategory;
 import lombok.Builder;
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
@@ -16,7 +17,7 @@ public class BookInfoResponse {
     Integer totalPage;
     //TODO 차후 List<String>으로 진행할지, category 계층화 시킬것인지 고민해야함. 알라딘 카테고리는 계층화 되어있음.
     BookCategory category;
-    LocalDateTime publishDate;
+    LocalDate publishDate;
     String author;
     String publisher;
     LocalDateTime createTime;

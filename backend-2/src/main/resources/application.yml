@@ -1,6 +1,3 @@
 spring:
   profiles:
     active: test
-server:
-  servlet:
-    context-path: /api/v1

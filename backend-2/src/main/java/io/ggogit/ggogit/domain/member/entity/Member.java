@@ -78,8 +78,10 @@ public class Member {
     private List<Tree> trees;
 
     @OneToOne
+    @JoinColumn(name = "ID")
     private MemberProfileImage memberProfileImage;
 
     @OneToOne
+    @JoinColumn(name = "ID")
     private MemberBackgroundImage memberBackgroundImage;
 }

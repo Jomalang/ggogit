@@ -178,8 +178,12 @@ public class TreeController {
         Pageable pageable = PageRequest.of(page, size, s);
 
         Boolean hasOwner = true;
+        System.out.println("bookMark = " + bookMark);
         List<LeafBranchResponse> leafList = leafDtoService.findBranchByFilter(treeId, hasOwner, bookMark);
 
+        for (LeafBranchResponse leaf : leafList) {
+            System.out.println(leaf.toString());
+        }
         if (leafList.isEmpty()) {
             return Page.empty(pageable);
         }
@@ -191,14 +195,11 @@ public class TreeController {
 
         int end = Math.min(start + pageable.getPageSize(), leafList.size());
 
-//        log.debug("Paging: start={}, end={}, listSize={}", start, end, leafList.size());
-        System.out.println("Paging: start=" + start + ", end=" + end + ", listSize=" + leafList.size());
         try {
             Page<LeafBranchResponse> leafCard = new PageImpl<>(
                     leafList.subList(start, end), pageable, leafList.size());
             return leafCard;
         } catch (IllegalArgumentException e) {
-//            log.error("Paging error: " + e.getMessage());
             System.out.println("Paging error: " + e.getMessage());
             return Page.empty(pageable);
         }

@@ -1,19 +1,17 @@
 <script setup lang="ts">
-
 const props = defineProps<{
   link: String;
   text: String;
 }>();
-
 </script>
 
 <template>
   <div class="btn-full-width">
-    <a class="btn-full-width__link" :href="link">
+    <RouterLink class="btn-full-width__link" :to="link">
       <div class="btn-full-width__button">
         <p class="btn-full-width__placeholder">{{ text }}</p>
       </div>
-    </a>
+    </RouterLink>
   </div>
 </template>
 

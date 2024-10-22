@@ -1,14 +1,14 @@
 <script setup lang="ts">
-
-import {TextBtnGreenProps} from "@/types/types";
+import { TextBtnGreenProps } from "@/types/types";
 
 const props = defineProps<{
-  btn: TextBtnGreenProps
+  link: string;
+  text: string;
 }>();
 </script>
 
 <template>
-  <a class="text__btn--green" :href="`${ btn.link}`">{{ btn.text }}</a>
+  <a class="text__btn--green" :href="link">{{ text }}</a>
 </template>
 
 <style>

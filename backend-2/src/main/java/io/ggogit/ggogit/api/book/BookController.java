@@ -1,23 +1,52 @@
 package io.ggogit.ggogit.api.book;
 
 import io.ggogit.ggogit.api.book.dto.BookDetailResponse;
+import io.ggogit.ggogit.api.book.dto.BookListResponse;
 import io.ggogit.ggogit.api.book.dto.BookRequest;
 import io.ggogit.ggogit.api.book.dto.BookResponse;
+import io.ggogit.ggogit.api.book.filter.BookFilterType;
 import io.ggogit.ggogit.domain.book.entity.Book;
 import io.ggogit.ggogit.domain.book.service.BookService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 
 @RestController
 @RequestMapping("books")
 @RequiredArgsConstructor
+@Slf4j
 public class BookController {
 
     private final BookService bookService;
+    // 목록 조회
+    @GetMapping
+    public ResponseEntity<BookListResponse> getList(
+            @RequestParam(name="p", required=true, defaultValue="1") int page,
+            @RequestParam(name="q", required=false) String query,
+            @RequestParam(name="f", required=true, defaultValue="title") String filter
+    ) {
+        log.info("query={}", query);
+        log.info("filter={}", filter);
+        log.info("page={}", page);
+
+        if(query == null || query.length() < 2) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        List<Book> books = bookService.getBooks(page, query, filter);
+        if(books.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        List<BookDetailResponse> list = books.stream().map(BookDetailResponse::of).toList();
+        BookListResponse response = BookListResponse.of(list, String.valueOf(page));
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 
     // 수정
     @PutMapping("/{bookId}")

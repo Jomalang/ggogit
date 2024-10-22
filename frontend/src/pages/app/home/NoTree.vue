@@ -1,11 +1,17 @@
-<script setup></script>
+<script setup>
+import HeaderSearchLink from "@/components/header/HeaderSearchLink.vue";
+import TextMainTitle from "@/components/text/TextMainTitle.vue";
+import BgNoTreeBook from "@/components/background/BgNoTreeBook.vue";
+import LinkFullWidth from "@/components/button/LinkFullWidth.vue";
+import NavigationBar from "@/components/nav/NavigationBar.vue";
+</script>
 
 <template>
   <header>
     <h1 class="none">나의 트리</h1>
     <section class="header-search-container">
       <h1 class="none">나의 트리 검색 링크</h1>
-      <div th:replace="~{fragments/header :: header-search-link}"></div>
+      <HeaderSearchLink />
     </section>
   </header>
 
@@ -14,22 +20,17 @@
       <h1 class="none">나의 트리 정보</h1>
 
       <section class="my-tree-title-container">
-        <h1
-          th:replace="~{fragments/text :: text-main-title('나의 트리', 28)}"
-        ></h1>
+        <TextMainTitle :title="`나의 트리`" :size="28" />
       </section>
 
       <section class="book-img-container">
         <h1 class="none">트리 이미지</h1>
-        <div th:replace="~{fragments/background :: bg-no-tree-book}"></div>
+        <BgNoTreeBook />
       </section>
     </section>
 
     <section class="btn-full-width-link-container">
-      <h1 class="none">트리 생성 버튼</h1>
-      <div
-        th:replace="~{fragments/button :: link-full-width(link='/seed/index', text='트리 생성')}"
-      ></div>
+      <LinkFullWidth :link="`/seed/index`" :text="`트리 생성`" />
     </section>
   </main>
 
@@ -39,7 +40,7 @@
 
   <aside class="nav-container">
     <h1 class="none">네비게이션 하단</h1>
-    <nav th:replace="~{fragments/nav :: navigation-bar(active='home')}"></nav>
+    <NavigationBar :active="home" />
   </aside>
 </template>
 

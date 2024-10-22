@@ -3,23 +3,14 @@ package io.ggogit.ggogit.domain.tree.service;
 import io.ggogit.ggogit.domain.tree.entity.Seed;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface SeedService {
 
-    boolean isBook(String name);
-    boolean isBook(Long id);
-
-    boolean isBookById(Long id);
-
-    boolean contains(String seed);
-
-    List<Seed> getSeeds();
+    List<Seed> list();
 
     Seed getByEngName(String name);
 
-    Seed get(Long id);
-
-    Seed getByDiscription(String type);
-
+    Optional<Seed> get(Long id);
 
 }

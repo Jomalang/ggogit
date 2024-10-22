@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Recorders.ggogit.domain.member.repository.MemberRepository">
+
+    <insert id="save" parameterType="Member">
+        INSERT INTO MEMBER(EMAIL, PASSWORD, NICKNAME, INTRODUCTION, USERNAME)
+        VALUES(#{email}, #{password}, #{nickname}, #{introduction}, #{username})
+    </insert>
+
+    <update id="update" parameterType="Member">
+        UPDATE MEMBER
+        SET EMAIL = #{email}, PASSWORD = #{password}, NICKNAME = #{nickname}, INTRODUCTION = #{introduction} USERNAME=#{username}
+        WHERE ID = #{id} AND IS_DELETED = 0
+    </update>
+
+    <update id="delete" parameterType="Member">
+        UPDATE MEMBER
+        SET IS_DELETED = 1
+        WHERE ID = #{id} AND IS_DELETED = 0
+    </update>
+
+    <select id="findAll" resultType="Member">
+        SELECT * FROM MEMBER
+        WHERE IS_DELETED = 0
+    </select>
+
+    <select id="findById" resultType="Member">
+        SELECT * FROM MEMBER
+        WHERE ID = #{id} AND IS_DELETED = 0
+    </select>
+
+    <select id="findByEmail" resultType="Member">
+        SELECT * FROM MEMBER
+        WHERE EMAIL = #{email} AND IS_DELETED = 0
+    </select>
+
+    <select id="findByNickname" resultType="Member">
+        SELECT * FROM MEMBER
+        WHERE NICKNAME = #{nickname} AND IS_DELETED = 0
+    </select>
+
+    <select id="getMemberImageView" resultType="MemberImageView">
+        SELECT
+            M.ID,
+            M.USERNAME,
+            M.NICKNAME,
+            NVL(MP.NAME, 'default.svg') PROFILE_IMAGE
+        FROM
+            MEMBER M
+        LEFT JOIN
+            (SELECT * FROM MEMBER_PROFILE_IMAGE) MP
+        ON
+            M.ID = MP.MEMBER_ID
+        WHERE
+            M.ID=#{memberId} AND M.IS_DELETED = 0
+    </select>
+
+</mapper>

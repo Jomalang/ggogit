@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkbox as Button</title>
+
+    <style>
+        /* styles.css */
+input[type="checkbox"] {
+    display: none; /* 체크박스 숨기기 */
+}
+
+label.button {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    background-color: #007bff;
+    border: 1px solid #007bff;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    user-select: none;
+}
+
+label.button:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+input[type="checkbox"]:checked + label.button {
+    background-color: #28a745;
+    border-color: #28a745;
+}
+
+    </style>
+
+</head>
+<body>
+    <form id="myForm">
+        <input type="checkbox" id="toggleButton" name="toggle" />
+        <label for="toggleButton" class="button">Toggle Button</label>
+    </form>
+</body>
+</html>

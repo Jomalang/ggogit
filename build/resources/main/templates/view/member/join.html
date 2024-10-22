@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link th:href="@{/css/reset.css}" rel="stylesheet" />
+    <link th:href="@{/css/fragments.css}" rel="stylesheet" />
+    <link th:href="@{/css/layout.css}" rel="stylesheet" />
+
+    <title>로그인</title>
+</head>
+<body class="login-member__join-page-container">
+<header>
+    <h1 class="none">뒤로가기</h1>
+    <div th:replace="~{fragments/button::login-join-page__back-btn}"></div>
+</header>
+
+<section class="login-screen-container" th:unless="${param.get('s')}">
+    <h1 class="none">회원가입 화면 안내</h1>
+    <div th:replace="~{fragments/text::text-login__page-info(label='회원가입', infoText='이메일로 회원가입을 진행합니다')}"></div>
+</section>
+
+<section class="login-screen-container" th:if="${param.get('s')}">
+    <h1 class="none">회원가입 화면 안내</h1>
+    <div th:replace="~{fragments/text::text-login__page-info(label='회원가입', infoText='')}"></div>
+    <div class="text--alert">이메일이 전송되었습니다.</div>
+</section>
+
+
+<form method="POST" th:action="@{/member/join}">
+<section class="social-login-container" th:object="${loginRegForm}">
+    <h3 class="none">회원가입 이메일</h3>
+    <!-- 컴포넌트 -->
+    <div class="input-text__bar">
+        <label class="input-text__label" th:unless="${param.get('s')}">
+            <span class="input-text__label-text" th:text="'이메일'">이메일</span>
+            <input class="input-text__input" th:field="*{email}" th:placeholder="'이메일을 입력해주세요'" autocomplete="off"/>
+        </label>
+        <label class="input-text__label" th:if="${param.get('s')}">
+            <input class="input-text__input" th:field="*{email}" th:placeholder="'이메일을 입력해주세요'" autocomplete="off" readonly/>
+        </label>
+        <div th:errors="*{email}" class="text--errors"></div>
+    </div>
+</section>
+
+    <section class="social-login-container">
+        <h1 class="none">회원가입 버튼</h1>
+        <div th:replace="~{fragments/input::green-wide-btn(label='회원가입')}"></div>
+    </section>
+</form>
+
+<section class="social-login-container">
+    <h1 class="none">소셜 로그인 버튼</h1>
+    <div th:replace="~{fragments/link::social-login}"></div>
+</section>
+
+<footer class="join-guide-container">
+    <h1 class="none">회원가입 안내</h1>
+    <div th:replace="~{fragments/text::join-guide(infoText='계정이 이미 있으신가요?', label='로그인', href='/member/login')}"></div>
+</footer>
+</body>
+</html>

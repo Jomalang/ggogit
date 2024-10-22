@@ -1,6 +1,24 @@
 <script setup lang="ts">
 
-import {onMounted} from "vue";
+import {onMounted, reactive} from "vue";
+
+// ----------------------- Model ----------------------- //
+
+const savedFormData = localStorage.getItem('formData');
+const formData = reactive(savedFormData ? JSON.parse(savedFormData) : {
+  seedCategoryType: '',
+  bookTitle: '',
+  author: '',
+  publishDate: '',
+  totalPage: '',
+  treeTitle: '',
+  description: '',
+  visibility: false,
+  bookCategoryId: '',
+  imageData: ''
+});
+
+const emit = defineEmits(['image-selected']);
 
 onMounted(() => {
   const imgTag = document.getElementById('input-book-img-box__input-id') as HTMLInputElement;
@@ -14,6 +32,10 @@ onMounted(() => {
         if (e.target) {
           imagePreview.src = e.target.result as string;
           imagePreview.style.display = 'block';
+
+          // 이미지 데이터를 부모 컴포넌트로 전달
+          const imageData = e.target.result as string;
+          emit('image-selected', imageData);
         }
       };
       reader.readAsDataURL(file);

@@ -1,12 +1,35 @@
 <script setup lang="ts">
 
-import {reactive, ref} from "vue";
+import { reactive } from "vue";
+
+const savedFormData = localStorage.getItem('formData');
+const formData = reactive(savedFormData ? JSON.parse(savedFormData) : {
+  seedCategoryType: '',
+  bookTitle: '',
+  author: '',
+  publishDate: '',
+  totalPage: '',
+  treeTitle: '',
+  description: '',
+  visibility: true,
+  bookCategoryId: '',
+  bookCategoryName: ''
+});
 
 const bookCategory = reactive({
-  isSelected: false,
-  id: 0,
-  name: ''
+  isSelected: formData.bookCategoryId !== '',
+  id: formData.bookCategoryId,
+  name: formData.bookCategoryName
 });
+
+// -------------------- Function -------------------- //
+const dropBookCategory = () => {
+  bookCategory.isSelected = false;
+  bookCategory.id = '';
+  bookCategory.name = '';
+  formData.bookCategoryId = '';
+  formData.bookCategoryName = '';
+};
 
 </script>
 
@@ -16,11 +39,15 @@ const bookCategory = reactive({
     <div class="input-tag-select__bg">
       <div class="input-tag-select__button-box">
         <div class="input-tag-select__tag-box">
-          <p v-if="!bookCategory.selected" class="input-tag-select__placeholder">도서 카테고리를 선택해주세요</p>
+          <p v-if="!bookCategory.isSelected" class="input-tag-select__placeholder">도서 카테고리를 선택해주세요</p>
           <div v-else class="input-tag-select__tag">
             <label class="input-tag-select__tag-label">
               <span class="input-tag-select__tag-text">{{ bookCategory.name }}</span>
-              <button class="input-tag-select__tag-delete-btn" type="button">
+              <button
+                  class="input-tag-select__tag-delete-btn"
+                  type="button"
+                  @click="dropBookCategory"
+              >
                 <img src="/svg/x-button.svg" alt="next-button" />
               </button>
               <input class="none input-tag-select__input" name="bookCategoryId" :value="bookCategory.id" />

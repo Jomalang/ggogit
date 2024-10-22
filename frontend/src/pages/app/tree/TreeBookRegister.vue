@@ -10,11 +10,12 @@ import SubmitBtnFullBar from "@/components/button/SubmitBtnFullBar.vue";
 import NavigationBar from "@/components/nav/NavigationBar.vue";
 import TextNumberBox from "@/components/input/TextNumberBox.vue";
 import BookCategorySelect from "@/components/input/BookCategorySelect.vue";
-import {reactive, watch} from "vue";
+import {onMounted, reactive, watch} from "vue";
 
 // ----------------------- Model ----------------------- //
 
-const formData = reactive({
+const savedFormData = localStorage.getItem('formData');
+const formData = reactive(savedFormData ? JSON.parse(savedFormData) : {
   seedCategoryType: '',
   bookTitle: '',
   author: '',
@@ -22,21 +23,38 @@ const formData = reactive({
   totalPage: '',
   treeTitle: '',
   description: '',
-  visibility: '',
-  bookCategoryId: '1',
-  memberId: '1'
+  visibility: true,
+  bookCategoryId: '',
+  imageData: ''
 });
 
 watch(
-formData,
-(newVal) => {
-  console.log(newVal);
-}, { deep: true });
+    formData,
+    (newVal) => {
+      localStorage.setItem('formData', JSON.stringify(newVal));
+      console.log('formData:', newVal);
+    },
+    { deep: true }
+);
 
-const submitFormHandler = (e: Event) => {
+// ----------------------- Life Cycle ----------------------- //
+onMounted(() => {
+  if (formData.imageData) {
+    const imgTag = document.getElementById('input-book-img-box__img-id') as HTMLImageElement;
+    imgTag.src = formData.imageData;
+  }
+});
 
+
+// ----------------------- Function ----------------------- //
+const handleImageSelected = (imageData: string) => {
+  console.log('Selected image data:', imageData);
+  formData.imageData = imageData;
 };
 
+const submitFormHandler = (e: Event) => {
+  // TODO: 데이터 전송 로직 작성 해야함
+};
 
 </script>
 
@@ -72,7 +90,7 @@ const submitFormHandler = (e: Event) => {
 
         <section class="book-tree-input-form__photo-container">
           <h1 class="none">도서 이미지 입력</h1>
-          <bookInputImg></bookInputImg>
+          <bookInputImg @image-selected="handleImageSelected"></bookInputImg>
         </section>
 
         <section class="input-form__input-container">
@@ -138,7 +156,7 @@ const submitFormHandler = (e: Event) => {
         <section class="input-form__input-container">
           <h1 class="none">공개성 선택</h1>
           <InputVisibility name="visibility"
-                           v-model="formData.visibility">
+                           v-model="formData.visibility" >
           </InputVisibility>
         </section>
 
@@ -146,11 +164,6 @@ const submitFormHandler = (e: Event) => {
           <h1 class="none">트리 생성 버튼</h1>
           <SubmitBtnFullBar text="트리 생성"
                             @click.prevent="submitFormHandler"></SubmitBtnFullBar>
-        </section>
-
-        <section class="none">
-          <label><input name="bookCategoryId" value="1"></label> <!--TODO: 도서 카테고리 개발예정 -->
-          <label><input name="memberId" value="1"></label><!--TODO: session storage or cookies or JWT 확인 필요 -->
         </section>
 
       </form>

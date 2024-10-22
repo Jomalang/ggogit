@@ -7,40 +7,102 @@ const props = defineProps({
 <template>
   <div class="tree-book-bg">
     <ul class="tree-book-bg__list">
-      <template v-for="groupIndex in 3" :key="groupIndex">
-        <li
-          v-for="(tree, index) in trees"
-          :key="`tree-${groupIndex}-${index}`"
-          class="mid__item"
-          :class="index"
-        >
-          <a :href="`/tree/detail/${tree.treeId}`">
-            <img
-              class="mid__img"
-              :src="tree.coverImageName"
-              alt="도서 예시 이미지"
-            />
-          </a>
-        </li>
-        <li v-if="trees.length === 1" class="mid__item" :class="1">
-          <a href="/seed/index">
-            <img
-              class="mid__img"
-              src="/public/png/tree-book-blank.png"
-              alt="도서 예시 이미지"
-            />
-          </a>
-        </li>
-        <li v-if="trees.length <= 2" class="mid__item" :class="2">
-          <a href="/seed/index">
-            <img
-              class="mid__img"
-              src="/public/png/tree-book-blank.png"
-              alt="도서 예시 이미지"
-            />
-          </a>
-        </li>
-      </template>
+      <li
+        class="mid__item"
+        v-for="(tree, index) in trees"
+        :key="index"
+        :class="index"
+      >
+        <a :href="`/tree/detail/${tree.treeId}`">
+          <img
+            class="mid__img"
+            :src="tree.coverImageName"
+            alt="도서 예시 이미지"
+          />
+        </a>
+      </li>
+      <li v-if="trees.length === 1" class="mid__item 1">
+        <a href="/seed/index">
+          <img
+            class="mid__img"
+            src="/public/png/tree-book-blank.png"
+            alt="도서 예시 이미지"
+          />
+        </a>
+      </li>
+      <li v-if="trees.length <= 2" class="mid__item 2">
+        <a href="/seed/index">
+          <img
+            class="mid__img"
+            src="/public/png/tree-book-blank.png"
+            alt="도서 예시 이미지"
+          />
+        </a>
+      </li>
+      <li
+        class="mid__item"
+        v-for="(tree, index) in trees"
+        :key="index"
+        :class="index"
+      >
+        <a :href="`/tree/detail/${tree.treeId}`">
+          <img
+            class="mid__img"
+            :src="tree.coverImageName"
+            alt="도서 예시 이미지"
+          />
+        </a>
+      </li>
+      <li v-if="trees.length === 1" class="mid__item 1">
+        <a href="/seed/index">
+          <img
+            class="mid__img"
+            src="/public/png/tree-book-blank.png"
+            alt="도서 예시 이미지"
+          />
+        </a>
+      </li>
+      <li v-if="trees.length <= 2" class="mid__item 2">
+        <a href="/seed/index">
+          <img
+            class="mid__img"
+            src="/public/png/tree-book-blank.png"
+            alt="도서 예시 이미지"
+          />
+        </a>
+      </li>
+      <li
+        class="mid__item"
+        v-for="(tree, index) in trees"
+        :key="index"
+        :class="index"
+      >
+        <a :href="`/tree/detail/${tree.treeId}`">
+          <img
+            class="mid__img"
+            :src="tree.coverImageName"
+            alt="도서 예시 이미지"
+          />
+        </a>
+      </li>
+      <li v-if="trees.length === 1" class="mid__item 1">
+        <a href="/seed/index">
+          <img
+            class="mid__img"
+            src="/public/png/tree-book-blank.png"
+            alt="도서 예시 이미지"
+          />
+        </a>
+      </li>
+      <li v-if="trees.length <= 2" class="mid__item 2">
+        <a href="/seed/index">
+          <img
+            class="mid__img"
+            src="/public/png/tree-book-blank.png"
+            alt="도서 예시 이미지"
+          />
+        </a>
+      </li>
     </ul>
   </div>
 </template>

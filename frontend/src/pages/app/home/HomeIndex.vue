@@ -285,7 +285,7 @@ onMounted(() => {
           <h3 class="none">최근 트리 이미지 캐러셀</h3>
           <section class="book-img-container">
             <div>
-              <BgTreeBookCovers trees="treeInfoList" />
+              <BgTreeBookCovers :trees="treeInfoList" />
             </div>
           </section>
 
@@ -298,7 +298,7 @@ onMounted(() => {
                 :key="index"
                 :class="index"
               >
-                <div><RecentTreeInfo :tree="tree" />"</div>
+                <RecentTreeInfo :tree="tree" />
               </li>
             </ul>
           </section>
@@ -312,8 +312,7 @@ onMounted(() => {
                 :key="index"
                 :class="index"
               >
-                <div><RecentTreeEx :text="tree.description" />"</div>
-
+                <RecentTreeEx :text="tree.description" />
                 <section
                   class="card-progress-home-container"
                   :readingPage="tree.readingPage"
@@ -373,7 +372,7 @@ onMounted(() => {
     </main>
 
     <footer>
-      <Footer message="개발 중입니다~" />
+      <Footer :noticeText="`개발중입니다.`" />
     </footer>
 
     <section class="nav-back-container">
@@ -390,6 +389,4 @@ onMounted(() => {
   </body>
 </template>
 
-<style>
-@import url(/src/assets/css/layout.css);
-</style>
+<style></style>

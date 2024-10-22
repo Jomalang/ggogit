@@ -4,6 +4,7 @@ import TextMainTitle from "@/components/text/TextMainTitle.vue";
 import BgNoTreeBook from "@/components/background/BgNoTreeBook.vue";
 import LinkFullWidth from "@/components/button/LinkFullWidth.vue";
 import NavigationBar from "@/components/nav/NavigationBar.vue";
+import TextInfo from "@/components/text/TextInfo.vue";
 </script>
 
 <template>
@@ -27,6 +28,13 @@ import NavigationBar from "@/components/nav/NavigationBar.vue";
         <h1 class="none">트리 이미지</h1>
         <BgNoTreeBook />
       </section>
+    </section>
+
+    <section>
+      <TextInfo
+        text="현재 기록중인 트리가 없습니다"
+        boldText="트리를 생성해주세요"
+      />
     </section>
 
     <section class="btn-full-width-link-container">

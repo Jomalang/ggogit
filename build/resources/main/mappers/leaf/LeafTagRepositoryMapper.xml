@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Recorders.ggogit.domain.leaf.repository.LeafTagRepository">
+
+    <insert id="save" parameterType="LeafTag"
+            useGeneratedKeys="true" keyProperty="id,updateTime,createTime" keyColumn="ID,UPDATE_TIME,CREATE_TIME">
+        INSERT INTO LEAF_TAG (MEMBER_ID , NAME)
+        VALUES (#{memberId}, #{name})
+    </insert>
+
+    <select id="findAll" resultType="LeafTag">
+        SELECT *
+        FROM LEAF_TAG
+        <where>
+            IS_DELETED = FALSE
+            <if test="memberId != null">
+                AND MEMBER_ID = #{memberId}
+            </if>
+            <if test="name != null">
+                AND NAME LIKE CONCAT('%', #{name}, '%')
+            </if>
+        </where>
+        ORDER BY ID DESC
+        LIMIT #{limit} OFFSET #{offset}
+    </select>
+
+    <select id="findByLeafId" resultType="LeafTag">
+        SELECT LT.*
+        FROM (
+            SELECT *
+            FROM LEAF_TAG_MAP
+            WHERE LEAF_ID = #{leafId}
+                AND IS_DELETED = FALSE
+        ) LTM
+        JOIN LEAF_TAG LT
+            ON LT.ID = LTM.LEAF_TAG_ID
+    </select>
+
+    <select id="count" resultType="Long">
+        SELECT COUNT(*)
+        FROM LEAF_TAG
+        <where>
+            IS_DELETED = FALSE
+            <if test="memberId != null">
+                AND MEMBER_ID = #{memberId}
+            </if>
+            <if test="name != null">
+                AND NAME LIKE '%${name}%'
+            </if>
+        </where>
+    </select>
+
+    <select id="findById" parameterType="Long" resultType="LeafTag">
+        SELECT *
+        FROM LEAF_TAG
+        WHERE ID = #{id}
+            AND IS_DELETED = FALSE
+    </select>
+
+    <select id="existsById" parameterType="Long" resultType="Boolean">
+        SELECT CASE
+            WHEN COUNT(ID) > 0 THEN 1
+            ELSE 0
+        END AS ROW_EXISTS
+        FROM LEAF_TAG
+        WHERE ID = #{id}
+            AND IS_DELETED = FALSE
+    </select>
+
+    <select id="existsByMemberIdAndName" parameterType="LeafTag" resultType="Long">
+        SELECT CASE
+            WHEN COUNT(ID) > 0 THEN 1
+            ELSE 0
+        END AS row_exists
+        FROM LEAF_TAG
+        WHERE MEMBER_ID = #{memberId}
+            AND NAME = #{name}
+            AND IS_DELETED = FALSE
+    </select>
+    
+    <update id="update" parameterType="LeafTag">
+        UPDATE LEAF_TAG
+        SET NAME = #{name}
+        WHERE ID = #{id}
+            AND IS_DELETED = FALSE
+    </update>
+
+    <delete id="delete" parameterType="LeafTag">
+        UPDATE LEAF_TAG
+        SET IS_DELETED = TRUE
+        WHERE ID = #{id}
+    </delete>
+
+    <delete id="deleteById" parameterType="Long">
+        UPDATE LEAF_TAG
+        SET IS_DELETED = TRUE
+        WHERE ID = #{id}
+    </delete>
+
+</mapper>

@@ -1,0 +1,46 @@
+# ================================================== #
+# Member API
+
+### 회원 가입 이메일 전송
+POST {{host}}/api/v1/member/join
+Content-Type: application/json
+
+{
+  "email": "test@example.com"
+}
+
+### 회원 가입
+POST {{host}}/api/v1/member/join-input
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "password123",
+  "nickname": "testNickname",
+  "username": "testUsername",
+  "introduction": "test introduction",
+  "policyAgreement": true
+}
+
+### 로그인
+POST {{host}}/api/v1/member/login
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "password123"
+}
+
+### 로그아웃
+POST {{host}}/api/v1/member/logout
+
+### 비밀번호 재설정 페이지
+GET {{host}}/api/v1/member/pw/rst
+
+### 비밀번호 재설정 요청
+POST {{host}}/api/v1/member/pw/rst
+
+### 회원 이미지 조회
+GET {{host}}/api/v1/member/image/{memberId}
+
+# ================================================== #

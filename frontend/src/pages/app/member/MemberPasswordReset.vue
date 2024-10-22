@@ -14,6 +14,7 @@ import TextJoinPageInfo from "@/components/text/TextJoinPageInfo.vue";
         />
 
         <InputTextBar
+
             label="비밀번호"
             name="password"
             placeholder="비밀번호를 입력해주세요 (8~32자, 대소문자 포함, 숫자, 특스문자 1개이상 포함)"

@@ -95,7 +95,7 @@ public class AladinServiceImpl implements AladinService {
         book.setIsbn(dto.getIsbn13());  // 알라딘에서 isbn 보다 isbn13 를 사용하는 것을 권장하므로 수정하였습니다
         book.setPublisher(dto.getPublisher());
         book.setPublishDate(dto.getPubDate());
-        book.setTotalPage(getTotalPage(dto.getIsbn13())); // isbn13 으로 itemLookup url 를 이용하여 총페이지를 가져옴
+//        book.setTotalPage(getTotalPage(dto.getIsbn13())); // isbn13 으로 itemLookup url 를 이용하여 총페이지를 가져옴
         book.setImageFile(dto.getCover());
         book.setDeleted(false); // book entity 의 isDeleted
         book.setUpdateTime(LocalDateTime.now());

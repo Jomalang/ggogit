@@ -35,7 +35,7 @@ public class TreeSaveTmp {
                 .id(bookId)
                 .memberId(memberId)
                 .bookCategoryId(bookCategoryId)
-                .totalPage(totalPage) // db 에 int 로 되어있음 long -> int
+//                .totalPage(totalPage) // db 에 int 로 되어있음 long -> int
                 .title(bookTitle)
                 .author(author)
                 .publisher(publisher)

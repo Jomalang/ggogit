@@ -23,7 +23,7 @@ public interface LeafRepository extends JpaRepository<Leaf, Long> {
                 OR(:bookMark = true AND l.bookMark = true)
                 OR(:bookMark = false AND l.childLeafCount = 0)
         ))
-        OR (:owner = false AND l.childLeafCount = 0)
+        OR (:owner = false AND l.visibility = false AND l.childLeafCount = 0)
     )
 """)
     List<Leaf> findByBranchQuery(

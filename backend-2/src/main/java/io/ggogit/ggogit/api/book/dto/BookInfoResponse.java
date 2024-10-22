@@ -15,6 +15,7 @@ public class BookInfoResponse {
     String imageFile;
     String title;
     Integer totalPage;
+    String translator;
     //TODO 차후 List<String>으로 진행할지, category 계층화 시킬것인지 고민해야함. 알라딘 카테고리는 계층화 되어있음.
     BookCategory category;
     LocalDate publishDate;
@@ -32,6 +33,7 @@ public class BookInfoResponse {
                 .category(book.getBookCategory())
                 .publishDate(book.getPublishDate())
                 .author(book.getAuthor())
+                .translator(book.getTranslator())
                 .publisher(book.getPublisher())
                 .createTime(book.getCreateTime())
                 .build();

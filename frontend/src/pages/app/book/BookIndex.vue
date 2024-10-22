@@ -3,7 +3,6 @@
 </script>
 
 <template>
-  Book Index
   <RouterView />
 </template>
 

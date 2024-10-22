@@ -2761,9 +2761,7 @@ card.html
 .card-tree__bot-view-count {
   font-size: 14px;
   font-weight: var(--bold, 700);
-  color: var(--main1, #323a27);
-}
-
+  color: var(--main1, #32
 .card-tree__img-frame{
   display: flex;
   height: 120px;

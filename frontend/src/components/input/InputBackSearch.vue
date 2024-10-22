@@ -1,11 +1,37 @@
 <script setup lang="ts">
+import axios from "axios";
+import { ref } from "vue";
+import SearchFilterRadio from "../filter/SearchFilterRadio.vue";
+
+const query = ref<string>("");
+
 const props = defineProps<{
   placeholder: string;
   href: string;
-  method: string;
-  name: string;
-  action: string;
+  api: string;
 }>();
+
+const emit = defineEmits<{
+  (event: "query", query: string): void;
+  (event: "data", data: any): void;
+}>();
+
+const EmitQuery = async (): Promise<void> => {
+  try {
+    const response = await axios.get(props.api, {
+      params: {
+        query: query.value,
+      },
+    });
+
+    console.log(response.data);
+
+    emit("query", query.value);
+    emit("data", response.data);
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+};
 </script>
 
 <template>
@@ -16,24 +42,55 @@ const props = defineProps<{
         <img src="/public/svg/back.svg" alt="back button" />
       </a>
     </div>
-    <form class="search-bar" :action="action" :method="method">
+    <div class="search-bar">
       <label class="search-bar--label">
         <input
           class="search-bar--input"
           type="text"
-          :name="name"
-          :id="name"
-          :placeholder="placeholder"
+          :placeholder="props.placeholder"
+          :v-modle="query"
           autocomplete="off"
         />
         <button class="search-bar--close" type="reset">
           <img src="/public/svg/close-button.svg" alt="close-btn" />
         </button>
       </label>
-      <button type="submit">
+      <button @click="EmitQuery()">
         <img src="/public/svg/lens.svg" alt="lens" />
       </button>
-    </form>
+    </div>
+  </div>
+  <!-- (description, name, value, isChecked) -->
+  <div class="filter-category-frame">
+    <div class="search-filter-log">
+      <label class="search-filter-log__checkbox-labal">
+        <input
+          class="search-filter-log__checkbox-input"
+          type="radio"
+          name="filterType"
+          value="title"
+        />
+        <span class="search-filter-log__checkbox-input-text">제목</span>
+      </label>
+      <label class="search-filter-log__checkbox-labal">
+        <input
+          class="search-filter-log__checkbox-input"
+          type="radio"
+          name="filterType"
+          value="author"
+        />
+        <span class="search-filter-log__checkbox-input-text">저자</span>
+      </label>
+      <label class="search-filter-log__checkbox-labal">
+        <input
+          class="search-filter-log__checkbox-input"
+          type="radio"
+          name="filterType"
+          value="publisher"
+        />
+        <span class="search-filter-log__checkbox-input-text">출판사</span>
+      </label>
+    </div>
   </div>
 </template>
 
@@ -106,5 +163,42 @@ button {
 /*  */
 .search-bar-img {
   height: 18px;
+}
+/* 필터 */
+.filter-category-frame {
+  margin-top: 18px;
+  display: flex;
+  overflow-x: auto;
+  white-space: nowrap;
+  scrollbar-width: none;
+  gap: 10px;
+}
+.search-filter {
+  display: flex;
+  justify-content: flex-start;
+  gap: 10px;
+}
+
+.search-filter-log__checkbox-input {
+  display: none;
+}
+
+.search-filter-log__checkbox-input-text {
+  font-family: "Pretendard", serif;
+  font-size: 12px;
+  font-weight: var(--medium, 500);
+  color: var(--text-sub, #767676);
+  border-radius: 8px;
+  background-color: #f7f7f7;
+  padding: 12px 20px;
+  cursor: pointer;
+  user-select: none;
+  flex-shrink: 0;
+}
+
+.search-filter-log__checkbox-input:checked
+  + .search-filter-log__checkbox-input-text {
+  background-color: var(--main1, #323a27);
+  color: var(--white, #ffffff);
 }
 </style>

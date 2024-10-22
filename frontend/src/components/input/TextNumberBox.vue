@@ -7,14 +7,18 @@ const props = defineProps<{
   placeholder: string;
 }>();
 
+const emit = defineEmits(['update:modelValue']);
+
 </script>
 
 <template>
   <div class="input-text__bar">
     <label class="input-text__label">
       <span class="input-text__label-text">{{ label }}</span>
-      <input class="input-text__input" type="number" :name="name"
+      <input class="input-text__input" type="number"
+             :name="name"
              :min="min"
+             @input="$emit('update:modelValue', $event.target.value)"
              :placeholder="placeholder"
              autocomplete="off"
       />

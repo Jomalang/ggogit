@@ -4,6 +4,9 @@ const props = defineProps<{
   name: string;
   placeholder: string;
 }>();
+
+const emit = defineEmits(['update:modelValue']);
+
 </script>
 
 <template>
@@ -14,6 +17,7 @@ const props = defineProps<{
       <textarea
         class="input-textarea__textarea tree-input__large-textarea"
         :name="name"
+        @input="$emit('update:modelValue', $event.target.value)"
         :placeholder="placeholder"
       ></textarea>
     </label>

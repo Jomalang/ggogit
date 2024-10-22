@@ -1,7 +1,6 @@
 <script setup lang="ts">
 
 import TopBarBack from "@/components/top-bar/TopBarBack.vue";
-import TagSelectedList from "@/components/tag/TagSelectedList.vue";
 import TopBarTagInfo from "@/components/top-bar/TopBarTagInfo.vue";
 import TagListBox from "@/components/tag/TagListBox.vue";
 
@@ -10,7 +9,7 @@ import TagListBox from "@/components/tag/TagListBox.vue";
 <template>
   <header>
     <h1 class="none">도서 카테고리 이름</h1>
-    <TopBarBack title="도서 카테고리" link=""></TopBarBack>
+    <TopBarBack title="도서 카테고리" link="/tree/book/reg"></TopBarBack>
   </header>
   <main>
     <section>
@@ -34,11 +33,6 @@ import TagListBox from "@/components/tag/TagListBox.vue";
           />
         </label>
       </div>
-    </section>
-
-    <section>
-      <h2 class="none">도서 카테고리 선택</h2>
-      <TagSelectedList tags="null"></TagSelectedList>
     </section>
 
     <section>

@@ -10,12 +10,12 @@ const props = defineProps<{
   <div class="top-bar--green">
     <div class="top-bar__frame">
       <p class="top-bar__title">{{ title }}</p>
-      <a class="tob-bar__back-link" :href="link">
+      <RouterLink class="tob-bar__back-link" :to="link">
         <img
           src="/public/svg/back-arrow-icon.svg"
           alt="top-bar--backarrow.svg"
         />
-      </a>
+      </RouterLink>
       <div class="top-bar__text"></div>
     </div>
   </div>

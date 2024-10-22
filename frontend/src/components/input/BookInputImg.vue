@@ -1,5 +1,26 @@
 <script setup lang="ts">
 
+import {onMounted} from "vue";
+
+onMounted(() => {
+  const imgTag = document.getElementById('input-book-img-box__input-id') as HTMLInputElement;
+  imgTag.addEventListener('change', function (event: Event) {
+    const target = event.target as HTMLInputElement;
+    const file = target.files ? target.files[0] : null;
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function (e: ProgressEvent<FileReader>) {
+        const imagePreview = document.getElementById('input-book-img-box__img-id') as HTMLImageElement;
+        if (e.target) {
+          imagePreview.src = e.target.result as string;
+          imagePreview.style.display = 'block';
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+});
+
 </script>
 
 <template>

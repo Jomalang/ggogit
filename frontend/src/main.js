@@ -41,6 +41,8 @@ import LeafBookFirstRegister from "@/pages/app/leaf/LeafBookFirstRegister.vue";
 import LeafEtcFirstRegister from "@/pages/app/leaf/LeafEtcFirstRegister.vue";
 import LeafBookRegister from "@/pages/app/leaf/LeafBookRegister.vue";
 import LeafEtcRegister from "@/pages/app/leaf/LeafEtcRegister.vue";
+import BookCategoryList from "@/pages/app/book/BookCategoryList.vue";
+import TreeBookAutoRegister from "@/pages/app/tree/TreeBookAutoRegister.vue";
 
 let router;
 
@@ -123,6 +125,80 @@ router = createRouter({
       component: TreeIndex,
     },
   ],
+=======
+    history: createWebHistory(),
+    routes: [
+        {
+            path: '/test',
+            component: Test
+        },
+        {
+            path: '/', component: Index
+        },
+        {
+            path: '/home', component: HomeIndex
+        },
+        {
+            path: '/member', children: [
+                { path: 'login', component: MemberLogin },
+                { path: 'join-input', component: MemberJoinInput },
+                { path: 'join', component: MemberJoin },
+                { path: 'password-reset', component: MemberPasswordReset },
+            ],
+            component: MemberIndex
+        },
+        {
+            path: '/book', children: [
+                { path: 'detail', component: BookDetail },
+                { path: 'category/list', component: BookCategoryList }
+            ],
+            component: BookIndex
+        },
+        {
+            path: '/memoir', children: [
+                { path: 'reg', component: MemoirRegister },
+                { path: 'edit', component: MemoirEdit },
+            ],
+            component: MemoirIndex
+        },
+        {
+            path: '/leaf', children: [
+                { path: 'book/first/reg', component: LeafBookFirstRegister },
+                { path: 'etc/first/reg', component: LeafEtcFirstRegister },
+                { path: 'book/reg', component: LeafBookRegister },
+                { path: 'etc/reg', component: LeafEtcRegister },
+                { path: 'book/edit', component: LeafEdit },
+                { path: 'book/edit', component: LeafEdit },
+                { path: 'list', component: LeafList },
+                { path: 'detail', component: LeafDetail }
+            ],
+            component: LeafIndex
+        },
+        {
+            path: '/tag', children: [
+                { path: 'list', component: TagList },
+                { path: 'edit', component: TagEdit }
+            ],
+            component: TagIndex
+        },
+        {
+            path: '/seed', component: SeedIndex
+        },
+        {
+            path: '/tree', children: [
+                { path: 'search', component: TreeSearch },
+                { path: 'search/result:treeSearchText', component: TreeSearchResult },
+                { path: 'book/reg', component: TreeBookRegister },
+                { path: 'book/auto/reg', component: TreeBookAutoRegister },
+                { path: 'etc/reg', component: TreeEtcRegister },
+                { path: 'list', component: TreeList },
+                { path: 'book/search', component: TreeBookSearch },
+                { path: 'detail:treeId', component: TreeDetail },
+                { path: 'memoir/register/index', component: TreeMemoirRegisterIndex }
+            ],
+            component: TreeIndex
+        },
+    ]
 });
 
 createApp(App).use(router).mount("#app");

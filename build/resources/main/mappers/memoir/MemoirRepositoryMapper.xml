@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Recorders.ggogit.domain.memoir.repository.MemoirRepository">
+    <insert id="save" parameterType="Memoir"
+            useGeneratedKeys="true" keyProperty="id" keyColumn="ID">
+        INSERT INTO MEMOIR(TREE_ID, TITLE, TEXT, VISIBILITY)
+        VALUES(#{treeId}, #{title}, #{text}, #{visibility})
+    </insert>
+    <select id="findById" resultType="Memoir">
+        SELECT *
+        FROM MEMOIR
+        WHERE TREE_ID = #{id} AND IS_DELETED = 0
+    </select>
+    <update id="delete">
+        UPDATE MEMOIR
+        SET IS_DELETED = 1
+        WHERE TREE_ID = #{treeId} AND IS_DELETED = 0
+    </update>
+    <update id="update" parameterType="Memoir" useGeneratedKeys="true" keyProperty="id" keyColumn="ID">
+        UPDATE MEMOIR
+        SET TITLE = #{title}, TEXT = #{text}, VISIBILITY = #{visibility}
+        WHERE TREE_ID = #{treeId} AND IS_DELETED = 0
+    </update>
+    <select id="findAll" resultType="Memoir">
+        SELECT *
+        FROM MEMOIR
+        WHERE IS_DELETED = 0
+    </select>
+    <select id="findByTreeId" resultType="Memoir">
+        SELECT *
+        FROM MEMOIR
+        WHERE TREE_ID = #{treeId} AND IS_DELETED = 0
+    </select>
+    <select id="findByTitle" resultType="Memoir">
+        SELECT *
+        FROM MEMOIR
+        WHERE TITLE LIKE '%${title}%' AND IS_DELETED = 0
+    </select>
+
+    <select id="findCntById" resultType="MemoirCommentLikeView" parameterType="MemoirCommentLikeView">
+        SELECT *
+        FROM MEMOIR_CL_CNT
+        WHERE ID = #{id}
+    </select>
+
+    <select id="findMemoirBookViews" resultType="MemoirBookView">
+        SELECT *
+        FROM VW_MEMOIR_BOOK
+        WHERE MEMBER_ID = #{memberId}
+        ORDER BY UPDATE_TIME DESC
+        LIMIT 10
+    </select>
+
+</mapper>

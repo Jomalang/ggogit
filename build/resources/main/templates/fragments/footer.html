@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="https://www.tyhmeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>footer</title>
+  </head>
+  <body>
+    <!-- ==========================================
+     FRAGMENT: Footer - 로그인 되어있을때
+     ========================================== -->
+    <footer class="tree-footer" th:fragment="footer(noticeText)">
+      <header class="tree-footer-header">
+        <h1 class="tree-footer-header__title">공지사항</h1>
+        <p class="tree-footer-header__added" th:text="${noticeText}">
+          서비스 개발 진행중
+        </p>
+      </header>
+      <div class="tree-footer__membership">
+        <form class="display__inline" method="post" th:action="@{/member/logout}" >
+          <button class="membership-login">로그아웃</button>
+        </form>
+        <a href="#" class="membership-asking">문의하기</a>
+      </div>
+      <div class="tree-footer__app">
+        <a href="#" class="app-info">이용약관</a>
+        <span class="app-sep">|</span>
+        <a href="#" class="app-membership-policy">개인정보처리방침</a>
+      </div>
+      <div class="tree-footer__logo">
+        <img
+          th:src="@{/img/logo/logo-sample.png}"
+          width="80"
+          height="80"
+          alt="app-logo"
+        />
+      </div>
+    </footer>
+  </body>
+</html>

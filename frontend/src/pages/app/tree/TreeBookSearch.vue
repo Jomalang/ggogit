@@ -3,8 +3,12 @@ import InputBackSearch from "@/components/input/InputBackSearch.vue";
 import TopbarSearchResultNum from "@/components/top-bar/TopbarSearchResultNum.vue";
 import NavigationBar from "@/components/nav/NavigationBar.vue";
 import { ref } from "vue";
-const apiUrl = `${import.meta.env.VITE_API_URL}/api/v1/tree/search`;
-const bookResult = ref([]);
+const apiUrl = `${import.meta.env.VITE_API_BASE_URL}/api/v1/books`;
+
+//-------------handler----------------
+const handleBookResult = (data) => {
+  console.log(data);
+};
 </script>
 
 <template>
@@ -17,6 +21,7 @@ const bookResult = ref([]);
         :placeholder="`검색할 트리를 입력해주세요.`"
         :href="`./seed/index`"
         :api="apiUrl"
+        @bookResult="handleBookResult"
       />
     </section>
 

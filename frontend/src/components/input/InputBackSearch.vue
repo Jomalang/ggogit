@@ -1,37 +1,43 @@
 <script setup lang="ts">
 import axios from "axios";
-import { ref } from "vue";
+import { onUpdated, ref } from "vue";
 import SearchFilterRadio from "../filter/SearchFilterRadio.vue";
-
-const query = ref<string>("");
-
+//-----------------props-----------------
 const props = defineProps<{
   placeholder: string;
   href: string;
   api: string;
 }>();
-
+//-----------------emit-----------------
 const emit = defineEmits<{
-  (event: "query", query: string): void;
-  (event: "data", data: any): void;
+  (event: "req", query: string): void;
+  (event: "bookResult", data: any): void;
 }>();
+//-----------------query-----------------
+let query = ref<string>("");
+let filter = ref<string>("title");
 
-const EmitQuery = async (): Promise<void> => {
-  try {
-    const response = await axios.get(props.api, {
+const createReq = async (query: string, filter: string): Promise<void> => {
+  axios
+    .get(props.api, {
       params: {
-        query: query.value,
+        q: query,
+        f: filter,
       },
+    })
+    .then((response) => {
+      emit("bookResult", response.data);
+    })
+    .catch((error) => {
+      console.error("Error fetching data:", error);
     });
-
-    console.log(response.data);
-
-    emit("query", query.value);
-    emit("data", response.data);
-  } catch (error) {
-    console.error("Error fetching data:", error);
-  }
 };
+
+//-----------------lifeCycle-----------------
+onUpdated(() => {
+  console.log(query.value);
+  console.log(filter.value);
+});
 </script>
 
 <template>
@@ -48,49 +54,51 @@ const EmitQuery = async (): Promise<void> => {
           class="search-bar--input"
           type="text"
           :placeholder="props.placeholder"
-          :v-modle="query"
+          v-model="query"
           autocomplete="off"
         />
         <button class="search-bar--close" type="reset">
           <img src="/public/svg/close-button.svg" alt="close-btn" />
         </button>
       </label>
-      <button @click="EmitQuery()">
+      <button @click="createReq(query, filter)">
         <img src="/public/svg/lens.svg" alt="lens" />
       </button>
     </div>
   </div>
   <!-- (description, name, value, isChecked) -->
-  <div class="filter-category-frame">
-    <div class="search-filter-log">
-      <label class="search-filter-log__checkbox-labal">
-        <input
-          class="search-filter-log__checkbox-input"
-          type="radio"
-          name="filterType"
-          value="title"
-        />
-        <span class="search-filter-log__checkbox-input-text">제목</span>
-      </label>
-      <label class="search-filter-log__checkbox-labal">
-        <input
-          class="search-filter-log__checkbox-input"
-          type="radio"
-          name="filterType"
-          value="author"
-        />
-        <span class="search-filter-log__checkbox-input-text">저자</span>
-      </label>
-      <label class="search-filter-log__checkbox-labal">
-        <input
-          class="search-filter-log__checkbox-input"
-          type="radio"
-          name="filterType"
-          value="publisher"
-        />
-        <span class="search-filter-log__checkbox-input-text">출판사</span>
-      </label>
-    </div>
+  <div class="search-filter-log">
+    <label class="search-filter-log__checkbox-labal">
+      <input
+        class="search-filter-log__checkbox-input"
+        type="radio"
+        name="filterType"
+        value="title"
+        checked
+        v-model="filter"
+      />
+      <span class="search-filter-log__checkbox-input-text">제목</span>
+    </label>
+    <label class="search-filter-log__checkbox-labal">
+      <input
+        class="search-filter-log__checkbox-input"
+        type="radio"
+        name="filterType"
+        value="author"
+        v-model="filter"
+      />
+      <span class="search-filter-log__checkbox-input-text">저자</span>
+    </label>
+    <label class="search-filter-log__checkbox-labal">
+      <input
+        class="search-filter-log__checkbox-input"
+        type="radio"
+        name="filterType"
+        value="publisher"
+        v-model="filter"
+      />
+      <span class="search-filter-log__checkbox-input-text">출판사</span>
+    </label>
   </div>
 </template>
 
@@ -165,10 +173,9 @@ button {
   height: 18px;
 }
 /* 필터 */
-.filter-category-frame {
+.search-filter-log {
   margin-top: 18px;
   display: flex;
-  overflow-x: auto;
   white-space: nowrap;
   scrollbar-width: none;
   gap: 10px;

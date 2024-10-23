@@ -3,8 +3,8 @@
 import TagSearchOrRegisterBar from "@/components/input/TagSearchOrRegisterBar.vue";
 import TopBarTagEdit from "@/components/top-bar/TopBarTagEdit.vue";
 import TopBarTagInfo from "@/components/top-bar/TopBarTagInfo.vue";
-import DeleteFormBtn from "@/components/input/DeleteFormBtn.vue";
 import DefaultData from "@/components/input/DefaultData.vue";
+import DeleteFormBtn from "@/components/input/DeleteFormBtn.vue";
 
 </script>
 

@@ -9,7 +9,7 @@ const props = defineProps<{
     <label>
       <input type="checkbox" class="checkbox__input" />
       <span class="checkbox__check"></span>
-      <p>{{ text }}</p>
+      <span>{{ text }}</span>
     </label>
   </div>
 </template>

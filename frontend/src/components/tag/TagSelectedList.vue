@@ -4,6 +4,13 @@ import { LeafTagProps } from "@/types/types";
 const props = defineProps<{
   tags: Array<LeafTagProps>;
 }>();
+
+const emit = defineEmits(['tagUnSelected']);
+
+const tagUnSelected = (tag: LeafTagProps) => {
+  emit('tagUnSelected', tag);
+};
+
 </script>
 
 <template>
@@ -11,14 +18,13 @@ const props = defineProps<{
   <div class="tag-info-box tag-info-box--selected">
     <ul class="tag-info__list tag-info__list--selected">
       <li
-        v-if="tags !== null"
         v-for="tag in tags"
         class="tag-info__item tag-info__item--selected"
         :id="tag.id + '--selected'"
       >
         <div class="tag-info__tag-box">
           <q class="tag-info__name">{{ tag.name }}</q>
-          <button class="tag-info__btn tag-info__btn--selected" type="button">
+          <button class="tag-info__btn tag-info__btn--selected" type="button" @click="tagUnSelected(tag)">
             <img class="tag-info__btn" src="/public/svg/x-button.svg" alt="" />
           </button>
         </div>
@@ -46,14 +52,6 @@ const props = defineProps<{
   padding: 8px 0;
   justify-content: space-between;
   align-items: center;
-}
-
-.tag-info__item--create {
-  justify-content: flex-start;
-}
-
-.tag-info__create-btn {
-  margin-left: 16px;
 }
 
 .tag-info__tag-box {

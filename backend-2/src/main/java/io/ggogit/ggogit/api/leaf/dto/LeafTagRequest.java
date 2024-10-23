@@ -13,7 +13,6 @@ import org.hibernate.validator.constraints.Length;
 @NoArgsConstructor
 public class LeafTagRequest {
 
-    @Length(min = 1, max = 255, message = "태그 이름은 1자 이상 255자 이하로 입력해주세요.")
     @NotBlank(message = "태그 이름을 입력해주세요.")
     private String name;
 }

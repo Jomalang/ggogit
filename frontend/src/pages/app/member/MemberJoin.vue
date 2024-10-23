@@ -1,8 +1,8 @@
 <script setup lang="ts">
 
 import LoginJoinPageBackBtn from "@/components/button/LoginJoinPageBackBtn.vue";
-import TextLoginPageInfo from "@/components/text/TextLoginPageInfo.vue";
 import InputTextBar from "@/components/input/InputTextBar.vue";
+import TextLoginPageInfo from "@/components/text/TextLoginPageInfo.vue";
 import SocialLogin from "@/components/link/SocialLogin.vue";
 import SubmitBtnFullBar from "@/components/button/SubmitBtnFullBar.vue";
 import JoinGuide from "@/components/text/JoinGuide.vue";

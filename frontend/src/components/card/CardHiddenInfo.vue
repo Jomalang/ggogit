@@ -1,13 +1,54 @@
 <script setup lang="ts">
 
-import {CardHiddenInfoProps, CardReactNumbersProps} from "@/types/types";
+import { defineProps } from 'vue';
 import CardProgressBar from "@/components/card/CardProgressBar.vue";
 import CardReactNumbers from "@/components/card/CardReactNumbers.vue";
 import LinkFullWidth from "@/components/button/LinkFullWidth.vue";
 
-const item: CardHiddenInfoProps = {
-  treeDescription: '트리 설명입니다.',
+
+interface CardHiddenInfoProps {
+  hiddentext: string;
+  authors?: string | null;
+  translators?: string | null;
+  publisher?: string | null;
+  page?: number | null;
+  seed: number;
+  treedescription: string;
+  readPage?: number | null;
+  progress?: number | null;
+  fullPage?: number | null;
+  leaf: number;
+  like: number;
+  view: number;
 }
+
+interface CardProgressBarProps {
+  progress: number;
+  readPage: number;
+  fullPage: number;
+}
+
+interface CardReactNumbersProps {
+  leaf: number;
+  like: number;
+  view: number;
+}
+
+const item: CardHiddenInfoProps = {
+  hiddentext: '자세히',
+  authors: 'authors',
+  translators: 'translators',
+  publisher: 'publisher',
+  page: 100,
+  seed: 100,
+  treedescription: 'treedescription',
+  readPage: 50,
+  progress: 50,
+  fullPage: 100,
+  leaf: 100,
+  like: 100,
+  view: 100,
+};
 
 const cardProgressBarProps: CardProgressBarProps = {
   progress: 50,
@@ -16,9 +57,9 @@ const cardProgressBarProps: CardProgressBarProps = {
 };
 
 const cardReactNumbersProps: CardReactNumbersProps = {
-  leafCount: 100,
-  likeCount: 100,
-  viewCount: 100,
+  leaf: 100,
+  like: 100,
+  view: 100,
 }
 
 const props = defineProps<{
@@ -43,7 +84,7 @@ const props = defineProps<{
 
       <section class="card-tree__description-title__container">
         <!-- <h3 th:replace="~{fragments/text :: text-main-title(title='트리설명', size=18)}"></h3> -->
-        <p class="card-tree__description-content">{{ item.treeDescription }}</p>
+        <p class="card-tree__description-content">{{ treeDescription }}</p>
       </section>
 
       <section class="card-progress__container" >

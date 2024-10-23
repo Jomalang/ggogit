@@ -1,58 +1,129 @@
 <script setup lang="ts">
+import { defineComponent, onMounted } from 'vue';
+
+import axios from "axios";
+import CardTreeInfoCover from '@/components/card/CardTreeInfoCover.vue';
+import InputBackSearch from '@/components/input/InputBackSearch.vue';
+import CardHiddenInfo from '@/components/card/CardHiddenInfo.vue';
+
+const props = defineProps<{
+  treeInfoResponse: {
+    bookId?: number | null;
+    bookCategory?: string | null;
+    bookTitle?: string | null;
+    bookAuthor?: string | null;
+    bookTranslator?: string | null;
+    bookPublisher?: string | null;
+    bookPublishedYear?: string | null;
+    bookTotalPage?: number | null;
+    treeId: number;
+    memberId : number;
+    seedId: number;
+    title: string;
+    description: string;
+    visibility: Boolean;
+    leafCreatedAt: string;
+    createdAt: string;
+    readingPage ?: number | null;
+    coverImageName: string;
+    treeLeafCnt: number;
+    treeLikeCnt: number;
+    treeViewCnt: number;
+  };
+}>();
+
+let leafList: any[] = [];
+
+const fetchData = async () => {
+  try {
+    const response = await axios.get(`http://localhost:8080/api/v1/trees/3000/leafs`);
+    leafList = response.data.leafs;
+    console.log(response.data);
+    console.log(leafList + 'leafList'); 
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  }
+};
+
+onMounted(() => {
+  fetchData();
+});
 
 </script>
 
 <template>
-  <header>
+    hi
+  <!-- <header>
     <h1 class="none">사용자 트리 세부정보</h1>
     <section  class="reg-book-search-container">
         <h2 class="none">트리 검색</h2>
-        <!-- 컴포넌트 start -->
-        <div
-                <!-- th:replace="~{fragments/input::input-back-search-text(placeholder='검색할 트리를 입력해주세요', action='', name='treeSearchText', href='javascript:history.back()')}" -->
-        ></div>
+        
+        <InputBackSearch placeholder='검색할 트리를 입력해주세요' action='' method='' name='treeSearchText' href='javascript:history.back()'>트리 검색 상단 바</InputBackSearch>
+        
+        
     </section>
 </header>
 <main>
     <section class="user-tree-info__container">
         <h2 class="none">트리 정보</h2>
-        <div th:replace="~{fragments/card :: card-tree-info-cover(src=${treeInfoView.coverImageName},treetitle=${treeInfoView.title},booktitle=${treeInfoView.bookTitle})}">
-        </div>
+        <CardTreeInfoCover 
+        :data="{ 
+            src: treeInfoResponse.coverImageName, 
+            treeTitle: treeInfoResponse.title,
+            bookTitle: treeInfoResponse.bookTitle 
+            }"
+        >트리 정보</CardTreeInfoCover>
+        <div th:replace="~{fragments/card :: card-tree-info-cover(src=${treeInfoResponse.coverImageName},treetitle=${treeInfoResponse.title},booktitle=${treeInfoResponse.bookTitle})}"> </div>
     </section>
     <section class="branch-tree-detail-container"
-             th:with="rPage=${treeInfoView.readingPage ?: 0}, totalPage=${treeInfoView.bookTotalPage ?: 1}">
+             th:with="rPage=${treeInfoResponse.readingPage ?: 0}, totalPage=${treeInfoResponse.bookTotalPage ?: 1}">
         <h2 class="none">트리 상세 설명</h2>
+        <CardHiddenInfo :item="{
+        hiddentext:'자세히',
+        authors:treeInfoResponse.bookAuthor,
+        translators:treeInfoResponse.bookTranslator,
+        publisher:treeInfoResponse.bookPublisher,
+        page:treeInfoResponse.bookTotalPage,
+        seed:treeInfoResponse.seedId,
+        treedescription:treeInfoResponse.description,
+        readPage:treeInfoResponse.readingPage,
+        progress: (treeInfoResponse.readingPage && treeInfoResponse.bookTotalPage) ? parseFloat(((treeInfoResponse.readingPage * 100.0) / treeInfoResponse.bookTotalPage).toFixed(1)) : 0,
+        fullPage:treeInfoResponse.bookTotalPage,
+        leaf:treeInfoResponse.treeLeafCnt,
+        like:treeInfoResponse.treeLikeCnt,
+        view:treeInfoResponse.treeViewCnt
+        }"></CardHiddenInfo>
         <div th:replace="~{fragments/card :: card-hidden-info(
         hiddentext='자세히',
-        authors=${treeInfoView.bookAuthor},
-        translators=${treeInfoView.bookTranslator},
-        publisher=${treeInfoView.bookPublisher},
+        authors=${treeInfoResponse.bookAuthor},
+        translators=${treeInfoResponse.bookTranslator},
+        publisher=${treeInfoResponse.bookPublisher},
         page=${totalPage},
-        seed=${treeInfoView.seedId},
-        treedescription=${treeInfoView.description},
+        seed=${treeInfoResponse.seedId},
+        treedescription=${treeInfoResponse.description},
         readpage=${rPage},
         progress=${#numbers.formatDecimal((rPage * 100.0 / totalPage), 1, 1)},
-        fullpage=${treeInfoView.bookTotalPage},
-        leaf=${treeInfoView.treeLeafCnt},
-        like=${treeInfoView.treeLikeCnt},
-        view=${treeInfoView.treeViewCnt}
+        fullpage=${treeInfoResponse.bookTotalPage},
+        leaf=${treeInfoResponse.treeLeafCnt},
+        like=${treeInfoResponse.treeLikeCnt},
+        view=${treeInfoResponse.treeViewCnt}
     )}"></div>
     </section>
 
     <section class="branch-list__container">
         <h2 th:replace="~{fragments/text :: text-main-title__listCount(title='브랜치 목록', number=${#lists.size(leafList)})}"></h2>
-        <!-- 컴포넌트 -->
+ 
         <section class="branch-filter-container">
             <h3 class="none">브랜치 필터</h3>
-            <!-- 컴포넌트 -->
+ 
             <div th:replace="~{fragments/filter :: filter-tree-leaf__card()}"></div>
         </section>
 
         <section class="branch-filter-result-list__container">
             <h3 class="none">브랜치 리스트</h3>
-            <!-- 컴포넌트 -->
+\
             <div id="card-branch__list-frame" >
-<!--            <div th:replace="~{fragments/card :: card-branch__list(${leafList})}"></div>-->
+           <div th:replace="~{fragments/card :: card-branch__list(${leafList})}"></div>
             </div>
         </section>
     </section>
@@ -147,10 +218,9 @@
 <aside>
     <section class="nav-container">
         <h2 class="none">네비게이션</h2>
-        <!-- 트리 생성 언더바  -->
         <div th:replace="~{fragments/nav :: navigation-bar(active='home')}"></div>
     </section>
-</aside>
+</aside> -->
 
 </template>
 

@@ -25,9 +25,18 @@ import LeafDetail from "@/pages/app/leaf/LeafDetail.vue";
 import TagList from "@/pages/app/leaf/TagList.vue";
 import TagEdit from "@/pages/app/leaf/TagEdit.vue";
 import SeedIndex from "@/pages/app/tree/SeedIndex.vue";
+import TreeSearch from "@/pages/app/tree/TreeSearch.vue";
+import TreeSearchResult from "@/pages/app/tree/TreeSearchResult.vue";
+import TreeBookRegister from "@/pages/app/tree/TreeBookRegister.vue";
+import TreeEtcRegister from "@/pages/app/tree/TreeEtcRegister.vue";
+import TreeList from "@/pages/app/tree/TreeList.vue";
+import TreeBookSearch from "@/pages/app/tree/TreeBookSearch.vue";
+import TreeDetail from "@/pages/app/tree/TreeDetail.vue";
+import TreeMemoirRegisterIndex from "@/pages/app/tree/TreeMemoirRegisterIndex.vue";
 import MemberIndex from "@/pages/app/member/MemberIndex.vue";
 import LeafIndex from "@/pages/app/leaf/LeafIndex.vue";
 import TagIndex from "@/pages/app/leaf/TagIndex.vue";
+import TreeIndex from "@/pages/app/tree/TreeIndex.vue";
 import Test from "@/pages/Test.vue";
 import LeafBookFirstRegister from "@/pages/app/leaf/LeafBookFirstRegister.vue";
 import LeafEtcFirstRegister from "@/pages/app/leaf/LeafEtcFirstRegister.vue";
@@ -35,9 +44,6 @@ import LeafBookRegister from "@/pages/app/leaf/LeafBookRegister.vue";
 import LeafEtcRegister from "@/pages/app/leaf/LeafEtcRegister.vue";
 import BookCategoryList from "@/pages/app/book/BookCategoryList.vue";
 import TreeBookAutoRegister from "@/pages/app/tree/TreeBookAutoRegister.vue";
-
-//----------------------Router----------------------
-import treeRouter from "@/pages/app/tree/Router.js";
 
 let router;
 
@@ -108,8 +114,23 @@ router = createRouter({
       path: "/seed",
       component: SeedIndex,
     },
-    treeRouter,
-  ],
+    {
+      path: "/tree",
+      children: [
+        { path: "search", component: TreeSearch },
+        { path: "search/result:treeSearchText", component: TreeSearchResult },
+        { path: "book/reg", component: TreeBookRegister },
+        { path: "etc/reg", component: TreeEtcRegister },
+        { path: "list", component: TreeList },
+        { path: "book/search", component: TreeBookSearch },
+        { path: ":id", component: TreeDetail },
+        { path: "memoir/register/index", component: TreeMemoirRegisterIndex },
+        { path: "test", component: TreeDetail },
+        { path: "test2", component: TreeDetail },
+      ],
+      component: TreeIndex,
+    },
+  ]
 });
 
 createApp(App).use(router).mount("#app");

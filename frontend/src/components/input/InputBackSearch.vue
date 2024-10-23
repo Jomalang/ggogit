@@ -27,6 +27,7 @@ const createReq = async (query: string, filter: string): Promise<void> => {
     })
     .then((response) => {
       emit("bookResult", response.data);
+      emit("req", query);
     })
     .catch((error) => {
       console.error("Error fetching data:", error);
@@ -66,6 +67,7 @@ onUpdated(() => {
       </button>
     </div>
   </div>
+  <!-- 필터 -->
   <!-- (description, name, value, isChecked) -->
   <div class="search-filter-log">
     <label class="search-filter-log__checkbox-labal">

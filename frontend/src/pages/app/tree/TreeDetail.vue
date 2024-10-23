@@ -1,4 +1,38 @@
 <script setup lang="ts">
+import { defineComponent } from 'vue';
+
+import CardTreeInfoCover from '@/components/card/CardTreeInfoCover.vue';
+import InputBackSearch from '@/components/input/InputBackSearch.vue';
+import CardHiddenInfo from '@/components/card/CardHiddenInfo.vue';
+
+const props = defineProps<{
+  treeInfoResponse: {
+    bookId?: number | null;
+    bookCategory?: string | null;
+    bookTitle?: string | null;
+    bookAuthor?: string | null;
+    bookTranslator?: string | null;
+    bookPublisher?: string | null;
+    bookPublishedYear?: string | null;
+    bookTotalPage?: number | null;
+    treeId: number;
+    memberId : number;
+    seedId: number;
+    title: string;
+    description: string;
+    visibility: Boolean;
+    leafCreatedAt: string;
+    createdAt: string;
+    readingPage ?: number | null;
+    coverImageName: string;
+    treeLeafCnt: number;
+    treeLikeCnt: number;
+    treeViewCnt: number;
+  };
+  leafList: any;
+
+
+}>();
 
 </script>
 
@@ -8,35 +42,56 @@
     <section  class="reg-book-search-container">
         <h2 class="none">트리 검색</h2>
         <!-- 컴포넌트 start -->
-        <div
-                <!-- th:replace="~{fragments/input::input-back-search-text(placeholder='검색할 트리를 입력해주세요', action='', name='treeSearchText', href='javascript:history.back()')}" -->
-        ></div>
+        <InputBackSearch placeholder='검색할 트리를 입력해주세요' action='' method='' name='treeSearchText' href='javascript:history.back()'>트리 검색 상단 바</InputBackSearch>
+        <!-- th:replace="~{fragments/input::input-back-search-text(placeholder='검색할 트리를 입력해주세요', action='', name='treeSearchText', href='javascript:history.back()')}" -->
+        <!-- 컴포넌트 end -->
     </section>
 </header>
 <main>
     <section class="user-tree-info__container">
         <h2 class="none">트리 정보</h2>
-        <div th:replace="~{fragments/card :: card-tree-info-cover(src=${treeInfoView.coverImageName},treetitle=${treeInfoView.title},booktitle=${treeInfoView.bookTitle})}">
-        </div>
+        <CardTreeInfoCover 
+        :data="{ 
+            src: treeInfoResponse.coverImageName, 
+            treeTitle: treeInfoResponse.title,
+            bookTitle: treeInfoResponse.bookTitle 
+            }"
+        >트리 정보</CardTreeInfoCover>
+        <!-- <div th:replace="~{fragments/card :: card-tree-info-cover(src=${treeInfoResponse.coverImageName},treetitle=${treeInfoResponse.title},booktitle=${treeInfoResponse.bookTitle})}"> </div>-->
     </section>
     <section class="branch-tree-detail-container"
-             th:with="rPage=${treeInfoView.readingPage ?: 0}, totalPage=${treeInfoView.bookTotalPage ?: 1}">
+             th:with="rPage=${treeInfoResponse.readingPage ?: 0}, totalPage=${treeInfoResponse.bookTotalPage ?: 1}">
         <h2 class="none">트리 상세 설명</h2>
-        <div th:replace="~{fragments/card :: card-hidden-info(
+        <CardHiddenInfo :data="{
+        hiddentext:'자세히',
+        authors:treeInfoResponse.bookAuthor,
+        translators:treeInfoResponse.bookTranslator,
+        publisher:treeInfoResponse.bookPublisher,
+        page:treeInfoResponse.bookTotalPage,
+        seed:treeInfoResponse.seedId,
+        treedescription:treeInfoResponse.description,
+        readpage:treeInfoResponse.readingPage,
+        progress: (treeInfoResponse.readingPage && treeInfoResponse.bookTotalPage) ? parseFloat(((treeInfoResponse.readingPage * 100.0) / treeInfoResponse.bookTotalPage).toFixed(1)) : 0,
+        fullpage:treeInfoResponse.bookTotalPage,
+        leaf:treeInfoResponse.treeLeafCnt,
+        like:treeInfoResponse.treeLikeCnt,
+        view:treeInfoResponse.treeViewCnt
+        }"></CardHiddenInfo>
+        <!-- <div th:replace="~{fragments/card :: card-hidden-info(
         hiddentext='자세히',
-        authors=${treeInfoView.bookAuthor},
-        translators=${treeInfoView.bookTranslator},
-        publisher=${treeInfoView.bookPublisher},
+        authors=${treeInfoResponse.bookAuthor},
+        translators=${treeInfoResponse.bookTranslator},
+        publisher=${treeInfoResponse.bookPublisher},
         page=${totalPage},
-        seed=${treeInfoView.seedId},
-        treedescription=${treeInfoView.description},
+        seed=${treeInfoResponse.seedId},
+        treedescription=${treeInfoResponse.description},
         readpage=${rPage},
         progress=${#numbers.formatDecimal((rPage * 100.0 / totalPage), 1, 1)},
-        fullpage=${treeInfoView.bookTotalPage},
-        leaf=${treeInfoView.treeLeafCnt},
-        like=${treeInfoView.treeLikeCnt},
-        view=${treeInfoView.treeViewCnt}
-    )}"></div>
+        fullpage=${treeInfoResponse.bookTotalPage},
+        leaf=${treeInfoResponse.treeLeafCnt},
+        like=${treeInfoResponse.treeLikeCnt},
+        view=${treeInfoResponse.treeViewCnt}
+    )}"></div> -->
     </section>
 
     <section class="branch-list__container">

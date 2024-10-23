@@ -120,6 +120,10 @@ public class LeafDtoServiceImpl implements LeafDtoService {
         }
 
 
+        for(LeafBranchResponse leaf : responseList){
+            System.out.println(leaf.toString());
+        }
+
         return responseList;
     }
 

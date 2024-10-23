@@ -4,8 +4,8 @@ import {onMounted, reactive} from "vue";
 
 // ----------------------- Model ----------------------- //
 
-const savedFormData = localStorage.getItem('formData');
-const formData = reactive(savedFormData ? JSON.parse(savedFormData) : {
+const savedFormData = localStorage.getItem('treeFormData');
+const treeFormData = reactive(savedFormData ? JSON.parse(savedFormData) : {
   seedCategoryType: '',
   bookTitle: '',
   author: '',

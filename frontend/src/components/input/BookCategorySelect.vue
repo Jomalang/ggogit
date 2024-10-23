@@ -2,8 +2,8 @@
 
 import { reactive } from "vue";
 
-const savedFormData = localStorage.getItem('formData');
-const formData = reactive(savedFormData ? JSON.parse(savedFormData) : {
+const savedFormData = localStorage.getItem('treeFormData');
+const treeFormData = reactive(savedFormData ? JSON.parse(savedFormData) : {
   seedCategoryType: '',
   bookTitle: '',
   author: '',
@@ -17,9 +17,9 @@ const formData = reactive(savedFormData ? JSON.parse(savedFormData) : {
 });
 
 const bookCategory = reactive({
-  isSelected: formData.bookCategoryId !== '',
-  id: formData.bookCategoryId,
-  name: formData.bookCategoryName
+  isSelected: treeFormData.bookCategoryId !== '',
+  id: treeFormData.bookCategoryId,
+  name: treeFormData.bookCategoryName
 });
 
 // -------------------- Function -------------------- //
@@ -27,8 +27,8 @@ const dropBookCategory = () => {
   bookCategory.isSelected = false;
   bookCategory.id = '';
   bookCategory.name = '';
-  formData.bookCategoryId = '';
-  formData.bookCategoryName = '';
+  treeFormData.bookCategoryId = '';
+  treeFormData.bookCategoryName = '';
 };
 
 </script>

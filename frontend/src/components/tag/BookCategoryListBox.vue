@@ -6,8 +6,8 @@ const props = defineProps<{
   tags: Array<LeafTagProps>;
 }>();
 
-const savedFormData = localStorage.getItem('formData');
-const formData = reactive(savedFormData ? JSON.parse(savedFormData) : {
+const savedFormData = localStorage.getItem('treeFormData');
+const treeFormData = reactive(savedFormData ? JSON.parse(savedFormData) : {
   seedCategoryType: '',
   bookTitle: '',
   author: '',
@@ -21,9 +21,9 @@ const formData = reactive(savedFormData ? JSON.parse(savedFormData) : {
 });
 
 watch(
-    formData,
+    treeFormData,
     (newVal) => {
-      localStorage.setItem('formData', JSON.stringify(newVal));
+      localStorage.setItem('treeFormData', JSON.stringify(newVal));
       window.location.href = '/tree/book/reg';
     },
     { deep: true }
@@ -34,8 +34,8 @@ const chooseBookCategory = (e: Event) => {
   const target = e.target as HTMLElement;
   const dataId = target.closest('.tag-info__tag-box')?.getAttribute('data-id');
   if (dataId) {
-    formData.bookCategoryId = dataId;
-    formData.bookCategoryName = target.textContent || '';
+    treeFormData.bookCategoryId = dataId;
+    treeFormData.bookCategoryName = target.textContent || '';
   }
 };
 

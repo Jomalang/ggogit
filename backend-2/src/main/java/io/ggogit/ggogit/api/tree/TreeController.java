@@ -6,13 +6,11 @@ import io.ggogit.ggogit.api.tree.dto.TreeTmpRequest;
 import io.ggogit.ggogit.api.tree.dto.TreeTmpResponse;
 
 import io.ggogit.ggogit.domain.leaf.service.LeafDtoService;
-import io.ggogit.ggogit.domain.member.entity.Member;
 import io.ggogit.ggogit.domain.tree.entity.TreeTmp;
 import io.ggogit.ggogit.domain.tree.service.SeedService;
 import io.ggogit.ggogit.domain.tree.service.TreeService;
 import io.ggogit.ggogit.domain.tree.service.TreeTmpService;
 import io.ggogit.ggogit.type.FilterType;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.data.domain.*;
@@ -70,7 +68,7 @@ public class TreeController {
         redirectAttributes.addAttribute("treeSearchText", treeSearchText);
         return "redirect:/tree/search/result/{treeSearchText}";
     }
-    @GetMapping()
+    @GetMapping
     public Page<TreeCardRequest> getTreeList(
             @RequestParam(value = "s", required = false) Long seedId,
             @RequestParam(value = "p", defaultValue = "0") int page,
@@ -89,20 +87,19 @@ public class TreeController {
         return list;
     }
 
-    @PostMapping("/treeTmp/reg")
+    @PostMapping
     public ResponseEntity<TreeTmpResponse> createBookTreeTmp (
-            @RequestParam(required = false) MultipartFile img,
             @ModelAttribute TreeTmpRequest dto,
-            @RequestParam(value = "auto") boolean auto,
-            @SessionAttribute Member member,
-            HttpServletRequest request
+            @RequestParam(required = false) MultipartFile image
+            // @SessionAttribute Member member
     ) throws IOException {
-
-        TreeTmp treeTmp = dto.toTreeTmp(member);
+        TreeTmp treeTmp = dto.toTreeTmp();
+        Long memberId = 1000L; // 테스트용 코드
         Long seedId = dto.getSeedId();
         Long bookCategoryId = dto.getBookCategoryId();
 
-        Long treeTmpId = treeTmpService.tmpTreeSave(treeTmp, member, seedId, bookCategoryId, img.getBytes(), img.getOriginalFilename());
+        Long treeTmpId = treeTmpService
+                .save(treeTmp, memberId, seedId, bookCategoryId, image.getBytes(), image.getOriginalFilename());
 
         TreeTmpResponse resp = TreeTmpResponse.of(treeTmpId, "도서 트리 임시 저장 성공");
 

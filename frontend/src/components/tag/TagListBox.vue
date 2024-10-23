@@ -18,15 +18,6 @@ const props = defineProps<{
         <div class="tag-info__tag-box">
           <q class="tag-info__name">{{ tag.name }}</q>
         </div>
-        <div class="tag-info__option-box">
-          <RouterLink class="tag-info__option-link" to="`/tag/edit/${tag.id}`">
-            <img
-              class="tag-info__option-btn"
-              src="/public/svg/icon-option.svg"
-              alt="태그 선택 제거 이미지"
-            />
-          </RouterLink>
-        </div>
       </li>
     </ul>
   </div>

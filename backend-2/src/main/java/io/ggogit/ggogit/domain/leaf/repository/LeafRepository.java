@@ -16,8 +16,15 @@ public interface LeafRepository extends JpaRepository<Leaf, Long> {
     @Query("""
     SELECT l FROM Leaf l
     WHERE l.tree.id = :treeId
-    AND (:owner = true AND l.bookMark = :bookMark AND l.childLeafCount = 0)
-    OR (:owner = false AND l.childLeafCount = 0)
+    AND l.isDeleted = false
+    AND (
+        (:owner = true AND (
+            (:bookMark IS NULL AND (l.bookMark = true OR l.childLeafCount = 0))
+                OR(:bookMark = true AND l.bookMark = true)
+                OR(:bookMark = false AND l.childLeafCount = 0)
+        ))
+        OR (:owner = false AND l.visibility = false AND l.childLeafCount = 0)
+    )
 """)
     List<Leaf> findByBranchQuery(
             @Param("treeId") Long treeId,

@@ -1,7 +1,6 @@
 <script setup lang="ts">
 
 const props = defineProps<{
-  link: String;
   text: String;
 }>();
 
@@ -9,11 +8,11 @@ const props = defineProps<{
 
 <template>
   <div class="btn-full-width">
-    <a class="btn-full-width__link" :href="link">
+    <div class="btn-full-width__link">
       <div class="btn-full-width__button">
         <p class="btn-full-width__placeholder">{{ text }}</p>
       </div>
-    </a>
+    </div>
   </div>
 </template>
 

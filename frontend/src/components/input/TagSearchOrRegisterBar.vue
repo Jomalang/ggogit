@@ -4,21 +4,20 @@ import { LeafTagProps } from "@/types/types";
 const props = defineProps<{
   tag: LeafTagProps;
 }>();
+
+
 </script>
 
 <template>
   <!-- tag-search-or-register-bar(tag) -->
-  <div
-    class="tree-input-text__form"
-    th:fragment="tag-search-or-register-bar(tag)"
-  >
+  <div class="tree-input-text__form">
     <label class="tree-input-text__subject">
       <input
         v-if="tag"
         id="tree-input-text__rectangle-id"
         name="name"
         class="tree-input-text__rectangle"
-        placeholder="태그 생성 및 옵션 선택"
+        :placeholder="tag.placeholder"
         :value="tag.name"
       />
       <input
@@ -26,7 +25,7 @@ const props = defineProps<{
         id="tree-input-text__rectangle-id"
         name="name"
         class="tree-input-text__rectangle"
-        placeholder="태그 생성 및 옵션 선택"
+        :placeholder="tag.placeholder"
       />
     </label>
   </div>

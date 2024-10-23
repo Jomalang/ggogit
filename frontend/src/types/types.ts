@@ -1,6 +1,7 @@
 export interface LeafTagProps {
   id: Number;
-  name: String;
+  name: string;
+  placeholder: string;
 }
 
 export interface LeafItemProps {
@@ -100,6 +101,7 @@ export interface FilterItemProps {
 }
 
 export interface SeedFilterProps {
+    id: number;
     engName: string;
     korName: string;
 }

@@ -33,7 +33,7 @@ import DeleteFormBtn from "@/components/input/DeleteFormBtn.vue";
   <main>
     <section>
       <h2 class="none">태그 기능 알림</h2>
-      <TopBarTagInfo></TopBarTagInfo>
+      <TopBarTagInfo text="옵션 선택 또는 생성"></TopBarTagInfo>
     </section>
 
     <form id="tag-delete-form-id" action="/tag/delete" method="post">

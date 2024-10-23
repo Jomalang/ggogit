@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link th:href="@{/common/variables.css}" rel="stylesheet" />
+    <link th:href="@{/css/fragments.css}" rel="stylesheet" />
+    <link th:href="@{/css/layout.css}" rel="stylesheet" />
+
+    <title>나의 트리 검색</title>
+  </head>
+
+  <body th:object="${resultMap}">
+    <header class="reg-book-search-container">
+      <h1 class="none">나의 트리</h1>
+      <section>
+        <h2 class="none">트리 검색</h2>
+        <!-- 컴포넌트 start -->
+        <div
+          th:replace="~{fragments/input::input-back-search-text(placeholder='검색할 트리를 입력해주세요', action='', name='treeSearchText', href='javascript:history.back()')}"
+        ></div>
+      </section>
+
+      <section>
+        <h2 class="none">검색 필터 리스트</h2>
+        <div
+          th:replace="~{fragments/filter:: search-filter-log('리프 전체 검색')}"
+        ></div>
+      </section>
+
+      <section>
+        <h2 class="none">검색 결과 개수 및 최근 수정한 순서</h2>
+        <div
+          th:replace="~{fragments/top-bar::topbar-search-result-num(*{size})}"
+        ></div>
+      </section>
+    </header>
+
+    <main>
+      <h2 class="none">트리 검색 결과</h2>
+      <section class="tree-card-list">
+        <h3 class="none">트리 검색 리스트</h3>
+        <div th:each="tree : *{values}">
+          <div
+            th:replace="~{fragments/card::card-tree-details(tree = ${tree})}"
+          ></div>
+        </div>
+      </section>
+      <section>
+        <h3 class="none">검색 결과 없음</h3>
+        <div
+          class="margin-bottom500"
+          th:if="*{size} eq 0"
+          th:insert="~{fragments/text::text-info(text = '검색 결과가 없습니다.', boldText='다시 검색해 주세요' )}"
+        ></div>
+      </section>
+    </main>
+
+    <div class="nav-back-container">
+      <h2 class="none">네비게이션 뒤 공백</h2>
+    </div>
+
+    <aside class="nav-container">
+      <div th:replace="~{fragments/nav :: navigation-bar(home)}"
+    </aside>
+  </body>
+</html>

@@ -1,9 +1,44 @@
 <script setup lang="ts">
 import { LeafTagProps } from "@/types/types";
+import { reactive, watch } from "vue";
 
 const props = defineProps<{
   tags: Array<LeafTagProps>;
 }>();
+
+const savedFormData = localStorage.getItem('treeFormData');
+const treeFormData = reactive(savedFormData ? JSON.parse(savedFormData) : {
+  seedCategoryType: '',
+  bookTitle: '',
+  author: '',
+  publishDate: '',
+  totalPage: '',
+  treeTitle: '',
+  description: '',
+  visibility: true,
+  bookCategoryId: '',
+  bookCategoryName: ''
+});
+
+watch(
+    treeFormData,
+    (newVal) => {
+      localStorage.setItem('treeFormData', JSON.stringify(newVal));
+      window.location.href = '/tree/book/reg';
+    },
+    { deep: true }
+);
+
+// -------------------- Function -------------------- //
+const chooseBookCategory = (e: Event) => {
+  const target = e.target as HTMLElement;
+  const dataId = target.closest('.tag-info__tag-box')?.getAttribute('data-id');
+  if (dataId) {
+    treeFormData.bookCategoryId = dataId;
+    treeFormData.bookCategoryName = target.textContent || '';
+  }
+};
+
 </script>
 
 <template>
@@ -12,10 +47,13 @@ const props = defineProps<{
     <ul class="tag-info__list tag-info__list--unselected">
       <li
         v-for="tag in tags"
+        :key="tag.id"
         class="tag-info__item tag-info__item--unselected"
-        :id="tag.id + '--unselected'"
       >
-        <div class="tag-info__tag-box">
+        <div class="tag-info__tag-box"
+             @click="chooseBookCategory"
+             :data-id="tag.id"
+        >
           <q class="tag-info__name">{{ tag.name }}</q>
         </div>
       </li>
@@ -44,14 +82,6 @@ const props = defineProps<{
   align-items: center;
 }
 
-.tag-info__item--create {
-  justify-content: flex-start;
-}
-
-.tag-info__create-btn {
-  margin-left: 16px;
-}
-
 .tag-info__tag-box {
   display: inline-flex;
   margin-left: 16px;
@@ -64,20 +94,5 @@ const props = defineProps<{
 
 .tag-info__name {
   color: var(--white);
-}
-
-.tag-info__btn {
-  padding: 0;
-}
-
-.tag-info__option-box {
-  display: flex;
-  align-items: center;
-  margin-right: 16px;
-}
-
-.tag-info__option-link {
-  display: flex;
-  align-items: center;
 }
 </style>

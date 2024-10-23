@@ -64,12 +64,11 @@ public class ImageRepository {
     // 이미지 삭제
     public void deleteImage(String imageName, UploadFolderType folderType) {
         File file = new File(uploadPath + File.separator + folderType.getFolderName() + File.separator + imageName);
-        if (file.exists()) {
-            if (!file.delete()) {
-                throw new IllegalArgumentException("이미지 삭제에 실패하였습니다.");
-            }
-        } else {
-            throw new IllegalArgumentException("해당 이미지가 존재하지 않습니다.");
+        if (!file.exists()) {
+            return; // 이미지가 존재하지 않으면 PASS
+        }
+        if (!file.delete()) {
+            throw new IllegalArgumentException("이미지 삭제에 실패하였습니다.");
         }
     }
 

@@ -1,5 +1,48 @@
 <script setup lang="ts">
 
+import {onMounted, reactive} from "vue";
+
+// ----------------------- Model ----------------------- //
+
+const savedFormData = localStorage.getItem('treeFormData');
+const treeFormData = reactive(savedFormData ? JSON.parse(savedFormData) : {
+  seedCategoryType: '',
+  bookTitle: '',
+  author: '',
+  publishDate: '',
+  totalPage: '',
+  treeTitle: '',
+  description: '',
+  visibility: false,
+  bookCategoryId: '',
+  imageData: ''
+});
+
+const emit = defineEmits(['image-selected']);
+
+onMounted(() => {
+  const imgTag = document.getElementById('input-book-img-box__input-id') as HTMLInputElement;
+  imgTag.addEventListener('change', function (event: Event) {
+    const target = event.target as HTMLInputElement;
+    const file = target.files ? target.files[0] : null;
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function (e: ProgressEvent<FileReader>) {
+        const imagePreview = document.getElementById('input-book-img-box__img-id') as HTMLImageElement;
+        if (e.target) {
+          imagePreview.src = e.target.result as string;
+          imagePreview.style.display = 'block';
+
+          // 이미지 데이터를 부모 컴포넌트로 전달
+          const imageData = e.target.result as string;
+          emit('image-selected', imageData);
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+});
+
 </script>
 
 <template>

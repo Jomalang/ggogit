@@ -1,7 +1,10 @@
 <script setup lang="ts">
+
 const props = defineProps<{
   name: string;
+  modelValue: boolean;
 }>();
+
 </script>
 
 <template>
@@ -12,22 +15,23 @@ const props = defineProps<{
       <label class="input-visibility__label">
         <input
           class="input-visibility__btn"
-          label="공개"
+          text="공개"
           type="radio"
           :name="name"
+          @change="$emit('update:modelValue', true)"
+          :checked="modelValue"
           id="public"
-          value="1"
-          checked
         />
       </label>
       <label class="input-visibility__label">
         <input
           class="input-visibility__btn"
-          label="비공개"
+          text="비공개"
           type="radio"
           :name="name"
           id="private"
-          value="0"
+          @change="$emit('update:modelValue', false)"
+          :checked="!modelValue"
         />
       </label>
     </div>
@@ -88,7 +92,7 @@ const props = defineProps<{
 }
 
 .input-visibility__btn::after {
-  content: attr(label);
+  content: attr(text);
 }
 
 .input-visibility__btn:checked {

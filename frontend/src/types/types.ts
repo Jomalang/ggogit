@@ -102,6 +102,7 @@ export interface FilterItemProps {
 }
 
 export interface SeedFilterProps {
+  id: number;
   engName: string;
   korName: string;
 }
@@ -151,6 +152,11 @@ export interface TextMainTitleRightProps {
 }
 
 export interface TextBtnGreenProps {
-  text: string;
-  link: string;
+    text: string;
+    link: string;
+}
+
+export interface BookCategoryProps {
+    id: Number;
+    name: string;
 }

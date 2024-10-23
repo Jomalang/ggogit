@@ -24,6 +24,7 @@ const props = defineProps<{
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 30px 0 30px 0;
 }
 
 .btn-full-bar__btn {

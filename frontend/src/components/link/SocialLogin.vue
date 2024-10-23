@@ -24,6 +24,7 @@
   width: 100%;
   display: flex;
   justify-content: center;
+  padding: 30px 0 0 0;
 }
 
 .social-login__icons {

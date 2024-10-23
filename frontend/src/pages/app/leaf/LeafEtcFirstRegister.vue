@@ -27,13 +27,13 @@ onMounted(() => {
           /**
            * 에디터에 업로드한 이미지를 FormData 객체에 저장
            */
-          const formData = new FormData();
-          formData.append('image', blob);
+          const treeFormData = new FormData();
+          treeFormData.append('image', blob);
 
           // MemoirFileApiController - uploadEditorImage 메서드 호출
           const response = await fetch('/api/v1/leaf/image-upload', {
             method : 'POST',
-            body : formData,
+            body : treeFormData,
           });
           // 컨트롤러에서 전달받은 디스크에 저장된 파일 명
           const filename = await response.text();

@@ -1,7 +1,16 @@
 <script setup lang="ts">
+
+import {LeafTagProps} from "@/types/types";
+
 const props = defineProps<{
-  memberId: number;
+  selectedTag: Array<LeafTagProps>;
 }>();
+
+const tagDelete = (tag: LeafTagProps) => {
+  const index = props.selectedTag.findIndex((item) => item.id === tag.id);
+  props.selectedTag.splice(index, 1);
+};
+
 </script>
 
 <template>
@@ -10,17 +19,28 @@ const props = defineProps<{
     <label class="input-tag-select__bg">
       <div class="input-tag-select__button-box">
         <div class="input-tag-select__tag-box">
-          <ul class="input-tag-select__tags"></ul>
-          <p class="input-tag-select__placeholder">태그를 선택해주세요</p>
+          <ul class="input-tag-select__tags">
+            <li class="input-tag-select__tag"
+                v-for="tag in selectedTag" :key="tag.id">
+              <label class="input-tag-select__tag-label">
+                <span class="input-tag-select__tag-text">{{ tag.name }}</span>
+                <button class="input-tag-select__tag-delete-btn" type="button"
+                        @click="(evnet) => {evnet.pre}
+                  <img src="/svg/x-button.svg" alt="next-button" />
+                </button>
+                <input class="none input-tag-select__input" name="tagIds" :value="tag.id" />
+              </label>
+            </li>
+          </ul>
+          <p v-if="selectedTag.length === 0" class="input-tag-select__placeholder">태그를 선택해주세요.</p>
         </div>
 
-        <a
+        <RouterLink
           class="input-tag-select__button"
           id="input-tag-select__button-id"
-          href="javascript:void(0)"
-        >
+          to="/tag/list">
           <img src="/public/svg/next.svg" alt="next-button" />
-        </a>
+        </RouterLink>
       </div>
     </label>
   </div>

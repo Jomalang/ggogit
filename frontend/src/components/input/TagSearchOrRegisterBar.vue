@@ -5,6 +5,7 @@ const props = defineProps<{
   tag: LeafTagProps;
 }>();
 
+const emit = defineEmits(['tagSearch']);
 
 </script>
 
@@ -13,19 +14,12 @@ const props = defineProps<{
   <div class="tree-input-text__form">
     <label class="tree-input-text__subject">
       <input
-        v-if="tag"
         id="tree-input-text__rectangle-id"
         name="name"
         class="tree-input-text__rectangle"
-        :placeholder="tag.placeholder"
+        placeholder="태그를 검색하거나 등록하세요."
+        @input="$emit('tagSearch', $event.target.value)"
         :value="tag.name"
-      />
-      <input
-        v-else
-        id="tree-input-text__rectangle-id"
-        name="name"
-        class="tree-input-text__rectangle"
-        :placeholder="tag.placeholder"
       />
     </label>
   </div>

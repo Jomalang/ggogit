@@ -154,3 +154,8 @@ export interface TextBtnGreenProps {
     text: string;
     link: string;
 }
+
+export interface BookCategoryProps {
+    id: Number;
+    name: string;
+}

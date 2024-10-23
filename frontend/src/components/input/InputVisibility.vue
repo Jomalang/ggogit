@@ -1,9 +1,9 @@
 <script setup lang="ts">
+
 const props = defineProps<{
   name: string;
+  modelValue: boolean;
 }>();
-
-const emit = defineEmits(['update:modelValue']);
 
 </script>
 
@@ -18,10 +18,9 @@ const emit = defineEmits(['update:modelValue']);
           text="공개"
           type="radio"
           :name="name"
-          @change="$emit('update:modelValue', $event.target.value)"
+          @change="$emit('update:modelValue', true)"
+          :checked="modelValue"
           id="public"
-          value="1"
-          checked
         />
       </label>
       <label class="input-visibility__label">
@@ -30,9 +29,9 @@ const emit = defineEmits(['update:modelValue']);
           text="비공개"
           type="radio"
           :name="name"
-          @change="$emit('update:modelValue', $event.target.value)"
           id="private"
-          value="0"
+          @change="$emit('update:modelValue', false)"
+          :checked="!modelValue"
         />
       </label>
     </div>

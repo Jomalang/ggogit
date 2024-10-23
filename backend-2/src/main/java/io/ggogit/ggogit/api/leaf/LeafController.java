@@ -37,7 +37,7 @@ public class LeafController {
             @PathVariable Long leafId
     ) {
         boolean isOwner = true;
-        LeafItemResponse responses = leafDtoService.getLeafNodeRootToEnd(leafId, isOwner);
+            LeafItemResponse responses = leafDtoService.getLeafNodeRootToEnd(leafId, isOwner);
         return new ResponseEntity<>(responses, HttpStatus.OK);
     }
 

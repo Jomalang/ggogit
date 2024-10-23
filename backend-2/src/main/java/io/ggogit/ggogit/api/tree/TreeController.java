@@ -1,10 +1,13 @@
 package io.ggogit.ggogit.api.tree;
 
 import io.ggogit.ggogit.api.leaf.dto.LeafBranchResponse;
+import io.ggogit.ggogit.api.leaf.dto.LeafItemResponse;
 import io.ggogit.ggogit.api.tree.dto.TreeCardRequest;
+import io.ggogit.ggogit.api.tree.dto.TreeInfoResponse;
 import io.ggogit.ggogit.api.tree.dto.TreeTmpRequest;
 import io.ggogit.ggogit.api.tree.dto.TreeTmpResponse;
 
+import io.ggogit.ggogit.domain.leaf.entity.Leaf;
 import io.ggogit.ggogit.domain.leaf.service.LeafDtoService;
 import io.ggogit.ggogit.domain.tree.entity.TreeTmp;
 import io.ggogit.ggogit.domain.tree.service.SeedService;
@@ -68,8 +71,9 @@ public class TreeController {
         redirectAttributes.addAttribute("treeSearchText", treeSearchText);
         return "redirect:/tree/search/result/{treeSearchText}";
     }
+
     @GetMapping
-    public Page<TreeCardRequest> getTreeList(
+    public Page<TreeInfoResponse> getTreeList(
             @RequestParam(value = "s", required = false) Long seedId,
             @RequestParam(value = "p", defaultValue = "0") int page,
             @RequestParam(value = "mid",defaultValue = "1") Long mid
@@ -83,9 +87,28 @@ public class TreeController {
         int size = 10;
         Sort s = Sort.by(Sort.Order.desc("updateTime"));
         Pageable pageable = PageRequest.of(page, size, s);
-        Page<TreeCardRequest> list = treeService.findTreeCardRequestList(seedId,memberId, pageable);
+        Page<TreeInfoResponse> list = treeService.findTreeInfoResponseList(seedId,memberId, pageable);
         return list;
     }
+
+//    @GetMapping
+//    public Page<TreeCardRequest> getTreeList(
+//            @RequestParam(value = "s", required = false) Long seedId,
+//            @RequestParam(value = "p", defaultValue = "0") int page,
+//            @RequestParam(value = "mid",defaultValue = "1") Long mid
+////            @SessionAttribute Member member
+//    ) {
+////        Long memberId = member.getId();
+//        Long memberId = mid;
+//        System.out.println("memberId = " + memberId);
+//        System.out.println("seedId = " + seedId);
+//
+//        int size = 10;
+//        Sort s = Sort.by(Sort.Order.desc("updateTime"));
+//        Pageable pageable = PageRequest.of(page, size, s);
+//        Page<TreeCardRequest> list = treeService.findTreeCardRequestList(seedId,memberId, pageable);
+//        return list;
+//    }
 
     @PostMapping
     public ResponseEntity<TreeTmpResponse> createBookTreeTmp (
@@ -106,15 +129,15 @@ public class TreeController {
         return new ResponseEntity<>(resp, HttpStatus.CREATED);
     }
 
-    @GetMapping("/{treeId}/leafs")
+    @GetMapping("/{treeId}/branches")
     public Page<LeafBranchResponse> getBranchList(
             @PathVariable Long treeId,
-            @RequestParam(value = "bookMark", required = false) final Boolean bookMark,
-            @RequestParam(value = "filter", defaultValue = "10") final Long filter,
-            @RequestParam(value = "sort", defaultValue = "1") final Long sort,
+            @RequestParam(value = "b", required = false) final Boolean bookMark,
+            @RequestParam(value = "f", defaultValue = "10") final Long filter,
+            @RequestParam(value = "s", defaultValue = "1") final Long sort,
             @RequestParam(value = "p", defaultValue = "0") final int page
 //            @SessionAttribute Member member
-            ) {
+    ) {
 
         int size = 10;
         FilterType filterName = FilterType.fromNumber(filter);
@@ -123,32 +146,52 @@ public class TreeController {
         Pageable pageable = PageRequest.of(page, size, s);
 
 //        Boolean hasOwner = treeService.isOwner(treeId, member.getId());
-        Boolean hasOwner = false;//테스트용 코드
+        Boolean hasOwner = true;//테스트용 코드
 
-        List<LeafBranchResponse> leafList = leafDtoService.findBranchByFilter(treeId, hasOwner, bookMark);
-        leafList = sortLeafList(leafList, filterName.getValue(), sortName.getValue());
-        for (LeafBranchResponse leaf : leafList) {
+        List<LeafBranchResponse> branchList = leafDtoService.findBranchByFilter(treeId, hasOwner, bookMark);
+        branchList = sortLeafList(branchList, filterName.getValue(), sortName.getValue());
+        for (LeafBranchResponse leaf : branchList) {
             System.out.println(leaf.toString());
         }
-        if (leafList.isEmpty()) {
+        if (branchList.isEmpty()) {
             return Page.empty(pageable);
         }
 
         int start = (int) pageable.getOffset();
-        if (start >= leafList.size()) {
+        if (start >= branchList.size()) {
             return Page.empty(pageable);
         }
 
-        int end = Math.min(start + pageable.getPageSize(), leafList.size());
+        int end = Math.min(start + pageable.getPageSize(), branchList.size());
 
         try {
-            Page<LeafBranchResponse> leafCard = new PageImpl<>(
-                    leafList.subList(start, end), pageable, leafList.size());
-            return leafCard;
+            Page<LeafBranchResponse> branchCard = new PageImpl<>(
+                    branchList.subList(start, end), pageable, branchList.size());
+            return branchCard;
         } catch (IllegalArgumentException e) {
             System.out.println("Paging error: " + e.getMessage());
             return Page.empty(pageable);
         }
+    }
+
+    @GetMapping("/{treeId}/leafs")
+    public Page<Leaf> getLeafList(
+            @PathVariable Long treeId,
+            @RequestParam(value = "p", defaultValue = "0") final int page
+//            @SessionAttribute Member member
+    ) {
+
+
+        int size = 10;
+        Sort s = Sort.by(Sort.Order.desc("updateTime"));
+        Pageable pageable = PageRequest.of(page, size, s);
+
+//        Boolean hasOwner = treeService.isOwner(treeId, member.getId());
+        Boolean hasOwner = true;//테스트용 코드
+
+        Page<Leaf> leafList = leafDtoService.findLeafByTreeId(treeId, hasOwner, pageable);
+
+        return leafList;
     }
 
     private List<LeafBranchResponse> sortLeafList(List<LeafBranchResponse> leafList, String filterName, String sortName) {

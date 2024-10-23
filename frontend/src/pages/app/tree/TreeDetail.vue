@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { defineComponent, onMounted } from 'vue';
+import { defineComponent, onMounted, reactive } from 'vue';
 
 import axios from "axios";
 import CardTreeInfoCover from '@/components/card/CardTreeInfoCover.vue';
 import InputBackSearch from '@/components/input/InputBackSearch.vue';
 import CardHiddenInfo from '@/components/card/CardHiddenInfo.vue';
+import { useRoute } from 'vue-router';
 
 const props = defineProps<{
   treeInfoResponse: {
@@ -32,20 +33,34 @@ const props = defineProps<{
   };
 }>();
 
-let leafList: any[] = [];
+const treeId: number = Number(useRoute().params.id);
+const branchList = reactive({
+    items: []
+});
+const queryParam = reactive({
+  filter: '',
+  sort: '',
+  bookMark: '',
+  p: 0
+});
+
 
 const fetchData = async () => {
   try {
-    const response = await axios.get(`http://localhost:8080/api/v1/trees/3000/leafs`);
-    leafList = response.data.leafs;
+    const response = await axios.get
+    (`http://localhost:8080/api/v1/trees/${treeId}/branches?f=${queryParam.filter}&s=${queryParam.sort}&b=${queryParam.bookMark}&p=${queryParam.p}`);
+    branchList.items = response.data.branches;
     console.log(response.data);
-    console.log(leafList + 'leafList'); 
+    console.log(branchList.items + 'branchList'); 
+    return branchList;
   } catch (error) {
     console.error('Error fetching data:', error);
   }
 };
 
 onMounted(() => {
+    console.log('treeId: ' + treeId);
+    console.log('useRoute: ' + useRoute());
   fetchData();
 });
 
@@ -53,7 +68,7 @@ onMounted(() => {
 
 <template>
     hi
-  <!-- <header>
+  <header>
     <h1 class="none">사용자 트리 세부정보</h1>
     <section  class="reg-book-search-container">
         <h2 class="none">트리 검색</h2>
@@ -220,7 +235,7 @@ onMounted(() => {
         <h2 class="none">네비게이션</h2>
         <div th:replace="~{fragments/nav :: navigation-bar(active='home')}"></div>
     </section>
-</aside> -->
+</aside>
 
 </template>
 

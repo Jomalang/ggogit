@@ -8,13 +8,10 @@ import org.springframework.data.domain.Pageable;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
 
 
 import io.ggogit.ggogit.api.leaf.dto.LeafBranchInfoResponse;
 import io.ggogit.ggogit.api.leaf.dto.LeafItemResponse;
-
-import java.util.List;
 
 public interface LeafDtoService {
 
@@ -33,6 +30,9 @@ public interface LeafDtoService {
      * 리프 노드의 End 까지 조회
      */
     LeafItemResponse getLeafNodeToEnd(Long leafId, boolean isOwner);
+
+    Page<Leaf> findLeafByTreeId(Long leafId, Boolean isOwner, Pageable pageable);
+
 
 //    List<LeafItemView> getLeafItems(Long treeId, Long leafId, boolean isOwner);
 //

@@ -6,6 +6,8 @@ import io.ggogit.ggogit.api.tree.dto.TreeCardRequest;
 import io.ggogit.ggogit.api.tree.dto.TreeInfoResponse;
 import io.ggogit.ggogit.domain.book.entity.Book;
 import io.ggogit.ggogit.domain.book.repository.BookRepository;
+import io.ggogit.ggogit.domain.leaf.entity.Leaf;
+import io.ggogit.ggogit.domain.leaf.repository.LeafRepository;
 import io.ggogit.ggogit.domain.member.entity.Member;
 import io.ggogit.ggogit.domain.member.repository.MemberRepository;
 import io.ggogit.ggogit.domain.tree.entity.Seed;
@@ -26,6 +28,7 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -41,6 +44,7 @@ public class TreeServiceImpl implements TreeService {
     private final SeedRepository seedRepository;
     private final TreeImageRepository treeImageRepository;
     private final MemberRepository memberRepository;
+    private final LeafRepository leafRepository;
 
     @Override
     public void register(Tree tree) {
@@ -111,11 +115,7 @@ public class TreeServiceImpl implements TreeService {
 
     @Override
     public Page<TreeCardRequest> findTreeCardRequestList(Long seedId, Long memberId, Pageable pageable) {
-
-
-
         Page<Tree> treeList = treeRepository.findByMemberIdAndSeedId(memberId, seedId, pageable);
-
         return treeList.map(tree -> {
             if (tree.getSeed().getId() == 1){
                 Book tmpBook =  bookRepository.findById(tree.getBook().getId())
@@ -150,5 +150,26 @@ public class TreeServiceImpl implements TreeService {
             }
         });
     }
+
+    @Override
+    public Page<TreeInfoResponse> findTreeInfoResponseList(Long seedId, Long memberId, Pageable pageable) {
+        Page<Tree> treeList = treeRepository.findByMemberIdAndSeedId(memberId, seedId, pageable);
+        return treeList.map(tree -> {
+                List<Leaf> leafList = leafRepository.findByTreeId(tree.getId());
+                LocalDateTime lastestLeafTime = null;
+                Long viewCount = 0L;
+                Long likeCount = 0L;
+                Long leafCount = 0L;
+                for (Leaf leaf : leafList) {
+                    viewCount += leaf.getViewCount();
+                    likeCount += leaf.getLikeCount();
+                    leafCount++;
+                    if(lastestLeafTime == null || lastestLeafTime.isAfter(leaf.getUpdateTime()))
+                        lastestLeafTime = leaf.getUpdateTime();
+                }
+                return TreeInfoResponse.of(tree, lastestLeafTime, leafCount, likeCount, viewCount);
+        });
+    }
+
 
 }

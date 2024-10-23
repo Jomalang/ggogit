@@ -10,10 +10,14 @@
 # 도서 리프
 
 ### 트리 리프 조회
-GET {{host}}/api/v1/trees/{{treeId}}/leafs?filter=14&sort=1
+#GET {{host}}/api/v1/trees/{{treeId}}/leafs?filter=14&sort=1
+GET {{host}}/api/v1/trees/1/branches?filter=14&sort=1
+
+### 트리 리프 전체 조회
+GET {{host}}/api/v1/trees/{{treeId}}/leafs
 
 ### 트리 조회
-GET {{host}}/api/v1/trees?s=1
+GET {{host}}/api/v1/trees
 
 ### 트리 디테일 정보
 GET {{host}}/api/v1/trees/{{treeId}}

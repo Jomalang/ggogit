@@ -3,6 +3,8 @@ package io.ggogit.ggogit.domain.leaf.repository;
 import io.ggogit.ggogit.domain.leaf.entity.Leaf;
 import io.ggogit.ggogit.domain.tree.entity.Tree;
 import jakarta.validation.constraints.NotNull;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -23,11 +25,20 @@ public interface LeafRepository extends JpaRepository<Leaf, Long> {
                 OR(:bookMark = true AND l.bookMark = true)
                 OR(:bookMark = false AND l.childLeafCount = 0)
         ))
-        OR (:owner = false AND l.visibility = false AND l.childLeafCount = 0)
+        OR (:owner = false AND l.visibility = true AND l.childLeafCount = 0)
     )
 """)
     List<Leaf> findByBranchQuery(
             @Param("treeId") Long treeId,
             @Param("owner") Boolean owner,
             @Param("bookMark") Boolean bookMark);
+
+    @Query("""
+    SELECT l FROM Leaf l
+    WHERE l.tree.id = :treeId 
+    AND l.isDeleted = false
+    AND (:owner = false AND l.visibility = true
+    )""")
+    Page<Leaf> findByTreeId(Long treeId, Boolean owner, Pageable pageable);
+    List<Leaf> findByTreeId(Long treeId);
 }

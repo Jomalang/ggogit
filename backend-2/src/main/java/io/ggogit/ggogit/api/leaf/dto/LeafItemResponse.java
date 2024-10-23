@@ -1,5 +1,6 @@
 package io.ggogit.ggogit.api.leaf.dto;
 
+import io.ggogit.ggogit.domain.leaf.entity.Leaf;
 import io.ggogit.ggogit.domain.leaf.entity.LeafTag;
 import io.ggogit.ggogit.domain.leaf.structure.TreeNode;
 import lombok.AllArgsConstructor;
@@ -20,6 +21,8 @@ public class LeafItemResponse {
     public LeafItemResponse() {
         this.items = new ArrayList<>();
     }
+
+
 
     public void addItem(TreeNode node, List<LeafTag> tags) {
         items.add(LeafItemDto.of(node, tags));
@@ -70,5 +73,6 @@ public class LeafItemResponse {
         public static LeafTagDto of(LeafTag leafTag) {
             return new LeafTagDto(leafTag.getId(), leafTag.getName());
         }
+
     }
 }

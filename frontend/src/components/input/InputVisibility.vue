@@ -2,6 +2,9 @@
 const props = defineProps<{
   name: string;
 }>();
+
+const emit = defineEmits(['update:modelValue']);
+
 </script>
 
 <template>
@@ -12,9 +15,10 @@ const props = defineProps<{
       <label class="input-visibility__label">
         <input
           class="input-visibility__btn"
-          label="공개"
+          text="공개"
           type="radio"
           :name="name"
+          @change="$emit('update:modelValue', $event.target.value)"
           id="public"
           value="1"
           checked
@@ -23,9 +27,10 @@ const props = defineProps<{
       <label class="input-visibility__label">
         <input
           class="input-visibility__btn"
-          label="비공개"
+          text="비공개"
           type="radio"
           :name="name"
+          @change="$emit('update:modelValue', $event.target.value)"
           id="private"
           value="0"
         />
@@ -88,7 +93,7 @@ const props = defineProps<{
 }
 
 .input-visibility__btn::after {
-  content: attr(label);
+  content: attr(text);
 }
 
 .input-visibility__btn:checked {

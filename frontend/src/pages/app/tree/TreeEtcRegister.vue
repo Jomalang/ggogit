@@ -8,6 +8,7 @@ import TextareaBox from "@/components/input/TextareaBox.vue";
 import InputVisibility from "@/components/input/InputVisibility.vue";
 import SubmitBtnFullBar from "@/components/button/SubmitBtnFullBar.vue";
 import NavigationBar from "@/components/nav/NavigationBar.vue";
+
 </script>
 
 <template>

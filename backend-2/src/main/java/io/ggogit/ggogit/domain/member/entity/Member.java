@@ -16,11 +16,12 @@ import java.awt.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Getter
+@Setter
 @SQLDelete(sql = "update member set is_deleted = true where id = ? and version = ?")
 @SQLRestriction("is_deleted = false")
 @EntityListeners(AuditingEntityListener.class)
@@ -78,8 +79,10 @@ public class Member {
     private List<Tree> trees;
 
     @OneToOne
+    @JoinColumn(name = "ID")
     private MemberProfileImage memberProfileImage;
 
     @OneToOne
+    @JoinColumn(name = "ID")
     private MemberBackgroundImage memberBackgroundImage;
 }

@@ -123,7 +123,7 @@ router = createRouter({
         { path: "etc/reg", component: TreeEtcRegister },
         { path: "list", component: TreeList },
         { path: "book/search", component: TreeBookSearch },
-        { path: "detail:treeId", component: TreeDetail },
+        { path: "detail", component: TreeDetail },
         { path: "memoir/register/index", component: TreeMemoirRegisterIndex },
       ],
       component: TreeIndex,

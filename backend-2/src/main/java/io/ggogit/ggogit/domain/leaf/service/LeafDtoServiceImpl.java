@@ -85,19 +85,16 @@ public class LeafDtoServiceImpl implements LeafDtoService {
         Integer likeCnt = 0;
         Integer viewCnt = 0;
         Integer leafCnt = 1;
-
-        likeCnt = leaf.getLikeCount();
-        viewCnt = leaf.getViewCount();
-
-
-        Leaf tmpLeaf;
+        Leaf parentLeaf, tmpLeaf;
 
         do {
-            tmpLeaf = leafRepository.findById(leaf.getParentLeaf().getId()).orElse(null);
-            likeCnt += tmpLeaf.getLikeCount();
-            viewCnt += tmpLeaf.getViewCount();
+            likeCnt += leaf.getLikeCount();
+            viewCnt += leaf.getViewCount();
             leafCnt++;
-        }while (!(tmpLeaf.getParentLeaf() == null));
+            tmpLeaf = leaf;
+            parentLeaf = leaf.getParentLeaf();
+            leaf = parentLeaf;
+        } while (!(tmpLeaf.getParentLeaf() == null));
 
         result.put("like", likeCnt);
         result.put("view", viewCnt);
@@ -108,6 +105,7 @@ public class LeafDtoServiceImpl implements LeafDtoService {
 
     @Override
     public List<LeafBranchResponse> findBranchByFilter(Long treeId, Boolean owner, Boolean bookMark) {
+        System.out.println("treeId = " + treeId);
         List<Leaf> leafList = leafRepository.findByBranchQuery(treeId, owner, bookMark);
 
         List<LeafBranchResponse> responseList = new ArrayList<>();

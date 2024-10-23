@@ -192,7 +192,7 @@ INSERT INTO `seed`
 (`id`, `eng_name`, `kor_name`, `version`)
 VALUES
     (1, 'book', '도서', 1),
-    (2, 'Cucumber', '오이', 1),
+    (2, 'movie', '영상', 1),
     (3, 'Carrot', '당근', 1),
     (4, 'Spinach', '시금치', 1),
     (5, 'Lettuce', '상추', 1),

@@ -101,6 +101,7 @@ export interface FilterItemProps {
 }
 
 export interface SeedFilterProps {
+    id: number;
     engName: string;
     korName: string;
 }

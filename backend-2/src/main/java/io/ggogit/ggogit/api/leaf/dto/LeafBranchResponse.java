@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Data
 @AllArgsConstructor
@@ -29,7 +30,7 @@ public class LeafBranchResponse {
                 .title(leaf.getTitle())
                 .bookMark(leaf.getBookMark())
                 .updateTime(leaf.getUpdateTime())
-                .parentLeafId(leaf.getParentLeaf().getId())
+                .parentLeafId(leaf.getParentLeaf() == null ? null : leaf.getParentLeaf().getId())
                 .viewCount(viewCount)
                 .leafCount(leafCount)
                 .likeCount(likeCount)

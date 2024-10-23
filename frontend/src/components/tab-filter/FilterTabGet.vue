@@ -1,35 +1,30 @@
 <script setup lang="ts">
 
-
 import {SeedFilterTabProps} from "@/types/types";
 
 const props = defineProps<{
-  data:SeedFilterTabProps
+  data: SeedFilterTabProps
 }>();
+
+const emit = defineEmits(['backButtonClick']);
 
 </script>
 
 <template>
-  <div
-      id="filter-tab"
-      class="filter-tab__box"
-  >
+  <div id='filter-tab-btn' class="filter-tab__box">
     <header class="filter-tab__header">
-      <button
-          id="filter-tab-close-btn"
-          class="filter-tab__btn--back"
-          type="button"
-      >
+      <button id="filter-tab-close-btn" class="filter-tab__btn--back" type="button" @click="emit('backButtonClick')">
         <img src="/public/svg/tab-back.svg" alt="뒤로가기 버튼" />
       </button>
       <h1 class="filter-tab__header--title">{{ data.filterName }}</h1>
     </header>
 
     <ul class="filter-tab__list">
-      <li v-for="item in data.filterItems" class="filter-tab__item">
+      <li v-for="item in data.filterItems" :key="item.id" class="filter-tab__item">
         <div class="filter-tab__item-label">
-          <a v-if="item.engName === 'book'" href="/tree/book/select" class="filter-tab__item--label-text">{{item.korName}}</a>
-          <a v-else class="filter-tab__item--label-text" :href="`/tree/etc/reg?type=${item.engName}`">{{item.korName}}</a>
+
+          <RouterLink v-if="item.engName === 'book'" to="/tree/book/search" class="filter-tab__item--label-text">{{item.korName}}</RouterLink>
+          <RouterLink v-else class="filter-tab__item--label-text" :to="`/tree/etc/reg?type=${item.engName}`">{{item.korName}}</RouterLink>
 
             <div class="filter-tab__icon-box">
               <img

@@ -1,7 +1,7 @@
 # @env=dev
 # ================================================== #
 # 내부 변수
-@treeId = 10000
+@treeId = 3000
 @seedBookId = 1
 @seddEtcId = 1
 # ================================================== #
@@ -10,4 +10,10 @@
 # 도서 리프
 
 ### 트리 리프 조회
-GET {{host}}/api/v1/trees/{{treeId}}/leafs
+GET {{host}}/api/v1/trees/{{treeId}}/leafs?filter=14&sort=1
+
+### 트리 조회
+GET {{host}}/api/v1/trees?s=1
+
+### 트리 디테일 정보
+GET {{host}}/api/v1/trees/{{treeId}}

@@ -25,16 +25,19 @@ const props = defineProps<{
 /*  ========================================== /
     FRAGMENT: 텍스트 입력 바
 /   ========================================== */
+
 .input-text__label {
   display: flex;
   gap: 8px;
   flex-direction: column;
   width: 100%;
   position: relative;
+  padding: 30px 0 0 0;
 }
 
 .input-text__label-text {
   font-weight: var(--semi-bold);
+  font-size: 18px;
 }
 
 .input-text__input {

@@ -6,7 +6,7 @@ const props = defineProps({
     },
     infoText: {
         type: String,
-        default: '사용하는 이메일을 입력해주세요'
+        default: '이메일과 비밀번호를 입력해주세요.'
     }
 })
 </script>
@@ -24,6 +24,7 @@ const props = defineProps({
     display: flex;
     flex-direction: column;
     gap: 4px;
+    padding-top: 30px;
 }
 
 .text--title28 {

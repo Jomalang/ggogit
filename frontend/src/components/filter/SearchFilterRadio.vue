@@ -1,6 +1,4 @@
-<script setup lang="ts">
-
-</script>
+<script setup lang="ts"></script>
 
 <template>
   <!-- (description, name, value, isChecked) -->
@@ -11,9 +9,13 @@
         type="radio"
         th:name="${name}"
         th:value="${value}"
-        th:checked="${isChecked}"
+        checked="${isChecked}"
       />
-      <span class="search-filter-log__checkbox-input-text" th:text="${description}">리프 전체 검색</span>
+      <span
+        class="search-filter-log__checkbox-input-text"
+        th:text="${description}"
+        >리프 전체 검색</span
+      >
     </label>
   </div>
 </template>
@@ -43,9 +45,8 @@
 }
 
 .search-filter-log__checkbox-input:checked
-+ .search-filter-log__checkbox-input-text {
+  + .search-filter-log__checkbox-input-text {
   background-color: var(--main1, #323a27);
   color: var(--white, #ffffff);
 }
-
 </style>

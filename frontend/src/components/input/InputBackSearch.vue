@@ -1,11 +1,44 @@
 <script setup lang="ts">
+import axios from "axios";
+import { onUpdated, ref } from "vue";
+import SearchFilterRadio from "../filter/SearchFilterRadio.vue";
+//-----------------props-----------------
 const props = defineProps<{
   placeholder: string;
   href: string;
-  method: string;
-  name: string;
-  action: string;
+  api: string;
 }>();
+//-----------------emit-----------------
+const emit = defineEmits<{
+  (event: "req", query: string): void;
+  (event: "bookResult", data: any): void;
+}>();
+//-----------------query-----------------
+let query = ref<string>("");
+let filter = ref<string>("title");
+
+const createReq = async (query: string, filter: string): Promise<void> => {
+  axios
+    .get(props.api, {
+      params: {
+        q: query,
+        f: filter,
+      },
+    })
+    .then((response) => {
+      emit("bookResult", response.data);
+      emit("req", query);
+    })
+    .catch((error) => {
+      console.error("Error fetching data:", error);
+    });
+};
+
+//-----------------lifeCycle-----------------
+onUpdated(() => {
+  console.log(query.value);
+  console.log(filter.value);
+});
 </script>
 
 <template>
@@ -16,24 +49,58 @@ const props = defineProps<{
         <img src="/public/svg/back.svg" alt="back button" />
       </a>
     </div>
-    <form class="search-bar" :action="action" :method="method">
+    <div class="search-bar">
       <label class="search-bar--label">
         <input
           class="search-bar--input"
           type="text"
-          :name="name"
-          :id="name"
-          :placeholder="placeholder"
+          :placeholder="props.placeholder"
+          v-model="query"
           autocomplete="off"
         />
         <button class="search-bar--close" type="reset">
           <img src="/public/svg/close-button.svg" alt="close-btn" />
         </button>
       </label>
-      <button type="submit">
+      <button @click="createReq(query, filter)">
         <img src="/public/svg/lens.svg" alt="lens" />
       </button>
-    </form>
+    </div>
+  </div>
+  <!-- 필터 -->
+  <!-- (description, name, value, isChecked) -->
+  <div class="search-filter-log">
+    <label class="search-filter-log__checkbox-labal">
+      <input
+        class="search-filter-log__checkbox-input"
+        type="radio"
+        name="filterType"
+        value="title"
+        checked
+        v-model="filter"
+      />
+      <span class="search-filter-log__checkbox-input-text">제목</span>
+    </label>
+    <label class="search-filter-log__checkbox-labal">
+      <input
+        class="search-filter-log__checkbox-input"
+        type="radio"
+        name="filterType"
+        value="author"
+        v-model="filter"
+      />
+      <span class="search-filter-log__checkbox-input-text">저자</span>
+    </label>
+    <label class="search-filter-log__checkbox-labal">
+      <input
+        class="search-filter-log__checkbox-input"
+        type="radio"
+        name="filterType"
+        value="publisher"
+        v-model="filter"
+      />
+      <span class="search-filter-log__checkbox-input-text">출판사</span>
+    </label>
   </div>
 </template>
 
@@ -106,5 +173,41 @@ button {
 /*  */
 .search-bar-img {
   height: 18px;
+}
+/* 필터 */
+.search-filter-log {
+  margin-top: 18px;
+  display: flex;
+  white-space: nowrap;
+  scrollbar-width: none;
+  gap: 10px;
+}
+.search-filter {
+  display: flex;
+  justify-content: flex-start;
+  gap: 10px;
+}
+
+.search-filter-log__checkbox-input {
+  display: none;
+}
+
+.search-filter-log__checkbox-input-text {
+  font-family: "Pretendard", serif;
+  font-size: 12px;
+  font-weight: var(--medium, 500);
+  color: var(--text-sub, #767676);
+  border-radius: 8px;
+  background-color: #f7f7f7;
+  padding: 12px 20px;
+  cursor: pointer;
+  user-select: none;
+  flex-shrink: 0;
+}
+
+.search-filter-log__checkbox-input:checked
+  + .search-filter-log__checkbox-input-text {
+  background-color: var(--main1, #323a27);
+  color: var(--white, #ffffff);
 }
 </style>

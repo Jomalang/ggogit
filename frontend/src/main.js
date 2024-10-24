@@ -38,6 +38,7 @@ import TreeBookAutoRegister from "@/pages/app/tree/TreeBookAutoRegister.vue";
 
 //----------------------Router----------------------
 import treeRouter from "@/pages/app/tree/Router.js";
+import memoirRouter from "@/pages/app/memoir/Router.js";
 
 let router;
 
@@ -74,14 +75,7 @@ router = createRouter({
       children: [{ path: "detail", component: BookDetail }],
       component: BookIndex,
     },
-    {
-      path: "/memoir",
-      children: [
-        { path: "reg", component: MemoirRegister },
-        { path: "edit", component: MemoirEdit },
-      ],
-      component: MemoirIndex,
-    },
+    memoirRouter,
     {
       path: "/leaf",
       children: [

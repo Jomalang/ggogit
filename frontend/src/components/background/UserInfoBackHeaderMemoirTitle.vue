@@ -7,38 +7,37 @@ export default {
   components: {
     TopBarTransparent,
     BarUserInfoNoProfileBtn,
-    BarMemoirTitleBtn
+    BarMemoirTitleBtn,
   },
   props: {
     backimgpath: String,
-    edit: Boolean,
+    edit: String,
     username: String,
     userid: String,
     memoirtitle: String,
-    userurl: String
+    userurl: String,
   },
   computed: {
     backgroundStyle() {
       return {
-        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('/uploads/image/book/${this.backimgpath}')`
-      }
-    }
-  }
-}
+        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('/uploads/image/book/${this.backimgpath}')`,
+      };
+    },
+  },
+};
 </script>
 
 <template>
   <div class="user-tree-user-info-container" :style="backgroundStyle">
     <section class="user-info__top-bar-container">
-      <top-bar-transparent :edit="edit" />
+      <TopBarTransparent :edit="edit" />
     </section>
     <section class="user-info__user-info-bar-container">
-      <bar-user-info-no-profile-btn :username="username" :userid="userid" />
-      <bar-memoir-title-btn :memoirtitle="memoirtitle" :userurl="userurl" />
+      <BarUserInfoNoProfileBtn :username="username" :userid="userid" />
+      <BarMemoirTitleBtn :memoirtitle="memoirtitle" :userurl="userurl" />
     </section>
   </div>
 </template>
-
 
 <style scoped>
 .user-tree-user-info-container {

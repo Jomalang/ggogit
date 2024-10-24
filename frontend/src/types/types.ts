@@ -27,19 +27,19 @@ export interface CardItemProps {
   coverPath: string;
 
   /* 도서 정보 경우 경우  */
-  bookTitle: string;
-  bookPublishedYear: string;
-  bookAuthor: string;
-  bookPublisher: string;
+  bookTitle?: string;
+  bookPublishedYear?: string;
+  bookAuthor?: string;
+  bookPublisher?: string;
 
   /* 회고록 정보 */
-  treeTitle: string;
-  memoirTitle: string;
-  title: string;
+  treeTitle?: string;
+  memoirTitle?: string;
+  title?: string;
 
   /* leaf 카드 정보인 경우 경우  */
-  leafTitle: string;
-  leafContent: string;
+  leafTitle?: string;
+  leafContent?: string;
 
   /* 통계 수  */
   leafCount: number;
@@ -152,11 +152,18 @@ export interface TextMainTitleRightProps {
 }
 
 export interface TextBtnGreenProps {
-    text: string;
-    link: string;
+  text: string;
+  link: string;
 }
 
 export interface BookCategoryProps {
-    id: Number;
-    name: string;
+  id: Number;
+  name: string;
+}
+
+export interface memoir {
+  title: string;
+  text: string;
+  visibility: number;
+  fileNames: string;
 }

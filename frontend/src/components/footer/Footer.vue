@@ -25,7 +25,7 @@ const handleLogout = async () => {
 
 <template>
   <!-- footer(noticeText) -->
-  <footer class="tree-footer" notice-text="">
+  <footer class="tree-footer">
     <header class="tree-footer-header">
       <h1 class="tree-footer-header__title">공지사항</h1>
       <p class="tree-footer-header__added">{{ props.noticeText }}</p>

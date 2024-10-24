@@ -1,9 +1,9 @@
 <script setup lang="ts">
 interface Props {
-    memoirtitle: string;
-    userurl: string;
+  memoirtitle: string;
+  userurl: string;
 }
-const props = defineProps<Props>()
+const props = defineProps<Props>();
 </script>
 
 <template>
@@ -13,27 +13,23 @@ const props = defineProps<Props>()
       (memoirtitle,userurl)
       TODO: A태그 요청 페이지 경로 확인 필요
   ==========================================-->
-  <div class="bar-user-info-frame" >
-      <div class="bar-user-info__left-content">
-          <p class="bar-memoir-title">{{props.memoirtitle}}</p>
-      </div>
-      <div class="bar-user-info__right-btns">
-          <input
-                  class="__like-bold-input"
-                  type="checkbox"
-                  id="bar-user-info__like"
-          />
-          <label
-                  class="__like-bold"
-                  for="bar-user-info__like"
-          ></label>
-          <a class="bar-user-info__set-btn" :href="`${props.userurl}`"></a>
-      </div>
+  <div class="bar-user-info-frame">
+    <div class="bar-user-info__left-content">
+      <p class="bar-memoir-title">{{ props.memoirtitle }}</p>
+    </div>
+    <div class="bar-user-info__right-btns">
+      <input
+        class="__like-bold-input"
+        type="checkbox"
+        id="bar-user-info__like"
+      />
+      <label class="__like-bold" for="bar-user-info__like"></label>
+      <a class="bar-user-info__set-btn" :href="`${props.userurl}`"></a>
+    </div>
   </div>
 </template>
 
-<style>
-
+<style scoped>
 /* ==========================================
       user info bar - no profile, btn
       user tree memoir index 사용
@@ -47,7 +43,7 @@ const props = defineProps<Props>()
   gap: 8px;
 }
 .bar-memoir-title {
-  color: var(--main1);
+  color: var(--white);
   font-size: 24px;
   font-weight: var(--bold);
   line-height: var(--line-height-main);

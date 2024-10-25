@@ -58,6 +58,7 @@ public class Member {
 
     @NotNull
     @ColumnDefault("0")
+    @Builder.Default
     @Column(name = "IS_DELETED", nullable = false)
     private Boolean isDeleted = false;
 

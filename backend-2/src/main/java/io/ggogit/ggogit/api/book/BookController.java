@@ -4,7 +4,6 @@ import io.ggogit.ggogit.api.book.dto.BookDetailResponse;
 import io.ggogit.ggogit.api.book.dto.BookListResponse;
 import io.ggogit.ggogit.api.book.dto.BookRequest;
 import io.ggogit.ggogit.api.book.dto.BookResponse;
-import io.ggogit.ggogit.api.book.filter.BookFilterType;
 import io.ggogit.ggogit.domain.book.entity.Book;
 import io.ggogit.ggogit.domain.book.service.BookService;
 import lombok.RequiredArgsConstructor;

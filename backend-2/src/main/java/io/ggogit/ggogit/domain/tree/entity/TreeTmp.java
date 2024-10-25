@@ -93,7 +93,6 @@ public class TreeTmp {
 
     public static TreeTmp ofBook(TreeTmpRequest request, Book book, Seed seed, Member member) {
         return  TreeTmp.builder()
-                .id(request.getId())
                 .member(member)
                 .bookCategory(book.getBookCategory())
                 .bookTitle(book.getTitle())

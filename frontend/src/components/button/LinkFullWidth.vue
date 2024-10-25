@@ -7,7 +7,7 @@ const props = defineProps<{
 
 <template>
   <div class="btn-full-width">
-    <RouterLink class="btn-full-width__link" :to="link">
+    <RouterLink class="btn-full-width__link" :to="link as string">
       <div class="btn-full-width__button">
         <p class="btn-full-width__placeholder">{{ text }}</p>
       </div>

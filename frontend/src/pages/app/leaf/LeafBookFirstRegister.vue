@@ -11,10 +11,49 @@ import SubmitBtnFullBar from "@/components/button/SubmitBtnFullBar.vue";
 
 import Editor from '@toast-ui/editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
-import {onMounted} from "vue";
+import {onMounted, reactive, watch} from "vue";
 import NavigationBar from "@/components/nav/NavigationBar.vue";
+import {Reactive} from "@vue/reactivity";
+
+interface LeafFormData {
+  startPage: number | undefined;
+  endPage: number | undefined;
+  tagIds: number[];
+  title: string | undefined;
+  content: string | undefined;
+  visibility: boolean | undefined;
+}
+
+// ----------------------- Model ----------------------- //
+const savedFormData: string = localStorage.getItem('leafFormData');
+const leafFormData: Reactive<LeafFormData> = reactive(savedFormData ? JSON.parse(savedFormData) : {
+  startPage: undefined,
+  endPage: undefined,
+  tagIds: [],
+  title: undefined,
+  content: undefined,
+  visibility: undefined
+});
+
+const savedSelectedTags: string = localStorage.getItem('selectedTags');
+const selectedTags = reactive({
+  items: savedSelectedTags ? JSON.parse(savedSelectedTags) : [],
+});
+
+localStorage.setItem('leafCreateUrl', new URL(window.location.href).pathname);
+
+watch(leafFormData,
+(newVal) => {
+    localStorage.setItem('leafFormData', JSON.stringify(newVal));
+  },
+  { deep: true }
+);
+
+// ----------------------- Life Cycle ----------------------- //
 
 onMounted(() => {
+  console.log('leafFormData : ', leafFormData);
+
   const editor = new Editor({
     el: document.querySelector('#editor'),
     height: '300px',
@@ -28,13 +67,13 @@ onMounted(() => {
           /**
            * 에디터에 업로드한 이미지를 FormData 객체에 저장
            */
-          const formData = new FormData();
-          formData.append('image', blob);
+          const treeFormData = new FormData();
+          treeFormData.append('image', blob);
 
           // MemoirFileApiController - uploadEditorImage 메서드 호출
           const response = await fetch('/api/v1/leaf/image-upload', {
             method : 'POST',
-            body : formData,
+            body : treeFormData,
           });
           // 컨트롤러에서 전달받은 디스크에 저장된 파일 명
           const filename = await response.text();
@@ -57,6 +96,8 @@ onMounted(() => {
   });
 });
 
+// ----------------------- Function ----------------------- //
+
 </script>
 
 <template>
@@ -64,7 +105,7 @@ onMounted(() => {
     <h1 class="none">리프 생성 페이지</h1>
     <section class="tob-bar-back-container">
       <h1 class="none">리프 생성 상단 바</h1>
-      <TopBarBack title="리프 생성" link=""></TopBarBack>
+      <TopBarBack title="리프 생성" link="/tree/book/reg"></TopBarBack>
     </section>
   </header>
 
@@ -90,12 +131,15 @@ onMounted(() => {
 
         <section class="first-log_page-input-container">
           <h1 class="none">리프 페이지</h1>
-          <PageNumber start-page="" end-page=""></PageNumber>
+          <PageNumber
+              v-model:start-page="leafFormData.startPage"
+              v-model:end-page="leafFormData.endPage">
+          </PageNumber>
         </section>
 
         <section class="input-form__select-tag-input-container">
           <h1 class="none">리프 태그 입력</h1>
-          <TagSelect member-id="1"></TagSelect>
+          <TagSelect :selectedTag="selectedTags.items"></TagSelect>
         </section>
 
         <section class="input-form__input-container">

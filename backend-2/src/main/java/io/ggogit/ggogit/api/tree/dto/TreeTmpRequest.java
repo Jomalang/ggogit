@@ -1,9 +1,6 @@
 package io.ggogit.ggogit.api.tree.dto;
 
-import io.ggogit.ggogit.domain.book.entity.Book;
-import io.ggogit.ggogit.domain.book.entity.BookCategory;
 import io.ggogit.ggogit.domain.member.entity.Member;
-import io.ggogit.ggogit.domain.tree.entity.Seed;
 import io.ggogit.ggogit.domain.tree.entity.TreeTmp;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,8 +14,8 @@ import java.util.Date;
 @AllArgsConstructor
 @Builder
 public class TreeTmpRequest {
-    private Long id;
-    private Long memberId;
+
+    // 도서 정보 (Book Tree인 경우 사용)
     private Long bookId;
     private Long bookCategoryId;
     private String bookTitle;
@@ -26,29 +23,30 @@ public class TreeTmpRequest {
     private String publisher;
     private Integer totalPage;
 
+    // 씨앗 정보 (ETC tree인 경우 사용)
     private Long seedId;
 
+    // 트리 정보
     private String treeTitle;
     private String description;
-    private String imageFile;
     private Boolean visibility;
     private Date createTime;
 
+    // 이미지 파일
+    private String imageFile;
 
-    public TreeTmp toTreeTmp(Member member) {
+    public TreeTmp toTreeTmp() {
         return TreeTmp.builder()
-                .id(this.id)
-                .member(member)
-                .bookTitle(this.bookTitle)
-                .author(this.author)
-                .publisher(this.publisher)
-                .totalPage(this.totalPage)
-                .treeTitle(this.treeTitle)
-                .description(this.description)
-                .imageFile(this.imageFile)
-                .visibility(this.visibility)
+                .member(null)
+                .bookTitle(bookTitle)
+                .author(author)
+                .publisher(publisher)
+                .totalPage(totalPage)
+                .treeTitle(treeTitle)
+                .description(description)
+                .imageFile(imageFile)
+                .visibility(visibility)
                 .build();
-
     }
 }
 

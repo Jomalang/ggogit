@@ -1,22 +1,59 @@
 <script setup lang="ts">
 import { LeafTagProps } from "@/types/types";
+import {computed} from "vue";
 
 const props = defineProps<{
   tags: Array<LeafTagProps>;
+  selectedTag: Array<LeafTagProps>;
+  createTag: string;
 }>();
+
+const emit = defineEmits(['tagSelected', 'tagCreate']);
+
+const tagSelected = (tag: LeafTagProps) => {
+  emit('tagSelected', tag);
+};
+
+const tagCreate = (name: string) => {
+  emit('tagCreate', name);
+};
+
+const isCanCreate = computed(() => {
+  return !props.tags.some((tag) => tag.name === props.createTag)
+      && !props.selectedTag.some((tag) => tag.name === props.createTag)
+      && props.createTag !== '';
+});
+
+// ------------------- function ------------------- //
+
 </script>
 
 <template>
   <!--tag-list(tags)-->
   <div class="tag-info-box">
     <ul class="tag-info__list tag-info__list--unselected">
+
+      <li v-if="isCanCreate" class="tag-info__item tag-info__item--create">
+        <div class="tag-info__create-btn">
+          <q class="tag-info__create-btn-name" @click="tagCreate(createTag)" >생성</q>
+        </div>
+        <div class="tag-info__tag-box">
+          <q class="tag-info__name">{{ createTag }}</q>
+        </div>
+      </li>
+
       <li
         v-for="tag in tags"
         class="tag-info__item tag-info__item--unselected"
         :id="tag.id + '--unselected'"
       >
-        <div class="tag-info__tag-box">
+        <div class="tag-info__tag-box" @click="tagSelected(tag)" >
           <q class="tag-info__name">{{ tag.name }}</q>
+        </div>
+        <div class="tag-info__option-box">
+          <RouterLink class="tag-info__option-link" :to="`/tag/${tag.id}/edit`">
+            <img class="tag-info__option-btn" src="/svg/icon-option.svg" alt="태그 선택 제거 이미지">
+          </RouterLink>
         </div>
       </li>
     </ul>
@@ -54,7 +91,7 @@ const props = defineProps<{
 
 .tag-info__tag-box {
   display: inline-flex;
-  margin-left: 16px;
+  margin: 0 16px;
   gap: 6px;
   align-items: center;
   padding: 6px 12px;
@@ -79,5 +116,13 @@ const props = defineProps<{
 .tag-info__option-link {
   display: flex;
   align-items: center;
+}
+
+.tag-info__item--create {
+  justify-content: flex-start;
+}
+
+.tag-info__create-btn {
+  margin-left: 16px;
 }
 </style>

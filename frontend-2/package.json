@@ -1,0 +1,23 @@
+{
+  "name": "nuxt-app",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "@toast-ui/editor": "^3.2.2",
+    "@toast-ui/editor-plugin-code-syntax-highlight": "^3.1.0",
+    "axios": "^1.7.7",
+    "frontend": "file:",
+    "lodash": "^4.17.21",
+    "nuxt": "^3.13.2",
+    "nuxt-app": "file:",
+    "vue": "^3.5.12",
+    "vue-router": "^4.4.5"
+  }
+}

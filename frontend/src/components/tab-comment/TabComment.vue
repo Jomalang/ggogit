@@ -1,7 +1,7 @@
 <script setup>
-import TopBarComment from '../top-bar/TopBarComment';
-import CommentList from './CommentList';
-import CommentInput from '../input/CommentInput';
+import TopBarComment from "../top-bar/TopBarComment.vue";
+import CommentList from "./CommentList.vue";
+import CommentInput from "../input/CommentInput.vue";
 </script>
 
 <template>
@@ -190,7 +190,7 @@ import CommentInput from '../input/CommentInput';
   letter-spacing: var(--letter-spacing-main);
   height: 14px;
   cursor: pointer;
-  content: '자세히 보기';
+  content: "자세히 보기";
 }
 
 .card-log__content-detail-show:not(:checked) ~ .card-log__content {
@@ -216,7 +216,7 @@ import CommentInput from '../input/CommentInput';
   letter-spacing: var(--letter-spacing-main);
   height: 14px;
   cursor: pointer;
-  content: '간략히 보기';
+  content: "간략히 보기";
 }
 
 .card-log__content-detail-show:checked ~ .card-log__content {
@@ -246,11 +246,11 @@ import CommentInput from '../input/CommentInput';
 }
 
 .card-log__like:disabled + .card-log__like-frame {
-  background-image: url('/src/main/resources/static/svg/tumbsup-on.svg');
+  background-image: url("/src/main/resources/static/svg/tumbsup-on.svg");
 }
 
 .card-log__like:checked + .card-log__like-frame {
-  background-image: url('/src/main/resources/static/svg/tumbsup-on.svg');
+  background-image: url("/src/main/resources/static/svg/tumbsup-on.svg");
 }
 
 .card-log__like-frame {

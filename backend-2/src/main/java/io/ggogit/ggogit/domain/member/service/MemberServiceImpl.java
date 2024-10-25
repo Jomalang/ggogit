@@ -19,7 +19,7 @@ public class MemberServiceImpl implements MemberService {
     private final MemberRepository memberRepository;
     private final MemberProfileImageRepository memberProfileImageRepository;
 
-    private final PasswordEncoder passwordEncoder;
+    private  PasswordEncoder passwordEncoder;
 
     @Override
     public void registerMember(MemberRegRequestDto memberRegRequestDto) {

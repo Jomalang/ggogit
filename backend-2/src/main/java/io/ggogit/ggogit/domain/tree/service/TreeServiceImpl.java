@@ -1,11 +1,12 @@
 package io.ggogit.ggogit.domain.tree.service;
 
 import io.ggogit.ggogit.api.book.dto.BookInfoResponse;
-import io.ggogit.ggogit.api.member.session.SessionConst;
 import io.ggogit.ggogit.api.tree.dto.TreeCardRequest;
 import io.ggogit.ggogit.api.tree.dto.TreeInfoResponse;
 import io.ggogit.ggogit.domain.book.entity.Book;
 import io.ggogit.ggogit.domain.book.repository.BookRepository;
+import io.ggogit.ggogit.domain.leaf.entity.Leaf;
+import io.ggogit.ggogit.domain.leaf.repository.LeafRepository;
 import io.ggogit.ggogit.domain.member.entity.Member;
 import io.ggogit.ggogit.domain.member.repository.MemberRepository;
 import io.ggogit.ggogit.domain.tree.entity.Seed;
@@ -16,18 +17,12 @@ import io.ggogit.ggogit.domain.tree.repository.SeedRepository;
 import io.ggogit.ggogit.domain.tree.repository.TreeBookRepository;
 import io.ggogit.ggogit.domain.tree.repository.TreeImageRepository;
 import io.ggogit.ggogit.domain.tree.repository.TreeRepository;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.SessionAttribute;
 
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -41,6 +36,7 @@ public class TreeServiceImpl implements TreeService {
     private final SeedRepository seedRepository;
     private final TreeImageRepository treeImageRepository;
     private final MemberRepository memberRepository;
+    private final LeafRepository leafRepository;
 
     @Override
     public void register(Tree tree) {
@@ -111,11 +107,7 @@ public class TreeServiceImpl implements TreeService {
 
     @Override
     public Page<TreeCardRequest> findTreeCardRequestList(Long seedId, Long memberId, Pageable pageable) {
-
-
-
         Page<Tree> treeList = treeRepository.findByMemberIdAndSeedId(memberId, seedId, pageable);
-
         return treeList.map(tree -> {
             if (tree.getSeed().getId() == 1){
                 Book tmpBook =  bookRepository.findById(tree.getBook().getId())
@@ -150,5 +142,47 @@ public class TreeServiceImpl implements TreeService {
             }
         });
     }
+
+    @Override
+    public TreeInfoResponse findTreeInfoResponse(Long memberId, Long treeId) {
+        Tree tree = treeRepository.findById(treeId).orElseThrow(() -> new IllegalArgumentException("해당하는 Tree가 없습니다."));
+        if (!treeRepository.findByMemberId(memberId).contains(tree)) return null;
+
+        List<Leaf> leafList = leafRepository.findByTreeId(tree.getId());
+        LocalDateTime lastestLeafTime = null;
+        Long viewCount = 0L;
+        Long likeCount = 0L;
+        Long leafCount = 0L;
+        for (Leaf leaf : leafList) {
+            viewCount += leaf.getViewCount();
+            likeCount += leaf.getLikeCount();
+            leafCount++;
+            if(lastestLeafTime == null || lastestLeafTime.isBefore(leaf.getUpdateTime()))
+                lastestLeafTime = leaf.getUpdateTime();
+        }
+
+        return TreeInfoResponse.of(tree, lastestLeafTime != null ? lastestLeafTime : LocalDateTime.now(), leafCount, likeCount, viewCount);
+    }
+
+    @Override
+    public Page<TreeInfoResponse> findTreeInfoResponseList(Long memberId, Pageable pageable) {
+        Page<Tree> treeList = treeRepository.findByMemberId(memberId, pageable);
+        return treeList.map(tree -> {
+                List<Leaf> leafList = leafRepository.findByTreeId(tree.getId());
+                LocalDateTime lastestLeafTime = null;
+                Long viewCount = 0L;
+                Long likeCount = 0L;
+                Long leafCount = 0L;
+                for (Leaf leaf : leafList) {
+                    viewCount += leaf.getViewCount();
+                    likeCount += leaf.getLikeCount();
+                    leafCount++;
+                    if(lastestLeafTime == null || lastestLeafTime.isBefore(leaf.getUpdateTime() != null ? leaf.getUpdateTime() : LocalDateTime.now()))
+                        lastestLeafTime = leaf.getUpdateTime();
+                }
+                return TreeInfoResponse.of(tree, lastestLeafTime != null ? lastestLeafTime : LocalDateTime.now(), leafCount, likeCount, viewCount);
+        });
+    }
+
 
 }

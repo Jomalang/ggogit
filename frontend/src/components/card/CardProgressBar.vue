@@ -1,12 +1,18 @@
 <script setup lang="ts">
 
-import {CardProgressBarProps} from "@/types/types";
+import { defineProps } from 'vue';
 
-// const data: CardProgressBarProps = {
-//   progress: 50,
-//   readPage: 50,
-//   fullPage: 100,
-// };
+interface CardProgressBarProps {
+  progress: number;
+  readPage: number;
+  fullPage: number;
+}
+
+const data: CardProgressBarProps = {
+  progress: 50,
+  readPage: 50,
+  fullPage: 100,
+};
 
 const props = defineProps<{
   data: CardProgressBarProps;

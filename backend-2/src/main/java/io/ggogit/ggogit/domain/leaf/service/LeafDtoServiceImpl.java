@@ -11,6 +11,8 @@ import io.ggogit.ggogit.domain.leaf.repository.LeafTagMapRepository;
 import io.ggogit.ggogit.domain.leaf.structure.TreeNode;
 import io.ggogit.ggogit.domain.leaf.structure.TreeStructure;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -78,6 +80,12 @@ public class LeafDtoServiceImpl implements LeafDtoService {
         return getLeafItemResponse(treeNodes);
     }
 
+    @Override
+    public Page<Leaf> findLeafByTreeId(Long treeId, Boolean isOwner, Pageable pageable) {
+        Page<Leaf> leafList = leafRepository.findByTreeId(treeId, isOwner, pageable);
+        return leafList;
+    }
+
 
     @Override
     public HashMap<String, Integer> nodeCountToRoot(Leaf leaf) {
@@ -120,6 +128,10 @@ public class LeafDtoServiceImpl implements LeafDtoService {
         }
 
 
+        for(LeafBranchResponse leaf : responseList){
+            System.out.println(leaf.toString());
+        }
+
         return responseList;
     }
 
@@ -146,4 +158,5 @@ public class LeafDtoServiceImpl implements LeafDtoService {
         // 트리 아이디 기반 리프들 조회
         return leafRepository.findByTreeOrderById(leaf.getTree());
     }
+
 }

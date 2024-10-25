@@ -1,0 +1,16 @@
+.none {
+  display: none;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+.display__inline{
+  display: inline;
+}
+
+.disabled-btn{
+  pointer-events: none;
+  opacity: 0.5;
+}

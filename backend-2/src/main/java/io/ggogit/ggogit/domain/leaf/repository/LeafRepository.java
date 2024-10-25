@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface LeafRepository extends JpaRepository<Leaf, Long> {
+public interface LeafRepository extends JpaRepository<Leaf, Long>, LeafQueryDslRepository {
     List<Leaf> findByTree(Tree tree);
     List<Leaf> findByTreeOrderById(Tree tree);
 

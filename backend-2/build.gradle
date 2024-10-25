@@ -39,6 +39,16 @@ dependencies {
     //테스트용 Mock 프레임워크
     testImplementation 'org.mockito:mockito-core'
 
+    // FindBugs(및 JSR 305 주석 포함)는
+    // FindBugs JSR305 라이브러리를 사용하여 코드에 주석을 추가하고 FindBugs를 사용하여 코드를 분석할 수 있습니다.
+    compileOnly 'com.google.code.findbugs:jsr305:3.0.2'
+
+    // QueryDSL
+    implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
+    annotationProcessor "com.querydsl:querydsl-apt:5.0.0:jakarta"
+    annotationProcessor "jakarta.annotation:jakarta.annotation-api"
+    annotationProcessor "jakarta.persistence:jakarta.persistence-api"
+
     //p6spy, 하이버네이트 파라미터 추가
     implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.9.0'
 }
@@ -46,3 +56,17 @@ dependencies {
 tasks.named('test') {
     useJUnitPlatform()
 }
+
+//def generated = 'src/main/generated' // 생성된 QueryDSL 파일 위치
+//
+//tasks.withType(JavaCompile) {
+//    options.generatedSourceOutputDirectory = file(generated) // QueryDSL 파일 생성 위치 지정
+//}
+//
+//sourceSets {
+//    main.java.srcDirs += [generated] // QueryDSL 파일 위치를 소스 경로에 추가
+//}
+
+//clean {
+//    delete file(generated) // clean 시 생성된 QueryDSL 파일 삭제
+//}

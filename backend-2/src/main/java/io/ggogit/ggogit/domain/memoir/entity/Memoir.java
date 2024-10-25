@@ -50,10 +50,12 @@ public class Memoir {
     private String text;
 
     @ColumnDefault("1")
+    @Builder.Default
     @Column(name = "VISIBILITY", nullable = false)
     private Boolean visibility = true;
 
     @ColumnDefault("0")
+    @Builder.Default
     @Column(name = "IS_DELETED", nullable = false, insertable = false)
     private Boolean isDeleted = false;
 

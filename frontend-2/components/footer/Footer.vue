@@ -43,7 +43,7 @@ const handleLogout = async () => {
     </div>
     <div class="tree-footer__logo">
       <img
-        src="/img/logo/logo-sample.png"
+        src="/public/logo/logo-sample.png"
         style="width: 80px; height: 80px"
         alt="app-logo"
       />

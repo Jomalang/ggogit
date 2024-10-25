@@ -10,6 +10,8 @@ const tmpRenderUrl = `${
   import.meta.env.VITE_API_BASE_URL
 }/api/v1/memoir-image/render-tmp`;
 
+const treeId = useRoute().params.id;
+
 //----------------model---------------
 
 const memoir = ref({
@@ -66,7 +68,7 @@ onMounted(() => {
             body: memoirImageFormData,
           });
           // 컨트롤러에서 전달받은 디스크에 저장된 파일 명
-          const filename = await response.text();
+          const fileName = await response.text();
           console.log("서버에 저장된 파일 명 : ", fileName);
 
           // addImageBlobHook의 callback을 통해 디스크에 저장된 이미지 에디터에 렌더링
@@ -93,6 +95,7 @@ const savePost = () => {
 </script>
 
 <template>
+  <Title>회고록 작성</Title>
   <header>
     <h1 class="none">도서 완독 후 회고록 생성</h1>
 

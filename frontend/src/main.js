@@ -45,13 +45,10 @@ import LeafEtcRegister from "@/pages/app/leaf/LeafEtcRegister.vue";
 import BookCategoryList from "@/pages/app/book/BookCategoryList.vue";
 import TreeBookAutoRegister from "@/pages/app/tree/TreeBookAutoRegister.vue";
 
-<<<<<<< HEAD
-=======
 //----------------------Router----------------------
 import treeRouter from "@/pages/app/tree/Router.js";
 import memoirRouter from "@/pages/app/memoir/Router.js";
 
->>>>>>> bb05a658fc0bf658c4cafdbfeb3a462688d42368
 let router;
 
 router = createRouter({
@@ -85,8 +82,8 @@ router = createRouter({
     {
       path: "/book",
       children: [
-                { path: ":id", component: BookDetail },
-                { path: "category/list", component: BookCategoryList }
+        { path: ":id", component: BookDetail },
+        { path: "category/list", component: BookCategoryList },
       ],
       component: BookIndex,
     },
@@ -133,7 +130,7 @@ router = createRouter({
       ],
       component: TreeIndex,
     },
-  ]
+  ],
 });
 
 createApp(App).use(router).mount("#app");

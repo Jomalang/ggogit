@@ -21,133 +21,134 @@ export interface BeforeLeafItemProps {
 }
 
 export interface CardItemProps {
-    cardType: CardType;
-    cardImage: string;
-    bookCategory: string;
-    coverPath: string;
+  cardType: CardType;
+  cardImage: string;
+  bookCategory: string;
+  coverPath: string;
 
-    /* 도서 정보 경우 경우  */
-    bookTitle: string;
-    bookPublishedYear: string;
-    bookAuthor: string;
-    bookPublisher: string;
+  /* 도서 정보 경우 경우  */
+  bookTitle: string;
+  bookPublishedYear: string;
+  bookAuthor: string;
+  bookPublisher: string;
 
-    /* 회고록 정보 */
-    treeTitle: string;
-    memoirTitle: string;
-    title: string;
+  /* 회고록 정보 */
+  treeTitle: string;
+  memoirTitle: string;
+  title: string;
 
-    /* leaf 카드 정보인 경우 경우  */
-    leafTitle: string;
-    leafContent: string;
+  /* leaf 카드 정보인 경우 경우  */
+  leafTitle: string;
+  leafContent: string;
 
-    /* 통계 수  */
-    leafCount: number;
-    viewCount: number;
-    updateTime: string;
+  /* 통계 수  */
+  leafCount: number;
+  viewCount: number;
+  updateTime: string;
 }
 
 export interface CardBookPreviewsProps {
-    category: string;
-    title: string;
-    publishDate: string;
-    author: string;
-    publisher: string;
-    link: string;
-    createTime: string;
-    imageFile: string;
+  id: number;
+  category: string;
+  title: string;
+  publishDate: string;
+  author: string;
+  publisher: string;
+  link: string;
+  createTime: string;
+  imageFile: string;
 }
 
 export interface BranchInfoProps {
-    id: number;
-    title: string;
-    leafCount: number;
-    viewCount: number;
-    updateTime: string;
-    bookMark: boolean;
+  id: number;
+  title: string;
+  leafCount: number;
+  viewCount: number;
+  updateTime: string;
+  bookMark: boolean;
 }
 
 export interface CardHiddenInfoProps {
-    treeDescription: string
+  treeDescription: string;
 }
 
 export interface CardReactNumbersProps {
-    leafCount: number,
-    likeCount: number,
-    viewCount: number,
+  leafCount: number;
+  likeCount: number;
+  viewCount: number;
 }
 
 export interface CardProgressBarProps {
-    progress: number,
-    readPage: number,
-    fullPage: number,
+  progress: number;
+  readPage: number;
+  fullPage: number;
 }
 
 export interface SnsCardTreeProps {
-    cardType: CardType;
-    treeTitle: string;
-    treeDate: string;
-    memoirText: string;
-    nickname: string;
-    nicknameId: string;
-    leafCount: number;
-    viewCount: number;
+  cardType: CardType;
+  treeTitle: string;
+  treeDate: string;
+  memoirText: string;
+  nickname: string;
+  nicknameId: string;
+  leafCount: number;
+  viewCount: number;
 }
 
 export interface FilterItemProps {
-    name: string;
-    value: number;
-    description: string;
+  name: string;
+  value: number;
+  description: string;
 }
 
 export interface SeedFilterProps {
-    id: number;
-    engName: string;
-    korName: string;
+  id: number;
+  engName: string;
+  korName: string;
 }
 
 export interface SeedFilterTabProps {
-    filterName: string;
-    filterItems: SeedFilterProps[];
+  filterName: string;
+  filterItems: SeedFilterProps[];
 }
 
 export interface FilterTabProps {
-    filterName: string;
-    filterItems: FilterItemProps[];
+  filterName: string;
+  filterItems: FilterItemProps[];
 }
 
 export enum Direction {
-    INIT,
-    START_DOWN,
-    START_RIGHT,
-    START_SIDE,
-    START_LEFT,
-    DOWN,
-    RIGHT,
-    SIDE,
-    LEFT,
-    END_RIGHT,
-    END_LEFT,
-    END_UP
+  INIT,
+  START_DOWN,
+  START_RIGHT,
+  START_SIDE,
+  START_LEFT,
+  DOWN,
+  RIGHT,
+  SIDE,
+  LEFT,
+  END_RIGHT,
+  END_LEFT,
+  END_UP,
 }
 
 export enum CardType {
-    TREE,
-    MEMOIR,
-    LEAF
+  TREE,
+  MEMOIR,
+  LEAF,
 }
 
 export interface Branch {
-    branch: string;
-    log: number;
-    like: number;
-    view: number;
-    date: String;
+  branch: string;
+  log: number;
+  like: number;
+  view: number;
+  date: String;
 }
 
 export interface TextMainTitleRightProps {
-    title: string;
-    size: number;
+  title: string;
+  size: number;
 }
 
 export interface TextBtnGreenProps {

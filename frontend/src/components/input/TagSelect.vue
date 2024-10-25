@@ -24,8 +24,7 @@ const tagDelete = (tag: LeafTagProps) => {
                 v-for="tag in selectedTag" :key="tag.id">
               <label class="input-tag-select__tag-label">
                 <span class="input-tag-select__tag-text">{{ tag.name }}</span>
-                <button class="input-tag-select__tag-delete-btn" type="button"
-                        @click="(evnet) => {evnet.pre}
+                <button class="input-tag-select__tag-delete-btn" type="button" @click="(evnet) => {evnet.pre}" >
                   <img src="/svg/x-button.svg" alt="next-button" />
                 </button>
                 <input class="none input-tag-select__input" name="tagIds" :value="tag.id" />

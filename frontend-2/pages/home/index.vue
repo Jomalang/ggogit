@@ -245,7 +245,7 @@ onMounted(() => {
   window.addEventListener("touchmove", throttledDragging, { passive: false });
   window.addEventListener("touchend", (e) => dragEnd(e));
 });
-//---------------------------onMount 끝-----------------------------------
+//---------------------------onMounted 끝-----------------------------------
 </script>
 
 <template>

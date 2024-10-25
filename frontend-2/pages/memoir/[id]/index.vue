@@ -13,7 +13,7 @@ const memoirItem = ref({});
 const leafItem = ref({});
 
 //----------------Life Cycle----------------
-import Viewer from "@toast-ui/editor/dist/toastui-editor-viewer";
+import Viewer from "@toast-ui/editor";
 onMounted(() => {
   const viewer = new Viewer({
     el: document.querySelector("#viewer"),
@@ -73,9 +73,10 @@ onMounted(() => {
 </script>
 
 <template>
+  <Title>회고록</Title>
   <header>
     <UserInfoBackHeaderMemoirTitle
-      :edit="`/memoir/edit?${memoirId}`"
+      :edit="`/memoir/${memoirId}/edit`"
       :backimgpath="coverImageName"
       :username="`조현진`"
       :userid="`hyeonjin`"

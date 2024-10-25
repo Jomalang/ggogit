@@ -1,11 +1,5 @@
-<script setup lang="ts">
+<script setup lang="ts"></script>
 
-</script>
+<template>memoir Index</template>
 
-<template>
-  Index Page
-</template>
-
-<style scoped>
-
-</style>
+<style scoped></style>

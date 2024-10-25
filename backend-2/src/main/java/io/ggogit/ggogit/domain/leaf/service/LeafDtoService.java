@@ -33,6 +33,7 @@ public interface LeafDtoService {
 
     Page<Leaf> findLeafByTreeId(Long leafId, Boolean isOwner, Pageable pageable);
 
+    Leaf queryCheck(Long leafId);
 
 //    List<LeafItemView> getLeafItems(Long treeId, Long leafId, boolean isOwner);
 //
@@ -64,4 +65,6 @@ public interface LeafDtoService {
 
     HashMap<String ,Integer> nodeCountToRoot(Leaf leaf);
     List<LeafBranchResponse> findBranchByFilter(Long treeId, Boolean owner, Boolean bookMark);
+
+    Leaf findById(Long leafId);
 }

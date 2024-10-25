@@ -5,19 +5,19 @@
 <!-- ==========================================
      FRAGMENT: 태그 리스트
      ========================================== -->
+<ul class="tag-info__list tag-info__list--unselected">
+    <li th:each="tag : ${tags}" class="tag-info__item tag-info__item--unselected" th:id="${tag.id} + '--unselected'">
+        <div class="tag-info__tag-box">
+            <q class="tag-info__name" th:text="${tag.name}">책리뷰</q>
+        </div>
+        <div class="tag-info__option-box">
+            <a class="tag-info__option-link" th:href="@{/tag/edit(id=${tag.id})}">
+                <img class="tag-info__option-btn" th:src="@{/svg/icon-option.svg}" alt="태그 선택 제거 이미지">
+            </a>
+        </div>
+    </li>
+</ul>
 <div class="tag-info-box" th:fragment="tag-list(tags)">
-    <ul class="tag-info__list tag-info__list--unselected">
-        <li th:each="tag : ${tags}" class="tag-info__item tag-info__item--unselected" th:id="${tag.id} + '--unselected'">
-            <div class="tag-info__tag-box">
-                <q class="tag-info__name" th:text="${tag.name}">책리뷰</q>
-            </div>
-            <div class="tag-info__option-box">
-                <a class="tag-info__option-link" th:href="@{/tag/edit(id=${tag.id})}">
-                    <img class="tag-info__option-btn" th:src="@{/svg/icon-option.svg}" alt="태그 선택 제거 이미지">
-                </a>
-            </div>
-        </li>
-    </ul>
 </div>
 
 <!-- ==========================================
@@ -35,6 +35,6 @@
         </li>
     </ul>
 </div>
-
 </body>
+
 </html>

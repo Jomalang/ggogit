@@ -1,8 +1,15 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+
+const emit = defineEmits(['tagDelete']);
+
+</script>
 
 <template>
   <div class="delete-seed__form">
-    <button class="delete-seed__btn" type="submit">
+    <button class="delete-seed__btn"
+            type="button"
+            @click.prevent="emit('tagDelete')"
+    >
       <img src="/public/svg/delete.svg" alt="delete" />
       <p class="delete-seed__btn-msg">삭제</p>
     </button>

@@ -71,7 +71,10 @@ router = createRouter({
     },
     {
       path: "/book",
-      children: [{ path: "detail", component: BookDetail }],
+      children: [
+          { path: "detail", component: BookDetail },
+          { path: "category/list", component: BookCategoryList }
+      ],
       component: BookIndex,
     },
     {
@@ -100,7 +103,7 @@ router = createRouter({
       path: "/tag",
       children: [
         { path: "list", component: TagList },
-        { path: "edit", component: TagEdit },
+        { path: ":id/edit", component: TagEdit },
       ],
       component: TagIndex,
     },

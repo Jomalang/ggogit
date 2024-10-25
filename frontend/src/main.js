@@ -56,7 +56,7 @@ router = createRouter({
     {
       path: "/home",
       children: [
-        { path: "index", component: HomeIndex },
+        { path: "", component: HomeIndex },
         { path: "no-tree", component: NoTree },
       ],
     },
@@ -72,7 +72,7 @@ router = createRouter({
     },
     {
       path: "/book",
-      children: [{ path: "detail", component: BookDetail }],
+      children: [{ path: ":id", component: BookDetail }],
       component: BookIndex,
     },
     memoirRouter,

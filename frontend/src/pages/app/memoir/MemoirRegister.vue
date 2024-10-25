@@ -20,12 +20,12 @@ const tmpRenderUrl = `${
 //----------------model---------------
 
 const memoir = ref({
-  title: "",
-  text: "",
+  title: "default-title",
+  text: "default-text",
   visibility: 1,
 });
 
-let failname = ref({});
+let fileName = ref({});
 
 //----------------methods---------------
 
@@ -74,10 +74,10 @@ onMounted(() => {
           });
           // 컨트롤러에서 전달받은 디스크에 저장된 파일 명
           const filename = await response.text();
-          console.log("서버에 저장된 파일 명 : ", filename);
+          console.log("서버에 저장된 파일 명 : ", fileName);
 
           // addImageBlobHook의 callback을 통해 디스크에 저장된 이미지 에디터에 렌더링
-          const imageUrl = tmpRenderUrl + `/${filename}`;
+          const imageUrl = tmpRenderUrl + `/${fileName}`;
           callback(imageUrl, "image alt attribute");
           console.log(blob);
           console.log(callback);

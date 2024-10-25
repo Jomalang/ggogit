@@ -9,6 +9,7 @@ import io.ggogit.ggogit.api.tree.dto.TreeTmpResponse;
 
 import io.ggogit.ggogit.domain.leaf.entity.Leaf;
 import io.ggogit.ggogit.domain.leaf.service.LeafDtoService;
+import io.ggogit.ggogit.domain.member.entity.Member;
 import io.ggogit.ggogit.domain.tree.entity.TreeTmp;
 import io.ggogit.ggogit.domain.tree.service.SeedService;
 import io.ggogit.ggogit.domain.tree.service.TreeService;
@@ -72,25 +73,37 @@ public class TreeController {
         return "redirect:/tree/search/result/{treeSearchText}";
     }
 
-    @GetMapping
-    public Page<TreeInfoResponse> getTreeList(
-            @RequestParam(value = "s", required = false) Long seedId,
-            @RequestParam(value = "p", defaultValue = "0") int page,
+    @GetMapping("{id}/info")
+    public TreeInfoResponse getTreeInfoResponse(
+            @PathVariable(value = "id") Long treeId,
             @RequestParam(value = "mid",defaultValue = "1") Long mid
 //            @SessionAttribute Member member
     ) {
 //        Long memberId = member.getId();
         Long memberId = mid;
-        System.out.println("memberId = " + memberId);
-        System.out.println("seedId = " + seedId);
 
-        int size = 10;
-        Sort s = Sort.by(Sort.Order.desc("updateTime"));
-        Pageable pageable = PageRequest.of(page, size, s);
-        Page<TreeInfoResponse> list = treeService.findTreeInfoResponseList(seedId,memberId, pageable);
-        return list;
+        TreeInfoResponse treeInfoResponse = treeService.findTreeInfoResponse(memberId, treeId);
+        return treeInfoResponse;
     }
 
+//    @GetMapping("{id}/info")
+//    public Page<TreeInfoResponse> getTreeInfoResponseList(
+//            @RequestParam(value = "s", required = false) Long seedId,
+//            @RequestParam(value = "p", defaultValue = "0") int page,
+//            @RequestParam(value = "mid",defaultValue = "1") Long mid
+////            @SessionAttribute Member member
+//    ) {
+////        Long memberId = member.getId();
+//        Long memberId = mid;
+//        System.out.println("memberId = " + memberId);
+//        System.out.println("seedId = " + seedId);
+//
+//        int size = 10;
+//        Sort s = Sort.by(Sort.Order.desc("updateTime"));
+//        Pageable pageable = PageRequest.of(page, size, s);
+//        Page<TreeInfoResponse> list = treeService.findTreeInfoResponseList(memberId, pageable);
+//        return list;
+//    }
 //    @GetMapping
 //    public Page<TreeCardRequest> getTreeList(
 //            @RequestParam(value = "s", required = false) Long seedId,

@@ -17,4 +17,6 @@ public interface TreeRepository extends JpaRepository<Tree, Long> {
     AND (:seedId IS NULL OR t.seed.id = :seedId)
     """)
     Page<Tree> findByMemberIdAndSeedId(Long memberId, Long seedId, Pageable pageable);
+
+    Page<Tree> findByMemberId(Long memberId, Pageable pageable);
 }

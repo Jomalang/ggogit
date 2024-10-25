@@ -6,62 +6,76 @@ import CardTreeInfoCover from '@/components/card/CardTreeInfoCover.vue';
 import InputBackSearch from '@/components/input/InputBackSearch.vue';
 import CardHiddenInfo from '@/components/card/CardHiddenInfo.vue';
 import { useRoute } from 'vue-router';
-
 const props = defineProps<{
-  treeInfoResponse: {
-    bookId?: number | null;
-    bookCategory?: string | null;
-    bookTitle?: string | null;
-    bookAuthor?: string | null;
-    bookTranslator?: string | null;
-    bookPublisher?: string | null;
-    bookPublishedYear?: string | null;
-    bookTotalPage?: number | null;
-    treeId: number;
-    memberId : number;
-    seedId: number;
-    title: string;
-    description: string;
-    visibility: Boolean;
-    leafCreatedAt: string;
-    createdAt: string;
-    readingPage ?: number | null;
-    coverImageName: string;
-    treeLeafCnt: number;
-    treeLikeCnt: number;
-    treeViewCnt: number;
-  };
+    treeInfoResponse: {
+        bookId?: number | null;
+        bookCategory?: string | null;
+        bookTitle?: string | null;
+        bookAuthor?: string | null;
+        bookTranslator?: string | null;
+        bookPublisher?: string | null;
+        bookPublishedYear?: string | null;
+        bookTotalPage?: number | null;
+        treeId: number;
+        memberId : number;
+        seedId: number;
+        title: string;
+        description: string;
+        visibility: Boolean;
+        leafCreatedAt: string;
+        createdAt: string;
+        readingPage ?: number | null;
+        coverImageName: string;
+        treeLeafCnt: number;
+        treeLikeCnt: number;
+        treeViewCnt: number;
+    };
 }>();
 
 const treeId: number = Number(useRoute().params.id);
-const branchList = reactive({
-    items: []
+const data = reactive({
+        info: [],
+        list: []
 });
 const queryParam = reactive({
-  filter: '',
-  sort: '',
-  bookMark: '',
-  p: 0
+    filter: '',
+    sort: '',
+    bookMark: '',
+    p: 0
 });
 
-
-const fetchData = async () => {
-  try {
-    const response = await axios.get
-    (`http://localhost:8080/api/v1/trees/${treeId}/branches?f=${queryParam.filter}&s=${queryParam.sort}&b=${queryParam.bookMark}&p=${queryParam.p}`);
-    branchList.items = response.data.branches;
-    console.log(response.data);
-    console.log(branchList.items + 'branchList'); 
-    return branchList;
-  } catch (error) {
-    console.error('Error fetching data:', error);
-  }
+const fetchInfo = async () => {
+    try {
+        const response = await axios.get
+        (`http://localhost:8080/api/v1/trees/info`);
+        // (`http://localhost:8080/api/v1/trees/${treeId}/branches?f=${queryParam.filter}&s=${queryParam.sort}&b=${queryParam.bookMark}&p=${queryParam.p}`);
+        data.info = response.data;
+        
+        return data.info;
+    } catch (error) {
+        console.error('Error fetching data:', error);
+    }
 };
+
+const fetchList = async () => {
+    try {
+        const response = await axios.get
+        (`http://localhost:8080/api/v1/trees/1/branches?`);
+        // (`http://localhost:8080/api/v1/trees/${treeId}/branches?f=${queryParam.filter}&s=${queryParam.sort}&b=${queryParam.bookMark}&p=${queryParam.p}`);
+        data.list = response.data.branches;
+        return data.list;
+    } catch (error) {
+        console.error('Error fetching data:', error);
+    }
+};
+
+
 
 onMounted(() => {
     console.log('treeId: ' + treeId);
     console.log('useRoute: ' + useRoute());
-  fetchData();
+    fetchInfo();
+    fetchList();
 });
 
 </script>
@@ -73,7 +87,7 @@ onMounted(() => {
     <section  class="reg-book-search-container">
         <h2 class="none">트리 검색</h2>
         
-        <InputBackSearch placeholder='검색할 트리를 입력해주세요' action='' method='' name='treeSearchText' href='javascript:history.back()'>트리 검색 상단 바</InputBackSearch>
+        <InputBackSearch placeholder='검색할 트리를 입력해주세요'  href='' javascript:history.back() api='' >트리 검색 상단 바</InputBackSearch>
         
         
     </section>

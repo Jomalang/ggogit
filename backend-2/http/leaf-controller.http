@@ -3,6 +3,7 @@
 @leafId = 47
 @seedBookId = 1
 @seddEtcId = 1
+@tagId = 10001
 # ================================================== #
 
 # ================================================== #
@@ -42,7 +43,6 @@ DELETE {{host}}/api/v1/etc/leaves/{{leafId}}
 
 GET {{host}}/api/v1/leaves/{{leafId}}/all
 
-
 # ================================================== #
 
 # ================================================== #
@@ -58,6 +58,9 @@ Content-Type: application/json
 
 ### 리프 태그 조회
 GET {{host}}/api/v1/leaf/tags
+
+### 리프 태그 디테일 조회
+GET {{host}}/api/v1/leaf/tags/{{tagId}}
 
 
 ### 리프 태그 생성

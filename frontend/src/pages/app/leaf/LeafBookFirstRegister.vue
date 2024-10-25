@@ -11,28 +11,49 @@ import SubmitBtnFullBar from "@/components/button/SubmitBtnFullBar.vue";
 
 import Editor from '@toast-ui/editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
-import {onMounted, reactive} from "vue";
+import {onMounted, reactive, watch} from "vue";
 import NavigationBar from "@/components/nav/NavigationBar.vue";
+import {Reactive} from "@vue/reactivity";
+
+interface LeafFormData {
+  startPage: number | undefined;
+  endPage: number | undefined;
+  tagIds: number[];
+  title: string | undefined;
+  content: string | undefined;
+  visibility: boolean | undefined;
+}
 
 // ----------------------- Model ----------------------- //
-const savedFormData = localStorage.getItem('treeFormData');
-const treeFormData = reactive(savedFormData ? JSON.parse(savedFormData) : {
-  seedCategoryType: '',
-  bookTitle: '',
-  author: '',
-  publishDate: '',
-  seedId: 1,
-  totalPage: '',
-  treeTitle: '',
-  description: '',
-  visibility: true,
-  bookCategoryId: '',
-  imageData: ''
+const savedFormData: string = localStorage.getItem('leafFormData');
+const leafFormData: Reactive<LeafFormData> = reactive(savedFormData ? JSON.parse(savedFormData) : {
+  startPage: undefined,
+  endPage: undefined,
+  tagIds: [],
+  title: undefined,
+  content: undefined,
+  visibility: undefined
 });
+
+const savedSelectedTags: string = localStorage.getItem('selectedTags');
+const selectedTags = reactive({
+  items: savedSelectedTags ? JSON.parse(savedSelectedTags) : [],
+});
+
+localStorage.setItem('leafCreateUrl', new URL(window.location.href).pathname);
+
+watch(leafFormData,
+(newVal) => {
+    localStorage.setItem('leafFormData', JSON.stringify(newVal));
+  },
+  { deep: true }
+);
 
 // ----------------------- Life Cycle ----------------------- //
 
 onMounted(() => {
+  console.log('leafFormData : ', leafFormData);
+
   const editor = new Editor({
     el: document.querySelector('#editor'),
     height: '300px',
@@ -75,6 +96,8 @@ onMounted(() => {
   });
 });
 
+// ----------------------- Function ----------------------- //
+
 </script>
 
 <template>
@@ -108,12 +131,15 @@ onMounted(() => {
 
         <section class="first-log_page-input-container">
           <h1 class="none">리프 페이지</h1>
-          <PageNumber start-page="" end-page=""></PageNumber>
+          <PageNumber
+              v-model:start-page="leafFormData.startPage"
+              v-model:end-page="leafFormData.endPage">
+          </PageNumber>
         </section>
 
         <section class="input-form__select-tag-input-container">
           <h1 class="none">리프 태그 입력</h1>
-          <TagSelect member-id="1"></TagSelect>
+          <TagSelect :selectedTag="selectedTags.items"></TagSelect>
         </section>
 
         <section class="input-form__input-container">

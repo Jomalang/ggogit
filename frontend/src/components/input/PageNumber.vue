@@ -1,8 +1,15 @@
 <script setup lang="ts">
+
 const props = defineProps<{
   startPage: number;
   endPage: number;
 }>();
+
+const emit = defineEmits<{
+  (e: 'update:startPage', value: number): void;
+  (e: 'update:endPage', value: number): void;
+}>();
+
 </script>
 
 <template>
@@ -12,24 +19,26 @@ const props = defineProps<{
     <div class="input-page-number__frame">
       <label class="input-page-number__label">
         <input
-          class="input-page-number__input input-page-number__input--start"
-          id="input-page-number__input--start-id"
-          :value="startPage"
-          name="startPage"
-          type="number"
-          placeholder="시작 페이지"
-          min="0"
+            class="input-page-number__input input-page-number__input--start"
+            id="input-page-number__input--start-id"
+            :value="startPage"
+            name="startPage"
+            type="number"
+            placeholder="시작 페이지"
+            min="0"
+            @input="(event) => emit('update:startPage', Number(event.target.value))"
         />
       </label>
       <label class="input-page-number__label">
         <input
-          class="input-page-number__input input-page-number__input--end"
-          id="input-page-number__input--end-id"
-          :value="endPage"
-          name="endPage"
-          type="number"
-          placeholder="마지막 페이지"
-          min="0"
+            class="input-page-number__input input-page-number__input--end"
+            id="input-page-number__input--end-id"
+            :value="endPage"
+            name="endPage"
+            type="number"
+            placeholder="마지막 페이지"
+            min="0"
+            @input="(event) => emit('update:endPage', Number(event.target.value))"
         />
       </label>
     </div>

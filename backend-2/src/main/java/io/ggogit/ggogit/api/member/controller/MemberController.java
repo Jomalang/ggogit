@@ -14,6 +14,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +24,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/member")
+@RequestMapping("/member")
 @RequiredArgsConstructor
 @Slf4j
 public class MemberController {
@@ -151,11 +153,13 @@ public class MemberController {
 
     @GetMapping("/pw/rst")
     public ResponseEntity<String> getMemberPwRst() {
+
         return ResponseEntity.ok("비밀번호 재설정 페이지입니다.");
     }
 
     @PostMapping("/pw/rst")
     public ResponseEntity<String> postMemberPwRst() {
+
         return ResponseEntity.ok("비밀번호 재설정 요청이 완료되었습니다.");
     }
 
@@ -164,5 +168,20 @@ public class MemberController {
     public ResponseEntity<MemberImageDto> getMemberImage(@PathVariable Long memberId) {
         MemberImageDto memberImageDto = memberService.getMemberImageDto(memberId);
         return ResponseEntity.ok(memberImageDto);
+    }
+
+    // 비밀번호 변경 로직 (추가생성)
+    @PutMapping("/resetPassword")
+    public ResponseEntity<String> changePassword(@RequestBody MemberPasswordResetDto request,
+                                                 @AuthenticationPrincipal UserDetails userDetails) {
+        Member member = new Member();
+        Long memberId = member.getId();
+        boolean result = memberService.resetPassword(memberId, request.getNewPassword(), request.getCheckPassword());
+
+        if (result) {
+            return new ResponseEntity<>("비밀번호가 성공적으로 변경되었습니다.", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("비밀번호 변경 실패", HttpStatus.BAD_REQUEST);
+        }
     }
 }

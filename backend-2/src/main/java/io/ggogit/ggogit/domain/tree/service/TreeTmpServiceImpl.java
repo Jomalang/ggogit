@@ -2,7 +2,7 @@ package io.ggogit.ggogit.domain.tree.service;
 
 import io.ggogit.ggogit.domain.book.entity.BookCategory;
 import io.ggogit.ggogit.domain.book.repository.BookCategoryRepository;
-import io.ggogit.ggogit.domain.image.repository.ImageRepository;
+import io.ggogit.ggogit.domain.image.repository.ImageRepositoryImpl;
 import io.ggogit.ggogit.domain.member.entity.Member;
 import io.ggogit.ggogit.domain.member.repository.MemberRepository;
 import io.ggogit.ggogit.domain.tree.entity.Seed;
@@ -23,7 +23,7 @@ public class TreeTmpServiceImpl implements TreeTmpService {
     private final BookCategoryRepository bookCategoryRepository;
     private final MemberRepository memberRepository;
     private final SeedRepository seedRepository;
-    private final ImageRepository imageRepository;
+    private final ImageRepositoryImpl imageRepository;
 
     @Override
     public void deleteTmpById(Long memberId) {

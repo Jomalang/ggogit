@@ -1,8 +1,7 @@
 <script setup lang="ts">
-
 interface Props {
-    username: string;
-    userid: string;
+  username: string;
+  userid: string;
 }
 const props = defineProps<Props>();
 </script>
@@ -14,17 +13,16 @@ const props = defineProps<Props>();
       (username,userid)
   ==========================================-->
   <div class="bar-user-info-frame">
-      <div class="bar-user-info__left-content">
-          <div>
-              <div class="bar-user-info__user-name">{{props.username}}</div>
-              <div class="bar-user-info__user-id">{{props.userid}}</div>
-          </div>
+    <div class="bar-user-info__left-content">
+      <div>
+        <div class="bar-user-info__user-name">{{ props.username }}</div>
+        <div class="bar-user-info__user-id">{{ props.userid }}</div>
       </div>
+    </div>
   </div>
 </template>
 
-<style>
-
+<style scoped>
 /* ==========================================
       user info bar - no profile, btn
       user tree memoir index 사용
@@ -32,7 +30,6 @@ const props = defineProps<Props>();
 .bar-user-info-frame {
   display: flex;
   justify-content: space-between;
-  background-color: black;
 }
 .bar-user-info__left-content {
   display: flex;

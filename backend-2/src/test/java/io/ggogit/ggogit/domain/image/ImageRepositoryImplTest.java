@@ -1,29 +1,22 @@
 package io.ggogit.ggogit.domain.image;
 
-import io.ggogit.ggogit.domain.image.repository.ImageRepository;
+import io.ggogit.ggogit.domain.image.repository.ImageRepositoryImpl;
 import io.ggogit.ggogit.type.UploadFolderType;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
-
-class ImageRepositoryTest {
+class ImageRepositoryImplTest {
 
     @TempDir
     Path tempDir;
 
     @InjectMocks
-    private ImageRepository imageRepository;
+    private ImageRepositoryImpl imageRepository;
 
     @Mock
     private UploadFolderType folderType;
@@ -31,7 +24,7 @@ class ImageRepositoryTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        imageRepository = new ImageRepository(tempDir.toString());
+        imageRepository = new ImageRepositoryImpl(tempDir.toString());
     }
 
 //    @Test

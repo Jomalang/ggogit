@@ -1,6 +1,6 @@
 package io.ggogit.ggogit.domain.memoir.service;
 
-import io.ggogit.ggogit.domain.leaf.entity.Leaf;
+import io.ggogit.ggogit.domain.image.repository.ImageRepositoryImpl;
 import io.ggogit.ggogit.domain.memoir.entity.Memoir;
 import io.ggogit.ggogit.domain.memoir.repository.MemoirRepository;
 import io.ggogit.ggogit.domain.tree.entity.Tree;
@@ -10,11 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -27,6 +23,7 @@ public class MemoirServiceImpl implements MemoirService {
 
     private final MemoirRepository memoirRepository;
     private final TreeRepository treeRepository;
+    private final ImageRepositoryImpl imageRepository;
 
     @Override
     public Long regMemoir(Memoir memoir, Long treeId) {
@@ -73,19 +70,11 @@ public class MemoirServiceImpl implements MemoirService {
     //TODO:나중에 폴더 통합되면 경로 수정해야 함.
     @Override
     public void saveImage(List<String> fileNames) throws IOException {
-        final String uploadDir = Paths.get("C:", "ggogit","backend-2", "src", "main", "webapp","image", "tmp").toAbsolutePath().toString();
-        //파일 위치 수정
-        for(String fileName : fileNames) {
-            Path tmpFilePath = Path.of(uploadDir, fileName).toAbsolutePath();
-            byte[] tmpFile = Files.readAllBytes(tmpFilePath);
-            File newFilePath = new File("C://ggogit/backend-2/src/main/webapp/uploads/image/memoir/" + fileName);
-            try{
-                Files.write(newFilePath.toPath(), tmpFile);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            //이전 임시 파일 삭제
-            Files.delete(tmpFilePath);
+        if(fileNames.isEmpty()) return;
+        for (String fileName : fileNames) {
+            imageRepository.changeFileNameToUUID(fileName);
+
+
         }
 
     }

@@ -13,7 +13,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.swing.*;
 import java.util.List;
 
 @Service
@@ -58,6 +57,7 @@ public class LeafTagServiceImpl implements LeafTagService {
     }
 
     @Override
+    @Transactional
     public boolean isOwner(Long memberId, Long tagId) {
 
         Member member = memberRepository.findById(memberId)
@@ -70,6 +70,7 @@ public class LeafTagServiceImpl implements LeafTagService {
     }
 
     @Override
+    @Transactional
     public void remove(Long memberId, Long tagId) {
 
         LeafTag leafTag = leafTagRepository.findById(tagId)
@@ -82,10 +83,12 @@ public class LeafTagServiceImpl implements LeafTagService {
             leafTagMapRepository.save(leafTagMap);
         }
 
-        leafTagRepository.delete(leafTag);
+        leafTag.setIsDeleted(true);
+        leafTagRepository.save(leafTag);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Page<LeafTag> list(Long memberId, String searchName, int page, int size) {
 
         Member member = memberRepository.findById(memberId)
@@ -94,5 +97,22 @@ public class LeafTagServiceImpl implements LeafTagService {
         Pageable pageable = PageRequest.of(page, size);
 
         return leafTagRepository.findByMemberAndName(member, searchName, pageable);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public LeafTag detail(Long tagId) {
+        return leafTagRepository.findById(tagId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 태그가 존재하지 않습니다."));
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public boolean isExist(Long memberId, String name) {
+
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 회원이 존재하지 않습니다."));
+
+        return leafTagRepository.findByMemberAndName(member, name).isPresent();
     }
 }

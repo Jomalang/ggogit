@@ -1,10 +1,9 @@
 <script setup lang="ts">
-
 interface Props {
-    userimg: string;
-    username: string;
-    userid: string;
-    userurl: string;
+  userimg: string;
+  username: string;
+  userid: string;
+  userurl: string;
 }
 const props = defineProps<Props>();
 </script>
@@ -19,7 +18,7 @@ const props = defineProps<Props>();
   <div class="bar-user-info-frame">
     <div class="bar-user-info__left-content">
       <div class="bar-user-info__img-wrapper">
-        <img :src="`/img/card/${props.userimg}`" alt="user-profile">
+        <img :src="`/img/card/${props.userimg}`" alt="user-profile" />
       </div>
       <div>
         <div class="bar-user-info__user-name">{{ props.username }}</div>
@@ -32,17 +31,13 @@ const props = defineProps<Props>();
         type="checkbox"
         id="bar-user-info__like"
       />
-      <label
-        class="__like-bold"
-        for="bar-user-info__like"
-      ></label>
+      <label class="__like-bold" for="bar-user-info__like"></label>
       <a class="bar-user-info__set-btn" :href="`${props.userurl}`"></a>
     </div>
   </div>
 </template>
 
-<style>
-
+<style scoped>
 /* ==========================================
       user info bar
       user tree index 사용 
@@ -126,5 +121,4 @@ const props = defineProps<Props>();
   background-position: center;
   background-size: contain;
 }
-
 </style>

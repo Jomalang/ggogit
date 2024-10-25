@@ -15,6 +15,9 @@ public interface LeafTagService {
 
     Page<LeafTag> list(Long memberId, String searchName, int page, int size);
 
+    LeafTag detail(Long tagId);
+    boolean isExist(Long memberId, String name);
+
 //    /**
 //     * LeafTag를 등록한다.
 //     * @param leafTag 리프 태그 Entity

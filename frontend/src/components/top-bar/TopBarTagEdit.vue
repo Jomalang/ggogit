@@ -3,16 +3,21 @@ import { LeafTagProps } from "@/types/types";
 
 const props = defineProps<{
   tag: LeafTagProps;
-  memberId: number;
 }>();
-const href = `/tag/list/&{memberId}`;
+
+const emit = defineEmits(['tagUpdate']);
+
+const tagUpdate = () => {
+  emit('tagUpdate');
+};
+
 </script>
 
 <template>
   <!--top-bar-tag-edit(tag,memberId)-->
   <div class="top-bar--green">
     <div class="top-bar__frame">
-      <a class="tob-bar__back-link" :href="href">
+      <a class="tob-bar__back-link" href="/tag/list">
         <img
           src="/public/svg/back-arrow-icon.svg"
           alt="top-bar--backarrow.svg"
@@ -21,7 +26,7 @@ const href = `/tag/list/&{memberId}`;
       <div class="tree-input-text--select__tag">
         {{ tag.name }}
       </div>
-      <button class="top-bar__text" type="submit">완료</button>
+      <button class="top-bar__text" type="submit" @click.prevent="emit('tagUpdate')">완료</button>
     </div>
   </div>
 </template>

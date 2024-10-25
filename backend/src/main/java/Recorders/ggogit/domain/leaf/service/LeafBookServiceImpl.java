@@ -202,8 +202,8 @@ public class LeafBookServiceImpl implements LeafBookService {
 
         Book book = bookRepository.findById(tree.getBookId());
         List<LeafBook> leafBooks = leafBookRepository.findByTreeId(treeId);
-        int readingPage = readingPage(book.getTotalPage(), leafBooks);
-        treeBook.setReadingPage(readingPage);
+//        int readingPage = readingPage(book.getTotalPage(), leafBooks);
+//        treeBook.setReadingPage(readingPage);
 
         // 도서 리프 읽은 페이지 저장
         treeBookRepository.update(treeBook);

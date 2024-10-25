@@ -1,10 +1,9 @@
 package io.ggogit.ggogit.domain.tree.service;
 
 import io.ggogit.ggogit.api.tree.dto.TreeCardRequest;
-import io.ggogit.ggogit.domain.member.entity.Member;
+import io.ggogit.ggogit.api.tree.dto.TreeInfoResponse;
 import io.ggogit.ggogit.domain.tree.entity.Seed;
 import io.ggogit.ggogit.domain.tree.entity.Tree;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -26,6 +25,9 @@ public interface TreeService  {
 
     Seed getSeedByTreeId(Long treeId);
     Page<TreeCardRequest> findTreeCardRequestList(Long seedId, Long memberId, Pageable pageable);
+
+    TreeInfoResponse findTreeInfoResponse(Long memberId, Long treeId);
+    Page<TreeInfoResponse> findTreeInfoResponseList(Long memberId, Pageable pageable);
     //TreeInfoDto 생성
 //    List<TreeInfoResponse> findTreeInfoResponse(Long memberId);
 

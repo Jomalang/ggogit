@@ -54,4 +54,12 @@ public interface MemberService {
      * @return MemberImageDto
      */
     MemberImageDto getMemberImageDto(Long memberId);
+
+    /**
+     * 회원 ID로 회원 이미지 정보 조회
+     *
+     * @param memberId 회원 ID, oldPassword 기존 비밀번호, newPassword 새로운 비밀번호
+     * @return resetPassword
+     */
+    boolean resetPassword(Long memberId, String newPassword, String checkPassword);
 }

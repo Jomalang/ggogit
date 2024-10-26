@@ -3,7 +3,9 @@
 </script>
 
 <template>
-  <RouterView />
+  <main>
+    <h1>Trees</h1>
+  </main>
 </template>
 
 <style scoped>

@@ -17,7 +17,7 @@ const tagUpdate = () => {
   <!--top-bar-tag-edit(tag,memberId)-->
   <div class="top-bar--green">
     <div class="top-bar__frame">
-      <a class="tob-bar__back-link" href="/tag/list">
+      <a class="tob-bar__back-link" href="/leaf/tag/list">
         <img
           src="/public/svg/back-arrow-icon.svg"
           alt="top-bar--backarrow.svg"

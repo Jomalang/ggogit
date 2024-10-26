@@ -37,7 +37,7 @@ const tagDelete = (tag: LeafTagProps) => {
         <RouterLink
           class="input-tag-select__button"
           id="input-tag-select__button-id"
-          to="/tag/list">
+          to="/leaf/tag/list">
           <img src="/public/svg/next.svg" alt="next-button" />
         </RouterLink>
       </div>

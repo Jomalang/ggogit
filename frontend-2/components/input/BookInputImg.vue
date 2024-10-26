@@ -1,10 +1,11 @@
 <script setup lang="ts">
 
-import {onMounted, reactive} from "vue";
+import {onMounted, reactive, useSSRContext} from "vue";
 
 // ----------------------- Model ----------------------- //
 
-const savedFormData = localStorage.getItem('treeFormData');
+const ssrContext = useSSRContext();
+const savedFormData = ssrContext?.treeFormData || null;
 const treeFormData = reactive(savedFormData ? JSON.parse(savedFormData) : {
   seedCategoryType: '',
   bookTitle: '',

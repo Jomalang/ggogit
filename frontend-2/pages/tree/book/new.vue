@@ -1,10 +1,18 @@
 <script setup lang="ts">
-import { onMounted, reactive, watch } from "vue";
+import {onMounted, reactive, useSSRContext, watch} from "vue";
 import axios, { HttpStatusCode } from "axios";
+import BookInputImg from "~/components/input/BookInputImg.vue";
+import TextBox from "~/components/input/TextBox.vue";
+import BookCategorySelect from "~/components/input/BookCategorySelect.vue";
+import TextareaBox from "~/components/input/TextareaBox.vue";
+import SubmitBtnFullBar from "~/components/button/SubmitBtnFullBar.vue";
+import NavigationBar from "~/components/nav/NavigationBar.vue";
+import TextNumberBox from "~/components/input/TextNumberBox.vue";
 
 // ----------------------- Model ----------------------- //
 
-const savedFormData = localStorage.getItem("treeFormData");
+const ssrContext = useSSRContext();
+const savedFormData = ssrContext?.treeFormData || null;
 const treeFormData = reactive(
     savedFormData
         ? JSON.parse(savedFormData)

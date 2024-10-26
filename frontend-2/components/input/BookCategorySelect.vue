@@ -1,8 +1,9 @@
 <script setup lang="ts">
 
-import { reactive } from "vue";
+import {reactive, useSSRContext} from "vue";
 
-const savedFormData = localStorage.getItem('treeFormData');
+const ssrContext = useSSRContext();
+const savedFormData = ssrContext?.treeFormData || null;
 const treeFormData = reactive(savedFormData ? JSON.parse(savedFormData) : {
   seedCategoryType: '',
   bookTitle: '',
@@ -57,7 +58,7 @@ const dropBookCategory = () => {
         <RouterLink
             class="input-tag-select__button"
             id="input-tag-select__button-id"
-            to="/book/category/list"
+            to="/book/category"
         >
           <img src="/public/svg/next.svg" alt="next-button" />
         </RouterLink>

@@ -4,6 +4,11 @@ import Editor from "@toast-ui/editor";
 import "@toast-ui/editor/dist/toastui-editor.css";
 import { onMounted, reactive, watch } from "vue";
 import { Reactive } from "@vue/reactivity";
+import FirstLog from "~/components/log/FirstLog.vue";
+import TagSelect from "~/components/input/TagSelect.vue";
+import TextBox from "~/components/input/TextBox.vue";
+import SubmitBtnFullBar from "~/components/button/SubmitBtnFullBar.vue";
+import NavigationBar from "~/components/nav/NavigationBar.vue";
 
 interface LeafFormData {
   startPage: number | undefined;

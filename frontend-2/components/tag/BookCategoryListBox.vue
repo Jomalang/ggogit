@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import { LeafTagProps } from "@/types/types";
-import { reactive, watch } from "vue";
+import {reactive, useSSRContext, watch} from "vue";
 
 const props = defineProps<{
   tags: Array<LeafTagProps>;
 }>();
 
-const savedFormData = localStorage.getItem('treeFormData');
+const ssrContext = useSSRContext();
+const savedFormData = ssrContext?.treeFormData || null;
 const treeFormData = reactive(savedFormData ? JSON.parse(savedFormData) : {
   seedCategoryType: '',
   bookTitle: '',

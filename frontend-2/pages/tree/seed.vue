@@ -1,7 +1,10 @@
 <script setup lang="ts">
-import { SeedFilterProps, SeedFilterTabProps } from "@/types/types";
+import { SeedFilterTabProps } from "@/types/types";
 import { onMounted, reactive } from "vue";
 import axios from "axios";
+import FilterFullWidth from "~/components/button/FilterFullWidth.vue";
+import FilterTabGet from "~/components/tab-filter/FilterTabGet.vue";
+import NavigationBar from "~/components/nav/NavigationBar.vue";
 
 // -------------------------- Model -------------------------- //
 

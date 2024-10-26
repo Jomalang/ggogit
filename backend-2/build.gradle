@@ -67,17 +67,3 @@ dependencies {
 tasks.named('test') {
     useJUnitPlatform()
 }
-
-//def generated = 'src/main/generated' // 생성된 QueryDSL 파일 위치
-//
-//tasks.withType(JavaCompile) {
-//    options.generatedSourceOutputDirectory = file(generated) // QueryDSL 파일 생성 위치 지정
-//}
-//
-//sourceSets {
-//    main.java.srcDirs += [generated] // QueryDSL 파일 위치를 소스 경로에 추가
-//}
-
-//clean {
-//    delete file(generated) // clean 시 생성된 QueryDSL 파일 삭제
-//}

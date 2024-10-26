@@ -86,6 +86,12 @@ public class LeafDtoServiceImpl implements LeafDtoService {
         return leafList;
     }
 
+    @Override
+    public Leaf queryCheck(Long leafId) {
+        return leafRepository.findById(leafId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 리프가 존재하지 않습니다."));
+    }
+
 
     @Override
     public HashMap<String, Integer> nodeCountToRoot(Leaf leaf) {
@@ -133,6 +139,12 @@ public class LeafDtoServiceImpl implements LeafDtoService {
         }
 
         return responseList;
+    }
+
+    @Override
+    public Leaf findById(Long leafId) {
+        return leafRepository.findByLeafId(leafId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 리프가 존재하지 않습니다."));
     }
 
     private LeafItemResponse getLeafItemResponse(List<TreeNode> treeNodes) {

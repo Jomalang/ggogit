@@ -7,10 +7,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 @RestController
 @RequestMapping("memoir-image")
@@ -20,7 +17,7 @@ public class MemoirImageController {
     private final ImageRepositoryImpl imageRepository;
 
     @PostMapping("upload-tmp")
-    public String uploadImageToTemp(@RequestParam final MultipartFile image) throws IOException {
+    public String uploadImageToTemp(@RequestParam final MultipartFile image) {
         if(image.isEmpty()) return "";
 
         //이미지 파일명 변경

@@ -1,86 +1,196 @@
 package io.ggogit.ggogit.domain.member.service;
 
-import io.ggogit.ggogit.api.member.dto.MemberImageDto;
-import io.ggogit.ggogit.api.member.dto.MemberRegRequestDto;
+import io.ggogit.ggogit.api.member.dto.MemberRefreshResponse;
+import io.ggogit.ggogit.domain.member.entity.EmailJoinToken;
 import io.ggogit.ggogit.domain.member.entity.Member;
-import io.ggogit.ggogit.domain.member.repository.MemberProfileImageRepository;
+import io.ggogit.ggogit.domain.member.entity.PassWordRest;
+import io.ggogit.ggogit.domain.member.entity.RoleType;
+import io.ggogit.ggogit.domain.member.repository.EmailJoinTokenRepository;
 import io.ggogit.ggogit.domain.member.repository.MemberRepository;
+import io.ggogit.ggogit.domain.member.repository.PassWordRestRepository;
+import io.ggogit.ggogit.util.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService {
 
+    private final EmailJoinTokenRepository emailJoinTokenRepository;
+    private final PassWordRestRepository passWordRestRepository;
+    private final JwtTokenProvider jwtTokenProvider;
     private final MemberRepository memberRepository;
-    private final MemberProfileImageRepository memberProfileImageRepository;
+    private final JavaMailSender emailSender;
+    private final PasswordEncoder passwordEncoder;
 
-    private  PasswordEncoder passwordEncoder;
+    @Value("${jwt.secret}")
+    private String secretKey;
+
+    @Value("${jwt.access-expiration}")
+    private long accessExpirationTime;
+
+    @Value("${jwt.refresh-expiration}")
+    private long refreshExpirationTime;
 
     @Override
-    public void registerMember(MemberRegRequestDto memberRegRequestDto) {
-
+    public boolean existsEmail(String email) {
+        return memberRepository.findByEmail(email).isPresent();
     }
 
     @Override
-    public boolean getNickname(String nickname) {
+    @Transactional
+    public void joinSendEmail(String email) {
 
-        return false;
+        // 세션에 이메일 토큰 저장
+        String token = generateToken();
+
+        StringBuilder emailContent = new StringBuilder();
+        emailContent.append("http://localhost:8080/member/join?key=");
+        emailContent.append(token);
+
+        // 이메일 전송 로직
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo("gksxorb147@naver.com");
+        message.setSubject("회원가입 인증 이메일"); // TODO: 나중에 메일 제목 변경
+        message.setText(emailContent.toString()); // TODO: 나중에 메일 내용 변경
+        message.setFrom("your_email@gmail.com"); // 발신자 이메일
+        emailSender.send(message);
+
+        // 이메일 인증 정보 저장
+        EmailJoinToken emailJoinToken = EmailJoinToken.of(email, token);
+        emailJoinTokenRepository.save(emailJoinToken);
     }
 
     @Override
-    public boolean getEmail(String email) {
+    public void passwordResetSendEmail(String email) {
 
-        return false;
+        // 기존 이메일 인증 정보 삭제
+        passWordRestRepository.deleteByEmail(email);
+
+        String token = generateToken();
+
+        // 이메일 인증 정보 저장
+        PassWordRest passWordRest = PassWordRest.of(email, token);
+        passWordRestRepository.save(passWordRest);
+
+        // 이메일 전송 로직
+        StringBuilder emailContent = new StringBuilder();
+        emailContent.append("http://localhost:8080/member/password-reset?key=");
+        emailContent.append(token);
+
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo("gksxorb147@naver.com");
+        message.setSubject("비밀번호 변경 이메일"); // TODO: 나중에 메일 제목 변경
+        message.setText(emailContent.toString()); // TODO: 나중에 메일 내용 변경
+        message.setFrom("your_email@gmail.com"); // 발신자 이메일
+        emailSender.send(message);
     }
 
     @Override
-    public boolean getPassword(String password) {
+    @Transactional
+    public void passwordReset(String password, String token) {
+        PassWordRest passWordRest = passWordRestRepository.findByUuid(token)
+                .orElseThrow(() -> new IllegalArgumentException("비밀번호 변경 토큰이 존재하지 않습니다."));
 
-        return false;
+        Member member = memberRepository.findByEmail(passWordRest.getEmail())
+                .orElseThrow(() -> new IllegalArgumentException("가입되지 않은 이메일입니다."));
+
+        member.setPassword(password);
+        memberRepository.save(member);
+
+        passWordRestRepository.deleteByEmail(passWordRest.getEmail());
     }
 
     @Override
-    public Member getMember(Long id) {
-        Optional<Member> memberOptional = memberRepository.findById(id); // Optional 처리
-        if (memberOptional.isPresent()) {
-
-            return memberOptional.get(); // Member 객체 반환
-        } else {
-
-            return null;
-        }
+    @Transactional
+    public void deleteJoinTmpEmailInfo(String email) {
+        emailJoinTokenRepository.deleteByEmail(email);
     }
 
     @Override
-    public MemberImageDto getMemberImageDto(Long memberId) {
-        return memberProfileImageRepository.getMemberImageDto(memberId);
+    @Transactional(readOnly = true)
+    public boolean existsEmailJoinToken(String email, String joinToken) {
+        EmailJoinToken emailJoinToken = emailJoinTokenRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("회원 가입 이메일 전송을 진행하지 않은 이메일입니다."));
+        return emailJoinToken.getUuid().equals(joinToken);
     }
 
     @Override
-    public boolean resetPassword(Long userId, String checkPassword, String newPassword) {
-        // 사용자 조회
-        Optional<Member> memberOptional = memberRepository.findById(userId);
-        if (memberOptional.isPresent()) {
-            Member member = memberOptional.get();
+    @Transactional
+    public void join(Member member) {
 
-            // 새 비밀번호와 기존 비밀번호가 같을 때 true 반환
-            if (newPassword.equals(checkPassword)) {
-                return true; // 비밀번호가 같으면 true 반환
-            }
+        // 비밀번호 암호화
+        member.setPassword(passwordEncoder.encode(secretKey + member.getPassword()));
+        member.setRole(RoleType.USER);
 
-            // 기존 비밀번호 확인
-            if (passwordEncoder.matches(checkPassword, member.getPassword())) {
-                // 비밀번호 변경
-                member.setPassword(passwordEncoder.encode(newPassword));
-                memberRepository.save(member);
-                return true;
-            }
-        }
-        return false; // 사용자 없음 또는 비밀번호 불일치
+        // 회원 저장
+        memberRepository.save(member);
+
+        // 이메일 인증 정보 삭제
+        emailJoinTokenRepository.deleteByEmail(member.getEmail());
+    }
+
+    @Override
+    public boolean validateToken(String refreshToken) {
+        return jwtTokenProvider.validateToken(refreshToken);
+    }
+
+    @Override
+    public MemberRefreshResponse refresh(String refreshToken) {
+
+        // 회원 조회
+        String email = jwtTokenProvider.extractSubject(refreshToken);
+
+        Member member = memberRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("가입되지 않은 이메일입니다."));
+
+        // JWT 토큰 재발급
+        String token = jwtTokenProvider.generateAccessToken(member);
+
+        return MemberRefreshResponse.of(token, accessExpirationTime);
+    }
+
+    @Override
+    public boolean loginCheck(Member member) {
+        // 회원 조회
+        Member findMember = memberRepository.findByEmail(member.getEmail())
+                .orElseThrow(() -> new IllegalArgumentException("가입되지 않은 이메일입니다."));
+
+        return passwordEncoder.matches(secretKey + member.getPassword(), findMember.getPassword());
+    }
+
+    @Override
+    public String generateAccessToken(Member member) {
+        return jwtTokenProvider.generateAccessToken(member);
+    }
+
+    @Override
+    public String generateRefreshToken(Member member) {
+        return jwtTokenProvider.generateRefreshToken(member);
+    }
+
+    @Override
+    @Transactional
+    public void edit(Long id, Member toMember) {
+        Member fromMember = memberRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("가입되지 않은 이메일입니다."));
+
+        fromMember.setUsername(toMember.getUsername());
+        fromMember.setNickname(toMember.getNickname());
+        fromMember.setIntroduction(toMember.getIntroduction());
+
+        memberRepository.save(fromMember);
+    }
+
+    // 이메일 전송 고유 값
+    private String generateToken() {
+        return UUID.randomUUID().toString();
     }
 }

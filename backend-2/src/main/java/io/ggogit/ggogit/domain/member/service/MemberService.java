@@ -1,65 +1,35 @@
 package io.ggogit.ggogit.domain.member.service;
 
-import io.ggogit.ggogit.api.member.dto.MemberImageDto;
-import io.ggogit.ggogit.api.member.dto.MemberRegRequestDto;
+import io.ggogit.ggogit.api.member.dto.MemberRefreshResponse;
 import io.ggogit.ggogit.domain.member.entity.Member;
-import org.springframework.stereotype.Service;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 
-@Service
 public interface MemberService {
 
-    /**
-     * 회원가입
-     *
-     * @param memberRegRequestDto 회원가입 요청 DTO
-     */
-    void registerMember(MemberRegRequestDto memberRegRequestDto);
+    boolean existsEmail(@Email String email);
 
-    /**
-     * 닉네임 유효성 검사
-     *
-     * @param nickname 닉네임
-     * @return 유효한 경우 true, 유효하지 않은 경우 false
-     */
-    boolean getNickname(String nickname);
+    void joinSendEmail(@Email String email);
 
-    /**
-     * 이메일 유효성 검사
-     *
-     * @param email 이메일
-     * @return 유효한 경우 true, 유효하지 않은 경우 false
-     */
-    boolean getEmail(String email);
+    boolean existsEmailJoinToken(@Email String email, @NotBlank String joinToken);
 
-    /**
-     * 비밀번호 유효성 검사
-     *
-     * @param password 비밀번호
-     * @return 유효한 경우 true, 유효하지 않은 경우 false
-     */
-    boolean getPassword(String password);
+    void join(Member member);
 
-    /**
-     * ID로 회원 정보 조회
-     *
-     * @param id 회원 ID
-     * @return Member
-     */
-    Member getMember(Long id);
+    boolean validateToken(String refreshToken);
 
-    /**
-     * 회원 ID로 회원 이미지 정보 조회
-     *
-     * @param memberId 회원 ID
-     * @return MemberImageDto
-     */
-    MemberImageDto getMemberImageDto(Long memberId);
+    void edit(Long id, Member member);
 
-    /**
-     * 회원 ID로 회원 이미지 정보 조회
-     *
-     * @param memberId 회원 ID, oldPassword 기존 비밀번호, newPassword 새로운 비밀번호
-     * @return resetPassword
-     */
-    boolean resetPassword(Long memberId, String newPassword, String checkPassword);
+    MemberRefreshResponse refresh(String refreshToken);
+
+    String generateAccessToken(Member member);
+
+    boolean loginCheck(Member member);
+
+    String generateRefreshToken(Member member);
+
+    void passwordResetSendEmail(String email);
+
+    void passwordReset(String password, String token);
+
+    void deleteJoinTmpEmailInfo(String email);
 }

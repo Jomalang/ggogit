@@ -2,186 +2,156 @@ package io.ggogit.ggogit.api.member.controller;
 
 import io.ggogit.ggogit.api.member.dto.*;
 import io.ggogit.ggogit.domain.member.entity.Member;
-import io.ggogit.ggogit.domain.member.service.EmailService;
-import io.ggogit.ggogit.domain.member.service.LoginService;
-import io.ggogit.ggogit.api.member.session.SessionConst;
-import io.ggogit.ggogit.api.member.validation.LoginRegValidator;
-import io.ggogit.ggogit.api.member.validation.LoginValidator;
 import io.ggogit.ggogit.domain.member.service.MemberService;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.Map;
-
-@RestController
-@RequestMapping("/member")
-@RequiredArgsConstructor
 @Slf4j
+@RestController
+@RequestMapping("/members")
+@RequiredArgsConstructor
 public class MemberController {
 
-    private final LoginService loginService;
-    private final EmailService emailService;
-    private final LoginRegValidator loginRegValidator;
-    private final LoginValidator loginValidator;
+    @Value("${jwt.access-expiration}")
+    private long accessExpirationTime;
+
     private final MemberService memberService;
 
-    @PostMapping("/login")
-    public ResponseEntity<Map<String, Object>> postMemberLogin(@Validated @RequestBody MemberLoginRequestDto loginForm,
-                                                               BindingResult bindingResult,
-                                                               HttpServletRequest request) {
-
-        Map<String, Object> response = new HashMap<>();
-
-        // 공백 검사
-        if (bindingResult.hasErrors()) {
-            log.info("errors: {}", bindingResult.getAllErrors());
-            response.put("error", "입력값에 오류가 있습니다.");
-            return ResponseEntity.badRequest().body(response);
+    // 회원가입 이메일 전송
+    @PostMapping("/join/send-email")
+    public ResponseEntity<MemberSendEmailResponse> joinSendEmail(
+            @RequestBody MemberSendEmailRequest dto
+    ) {
+        // 기존 회원 확인
+        if (memberService.existsEmail(dto.getEmail())) {
+            MemberSendEmailResponse response = MemberSendEmailResponse.of(false, "이미 가입된 이메일입니다.");
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
 
-        // 유효성 검사
-        if (loginValidator.supports(loginForm.getClass())) {
-            loginValidator.validate(loginForm, bindingResult);
-            if (bindingResult.hasErrors()) {
-                log.info("errors: {}", bindingResult.getAllErrors());
-                response.put("error", "아이디 또는 비밀번호가 맞지 않습니다.");
-                return ResponseEntity.badRequest().body(response);
-            }
-        }
+        // 기존 템프 정보 삭제
+        memberService.deleteJoinTmpEmailInfo(dto.getEmail());
 
-        MemberLoginRequestDto loginRequestDto = new MemberLoginRequestDto();
-        loginRequestDto.setEmail(loginForm.getEmail());
-        loginRequestDto.setPassword(loginForm.getPassword());
-        Member loginMember = loginService.login(loginRequestDto);
-
-        // 로그인 성공
-        // 세션 생성
-        HttpSession session = request.getSession();
-        session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember);
-
-        response.put("member", new MemberLoginResponseDto(loginMember));
-        return ResponseEntity.ok(response);
+        // 이메일 전송
+        memberService.joinSendEmail(dto.getEmail());
+        MemberSendEmailResponse response = MemberSendEmailResponse.of("이메일 전송 완료");
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PostMapping("/logout")
-    public ResponseEntity<String> postMemberLogout(HttpServletRequest request) {
-        HttpSession session = request.getSession(false);
-        if (session != null) {
-            session.invalidate();
-        }
-        return ResponseEntity.ok("로그아웃 되었습니다.");
-    }
-
-    @PostMapping("/join-input")
-    public ResponseEntity<Map<String, Object>> postMemberJoinInput(@Validated @RequestBody MemberRegRequestDto loginRegForm,
-                                                                   BindingResult bindingResult) {
-
-        Map<String, Object> response = new HashMap<>();
-
-        // 공백 검사
-        if (bindingResult.hasErrors()) {
-            log.info("errors: {}", bindingResult.getAllErrors());
-            response.put("error", "입력값에 오류가 있습니다.");
-            return ResponseEntity.badRequest().body(response);
-        }
-
-        // 유효성 검사
-        if (loginRegValidator.supports(loginRegForm.getClass())) {
-            loginRegValidator.validate(loginRegForm, bindingResult);
-            if (bindingResult.hasErrors()) {
-                log.info("errors: {}", bindingResult.getAllErrors());
-                response.put("error", "입력값에 오류가 있습니다.");
-                return ResponseEntity.badRequest().body(response);
-            }
-        }
-
-        // 회원 가입 성공
-        MemberRegRequestDto regRequestDto = new MemberRegRequestDto();
-        regRequestDto.setEmail(loginRegForm.getEmail());
-        regRequestDto.setPassword(loginRegForm.getPassword());
-        regRequestDto.setNickname(loginRegForm.getNickname());
-        regRequestDto.setUsername(loginRegForm.getUsername());
-        regRequestDto.setIntroduction(loginRegForm.getIntroduction());
-        Member newMember = loginService.regMember(regRequestDto);
-        response.put("member", new MemberRegResponseDto(newMember));
-
-        return ResponseEntity.ok(response);
-    }
-
+    // 회원 가입
     @PostMapping("/join")
-    public ResponseEntity<Map<String, Object>> postMemberJoin(@Validated @RequestBody MemberRegRequestDto tmpForm,
-                                                              BindingResult bindingResult) {
-
-        Map<String, Object> responseBody = new HashMap<>();
-
-        // 공백 검사
-        if (bindingResult.hasFieldErrors("email")) {
-            log.info("errors: {}", bindingResult.getAllErrors());
-            responseBody.put("error", "이메일을 입력해주세요.");
-            return ResponseEntity.badRequest().body(responseBody);
+    public ResponseEntity<MemberJoinResponse> join(
+            @RequestBody MemberJoinRequest dto
+    ) {
+        // 이메일 인증 확인
+        if (!memberService.existsEmailJoinToken(dto.getEmail(), dto.getJoinToken())) {
+            MemberJoinResponse response = MemberJoinResponse.of(false, "이메일 인증에 실패했습니다.");
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
 
-        // 이메일 형식 검증
-        loginRegValidator.validate(tmpForm, bindingResult);
-        if (bindingResult.hasFieldErrors("email")) {
-            log.info("errors: {}", bindingResult.getAllErrors());
-            responseBody.put("error", "이메일 형식이 올바르지 않습니다.");
-            return ResponseEntity.badRequest().body(responseBody);
+        // 회원 가입
+        Member member = dto.toMember();
+        memberService.join(member);
+        MemberJoinResponse response = MemberJoinResponse.of("회원 가입 완료");
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    // JWT 토큰 신규 발급
+    @PostMapping("/login")
+    public ResponseEntity<MemberLoginResponse> login(
+            @RequestBody MemberLoginRequest dto
+    ) {
+        // 로그인 로직
+        Member member = dto.toMember();
+
+        if (!memberService.loginCheck(member)) {
+            MemberLoginResponse response = MemberLoginResponse.of("로그인 실패");
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
 
-        log.info("올바른 이메일");
-        try {
-            emailService.sendEmail(tmpForm.getEmail());
-        } catch (Exception e) {
-            responseBody.put("error", "이메일 전송에 실패했습니다.");
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseBody);
+        String accessToken = memberService.generateAccessToken(member);
+        String refreshToken = memberService.generateRefreshToken(member);
+
+        // httpOnly 쿠키 설정
+        ResponseCookie refreshTokenCookie = ResponseCookie.from("refreshToken", refreshToken)
+                .httpOnly(true)
+                .secure(false)  // HTTPS에서만 전송
+                .path("/")   // 적용 경로 설정
+                .maxAge(7 * 24 * 60 * 60) // 7일 동안 유효
+                    .sameSite("Strict") // 다른 관련 옵션 설정 (Strict, Lax, None)
+                .build();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.SET_COOKIE, refreshTokenCookie.toString());
+
+        MemberLoginResponse response = MemberLoginResponse.of(accessToken, accessExpirationTime, "로그인 성공");
+        return new ResponseEntity<>(response, headers, HttpStatus.OK);
+    }
+
+    // JWT 토큰 재발급
+    @PostMapping("/refresh")
+    public ResponseEntity<MemberRefreshResponse> refresh(
+            @CookieValue("refreshToken") String refreshToken
+    ) {
+        if (!memberService.validateToken(refreshToken)) {
+            MemberRefreshResponse response = MemberRefreshResponse.of("토큰이 유효하지 않습니다.");
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
-        log.info("이메일이 전송되었습니다.");
-        responseBody.put("message", "이메일이 전송되었습니다.");
-        return ResponseEntity.ok(responseBody);
+
+        MemberRefreshResponse response = memberService.refresh(refreshToken);
+        response.setMessage("토큰 재발급 완료");
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping("/pw/rst")
-    public ResponseEntity<String> getMemberPwRst() {
-
-        return ResponseEntity.ok("비밀번호 재설정 페이지입니다.");
+    // 회원 정보 수정
+    @PostMapping("/{memberId}/edit")
+    public ResponseEntity<MemberEditResponse> edit(
+            @PathVariable Long memberId,
+            @RequestHeader("Authorization") String accessToken, // AOP로 처리
+            @RequestBody MemberEditRequest dto
+    ) {
+        // 회원 정보 수정
+        Member member = dto.toMember();
+        memberService.edit(memberId, member);
+        MemberEditResponse response = MemberEditResponse.of("회원 정보 수정 완료");
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PostMapping("/pw/rst")
-    public ResponseEntity<String> postMemberPwRst() {
+    // 비밀번호 변경 이메일 전송
+    @PostMapping("/password-reset/send-email")
+    public ResponseEntity<MemberPasswordResetSendEmailResponse> passwordResetSendEmail(
+            @RequestBody MemberPasswordResetSendEmailRequest dto
+    ) {
 
-        return ResponseEntity.ok("비밀번호 재설정 요청이 완료되었습니다.");
-    }
-
-    // 기존이미지뷰 반환 로직
-    @GetMapping("/image/{memberId}")
-    public ResponseEntity<MemberImageDto> getMemberImage(@PathVariable Long memberId) {
-        MemberImageDto memberImageDto = memberService.getMemberImageDto(memberId);
-        return ResponseEntity.ok(memberImageDto);
-    }
-
-    // 비밀번호 변경 로직 (추가생성)
-    @PutMapping("/resetPassword")
-    public ResponseEntity<String> changePassword(@RequestBody MemberPasswordResetDto request,
-                                                 @AuthenticationPrincipal UserDetails userDetails) {
-        Member member = new Member();
-        Long memberId = member.getId();
-        boolean result = memberService.resetPassword(memberId, request.getNewPassword(), request.getCheckPassword());
-
-        if (result) {
-            return new ResponseEntity<>("비밀번호가 성공적으로 변경되었습니다.", HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>("비밀번호 변경 실패", HttpStatus.BAD_REQUEST);
+        // 사용자 확인
+        if (!memberService.existsEmail(dto.getEmail())) {
+            MemberPasswordResetSendEmailResponse response = MemberPasswordResetSendEmailResponse.of("가입되지 않은 이메일입니다.");
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
+
+        // 이메일 전송
+        memberService.passwordResetSendEmail(dto.getEmail());
+
+        // 비밀번호 변경
+        MemberPasswordResetSendEmailResponse response = MemberPasswordResetSendEmailResponse.of("비밀번호 변경 이메일 전송 완료");
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    // 비밀번호 변경
+    @PostMapping("/password-reset")
+    public ResponseEntity<MemberPasswordResetResponse> passwordReset(
+            @RequestBody MemberPasswordResetRequest dto
+    ) {
+        // 비밀번호 변경
+        String password = dto.getNewPassword();
+        String token = dto.getToken();
+        memberService.passwordReset(password, token);
+        MemberPasswordResetResponse response = MemberPasswordResetResponse.of("비밀번호 변경 완료");
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

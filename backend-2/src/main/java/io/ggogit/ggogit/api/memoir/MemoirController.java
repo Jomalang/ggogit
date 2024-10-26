@@ -1,13 +1,13 @@
 package io.ggogit.ggogit.api.memoir;
 
 import io.ggogit.ggogit.api.book.dto.BookDetailResponse;
+import io.ggogit.ggogit.api.member.session.SessionConst;
 import io.ggogit.ggogit.api.memoir.dto.MemoirRequest;
 import io.ggogit.ggogit.api.memoir.dto.MemoirDto;
 import io.ggogit.ggogit.api.memoir.dto.MemoirResponse;
 import io.ggogit.ggogit.domain.book.entity.Book;
 import io.ggogit.ggogit.domain.book.service.BookService;
 import io.ggogit.ggogit.domain.member.entity.Member;
-import io.ggogit.ggogit.api.member.session.SessionConst;
 import io.ggogit.ggogit.domain.memoir.entity.Memoir;
 import io.ggogit.ggogit.domain.memoir.service.MemoirService;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Objects;
 
 @RestController
 @RequestMapping("memoir")
@@ -30,7 +29,7 @@ public class MemoirController {
     //memoir 조회 - 소유권 할당
     @GetMapping("{id}")
     public ResponseEntity<MemoirResponse> getMemoir(@PathVariable(name="id") long memoirId,
-                                                    @SessionAttribute(name=SessionConst.LOGIN_MEMBER, required = false) Member member) {
+                                                    @SessionAttribute(name= SessionConst.LOGIN_MEMBER, required = false) Member member) {
 
         Memoir memoir = memoirService.getMemoir(memoirId);
         MemoirDto memoirDto = MemoirDto.of(memoir, "");

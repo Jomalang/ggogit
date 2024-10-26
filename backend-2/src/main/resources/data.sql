@@ -2,19 +2,20 @@
 -- 회원 데이터
 -- ====================================================== --
 INSERT INTO `member`
-(`id`, `create_time`, `email`, `introduction`, `is_deleted`, `nickname`, `password`, `update_time`, `username`, `version`)
+(`id`, `create_time`, `email`, `introduction`, `is_deleted`, `nickname`, `password`, `update_time`, `username`, `version`, `role`)
 VALUES
-    (1, '2024-10-01 10:00:00', 'user1@example.com', 'Introduction of user1', false, 'nickname1', 'password1hash', '2024-10-01 10:00:00', 'user1', 1),
-    (2, '2024-10-02 11:00:00', 'user2@example.com', 'Introduction of user2', false, 'nickname2', 'password2hash', '2024-10-02 11:00:00', 'user2', 1),
-    (3, '2024-10-03 12:00:00', 'user3@example.com', 'Introduction of user3', false, 'nickname3', 'password3hash', '2024-10-03 12:00:00', 'user3', 1),
-    (4, '2024-10-04 13:00:00', 'user4@example.com', 'Introduction of user4', false, 'nickname4', 'password4hash', '2024-10-04 13:00:00', 'user4', 1),
-    (5, '2024-10-05 14:00:00', 'user5@example.com', 'Introduction of user5', false, 'nickname5', 'password5hash', '2024-10-05 14:00:00', 'user5', 1),
-    (6, '2024-10-06 15:00:00', 'user6@example.com', 'Introduction of user6', false, 'nickname6', 'password6hash', '2024-10-06 15:00:00', 'user6', 1),
-    (7, '2024-10-07 16:00:00', 'user7@example.com', 'Introduction of user7', false, 'nickname7', 'password7hash', '2024-10-07 16:00:00', 'user7', 1),
-    (8, '2024-10-08 17:00:00', 'user8@example.com', 'Introduction of user8', false, 'nickname8', 'password8hash', '2024-10-08 17:00:00', 'user8', 1),
-    (9, '2024-10-09 18:00:00', 'user9@example.com', 'Introduction of user9', false, 'nickname9', 'password9hash', '2024-10-09 18:00:00', 'user9', 1),
-    (10, '2024-10-10 19:00:00', 'user10@example.com', 'Introduction of user10', false, 'nickname10', 'password10hash', '2024-10-10 19:00:00', 'user10', 1),
-    (999, '2024-10-10 19:00:00', 'user10@example.com', 'Introduction of user10', false, 'API', 'API', '2024-10-10 19:00:00', 'API', 1);
+    (1, '2024-10-01 10:00:00', 'user1@example.com', 'Introduction of user1', false, 'nickname1', 'password1hash', '2024-10-01 10:00:00', 'user1', 1, 'USER'),
+    (2, '2024-10-02 11:00:00', 'user2@example.com', 'Introduction of user2', false, 'nickname2', 'password2hash', '2024-10-02 11:00:00', 'user2', 1, 'USER'),
+    (3, '2024-10-03 12:00:00', 'user3@example.com', 'Introduction of user3', false, 'nickname3', 'password3hash', '2024-10-03 12:00:00', 'user3', 1, 'USER'),
+    (4, '2024-10-04 13:00:00', 'user4@example.com', 'Introduction of user4', false, 'nickname4', 'password4hash', '2024-10-04 13:00:00', 'user4', 1, 'USER'),
+    (5, '2024-10-05 14:00:00', 'user5@example.com', 'Introduction of user5', false, 'nickname5', 'password5hash', '2024-10-05 14:00:00', 'user5', 1, 'USER'),
+    (6, '2024-10-06 15:00:00', 'user6@example.com', 'Introduction of user6', false, 'nickname6', 'password6hash', '2024-10-06 15:00:00', 'user6', 1, 'USER'),
+    (7, '2024-10-07 16:00:00', 'user7@example.com', 'Introduction of user7', false, 'nickname7', 'password7hash', '2024-10-07 16:00:00', 'user7', 1, 'USER'),
+    (8, '2024-10-08 17:00:00', 'user8@example.com', 'Introduction of user8', false, 'nickname8', 'password8hash', '2024-10-08 17:00:00', 'user8', 1, 'USER'),
+    (9, '2024-10-09 18:00:00', 'user9@example.com', 'Introduction of user9', false, 'nickname9', 'password9hash', '2024-10-09 18:00:00', 'user9', 1, 'USER'),
+    (10, '2024-10-10 19:00:00', 'user10@example.com', 'Introduction of user10', false, 'nickname10', 'password10hash', '2024-10-10 19:00:00', 'user10', 1, 'USER'),
+    (999, '2024-10-10 19:00:00', 'admin@ggogit.io', 'Introduction of user10', false, 'API', 'API', '2024-10-10 19:00:00', 'API', 1, 'ADMIN'),
+    (998, '2024-10-10 19:00:00', 'gksxorb147@naver.com', 'Introduction of user10', false, 'API', '$2a$10$YOSCvr2AcsMbSv36aYWFp.14..6ruvlkD3/QabL2FowYffwr26XWO', '2024-10-10 19:00:00', 'API', 1, 'ADMIN');
 
 ALTER TABLE `member` ALTER COLUMN id RESTART WITH 100000;
 
@@ -511,9 +512,9 @@ VALUES
 -- 태규의 테스트 START
 -- ====================================================== --
 INSERT INTO `member`
-(`id`, `create_time`, `email`, `introduction`, `is_deleted`, `nickname`, `password`, `update_time`, `username`, `version`)
+(`id`, `create_time`, `email`, `introduction`, `is_deleted`, `nickname`, `password`, `update_time`, `username`, `version`, `role`)
 VALUES
-    (1000, '2024-10-01 10:00:00', 'hantest@example.com', 'Introduction of user1', false, 'nickname1', 'password1hash', '2024-10-01 10:00:00', 'user1', 1);
+    (1000, '2024-10-01 10:00:00', 'hantest@example.com', 'Introduction of user1', false, 'nickname1', 'password1hash', '2024-10-01 10:00:00', 'user1', 1, 'USER');
 
 -- ======================== --
 -- 태규의 테스트 tree_save_tmp

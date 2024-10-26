@@ -12,7 +12,6 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.awt.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -66,6 +65,10 @@ public class Member {
     @CreatedDate
     @Column(name = "CREATE_TIME", nullable = false)
     private LocalDateTime createTime;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "ROLE", nullable = false)
+    private RoleType role;
 
     @NotNull
     @LastModifiedDate

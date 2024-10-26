@@ -44,6 +44,10 @@ spring:
     init:
       encoding: utf-8
 
+jwt:
+  secret: secret_ggogit_a15sf1asdf1a5s64df2a3s4df5as1df
+  access-expiration: 1800000 # 30분
+  refresh-expiration: 604800000 # 7일
 
 server:
   servlet:

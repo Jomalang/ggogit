@@ -24,6 +24,11 @@ server:
   servlet:
     context-path: /api/v1
 
+jwt:
+  secret: secret_ggogit_a15sf1asdf1a5s64df2a3s4df5as1df
+  access-expiration: 1800000 # 30분
+  refresh-expiration: 604800000 # 7일
+
 file: # 이미지 업로드 경로
   tmp-dir: src/main/webapp/image/tmp
   upload-dir: src/main/webapp/uploads

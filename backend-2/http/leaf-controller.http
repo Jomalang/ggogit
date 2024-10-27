@@ -51,6 +51,9 @@ GET {{host}}/api/v1/book/leaves/{{leafId}}
 ### 도서 리프 수정 조회
 GET {{host}}/api/v1/book/leaves/{{leafId}}/edit
 
+### 기타 리프 수정 조회
+GET {{host}}/api/v1/etc/leaves/{{leafId}}/edit
+
 ### 도서 브래드 크럼 조회
 GET {{host}}/api/v1/leaves/{{leafId}}/breadcrumb
 

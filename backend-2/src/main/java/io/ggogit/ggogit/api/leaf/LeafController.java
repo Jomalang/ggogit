@@ -77,6 +77,17 @@ public class LeafController {
     }
 
     /**
+     * 기타 리프 수정 삭세 조회
+     */
+    @GetMapping("/etc/leaves/{leafId}/edit")
+    public ResponseEntity<LeafEtcEditDetailResponse> getEtcLeafEditDetail(
+            @PathVariable Long leafId
+    ) {
+        LeafEtcEditDetailResponse response = leafDtoService.getEtcLeafEditDetail(leafId);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    /**
      * 리프의 브레드크럼 조회
      */
     @GetMapping("/leaves/{leafId}/breadcrumb")

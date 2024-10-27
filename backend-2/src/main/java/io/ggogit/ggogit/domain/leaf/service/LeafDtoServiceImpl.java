@@ -2,10 +2,13 @@ package io.ggogit.ggogit.domain.leaf.service;
 
 import io.ggogit.ggogit.api.leaf.dto.LeafBranchInfoResponse;
 import io.ggogit.ggogit.api.leaf.dto.LeafBranchResponse;
+import io.ggogit.ggogit.api.leaf.dto.LeafBookDetailResponse;
 import io.ggogit.ggogit.api.leaf.dto.LeafItemResponse;
 import io.ggogit.ggogit.domain.leaf.entity.Leaf;
+import io.ggogit.ggogit.domain.leaf.entity.LeafBook;
 import io.ggogit.ggogit.domain.leaf.entity.LeafTag;
 import io.ggogit.ggogit.domain.leaf.entity.LeafTagMap;
+import io.ggogit.ggogit.domain.leaf.repository.LeafBookRepository;
 import io.ggogit.ggogit.domain.leaf.repository.LeafRepository;
 import io.ggogit.ggogit.domain.leaf.repository.LeafTagMapRepository;
 import io.ggogit.ggogit.domain.leaf.structure.TreeNode;
@@ -25,6 +28,7 @@ import java.util.List;
 public class LeafDtoServiceImpl implements LeafDtoService {
 
     private final LeafRepository leafRepository;
+    private final LeafBookRepository leafBookRepository;
     private final LeafTagMapRepository leafTagMapRepository;
 
     @Override
@@ -142,9 +146,16 @@ public class LeafDtoServiceImpl implements LeafDtoService {
     }
 
     @Override
-    public Leaf findById(Long leafId) {
-        return leafRepository.findByLeafId(leafId)
+    @Transactional(readOnly = true)
+    public LeafBookDetailResponse findById(Long leafId) {
+
+        Leaf leaf = leafRepository.findByLeafId(leafId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 리프가 존재하지 않습니다."));
+
+        LeafBook leafBook = leafBookRepository.findByLeaf(leaf)
+                .orElseThrow(() -> new IllegalArgumentException("해당 리프의 도서 정보가 존재하지 않습니다."));
+
+        return LeafBookDetailResponse.of(leaf, leafBook);
     }
 
     private LeafItemResponse getLeafItemResponse(List<TreeNode> treeNodes) {

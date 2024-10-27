@@ -645,6 +645,28 @@ INSERT INTO leaf_tag_map (leaf_id, leaf_tag_id, version) VALUES (47, 10001, 1);
 INSERT INTO leaf_tag_map (leaf_id, leaf_tag_id, version) VALUES (47, 10002, 1);
 INSERT INTO leaf_tag_map (leaf_id, leaf_tag_id, version) VALUES (47, 10003, 1);
 
+INSERT INTO `leaf_book`
+(`leaf_id`, `end_page`, `is_deleted`, `start_page`, `version`)
+VALUES
+    (31, 10, false, 1, 1),
+    (32, 10, false, 1, 1),
+    (33, 10, false, 1, 1),
+    (34, 10, false, 1, 1),
+    (35, 10, false, 1, 1),
+    (36, 10, false, 1, 1),
+    (37, 10, false, 1, 1),
+    (38, 10, false, 1, 1),
+    (39, 10, false, 1, 1),
+    (40, 10, false, 1, 1),
+    (41, 10, false, 1, 1),
+    (42, 10, false, 1, 1),
+    (43, 10, false, 1, 1),
+    (44, 10, false, 1, 1),
+    (45, 10, false, 1, 1),
+    (46, 10, false, 1, 1),
+    (47, 10, false, 1, 1);
+
+
 -- ====================================================== --
 -- 태규의 테스트 END
 -- ====================================================== --

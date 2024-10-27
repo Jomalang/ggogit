@@ -46,6 +46,9 @@ GET {{host}}/api/v1/leaves/{{leafId}}/all
 ### 리프 상세 조회
 GET {{host}}/api/v1/leaves/{{leafId}}
 
+### 도서 리프 디테일 조회
+GET {{host}}/api/v1/book/leaves/{{leafId}}
+
 
 # ================================================== #
 

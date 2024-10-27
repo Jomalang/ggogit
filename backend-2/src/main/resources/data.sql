@@ -564,7 +564,7 @@ VALUES
 INSERT INTO `tree`
 (`id`, `book_mark_count`, `create_time`, `description`, `is_deleted`, `title`, `update_time`, `version`, `visibility`, `book_id`, `member_id`, `seed_id`)
 VALUES
-    (20000, 0, '2024-10-01 10:00:00', '테스트 데이터', false, '토마토 나무', '2024-10-01 10:00:00', 1, true, 1, 1000, 2);
+    (20000, 0, '2024-10-01 10:00:00', '테스트 데이터', false, '토마토 나무', '2024-10-01 10:00:00', 1, true, 1, 999, 2);
 
 INSERT INTO `leaf`
 (`id`, `book_mark`, `child_leaf_count`, `content`, `create_time`, `is_deleted`, `like_count`, `title`, `update_time`, `version`, `view_count`, `visibility`, `parent_leaf_id`, `tree_id`)

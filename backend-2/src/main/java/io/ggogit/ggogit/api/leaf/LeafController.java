@@ -2,13 +2,16 @@ package io.ggogit.ggogit.api.leaf;
 
 import io.ggogit.ggogit.api.leaf.dto.LeafBranchInfoResponse;
 import io.ggogit.ggogit.api.leaf.dto.LeafBookDetailResponse;
+import io.ggogit.ggogit.api.leaf.dto.LeafBreadcrumbResponse;
 import io.ggogit.ggogit.api.leaf.dto.LeafItemResponse;
 import io.ggogit.ggogit.domain.leaf.service.LeafDtoService;
+import io.ggogit.ggogit.domain.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -16,9 +19,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class LeafController {
 
     private final LeafDtoService leafDtoService;
+    private final MemberService memberService;
 
     /**
-     * 브랜치 정보 조회
+     * 리프 리스트 화면 하단 브랜치 정보 조회
      */
     @GetMapping("/leaves/{leafId}/branch")
     public ResponseEntity<LeafBranchInfoResponse> getLeafBranch(
@@ -35,6 +39,7 @@ public class LeafController {
     public ResponseEntity<LeafItemResponse> getLeafNodesRootToEnd(
             @PathVariable Long leafId
     ) {
+
         boolean isOwner = true;
             LeafItemResponse responses = leafDtoService.getLeafNodeRootToEnd(leafId, isOwner);
         return new ResponseEntity<>(responses, HttpStatus.OK);
@@ -59,8 +64,19 @@ public class LeafController {
     public ResponseEntity<LeafBookDetailResponse> getLeafBookDetail(
             @PathVariable Long leafId
     ) {
-        LeafBookDetailResponse response = leafDtoService.findById(leafId);
+        LeafBookDetailResponse response = leafDtoService.getBookDetail(leafId);
         return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    /**
+     * 리프의 브레드크럼 조회
+     */
+    @GetMapping("/leaves/{leafId}/breadcrumb")
+    public ResponseEntity<LeafBreadcrumbResponse> getLeafBreadcrumb(
+            @PathVariable Long leafId
+    ) {
+        LeafBreadcrumbResponse responses = leafDtoService.getLeafBreadcrumb(leafId);
+        return new ResponseEntity<>(responses, HttpStatus.OK);
     }
 
 }

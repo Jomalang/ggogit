@@ -1,9 +1,6 @@
 package io.ggogit.ggogit.domain.leaf.service;
 
-import io.ggogit.ggogit.api.leaf.dto.LeafBranchInfoResponse;
-import io.ggogit.ggogit.api.leaf.dto.LeafBranchResponse;
-import io.ggogit.ggogit.api.leaf.dto.LeafBookDetailResponse;
-import io.ggogit.ggogit.api.leaf.dto.LeafItemResponse;
+import io.ggogit.ggogit.api.leaf.dto.*;
 import io.ggogit.ggogit.domain.leaf.entity.Leaf;
 import io.ggogit.ggogit.domain.leaf.entity.LeafBook;
 import io.ggogit.ggogit.domain.leaf.entity.LeafTag;
@@ -147,7 +144,7 @@ public class LeafDtoServiceImpl implements LeafDtoService {
 
     @Override
     @Transactional(readOnly = true)
-    public LeafBookDetailResponse findById(Long leafId) {
+    public LeafBookDetailResponse getBookDetail(Long leafId) {
 
         Leaf leaf = leafRepository.findByLeafId(leafId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 리프가 존재하지 않습니다."));
@@ -156,6 +153,19 @@ public class LeafDtoServiceImpl implements LeafDtoService {
                 .orElseThrow(() -> new IllegalArgumentException("해당 리프의 도서 정보가 존재하지 않습니다."));
 
         return LeafBookDetailResponse.of(leaf, leafBook);
+    }
+
+    @Override
+    public LeafBreadcrumbResponse getLeafBreadcrumb(Long leafId) {
+
+        Leaf leaf = leafRepository.findById(leafId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 리프가 존재하지 않습니다."));
+
+        List<Leaf> leafNodes = leafRepository.findByTreeOrderById(leaf.getTree());
+
+        TreeStructure treeStructure = new TreeStructure(leafNodes);
+        List<TreeNode> treeNodes = treeStructure.findToEnd(leafId, true);
+        return LeafBreadcrumbResponse.of(leaf, treeNodes.getLast());
     }
 
     private LeafItemResponse getLeafItemResponse(List<TreeNode> treeNodes) {

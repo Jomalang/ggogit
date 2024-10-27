@@ -1,18 +1,13 @@
 package io.ggogit.ggogit.domain.leaf.service;
 
 
-import io.ggogit.ggogit.api.leaf.dto.LeafBranchResponse;
-import io.ggogit.ggogit.api.leaf.dto.LeafBookDetailResponse;
+import io.ggogit.ggogit.api.leaf.dto.*;
 import io.ggogit.ggogit.domain.leaf.entity.Leaf;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.HashMap;
 import java.util.List;
-
-
-import io.ggogit.ggogit.api.leaf.dto.LeafBranchInfoResponse;
-import io.ggogit.ggogit.api.leaf.dto.LeafItemResponse;
 
 public interface LeafDtoService {
 
@@ -39,5 +34,7 @@ public interface LeafDtoService {
     HashMap<String ,Integer> nodeCountToRoot(Leaf leaf);
 
     List<LeafBranchResponse> findBranchByFilter(Long treeId, Boolean owner, Boolean bookMark);
-    LeafBookDetailResponse findById(Long leafId);
+    LeafBookDetailResponse getBookDetail(Long leafId);
+
+    LeafBreadcrumbResponse getLeafBreadcrumb(Long leafId);
 }

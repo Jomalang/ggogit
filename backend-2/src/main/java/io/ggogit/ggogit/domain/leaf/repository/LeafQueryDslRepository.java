@@ -10,4 +10,6 @@ public interface LeafQueryDslRepository {
     Optional<Leaf> findByLeafId(Long leafId);
 
     Page<Leaf> getBookCards(Long memberId, int page, int size);
+
+    Page<Leaf> getLeafCards(Long bookId, int page, int size);
 }

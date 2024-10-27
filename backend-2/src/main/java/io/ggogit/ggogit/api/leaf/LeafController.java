@@ -133,4 +133,17 @@ public class LeafController {
         LeafBookCardResponse responses = leafDtoService.getLeafBookCards(memberId, page, size);
         return new ResponseEntity<>(responses, HttpStatus.OK);
     }
+
+    /**
+     * 리프 일반 카드 리스트 조회
+     */
+    @GetMapping("/books/{bookId}/leaves/cards")
+    public ResponseEntity<LeafCardResponse> getLeafCards(
+            @PathVariable Long bookId,
+            @RequestParam(value = "page", defaultValue = "1") int page,
+            @RequestParam(value = "size", defaultValue = "10") int size
+    ) {
+        LeafCardResponse responses = leafDtoService.getLeafCards(bookId, page, size);
+        return new ResponseEntity<>(responses, HttpStatus.OK);
+    }
 }

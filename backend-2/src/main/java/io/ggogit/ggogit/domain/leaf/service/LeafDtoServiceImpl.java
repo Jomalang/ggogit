@@ -12,6 +12,7 @@ import io.ggogit.ggogit.domain.leaf.repository.LeafRepository;
 import io.ggogit.ggogit.domain.leaf.repository.LeafTagMapRepository;
 import io.ggogit.ggogit.domain.leaf.structure.TreeNode;
 import io.ggogit.ggogit.domain.leaf.structure.TreeStructure;
+import io.ggogit.ggogit.domain.member.entity.Member;
 import io.ggogit.ggogit.domain.tree.entity.Tree;
 import io.ggogit.ggogit.domain.tree.entity.TreeImage;
 import io.ggogit.ggogit.domain.tree.repository.TreeImageRepository;
@@ -264,6 +265,25 @@ public class LeafDtoServiceImpl implements LeafDtoService {
                 response.addItem(dto);
             }
         }
+        return response;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public LeafCardResponse getLeafCards(Long bookId, int page, int size) {
+        Page<Leaf> leafPage = leafRepository.getLeafCards(bookId, page, size);
+
+        int currentPage = leafPage.getNumber();
+        int totalPage = leafPage.getTotalPages();
+        LeafCardResponse response = new LeafCardResponse(totalPage, currentPage, size);
+
+        for (Leaf leaf : leafPage.getContent()) {
+            Tree tree = leaf.getTree();
+            Member member = tree.getMember();
+            LeafCardResponse.ItemDto itemDto = LeafCardResponse.ItemDto.of(leaf, tree, member);
+            response.addItem(itemDto);
+        }
+
         return response;
     }
 

@@ -5,6 +5,7 @@
 @seddEtcId = 1
 @tagId = 10001
 @memberId = 777
+@bookId = 1
 # ================================================== #
 
 # ================================================== #
@@ -79,7 +80,7 @@ GET {{host}}/api/v1/members/{{memberId}}/leaves/book/cards
 
 
 ### 일반 리프 카드 조회
-GET {{host}}/api/v1/leaves/{{leafId}}/etc/cards?page=1&size=10
+GET {{host}}/api/v1/books/{{bookId}}/leaves/cards
 
 
 # ================================================== #

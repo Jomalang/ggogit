@@ -48,4 +48,6 @@ public interface LeafDtoService {
     LeafEtcDetailResponse getLeafEtcDetail(Long leafId);
 
     LeafBookCardResponse getLeafBookCards(Long memberId, int page, int size);
+
+    LeafCardResponse getLeafCards(Long bookId, int page, int size);
 }

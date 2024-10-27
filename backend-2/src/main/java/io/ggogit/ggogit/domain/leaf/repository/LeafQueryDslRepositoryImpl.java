@@ -76,4 +76,52 @@ public class LeafQueryDslRepositoryImpl implements LeafQueryDslRepository {
 
         return new PageImpl<>(leaves, PageRequest.of(page, size), count);
     }
+
+    @Override
+    public Page<Leaf> getLeafCards(Long bookId, int page, int size) {
+
+        QLeaf leaf = QLeaf.leaf;
+        QTree tree = QTree.tree;
+
+        long count = queryFactory
+                .selectFrom(leaf)
+                .where(
+                        leaf.tree.id.in(
+                                JPAExpressions
+                                        .select(tree.id)
+                                        .from(tree)
+                                        .where(
+                                                tree.book.id.eq(bookId),
+                                                tree.isDeleted.eq(false),
+                                                tree.visibility.eq(true)
+                                        )
+                        ),
+                        leaf.isDeleted.eq(false),
+                        leaf.visibility.eq(true)
+                )
+                .fetchCount();
+
+        List<Leaf> leaves = queryFactory
+                .selectFrom(leaf)
+                .where(
+                        leaf.tree.id.in(
+                                JPAExpressions
+                                        .select(tree.id)
+                                        .from(tree)
+                                        .where(
+                                                tree.book.id.eq(bookId),
+                                                tree.isDeleted.eq(false),
+                                                tree.visibility.eq(true)
+                                        )
+                        ),
+                        leaf.isDeleted.eq(false),
+                        leaf.visibility.eq(true)
+                )
+                .orderBy(leaf.updateTime.desc())
+                .offset((long) (page - 1) * size)
+                .limit(size)
+                .fetch();
+
+        return new PageImpl<>(leaves, PageRequest.of(page, size), count);
+    }
 }

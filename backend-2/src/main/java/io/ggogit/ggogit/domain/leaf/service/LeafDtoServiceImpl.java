@@ -221,6 +221,15 @@ public class LeafDtoServiceImpl implements LeafDtoService {
         return LeafEtcEditDetailResponse.of(leaf, leafTags);
     }
 
+    @Override
+    public LeafEtcDetailResponse getLeafEtcDetail(Long leafId) {
+
+        Leaf leaf = leafRepository.findById(leafId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 리프가 존재하지 않습니다."));
+
+        return LeafEtcDetailResponse.of(leaf);
+    }
+
     private LeafItemResponse getLeafItemResponse(List<TreeNode> treeNodes) {
         LeafItemResponse response = new LeafItemResponse();
         for (TreeNode treeNode : treeNodes) {

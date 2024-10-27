@@ -39,11 +39,8 @@ DELETE {{host}}/api/v1/etc/leaves/{{leafId}}
 
 # ================================================== #
 # 리프 조회
-### 리프 전체 조회
-GET {{host}}/api/v1/leaves/{{leafId}}/all
 
-### 리프 상세 조회
-GET {{host}}/api/v1/leaves/{{leafId}}
+# 도서
 
 ### 도서 리프 디테일 조회
 GET {{host}}/api/v1/book/leaves/{{leafId}}
@@ -51,10 +48,23 @@ GET {{host}}/api/v1/book/leaves/{{leafId}}
 ### 도서 리프 수정 조회
 GET {{host}}/api/v1/book/leaves/{{leafId}}/edit
 
+# 기타
+
+### 기타 리프 디테일 조회
+GET {{host}}/api/v1/etc/leaves/{{leafId}}
+
 ### 기타 리프 수정 조회
 GET {{host}}/api/v1/etc/leaves/{{leafId}}/edit
 
-### 도서 브래드 크럼 조회
+# ================================================== #
+# 리프 조회
+### 리프 전체 조회
+GET {{host}}/api/v1/leaves/{{leafId}}/all
+
+### 리프 상세 조회
+GET {{host}}/api/v1/leaves/{{leafId}}
+
+### 브래드 크럼 조회
 GET {{host}}/api/v1/leaves/{{leafId}}/breadcrumb
 
 ### 리프 생성 및 수정 이전 정보 조회

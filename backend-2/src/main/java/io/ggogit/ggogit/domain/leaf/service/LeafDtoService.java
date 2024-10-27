@@ -44,4 +44,6 @@ public interface LeafDtoService {
     LeafBeforeNodeInfoResponse getLeafBeforeNodeInfo(Long leafId);
 
     LeafEtcEditDetailResponse getEtcLeafEditDetail(Long leafId);
+
+    LeafEtcDetailResponse getLeafEtcDetail(Long leafId);
 }

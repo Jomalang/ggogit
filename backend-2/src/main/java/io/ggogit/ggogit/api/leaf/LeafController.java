@@ -87,4 +87,14 @@ public class LeafController {
         return new ResponseEntity<>(responses, HttpStatus.OK);
     }
 
+    /**
+     * 리프 생성 및 수정시 이전 정보 조회
+     */
+    @GetMapping("leaves/{leafId}/before")
+    public ResponseEntity<LeafBeforeNodeInfoResponse> getLeafBefore(
+            @PathVariable Long leafId
+    ) {
+        LeafBeforeNodeInfoResponse responses = leafDtoService.getLeafBeforeNodeInfo(leafId);
+        return new ResponseEntity<>(responses, HttpStatus.OK);
+    }
 }

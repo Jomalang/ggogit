@@ -40,4 +40,6 @@ public interface LeafDtoService {
     LeafBreadcrumbResponse getLeafBreadcrumb(Long leafId);
 
     LeafBookEditDetailResponse getLeafBookEditDetail(Long leafId);
+
+    LeafBeforeNodeInfoResponse getLeafBeforeNodeInfo(Long leafId);
 }

@@ -53,6 +53,10 @@ GET {{host}}/api/v1/book/leaves/{{leafId}}/edit
 
 ### 도서 브래드 크럼 조회
 GET {{host}}/api/v1/leaves/{{leafId}}/breadcrumb
+
+### 리프 생성 및 수정 이전 정보 조회
+GET {{host}}/api/v1/leaves/{{leafId}}/before
+
 #Authorization: Bearer {{accessToken}}
 
 # ================================================== #

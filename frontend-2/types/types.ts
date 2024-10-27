@@ -64,7 +64,9 @@ export interface BranchInfoProps {
   title: string;
   leafCount: number;
   viewCount: number;
+  likeCount: number;
   updateTime: string;
+  visibility?: boolean | false;
   bookMark: boolean;
 }
 
@@ -166,4 +168,28 @@ export interface memoir {
   text: string;
   visibility: number;
   fileNames: string;
+}
+
+export interface treeInfoResponse {
+  bookId?: number | null;
+  bookCategory?: string | null;
+  bookTitle?: string | null;
+  bookAuthor?: string | null;
+  bookTranslator?: string | null;
+  bookPublisher?: string | null;
+  bookPublishedYear?: string | null;
+  bookTotalPage?: number | null;
+  treeId: number;
+  memberId: number;
+  seedId: number;
+  title: string;
+  description: string;
+  visibility: Boolean;
+  leafCreatedAt: string;
+  createdAt: string;
+  readingPage?: number | null;
+  coverImageName: string;
+  treeLeafCnt: number;
+  treeLikeCnt: number;
+  treeViewCnt: number;
 }

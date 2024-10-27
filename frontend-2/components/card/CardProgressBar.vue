@@ -8,12 +8,6 @@ interface CardProgressBarProps {
   fullPage: number;
 }
 
-const data: CardProgressBarProps = {
-  progress: 50,
-  readPage: 50,
-  fullPage: 100,
-};
-
 const props = defineProps<{
   data: CardProgressBarProps;
 }>();

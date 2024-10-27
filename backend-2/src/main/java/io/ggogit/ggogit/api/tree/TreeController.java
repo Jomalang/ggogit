@@ -74,7 +74,7 @@ public class TreeController {
     }
 
     @GetMapping("{id}/info")
-    public TreeInfoResponse getTreeInfoResponse(
+    public ResponseEntity<TreeInfoResponse> getTreeInfoResponse(
             @PathVariable(value = "id") Long treeId,
             @RequestParam(value = "mid",defaultValue = "1") Long mid
 //            @SessionAttribute Member member
@@ -83,7 +83,7 @@ public class TreeController {
         Long memberId = mid;
 
         TreeInfoResponse treeInfoResponse = treeService.findTreeInfoResponse(memberId, treeId);
-        return treeInfoResponse;
+        return new ResponseEntity<> (treeInfoResponse, HttpStatus.OK);
     }
 
 //    @GetMapping("{id}/info")

@@ -1,21 +1,17 @@
 <script setup lang="ts" xmlns:th="http://www.w3.org/1999/xhtml">
 
-interface CardTreeInfoCoverProps {
-  src: string;
-  treeTitle: string;
-  bookTitle: string;
-}
-
-const data: CardTreeInfoCoverProps = {
-  src: null,
-  treeTitle: 'Tree Title',
-  bookTitle: 'Book Title'
-}
 
 const props = defineProps<{
-  data: CardTreeInfoCoverProps
+  data: {
+    src: string;
+    treeTitle: string;
+    bookTitle: string;
+  };
 }>();
 
+onMounted(() => {
+  console.log('data:', props.data);
+});
 </script>
 
 <template>

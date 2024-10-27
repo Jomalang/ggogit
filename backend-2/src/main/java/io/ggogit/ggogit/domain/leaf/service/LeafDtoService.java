@@ -34,7 +34,10 @@ public interface LeafDtoService {
     HashMap<String ,Integer> nodeCountToRoot(Leaf leaf);
 
     List<LeafBranchResponse> findBranchByFilter(Long treeId, Boolean owner, Boolean bookMark);
+
     LeafBookDetailResponse getBookDetail(Long leafId);
 
     LeafBreadcrumbResponse getLeafBreadcrumb(Long leafId);
+
+    LeafBookEditDetailResponse getLeafBookEditDetail(Long leafId);
 }

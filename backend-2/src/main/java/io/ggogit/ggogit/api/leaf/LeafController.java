@@ -1,9 +1,6 @@
 package io.ggogit.ggogit.api.leaf;
 
-import io.ggogit.ggogit.api.leaf.dto.LeafBranchInfoResponse;
-import io.ggogit.ggogit.api.leaf.dto.LeafBookDetailResponse;
-import io.ggogit.ggogit.api.leaf.dto.LeafBreadcrumbResponse;
-import io.ggogit.ggogit.api.leaf.dto.LeafItemResponse;
+import io.ggogit.ggogit.api.leaf.dto.*;
 import io.ggogit.ggogit.domain.leaf.service.LeafDtoService;
 import io.ggogit.ggogit.domain.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -65,6 +62,17 @@ public class LeafController {
             @PathVariable Long leafId
     ) {
         LeafBookDetailResponse response = leafDtoService.getBookDetail(leafId);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    /**
+     * 도서 리프 수정 상세 조회
+     */
+    @GetMapping("/book/leaves/{leafId}/edit")
+    public ResponseEntity<LeafBookEditDetailResponse> getLeafBookEditDetail(
+            @PathVariable Long leafId
+    ) {
+        LeafBookEditDetailResponse response = leafDtoService.getLeafBookEditDetail(leafId);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

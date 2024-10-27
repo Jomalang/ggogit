@@ -168,6 +168,24 @@ public class LeafDtoServiceImpl implements LeafDtoService {
         return LeafBreadcrumbResponse.of(leaf, treeNodes.getLast());
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public LeafBookEditDetailResponse getLeafBookEditDetail(Long leafId) {
+        Leaf leaf = leafRepository.findById(leafId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 리프가 존재하지 않습니다."));
+
+        LeafBook leafBook = leafBookRepository.findByLeaf(leaf)
+                .orElseThrow(() -> new IllegalArgumentException("해당 리프의 도서 정보가 존재하지 않습니다."));
+
+        List<LeafTagMap> leafTagMaps = leafTagMapRepository.findByLeaf(leaf);
+        List<LeafTag> leafTags = new ArrayList<>();
+        for (LeafTagMap leafTagMap : leafTagMaps) {
+            leafTags.add(leafTagMap.getLeafTag());
+        }
+
+        return LeafBookEditDetailResponse.of(leafBook, leaf, leafTags);
+    }
+
     private LeafItemResponse getLeafItemResponse(List<TreeNode> treeNodes) {
         LeafItemResponse response = new LeafItemResponse();
         for (TreeNode treeNode : treeNodes) {

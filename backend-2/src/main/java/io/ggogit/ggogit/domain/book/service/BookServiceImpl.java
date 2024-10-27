@@ -26,26 +26,17 @@ public class BookServiceImpl implements BookService {
     //목록 조회 + 페이징, 정렬, 검색 기능
     @Override
     public List<Book> getBooks(int page, String query, String filter) {
-        int size = 10;
-        int offset = (page - 1) * size;
+        int limit = 10;
+        int offset = (page - 1) * limit;
 
         //TODO: 정렬기준 추가
         Sort sort = Sort.by(Sort.Order.desc("id"));
-        Pageable pageable = PageRequest.of(offset, size, sort);
+        Pageable pageable = PageRequest.of(offset, limit, sort);
 
         if (query == null) {
             return bookRepository.findAll(pageable).getContent();
         } else{
-            switch (filter) {
-                case "title":
-                    return bookRepository.findByTitle(query, pageable);
-                case "author":
-                    return bookRepository.findByAuthor(query, pageable);
-                case "publisher":
-                    return bookRepository.findByPublisher(query, pageable);
-                default:
-                    return bookRepository.findByTitle(query, pageable);
-            }
+            return bookRepository.findByFilter(filter, query, pageable);
         }
     }
 

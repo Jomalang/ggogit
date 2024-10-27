@@ -46,4 +46,6 @@ public interface LeafDtoService {
     LeafEtcEditDetailResponse getEtcLeafEditDetail(Long leafId);
 
     LeafEtcDetailResponse getLeafEtcDetail(Long leafId);
+
+    LeafBookCardResponse getLeafBookCards(Long memberId, int page, int size);
 }

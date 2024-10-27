@@ -1,5 +1,6 @@
 package io.ggogit.ggogit.api.leaf;
 
+import io.ggogit.ggogit.api.leaf.dto.LeafBookCardResponse;
 import io.ggogit.ggogit.api.leaf.dto.*;
 import io.ggogit.ggogit.domain.leaf.service.LeafDtoService;
 import io.ggogit.ggogit.domain.member.service.MemberService;
@@ -8,7 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -117,6 +118,19 @@ public class LeafController {
             @PathVariable Long leafId
     ) {
         LeafBeforeNodeInfoResponse responses = leafDtoService.getLeafBeforeNodeInfo(leafId);
+        return new ResponseEntity<>(responses, HttpStatus.OK);
+    }
+
+    /**
+     * 리프 도서 카드 리스트 조회
+     */
+    @GetMapping("/members/{memberId}/leaves/book/cards")
+    public ResponseEntity<LeafBookCardResponse> getLeafBookCards(
+            @PathVariable Long memberId,
+            @RequestParam(value = "page", defaultValue = "1") int page,
+            @RequestParam(value = "size", defaultValue = "10") int size
+    ) {
+        LeafBookCardResponse responses = leafDtoService.getLeafBookCards(memberId, page, size);
         return new ResponseEntity<>(responses, HttpStatus.OK);
     }
 }

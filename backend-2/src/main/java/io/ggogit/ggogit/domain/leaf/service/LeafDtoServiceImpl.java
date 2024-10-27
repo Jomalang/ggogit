@@ -1,6 +1,8 @@
 package io.ggogit.ggogit.domain.leaf.service;
 
 import io.ggogit.ggogit.api.leaf.dto.*;
+import io.ggogit.ggogit.domain.book.entity.Book;
+import io.ggogit.ggogit.domain.book.entity.BookCategory;
 import io.ggogit.ggogit.domain.leaf.entity.Leaf;
 import io.ggogit.ggogit.domain.leaf.entity.LeafBook;
 import io.ggogit.ggogit.domain.leaf.entity.LeafTag;
@@ -10,6 +12,9 @@ import io.ggogit.ggogit.domain.leaf.repository.LeafRepository;
 import io.ggogit.ggogit.domain.leaf.repository.LeafTagMapRepository;
 import io.ggogit.ggogit.domain.leaf.structure.TreeNode;
 import io.ggogit.ggogit.domain.leaf.structure.TreeStructure;
+import io.ggogit.ggogit.domain.tree.entity.Tree;
+import io.ggogit.ggogit.domain.tree.entity.TreeImage;
+import io.ggogit.ggogit.domain.tree.repository.TreeImageRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -27,6 +32,7 @@ public class LeafDtoServiceImpl implements LeafDtoService {
     private final LeafRepository leafRepository;
     private final LeafBookRepository leafBookRepository;
     private final LeafTagMapRepository leafTagMapRepository;
+    private final TreeImageRepository treeImageRepository;
 
     @Override
     @Transactional(readOnly = true)
@@ -156,6 +162,7 @@ public class LeafDtoServiceImpl implements LeafDtoService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public LeafBreadcrumbResponse getLeafBreadcrumb(Long leafId) {
 
         Leaf leaf = leafRepository.findById(leafId)
@@ -187,6 +194,7 @@ public class LeafDtoServiceImpl implements LeafDtoService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public LeafBeforeNodeInfoResponse getLeafBeforeNodeInfo(Long leafId) {
 
         // 리프 조회
@@ -208,6 +216,7 @@ public class LeafDtoServiceImpl implements LeafDtoService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public LeafEtcEditDetailResponse getEtcLeafEditDetail(Long leafId) {
         Leaf leaf = leafRepository.findById(leafId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 리프가 존재하지 않습니다."));
@@ -222,12 +231,40 @@ public class LeafDtoServiceImpl implements LeafDtoService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public LeafEtcDetailResponse getLeafEtcDetail(Long leafId) {
 
         Leaf leaf = leafRepository.findById(leafId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 리프가 존재하지 않습니다."));
 
         return LeafEtcDetailResponse.of(leaf);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public LeafBookCardResponse getLeafBookCards(Long memberId, int page, int size) {
+        Page<Leaf> leafPage = leafRepository.getBookCards(memberId, page, size);
+
+        int currentPage = leafPage.getNumber();
+        int totalPage = leafPage.getTotalPages();
+        LeafBookCardResponse response = new LeafBookCardResponse(totalPage, currentPage, size);
+
+        for (Leaf leaf : leafPage.getContent()) {
+            Long seedId = leaf.getTree().getSeed().getId();
+            Tree tree = leaf.getTree();
+
+            if (seedId == 1L) {
+                Book book = tree.getBook();
+                BookCategory bookCategory = book.getBookCategory();
+                LeafBookCardResponse.ItemDto dto = LeafBookCardResponse.ItemDto.of(leaf, tree, book, bookCategory);
+                response.addItem(dto);
+            } else {
+                TreeImage treeImage = treeImageRepository.findById(tree.getId()).orElse(null); // 트리 이미지가 없는 경우도 존재함
+                LeafBookCardResponse.ItemDto dto = LeafBookCardResponse.ItemDto.of(leaf, tree, treeImage);
+                response.addItem(dto);
+            }
+        }
+        return response;
     }
 
     private LeafItemResponse getLeafItemResponse(List<TreeNode> treeNodes) {
@@ -241,7 +278,6 @@ public class LeafDtoServiceImpl implements LeafDtoService {
             }
             response.addItem(treeNode, leafTags);
         }
-
         return response;
     }
 

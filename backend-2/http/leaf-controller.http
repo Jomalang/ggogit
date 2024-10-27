@@ -4,6 +4,7 @@
 @seedBookId = 1
 @seddEtcId = 1
 @tagId = 10001
+@memberId = 777
 # ================================================== #
 
 # ================================================== #
@@ -70,9 +71,16 @@ GET {{host}}/api/v1/leaves/{{leafId}}/breadcrumb
 ### 리프 생성 및 수정 이전 정보 조회
 GET {{host}}/api/v1/leaves/{{leafId}}/before
 
-#Authorization: Bearer {{accessToken}}
-
 # ================================================== #
+# 리프 카드 조회
+
+### 도서 리프 카드 조회
+GET {{host}}/api/v1/members/{{memberId}}/leaves/book/cards
+
+
+### 일반 리프 카드 조회
+GET {{host}}/api/v1/leaves/{{leafId}}/etc/cards?page=1&size=10
+
 
 # ================================================== #
 # 리프 태그

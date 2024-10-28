@@ -112,13 +112,13 @@ onMounted(() => {
       <h2 class="none">트리 상세 설명</h2>
       <CardHiddenInfo
         :item="{
-          hiddentext: '자세히',
+          hiddenText: '자세히',
           authors: treeInfoResponse.bookAuthor,
           translators: treeInfoResponse.bookTranslator,
           publisher: treeInfoResponse.bookPublisher,
           page: treeInfoResponse.bookTotalPage,
           seed: treeInfoResponse.seedId,
-          treedescription: treeInfoResponse.description,
+          treeDescription: treeInfoResponse.description,
           readPage: treeInfoResponse.readingPage,
           progress:
             treeInfoResponse.readingPage && treeInfoResponse.bookTotalPage
@@ -137,13 +137,13 @@ onMounted(() => {
       ></CardHiddenInfo>
       <div
         th:replace="~{fragments/card :: card-hidden-info(
-        hiddentext='자세히',
+        hiddenText='자세히',
         authors=${treeInfoResponse.bookAuthor},
         translators=${treeInfoResponse.bookTranslator},
         publisher=${treeInfoResponse.bookPublisher},
         page=${totalPage},
         seed=${treeInfoResponse.seedId},
-        treedescription=${treeInfoResponse.description},
+        treeDescription=${treeInfoResponse.description},
         readpage=${rPage},
         progress=${#numbers.formatDecimal((rPage * 100.0 / totalPage), 1, 1)},
         fullpage=${treeInfoResponse.bookTotalPage},

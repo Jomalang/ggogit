@@ -14,7 +14,7 @@
       <h1 class="none">나의 트리 정보</h1>
 
       <section class="my-tree-title-container">
-        <TextMainTitle :title="`나의 트리`" :size="28" />
+        <TextMainTitle :data="{ title: '나의 트리', size: 28 }" />
       </section>
 
       <section class="book-img-container">

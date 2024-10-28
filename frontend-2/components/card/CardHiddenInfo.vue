@@ -4,23 +4,7 @@ import { defineProps } from 'vue';
 import CardProgressBar from "@/components/card/CardProgressBar.vue";
 import CardReactNumbers from "@/components/card/CardReactNumbers.vue";
 import LinkFullWidth from "@/components/button/LinkFullWidth.vue";
-
-
-interface CardHiddenInfoProps {
-  hiddentext: string;
-  authors?: string | null;
-  translators?: string | null;
-  publisher?: string | null;
-  page?: number | null;
-  seed: number;
-  treedescription: string;
-  readPage?: number | null;
-  progress?: number | null;
-  fullPage?: number | null;
-  leaf: number;
-  like: number;
-  view: number;
-}
+import type {CardHiddenInfoProps} from "~/types/types";
 
 interface CardProgressBarProps {
   progress: number;
@@ -35,13 +19,13 @@ interface CardReactNumbersProps {
 }
 
 const item: CardHiddenInfoProps = {
-  hiddentext: '자세히',
+  hiddenText: '자세히',
   authors: 'authors',
   translators: 'translators',
   publisher: 'publisher',
   page: 100,
   seed: 100,
-  treedescription: 'treedescription',
+  treeDescription: 'treeDescription',
   readPage: 50,
   progress: 50,
   fullPage: 100,
@@ -69,7 +53,7 @@ const props = defineProps<{
 </script>
 
 <template>
-  <!-- (hiddentext, authors,translators,publisher,page,seed, treedescription, progress,readpage,fullpage, leaf,like,view) -->
+  <!-- (hiddenText, authors,translators,publisher,page,seed, treeDescription, progress,readpage,fullpage, leaf,like,view) -->
   <div class="card-tree-info__detail-frame">
     <input class="card-tree-info__detail-input" type="checkbox" id="card-tree-info__detail"/>
     <label class="card-tree-info__detail" for="card-tree-info__detail">자세히</label>

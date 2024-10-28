@@ -1,5 +1,6 @@
 <script setup>
 import _ from "lodash";
+import "@toast-ui/editor/dist/toastui-editor.css";
 
 import { onBeforeMount, onMounted, reactive } from "vue";
 

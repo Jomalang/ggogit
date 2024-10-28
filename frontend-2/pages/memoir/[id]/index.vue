@@ -1,5 +1,8 @@
 <script setup>
 import { onMounted, ref } from "vue";
+import "@toast-ui/editor/dist/toastui-editor.css";
+import Viewer from "@toast-ui/editor/dist/toastui-editor-viewer";
+import UserInfoBackHeaderMemoirTitle from "~/components/background/UserInfoBackHeaderMemoirTitle.vue";
 
 const treeInfo = ref({});
 const memoir = ref({
@@ -13,7 +16,6 @@ const memoirItem = ref({});
 const leafItem = ref({});
 
 //----------------Life Cycle----------------
-import Viewer from "@toast-ui/editor";
 onMounted(() => {
   const viewer = new Viewer({
     el: document.querySelector("#viewer"),

@@ -12,7 +12,7 @@ const {data} = defineProps(['data']);
       <img v-else class="card-tree-info-cover" src="/public/svg/tree-icon--white.svg" alt="cover">
     </div>
     <div class="card-tree-title-frame">
-      <p class="card-tree-title">{{ data.treeTitle }}</p>
+      <p class="card-tree-title">{{ data.title }}</p>
       <p class="card-book-title">{{ data.bookTitle }}</p>
     </div>
   </div>

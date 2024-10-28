@@ -15,15 +15,15 @@ function translatorsConverter(translators) {
   return translators.split(",");
 };
 
-let translators = translatorsConverter(data.translators ?? "");
+let translators = translatorsConverter(data.bookTranslator ?? "");
 
 const textBookInfoProps = {
-  title: data.title,
-  authors: data.authors,
+  title: data.bookTitle,
+  authors: data.bookAuthor,
   translators: translators,
-  publisher: data.publisher,
-  page: data.page,
-  seed: data.seed,
+  publisher: data.bookPublisher,
+  page: data.bookTotalPage,
+  seed: data.seedId,
 };
 
 const cardProgressBarProps = {
@@ -33,9 +33,9 @@ const cardProgressBarProps = {
 };
 
 const cardReactNumbersProps = {
-  leaf: data.leaf,
-  like: data.like,
-  view: data.view,
+  leaf: data.treeLeafCnt,
+  like: data.treeLikeCnt,
+  view: data.treeViewCnt,
 };
 
 </script>

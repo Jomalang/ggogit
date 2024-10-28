@@ -43,14 +43,14 @@ let seed = seedConverter(data.seed);
     </div>
     <div class="text-book-info__create-frame">
       <div class="text-book-info__create">
-        <span class="text-book-info-create-info">{{ data.author }}</span>
+        <span class="text-book-info-create-info">{{ data.authors }}</span>
         <span class="text-book-info-create-info">·</span>
       </div>
       <div v-if="data.translators && data.translators.length"
            v-for="(translator, index) in data.translators"
            :key="index"
            class="text-book-info__create">
-        <span class="text-book-info-create-info">{{ data.translator }}</span>
+        <span class="text-book-info-create-info">{{ data.translators }}</span>
         <span class="text-book-info-create-info">·</span>
       </div>
       <span class="text-book-info-create-info">{{ data.publisher }}</span>

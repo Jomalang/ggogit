@@ -1,11 +1,13 @@
-<script setup lang="ts">
+<script setup>
 
-import type { BranchInfoProps } from "@/types/types";
+import { defineProps } from 'vue';
 
-const props = defineProps<{
-  items: BranchInfoProps[];
-}>();
-
+const props = defineProps({
+  items: {
+    type: Array,
+    default: () => []
+  }
+})
 </script>
 
 <template>

@@ -1,5 +1,9 @@
 <script setup>
-
+// const cardProgressBarProps = {
+//   progress: (data.readingPage * 100 / data.bookTotalPage).toFixed(2),
+//   readPage: data.readingPage,
+//   fullPage: data.bookTotalPage,
+// };
 import {defineProps} from 'vue';
 
 const {data} = defineProps(['data']);

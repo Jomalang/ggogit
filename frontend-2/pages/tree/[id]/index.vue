@@ -13,23 +13,19 @@ import InputBackSearch from "~/components/input/InputBackSearch.vue";
 
 
 const treeId = Number(useRoute().params.id);
-const branch = ref([
-  {
-    branchId: 0,
-    branchTitle: "",
-    branchDescription: "",
-    branchLikeCnt: 0,
-    branchViewCnt: 0,
-    branchLeafCnt: 0,
-    branchCreatedDate: "",
-    branchModifiedDate: "",
-  },
-]);
+
 const queryParam = reactive({
   filter: 10,
   sort: 1,
   bookMark: "",
   p: 0,
+});
+
+let info = reactive({});
+let branch = reactive({
+  items: [],
+  totalCnt: 0,
+  totalPage: 0
 });
 
 const config = useRuntimeConfig();
@@ -48,19 +44,15 @@ const { data: branchData, error: branchError } = useFetch(() => `trees/${treeId}
   },
 });
 
-
-let info = reactive({});
+let filterName = "최근 수정 순";
 
 watchEffect(() => {
   if (infoData.value) {
     info = infoData.value;
-    console.log('info:', info);
   }
   if(branchData.value) {
-    branch.value = branchData.value.branches;
-
+    branch = branchData.value;
   }
-
 });
 
 </script>
@@ -91,30 +83,13 @@ watchEffect(() => {
 
       <CardHiddenInfo :data ="info" >트리 상세 설명</CardHiddenInfo>
     </section>
-<!--      <div-->
-<!--        th:replace="~{fragments/card :: card-hidden-info(-->
-<!--        hiddentext='자세히',-->
-<!--        authors=${info.value.bookAuthor},-->
-<!--        translators=${info.value.bookTranslator},-->
-<!--        publisher=${info.value.bookPublisher},-->
-<!--        page=${totalPage},-->
-<!--        seed=${info.value.seedId},-->
-<!--        treedescription=${info.value.description},-->
-<!--        readpage=${rPage},-->
-<!--        progress=${#numbers.formatDecimal((rPage * 100.0 / totalPage), 1, 1)},-->
-<!--        fullpage=${info.value.bookTotalPage},-->
-<!--        leaf=${info.value.treeLeafCnt},-->
-<!--        like=${info.value.treeLikeCnt},-->
-<!--        view=${info.value.treeViewCnt}-->
-<!--    )}"-->
-<!--      ></div>-->
 
     <section class="branch-list__container">
       <div>
-<!--      <TextMainTitle-->
-<!--        :title="'브랜치 목록'"-->
-<!--        :number="branch.value.length"-->
-<!--        >브랜치 목록</TextMainTitle>-->
+      <TextMainTitleListCount
+        :title="'브랜치 목록'"
+        :number='branch.totalCnt'
+      >브랜치 목록</TextMainTitleListCount>
       </div>
 <!--      <h2-->
 <!--        th:replace="~{fragments/text :: text-main-title__listCount(title='브랜치 목록', number=${#lists.size(leafList)})}"-->
@@ -123,7 +98,7 @@ watchEffect(() => {
         <h3 class="none">브랜치 필터</h3>
 
         <div>
-        <FilterTreeLeafCard></FilterTreeLeafCard>
+        <FilterTreeLeafCard :filterName="filterName"></FilterTreeLeafCard>
         </div>
 <!--        <div th:replace="~{fragments/filter :: filter-tree-leaf__card()}"></div>-->
       </section>
@@ -132,7 +107,7 @@ watchEffect(() => {
         <h3 class="none">브랜치 리스트</h3>
         <div id="card-branch__list-frame">
           <div>
-<!--          <CardBranchList :items="branch.value"></CardBranchList>-->
+          <CardBranchList :items="branch.items.content"></CardBranchList>
           </div>
 <!--          <div-->
 <!--            th:replace="~{fragments/card :: card-branch__list(${leafList})}"-->

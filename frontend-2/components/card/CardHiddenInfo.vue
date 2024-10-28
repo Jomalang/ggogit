@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 
 import { defineProps } from 'vue';
 import CardProgressBar from "~/components/card/CardProgressBar.vue";
@@ -6,137 +6,62 @@ import CardReactNumbers from "~/components/card/CardReactNumbers.vue";
 import LinkFullWidth from "~/components/button/LinkFullWidth.vue";
 import TextBookInfo from "~/components/text/TextBookInfo.vue";
 
+const {data} = defineProps(['data']);
 
-
-const dataLoaded = ref(false);
-const props = defineProps<{
-  item: {
-    hiddenText: string;
-    authors?: string | null;
-    translators?: string | null;
-    publisher?: string | null;
-    page?: number | null;
-    seedId: number;
-    treeDescription: string;
-    readPage?: number | null;
-    progress?: number | null;
-    fullPage?: number | null;
-    leaf: number;
-    like: number;
-    view: number;
-  };
-}>();
-
-function isDataLoaded() {
-  dataLoaded.value = true;
-}
-
-function translatorsConverter(translators: string | null): Array<string> {
+function translatorsConverter(translators) {
   if (translators == null || translators === "") {
     return [];
   }
   return translators.split(",");
 };
-interface DataItem {
-  hiddenText: string;
-  authors: string;
-  translators: string[];
-  publisher: string;
-  page: number | null;
-  seedId: number;
-  treeDescription: string;
-  readPage: number | null;
-  progress: number | null;
-  fullPage: number | null;
-  leaf: number;
-  like: number;
-  view: number;
-}
-const data = reactive<DataItem>({
-  hiddenText: '자세히',
-  authors: '',
-  translators: [],
-  publisher: '',
-  page: null,
-  seedId: 0,
-  treeDescription: '',
-  readPage: null,
-  progress: null,
-  fullPage: null,
-  leaf: 0,
-  like: 0,
-  view: 0
-});
-function updateData(props) {
-  data.hiddenText = props.item.hiddenText;
-  data.authors = props.item.authors;
-  data.translators = translatorsConverter(props.item.translators ?? "");
-  data.publisher = props.item.publisher;
-  data.page = props.item.page;
-  data.seedId = props.item.seedId;
-  data.treeDescription = props.item.treeDescription;
-  data.readPage = props.item.readPage;
-  data.progress = props.item.progress;
-  data.fullPage = props.item.fullPage;
-  data.leaf = props.item.leaf;
-  data.like = props.item.like;
-  data.view = props.item.view;
 
-  isDataLoaded(); // 데이터 로드 완료 후 호출
+let translators = translatorsConverter(data.translators ?? "");
 
-}
-let translators:Array<string> =translatorsConverter(props.item.translators ?? "");
+const textBookInfoProps = {
+  title: data.title,
+  authors: data.authors,
+  translators: translators,
+  publisher: data.publisher,
+  page: data.page,
+  seed: data.seed,
+};
 
 const cardProgressBarProps = {
-  progress: props.item.progress,
-  readPage: props.item.readPage,
-  fullPage: props.item.fullPage,
+  progress: (data.readingPage * 100 / data.bookTotalPage).toFixed(2),
+  readPage: data.readingPage,
+  fullPage: data.bookTotalPage,
 };
 
 const cardReactNumbersProps = {
-  leaf: props.item.leaf,
-  like: props.item.like,
-  view: props.item.view,
+  leaf: data.leaf,
+  like: data.like,
+  view: data.view,
 };
 
-onMounted(async () => {
-  await updateData(props);
-});
 </script>
 
 <template>
   <!-- (hiddentext, authors,translators,publisher,page,seed, treedescription, progress,readpage,fullpage, leaf,like,view) -->
   <div class="card-tree-info__detail-frame">
     <input class="card-tree-info__detail-input" type="checkbox" id="card-tree-info__detail"/>
-    <label class="card-tree-info__detail" for="card-tree-info__detail">{{data.hiddenText}}</label>
+    <label class="card-tree-info__detail" for="card-tree-info__detail">자세히</label>
 
     <section class="card-tree-info__detail-content">
       <h3 class="none">트리 상세 설명 보기</h3>
 
       <section class="card-tree-info__detail-tree-container">
         <h4 class="none">트리 정보</h4>
-        <div v-if="dataLoaded">
-        <TextBookInfo
-            :title="data.title"
-            :authors="data.authors"
-            :translators="data.translators"
-            :publisher="data.publisher"
-            :page="data.page"
-            :seed="data.seedId" />
-        </div>
-        <div v-else>
-          <p>로딩중...</p>
-        </div>
-        <!-- <div th:replace="~{fragments/text :: text-book-info&#45;&#45;no-title(${authors},${translators},${publisher},${page},${seed})}"></div> -->
+        <TextBookInfo :data = textBookInfoProps />
+        <!-- <div th:replace="~{fragments/text :: text-book-info--no-title(${authors},${translators},${publisher},${page},${seed})}"></div> -->
       </section>
 
       <section class="card-tree__description-title__container">
         <!-- <h3 th:replace="~{fragments/text :: text-main-title(title='트리설명', size=18)}"></h3> -->
-        <p class="card-tree__description-content">{{ data.treeDescription }}</p>
+        <p class="card-tree__description-content">{{ data.description }}</p>
       </section>
 
       <section
-          v-if="data.fullPage != null"
+          v-if="data.bookTotalPage != null"
           class="card-progress__container" >
         <div class="card-reading-progress-no-background">
           <CardProgressBar :data="cardProgressBarProps" />

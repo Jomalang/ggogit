@@ -1,20 +1,13 @@
-<script setup lang="ts">
+<script setup>
 
-import { defineProps } from 'vue';
+import {defineProps} from 'vue';
 
-interface CardProgressBarProps {
-  progress: number;
-  readPage: number;
-  fullPage: number;
-}
+const {data} = defineProps(['data']);
 
-const props = defineProps<{
-  data: CardProgressBarProps;
-}>();
-
-function progressStyle(progress: number) {
+function progressStyle(progress) {
   return `width: ${progress}%;`;
 }
+
 
 </script>
 

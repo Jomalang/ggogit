@@ -1,54 +1,18 @@
 <!-- TextBookInfo.vue -->
-<script setup lang="ts">
+
+
+<script setup>
+// const textBookInfoProps = {
+//   title: data.title,
+//   authors: data.authors,
+//   translators: translators,
+//   publisher: data.publisher,
+//   page: data.page,
+//   seed: data.seed,
+// };
 import { defineProps } from 'vue';
 
-const props = defineProps({
-  seed: {
-    type: Number,
-    default: 0
-  },
-  title: {
-    type: String,
-    default: '제목'
-  },
-  author: {
-    type: String,
-    default: '저자'
-  },
-  translators: {
-    type: Array as () => string[],
-    default: () => []
-  },
-  publisher: {
-    type: [String, null],
-    default: '출판사'
-  }
-});
-
-interface  DataItem {
-  title: string;
-  author: string;
-  translators: string[];
-  publisher: string;
-  seed: string;
-}
-const data = ref<DataItem>({
-  title: '',
-  author: '',
-  translators: '',
-  publisher: '',
-  seed: ''
-});
-
-function updateData(props) {
-  data.title = props.title;
-  data.author = props.author;
-  data.translators = props.translators;
-  data.publisher = props.publisher;
-  data.seed = seedConverter(props.seed);
-  console.log('data: ',data);
-}
-
+const {data} = defineProps(['data']);
 // seedConverter 함수 정의
 function seedConverter(seedId) {
   switch (seedId) {
@@ -65,18 +29,14 @@ function seedConverter(seedId) {
     default:
       return '알 수 없는 유형';
   }
-}
-
-onMounted(async () => {
-  await updateData(props);
-
-});
+};
+let seed = seedConverter(data.seed);
 </script>
 
 <template>
   <div class="text-book-info">
     <div class="text-book-info__frame">
-      <p class="text-book-info__seed">{{ data.seed }}</p>
+      <p class="text-book-info__seed">{{ seed }}</p>
     </div>
     <div class="text-book-info__frame">
       <p class="text-book-info__title">{{ data.title }}</p>

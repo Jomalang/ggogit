@@ -2,54 +2,92 @@
 import { onBeforeMount, onMounted, ref } from "vue";
 import Editor from "@toast-ui/editor";
 import "@toast-ui/editor/dist/toastui-editor.css";
+import LInkOneImageDetail from "~/components/link/LInkOneImageDetail.vue";
+import SubmitBtnFullBar from "~/components/button/SubmitBtnFullBar.vue";
+import NavigationBar from "~/components/nav/NavigationBar.vue";
+
 //----------------variable----------------
+//save 호출 API
 const tmpSaveUrl = `${
   import.meta.env.VITE_API_BASE_URL
 }/api/v1/memoir-image/upload-tmp`;
 
+//이미지 전체 경로 호출 API
+const tmpPathUrl = `${
+  import.meta.env.VITE_API_BASE_URL
+}/api/v1/memoir-image/path-tmp?fileName=`;
+
 const tmpRenderUrl = `${
   import.meta.env.VITE_API_BASE_URL
-}/api/v1/memoir-image/render-tmp`;
+}/api/v1/memoir-image/return-byte-tmp?filePath=`;
 
+//트리 아이디
 const treeId = useRoute().params.id;
+
+//editor 객체
+let editor;
 
 //----------------model---------------
 
 const memoir = ref({
-  title: "default-title",
-  text: "default-text",
+  title: "",
+  text: "",
   visibility: 1,
 });
 
-let fileName = ref({});
+const memoirId = ref(0);
 
-//----------------methods---------------
+const book = ref({
+  bookId: 0,
+  bookTitle: "default-title",
+  bookAuthor: "default-author",
+  //배열로 전달
+  bookTranslator: ["default-translator"],
+  bookPublisher: "default-publisher",
+  bookImage: "book-cover-dummy1.svg",
+  bookCategory: "default-category",
+});
 
-// const savePost = async () => {
-//   try {
-//     const response = await fetch("/api/v1/memoir", {
-//       method: "POST",
-//       headers: {
-//         "Content-Type": "application/json",
-//       },
-//       body: JSON.stringify(memoir.value),
-//     });
-//     if (response.ok) {
-//       alert("회고록이 성공적으로 등록되었습니다.");
-//       location.href = "/app/memoir";
-//     } else {
-//       alert("회고록 등록에 실패하였습니다.");
-//     }
-//   } catch (error) {
-//     console.error("회고록 등록 실패 : ", error);
-//   }
-// };
+const fileNames = ref([]);
 
-//----------------editor logic----------------
+//----------------function----------------
+const savePost = async () => {
+  //에디터에서 작성한 내용을 획득
+  memoir.value.text = editor.getMarkdown();
+
+  //useFetch
+  const { data, error } = await useFetch(
+    import.meta.env.VITE_API_BASE_URL + "/api/v1/memoir/" + treeId,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        title: memoir.value.title,
+        text: memoir.value.text,
+        visibility: memoir.value.visibility,
+        fileNames: fileNames.value,
+      }),
+    }
+  );
+
+  if (error.value) {
+    console.error("회고록 등록 실패 : ", error.value);
+    return;
+  } else {
+    alert("회고록이 성공적으로 등록되었습니다.");
+    memoirId.value = data.value.id;
+    location.href =
+      import.meta.env.VITE_APP_BASE_URL + "api/v1/memoir/id=" + memoirId.value;
+  }
+};
+
+//---------------Life Cycle----------------
 onMounted(() => {
-  const editor = new Editor({
+  editor = new Editor({
     el: document.querySelector("#editor"),
-    height: "300px",
+    height: "450px",
     initialEditType: "wysiwyg",
     previewStyle: "vertical",
     placeholder: "무엇을 느끼셨나요?",
@@ -71,28 +109,31 @@ onMounted(() => {
           // 컨트롤러에서 전달받은 디스크에 저장된 파일 명
           const fileName = await response.text();
           console.log("서버에 저장된 파일 명 : ", fileName);
+          fileNames.value.push(fileName);
 
-          // addImageBlobHook의 callback을 통해 디스크에 저장된 이미지 에디터에 렌더링
-          const imageUrl = tmpRenderUrl + `/${fileName}`;
-          callback(imageUrl, "image alt attribute");
-          console.log(blob);
-          console.log(callback);
+          //획득한 이미지경로 바탕으로 바이트 코드 획득
+          callback(tmpRenderUrl + `${fileName}`, "image alt attribute");
         } catch (error) {
           console.log("업로드 실패 : ", error);
         }
       },
     },
   });
-
-  editor.on("change", () => {
-    document.querySelector("#editor-text").textContent = editor.getMarkdown();
-  });
 });
 
-const savePost = () => {
-  console.log("savePost");
-  console.log(memoir.value);
-};
+// TODO: 도서, 트리 API이용해 데이터 가져오기
+// onBeforeMount(async () => {
+//   const { data, error } = await useFetch(
+//     import.meta.env.VITE_API_BASE_URL + "/api/v1/tree/" + treeId
+//   );
+
+//   if (error.value) {
+//     console.error("트리 정보 조회 실패 : ", error.value);
+//     return;
+//   } else {
+//     book.value = data.value.book;
+//   }
+// });
 </script>
 
 <template>
@@ -112,23 +153,23 @@ const savePost = () => {
       <h3 class="none">도서 TEXT 컨테이너</h3>
       <TextMainTitle :title="`완독한 도서`" :size="28" />
     </section>
-    <section class="tree-reg-cover-info__container" th:object="${treeInfo}">
+    <section class="tree-reg-cover-info__container">
       <h3 class="none">도서 커버 및 도서 정보</h3>
       <section class="tree-reg-cover__container">
         <h4 class="none">도서 커버</h4>
-        <LinkOneImageDetail
-          :src="`book/${bookImage}`"
+        <LInkOneImageDetail
+          :src="`book/${book.bookImage}`"
           :href="'javascript:history.back()'"
         />
       </section>
       <section class="tree-reg-book-info__container">
         <h4 class="none">도서 정보</h4>
         <TextBookInfo
-          :seed="bookCategory"
-          :title="bookTitle"
-          :author="bookAuthor"
-          :translators="bookTranslator"
-          :publisher="bookPublisher"
+          :seed="book.bookCategory"
+          :title="book.bookTitle"
+          :author="book.bookAuthor"
+          :translators="book.bookTranslator"
+          :publisher="book.bookPublisher"
         />
       </section>
     </section>
@@ -141,7 +182,7 @@ const savePost = () => {
           <span class="input-text__label-text">회고록 제목</span>
           <input
             class="input-text__input"
-            v-model="title"
+            v-model="memoir.title"
             :placeholder="'제목을 입력해 주세요.'"
           />
         </label>
@@ -152,7 +193,7 @@ const savePost = () => {
       <h3 class="none">회고록 설명글</h3>
       <!--            toast 에디터2.0 -->
       <div id="editor"></div>
-      <input class="hidden" id="editor-text" v-model="text" />
+      <input class="hidden" id="editor-text" v-model="memoir.text" />
     </section>
     <section class="register__input-container">
       <h3 class="none">공개 여부</h3>
@@ -164,7 +205,7 @@ const savePost = () => {
             <input
               class="input-visibility__btn"
               type="radio"
-              v-model="visibility"
+              v-model="memoir.visibility"
               name="visibility"
               label="공개"
               id="public"
@@ -177,7 +218,7 @@ const savePost = () => {
               class="input-visibility__btn"
               label="비공개"
               type="radio"
-              v-model="visibility"
+              v-model="memoir.visibility"
               name="visibility"
               id="private"
               value="0"
@@ -191,7 +232,6 @@ const savePost = () => {
       <!-- 컴포넌트 -->
       <SubmitBtnFullBar :text="'회고록 생성하기'" @click="savePost" />
     </section>
-    <input class="hidden" id="fileNames" v-model="fileNames" />
   </main>
 
   <section class="nav-back-container">

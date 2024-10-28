@@ -1,11 +1,12 @@
 <script setup lang="ts">
-interface Props {
-  userimg: string;
-  username: string;
-  userid: string;
-  userurl: string;
-}
-const props = defineProps<Props>();
+
+const { data } = defineProps(['data']);
+/*
+userimg: string;
+username: string;
+userid: string;
+userurl: string;
+*/
 </script>
 
 <template>
@@ -18,11 +19,11 @@ const props = defineProps<Props>();
   <div class="bar-user-info-frame">
     <div class="bar-user-info__left-content">
       <div class="bar-user-info__img-wrapper">
-        <img :src="`/img/card/${props.userimg}`" alt="user-profile" />
+        <img :src="`/img/card/${data.userimg}`" alt="user-profile" />
       </div>
       <div>
-        <div class="bar-user-info__user-name">{{ props.username }}</div>
-        <div class="bar-user-info__user-id">{{ props.userid }}</div>
+        <div class="bar-user-info__user-name">{{ data.username }}</div>
+        <div class="bar-user-info__user-id">{{ data.userid }}</div>
       </div>
     </div>
     <div class="bar-user-info__right-btns">
@@ -32,7 +33,7 @@ const props = defineProps<Props>();
         id="bar-user-info__like"
       />
       <label class="__like-bold" for="bar-user-info__like"></label>
-      <a class="bar-user-info__set-btn" :href="`${props.userurl}`"></a>
+      <a class="bar-user-info__set-btn" :href="`${data.userurl}`"></a>
     </div>
   </div>
 </template>

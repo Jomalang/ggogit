@@ -5,13 +5,15 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Profile;
+import org.springframework.data.domain.Page;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 
 @Profile("test")
-@DataJpaTest
+@SpringBootTest
 class LeafQueryDslRepositoryImplTest {
 
     @Autowired
@@ -29,5 +31,20 @@ class LeafQueryDslRepositoryImplTest {
 
         // then
         assertNotNull(actualLeaf);
+    }
+
+    @Test
+    @DisplayName("테스트 이름")
+    void getBookCards() {
+        // given
+
+        // when
+        Page<Leaf> actualPage = leafQueryDslRepository.getBookCards(777L, 1, 10);
+
+        for (Leaf leaf : actualPage.getContent()) {
+            System.out.println("leaf = " + leaf);
+        }
+
+        // then
     }
 }

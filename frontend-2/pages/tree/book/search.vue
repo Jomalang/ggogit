@@ -41,7 +41,7 @@ const handleKeyword = (query) => {
 
     <section>
       <h2 class="none">검색 결과 개수 및 최근 수정한 순서</h2>
-      <TopbarSearchResultNum :num="size" />
+      <TopBarSearchResultNum :num="size" />
     </section>
   </header>
 
@@ -77,8 +77,8 @@ const handleKeyword = (query) => {
   <section class="btn-select-container--right">
     <h2 class="none">도서 직접 등록 버튼</h2>
     <!-- TODO: href변경하기 -->
-    <BtnShortAGreen
-        :href="`/tree/book/reg?auto=false`"
+    <ButtonBtnShortAGreen
+        :href="`/tree/book/new`"
         :text="`도서 직접 등록하기`"
     />
   </section>
@@ -88,7 +88,7 @@ const handleKeyword = (query) => {
   </div>
 
   <aside class="nav-container">
-    <NavigationBar active="home" />
+    <NavNavigationBar active="home" />
   </aside>
 </template>
 

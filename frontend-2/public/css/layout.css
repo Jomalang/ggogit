@@ -457,7 +457,7 @@ home-tree__reg-4--search-book__input
 }
 
 .book-detail-book-info-container {
-  padding: 30px 24px 30px 24px;
+  padding: 30px 24px 0px 24px;
 }
 
 .book-detail-my-tree-container {
@@ -598,6 +598,9 @@ home-tree__reg-4--search-book__input
   border-top: var(--main1) solid 1px;
 }
 
+.leaf-page-info-container {
+  margin: 24px 16px;
+}
 
 /*================================
 toast 이미지 팝업 레이아웃 css
@@ -613,3 +616,4 @@ toast 이미지 팝업 레이아웃 css
     transform: translateX(0%) !important;
   }
 }
+

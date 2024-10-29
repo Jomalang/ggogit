@@ -2,7 +2,7 @@
 
 interface Props {
     followId: string;
-    userimg: string;
+    userImg: string;
     username: string;
     userid: string;
 }
@@ -13,13 +13,13 @@ const props = defineProps<Props>();
   <!--==========================================
       user info - follow btn
       user tree memoir index 사용
-      (userimg,username,userid)
+      (userImg,username,userid)
       TODO: followId 사용 관련 로직 구현 필요.
   ==========================================-->
   <div class="bar-user-info-follow-btn-frame">
       <div class="bar-user-info__left-content">
           <div class="bar-user-info__img-wrapper">
-              <img :src="`/img/card/${props.userimg}`" alt="user-profile">
+              <img :src="`${props.userImg}`" alt="user-profile">
           </div>
           <div>
               <div class="bar-user-info__user-name--color-main1">{{props.username}}</div>

@@ -133,7 +133,7 @@ onMounted(() => {
 
   <main>
     <section class="my-tree-list">
-      <TextMainTitle class="memoir-title" :title="memoir.title" :size="28" />
+      <TextMainTitle :data="{ title: '회고록', size: 28 }" />
       <h2 class="none">에디터 뷰어</h2>
 
       <!-- 에디터 뷰어-->
@@ -167,10 +167,10 @@ onMounted(() => {
       <h2 class="none">작성자 다른 기록들</h2>
       <!-- 컴포넌트 -->
       <section class="user-another-records-title-container">
-        <TextMainTitle :title="`${username}의 다른 최근 기록들`" :size="28" />
+        <TextMainTitle :data="{ title: `${username}의 다른 최근 기록들`, size: 28 }" />
       </section>
       <section class="branch-tree-other-recode-sub-title-container">
-        <TextMainTitle :title="`트리`" :size="24" />
+        <TextMainTitle :data="{ title: `트리`, size: 24 }" />
       </section>
       <section class="branch-tree-another-record-list-container">
         <h1 class="none">트리 리스트</h1>
@@ -178,7 +178,7 @@ onMounted(() => {
       </section>
 
       <section class="branch-tree-other-recode-sub-title-container">
-        <TextMainTitle :title="`회고록`" :size="24" />
+        <TextMainTitle :data="{ title: `회고록`, size: 24 }" />
       </section>
 
       <section class="branch-tree-another-record-list-container">
@@ -189,7 +189,7 @@ onMounted(() => {
       </section>
 
       <section class="branch-tree-other-recode-sub-title-container">
-        <TextMainTitle :title="`로그`" :size="24" />
+        <TextMainTitle :data="{ title: `로그`, size: 24 }" />
       </section>
 
       <section class="branch-tree-another-record-list-container">

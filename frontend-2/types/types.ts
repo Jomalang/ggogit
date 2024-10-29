@@ -68,10 +68,6 @@ export interface BranchInfoProps {
   bookMark: boolean;
 }
 
-export interface CardHiddenInfoProps {
-  treeDescription: string;
-}
-
 export interface CardReactNumbersProps {
   leafCount: number;
   likeCount: number;
@@ -166,4 +162,20 @@ export interface memoir {
   text: string;
   visibility: number;
   fileNames: string;
+}
+
+export interface CardHiddenInfoProps {
+  hiddenText: string;
+  authors?: string | null;
+  translators?: string | null;
+  publisher?: string | null;
+  page?: number | null;
+  seed: number;
+  treeDescription: string;
+  readPage?: number | null;
+  progress?: number | null;
+  fullPage?: number | null;
+  leaf: number;
+  like: number;
+  view: number;
 }

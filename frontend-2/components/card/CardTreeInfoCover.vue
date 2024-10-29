@@ -1,32 +1,18 @@
-<script setup lang="ts" xmlns:th="http://www.w3.org/1999/xhtml">
+<script setup>
 
-interface CardTreeInfoCoverProps {
-  src: string;
-  treeTitle: string;
-  bookTitle: string;
-}
 
-const data: CardTreeInfoCoverProps = {
-  src: null,
-  treeTitle: 'Tree Title',
-  bookTitle: 'Book Title'
-}
-
-const props = defineProps<{
-  data: CardTreeInfoCoverProps
-}>();
+const {data} = defineProps(['data']);
 
 </script>
 
 <template>
-  <!-- (src,treetitle,booktitle) -->
   <div class="card-tree-info-cover-frame">
     <div class="card-tree-info-cover">
-      <img v-if="data.src" class="card-tree-info-cover" :src="data.src" alt="cover">
+      <img v-if="data.coverImageName" class="card-tree-info-cover" :src="data.coverImageName" alt="cover">
       <img v-else class="card-tree-info-cover" src="/public/svg/tree-icon--white.svg" alt="cover">
     </div>
     <div class="card-tree-title-frame">
-      <p class="card-tree-title">{{ data.treeTitle }}</p>
+      <p class="card-tree-title">{{ data.title }}</p>
       <p class="card-book-title">{{ data.bookTitle }}</p>
     </div>
   </div>

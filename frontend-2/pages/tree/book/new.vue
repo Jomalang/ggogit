@@ -106,7 +106,7 @@ const submitFormHandler = async (e: Event) => {
       <h1 class="none">도서 정보 입력</h1>
 
       <section class="select-title-container">
-        <TextMainTitle title="도서 직접 입력" :size="28"></TextMainTitle>
+        <TextMainTitle :data="{ title: '도서 직접 입력', size: 28 }"></TextMainTitle>
       </section>
 
       <form

@@ -1,26 +1,17 @@
-<script setup lang="ts">
+<script setup>
+// const cardProgressBarProps = {
+//   progress: (data.readingPage * 100 / data.bookTotalPage).toFixed(2),
+//   readPage: data.readingPage,
+//   fullPage: data.bookTotalPage,
+// };
+import {defineProps} from 'vue';
 
-import { defineProps } from 'vue';
+const {data} = defineProps(['data']);
 
-interface CardProgressBarProps {
-  progress: number;
-  readPage: number;
-  fullPage: number;
-}
-
-const data: CardProgressBarProps = {
-  progress: 50,
-  readPage: 50,
-  fullPage: 100,
-};
-
-const props = defineProps<{
-  data: CardProgressBarProps;
-}>();
-
-function progressStyle(progress: number) {
+function progressStyle(progress) {
   return `width: ${progress}%;`;
 }
+
 
 </script>
 

@@ -264,7 +264,7 @@ onMounted(() => {
         <h2 class="none">나의 트리 정보</h2>
         <section class="my-tree-title-container">
           <h3>
-            <TextMainTitle :title="'나의 트리'" :size="28" />
+            <TextMainTitle :data="{ title: '나의 트리', size: 28 }" />
           </h3>
         </section>
 

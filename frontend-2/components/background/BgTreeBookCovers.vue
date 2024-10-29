@@ -1,7 +1,12 @@
 <script setup>
-const props = defineProps({
-  trees: Array,
-});
+
+const { data } = defineProps(['data']);
+/*
+treeId
+coverImageName
+length
+ */
+
 </script>
 
 <template>
@@ -9,7 +14,7 @@ const props = defineProps({
     <ul class="tree-book-bg__list">
       <li
         class="mid__item"
-        v-for="(tree, index) in trees"
+        v-for="(tree, index) in data"
         :key="index"
         :class="index"
       >
@@ -21,7 +26,7 @@ const props = defineProps({
           />
         </a>
       </li>
-      <li v-if="trees.length === 1" class="mid__item 1">
+      <li v-if="data.length === 1" class="mid__item 1">
         <a href="/seed/index">
           <img
             class="mid__img"
@@ -30,7 +35,7 @@ const props = defineProps({
           />
         </a>
       </li>
-      <li v-if="trees.length <= 2" class="mid__item 2">
+      <li v-if="data.length <= 2" class="mid__item 2">
         <a href="/seed/index">
           <img
             class="mid__img"
@@ -41,7 +46,7 @@ const props = defineProps({
       </li>
       <li
         class="mid__item"
-        v-for="(tree, index) in trees"
+        v-for="(tree, index) in data"
         :key="index"
         :class="index"
       >
@@ -53,7 +58,7 @@ const props = defineProps({
           />
         </a>
       </li>
-      <li v-if="trees.length === 1" class="mid__item 1">
+      <li v-if="data.length === 1" class="mid__item 1">
         <a href="/seed/index">
           <img
             class="mid__img"
@@ -62,7 +67,7 @@ const props = defineProps({
           />
         </a>
       </li>
-      <li v-if="trees.length <= 2" class="mid__item 2">
+      <li v-if="data.length <= 2" class="mid__item 2">
         <a href="/seed/index">
           <img
             class="mid__img"
@@ -73,7 +78,7 @@ const props = defineProps({
       </li>
       <li
         class="mid__item"
-        v-for="(tree, index) in trees"
+        v-for="(tree, index) in data"
         :key="index"
         :class="index"
       >
@@ -85,7 +90,7 @@ const props = defineProps({
           />
         </a>
       </li>
-      <li v-if="trees.length === 1" class="mid__item 1">
+      <li v-if="data.length === 1" class="mid__item 1">
         <a href="/seed/index">
           <img
             class="mid__img"
@@ -94,7 +99,7 @@ const props = defineProps({
           />
         </a>
       </li>
-      <li v-if="trees.length <= 2" class="mid__item 2">
+      <li v-if="data.length <= 2" class="mid__item 2">
         <a href="/seed/index">
           <img
             class="mid__img"

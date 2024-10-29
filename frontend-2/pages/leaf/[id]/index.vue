@@ -1,6 +1,6 @@
 <script setup>
-
-import UserInfoBackHeaderMemoirTitle from "~/components/background/UserInfoBackHeaderMemoirTitle.vue";
+import "@toast-ui/editor/dist/toastui-editor.css";
+import { ref } from "vue";
 
 const leafId = ref(1);
 const coverImageName = ref("background-image.png");
@@ -21,6 +21,22 @@ let cardHiddenInfo = reactive({
   view: 100 // 리프 수
 });
 
+const editor = ref({
+  title: "test",
+  text: "<h1>hello",
+  visibility: 1,
+});
+
+import Viewer from '@toast-ui/editor/dist/toastui-editor-viewer';
+onMounted(() => {
+  const viewer = new Viewer({
+    el: document.querySelector("#viewer"),
+    height: "500px",
+    initialValue: "hello"
+  });
+  viewer.setMarkdown(editor.value.text);
+});
+
 </script>
 
 <template>
@@ -28,32 +44,35 @@ let cardHiddenInfo = reactive({
   <Title>리프 정보</Title>
 
   <header>
-    <UserInfoBackHeaderMemoirTitle
+    <BackgroundDetail
         :edit="`/leaves/${leafId}/edit`"
-        :backimgpath="coverImageName"
+        :backImgPath="coverImageName"
         :username="`조현진`"
         :userid="`hyeonjin`"
-        :memoirtitle="`bookTitle`"
-        :userurl="`userurl`"
+        :memoirTitle="`리프 디테일 제목입니다`"
+        :userUrl="`userUrl`"
     />
   </header>
 
   <main>
-    <section class="my-tree-list">
-      <h2 class="none">리프 제목</h2>
-      <TextMainTitle class="memoir-title" :data="{ title: '리프 제목', size: 28 }" />
-    </section>
 
     <section class="branch-tree-detail-container">
       <h2 class="none">트리 상세 설명</h2>
       <!-- 트리 상세 설명 -->
     </section>
 
-    <!-- 에디터 뷰어-->
+    <section class="leaf-page-info-container">
+      <h2 class="none">도서 읽은 정보</h2>
+      <BarLeafReadingPageInfo :data="{ title: '회고록', size: 28, startPage: 100, endPage: 200 }" ></BarLeafReadingPageInfo>
+    </section>
+
+    <!-- 에디터 뷰어 -->
     <section class="my-tree-list">
       <h2 class="none">에디터 뷰어</h2>
       <div id="viewer"></div>
     </section>
+
+
 
   </main>
 

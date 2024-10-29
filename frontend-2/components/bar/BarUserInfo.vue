@@ -5,7 +5,7 @@ const { data } = defineProps(['data']);
 userimg: string;
 username: string;
 userid: string;
-userurl: string;
+userUrl: string;
 */
 </script>
 
@@ -13,7 +13,7 @@ userurl: string;
   <!--==========================================
       user info bar
       user tree index 사용 
-      (userimg,username,userid,userurl)
+      (userimg,username,userid,userUrl)
       TODO: A태그 어디다 쓰는거?
   ==========================================-->
   <div class="bar-user-info-frame">
@@ -33,7 +33,7 @@ userurl: string;
         id="bar-user-info__like"
       />
       <label class="__like-bold" for="bar-user-info__like"></label>
-      <a class="bar-user-info__set-btn" :href="`${data.userurl}`"></a>
+      <a class="bar-user-info__set-btn" :href="`${data.userUrl}`"></a>
     </div>
   </div>
 </template>

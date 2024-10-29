@@ -80,8 +80,8 @@ onMounted(() => {
       :backimgpath="coverImageName"
       :username="`조현진`"
       :userid="`hyeonjin`"
-      :memoirtitle="`bookTitle`"
-      :userurl="`userurl`"
+      :memoirTitle="`bookTitle`"
+      :userUrl="`userUrl`"
     />
   </header>
 

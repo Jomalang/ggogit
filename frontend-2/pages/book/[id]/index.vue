@@ -14,7 +14,15 @@
   <main>
     <section class="book-detail-bg-container">
       <h1 class="none">도서 배경 이미지</h1>
-      <BookDetail :imgSrc="`/img/book/detail/book.jpg`" />
+      <BackgroundBookDetail :data="{
+              imgSrc: 'test',
+              src: '',
+              backimgpath: '',
+              userimg: '',
+              username: '',
+              userid: '',
+              userUrl: '',
+          }" />
       <section class="book-detail-like-bar-container">
         <h1 class="none">좋아요 및 공유</h1>
         <LikeShare

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 interface Props {
-  memoirtitle: string;
-  userurl: string;
+  memoirTitle: string;
+  userUrl: string;
 }
 const props = defineProps<Props>();
 </script>
@@ -10,12 +10,12 @@ const props = defineProps<Props>();
   <!--==========================================
       memoir title + btns
       user tree memoir index 사용
-      (memoirtitle,userurl)
+      (memoirTitle,userUrl)
       TODO: A태그 요청 페이지 경로 확인 필요
   ==========================================-->
   <div class="bar-user-info-frame">
     <div class="bar-user-info__left-content">
-      <p class="bar-memoir-title">{{ props.memoirtitle }}</p>
+      <p class="bar-memoir-title">{{ props.memoirTitle }}</p>
     </div>
     <div class="bar-user-info__right-btns">
       <input
@@ -24,7 +24,7 @@ const props = defineProps<Props>();
         id="bar-user-info__like"
       />
       <label class="__like-bold" for="bar-user-info__like"></label>
-      <a class="bar-user-info__set-btn" :href="`${props.userurl}`"></a>
+      <a class="bar-user-info__set-btn" :href="`${props.userUrl}`"></a>
     </div>
   </div>
 </template>

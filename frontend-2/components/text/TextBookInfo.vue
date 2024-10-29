@@ -60,53 +60,55 @@ let seed = seedConverter(data.seed);
 
 <style scoped>
 .text-book-info {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    height: 137px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  height: 137px;
 }
 .text-book-info__frame {
-    display: flex;
-    background: var(--white);
+  display: flex;
+  /* background: var(--white); */
+  background-color: var(--main3);
 }
 
 .text-book-info__seed {
-    display: inline;
-    padding: 2px 8px;
-    border-radius: 4px;
-    font-size: 10px;
-    font-weight: var(--medium);
-    line-height: var(--line-height-main);
-    letter-spacing: var(--letter-spacing-main);
-    color: var(--white);
-    background: var(--main1);
+  display: inline;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: var(--medium);
+  line-height: var(--line-height-main);
+  letter-spacing: var(--letter-spacing-main);
+  color: var(--white);
+  background: var(--main1);
 }
 
 .text-book-info__title {
-    font-size: 24px;
-    font-weight: var(--bold);
-    line-height: var(--line-height-main);
-    letter-spacing: var(--letter-spacing-main);
-    color: var(--main1);
+  font-size: 24px;
+  font-weight: var(--bold);
+  line-height: var(--line-height-main);
+  letter-spacing: var(--letter-spacing-main);
+  color: var(--main1);
 }
 
 .text-book-info__create {
-    width: fit-content;
-    display: flex;
-    justify-content: left;
-    gap: 2px;
+  width: fit-content;
+  display: flex;
+  justify-content: left;
+  gap: 2px;
+  background-color: var(--main3);
 }
 .text-book-info__create-frame {
-    display: flex;
-    gap: 2px;
+  display: flex;
+  gap: 2px;
 }
 
 .text-book-info-create-info {
-    display: flex;
-    font-size: 14px;
-    font-weight: var(--regular);
-    line-height: var(--line-height-main);
-    letter-spacing: var(--letter-spacing-main);
-    color: var(--text-sub);
+  display: flex;
+  font-size: 14px;
+  font-weight: var(--regular);
+  line-height: var(--line-height-main);
+  letter-spacing: var(--letter-spacing-main);
+  color: var(--text-sub);
 }
 </style>

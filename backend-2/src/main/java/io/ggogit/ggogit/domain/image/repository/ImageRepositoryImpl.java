@@ -10,6 +10,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 @Repository
 @RequiredArgsConstructor
@@ -124,6 +126,18 @@ public class ImageRepositoryImpl {
      * @return UUID로 변경된 파일명
      */
     public String changeFileNameToUUID(String fileName) {
-        return java.util.UUID.randomUUID().toString().replace("-", "") + "." + fileName.lastIndexOf(".");
+        String extension = fileName.substring(fileName.lastIndexOf("."));
+        return java.util.UUID.randomUUID().toString().replace("-", "") + "." + extension;
+    }
+
+    /**
+     *
+     * @param fileName 파일 이름을 입력받습니다.
+     * @param folderType 찾기를 원하는 폴더 타입을 적습니다.
+     * @return 이미지의 전체 경로를 반환합니다.
+     */
+    public Path getImageFullPath(String fileName, UploadFolderType folderType) {
+        Path path = Paths.get(uploadPath + File.separator + folderType.getFolderName() + File.separator + fileName);
+        return path.toAbsolutePath();
     }
 }

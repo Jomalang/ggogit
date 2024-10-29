@@ -1,9 +1,11 @@
 # ================================================== #
 # 내부 변수
-@leafId = 47
+@leafId = 37
 @seedBookId = 1
 @seddEtcId = 1
 @tagId = 10001
+@memberId = 777
+@bookId = 1
 # ================================================== #
 
 # ================================================== #
@@ -39,15 +41,47 @@ DELETE {{host}}/api/v1/etc/leaves/{{leafId}}
 
 # ================================================== #
 # 리프 조회
+
+# 도서
+
+### 도서 리프 디테일 조회
+GET {{host}}/api/v1/book/leaves/{{leafId}}
+
+### 도서 리프 수정 조회
+GET {{host}}/api/v1/book/leaves/{{leafId}}/edit
+
+# 기타
+
+### 기타 리프 디테일 조회
+GET {{host}}/api/v1/etc/leaves/{{leafId}}
+
+### 기타 리프 수정 조회
+GET {{host}}/api/v1/etc/leaves/{{leafId}}/edit
+
+# ================================================== #
+# 리프 조회
 ### 리프 전체 조회
 GET {{host}}/api/v1/leaves/{{leafId}}/all
-
 
 ### 리프 상세 조회
 GET {{host}}/api/v1/leaves/{{leafId}}
 
+### 브래드 크럼 조회
+GET {{host}}/api/v1/leaves/{{leafId}}/breadcrumb
+
+### 리프 생성 및 수정 이전 정보 조회
+GET {{host}}/api/v1/leaves/{{leafId}}/before
 
 # ================================================== #
+# 리프 카드 조회
+
+### 도서 리프 카드 조회
+GET {{host}}/api/v1/members/{{memberId}}/leaves/book/cards
+
+
+### 일반 리프 카드 조회
+GET {{host}}/api/v1/books/{{bookId}}/leaves/cards
+
 
 # ================================================== #
 # 리프 태그

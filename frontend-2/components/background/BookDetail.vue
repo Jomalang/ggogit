@@ -2,46 +2,39 @@
 import TopBarTransparent from "@/components/top-bar/TopBarTransparent.vue";
 import BarUserInfo from "@/components/bar/BarUserInfo.vue";
 
-export default {
-  components: {
-    TopBarTransparent,
-    BarUserInfo
-  },
-  props: {
-    imgSrc: String,
-    src: String,
-    backimgpath: String,
-    userimg: String,
-    username: String,
-    userid: String,
-    userurl: String
-  },
-  computed: {
-    backgroundStyle() {
-      return {
-        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('/uploads/image/book/${this.backimgpath}')`
-      }
-    }
+const { data } = defineProps(['data']);
+/*
+imgSrc: String,
+src: String,
+backimgpath: String,
+
+userimg: String,
+username: String,
+userid: String,
+userurl: String
+*/
+
+const backgroundImage = computed(() => {
+  return {
+    backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('/uploads/image/book/${data.backimgpath}')`
   }
-}
+});
+
 </script>
 
 <template>
   <div id="bg-book-detail-box-id" class="bg-book-detail-box">
-    <img class="bg-book-detail__image" :src="imgSrc" alt="도서 이미지" />
+    <img class="bg-book-detail__image" :src="data.imgSrc" alt="도서 이미지" />
     <div id="bg-book-detail__front-img-box-id" class="bg-book-detail__front-img-box">
-      <img class="bg-book-detail__front-img" :src="imgSrc" alt="도서 이미지" />
+      <img class="bg-book-detail__front-img" :src="data.imgSrc" alt="도서 이미지" />
     </div>
-    <div class="user-tree-user-info-container" :style="backgroundStyle">
+    <div class="user-tree-user-info-container" :style="backgroundImage">
       <section class="user-info__top-bar-container">
-        <top-bar-transparent :src="src" />
+        <top-bar-transparent :src="data.src" />
       </section>
       <section class="user-info__user-info-bar-container">
         <bar-user-info
-            :userimg="userimg"
-            :username="username"
-            :userid="userid"
-            :userurl="userurl"
+            :data="{ 'userimg': data.userimg, 'username': data.username, 'userid': data.userid, 'userurl': data.userurl }"
         />
       </section>
     </div>

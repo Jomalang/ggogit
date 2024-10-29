@@ -1,4 +1,6 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+
+</script>
 
 <template>
   <header>
@@ -54,7 +56,7 @@
     <section class="book-detail-my-tree-container">
       <h1 class="none">도서의 나의 트리 정보</h1>
       <section class="book-detail-my-tree-title-container">
-        <TextMainTitle :title="`나의 트리`" :size="28" />
+        <TextMainTitle :data="{ title: '나의 트리', size: 28 }"></TextMainTitle>
       </section>
 
       <section class="book-detail-my-tree-list-container">
@@ -68,11 +70,11 @@
     <section class="book-detail-other-recode-container">
       <h1 class="none">도서의 다른 기록 보기</h1>
       <section class="book-detail-other-recode-title-container">
-        <TextMainTitle :title="`다른 기록 보기`" :size="28" />
+        <TextMainTitle :data="{ title: '다른 기록 보기', size: 28 }" />
       </section>
 
       <section class="book-detail-other-recode-sub-title-container">
-        <TextMainTitle :title="`트리 리스트`" :size="24" />
+        <TextMainTitle :data="{ title: '트리 리스트', size: 28 }" />
       </section>
 
       <section class="book-detail-other-tree-list-container">
@@ -83,7 +85,7 @@
       </section>
 
       <section class="book-detail-other-recode-sub-title-container">
-        <TextMainTitle :title="`회고록 리스트`" :size="24" />
+        <TextMainTitle :data="{ title: '회고록 리스트', size: 24 }" />
       </section>
 
       <section class="book-detail-other-tree-list-container">
@@ -94,7 +96,7 @@
       </section>
 
       <section class="book-detail-other-recode-sub-title-container">
-        <TextMainTitle :title="`리프 리스트`" :size="24" />
+        <TextMainTitle :data="{ title: '리프 리스트', size: 24 }" />
       </section>
 
       <section class="book-detail-other-tree-list-container">

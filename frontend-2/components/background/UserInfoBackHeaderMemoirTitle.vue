@@ -3,6 +3,8 @@ import TopBarTransparent from "@/components/top-bar/TopBarTransparent.vue";
 import BarUserInfoNoProfileBtn from "@/components/bar/BarUserInfoNoProfileBtn.vue";
 import BarMemoirTitleBtn from "@/components/bar/BarMemoirTitleBtn.vue";
 
+const { data } = defineProps(['data']);
+
 export default {
   components: {
     TopBarTransparent,
@@ -20,11 +22,12 @@ export default {
   computed: {
     backgroundStyle() {
       return {
-        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('/uploads/image/book/${this.backimgpath}')`,
+        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('/png/${this.backimgpath}')`,
       };
     },
   },
 };
+
 </script>
 
 <template>

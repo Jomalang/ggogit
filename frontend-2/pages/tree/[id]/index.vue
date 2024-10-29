@@ -54,7 +54,6 @@ watchEffect(() => {
     branch = branchData.value;
   }
 });
-
 </script>
 
 

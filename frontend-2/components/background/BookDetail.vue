@@ -8,7 +8,7 @@ imgSrc: String,
 src: String,
 backimgpath: String,
 
-userimg: String,
+userImg: String,
 username: String,
 userid: String,
 userUrl: String
@@ -34,7 +34,7 @@ const backgroundImage = computed(() => {
       </section>
       <section class="user-info__user-info-bar-container">
         <bar-user-info
-            :data="{ 'userimg': data.userimg, 'username': data.username, 'userid': data.userid, 'userUrl': data.userUrl }"
+            :data="{ 'userImg': data.userImg, 'username': data.username, 'userid': data.userid, 'userUrl': data.userUrl }"
         />
       </section>
     </div>

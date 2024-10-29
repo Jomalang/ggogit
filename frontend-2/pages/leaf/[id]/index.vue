@@ -4,6 +4,7 @@ import { ref } from "vue";
 
 const leafId = ref(1);
 const coverImageName = ref("background-image.png");
+const myProfile = ref("/jpg/leaf-profile.jpg");
 
 let cardHiddenInfo = reactive({
   hiddenText: '자세히',
@@ -67,17 +68,45 @@ onMounted(() => {
     </section>
 
     <!-- 에디터 뷰어 -->
-    <section class="my-tree-list">
+    <section class="editor-show-container">
       <h2 class="none">에디터 뷰어</h2>
       <div id="viewer"></div>
     </section>
 
+    <!-- 팔로우 -->
+    <section class="follow-container">
+      <BarUserInfoFollowBtn
+          :followId="1"
+          :userImg="myProfile"
+          :username="`사용자 이름`"
+          :userid="`@gksxorb147`"
+      />
+    </section>
 
+    <!-- 댓글 -->
+    <section class="book-detail-comment-container">
+      <h1 class="none">댓글</h1>
+      <BarComment :commentCount="1" :profileImg="myProfile" />
+      <section
+          id="comment-filter-tab-id"
+          class="book-detail-comment-tab-container book-detail-comment-tab-container--active none"
+      >
+        <h1 class="none">댓글 탭</h1>
+        <!-- TODO: 추후에 데이터 바인딩하면 주석 풀 것 -->
+        <!-- <TabComment /> -->
+      </section>
+    </section>
 
   </main>
 
 </template>
 
 <style scoped>
+.editor-show-container {
+  margin: 10px 16px 100px 16px;
+}
 
+.follow-container {
+  margin: 20px 16px 40px 16px;
+}
 </style>

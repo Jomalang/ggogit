@@ -1,9 +1,9 @@
-<script setup lang="ts">
+<script setup>
 
-const props = defineProps<{
-  name: string;
-  modelValue: boolean;
-}>();
+const props = defineProps({
+  name: String,
+  modelValue: Boolean
+});
 
 </script>
 

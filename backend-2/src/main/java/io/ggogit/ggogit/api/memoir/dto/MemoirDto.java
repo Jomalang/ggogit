@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 @Data
 @Builder
 public class MemoirDto {
+    private Long id;
     @NotNull(message = "제목을 입력해 주세요.")
     private String title;
     @NotNull(message = "내용을 입력해 주세요.")
@@ -22,6 +23,7 @@ public class MemoirDto {
 
     public static MemoirDto of(Memoir memoir, String message) {
         return MemoirDto.builder()
+                .id(memoir.getId())
                 .title(memoir.getTitle())
                 .text(memoir.getText())
                 .visibility(memoir.getVisibility())

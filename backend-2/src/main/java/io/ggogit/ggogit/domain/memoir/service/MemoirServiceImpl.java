@@ -5,6 +5,7 @@ import io.ggogit.ggogit.domain.memoir.entity.Memoir;
 import io.ggogit.ggogit.domain.memoir.repository.MemoirRepository;
 import io.ggogit.ggogit.domain.tree.entity.Tree;
 import io.ggogit.ggogit.domain.tree.repository.TreeRepository;
+import io.ggogit.ggogit.type.UploadFolderType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -72,9 +73,11 @@ public class MemoirServiceImpl implements MemoirService {
     public void saveImage(List<String> fileNames) throws IOException {
         if(fileNames.isEmpty()) return;
         for (String fileName : fileNames) {
-            imageRepository.changeFileNameToUUID(fileName);
-
-
+            if(imageRepository.isImageExists(fileName, UploadFolderType.TMP)){
+                imageRepository.moveImage(fileName, UploadFolderType.TMP, UploadFolderType.MEMOIR);
+            } else{
+                imageRepository.deleteImage(fileName, UploadFolderType.TMP);
+            }
         }
 
     }

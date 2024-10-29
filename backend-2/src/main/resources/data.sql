@@ -748,3 +748,6 @@ VALUES
     (77737, false, 2, '77737 잎의 내용입니다. 이 잎은 나무의 생장에 중요한 역할을 합니다.', '2024-10-08 08:00:00', false, 10, '첫 번째 잎', '2024-10-08 08:00:00', 1, 50, false, 77736, 7773),
     (77738, false, 2, '77738 잎의 내용입니다. 이 잎은 나무의 생장에 중요한 역할을 합니다.', '2024-10-09 08:00:00', false, 10, '첫 번째 잎', '2024-10-09 08:00:00', 1, 50, false, 77737, 7773),
     (77739, false, 2, '77739 잎의 내용입니다. 이 잎은 나무의 생장에 중요한 역할을 합니다.', '2024-10-10 08:00:00', false, 10, '첫 번째 잎', '2024-10-10 08:00:00', 1, 50, false, 77738, 7773);
+
+-- INSERT INTO tree_save_tmp (total_page, visibility, book_category_id, book_id, create_time, id, member_id, seed_id, version, description, tree_title, author, book_title, image_file, publisher)
+-- VALUES (123, TRUE, 1, NULL, '2024-10-30 21:21:06.566287', 1, 1000, 1, 0, 'sdfasdfasdf123123', 'ss', 'asdasdas', 'dasdadasdasd', '2041ee883f98439689ff32c74a40b995..jpg', NULL);

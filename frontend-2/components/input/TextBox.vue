@@ -3,8 +3,8 @@
 const props = defineProps({
   label: String,
   name: String,
-  modelValue: String,
-  placeholder: String
+  placeholder: String,
+  modelValue: String
 });
 
 const emit = defineEmits(['update:modelValue']);

@@ -4,6 +4,8 @@ const props = defineProps({
   text: String
 });
 
+const emit = defineEmits(['submit']);
+
 </script>
 
 <template>
@@ -12,7 +14,7 @@ const props = defineProps({
     <button
         id="book-tree-input-form-id"
         class="btn-full-bar__btn"
-        type="submit"
+        @click.prevent="$emit('submit')"
     >{{ text }}</button>
   </div>
 </template>

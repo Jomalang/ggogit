@@ -1,22 +1,17 @@
-<script setup lang="ts">
+<script setup>
 
-import {LeafTagProps} from "@/types/types";
+const props = defineProps(
+  { selectedTag: Array }
+);
 
-const props = defineProps<{
-  selectedTag: Array<LeafTagProps>;
-}>();
-
-const tagDelete = (tag: LeafTagProps) => {
-  const index = props.selectedTag.findIndex((item) => item.id === tag.id);
-  props.selectedTag.splice(index, 1);
-};
+const emit = defineEmits( ["drop"]);
 
 </script>
 
 <template>
   <div class="input-tag-select-box">
     <p class="input-tag-select__label-text">태그 선택</p>
-    <label class="input-tag-select__bg">
+    <div class="input-tag-select__bg">
       <div class="input-tag-select__button-box">
         <div class="input-tag-select__tag-box">
           <ul class="input-tag-select__tags">
@@ -24,7 +19,8 @@ const tagDelete = (tag: LeafTagProps) => {
                 v-for="tag in selectedTag" :key="tag.id">
               <label class="input-tag-select__tag-label">
                 <span class="input-tag-select__tag-text">{{ tag.name }}</span>
-                <button class="input-tag-select__tag-delete-btn" type="button" @click="(evnet) => {evnet.pre}" >
+                <button class="input-tag-select__tag-delete-btn" type="button"
+                        @click="emit('drop', tag)">
                   <img src="/svg/x-button.svg" alt="next-button" />
                 </button>
                 <input class="none input-tag-select__input" name="tagIds" :value="tag.id" />
@@ -37,18 +33,23 @@ const tagDelete = (tag: LeafTagProps) => {
         <RouterLink
           class="input-tag-select__button"
           id="input-tag-select__button-id"
-          to="/leaf/tag/list">
+          to="/leaf/tag">
           <img src="/public/svg/next.svg" alt="next-button" />
         </RouterLink>
       </div>
-    </label>
+    </div>
   </div>
 </template>
 
-<style>
+<style scoped>
 /*  ==========================================
     FRAGMENT: 태그 선택
     ========================================== */
+.input-tag-select__tag-delete-btn {
+  background-color: var(--main1, #323a27);
+  border: none;
+}
+
 .input-tag-select-box {
   width: 100%;
   display: flex;
@@ -102,7 +103,7 @@ const tagDelete = (tag: LeafTagProps) => {
 .input-tag-select__tag-label {
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
 }
 

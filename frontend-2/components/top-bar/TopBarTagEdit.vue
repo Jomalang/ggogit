@@ -1,15 +1,10 @@
-<script setup lang="ts">
-import { LeafTagProps } from "@/types/types";
+<script setup>
 
-const props = defineProps<{
-  tag: LeafTagProps;
-}>();
+const props = defineProps(
+  { tag: String }
+);
 
-const emit = defineEmits(['tagUpdate']);
-
-const tagUpdate = () => {
-  emit('tagUpdate');
-};
+const emit = defineEmits(['update']);
 
 </script>
 
@@ -17,16 +12,16 @@ const tagUpdate = () => {
   <!--top-bar-tag-edit(tag,memberId)-->
   <div class="top-bar--green">
     <div class="top-bar__frame">
-      <a class="tob-bar__back-link" href="/leaf/tag/list">
+      <RouterLink class="tob-bar__back-link" to="/leaf/tag">
         <img
           src="/public/svg/back-arrow-icon.svg"
           alt="top-bar--backarrow.svg"
         />
-      </a>
+      </RouterLink>
       <div class="tree-input-text--select__tag">
         {{ tag.name }}
       </div>
-      <button class="top-bar__text" type="submit" @click.prevent="emit('tagUpdate')">완료</button>
+      <button class="top-bar__text" type="submit" @click.prevent="emit('update')">완료</button>
     </div>
   </div>
 </template>

@@ -14,6 +14,7 @@ const treeFormData = useState('treeFormData', () => ({
   bookTitle: "",
   author: "",
   publishDate: "",
+  publisher: "",
   totalPage: "",
 
   // 도서 카테고리 정보
@@ -151,6 +152,17 @@ const dropBookCategory = () => {
         <section class="input-form__input-container">
           <h1 class="none">출판사 입력</h1>
           <InputTextBox
+              label="*출판사"
+              name="publisher"
+              v-model="treeFormData.publisher"
+              placeholder="출판사를 입력해주세요"
+          >
+          </InputTextBox>
+        </section>
+
+        <section class="input-form__input-container">
+          <h1 class="none">출판사 입력</h1>
+          <InputTextBox
               label="*출판일"
               name="publishDate"
               v-model="treeFormData.publishDate"
@@ -206,8 +218,7 @@ const dropBookCategory = () => {
 
         <section class="input-form__input-container">
           <h1 class="none">공개성 선택</h1>
-          <InputVisibility name="visibility" v-model="treeFormData.visibility">
-          </InputVisibility>
+          <InputVisibility name="visibility" v-model="treeFormData.visibility"></InputVisibility>
         </section>
 
         <section class="book-tree-submit-container">

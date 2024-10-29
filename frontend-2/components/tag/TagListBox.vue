@@ -51,7 +51,7 @@ const isCanCreate = computed(() => {
           <q class="tag-info__name">{{ tag.name }}</q>
         </div>
         <div class="tag-info__option-box">
-          <RouterLink class="tag-info__option-link" :to="`/tag/${tag.id}/edit`">
+          <RouterLink class="tag-info__option-link" :to="`/leaf/tag/${tag.id}/edit`">
             <img class="tag-info__option-btn" src="/svg/icon-option.svg" alt="태그 선택 제거 이미지">
           </RouterLink>
         </div>

@@ -1,9 +1,11 @@
-<script setup lang="ts">
+<script setup>
 import { onMounted, reactive, ref } from "vue";
 import axios, { HttpStatusCode } from "axios";
 import { useRoute } from "vue-router";
 
 // ----------------------- Model --
+const config = useRuntimeConfig();
+const router = useRouter();
 const route = useRoute();
 const tag = reactive({
   id: route.params.id,
@@ -21,7 +23,7 @@ onMounted(() => {
 const tagDetailApi = async () => {
   try {
     const response = await axios.get(
-        `http://localhost:8080/api/v1/tags/${tag.id}`
+        `${config.public.apiBase}/tags/${tag.id}`
     );
 
     if (response.status !== HttpStatusCode.Ok) {
@@ -35,12 +37,12 @@ const tagDetailApi = async () => {
   }
 };
 
-const tagUpdateApi = async (newName: string) => {
+const tagUpdateApi = async (newName) => {
   try {
     // TODO: 태규 진행 작업
     // 리프 태그 수정 진행중 여기 작업 해야함
     const response = await axios.put(
-        `http://localhost:8080/api/v1/tags/${tag.id}`,
+        `${config.public.apiBase}/tags/${tag.id}`,
         {
           name: newName,
         }
@@ -56,7 +58,7 @@ const tagUpdateApi = async (newName: string) => {
     }
 
     alert("태그 정보가 수정되었습니다.");
-    location.href = "/tag/list";
+    router.push("/leaf/tag");
   } catch (error) {
     if (error.response.status === HttpStatusCode.Conflict) {
       alert("이미 존재하는 태그 이름입니다.");
@@ -79,7 +81,7 @@ const tagDeleteApi = async () => {
     }
 
     alert("태그 정보가 삭제되었습니다.");
-    location.href = "/tag/list";
+    router.push("/leaf/tag");
   } catch (error) {
     console.error(error);
   }
@@ -88,6 +90,7 @@ const tagDeleteApi = async () => {
 // ----------------------- Function ----------------------- //
 
 const tagUpdateHandler = () => {
+
   if (newTagName === "") {
     alert("태그 이름을 입력해주세요.");
     return;
@@ -95,7 +98,7 @@ const tagUpdateHandler = () => {
 
   if (tag.name === newTagName) {
     alert("변경된 사항이 없습니다.");
-    location.href = "/tag/list";
+    router.push("/leaf/tag");
     return;
   }
 
@@ -119,7 +122,7 @@ const tagDeleteHandler = () => {
     <form action="/leaf/tag/edit" method="post">
       <section>
         <h2 class="none">뒤로가기 및 완료 바</h2>
-        <TopBarTagEdit :tag="tag" @tagUpdate="tagUpdateHandler"></TopBarTagEdit>
+        <TopBarTagEdit :tag="tag" @update="tagUpdateHandler"></TopBarTagEdit>
       </section>
 
       <section class="none">
@@ -129,10 +132,10 @@ const tagDeleteHandler = () => {
 
       <section>
         <h2 class="none">태그 입력</h2>
-        <TagSearchOrRegisterBar
+        <InputTagSearchOrRegisterBar
             v-model:tag="tag"
-            @tagSearch="changeTagNameHandler"
-        ></TagSearchOrRegisterBar>
+            @tagSearch="changeTagNameHandler">
+        </InputTagSearchOrRegisterBar>
       </section>
     </form>
   </header>
@@ -146,12 +149,12 @@ const tagDeleteHandler = () => {
     <form id="tag-delete-form-id" action="/leaf/tag/delete" method="post">
       <section>
         <h1 class="none">삭제 데이터</h1>
-        <DefaultData name="" values=""></DefaultData>
+        <InputDefaultData name="" values=""></InputDefaultData>
       </section>
 
       <section>
         <h1 class="none">삭제 버튼</h1>
-        <DeleteFormBtn @tagDelete="tagDeleteHandler"></DeleteFormBtn>
+        <InputDeleteFormBtn @tagDelete="tagDeleteHandler"></InputDeleteFormBtn>
       </section>
     </form>
   </main>

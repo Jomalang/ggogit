@@ -43,13 +43,12 @@ const emit = defineEmits(['drop']);
   </div>
 </template>
 
-<style>
+<style scoped>
 /*  ==========================================
     FRAGMENT: 태그 선택
     ========================================== */
 .input-tag-select__tag-delete-btn {
   background-color: var(--main1, #323a27);
-  background: none;
   border: none;
   font: inherit;
   color: inherit;

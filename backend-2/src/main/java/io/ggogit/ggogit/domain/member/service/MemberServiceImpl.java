@@ -8,6 +8,7 @@ import io.ggogit.ggogit.domain.member.entity.RoleType;
 import io.ggogit.ggogit.domain.member.repository.EmailJoinTokenRepository;
 import io.ggogit.ggogit.domain.member.repository.MemberRepository;
 import io.ggogit.ggogit.domain.member.repository.PassWordRestRepository;
+import io.ggogit.ggogit.domain.tree.entity.Tree;
 import io.ggogit.ggogit.util.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,6 +18,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -192,5 +195,21 @@ public class MemberServiceImpl implements MemberService {
     // 이메일 전송 고유 값
     private String generateToken() {
         return UUID.randomUUID().toString();
+    }
+
+
+    @Override
+    public Optional<Member> findByNickname(String nickname) {
+        return memberRepository.findByNickname(nickname);
+    }
+
+    @Override
+    public Optional<Member> findByUsername(String username) {
+        return memberRepository.findByUsername(username);
+    }
+
+    @Override
+    public Optional<Member> findByTrees(List<Tree> trees) {
+        return memberRepository.findByTrees(trees);
     }
 }

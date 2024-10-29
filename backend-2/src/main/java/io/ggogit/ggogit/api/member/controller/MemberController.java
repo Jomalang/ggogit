@@ -3,6 +3,7 @@ package io.ggogit.ggogit.api.member.controller;
 import io.ggogit.ggogit.api.member.dto.*;
 import io.ggogit.ggogit.domain.member.entity.Member;
 import io.ggogit.ggogit.domain.member.service.MemberService;
+import io.ggogit.ggogit.domain.tree.entity.Tree;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,6 +12,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @RestController
@@ -153,5 +157,29 @@ public class MemberController {
         memberService.passwordReset(password, token);
         MemberPasswordResetResponse response = MemberPasswordResetResponse.of("비밀번호 변경 완료");
         return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    // 닉네임으로 회원 조회
+    @GetMapping("/nickname/{nickname}")
+    public ResponseEntity<Member> findByNickname(@PathVariable String nickname) {
+        Optional<Member> member = memberService.findByNickname(nickname);
+        return member.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    // 사용자 이름으로 회원 조회
+    @GetMapping("/username/{username}")
+    public ResponseEntity<Member> findByUsername(@PathVariable String username) {
+        Optional<Member> member = memberService.findByUsername(username);
+        return member.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    // 트리로 회원 조회
+    @PostMapping("/trees")
+    public ResponseEntity<Member> findByTrees(@RequestBody List<Tree> trees) {
+        Optional<Member> member = memberService.findByTrees(trees);
+        return member.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 }

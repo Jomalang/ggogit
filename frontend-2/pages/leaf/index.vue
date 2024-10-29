@@ -40,8 +40,6 @@ const btn = ref<TextBtnGreenProps>({
   link: "/app/leaf/create",
 });
 
-const
-
 </script>
 
 <template>

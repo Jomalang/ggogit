@@ -1,59 +1,47 @@
-<script setup lang="ts">
+<script setup>
 
 import { defineProps } from 'vue';
-import CardProgressBar from "@/components/card/CardProgressBar.vue";
-import CardReactNumbers from "@/components/card/CardReactNumbers.vue";
-import LinkFullWidth from "@/components/button/LinkFullWidth.vue";
-import type {CardHiddenInfoProps} from "~/types/types";
+import CardProgressBar from "~/components/card/CardProgressBar.vue";
+import CardReactNumbers from "~/components/card/CardReactNumbers.vue";
+import LinkFullWidth from "~/components/button/LinkFullWidth.vue";
+import TextBookInfo from "~/components/text/TextBookInfo.vue";
 
-interface CardProgressBarProps {
-  progress: number;
-  readPage: number;
-  fullPage: number;
-}
+const {data} = defineProps(['data']);
 
-interface CardReactNumbersProps {
-  leaf: number;
-  like: number;
-  view: number;
-}
-
-const item: CardHiddenInfoProps = {
-  hiddenText: '자세히',
-  authors: 'authors',
-  translators: 'translators',
-  publisher: 'publisher',
-  page: 100,
-  seed: 100,
-  treeDescription: 'treeDescription',
-  readPage: 50,
-  progress: 50,
-  fullPage: 100,
-  leaf: 100,
-  like: 100,
-  view: 100,
+function translatorsConverter(translators) {
+  if (translators == null || translators === "") {
+    return [];
+  }
+  return translators.split(",");
 };
 
-const cardProgressBarProps: CardProgressBarProps = {
-  progress: 50,
-  readPage: 50,
-  fullPage: 100,
+let translators = translatorsConverter(data.bookTranslator ?? "");
+
+const textBookInfoProps = {
+  title: data.bookTitle,
+  authors: data.bookAuthor,
+  translators: translators,
+  publisher: data.bookPublisher,
+  page: data.bookTotalPage,
+  seed: data.seedId,
 };
 
-const cardReactNumbersProps: CardReactNumbersProps = {
-  leaf: 100,
-  like: 100,
-  view: 100,
-}
+const cardProgressBarProps = {
+  progress: (data.readingPage * 100 / data.bookTotalPage).toFixed(2),
+  readPage: data.readingPage,
+  fullPage: data.bookTotalPage,
+};
 
-const props = defineProps<{
-  item: CardHiddenInfoProps;
-}>();
+const cardReactNumbersProps = {
+  leaf: data.treeLeafCnt,
+  like: data.treeLikeCnt,
+  view: data.treeViewCnt,
+};
 
 </script>
 
 <template>
-  <!-- (hiddenText, authors,translators,publisher,page,seed, treeDescription, progress,readpage,fullpage, leaf,like,view) -->
+  <!-- (hiddentext, authors,translators,publisher,page,seed, treedescription, progress,readpage,fullpage, leaf,like,view) -->
   <div class="card-tree-info__detail-frame">
     <input class="card-tree-info__detail-input" type="checkbox" id="card-tree-info__detail"/>
     <label class="card-tree-info__detail" for="card-tree-info__detail">자세히</label>
@@ -63,15 +51,18 @@ const props = defineProps<{
 
       <section class="card-tree-info__detail-tree-container">
         <h4 class="none">트리 정보</h4>
-        <!-- <div th:replace="~{fragments/text :: text-book-info&#45;&#45;no-title(${authors},${translators},${publisher},${page},${seed})}"></div> -->
+        <TextBookInfo :data = textBookInfoProps />
+        <!-- <div th:replace="~{fragments/text :: text-book-info--no-title(${authors},${translators},${publisher},${page},${seed})}"></div> -->
       </section>
 
       <section class="card-tree__description-title__container">
         <!-- <h3 th:replace="~{fragments/text :: text-main-title(title='트리설명', size=18)}"></h3> -->
-        <p class="card-tree__description-content">{{ treeDescription }}</p>
+        <p class="card-tree__description-content">{{ data.description }}</p>
       </section>
 
-      <section class="card-progress__container" >
+      <section
+          v-if="data.bookTotalPage != null"
+          class="card-progress__container" >
         <div class="card-reading-progress-no-background">
           <CardProgressBar :data="cardProgressBarProps" />
           <CardReactNumbers :data="cardReactNumbersProps" />

@@ -1,5 +1,13 @@
-<script setup lang="ts">
+<script setup>
 
+import { defineProps } from 'vue';
+
+const props = defineProps({
+  filterName: {
+    type: String,
+    default: 'Default Title'
+  }
+})
 </script>
 
 <template>
@@ -17,7 +25,7 @@
     </div>
     <div class="filter-tree-leaf__card-sort" id="filter-tree-leaf__card-sort">
       <input class="bar-search-current__detail-input" type="checkbox" id="bar-search-current__detail"/>
-      <label class="bar-search-current__detail" for="bar-search-current__detail"></label>
+      <label class="bar-search-current__detail" for="bar-search-current__detail">{{props.filterName}}</label>
     </div>
   </div>
 </template>

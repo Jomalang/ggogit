@@ -2,10 +2,7 @@ package io.ggogit.ggogit.api.tree;
 
 import io.ggogit.ggogit.api.leaf.dto.LeafBranchResponse;
 import io.ggogit.ggogit.api.leaf.dto.LeafItemResponse;
-import io.ggogit.ggogit.api.tree.dto.TreeCardRequest;
-import io.ggogit.ggogit.api.tree.dto.TreeInfoResponse;
-import io.ggogit.ggogit.api.tree.dto.TreeTmpRequest;
-import io.ggogit.ggogit.api.tree.dto.TreeTmpResponse;
+import io.ggogit.ggogit.api.tree.dto.*;
 
 import io.ggogit.ggogit.domain.leaf.entity.Leaf;
 import io.ggogit.ggogit.domain.leaf.service.LeafDtoService;
@@ -74,7 +71,7 @@ public class TreeController {
     }
 
     @GetMapping("{id}/info")
-    public TreeInfoResponse getTreeInfoResponse(
+    public ResponseEntity<TreeInfoResponse> getTreeInfoResponse(
             @PathVariable(value = "id") Long treeId,
             @RequestParam(value = "mid",defaultValue = "1") Long mid
 //            @SessionAttribute Member member
@@ -83,7 +80,7 @@ public class TreeController {
         Long memberId = mid;
 
         TreeInfoResponse treeInfoResponse = treeService.findTreeInfoResponse(memberId, treeId);
-        return treeInfoResponse;
+        return new ResponseEntity<> (treeInfoResponse, HttpStatus.OK);
     }
 
 //    @GetMapping("{id}/info")
@@ -143,7 +140,7 @@ public class TreeController {
     }
 
     @GetMapping("/{treeId}/branches")
-    public Page<LeafBranchResponse> getBranchList(
+    public TreeDetailResponse getBranchList(
             @PathVariable Long treeId,
             @RequestParam(value = "b", required = false) final Boolean bookMark,
             @RequestParam(value = "f", defaultValue = "10") final Long filter,
@@ -163,16 +160,14 @@ public class TreeController {
 
         List<LeafBranchResponse> branchList = leafDtoService.findBranchByFilter(treeId, hasOwner, bookMark);
         branchList = sortLeafList(branchList, filterName.getValue(), sortName.getValue());
-        for (LeafBranchResponse leaf : branchList) {
-            System.out.println(leaf.toString());
-        }
+
         if (branchList.isEmpty()) {
-            return Page.empty(pageable);
+            return null;
         }
 
         int start = (int) pageable.getOffset();
         if (start >= branchList.size()) {
-            return Page.empty(pageable);
+            return null;
         }
 
         int end = Math.min(start + pageable.getPageSize(), branchList.size());
@@ -180,10 +175,10 @@ public class TreeController {
         try {
             Page<LeafBranchResponse> branchCard = new PageImpl<>(
                     branchList.subList(start, end), pageable, branchList.size());
-            return branchCard;
+            return TreeDetailResponse.toEntity(branchCard, branchList.size(),branchCard.getTotalPages());
         } catch (IllegalArgumentException e) {
             System.out.println("Paging error: " + e.getMessage());
-            return Page.empty(pageable);
+            return null;
         }
     }
 

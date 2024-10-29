@@ -1,5 +1,10 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  runtimeConfig: {
+    public:{
+      apiBase: 'http://localhost:8080/api/v1'
+    }
+  },
   compatibilityDate: '2024-04-03',
   devtools: { enabled: true },
   nitro: {
@@ -8,6 +13,15 @@ export default defineNuxtConfig({
       "leaf/book/new": {
         ssr: false, // "/editor/toast" 경로에 대해서는 SSR을 비활성화
       },
+      "memoir/:id/edit": {
+        ssr: false, // "/editor/toast" 경로에 대해서는 SSR을 비활성화
+      },
+      "memoir/:id/reg": {
+        ssr: false, // "/editor/toast" 경로에 대해서는 SSR을 비활성화
+      },
+      "memoir/:id": {
+        ssr: false, // "/editor/toast" 경로에 대해서는 SSR을 비활성화
+      },
     },
   },
-})
+});

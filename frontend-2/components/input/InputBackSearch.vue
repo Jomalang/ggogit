@@ -69,39 +69,39 @@ onUpdated(() => {
   </div>
   <!-- 필터 -->
   <!-- (description, name, value, isChecked) -->
-  <div class="search-filter-log">
-    <label class="search-filter-log__checkbox-labal">
-      <input
-        class="search-filter-log__checkbox-input"
-        type="radio"
-        name="filterType"
-        value="title"
-        checked
-        v-model="filter"
-      />
-      <span class="search-filter-log__checkbox-input-text">제목</span>
-    </label>
-    <label class="search-filter-log__checkbox-labal">
-      <input
-        class="search-filter-log__checkbox-input"
-        type="radio"
-        name="filterType"
-        value="author"
-        v-model="filter"
-      />
-      <span class="search-filter-log__checkbox-input-text">저자</span>
-    </label>
-    <label class="search-filter-log__checkbox-labal">
-      <input
-        class="search-filter-log__checkbox-input"
-        type="radio"
-        name="filterType"
-        value="publisher"
-        v-model="filter"
-      />
-      <span class="search-filter-log__checkbox-input-text">출판사</span>
-    </label>
-  </div>
+<!--  <div class="search-filter-log">-->
+<!--    <label class="search-filter-log__checkbox-labal">-->
+<!--      <input-->
+<!--        class="search-filter-log__checkbox-input"-->
+<!--        type="radio"-->
+<!--        name="filterType"-->
+<!--        value="title"-->
+<!--        checked-->
+<!--        v-model="filter"-->
+<!--      />-->
+<!--      <span class="search-filter-log__checkbox-input-text">제목</span>-->
+<!--    </label>-->
+<!--    <label class="search-filter-log__checkbox-labal">-->
+<!--      <input-->
+<!--        class="search-filter-log__checkbox-input"-->
+<!--        type="radio"-->
+<!--        name="filterType"-->
+<!--        value="author"-->
+<!--        v-model="filter"-->
+<!--      />-->
+<!--      <span class="search-filter-log__checkbox-input-text">저자</span>-->
+<!--    </label>-->
+<!--    <label class="search-filter-log__checkbox-labal">-->
+<!--      <input-->
+<!--        class="search-filter-log__checkbox-input"-->
+<!--        type="radio"-->
+<!--        name="filterType"-->
+<!--        value="publisher"-->
+<!--        v-model="filter"-->
+<!--      />-->
+<!--      <span class="search-filter-log__checkbox-input-text">출판사</span>-->
+<!--    </label>-->
+<!--  </div>-->
 </template>
 
 <style scoped>

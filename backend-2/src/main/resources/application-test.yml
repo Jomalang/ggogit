@@ -60,4 +60,4 @@ aladin:
 file: # 이미지 업로드 경로
   tmp-dir: src/main/webapp/image/tmp
   upload-dir: src/main/webapp/uploads
-  upload-path: src/main/resources/static/uploads
+  upload-path: src/main/webapp/uploads

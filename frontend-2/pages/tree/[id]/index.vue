@@ -1,81 +1,65 @@
-<script setup lang="ts">
-import { defineComponent, onMounted, reactive } from "vue";
+<script setup >
+import { ref,watchEffect } from "vue";
 
 import axios from "axios";
 import { useRoute } from "vue-router";
-const props = defineProps<{
-  treeInfoResponse: {
-    bookId?: number | null;
-    bookCategory?: string | null;
-    bookTitle?: string | null;
-    bookAuthor?: string | null;
-    bookTranslator?: string | null;
-    bookPublisher?: string | null;
-    bookPublishedYear?: string | null;
-    bookTotalPage?: number | null;
-    treeId: number;
-    memberId: number;
-    seedId: number;
-    title: string;
-    description: string;
-    visibility: Boolean;
-    leafCreatedAt: string;
-    createdAt: string;
-    readingPage?: number | null;
-    coverImageName: string;
-    treeLeafCnt: number;
-    treeLikeCnt: number;
-    treeViewCnt: number;
-  };
-}>();
+import CardHiddenInfo from "~/components/card/CardHiddenInfo.vue";
+import CardTreeInfoCover from "~/components/card/CardTreeInfoCover.vue";
+import CardBranchList from "~/components/card/CardBranchList.vue";
+import TextMainTitle from "~/components/text/TextMainTitle.vue";
+import FilterTreeLeafCard from "~/components/filter/FilterTreeLeafCard.vue";
+import NavigationBar from "~/components/nav/NavigationBar.vue";
+import InputBackSearch from "~/components/input/InputBackSearch.vue";
 
-const treeId: number = Number(useRoute().params.id);
-const data = reactive({
-  info: [],
-  list: [],
-});
+
+const treeId = Number(useRoute().params.id);
+
 const queryParam = reactive({
-  filter: "",
-  sort: "",
+  filter: 10,
+  sort: 1,
   bookMark: "",
   p: 0,
 });
 
-const fetchInfo = async () => {
-  try {
-    const response = await axios.get(`http://localhost:8080/api/v1/trees/info`);
-    // (`http://localhost:8080/api/v1/trees/${treeId}/branches?f=${queryParam.filter}&s=${queryParam.sort}&b=${queryParam.bookMark}&p=${queryParam.p}`);
-    data.info = response.data;
+let info = reactive({});
+let branch = reactive({
+  items: [],
+  totalCnt: 0,
+  totalPage: 0
+});
 
-    return data.info;
-  } catch (error) {
-    console.error("Error fetching data:", error);
+const config = useRuntimeConfig();
+
+const { data: infoData, error: infoError } = useFetch(() => `trees/${treeId}/info`, {
+  baseURL: config.public.apiBase,
+});
+
+const { data: branchData, error: branchError } = useFetch(() => `trees/${treeId}/branches`, {
+  baseURL: config.public.apiBase,
+  params: {
+    f: queryParam.filter,
+    s: queryParam.sort,
+    b: queryParam.bookMark,
+    p: queryParam.p,
+  },
+});
+
+let filterName = "최근 수정 순";
+
+watchEffect(() => {
+  if (infoData.value) {
+    info = infoData.value;
   }
-};
-
-const fetchList = async () => {
-  try {
-    const response = await axios.get(
-      `http://localhost:8080/api/v1/trees/1/branches?`
-    );
-    // (`http://localhost:8080/api/v1/trees/${treeId}/branches?f=${queryParam.filter}&s=${queryParam.sort}&b=${queryParam.bookMark}&p=${queryParam.p}`);
-    data.list = response.data.branches;
-    return data.list;
-  } catch (error) {
-    console.error("Error fetching data:", error);
+  if(branchData.value) {
+    branch = branchData.value;
   }
-};
-
-onMounted(() => {
-  console.log("treeId: " + treeId);
-  console.log("useRoute: " + useRoute());
-  fetchInfo();
-  fetchList();
 });
 </script>
 
+
+<!------------------------------------View---------------------------------------->
+
 <template>
-  hi
   <header>
     <h1 class="none">사용자 트리 세부정보</h1>
     <section class="reg-book-search-container">
@@ -83,95 +67,50 @@ onMounted(() => {
 
       <InputBackSearch
         placeholder="검색할 트리를 입력해주세요"
-        href=""
-        javascript:history.back()
+        href="javascript:history.back()"
         api=""
-        >트리 검색 상단 바</InputBackSearch
-      >
+        >트리 검색 상단 바</InputBackSearch>
     </section>
   </header>
   <main>
     <section class="user-tree-info__container">
       <h2 class="none">트리 정보</h2>
-      <CardTreeInfoCover
-        :data="{
-          src: treeInfoResponse.coverImageName,
-          treeTitle: treeInfoResponse.title,
-          bookTitle: treeInfoResponse.bookTitle,
-        }"
-        >트리 정보</CardTreeInfoCover
-      >
-      <div
-        th:replace="~{fragments/card :: card-tree-info-cover(src=${treeInfoResponse.coverImageName},treetitle=${treeInfoResponse.title},booktitle=${treeInfoResponse.bookTitle})}"
-      ></div>
+        <CardTreeInfoCover :data="info">트리 정보</CardTreeInfoCover>
     </section>
-    <section
-      class="branch-tree-detail-container"
-      th:with="rPage=${treeInfoResponse.readingPage ?: 0}, totalPage=${treeInfoResponse.bookTotalPage ?: 1}"
-    >
+    <section class="branch-tree-detail-container">
       <h2 class="none">트리 상세 설명</h2>
-      <CardHiddenInfo
-        :item="{
-          hiddenText: '자세히',
-          authors: treeInfoResponse.bookAuthor,
-          translators: treeInfoResponse.bookTranslator,
-          publisher: treeInfoResponse.bookPublisher,
-          page: treeInfoResponse.bookTotalPage,
-          seed: treeInfoResponse.seedId,
-          treeDescription: treeInfoResponse.description,
-          readPage: treeInfoResponse.readingPage,
-          progress:
-            treeInfoResponse.readingPage && treeInfoResponse.bookTotalPage
-              ? parseFloat(
-                  (
-                    (treeInfoResponse.readingPage * 100.0) /
-                    treeInfoResponse.bookTotalPage
-                  ).toFixed(1)
-                )
-              : 0,
-          fullPage: treeInfoResponse.bookTotalPage,
-          leaf: treeInfoResponse.treeLeafCnt,
-          like: treeInfoResponse.treeLikeCnt,
-          view: treeInfoResponse.treeViewCnt,
-        }"
-      ></CardHiddenInfo>
-      <div
-        th:replace="~{fragments/card :: card-hidden-info(
-        hiddenText='자세히',
-        authors=${treeInfoResponse.bookAuthor},
-        translators=${treeInfoResponse.bookTranslator},
-        publisher=${treeInfoResponse.bookPublisher},
-        page=${totalPage},
-        seed=${treeInfoResponse.seedId},
-        treeDescription=${treeInfoResponse.description},
-        readpage=${rPage},
-        progress=${#numbers.formatDecimal((rPage * 100.0 / totalPage), 1, 1)},
-        fullpage=${treeInfoResponse.bookTotalPage},
-        leaf=${treeInfoResponse.treeLeafCnt},
-        like=${treeInfoResponse.treeLikeCnt},
-        view=${treeInfoResponse.treeViewCnt}
-    )}"
-      ></div>
+
+      <CardHiddenInfo :data ="info" >트리 상세 설명</CardHiddenInfo>
     </section>
 
     <section class="branch-list__container">
-      <h2
-        th:replace="~{fragments/text :: text-main-title__listCount(title='브랜치 목록', number=${#lists.size(leafList)})}"
-      ></h2>
-
+      <div>
+      <TextMainTitleListCount
+        :title="'브랜치 목록'"
+        :number='branch.totalCnt'
+      >브랜치 목록</TextMainTitleListCount>
+      </div>
+<!--      <h2-->
+<!--        th:replace="~{fragments/text :: text-main-title__listCount(title='브랜치 목록', number=${#lists.size(leafList)})}"-->
+<!--      ></h2>-->
       <section class="branch-filter-container">
         <h3 class="none">브랜치 필터</h3>
 
-        <div th:replace="~{fragments/filter :: filter-tree-leaf__card()}"></div>
+        <div>
+        <FilterTreeLeafCard :filterName="filterName"></FilterTreeLeafCard>
+        </div>
+<!--        <div th:replace="~{fragments/filter :: filter-tree-leaf__card()}"></div>-->
       </section>
 
       <section class="branch-filter-result-list__container">
         <h3 class="none">브랜치 리스트</h3>
-        \
         <div id="card-branch__list-frame">
-          <div
-            th:replace="~{fragments/card :: card-branch__list(${leafList})}"
-          ></div>
+          <div>
+          <CardBranchList :items="branch.items.content"></CardBranchList>
+          </div>
+<!--          <div-->
+<!--            th:replace="~{fragments/card :: card-branch__list(${leafList})}"-->
+<!--          ></div>-->
         </div>
       </section>
     </section>
@@ -184,7 +123,7 @@ onMounted(() => {
             class="filter-tab__btn--back"
             type="button"
           >
-            <img th:src="@{/svg/tab-back.svg}" alt="뒤로가기 버튼" />
+            <img src="/public/svg/tab-back.svg" alt="뒤로가기 버튼" />
           </button>
           <h1 class="filter-tab__header--title">정렬 선택</h1>
         </div>
@@ -319,7 +258,10 @@ onMounted(() => {
   <aside>
     <section class="nav-container">
       <h2 class="none">네비게이션</h2>
-      <div th:replace="~{fragments/nav :: navigation-bar(active='home')}"></div>
+      <div>
+      <NavigationBar :active = "'home'" ></NavigationBar>
+      </div>
+<!--      <div th:replace="~{fragments/nav :: navigation-bar(active='home')}"></div>-->
     </section>
   </aside>
 </template>

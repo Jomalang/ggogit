@@ -24,7 +24,7 @@ const props = defineProps<Props>();
         id="bar-user-info__like"
       />
       <label class="__like-bold" for="bar-user-info__like"></label>
-      <a class="bar-user-info__set-btn" :href="`${props.userurl}`"></a>
+      <a class="bar-user-info__share-btn" :href="`${props.userurl}`"></a>
     </div>
   </div>
 </template>
@@ -51,7 +51,7 @@ const props = defineProps<Props>();
 }
 .bar-user-info__right-btns {
   display: flex;
-  gap: 6px;
+  gap: 15px;
   align-items: center;
 }
 
@@ -92,5 +92,12 @@ const props = defineProps<Props>();
   width: 100%;
   display: flex;
   flex-direction: column;
+}
+.bar-user-info__share-btn {
+  width: 25px;
+  height: 25px;
+  display: flex;
+  background: transparent url("/svg/share.svg") no-repeat center;
+  background-size: contain;
 }
 </style>

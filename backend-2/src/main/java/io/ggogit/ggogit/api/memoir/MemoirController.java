@@ -1,15 +1,18 @@
 package io.ggogit.ggogit.api.memoir;
 
 import io.ggogit.ggogit.api.book.dto.BookDetailResponse;
+import io.ggogit.ggogit.api.member.dto.MemberInfoResponse;
 import io.ggogit.ggogit.api.member.session.SessionConst;
 import io.ggogit.ggogit.api.memoir.dto.MemoirRequest;
 import io.ggogit.ggogit.api.memoir.dto.MemoirDto;
 import io.ggogit.ggogit.api.memoir.dto.MemoirResponse;
+import io.ggogit.ggogit.api.tree.dto.TreeLightInfoResponse;
 import io.ggogit.ggogit.domain.book.entity.Book;
 import io.ggogit.ggogit.domain.book.service.BookService;
 import io.ggogit.ggogit.domain.member.entity.Member;
 import io.ggogit.ggogit.domain.memoir.entity.Memoir;
 import io.ggogit.ggogit.domain.memoir.service.MemoirService;
+import io.ggogit.ggogit.domain.tree.entity.Tree;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -35,10 +38,12 @@ public class MemoirController {
 
         Memoir memoir = memoirService.getMemoir(memoirId);
         MemoirDto memoirDto = MemoirDto.of(memoir, "");
-        Book book = bookService.findById(memoir.getTree().getBook().getId());
-        BookDetailResponse BookDto = BookDetailResponse.of(book);
+        Tree tree = memoir.getTree();
+        TreeLightInfoResponse treeDto = TreeLightInfoResponse.of(tree);
+        BookDetailResponse BookDto = BookDetailResponse.of(tree.getBook());
+        MemberInfoResponse memberDto = MemberInfoResponse.of(tree.getMember());
 
-        MemoirResponse memoirResponse = MemoirResponse.of(memoirDto, BookDto);
+        MemoirResponse memoirResponse = MemoirResponse.of(memoirDto, BookDto, treeDto, memberDto);
             //소유권 할당
             if (member != null && memoirService.isOwner(memoirId, member.getId())) {
                 memoirResponse.ChangeOwnership(true);
@@ -53,9 +58,9 @@ public class MemoirController {
     @PostMapping("{id}")
     public ResponseEntity<MemoirDto> createMemoirResponse(
             @PathVariable(name="id") long treeId,
-            @RequestBody MemoirRequest requestDto,
-            @RequestParam(name="f", required = false) List<String> fileNames) throws IOException {
+            @RequestBody MemoirRequest requestDto) throws IOException {
 
+        List<String> fileNames = requestDto.getFileNames();
         if(!requestDto.validate()){
             throw new IllegalArgumentException("올바른 입력이 아닙니다.");
         }

@@ -5,11 +5,11 @@ import "@toast-ui/editor/dist/toastui-editor.css";
 //----------------variable----------------
 const tmpSaveUrl = `${
   import.meta.env.VITE_API_BASE_URL
-}/api/v1/memoir-image/upload-tmp`;
+}memoir-image/upload-tmp`;
 
 const tmpRenderUrl = `${
   import.meta.env.VITE_API_BASE_URL
-}/api/v1/memoir-image/render-tmp`;
+}memoir-image/render-tmp`;
 
 //----------------model---------------
 

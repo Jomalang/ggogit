@@ -1,9 +1,10 @@
 <script setup>
-
-import UserInfoBackHeaderMemoirTitle from "~/components/background/UserInfoBackHeaderMemoirTitle.vue";
+import "@toast-ui/editor/dist/toastui-editor.css";
+import { ref } from "vue";
 
 const leafId = ref(1);
 const coverImageName = ref("background-image.png");
+const myProfile = ref("/jpg/leaf-profile.jpg");
 
 let cardHiddenInfo = reactive({
   hiddenText: '자세히',
@@ -21,6 +22,22 @@ let cardHiddenInfo = reactive({
   view: 100 // 리프 수
 });
 
+const editor = ref({
+  title: "test",
+  text: "<h1>hello",
+  visibility: 1,
+});
+
+import Viewer from '@toast-ui/editor/dist/toastui-editor-viewer';
+onMounted(() => {
+  const viewer = new Viewer({
+    el: document.querySelector("#viewer"),
+    height: "500px",
+    initialValue: "hello"
+  });
+  viewer.setMarkdown(editor.value.text);
+});
+
 </script>
 
 <template>
@@ -28,31 +45,56 @@ let cardHiddenInfo = reactive({
   <Title>리프 정보</Title>
 
   <header>
-    <UserInfoBackHeaderMemoirTitle
+    <BackgroundDetail
         :edit="`/leaves/${leafId}/edit`"
-        :backimgpath="coverImageName"
+        :backImgPath="coverImageName"
         :username="`조현진`"
         :userid="`hyeonjin`"
-        :memoirtitle="`bookTitle`"
-        :userurl="`userurl`"
+        :memoirTitle="`리프 디테일 제목입니다`"
+        :userUrl="`userUrl`"
     />
   </header>
 
   <main>
-    <section class="my-tree-list">
-      <h2 class="none">리프 제목</h2>
-      <TextMainTitle class="memoir-title" :data="{ title: '리프 제목', size: 28 }" />
-    </section>
 
     <section class="branch-tree-detail-container">
       <h2 class="none">트리 상세 설명</h2>
       <!-- 트리 상세 설명 -->
     </section>
 
-    <!-- 에디터 뷰어-->
-    <section class="my-tree-list">
+    <section class="leaf-page-info-container">
+      <h2 class="none">도서 읽은 정보</h2>
+      <BarLeafReadingPageInfo :data="{ title: '회고록', size: 28, startPage: 100, endPage: 200 }" ></BarLeafReadingPageInfo>
+    </section>
+
+    <!-- 에디터 뷰어 -->
+    <section class="editor-show-container">
       <h2 class="none">에디터 뷰어</h2>
       <div id="viewer"></div>
+    </section>
+
+    <!-- 팔로우 -->
+    <section class="follow-container">
+      <BarUserInfoFollowBtn
+          :followId="1"
+          :userImg="myProfile"
+          :username="`사용자 이름`"
+          :userid="`@gksxorb147`"
+      />
+    </section>
+
+    <!-- 댓글 -->
+    <section class="book-detail-comment-container">
+      <h1 class="none">댓글</h1>
+      <BarComment :commentCount="1" :profileImg="myProfile" />
+      <section
+          id="comment-filter-tab-id"
+          class="book-detail-comment-tab-container book-detail-comment-tab-container--active none"
+      >
+        <h1 class="none">댓글 탭</h1>
+        <!-- TODO: 추후에 데이터 바인딩하면 주석 풀 것 -->
+        <!-- <TabComment /> -->
+      </section>
     </section>
 
   </main>
@@ -60,5 +102,11 @@ let cardHiddenInfo = reactive({
 </template>
 
 <style scoped>
+.editor-show-container {
+  margin: 10px 16px 100px 16px;
+}
 
+.follow-container {
+  margin: 20px 16px 40px 16px;
+}
 </style>

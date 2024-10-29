@@ -63,12 +63,10 @@ let seed = seedConverter(data.seed);
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  height: 137px;
 }
+
 .text-book-info__frame {
   display: flex;
-  /* background: var(--white); */
-  background-color: var(--main3);
 }
 
 .text-book-info__seed {
@@ -96,7 +94,6 @@ let seed = seedConverter(data.seed);
   display: flex;
   justify-content: left;
   gap: 2px;
-  background-color: var(--main3);
 }
 .text-book-info__create-frame {
   display: flex;

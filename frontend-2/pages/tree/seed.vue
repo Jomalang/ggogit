@@ -42,6 +42,7 @@ const filterTabDownHandler = () => {
   const filterTab = document.querySelector(".filter-tab-container");
   setTimeout(() => filterTab.classList.add("none"), 300);
 };
+
 </script>
 
 <template>

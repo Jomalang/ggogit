@@ -126,8 +126,8 @@ onMounted(() => {
       :backimgpath="coverImageName"
       :username="`조현진`"
       :userid="`hyeonjin`"
-      :memoirtitle="`bookTitle`"
-      :userurl="`userurl`"
+      :memoirTitle="`bookTitle`"
+      :userUrl="`userUrl`"
     />
   </header>
 
@@ -144,7 +144,7 @@ onMounted(() => {
     <section class="bar-user-info-container">
       <h2 class="none">사용자 정보</h2>
       <BarUserInfoFollowBtn
-        :userimg="`svg/comment-profile.svg`"
+        :userImg="`svg/comment-profile.svg`"
         :username="`조현진`"
         :userid="`hyeonjin`"
       />

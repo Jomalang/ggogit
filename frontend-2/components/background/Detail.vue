@@ -1,30 +1,19 @@
 <script setup>
-import TopBarTransparent from "@/components/top-bar/TopBarTransparent.vue";
-import BarUserInfoNoProfileBtn from "@/components/bar/BarUserInfoNoProfileBtn.vue";
-import BarMemoirTitleBtn from "@/components/bar/BarMemoirTitleBtn.vue";
 
-export default {
-  components: {
-    TopBarTransparent,
-    BarUserInfoNoProfileBtn,
-    BarMemoirTitleBtn,
-  },
-  props: {
-    backimgpath: String,
-    edit: String,
-    username: String,
-    userid: String,
-    memoirTitle: String,
-    userUrl: String,
-  },
-  computed: {
-    backgroundStyle() {
-      return {
-        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('/png/${this.backimgpath}')`,
-      };
-    },
-  },
-};
+const props = defineProps({
+  backImgPath: { type: String, default: '' },
+  edit: { type: String, default: '' },
+  username: { type: String, default: '' },
+  userid: { type: Number, default: '' },
+  memoirTitle: { type: String, default: '' },
+  userUrl: { type: String, default: '' },
+});
+
+const backgroundStyle = computed(() => {
+  return {
+    backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('/png/${props.backImgPath}')`,
+  };
+});
 
 </script>
 

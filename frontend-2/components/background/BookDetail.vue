@@ -1,4 +1,4 @@
-<script>
+<script setup>
 import TopBarTransparent from "@/components/top-bar/TopBarTransparent.vue";
 import BarUserInfo from "@/components/bar/BarUserInfo.vue";
 
@@ -8,10 +8,10 @@ imgSrc: String,
 src: String,
 backimgpath: String,
 
-userimg: String,
+userImg: String,
 username: String,
 userid: String,
-userurl: String
+userUrl: String
 */
 
 const backgroundImage = computed(() => {
@@ -34,7 +34,7 @@ const backgroundImage = computed(() => {
       </section>
       <section class="user-info__user-info-bar-container">
         <bar-user-info
-            :data="{ 'userimg': data.userimg, 'username': data.username, 'userid': data.userid, 'userurl': data.userurl }"
+            :data="{ 'userImg': data.userImg, 'username': data.username, 'userid': data.userid, 'userUrl': data.userUrl }"
         />
       </section>
     </div>

@@ -1,23 +1,35 @@
-<script setup lang="ts">
+<script setup>
+
+import {ref} from "vue";
+
+const coverImageName = ref("/png/book-example.png");
+const commentCount = ref("/jpg/leaf-profile.jpg");
 
 </script>
 
 <template>
-  <header>
-    <h1 class="none">도서 세부 정보</h1>
-    <section class="book-detail-top-bar-container">
-      <h1 class="none">뒤로가기 상단바</h1>
-      <TopBarClearBack :link="`javascript:history.back()`" />
-    </section>
-  </header>
 
   <main>
     <section class="book-detail-bg-container">
       <h1 class="none">도서 배경 이미지</h1>
-      <BookDetail :imgSrc="`/img/book/detail/book.jpg`" />
+
+      <section class="book-detail-top-bar-container">
+        <h1 class="none">뒤로가기 상단바</h1>
+        <TopBarClearBack :link="`javascript:history.back()`" />
+      </section>
+
+      <BackgroundBookDetail :data="{
+              imgSrc: coverImageName,
+              src: '',
+              backImgPath: '',
+              userImg: '',
+              username: '',
+              userid: '',
+              userUrl: '',
+          }" />
       <section class="book-detail-like-bar-container">
         <h1 class="none">좋아요 및 공유</h1>
-        <LikeShare
+        <BarLikeShare
           :likeLink="`javascript:history.back()`"
           :shareLink="`javascript:history.back()`"
         />
@@ -26,23 +38,24 @@
 
     <section class="book-detail-book-info-container">
       <h1 class="none">도서 제목 및 저자 정보</h1>
-      <TextBookInfo
-        :seed="`시/에세이`"
-        :title="`무정형의 삶`"
-        :author="`올라프`"
-        :translators="null"
-        :publisher="`위즈덤하우스`"
+      <TextBookInfo :data="{
+              seed: '시/에세이',
+              title: '무정형의 삶',
+              author: '올라프',
+              translators: null,
+              publisher: '위즈덤하우스',
+      }"
       />
     </section>
 
     <section class="book-detail-book-info-container">
-      <TreeInfoCard :data="{ date: '2024-10-25', pageCount: 200 }" />
+      <CardTreeInfoCard :data="{ date: '2024-10-25', pageCount: 200 }" />
       <h1 class="none">도서 기본 정보</h1>
     </section>
 
     <section class="book-detail-comment-container">
       <h1 class="none">댓글</h1>
-      <Comment :commentCount="1" profileImg="null" />
+      <BarComment :commentCount="1" :profileImg="commentCount" />
       <section
         id="comment-filter-tab-id"
         class="book-detail-comment-tab-container book-detail-comment-tab-container--active none"
@@ -80,7 +93,7 @@
       <section class="book-detail-other-tree-list-container">
         <h1 class="none">트리 리스트</h1>
         <section class="book-detail-other-tree-card-container">
-          <SnsCardTreeList :list="`type1`" />
+          <CardSnsCardTreeList :list="`type1`" />
         </section>
       </section>
 
@@ -91,7 +104,7 @@
       <section class="book-detail-other-tree-list-container">
         <h1 class="none">회고록 리스트</h1>
         <section class="book-detail-other-tree-card-container">
-          <SnsCardTreeList :list="`type2`" />
+          <CardSnsCardTreeList :list="`type2`" />
         </section>
       </section>
 
@@ -102,7 +115,7 @@
       <section class="book-detail-other-tree-list-container">
         <h1 class="none">리프 리스트</h1>
         <section class="book-detail-other-tree-card-container">
-          <SnsCardTreeList :list="`type3`" />
+          <CardSnsCardTreeList :list="`type3`" />
         </section>
       </section>
     </section>
@@ -116,4 +129,8 @@
   <footer th:replace="~{fragments/footer :: footer}"></footer>
 </template>
 
-<style scoped></style>
+<style scoped>
+.book-detail-comment-container {
+  margin: 60px 0;
+}
+</style>

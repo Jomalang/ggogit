@@ -49,6 +49,7 @@ const emit = defineEmits(['backButtonClick']);
   transform: translateY(100%); /* 리스트가 아래로 숨겨짐 */
   transition: transform 0.3s ease-in-out;
 }
+
 .filter-tab__box--30 {
   background-color: var(--white, #ffffff);
   border-radius: 18px;

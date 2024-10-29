@@ -10,16 +10,16 @@ import NavigationBar from "~/components/nav/NavigationBar.vue";
 //save 호출 API
 const tmpSaveUrl = `${
   import.meta.env.VITE_API_BASE_URL
-}memoir-image/upload-tmp`;
+}/memoir-image/upload-tmp`;
 
 //이미지 전체 경로 호출 API
 const tmpPathUrl = `${
   import.meta.env.VITE_API_BASE_URL
-}memoir-image/path-tmp?fileName=`;
+}/memoir-image/path-tmp?fileName=`;
 
 const tmpRenderUrl = `${
   import.meta.env.VITE_API_BASE_URL
-}memoir-image/return-byte?filePath=`;
+}/memoir-image/return-byte?filePath=`;
 
 //트리 아이디
 const treeId = useRoute().params.id;
@@ -57,7 +57,7 @@ const savePost = async () => {
   memoir.value.text = editor.getHTML();
 
   //useFetch
-  const { data, error } = await useFetch("memoir/" + treeId, {
+  const { data, error } = await useFetch("/memoir/" + treeId, {
     method: "POST",
     baseURL: import.meta.env.VITE_API_BASE_URL,
     headers: {
@@ -145,7 +145,7 @@ onMounted(() => {
 
     <section>
       <h2 class="none">회고록 생성</h2>
-      <TopBarBack :title="`회고록 생성`" :link="`trees/${id}`" />
+      <TopBarBack :title="`회고록 생성`" :link="`/trees/${id}`" />
     </section>
   </header>
 

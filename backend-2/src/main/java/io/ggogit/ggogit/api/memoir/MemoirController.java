@@ -97,9 +97,10 @@ public class MemoirController {
             throw new IllegalArgumentException("올바른 입력이 아닙니다.");
         }
 
-        if(member == null || !memoirService.isOwner(memoirId, member.getId())){
-            throw new IllegalAccessException("회고록 소유자가 아닙니다.");
-        }
+        //TODO: 시큐리티 적용하기
+//        if(member == null || !memoirService.isOwner(memoirId, member.getId())){
+//            throw new IllegalAccessException("회고록 소유자가 아닙니다.");
+//        }
 
         Memoir newMemoir = requestDto.toMemoir();
         memoirService.modifyMemoir(newMemoir, memoirId);

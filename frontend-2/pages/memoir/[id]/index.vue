@@ -62,24 +62,17 @@ onBeforeMount(async () => {});
 
 onMounted(async () => {
   //fetch
-  watch(
-    () => memoir,
-    (newVal, oldVal) => {
-      console.log("title 변경 : ", newVal, oldVal);
-    },
-    { deep: true }
-  );
 
-  const { data, error } = await useFetch(`memoir/${useRoute().params.id}`, {
+  const { data, error } = await useFetch(`/memoir/${useRoute().params.id}`, {
     method: "GET",
     baseURL: import.meta.env.VITE_API_BASE_URL,
   });
 
   if (data.value) {
-    memoir = await { ...data.value.memoirDto };
-    book = await { ...data.value.bookDto };
-    tree = await { ...data.value.treeDto };
-    member = await { ...data.value.memberDto };
+    Object.assign(memoir, data.value.memoirDto);
+    Object.assign(book, data.value.bookDto);
+    Object.assign(member, data.value.memberDto);
+    Object.assign(tree, data.value.treeDto);
     isOnwer.value = await data.value.owner;
     console.log(memoir);
     console.log(memoir.text);
@@ -155,8 +148,8 @@ onMounted(async () => {
   <Title>회고록</Title>
   <header>
     <UserInfoBackHeaderMemoirTitle
-      :edit="`${memoir.id}/edit`"
-      :delete="`memoir/${memoir.id}`"
+      :edit="`/memoir/${memoir.id}/edit`"
+      :delete="`/memoir/${memoir.id}`"
       :backimgpath="member.backImgName"
       :username="member.nickName"
       :userid="member.email"

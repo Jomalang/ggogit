@@ -7,11 +7,11 @@ const props = defineProps({
 const deleteResource = () => {
   console.log(props.delete);
   if (confirm("정말 삭제하시겠습니까?")) {
-    const { data } = useFetch(props.delete, {
-      baseURL: import.meta.env.VITE_API_URL,
+    const { data } = $fetch(props.delete, {
+      baseURL: import.meta.env.VITE_API_BASE_URL,
       method: "DELETE",
     });
-    useRouter().back();
+    navigateTo("/home");
   }
 };
 </script>

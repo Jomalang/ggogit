@@ -11,6 +11,7 @@ import io.ggogit.ggogit.domain.member.entity.Member;
 import io.ggogit.ggogit.domain.memoir.entity.Memoir;
 import io.ggogit.ggogit.domain.memoir.service.MemoirService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequestMapping("memoir")
 @RequiredArgsConstructor
@@ -73,7 +75,6 @@ public class MemoirController {
                 throw new IllegalArgumentException("이미지가 존재하지 않습니다.");
             }
         }
-
         Memoir result = memoirService.getMemoir(savedId);
 
         MemoirDto memoirResponse = MemoirDto.of(result, "회고록이 등록되었습니다.");

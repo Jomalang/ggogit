@@ -23,6 +23,7 @@ public class MemoirDto {
 
     public static MemoirDto of(Memoir memoir, String message) {
         return MemoirDto.builder()
+                .id(memoir.getId())
                 .title(memoir.getTitle())
                 .text(memoir.getText())
                 .visibility(memoir.getVisibility())

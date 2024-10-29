@@ -32,7 +32,7 @@ let editor;
 const memoir = ref({
   title: "",
   text: "",
-  visibility: 1,
+  visibility: true,
 });
 
 const memoirId = ref(0);
@@ -51,9 +51,10 @@ const book = ref({
 const fileNames = ref([]);
 
 //----------------function----------------
+//save로직
 const savePost = async () => {
   //에디터에서 작성한 내용을 획득
-  memoir.value.text = editor.getMarkdown();
+  memoir.value.text = editor.getHTML();
 
   //useFetch
   const { data, error } = await useFetch(
@@ -74,12 +75,14 @@ const savePost = async () => {
 
   if (error.value) {
     console.error("회고록 등록 실패 : ", error.value);
+    //TODO : 에러 출력
+    alert(error.value.data.message);
     return;
   } else {
     alert("회고록이 성공적으로 등록되었습니다.");
     memoirId.value = data.value.id;
-    location.href =
-      import.meta.env.VITE_APP_BASE_URL + "api/v1/memoir/id=" + memoirId.value;
+    //리다이렉션
+    await navigateTo(`/memoir/${memoirId.value}`);
   }
 };
 
@@ -112,7 +115,7 @@ onMounted(() => {
           fileNames.value.push(fileName);
 
           //획득한 이미지경로 바탕으로 바이트 코드 획득
-          callback(tmpRenderUrl + `${fileName}`, "image alt attribute");
+          callback(tmpRenderUrl + `${fileName}`, "image alt");
         } catch (error) {
           console.log("업로드 실패 : ", error);
         }
@@ -209,7 +212,7 @@ onMounted(() => {
               name="visibility"
               label="공개"
               id="public"
-              value="1"
+              value="true"
               checked
             />
           </label>
@@ -221,7 +224,7 @@ onMounted(() => {
               v-model="memoir.visibility"
               name="visibility"
               id="private"
-              value="0"
+              value="false"
             />
           </label>
         </div>

@@ -87,4 +87,11 @@ public interface BookService {
     BookCategory getBookCategory(Long bookId);
 
     BookInfoResponse getBookbyId(Long id);
+
+    /**
+     * API 도서 확인
+     * @param bookId
+     * @return
+     */
+    boolean apiCheck(Long bookId);
 }

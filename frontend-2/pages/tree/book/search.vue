@@ -2,7 +2,7 @@
 import { reactive, ref } from "vue";
 
 //---------------variable----------------
-const apiUrl = `${import.meta.env.VITE_API_BASE_URL}/api/v1/books`;
+const apiUrl = `${import.meta.env.VITE_API_BASE_URL}books`;
 let keyword = ref("");
 let size = ref(0);
 const books = ref([]);
@@ -10,12 +10,12 @@ const page = ref(1);
 //-------------handler----------------
 
 const handleBookResult = (data) => {
-  books.value = data.books || [];
+  books.value = data || [];
+  console.log("-----book.value-----");
+  console.log(books.value);
+  console.log("-----------------");
   page.value = data.page || 1;
   size.value = books.value.length || 0;
-
-  console.log(data.books);
-  console.log(books.value);
   console.log(`length=${books.value.length}`);
 };
 
@@ -31,17 +31,17 @@ const handleKeyword = (query) => {
     <section>
       <h2 class="none">도서 검색 창</h2>
       <InputBackSearch
-          :placeholder="`검색할 도서를 입력해주세요.`"
-          :href="`./seed/index`"
-          :api="apiUrl"
-          @bookResult="handleBookResult"
-          @req="handleKeyword"
+        :placeholder="`검색할 도서를 입력해주세요.`"
+        :href="`./seed/index`"
+        :api="apiUrl"
+        @bookResult="handleBookResult"
+        @req="handleKeyword"
       />
     </section>
 
     <section>
       <h2 class="none">검색 결과 개수 및 최근 수정한 순서</h2>
-      <TopbarSearchResultNum :num="size" />
+      <TopBarSearchResultNum :num="size" />
     </section>
   </header>
 
@@ -50,8 +50,8 @@ const handleKeyword = (query) => {
       <div class="text-info-container">
         <h2 class="none">검색 시작 안내</h2>
         <TextInfo
-            :text="'현재 검색중인 도서가 없습니다'"
-            :boldText="'도서를 검색하거나 직접 등록해주세요'"
+          :text="'현재 검색중인 도서가 없습니다'"
+          :boldText="'도서를 검색하거나 직접 등록해주세요'"
         />
       </div>
     </section>
@@ -67,8 +67,8 @@ const handleKeyword = (query) => {
       <h3 class="none">검색 결과 없음</h3>
       <div class="text-info-container">
         <TextInfo
-            :text="'검색 결과가 없습니다.'"
-            :boldText="'다시 검색하거나 직접 등록해주세요'"
+          :text="'검색 결과가 없습니다.'"
+          :boldText="'다시 검색하거나 직접 등록해주세요'"
         />
       </div>
     </section>
@@ -77,9 +77,9 @@ const handleKeyword = (query) => {
   <section class="btn-select-container--right">
     <h2 class="none">도서 직접 등록 버튼</h2>
     <!-- TODO: href변경하기 -->
-    <BtnShortAGreen
-        :href="`/tree/book/reg?auto=false`"
-        :text="`도서 직접 등록하기`"
+    <ButtonBtnShortAGreen
+      :link="`/tree/book/reg?auto=false`"
+      :text="`도서 직접 등록하기`"
     />
   </section>
 
@@ -88,7 +88,7 @@ const handleKeyword = (query) => {
   </div>
 
   <aside class="nav-container">
-    <NavigationBar active="home" />
+    <NavNavigationBar active="home" />
   </aside>
 </template>
 

@@ -1,44 +1,42 @@
-<script setup lang="ts">
-import axios from "axios";
+<script setup>
+import { HttpStatusCode } from "axios";
 import { onUpdated, ref } from "vue";
-import SearchFilterRadio from "../filter/SearchFilterRadio.vue";
 //-----------------props-----------------
-const props = defineProps<{
-  placeholder: string;
-  href: string;
-  api: string;
-}>();
+const props = defineProps({
+  placeholder: "",
+  href: "",
+  api: "",
+});
 //-----------------emit-----------------
-const emit = defineEmits<{
-  (event: "req", query: string): void;
-  (event: "bookResult", data: any): void;
-}>();
+const emit = defineEmits(["req", "bookResult"]);
+const bookResult = ref([]);
 //-----------------query-----------------
-let query = ref<string>("");
-let filter = ref<string>("title");
+let query = ref("");
+let filter = ref("title");
 
-const createReq = async (query: string, filter: string): Promise<void> => {
-  axios
-    .get(props.api, {
+const createReq = async (query, filter) => {
+  bookResult.value = [];
+  try {
+    const response = await $fetch(props.api, {
+      method: "GET",
       params: {
         q: query,
         f: filter,
       },
-    })
-    .then((response) => {
-      emit("bookResult", response.data);
-      emit("req", query);
-    })
-    .catch((error) => {
-      console.error("Error fetching data:", error);
     });
+    if (response !== undefined) bookResult.value = response.books;
+    emit("bookResult", bookResult.value);
+    emit("req", query);
+  } catch (error) {
+    if (error.response && error.response.status === 400) {
+      alert("검색어를 두 글자 이상 입력해 주세요.");
+    } else {
+      alert("오류가 발생했습니다. 다시 시도해 주세요.");
+    }
+  }
 };
 
 //-----------------lifeCycle-----------------
-onUpdated(() => {
-  console.log(query.value);
-  console.log(filter.value);
-});
 </script>
 
 <template>
@@ -67,41 +65,40 @@ onUpdated(() => {
       </button>
     </div>
   </div>
-  <!-- 필터 -->
-  <!-- (description, name, value, isChecked) -->
-<!--  <div class="search-filter-log">-->
-<!--    <label class="search-filter-log__checkbox-labal">-->
-<!--      <input-->
-<!--        class="search-filter-log__checkbox-input"-->
-<!--        type="radio"-->
-<!--        name="filterType"-->
-<!--        value="title"-->
-<!--        checked-->
-<!--        v-model="filter"-->
-<!--      />-->
-<!--      <span class="search-filter-log__checkbox-input-text">제목</span>-->
-<!--    </label>-->
-<!--    <label class="search-filter-log__checkbox-labal">-->
-<!--      <input-->
-<!--        class="search-filter-log__checkbox-input"-->
-<!--        type="radio"-->
-<!--        name="filterType"-->
-<!--        value="author"-->
-<!--        v-model="filter"-->
-<!--      />-->
-<!--      <span class="search-filter-log__checkbox-input-text">저자</span>-->
-<!--    </label>-->
-<!--    <label class="search-filter-log__checkbox-labal">-->
-<!--      <input-->
-<!--        class="search-filter-log__checkbox-input"-->
-<!--        type="radio"-->
-<!--        name="filterType"-->
-<!--        value="publisher"-->
-<!--        v-model="filter"-->
-<!--      />-->
-<!--      <span class="search-filter-log__checkbox-input-text">출판사</span>-->
-<!--    </label>-->
-<!--  </div>-->
+
+  <div class="search-filter-log">
+    <label class="search-filter-log__checkbox-labal">
+      <input
+        class="search-filter-log__checkbox-input"
+        type="radio"
+        name="filterType"
+        value="title"
+        checked
+        v-model="filter"
+      />
+      <span class="search-filter-log__checkbox-input-text">제목</span>
+    </label>
+    <label class="search-filter-log__checkbox-labal">
+      <input
+        class="search-filter-log__checkbox-input"
+        type="radio"
+        name="filterType"
+        value="author"
+        v-model="filter"
+      />
+      <span class="search-filter-log__checkbox-input-text">저자</span>
+    </label>
+    <label class="search-filter-log__checkbox-labal">
+      <input
+        class="search-filter-log__checkbox-input"
+        type="radio"
+        name="filterType"
+        value="publisher"
+        v-model="filter"
+      />
+      <span class="search-filter-log__checkbox-input-text">출판사</span>
+    </label>
+  </div>
 </template>
 
 <style scoped>

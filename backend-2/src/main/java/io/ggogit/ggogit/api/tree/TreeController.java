@@ -1,17 +1,16 @@
 package io.ggogit.ggogit.api.tree;
 
 import io.ggogit.ggogit.api.leaf.dto.LeafBranchResponse;
-import io.ggogit.ggogit.api.leaf.dto.LeafItemResponse;
 import io.ggogit.ggogit.api.tree.dto.*;
 
 import io.ggogit.ggogit.domain.leaf.entity.Leaf;
 import io.ggogit.ggogit.domain.leaf.service.LeafDtoService;
-import io.ggogit.ggogit.domain.member.entity.Member;
 import io.ggogit.ggogit.domain.tree.entity.TreeTmp;
 import io.ggogit.ggogit.domain.tree.service.SeedService;
 import io.ggogit.ggogit.domain.tree.service.TreeService;
 import io.ggogit.ggogit.domain.tree.service.TreeTmpService;
 import io.ggogit.ggogit.type.FilterType;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.data.domain.*;
@@ -140,18 +139,22 @@ public class TreeController {
     }
 
     @GetMapping("/{treeId}/branches")
-    public TreeDetailResponse getBranchList(
+    public ResponseEntity<TreeDetailResponse> getBranchList(
             @PathVariable Long treeId,
-            @RequestParam(value = "b", required = false) final Boolean bookMark,
-            @RequestParam(value = "f", defaultValue = "10") final Long filter,
-            @RequestParam(value = "s", defaultValue = "1") final Long sort,
-            @RequestParam(value = "p", defaultValue = "0") final int page
+            @Valid @ModelAttribute TreeBranchFilter filter
+//            @RequestParam(value = "b", required = false) final Boolean bookMark,
+//            @RequestParam(value = "f", defaultValue = "10") final Long filter,
+//            @RequestParam(value = "s", defaultValue = "1") final Long sort,
+//            @RequestParam(value = "p", defaultValue = "0") final int page
 //            @SessionAttribute Member member
     ) {
 
         int size = 10;
-        FilterType filterName = FilterType.fromNumber(filter);
-        FilterType sortName = FilterType.fromNumber(sort);
+        int page = filter.getPage();
+        Boolean bookMark = filter.getBookMark();
+
+        FilterType filterName = FilterType.fromNumber(filter.getFilter());
+        FilterType sortName = FilterType.fromNumber(filter.getSort());
         Sort s = FilterType.createSort(filterName, sortName);
         Pageable pageable = PageRequest.of(page, size, s);
 
@@ -161,27 +164,16 @@ public class TreeController {
         List<LeafBranchResponse> branchList = leafDtoService.findBranchByFilter(treeId, hasOwner, bookMark);
         branchList = sortLeafList(branchList, filterName.getValue(), sortName.getValue());
 
-        if (branchList.isEmpty()) {
-            return null;
-        }
 
         int start = (int) pageable.getOffset();
-        if (start >= branchList.size()) {
-            return null;
-        }
-
         int end = Math.min(start + pageable.getPageSize(), branchList.size());
 
-        try {
-            Page<LeafBranchResponse> branchCard = new PageImpl<>(
-                    branchList.subList(start, end), pageable, branchList.size());
-            return TreeDetailResponse.toEntity(branchCard, branchList.size(),branchCard.getTotalPages());
-        } catch (IllegalArgumentException e) {
-            System.out.println("Paging error: " + e.getMessage());
-            return null;
-        }
-    }
+        Page<LeafBranchResponse> branchCard = new PageImpl<>(
+                branchList.subList(start, end), pageable, branchList.size());
+        TreeDetailResponse response = TreeDetailResponse.of(branchCard);
 
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
     @GetMapping("/{treeId}/leafs")
     public Page<Leaf> getLeafList(
             @PathVariable Long treeId,

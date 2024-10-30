@@ -9,14 +9,10 @@ import org.springframework.data.domain.Page;
 @Builder
 public class TreeDetailResponse {
     Page<LeafBranchResponse> items;
-    int totalCnt;
-    int totalPage;
 
-    public static TreeDetailResponse toEntity(Page<LeafBranchResponse> items, int totalCnt, int totalPage) {
+    public static TreeDetailResponse of(Page<LeafBranchResponse> items) {
         return TreeDetailResponse.builder()
                 .items(items)
-                .totalCnt(totalCnt)
-                .totalPage(totalPage)
                 .build();
     }
 }

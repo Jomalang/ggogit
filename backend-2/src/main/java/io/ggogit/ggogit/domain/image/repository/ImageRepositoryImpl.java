@@ -64,19 +64,22 @@ public class ImageRepositoryImpl {
      * @param targetFolder 이미지가 이동할 폴더의 타입입니다.(UploadFolderType)
      */
     public void moveImage(String imageName, UploadFolderType sourceFolder, UploadFolderType targetFolder) {
-        File sourceFile = new File(uploadPath + File.separator + sourceFolder.getFolderName() + File.separator + imageName);
-        File targetFolderFile = new File(uploadPath + File.separator + targetFolder.getFolderName());
-        File targetFile = new File(targetFolderFile, imageName);
+        Path sourcePath = Paths.get(uploadPath, sourceFolder.getFolderName(), imageName);
+        Path targetDirPath = Path.of(uploadPath, targetFolder.getFolderName());
+        Path targetPath = Paths.get(uploadPath, targetFolder.getFolderName(), imageName);
 
-        if (!targetFolderFile.exists()) {
-            if (!targetFolderFile.mkdirs()) {
+        if (!targetDirPath.toFile().exists()) {
+            if (!targetDirPath.toFile().mkdirs()) {
                 throw new IllegalArgumentException("이미지 이동 폴더 생성에 실패하였습니다.");
             }
         }
 
-        if (sourceFile.exists()) {
-            if (!sourceFile.renameTo(targetFile)) {
-                throw new IllegalArgumentException("이미지 이동에 실패하였습니다.");
+        if (sourcePath.toFile().exists()) {
+            //sourceFile에서 targetFile로 파일 옮기기
+            try {
+                Files.move(sourcePath, targetPath);
+            } catch (IOException e) {
+                throw new IllegalArgumentException("이미지 이동에 실패하였습니다.", e);
             }
         } else {
             throw new IllegalArgumentException("해당 이미지가 존재하지 않습니다.");

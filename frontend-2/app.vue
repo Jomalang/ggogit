@@ -3,8 +3,6 @@
     <Meta charset="UTF-8" />
     <Meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <Title>꼬깃-GGogit</Title>
-    <Link rel="stylesheet" href="/css/layout.css" />
-    <Link rel="stylesheet" href="/css/common/variables.css" />
   </Head>
   <div>
     <NuxtPage />

@@ -19,6 +19,8 @@ public class MemoirRequest {
     @NotNull(message = "공개여부를 설정해주세요.")
     private Boolean visibility;
 
+    private List<String> fileNames = new ArrayList<>();
+
     public Memoir toMemoir() {
         return Memoir.builder()
                 .title(this.title)

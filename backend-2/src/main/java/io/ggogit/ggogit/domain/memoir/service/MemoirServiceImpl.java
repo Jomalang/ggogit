@@ -75,9 +75,8 @@ public class MemoirServiceImpl implements MemoirService {
         for (String fileName : fileNames) {
             if(imageRepository.isImageExists(fileName, UploadFolderType.TMP)){
                 imageRepository.moveImage(fileName, UploadFolderType.TMP, UploadFolderType.MEMOIR);
-            } else{
-                imageRepository.deleteImage(fileName, UploadFolderType.TMP);
             }
+            imageRepository.deleteImage(fileName, UploadFolderType.TMP);
         }
 
     }

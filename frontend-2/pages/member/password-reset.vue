@@ -35,7 +35,7 @@
       </label>
     </div>
 
-    <SubmitBtnFullBar text="비밀번호 변경" />
+    <ButtonSubmitBtnFullBar text="비밀번호 변경" />
     <p v-if="message">{{ message }}</p>
   </div>
 </template>

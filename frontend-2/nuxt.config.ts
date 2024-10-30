@@ -1,11 +1,16 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   runtimeConfig: {
-    public:{
-      apiBase: 'http://localhost:8080/api/v1'
-    }
+    public: {
+      apiBase: "http://localhost:8080/api/v1",
+    },
   },
-  compatibilityDate: '2024-04-03',
+  //모바일 접속
+  devServer: {
+    host: "0.0.0.0",
+    port: 3000,
+  },
+  compatibilityDate: "2024-04-03",
   devtools: { enabled: true },
   nitro: {
     routeRules: {

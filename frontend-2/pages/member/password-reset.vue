@@ -1,33 +1,4 @@
 <script setup lang="ts">
-import axios from "axios";
-
-// export default {
-//   data() {
-//     return {
-//       newPassword: "",
-//       checkPassword: "",
-//       message: "",
-//     };
-//   },
-//   methods: {
-//     resetPassword() {
-//       const payload = {
-//         newPassword: this.newPassword,
-//         checkPassword: this.checkPassword,
-//       };
-
-//       axios
-//         .put("/api/v1/member/resetPassword", payload)
-//         .then((response) => {
-//           this.message = "비밀번호가 성공적으로 변경되었습니다.";
-//         })
-//         .catch((error) => {
-//           this.message = "비밀번호 변경에 실패했습니다.";
-//           console.error("오류:", error);
-//         });
-//     },
-//   },
-// };
 </script>
 
 <template>
@@ -64,7 +35,7 @@ import axios from "axios";
       </label>
     </div>
 
-    <SubmitBtnFullBar text="비밀번호 변경" />
+    <ButtonSubmitBtnFullBar text="비밀번호 변경" />
     <p v-if="message">{{ message }}</p>
   </div>
 </template>

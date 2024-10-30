@@ -1,37 +1,25 @@
 <script setup>
-import TopBarTransparent from "@/components/top-bar/TopBarTransparent.vue";
 import BarUserInfoNoProfileBtn from "@/components/bar/BarUserInfoNoProfileBtn.vue";
 import BarMemoirTitleBtn from "@/components/bar/BarMemoirTitleBtn.vue";
+defineProps({
+  backimgpath: String,
+  edit: String,
+  username: String,
+  userid: String,
+  memoirTitle: String,
+  userUrl: String,
+});
 
-export default {
-  components: {
-    TopBarTransparent,
-    BarUserInfoNoProfileBtn,
-    BarMemoirTitleBtn,
-  },
-  props: {
-    backimgpath: String,
-    edit: String,
-    username: String,
-    userid: String,
-    memoirTitle: String,
-    userUrl: String,
-  },
-  computed: {
-    backgroundStyle() {
-      return {
-        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('/png/${this.backimgpath}')`,
-      };
-    },
-  },
-};
+const backgroundStyle = computed(() => ({
+  backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('/png/${props.backimgpath}')`,
+}));
 
 </script>
 
 <template>
   <div class="user-tree-user-info-container" :style="backgroundStyle">
     <section class="user-info__top-bar-container">
-      <TopBarTransparent :edit="edit" />
+      <TopBarTransparent :edit="edit" :delete="delete" />
     </section>
     <section class="user-info__user-info-bar-container">
       <BarUserInfoNoProfileBtn :username="username" :userid="userid" />

@@ -29,17 +29,12 @@
         name="introduction"
         placeholder="간단한 한 줄 소개를 작성해 주세요"
     />
-    <CheckboxJoinPolicyAgreement label="이용약관 동의" />
-    <SubmitBtnFullBar text="회원가입" />
+    <InputCheckboxJoinPolicyAgreement label="이용약관 동의"/>
+    <ButtonSubmitBtnFullBar text="회원가입" />
   </div>
 </template>
 
 <style scoped>
-@import url("/src/assets/css/common/effect.css");
-@import url("/src/assets/css/common/reset.css");
-@import url("/src/assets/css/common/text.css");
-@import url("/src/assets/css/common/variables.css");
-@import url("/src/assets/css/layout.css");
 
 .login-member__join-page-container {
   width: auto;

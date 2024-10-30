@@ -1,10 +1,9 @@
 <script setup lang="ts">
-
 interface Props {
-    followId: string;
-    userImg: string;
-    username: string;
-    userid: string;
+  followId: string;
+  userimg: string;
+  username: string;
+  userid: string;
 }
 const props = defineProps<Props>();
 </script>
@@ -27,23 +26,30 @@ const props = defineProps<Props>();
           </div>
       </div>
       <div>
-          <form class="bar-user-info__right-btns" action="#" method="post">
-              <input
-                      class="__follow-btn"
-                      type="checkbox"
-                      id="bar-user-info__follow"
-              />
-              <label
-                      class="__follow-btn-msg"
-                      for="bar-user-info__follow"
-              >팔로우</label>
-          </form>
+        <div class="bar-user-info__user-name--color-main1">
+          {{ props.username }}
+        </div>
+        <div class="bar-user-info__user-id--color-main1">
+          {{ props.userid }}
+        </div>
       </div>
+    </div>
+    <div>
+      <form class="bar-user-info__right-btns" action="#" method="post">
+        <input
+          class="__follow-btn"
+          type="checkbox"
+          id="bar-user-info__follow"
+        />
+        <label class="__follow-btn-msg" for="bar-user-info__follow"
+          >팔로우</label
+        >
+      </form>
+    </div>
   </div>
 </template>
 
 <style>
-
 /* ==========================================
       user info - follow btn
       user tree memoir index 사용
@@ -124,5 +130,4 @@ const props = defineProps<Props>();
   letter-spacing: var(--letter-spacing-main);
   background: var(--main1);
 }
-
 </style>

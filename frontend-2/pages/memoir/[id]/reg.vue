@@ -10,16 +10,16 @@ import NavigationBar from "~/components/nav/NavigationBar.vue";
 //save 호출 API
 const tmpSaveUrl = `${
   import.meta.env.VITE_API_BASE_URL
-}/api/v1/memoir-image/upload-tmp`;
+}/memoir-image/upload-tmp`;
 
 //이미지 전체 경로 호출 API
 const tmpPathUrl = `${
   import.meta.env.VITE_API_BASE_URL
-}/api/v1/memoir-image/path-tmp?fileName=`;
+}/memoir-image/path-tmp?fileName=`;
 
 const tmpRenderUrl = `${
   import.meta.env.VITE_API_BASE_URL
-}/api/v1/memoir-image/return-byte-tmp?filePath=`;
+}/memoir-image/return-byte?filePath=`;
 
 //트리 아이디
 const treeId = useRoute().params.id;
@@ -57,21 +57,19 @@ const savePost = async () => {
   memoir.value.text = editor.getHTML();
 
   //useFetch
-  const { data, error } = await useFetch(
-    import.meta.env.VITE_API_BASE_URL + "/api/v1/memoir/" + treeId,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        title: memoir.value.title,
-        text: memoir.value.text,
-        visibility: memoir.value.visibility,
-        fileNames: fileNames.value,
-      }),
-    }
-  );
+  const { data, error } = await useFetch("/memoir/" + treeId, {
+    method: "POST",
+    baseURL: import.meta.env.VITE_API_BASE_URL,
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      title: memoir.value.title,
+      text: memoir.value.text,
+      visibility: memoir.value.visibility,
+      fileNames: fileNames.value,
+    }),
+  });
 
   if (error.value) {
     console.error("회고록 등록 실패 : ", error.value);
@@ -79,7 +77,7 @@ const savePost = async () => {
     alert(error.value.data.message);
     return;
   } else {
-    alert("회고록이 성공적으로 등록되었습니다.");
+    alert("회고록이 등록되었습니다.");
     memoirId.value = data.value.id;
     //리다이렉션
     await navigateTo(`/memoir/${memoirId.value}`);
@@ -112,6 +110,7 @@ onMounted(() => {
           // 컨트롤러에서 전달받은 디스크에 저장된 파일 명
           const fileName = await response.text();
           console.log("서버에 저장된 파일 명 : ", fileName);
+          //TODO: 최종 save되는 이미지 이름만 저장해야 함.
           fileNames.value.push(fileName);
 
           //획득한 이미지경로 바탕으로 바이트 코드 획득
@@ -127,7 +126,7 @@ onMounted(() => {
 // TODO: 도서, 트리 API이용해 데이터 가져오기
 // onBeforeMount(async () => {
 //   const { data, error } = await useFetch(
-//     import.meta.env.VITE_API_BASE_URL + "/api/v1/tree/" + treeId
+//     import.meta.env.VITE_API_BASE_URL + "tree/" + treeId
 //   );
 
 //   if (error.value) {
@@ -146,7 +145,7 @@ onMounted(() => {
 
     <section>
       <h2 class="none">회고록 생성</h2>
-      <TopBarBack :title="`회고록 생성`" :link="`trees/${id}`" />
+      <TopBarBack :title="`회고록 생성`" :link="`/trees/${id}`" />
     </section>
   </header>
 

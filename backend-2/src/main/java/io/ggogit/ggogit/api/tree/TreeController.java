@@ -142,11 +142,6 @@ public class TreeController {
     public ResponseEntity<TreeDetailResponse> getBranchList(
             @PathVariable Long treeId,
             @Valid @ModelAttribute TreeBranchFilter filter
-//            @RequestParam(value = "b", required = false) final Boolean bookMark,
-//            @RequestParam(value = "f", defaultValue = "10") final Long filter,
-//            @RequestParam(value = "s", defaultValue = "1") final Long sort,
-//            @RequestParam(value = "p", defaultValue = "0") final int page
-//            @SessionAttribute Member member
     ) {
 
         int size = 10;
@@ -155,8 +150,10 @@ public class TreeController {
 
         FilterType filterName = FilterType.fromNumber(filter.getFilter());
         FilterType sortName = FilterType.fromNumber(filter.getSort());
+        System.out.println("filter = " + filterName);
+        System.out.println("sort = " + sortName);
+        System.out.println("--------------------------------------------------------------------------------------");
         Sort s = FilterType.createSort(filterName, sortName);
-        Pageable pageable = PageRequest.of(page, size, s);
 
 //        Boolean hasOwner = treeService.isOwner(treeId, member.getId());
         Boolean hasOwner = true;//테스트용 코드
@@ -164,14 +161,13 @@ public class TreeController {
         List<LeafBranchResponse> branchList = leafDtoService.findBranchByFilter(treeId, hasOwner, bookMark);
         branchList = sortLeafList(branchList, filterName.getValue(), sortName.getValue());
 
-
-        int start = (int) pageable.getOffset();
-        int end = Math.min(start + pageable.getPageSize(), branchList.size());
-
-        Page<LeafBranchResponse> branchCard = new PageImpl<>(
-                branchList.subList(start, end), pageable, branchList.size());
-        TreeDetailResponse response = TreeDetailResponse.of(branchCard);
-
+        if(page >= 0) {
+            branchList = branchList.stream()
+                    .skip((long) page * size)
+                    .limit(size)
+                    .collect(Collectors.toList());
+        }
+        TreeDetailResponse response = TreeDetailResponse.of(branchList, branchList.size());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
     @GetMapping("/{treeId}/leafs")

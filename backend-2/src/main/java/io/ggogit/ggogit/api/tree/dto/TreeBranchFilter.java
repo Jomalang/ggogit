@@ -17,8 +17,8 @@ public class TreeBranchFilter {
     @Min(10)
     private Long filter;
     @NotNull
-    @Max(2)
-    @Min(1)
+    @Max(1)
+    @Min(0)
     private Long sort;
     @NotNull
     private int page;

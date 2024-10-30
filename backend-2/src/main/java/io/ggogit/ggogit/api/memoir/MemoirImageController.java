@@ -39,9 +39,13 @@ public class MemoirImageController {
         //저장된 이미지 파일명 반환
         return saveName;
     }
-    @GetMapping(value = "return-byte-tmp", produces = {MediaType.IMAGE_GIF_VALUE, MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE})
-    public byte[] printEditorImage(@RequestParam final String filePath) throws IOException {
-        return imageRepository.getImageBytes(filePath, UploadFolderType.TMP);
+    @GetMapping(value = "return-byte", produces = {MediaType.IMAGE_GIF_VALUE, MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE})
+    public byte[] printEditorImage(@RequestParam final String filePath) {
+        if(imageRepository.isImageExists(filePath, UploadFolderType.TMP)) {
+            return imageRepository.getImageBytes(filePath, UploadFolderType.TMP);
+        } else{
+            return imageRepository.getImageBytes(filePath, UploadFolderType.MEMOIR);
+        }
     }
 
     // 이미지 파일명을 받아서 이미지의 전체 경로를 반환

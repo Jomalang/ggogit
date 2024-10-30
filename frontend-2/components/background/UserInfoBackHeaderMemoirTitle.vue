@@ -1,7 +1,7 @@
 <script setup>
-import TopBarTransparent from "@/components/top-bar/TopBarTransparent.vue";
 import BarUserInfoNoProfileBtn from "@/components/bar/BarUserInfoNoProfileBtn.vue";
 import BarMemoirTitleBtn from "@/components/bar/BarMemoirTitleBtn.vue";
+import TopBarTransparent from "@/components/top-bar/TopBarTransparent.vue";
 
 export default {
   components: {
@@ -12,6 +12,7 @@ export default {
   props: {
     backimgpath: String,
     edit: String,
+    delete: String,
     username: String,
     userid: String,
     memoirTitle: String,
@@ -31,7 +32,7 @@ export default {
 <template>
   <div class="user-tree-user-info-container" :style="backgroundStyle">
     <section class="user-info__top-bar-container">
-      <TopBarTransparent :edit="edit" />
+      <TopBarTransparent :edit="edit" :delete="delete" />
     </section>
     <section class="user-info__user-info-bar-container">
       <BarUserInfoNoProfileBtn :username="username" :userid="userid" />

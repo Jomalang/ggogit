@@ -10,7 +10,26 @@ import Comment from "~/components/bar/Comment.vue";
 let isOnwer = ref(false);
 
 //----------------Model----------------
-let tree = reactive({});
+let tree = reactive({
+  id: 1,
+  memberId: 1,
+  seedId: 1,
+  bookId: 1,
+  title: "토마토 나무",
+  description: "토마토 나무의 성장 과정을 나타내는 나무입니다.",
+  visibility: true,
+  createdAt: "2024-10-01T10:00",
+  updatedAt: "2024-10-01T10:00",
+});
+
+let member = reactive({
+  id: 1,
+  nickName: "nickname1",
+  userName: "user1",
+  email: "user1@example.com",
+  backImgName: "",
+  profileImgName: "",
+});
 
 let memoir = reactive({
   id: 0,
@@ -39,36 +58,42 @@ const memoirItem = reactive({});
 const leafItem = reactive({});
 
 //----------------Life Cycle----------------
-onBeforeMount(async () => {
-  const { data, error } = await useFetch(
-    `/api/v1/memoir/${useRoute().params.id}`,
-    {
-      method: "GET",
-      baseURL: import.meta.env.VITE_API_BASE_URL,
-    }
-  );
+onBeforeMount(async () => {});
+
+onMounted(async () => {
+  //fetch
+
+  const { data, error } = await useFetch(`/memoir/${useRoute().params.id}`, {
+    method: "GET",
+    baseURL: import.meta.env.VITE_API_BASE_URL,
+  });
 
   if (data.value) {
-    memoir = data.value.memoirDto;
-    book = data.value.bookDto;
-    isOnwer.value = data.value.owner;
+    Object.assign(memoir, data.value.memoirDto);
+    Object.assign(book, data.value.bookDto);
+    Object.assign(member, data.value.memberDto);
+    Object.assign(tree, data.value.treeDto);
+    isOnwer.value = await data.value.owner;
+    console.log(memoir);
+    console.log(memoir.text);
+    console.log(memoir.id);
   } else {
     console.error("회고록 조회 실패 : ", error.value);
     alert(error.value.data.message);
-    //TODO: 이전 페이지 기억했다가 리다이렉션 시키기
-    await navigateTo("/home");
+    //이전페이지로 이동
+    useRouter().back();
   }
-});
 
-onMounted(() => {
+  //viewer 렌더링
   const viewer = new Viewer({
     el: document.querySelector("#viewer"),
     height: "500px",
     initialValue: "hello",
   });
 
+  console.log(memoir);
   console.log(memoir.text);
-  viewer.setMarkdown(memoir.text);
+  await viewer.setMarkdown(memoir.text);
 
   // function commentTabActive() {
   //   const commentTab = document.getElementById("comment-filter-tab-id");
@@ -119,15 +144,17 @@ onMounted(() => {
 </script>
 
 <template>
+  <!-- TODO:본인 회고록인 경우에만 수정,삭제 버튼이 보이게 하기 -->
   <Title>회고록</Title>
   <header>
     <UserInfoBackHeaderMemoirTitle
       :edit="`/memoir/${memoir.id}/edit`"
-      :backimgpath="coverImageName"
-      :username="`조현진`"
-      :userid="`hyeonjin`"
-      :memoirTitle="`bookTitle`"
-      :userUrl="`userUrl`"
+      :delete="`/memoir/${memoir.id}`"
+      :backimgpath="member.backImgName"
+      :username="member.nickName"
+      :userid="member.email"
+      :memoirtitle="book.title"
+      :userurl="member.email"
     />
   </header>
 
@@ -144,9 +171,9 @@ onMounted(() => {
     <section class="bar-user-info-container">
       <h2 class="none">사용자 정보</h2>
       <BarUserInfoFollowBtn
-        :userImg="`svg/comment-profile.svg`"
-        :username="`조현진`"
-        :userid="`hyeonjin`"
+        :userimg="member.profileImgName"
+        :username="member.nickName"
+        :userid="member.email"
       />
     </section>
 

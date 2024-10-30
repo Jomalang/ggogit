@@ -8,14 +8,14 @@ import { onBeforeMount, onMounted, reactive } from "vue";
 const treeInfoList = reactive([]);
 const seedList = reactive([]);
 
-onBeforeMount(() => {
-  const fetchTreeInfoList = async () => {
-    const response = await fetch(`http://localhost:8080/api/v1/trees`);
-    const data = await response.json();
-    treeInfoList.push(...data);
-  };
+//TODO: JWT토큰 있다면 전송하게끔 로직 수정 필요
+onBeforeMount(async () => {
+  const { data, error, referch } = await useFetch("trees", {
+    baseURL: import.meta.env.VITE_API_BASE_URL,
+    method: "GET",
+  });
 
-  fetchTreeInfoList();
+  await treeInfoList.push(...data.data);
 });
 
 onMounted(() => {

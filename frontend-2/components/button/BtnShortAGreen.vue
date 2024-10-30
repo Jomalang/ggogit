@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { TextBtnGreenProps } from "@/types/types";
-
 const props = defineProps<{
   link: string;
   text: string;

@@ -184,5 +184,25 @@ public class TreeServiceImpl implements TreeService {
         });
     }
 
+    @Override
+    public List<TreeInfoResponse> findTreeInfoResponseList(Long memberId) {
+        List<Tree> treeList = treeRepository.findTreeByMemberIdFetch(memberId);
+        return treeList.stream()
+                .map(tree -> {
+                    tree.get
+            LocalDateTime lastestLeafTime = null;
+            Long viewCount = 0L;
+            Long likeCount = 0L;
+            Long leafCount = 0L;
+            for (Leaf leaf : leafList) {
+                viewCount += leaf.getViewCount();
+                likeCount += leaf.getLikeCount();
+                leafCount++;
+            }
+            lastestLeafTime = tree.getUpdateTime();
+            return TreeInfoResponse.of(tree, lastestLeafTime != null ? lastestLeafTime : LocalDateTime.now(), leafCount, likeCount, viewCount);
+        }).toList();
+    }
+
 
 }

@@ -7,13 +7,18 @@ import io.ggogit.ggogit.api.tree.dto.*;
 import io.ggogit.ggogit.domain.leaf.entity.Leaf;
 import io.ggogit.ggogit.domain.leaf.service.LeafDtoService;
 import io.ggogit.ggogit.domain.member.entity.Member;
+import io.ggogit.ggogit.domain.member.service.MemberService;
+import io.ggogit.ggogit.domain.member.service.MemberServiceImpl;
+import io.ggogit.ggogit.domain.tree.entity.Tree;
 import io.ggogit.ggogit.domain.tree.entity.TreeTmp;
 import io.ggogit.ggogit.domain.tree.service.SeedService;
 import io.ggogit.ggogit.domain.tree.service.TreeService;
 import io.ggogit.ggogit.domain.tree.service.TreeTmpService;
 import io.ggogit.ggogit.type.FilterType;
+import io.ggogit.ggogit.util.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 
+import org.apache.coyote.Response;
 import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,6 +41,8 @@ public class TreeController {
     private final TreeTmpService treeTmpService;
     private final LeafDtoService leafDtoService;
     private final SeedService seedService;
+    private final JwtTokenProvider jwtTokenProvider;
+    private final MemberService memberService;
 
     @GetMapping("/search")
     public String treeSearch() {
@@ -106,9 +113,8 @@ public class TreeController {
 //            @RequestParam(value = "s", required = false) Long seedId,
 //            @RequestParam(value = "p", defaultValue = "0") int page,
 //            @RequestParam(value = "mid",defaultValue = "1") Long mid
-////            @SessionAttribute Member member
 //    ) {
-////        Long memberId = member.getId();
+//        Long memberId = member.getId();
 //        Long memberId = mid;
 //        System.out.println("memberId = " + memberId);
 //        System.out.println("seedId = " + seedId);
@@ -227,5 +233,18 @@ public class TreeController {
         }
 
         return leafList.stream().sorted(comparator).collect(Collectors.toList());
+    }
+
+    @GetMapping("tree-home")
+    public ResponseEntity<TreeInfoResponseHome> getTreeInfoResponses(
+       @RequestHeader(value="Authorization") String accessToken) {
+
+        Long memberId = jwtTokenProvider.getMemberIdFromToken(accessToken);
+        List<Tree> trees = treeService.findAllByMemberId(memberId);
+
+        for(Tree tree : trees){
+            TreeInfoResponse.of(tree, )
+        }
+
     }
 }

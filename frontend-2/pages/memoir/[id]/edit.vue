@@ -151,6 +151,7 @@ onMounted(async () => {
 //     book.value = data.value.book;
 //   }
 // });
+
 </script>
 
 <template>
@@ -168,7 +169,7 @@ onMounted(async () => {
     <h2 class="none">완독한 도서</h2>
     <section class="tree-book-reg-search-book__title-container">
       <h3 class="none">도서 TEXT 컨테이너</h3>
-      <TextMainTitle :title="`완독한 도서`" :size="28" />
+      <TextMainTitle :data="{ title: '완독한 도서', size: 28 }" />
     </section>
     <section class="tree-reg-cover-info__container">
       <h3 class="none">도서 커버 및 도서 정보</h3>

@@ -1,54 +1,13 @@
-<script setup lang="ts">
+<script setup>
 
-import { BranchInfoProps } from "@/types/types";
+import { defineProps } from 'vue';
 
-// const items:  BranchInfoProps[] = [
-//   {
-//     id: 1,
-//     title: '브랜치 제목',
-//     leafCount: 100,
-//     viewCount: 100,
-//     updateTime: '2024-07-11',
-//     bookMark: true,
-//   },
-//   {
-//     id: 2,
-//     title: '브랜치 제목',
-//     leafCount: 100,
-//     viewCount: 100,
-//     updateTime: '2024-07-11',
-//     bookMark: false,
-//   },
-//   {
-//     id: 3,
-//     title: '브랜치 제목',
-//     leafCount: 100,
-//     viewCount: 100,
-//     updateTime: '2024-07-11',
-//     bookMark: true,
-//   },
-//   {
-//     id: 4,
-//     title: '브랜치 제목',
-//     leafCount: 100,
-//     viewCount: 100,
-//     updateTime: '2024-07-11',
-//     bookMark: false,
-//   },
-//   {
-//     id: 5,
-//     title: '브랜치 제목',
-//     leafCount: 100,
-//     viewCount: 100,
-//     updateTime: '2024-07-11',
-//     bookMark: true,
-//   },
-// ];
-
-const props = defineProps<{
-  items: BranchInfoProps[];
-}>();
-
+const props = defineProps({
+  items: {
+    type: Array,
+    default: () => []
+  }
+})
 </script>
 
 <template>

@@ -15,7 +15,7 @@
       <h1 class="none">기타 정보 입력</h1>
 
       <section class="select-title-container">
-        <TextMainTitle title="트리 이름" size="28"></TextMainTitle>
+        <TextMainTitle :data="{ title: '트리 이름', size: 28 }"></TextMainTitle>
       </section>
 
       <form

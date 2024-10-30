@@ -15,7 +15,7 @@
     <h2 class="none">선택한 도서</h2>
     <section class="tree-book-reg-search-book__title-container">
       <h3 class="none">도서 TEXT 컨테이너</h3>
-      <TextMainTitle title="선택한 도서" size="28"></TextMainTitle>
+      <TextMainTitle :data="{ title: '선택한 도서', size: 28 }"></TextMainTitle>
     </section>
     <section>
       <section class="tree-reg-cover-info__container">

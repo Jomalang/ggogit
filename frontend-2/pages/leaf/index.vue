@@ -39,6 +39,7 @@ const btn = ref<TextBtnGreenProps>({
   text: "리프 생성",
   link: "/app/leaf/create",
 });
+
 </script>
 
 <template>

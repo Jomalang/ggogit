@@ -1,13 +1,11 @@
-<script setup lang="ts">
-
-import TopBarBack from "@/components/top-bar/TopBarBack.vue";
-import TopBarTagInfo from "@/components/top-bar/TopBarTagInfo.vue";
+<script setup>
 import axios from "axios";
+import { useRouter } from 'vue-router';
 import {onMounted, reactive, watch} from "vue";
-import BookCategoryListBox from "@/components/tag/BookCategoryListBox.vue";
-
 
 // -------------------------- Model -------------------------- //
+const treeFormData = useState('treeFormData');
+
 const queryParam = reactive({
   name: ''
 });
@@ -15,6 +13,8 @@ const queryParam = reactive({
 const bookCategories = reactive({
   items: []
 });
+
+const router = useRouter();
 
 watch(
     queryParam,
@@ -41,14 +41,24 @@ const fetchData = async () => {
 };
 
 // -------------------------- Event Function -------------------------- //
+const goBack = () => {
+  router.back();
+}
 
+const chooseBookCategory = (category) => {
+    treeFormData.value.bookCategoryId = category.id;
+    treeFormData.value.bookCategoryName = category.name;
+    treeFormData.value.isSelected = true;
+    console.log('Selected book category:', category);
+    router.push('/tree/book/new');
+};
 
 </script>
 
 <template>
   <header>
     <h1 class="none">도서 카테고리 이름</h1>
-    <TopBarBack title="도서 카테고리" link="/tree/book/reg"></TopBarBack>
+    <TopBarBack title="도서 카테고리" link="" @click="goBack"></TopBarBack>
   </header>
   <main>
     <section>
@@ -73,7 +83,7 @@ const fetchData = async () => {
 
     <section>
       <h2 class="none">도서 카테고리 리스트</h2>
-      <BookCategoryListBox :tags="bookCategories.items"></BookCategoryListBox>
+      <TagBookCategoryListBox :categories="bookCategories.items" @choose="chooseBookCategory" ></TagBookCategoryListBox>
     </section>
   </main>
 </template>

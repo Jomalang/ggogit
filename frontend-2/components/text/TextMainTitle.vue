@@ -1,22 +1,14 @@
 <script setup>
-const props = defineProps({
-  title: {
-    type: String,
-    default: "Default Title",
-  },
-  size: {
-    type: Number,
-    default: 28,
-    validator: (value) => [28, 24, 20, 18, 16, 14].includes(value),
-  },
-});
+
+const { data } = defineProps(["data"]);
+
 </script>
 
 <template>
   <!-- text-main-title(title, size) -->
   <div>
-    <h1 class="text-main-title" :class="`text--title${props.size}`">
-      {{ props.title }}
+    <h1 class="text-main-title" :class="`text--title${data.size}`">
+      {{ data.title }}
     </h1>
   </div>
 </template>

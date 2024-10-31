@@ -1,11 +1,11 @@
-<script setup lang="ts">
+<script setup>
 
-const props = defineProps<{
-  label: string;
-  name: string;
-  modelValue: string;
-  placeholder: string;
-}>();
+const props = defineProps({
+  label: String,
+  name: String,
+  placeholder: String,
+  modelValue: String
+});
 
 const emit = defineEmits(['update:modelValue']);
 

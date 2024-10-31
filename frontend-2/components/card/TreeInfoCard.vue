@@ -1,18 +1,6 @@
-<script setup lang="ts">
+<script setup>
 
-interface TreeInfoCardProps {
-  date: string;
-  pageCount: number;
-}
-
-const data = {
-  date: '2024-08-18',
-  pageCount: 1000
-};
-
-const props = defineProps<{
-  data: TreeInfoCardProps;
-}>();
+const { data } = defineProps(["data"]);
 
 </script>
 

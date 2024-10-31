@@ -12,6 +12,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Repository
 @RequiredArgsConstructor
@@ -142,5 +144,22 @@ public class ImageRepositoryImpl {
     public Path getImageFullPath(String fileName, UploadFolderType folderType) {
         Path path = Paths.get(uploadPath + File.separator + folderType.getFolderName() + File.separator + fileName);
         return path.toAbsolutePath();
+    }
+
+    /**
+     * 마크다운 문법안의 이미지들을 모두 옮겨 줍니다.
+     * @param content 이미지 파일명을 추출할 문자열을 입력받습니다. 토스트 에디터의 마틐다운 형식을 가정합니다.
+     * @param sourceFolder 이미지 파일이 존재하는 폴더 타입을 입력받습니다.
+     * @param targetFolder 이미지 파일을 이동할 폴더 타입을 입력받습니다.
+     */
+    public void moveAllImages(String content, UploadFolderType sourceFolder, UploadFolderType targetFolder) {
+        String regex = "filename=([\\w.]+)";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(content);
+
+        while (matcher.find()) {
+            String fileName = matcher.group(1);
+            moveImage(fileName, sourceFolder, targetFolder);
+        }
     }
 }

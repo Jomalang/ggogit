@@ -1,44 +1,9 @@
-<script setup lang="ts">
-import { LeafTagProps } from "@/types/types";
-import {reactive, useSSRContext, watch} from "vue";
-
-const props = defineProps<{
-  tags: Array<LeafTagProps>;
-}>();
-
-const ssrContext = useSSRContext();
-const savedFormData = ssrContext?.treeFormData || null;
-const treeFormData = reactive(savedFormData ? JSON.parse(savedFormData) : {
-  seedCategoryType: '',
-  bookTitle: '',
-  author: '',
-  publishDate: '',
-  totalPage: '',
-  treeTitle: '',
-  description: '',
-  visibility: true,
-  bookCategoryId: '',
-  bookCategoryName: ''
+<script setup>
+const props = defineProps({
+  categories: Array
 });
 
-watch(
-    treeFormData,
-    (newVal) => {
-      localStorage.setItem('treeFormData', JSON.stringify(newVal));
-      window.location.href = '/tree/book/reg';
-    },
-    { deep: true }
-);
-
-// -------------------- Function -------------------- //
-const chooseBookCategory = (e: Event) => {
-  const target = e.target as HTMLElement;
-  const dataId = target.closest('.tag-info__tag-box')?.getAttribute('data-id');
-  if (dataId) {
-    treeFormData.bookCategoryId = dataId;
-    treeFormData.bookCategoryName = target.textContent || '';
-  }
-};
+const emit = defineEmits(['choose']);
 
 </script>
 
@@ -47,15 +12,15 @@ const chooseBookCategory = (e: Event) => {
   <div class="tag-info-box">
     <ul class="tag-info__list tag-info__list--unselected">
       <li
-        v-for="tag in tags"
-        :key="tag.id"
+        v-for="category in categories"
+        :key="category.id"
         class="tag-info__item tag-info__item--unselected"
       >
         <div class="tag-info__tag-box"
-             @click="chooseBookCategory"
-             :data-id="tag.id"
+             @click="emit('choose', category)"
+             :data-id="category.id"
         >
-          <q class="tag-info__name">{{ tag.name }}</q>
+          <q class="tag-info__name">{{ category.name }}</q>
         </div>
       </li>
     </ul>

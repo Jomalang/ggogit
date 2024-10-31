@@ -20,7 +20,7 @@ public class LeafBookController {
 
     private final LeafBookService leafBookService;
 
-    @PostMapping("/book/first/leafs")
+    @PostMapping("/book/first/leaves")
     public ResponseEntity<BookLeafResponse> createFirstBookLeaf(
         @Valid @RequestBody BookLeafRequest dto
     ) {
@@ -36,7 +36,7 @@ public class LeafBookController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    @PostMapping("/book/leafs/{parentLeafId}")
+    @PostMapping("/book/leaves/{parentLeafId}")
     public ResponseEntity<BookLeafResponse> createBookLeaf(
             @PathVariable Long parentLeafId,
             @Valid @RequestBody BookLeafRequest dto
@@ -58,7 +58,7 @@ public class LeafBookController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    @PutMapping("/book/leafs/{leafId}")
+    @PutMapping("/book/leaves/{leafId}")
     public ResponseEntity<BookLeafResponse> updateBookLeaf(
             @PathVariable Long leafId,
             @Valid @RequestBody BookLeafRequest dto
@@ -80,7 +80,7 @@ public class LeafBookController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @DeleteMapping("/book/leafs/{leafId}")
+    @DeleteMapping("/book/leaves/{leafId}")
     public ResponseEntity<BookLeafResponse> deleteBookLeaf(
             @PathVariable Long leafId
     ) {

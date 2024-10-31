@@ -5,6 +5,8 @@ import io.ggogit.ggogit.domain.book.entity.Book;
 import io.ggogit.ggogit.domain.book.entity.BookCategory;
 import io.ggogit.ggogit.domain.book.repository.BookCategoryRepository;
 import io.ggogit.ggogit.domain.book.repository.BookRepository;
+import io.ggogit.ggogit.domain.member.entity.Member;
+import io.ggogit.ggogit.domain.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -21,6 +23,7 @@ public class BookServiceImpl implements BookService {
 
     private final BookRepository bookRepository;
     private final BookCategoryRepository bookCategoryRepository;
+    private final MemberRepository memberRepository;
 
 
     //목록 조회 + 페이징, 정렬, 검색 기능
@@ -93,5 +96,14 @@ public class BookServiceImpl implements BookService {
         if (book != null)
             return BookInfoResponse.of(book);
         return null;
+    }
+
+    @Override
+    public boolean apiCheck(Long bookId) {
+
+        Member member = memberRepository.findById(999L)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다."));
+
+        return bookRepository.existsByIdAndMember(bookId, member);
     }
 }

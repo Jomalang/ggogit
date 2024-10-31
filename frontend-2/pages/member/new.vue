@@ -29,7 +29,7 @@
         name="introduction"
         placeholder="간단한 한 줄 소개를 작성해 주세요"
     />
-    <InputCheckboxJoinPolicyAgreement label="이용약관 동의"/>
+    <InputCheckboxJoinPolicyAgreement text="이용약관 동의"/>
     <ButtonSubmitBtnFullBar text="회원가입" />
   </div>
 </template>

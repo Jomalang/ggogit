@@ -11,6 +11,7 @@ import FilterTreeLeafCard from "~/components/filter/FilterTreeLeafCard.vue";
 import NavigationBar from "~/components/nav/NavigationBar.vue";
 import InputBackSearch from "~/components/input/InputBackSearch.vue";
 
+// -----------DOM 객체---------------------------------------
 
 const treeId = Number(useRoute().params.id);
 let filterQuery = 10;
@@ -36,15 +37,29 @@ const isActive = ref(false);
 let totalCnt = 0;
 
 const openPopup = () => {
-  setTimeout(() =>
-      isActive.value = true, 300);
+  const filterBack1 = document.getElementById("filter-bg");
+  const filterBack2 = document.getElementById("filter-bg-blur");
+  const filterTab = document.getElementById("filter-tab");
+
+  filterBack1.classList.remove('none');
+  filterBack2.classList.remove('none');
+
+  setTimeout(() => {
+    filterTab.classList.add('up');
+  }, 30)
 };
+
 const closePopup = () => {
+  const filterBack1 = document.getElementById("filter-bg");
+  const filterBack2 = document.getElementById("filter-bg-blur");
+  const filterTab = document.getElementById("filter-tab");
+  filterTab.classList.remove('up');
+  filterBack1.classList.add('none');
+  filterBack2.classList.add('none');
+
   queryParam.filter = filterQuery;
   queryParam.sort = sortQuery;
-  setTimeout(() =>
-      isActive.value = false, 300);
-};
+}
 
 const { data: infoData, error: infoError } = useFetch(() => `trees/${treeId}/info`, {
   baseURL: config.public.apiBase,
@@ -155,9 +170,9 @@ watchEffect(() => {
         </div>
       </section>
     </section>
-    <section v-if="isActive">
-      <div  @click.prevent="closePopup" class="filter-tab-container"></div>
-      <div class="filter-tab-container--30" id="filter-bg-blur">
+    <section>
+      <div  @click.prevent="closePopup" class="filter-tab-container none" id="filter-bg"></div>
+      <div class="filter-tab-container--30 none" id="filter-bg-blur">
       <h2 class="none">정렬 선택</h2>
       <div id="filter-tab" class="filter-tab__box--30">
         <div class="filter-tab__header">
@@ -332,15 +347,6 @@ watchEffect(() => {
 
 <style scoped>
 
-
-.filter-tab-container--70 {
-  top: 0;
-  right: 0;
-  bottom: 70%;
-  left: 0;
-  background-color: rgba(0, 0, 0, 0.6);
-  position: fixed;
-}
 .filter-tab-container--30 {
   top: 30%;
   right: 0;
@@ -350,16 +356,19 @@ watchEffect(() => {
   position: fixed;
   aspect-ratio: 5 / 8;
 }
+
 .filter-tab__box--30 {
   background-color: var(--white, #ffffff);
-  border-radius: 18px 18px 0px 0px;
+  border-radius: 18px;
   border: 1px solid var(--main2--opacity40);
-  border-bottom: none;
   height: 100%;
   transition-property: height;
-  transform: translateY(0); /* 리스트가 아래로 숨겨짐 */
+  transform: translateY(100%); /* 리스트가 아래로 숨겨짐 */
   transition: transform 0.3s ease-in-out;
+}
 
+.filter-tab__box--30.up {
+  transform: translateY(0); /* 리스트가 위로 슬라이드됨 */
 }
 
 .filter-tab__header {

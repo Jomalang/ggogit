@@ -235,16 +235,16 @@ public class TreeController {
         return leafList.stream().sorted(comparator).collect(Collectors.toList());
     }
 
-    @GetMapping("tree-home")
-    public ResponseEntity<TreeInfoResponseHome> getTreeInfoResponses(
-       @RequestHeader(value="Authorization") String accessToken) {
-
-        Long memberId = jwtTokenProvider.getMemberIdFromToken(accessToken);
-        List<Tree> trees = treeService.findAllByMemberId(memberId);
-
-        for(Tree tree : trees){
-            TreeInfoResponse.of(tree, )
-        }
-
-    }
+//    @GetMapping("tree-home")
+//    public ResponseEntity<TreeInfoResponseHome> getTreeInfoResponses(
+//       @RequestHeader(value="Authorization") String accessToken) {
+//
+//        Long memberId = jwtTokenProvider.getMemberIdFromToken(accessToken);
+//        List<Tree> trees = treeService.findAllByMemberId(memberId);
+//
+//        for(Tree tree : trees){
+//            TreeInfoResponse.of(tree, )
+//        }
+//
+//    }
 }

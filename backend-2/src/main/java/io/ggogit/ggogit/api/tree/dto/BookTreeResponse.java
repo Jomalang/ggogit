@@ -51,7 +51,7 @@ public class BookTreeResponse {
                 .title(tree.getTitle())
                 .description(tree.getDescription())
                 .visibility(tree.getVisibility())
-                .createdAt(tree.getLeaf().getCreateTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
+                .createdAt(tree.getCreateTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
                 .readingPage(tree.getTreeBook().getReadingPage())
                 .coverImageName(tree.getBook().getImageFile())
                 .build();

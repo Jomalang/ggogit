@@ -94,4 +94,6 @@ public interface BookService {
      * @return
      */
     boolean apiCheck(Long bookId);
+
+    Book findByTreeId(Long treeId);
 }

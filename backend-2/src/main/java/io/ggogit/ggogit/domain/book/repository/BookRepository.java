@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface BookRepository extends JpaRepository<Book, Long>, BookQueryRepository {
     List<Book> findByMember_Id(Long memberId);
@@ -29,5 +30,6 @@ public interface BookRepository extends JpaRepository<Book, Long>, BookQueryRepo
     List<Book> findByPublisher(@Param("query") String query, Pageable pageable);
 
     boolean existsByIdAndMember(Long bookId, Member member);
+
 }
 

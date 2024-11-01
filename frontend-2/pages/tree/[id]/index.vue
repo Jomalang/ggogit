@@ -123,11 +123,11 @@ watchEffect(() => {
     <section class="reg-book-search-container">
       <h2 class="none">트리 검색</h2>
 
-      <InputBackSearch
+      <InputSearchWithBackBtn
         placeholder="검색할 트리를 입력해주세요"
         href="javascript:history.back()"
         api=""
-        >트리 검색 상단 바</InputBackSearch>
+        >트리 검색 상단 바</InputSearchWithBackBtn>
     </section>
   </header>
   <main>

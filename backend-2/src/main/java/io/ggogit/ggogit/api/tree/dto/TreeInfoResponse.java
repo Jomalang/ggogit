@@ -56,7 +56,7 @@ public class TreeInfoResponse {
                 .visibility(tree.getVisibility())
                 .createdAt(tree.getCreateTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
                 .leafCreatedAt(latestLeafDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
-                .readingPage(40)//tree.getTreeBook().getReadingPage())
+                .readingPage(tree.getTreeBook().getReadingPage())//tree.getTreeBook().getReadingPage())
                 .coverImageName(tree.getBook().getImageFile())
                 .treeLeafCnt(leafCnt)
                 .treeLikeCnt(likeCnt)

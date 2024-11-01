@@ -28,7 +28,14 @@ function seedConverter(seedId) {
       return '알 수 없는 유형';
   }
 };
-let seed = seedConverter(data.seed);
+let seed = (() => {
+  if (typeof data.seed === 'number' && data.seed > 0) {
+    return seedConverter(data.seed);
+  } else if (typeof data.seed === 'string') {
+    return data.seed;
+  }
+  return '알 수 없는 유형';
+})();
 </script>
 
 <template>

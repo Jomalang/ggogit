@@ -16,6 +16,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 
 @AllArgsConstructor
@@ -43,13 +44,13 @@ public class Tree {
     @JoinColumn(name = "BOOK_ID")
     private Book book;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "TREEBOOK_ID")
     private TreeBook treeBook;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "LEAF_ID")
-    private Leaf leaf;
+    private List<Leaf> leaf;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

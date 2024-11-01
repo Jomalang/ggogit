@@ -124,18 +124,18 @@ onMounted(() => {
 });
 
 // TODO: 도서, 트리 API이용해 데이터 가져오기
-// onBeforeMount(async () => {
-//   const { data, error } = await useFetch(
-//     import.meta.env.VITE_API_BASE_URL + "tree/" + treeId
-//   );
+onBeforeMount(async () => {
+  const { data, error } = await useFetch(
+    import.meta.env.VITE_API_BASE_URL + "book/tree/" + treeId
+  );
 
-//   if (error.value) {
-//     console.error("트리 정보 조회 실패 : ", error.value);
-//     return;
-//   } else {
-//     book.value = data.value.book;
-//   }
-// });
+  if (error.value) {
+    console.error("트리 정보 조회 실패 : ", error.value);
+    return;
+  } else {
+    book.value = data.value.book;
+  }
+});
 </script>
 
 <template>

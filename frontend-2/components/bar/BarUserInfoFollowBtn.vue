@@ -33,7 +33,6 @@ const props = defineProps<Props>();
           {{ props.userid }}
         </div>
       </div>
-    </div>
     <div>
       <form class="bar-user-info__right-btns" action="#" method="post">
         <input

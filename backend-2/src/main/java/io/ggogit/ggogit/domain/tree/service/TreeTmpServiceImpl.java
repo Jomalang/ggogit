@@ -72,4 +72,10 @@ public class TreeTmpServiceImpl implements TreeTmpService {
 
         return treeTmp.getId();
     }
+
+    @Override
+    public TreeTmp getTreeTmp(Long memberId) {
+        return treeTmpRepository.findByMemberId(memberId)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 임시 트리입니다."));
+    }
 }

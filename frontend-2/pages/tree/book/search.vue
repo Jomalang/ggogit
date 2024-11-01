@@ -78,7 +78,7 @@ const handleKeyword = (query) => {
     <h2 class="none">도서 직접 등록 버튼</h2>
     <!-- TODO: href변경하기 -->
     <ButtonBtnShortAGreen
-      :link="`/tree/book/reg?auto=false`"
+      :link="`/tree/book/new`"
       :text="`도서 직접 등록하기`"
     />
   </section>

@@ -7,12 +7,11 @@ const emit = defineEmits(['inputData']);
 
 <template>
   <div class="input-textarea__box">
-    <label class="input-textarea__label tree-input__large-text-label""
-    >
+    <label class="input-textarea__label tree-input__large-text-label">
       <span>{{ data.label }}</span>
       <textarea
         class="input-textarea__textarea tree-input__large-textarea"
-        :class="{ 'input-text__input--warning': data.validate }"
+        :class="{ 'input-text__input--warning': !data.validate }"
         :name="data.name"
         :value="data.value"
         @input="$emit('inputData', $event.target.value)"

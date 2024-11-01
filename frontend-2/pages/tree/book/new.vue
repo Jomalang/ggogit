@@ -21,7 +21,7 @@ const treeFormData = useState('treeFormData', () => ({
 
   // 출판일 정보
   publishDate: "",
-  publishDateValid: false,
+  publishDateValid: true,
 
   // 출판사 정보
   publisher: "",
@@ -177,8 +177,8 @@ const submitFormHandler = async (e) => {
       throw new Error("Network response was not ok");
     }
 
-    alert("트리가 생성되었습니다.");
-    // router.push("/leaf/book/new");
+    // alert("트리가 생성되었습니다.");
+    router.push("/leaf/book/new");
   } catch (error) {
     console.error("Error submitting form:", error);
   }
@@ -273,7 +273,7 @@ const inputDescription = (value) => {
                 name: 'bookTitle',
                 placeholder: '도서 이름을 입력해주세요',
                 value: treeFormData.bookTitle,
-                validate: !treeFormData.bookTitleValid,
+                validate: treeFormData.bookTitleValid,
                 validateMessage: '도서 이름을 입력해주세요.'
               }"
               @inputData="inputBookTitle"
@@ -289,7 +289,7 @@ const inputDescription = (value) => {
                 name: 'author',
                 placeholder: '지은이 이름을 입력해주세요',
                 value: treeFormData.author,
-                validate: !treeFormData.authorValid,
+                validate: treeFormData.authorValid,
                 validateMessage: '지은이 이름을 입력해주세요.'
               }"
               @inputData="inputAuthor"
@@ -305,7 +305,7 @@ const inputDescription = (value) => {
                 name: 'publisher',
                 placeholder: '출판사를 입력해주세요',
                 value: treeFormData.publisher,
-                validate: !treeFormData.publisherValid,
+                validate: treeFormData.publisherValid,
                 validateMessage: '출판사를 입력해주세요.'
               }"
               @inputData="inputPublisher"
@@ -338,7 +338,7 @@ const inputDescription = (value) => {
                 placeholder: '총페이지를 입력해주세요',
                 min: 0,
                 value: treeFormData.totalPage,
-                validate: !treeFormData.totalPageValid,
+                validate: treeFormData.totalPageValid,
                 validateMessage: '양수의 숫자만 입력해주세요.'
               }"
               @inputData="inputTotalPage"
@@ -367,7 +367,7 @@ const inputDescription = (value) => {
                 name: 'treeTitle',
                 placeholder: '트리 이름을 입력해주세요',
                 value: treeFormData.treeTitle,
-                validate: !treeFormData.treeTitleValid,
+                validate: treeFormData.treeTitleValid,
                 validateMessage: '트리 이름을 입력해주세요.'
               }"
               @inputData="inputTreeTitle"
@@ -383,7 +383,7 @@ const inputDescription = (value) => {
                 name: 'description',
                 placeholder: '트리에 대한 설명을 입력해주세요',
                 value: treeFormData.description,
-                validate: !treeFormData.descriptionValid,
+                validate: treeFormData.descriptionValid,
                 validateMessage: '트리에 대한 설명을 입력해주세요.'
               }"
               @inputData="inputDescription"

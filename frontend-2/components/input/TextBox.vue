@@ -26,11 +26,11 @@ const emit = defineEmits(['inputData']);
              :name="data.name"
              :placeholder="data.placeholder"
              :value="data.value"
-             :class="{ 'input-text__input--warning': data.validate }"
+             :class="{ 'input-text__input--warning': !data.validate }"
              @input="emit('inputData', $event.target.value)"
              autocomplete="off"/>
     </label>
-    <div v-if="data.validate" class="input-text__wrong-box">
+    <div v-if="!data.validate" class="input-text__wrong-box">
       <p class="input-text__wrong-text">{{ data.validateMessage }}</p>
     </div>
   </div>

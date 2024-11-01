@@ -78,7 +78,7 @@ onMounted(() => {
           console.log("서버에 저장된 파일 명 : ", filename);
 
           // addImageBlobHook의 callback을 통해 디스크에 저장된 이미지 에디터에 렌더링
-          const imageUrl = `${config.public.apiBase}/leaf/image-print?filename=${filename}`;
+          const imageUrl = `${config.public.apiBase}/leaf/image/${filename}`;
           callback(imageUrl, "image alt attribute");
           console.log(blob);
           console.log(callback);

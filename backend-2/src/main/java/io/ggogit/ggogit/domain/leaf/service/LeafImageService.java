@@ -12,4 +12,6 @@ public interface LeafImageService {
     byte[] print(String filename);
 
     byte[] print(String filename, UploadFolderType uploadFolderType);
+
+    boolean exists(String filename, UploadFolderType uploadFolderType);
 }

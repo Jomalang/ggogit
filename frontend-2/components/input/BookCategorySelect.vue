@@ -1,36 +1,12 @@
-<script setup lang="ts">
+<script setup>
 
-import {reactive, useSSRContext} from "vue";
-
-const ssrContext = useSSRContext();
-const savedFormData = ssrContext?.treeFormData || null;
-const treeFormData = reactive(savedFormData ? JSON.parse(savedFormData) : {
-  seedCategoryType: '',
-  bookTitle: '',
-  author: '',
-  publishDate: '',
-  totalPage: '',
-  treeTitle: '',
-  description: '',
-  visibility: true,
-  bookCategoryId: '',
-  bookCategoryName: ''
+const props = defineProps({
+  isSelected: Boolean,
+  id: Number,
+  name: String
 });
 
-const bookCategory = reactive({
-  isSelected: treeFormData.bookCategoryId !== '',
-  id: treeFormData.bookCategoryId,
-  name: treeFormData.bookCategoryName
-});
-
-// -------------------- Function -------------------- //
-const dropBookCategory = () => {
-  bookCategory.isSelected = false;
-  bookCategory.id = '';
-  bookCategory.name = '';
-  treeFormData.bookCategoryId = '';
-  treeFormData.bookCategoryName = '';
-};
+const emit = defineEmits(['drop']);
 
 </script>
 
@@ -40,18 +16,18 @@ const dropBookCategory = () => {
     <div class="input-tag-select__bg">
       <div class="input-tag-select__button-box">
         <div class="input-tag-select__tag-box">
-          <p v-if="!bookCategory.isSelected" class="input-tag-select__placeholder">도서 카테고리를 선택해주세요</p>
+          <p v-if="!isSelected" class="input-tag-select__placeholder">도서 카테고리를 선택해주세요</p>
           <div v-else class="input-tag-select__tag">
             <label class="input-tag-select__tag-label">
-              <span class="input-tag-select__tag-text">{{ bookCategory.name }}</span>
+              <span class="input-tag-select__tag-text">{{ name }}</span>
               <button
                   class="input-tag-select__tag-delete-btn"
                   type="button"
-                  @click="dropBookCategory"
+                  @click="emit('drop')"
               >
                 <img src="/svg/x-button.svg" alt="next-button" />
               </button>
-              <input class="none input-tag-select__input" name="bookCategoryId" :value="bookCategory.id" />
+              <input class="none input-tag-select__input" name="bookCategoryId" :value="id" />
             </label>
           </div>
         </div>
@@ -67,13 +43,12 @@ const dropBookCategory = () => {
   </div>
 </template>
 
-<style>
+<style scoped>
 /*  ==========================================
     FRAGMENT: 태그 선택
     ========================================== */
 .input-tag-select__tag-delete-btn {
   background-color: var(--main1, #323a27);
-  background: none;
   border: none;
   font: inherit;
   color: inherit;

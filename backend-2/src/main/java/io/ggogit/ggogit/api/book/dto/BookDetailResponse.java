@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.util.StringUtils;
 
 import java.time.format.DateTimeFormatter;
 
@@ -30,7 +29,7 @@ public class BookDetailResponse {
     public static BookDetailResponse of(Book book) {
         return BookDetailResponse.builder()
                 .id(book.getId())
-                .publishDate(book.getPublishDate().format(DateTimeFormatter.ofPattern("yyyy")))
+                .publishDate(book.getPublishDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
                 .totalPage(book.getTotalPage())
                 .bookCategoryId(book.getBookCategory().getId())
                 .author(book.getAuthor())

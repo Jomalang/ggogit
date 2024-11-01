@@ -5,6 +5,22 @@ import {useRouter} from "#vue-router";
 
 // ----------------------- Model ----------------------- //
 const router = useRouter();
+const route = useRoute();
+const config = useRuntimeConfig();
+const bookId = route.params.id;
+
+// ----------------------- API ----------------------- //
+const { data } = await useFetch(`/books/${bookId}`, {
+  method: "GET",
+  baseURL: config.public.apiBase,
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
+
+watchEffect(() => {
+  console.log("watchEffect data : ", data.value);
+});
 
 const treeFormData = useState('treeFormData', () => ({
   // 트리 씨앗 정보
@@ -28,10 +44,6 @@ const treeFormData = useState('treeFormData', () => ({
   visibility: true,
   imageData: "",
 }));
-
-watch(treeFormData.value, (newVal) => {
-  console.log("treeFormData:", newVal);
-});
 
 // ----------------------- Life Cycle ----------------------- //
 onMounted(() => {
@@ -94,7 +106,7 @@ const dropBookCategory = () => {
     <h1 class="none">도서 트리 생성 페이지</h1>
     <section class="tob-bar-back-container">
       <h1 class="none">트리 생성 상단 바</h1>
-      <TopBarBack title="트리 생성" link=""></TopBarBack>
+      <TopBarBack title="트리 생성" link="/tree/seed"></TopBarBack>
     </section>
   </header>
 
@@ -102,85 +114,48 @@ const dropBookCategory = () => {
     <section class="book-tree-input-form-container">
       <h1 class="none">도서 정보 입력</h1>
 
-      <section class="select-title-container">
-        <TextMainTitle :data="{ title: '도서 직접 입력', size: 28 }"></TextMainTitle>
+      <section class="tree-book-auto-title-container">
+        <TextMainTitle :data="{ title: '도서 정보', size: 28 }"></TextMainTitle>
       </section>
 
-      <form
-          id="book-tree-input-form-id"
-          class="book-tree-input-form"
-          action="/tree/book/reg?auto=false"
-          method="post"
-          enctype="multipart/form-data"
-      >
-        <section class="none">
-          <h1 class="none">씨앗 카테고리</h1>
-          <input
-              type="number"
-              name="seedCategoryId"
-              v-model="treeFormData.seedId"
-          />
+      <section class="tree-reg-cover-info__container">
+        <h3 class="none">도서 커버 및 도서 정보</h3>
+        <section class="tree-reg-cover__container">
+          <h4 class="none">도서 커버</h4>
+          <LinkOneImageDetail
+              :href="`/book/${data.id}`"
+              :src="data.imageFile">
+          </LinkOneImageDetail>
         </section>
+        <section class="tree-reg-book-info__container">
+          <h4 class="none">도서 정보</h4>
+          <TextBookInfo :data="{
+            title: data.title,
+            authors: data.authors,
+            translators: translators,
+            publisher: data.publisher,
+            page: data.page,
+            seed: data.seed,
+          }"></TextBookInfo>
+        </section>
+      </section>
 
-        <section class="book-tree-input-form__photo-container">
-          <h1 class="none">도서 이미지 입력</h1>
-          <InputBookInputImg @image-selected="handleImageSelected"></InputBookInputImg>
-        </section>
+      <section class="tree-info-card__container">
+        <CardTreeInfoCard :data="{ date: data.publishDate, pageCount: data.totalPage }" />
+      </section>
+
+
+      <form class="tree-book-auto-form-container">
 
         <section class="input-form__input-container">
-          <h1 class="none">도서 이름 입력</h1>
+          <h1 class="none">트리이름 입력</h1>
           <InputTextBox
-              label="*도서 이름"
-              name="bookTitle"
-              v-model="treeFormData.bookTitle"
-              placeholder="도서 이름을 입력해주세요"
+              label="*트리 이름"
+              name="treeTitle"
+              v-model="treeFormData.treeTitle"
+              placeholder="트리 이름을 입력해주세요"
           >
           </InputTextBox>
-        </section>
-
-        <section class="input-form__input-container">
-          <h1 class="none">지은이 입력</h1>
-          <InputTextBox
-              label="*지은이"
-              name="author"
-              v-model="treeFormData.author"
-              placeholder="지은이를 입력해주세요"
-          >
-          </InputTextBox>
-        </section>
-
-        <section class="input-form__input-container">
-          <h1 class="none">출판사 입력</h1>
-          <InputTextBox
-              label="*출판사"
-              name="publisher"
-              v-model="treeFormData.publisher"
-              placeholder="출판사를 입력해주세요"
-          >
-          </InputTextBox>
-        </section>
-
-        <section class="input-form__input-container">
-          <h1 class="none">출판사 입력</h1>
-          <InputTextBox
-              label="*출판일"
-              name="publishDate"
-              v-model="treeFormData.publishDate"
-              placeholder="출판일을 입력해주세요"
-          >
-          </InputTextBox>
-        </section>
-
-        <section class="input-form__input-container">
-          <h1 class="none">총페이지 입력</h1>
-          <InputTextNumberBox
-              label="*총페이지"
-              name="totalPage"
-              :min="1"
-              v-model="treeFormData.totalPage"
-              placeholder="총페이지를 입력해주세요"
-          >
-          </InputTextNumberBox>
         </section>
 
         <section class="input-form__input-container">
@@ -192,17 +167,6 @@ const dropBookCategory = () => {
               @drop="dropBookCategory"
           >
           </InputBookCategorySelect >
-        </section>
-
-        <section class="input-form__input-container">
-          <h1 class="none">트리이름 입력</h1>
-          <InputTextBox
-              label="*트리 이름"
-              name="treeTitle"
-              v-model="treeFormData.treeTitle"
-              placeholder="트리 이름을 입력해주세요"
-          >
-          </InputTextBox>
         </section>
 
         <section class="book-tree-input-form__large-input-container">
@@ -221,13 +185,6 @@ const dropBookCategory = () => {
           <InputVisibility name="visibility" v-model="treeFormData.visibility"></InputVisibility>
         </section>
 
-        <section class="book-tree-submit-container">
-          <h1 class="none">트리 생성 버튼</h1>
-          <ButtonSubmitBtnFullBar
-              text="트리 생성"
-              @click.prevent="submitFormHandler"
-          ></ButtonSubmitBtnFullBar>
-        </section>
       </form>
     </section>
   </main>

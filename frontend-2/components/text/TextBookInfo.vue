@@ -1,7 +1,6 @@
-<!-- TextBookInfo.vue -->
-
-
 <script setup>
+import { defineProps } from 'vue';
+
 // const textBookInfoProps = {
 //   title: data.title,
 //   authors: data.authors,
@@ -10,9 +9,8 @@
 //   page: data.page,
 //   seed: data.seed,
 // };
-import { defineProps } from 'vue';
 
-const {data} = defineProps(['data']);
+const { data } = defineProps(['data']);
 // seedConverter 함수 정의
 function seedConverter(seedId) {
   switch (seedId) {

@@ -1,15 +1,15 @@
-<script setup lang="ts">
+<script setup>
 import { onMounted, reactive, watch } from "vue";
 import axios, { HttpStatusCode } from "axios";
+import {useRoute} from "vue-router";
 
 // ----------------------- Model ----------------------- //
-const backLink = localStorage.getItem("leafCreateUrl");
+
+const config = useRuntimeConfig();
+const backLink = useState("leafCreateUrl");
+const selectedTags = useState('selectedTags');
 
 const tags = reactive({
-  items: [],
-});
-
-const selectedTags = reactive({
   items: [],
 });
 
@@ -18,16 +18,16 @@ const searchValue = reactive({
 });
 
 watch(
-    [tags, selectedTags, searchValue],
+    [tags, selectedTags.value, searchValue],
     [
       (newVal) => {},
       (newVal) => {
-        if (selectedTags.items.length === 0) {
+        if (selectedTags.value.items.length === 0) {
           localStorage.setItem("selectedTags", JSON.stringify([]));
         } else {
           localStorage.setItem(
               "selectedTags",
-              JSON.stringify(selectedTags.items)
+              JSON.stringify(selectedTags.value.items)
           );
         }
       },
@@ -37,40 +37,33 @@ watch(
 
 // ----------------------- Life Cycle ----------------------- //
 onMounted(() => {
-  if (!localStorage.getItem("selectedTags")) {
-    localStorage.setItem("selectedTags", JSON.stringify([]));
-  } else {
-    selectedTags.items = JSON.parse(localStorage.getItem("selectedTags"));
-  }
-
   tagListApi();
 });
 
 // ----------------------- API ----------------------- //
 const tagListApi = async () => {
+
   try {
-    const response = await axios.get(
-        `http://localhost:8080/api/v1/tags?s=${searchValue.name}`
-    );
-    if (response.status !== HttpStatusCode.OK) {
+    const response = await axios.get(`${config.public.apiBase}/tags?s=${searchValue.name}`);
+
+    if (response.status !== HttpStatusCode.Ok) {
       console.log("태그 리스트 조회 실패 : ", response);
     }
 
     // 선택 되어있는 태그 제외
     tags.items = response.data.tags.filter((tag) => {
-      for (let i = 0; i < selectedTags.items.length; i++) {
-        if (tag.id === selectedTags.items[i].id) {
-          return false;
-        }
+      for (let i = 0; i < selectedTags.value.items.length; i++) {
+        if (tag.id === selectedTags.value.items[i].id) { return false; }
       }
       return true;
     });
+
   } catch (error) {
     console.log("태그 리스트 조회 실패 : ", error);
   }
 };
 
-const tagCreateApi = async (tagName: string) => {
+const tagCreateApi = async (tagName) => {
   try {
     const response = await axios.post(`http://localhost:8080/api/v1/tags`, {
       name: tagName,
@@ -89,13 +82,13 @@ const tagCreateApi = async (tagName: string) => {
 // ----------------------- Function ----------------------- //
 const tagSelectedHandler = (tag) => {
   // 3개 이상 선택 불가
-  if (3 <= selectedTags.items.length) {
+  if (3 <= selectedTags.value.items.length) {
     alert("태그는 3개까지 선택 가능합니다.");
     return;
   }
 
   // 선택된 태그 리스트에 추가
-  selectedTags.items.push(tag);
+  selectedTags.value.items.push(tag);
 
   // 선택 하면 리스트에서 제거
   tags.items = tags.items.filter((item) => item.id !== tag.id);
@@ -106,13 +99,13 @@ const tagUnSelectedHandler = (tag) => {
   tags.items.push(tag);
 
   // 선택 해제 하면 리스트에서 제거
-  selectedTags.items = selectedTags.items.filter((item) => item.id !== tag.id);
+  selectedTags.value.items = selectedTags.value.items.filter((item) => item.id !== tag.id);
 
   // 로컬 스토리지에서 제거
-  localStorage.setItem("selectedTags", JSON.stringify(selectedTags.items));
+  localStorage.setItem("selectedTags", JSON.stringify(selectedTags.value.items));
 };
 
-const handleTagSearch = (value: string) => {
+const handleTagSearch = (value) => {
   searchValue.name = value;
   tagListApi();
 };
@@ -126,8 +119,8 @@ const tagCreateHandler = async (name) => {
   };
 
   // 생성한 태그 선택 리스트에 태그가 3개 미만이면 추가
-  if (selectedTags.items.length < 3) {
-    selectedTags.items.push(newTag);
+  if (selectedTags.value.items.length < 3) {
+    selectedTags.value.items.push(newTag);
     return;
   }
 
@@ -146,10 +139,10 @@ const tagCreateHandler = async (name) => {
   <main>
     <section>
       <h2 class="none">태그 검색</h2>
-      <TagSearchOrRegisterBar
+      <InputTagSearchOrRegisterBar
           @tagSearch="handleTagSearch"
           tag="null"
-      ></TagSearchOrRegisterBar>
+      ></InputTagSearchOrRegisterBar>
     </section>
 
     <section>

@@ -1,15 +1,15 @@
-<script setup lang="ts">
-const props = defineProps<{
-  href: string;
-  src: string;
-}>();
+<script setup>
+const props = defineProps({
+  href: String,
+  src: String
+});
 </script>
 
 <template>
   <!--link__one-imgae-detail(src,href)-->
   <div>
     <a class="link-cover-img-anker" :href="href">
-      <img class="link-cover-img" :src="'/uploads/image/' + src" alt="표지" />
+      <img class="link-cover-img" :src="src" alt="표지" />
       <p class="link-cover-img-p">자세히 보기</p>
     </a>
   </div>

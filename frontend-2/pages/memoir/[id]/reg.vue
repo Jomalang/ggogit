@@ -2,7 +2,7 @@
 import { onBeforeMount, onMounted, ref } from "vue";
 import Editor from "@toast-ui/editor";
 import "@toast-ui/editor/dist/toastui-editor.css";
-import LInkOneImageDetail from "~/components/link/LInkOneImageDetail.vue";
+import LInkOneImageDetail from "~/components/link/LinkOneImageDetail.vue";
 import SubmitBtnFullBar from "~/components/button/SubmitBtnFullBar.vue";
 import NavigationBar from "~/components/nav/NavigationBar.vue";
 

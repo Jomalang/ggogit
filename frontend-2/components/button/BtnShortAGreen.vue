@@ -1,8 +1,8 @@
-<script setup lang="ts">
-const props = defineProps<{
-  link: string;
-  text: string;
-}>();
+<script setup>
+const props = defineProps({
+    link: String,
+    text: String
+});
 </script>
 
 <template>

@@ -1,12 +1,10 @@
-<script setup lang="ts">
-import { LeafTagProps } from "@/types/types";
+<script setup>
 
-const props = defineProps<{
-  tag: LeafTagProps;
-}>();
+const props = defineProps({
+  tag: String,
+});
 
 const emit = defineEmits(['tagSearch']);
-
 </script>
 
 <template>
@@ -18,7 +16,7 @@ const emit = defineEmits(['tagSearch']);
         name="name"
         class="tree-input-text__rectangle"
         placeholder="태그를 검색하거나 등록하세요."
-        @input="$emit('tagSearch', $event.target.value)"
+        @input="emit('tagSearch', $event.target.value)"
         :value="tag.name"
       />
     </label>

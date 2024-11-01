@@ -1,14 +1,11 @@
-<script setup lang="ts">
+<script setup>
 
-const props = defineProps<{
-  startPage: number;
-  endPage: number;
-}>();
+const props = defineProps({
+  startPage: Number,
+  endPage: Number,
+});
 
-const emit = defineEmits<{
-  (e: 'update:startPage', value: number): void;
-  (e: 'update:endPage', value: number): void;
-}>();
+const emit = defineEmits(['update:startPage', 'update:endPage']);
 
 </script>
 

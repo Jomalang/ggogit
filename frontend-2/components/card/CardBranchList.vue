@@ -8,15 +8,26 @@ const props = defineProps({
     default: () => []
   }
 })
+const formatDate = (date) => {
+  const options = {
+    year: '2-digit', // '24' 형식으로 출력
+    month: '2-digit', // '10' 형식으로 출력
+    day: '2-digit', // '01' 형식으로 출력
+    hour: 'numeric', // 시간 출력 (24시간제)
+    minute: 'numeric', // 분 출력
+  };
+  return new Date(date).toLocaleString('ko-KR', options);
+};
 </script>
 
 <template>
   <!-- th:fragment="card-branch__list(lists)" -->
-  <div class="card-branch__list-frame"
+  <NuxtLink class="card-branch__list-frame"
     v-for="item in props.items"
     :key="item.id"
+    :to="{ name: 'leaf-id', params: { id: item.id }}"
   >
-    <a class="branch-info-frame" href="#">
+    <div class="branch-info-frame">
       <div class="branch-img-frame">
         <img v-if="item.bookMark" src="/public/svg/card-bookmark-icon.svg" alt="브랜치 이미지">
         <img v-else src="/public/svg/card-branch-represent-icon.svg" alt="브랜치 이미지" >
@@ -24,16 +35,16 @@ const props = defineProps({
       <div class="branch-detail-info">
         <p class="branch-detail-info--name">{{ item.title }}</p>
       </div>
-    </a>
+    </div>
     <div class="branch-card-bottom-info-frame">
       <div class="branch-card-bottom-info">
         <span>리프 <p>{{ item.leafCount }}</p></span>
         <span>조회수 <p>{{ item.viewCount }}</p></span></div>
       <div class="branch-card-bottom-info">
-        <p class="branch-detail-info--regdate">{{item.updateTime}}</p>
+        <p class="branch-detail-info--regdate">{{formatDate(item.updateTime)}}</p>
       </div>
     </div>
-  </div>
+  </NuxtLink>
 </template>
 
 <style scoped>

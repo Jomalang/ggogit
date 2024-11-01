@@ -3,20 +3,20 @@ package io.ggogit.ggogit.api.tree.dto;
 import io.ggogit.ggogit.api.leaf.dto.LeafBranchResponse;
 import lombok.Builder;
 import lombok.Data;
-import org.springframework.data.domain.Page;
+
+import java.util.List;
 
 @Data
 @Builder
 public class TreeDetailResponse {
-    Page<LeafBranchResponse> items;
-    int totalCnt;
-    int totalPage;
+    List<LeafBranchResponse> items;
+    int totalCount;
 
-    public static TreeDetailResponse toEntity(Page<LeafBranchResponse> items, int totalCnt, int totalPage) {
+
+    public static TreeDetailResponse of(List<LeafBranchResponse> items, int totalCount) {
         return TreeDetailResponse.builder()
                 .items(items)
-                .totalCnt(totalCnt)
-                .totalPage(totalPage)
+                .totalCount(totalCount)
                 .build();
     }
 }

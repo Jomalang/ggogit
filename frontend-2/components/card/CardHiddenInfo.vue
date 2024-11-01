@@ -9,7 +9,7 @@ import TextBookInfo from "~/components/text/TextBookInfo.vue";
 const {data} = defineProps(['data']);
 
 function translatorsConverter(translators) {
-  if (translators == null || translators === "") {
+  if (!translators) {
     return [];
   }
   return translators.split(",");
@@ -51,7 +51,7 @@ const cardReactNumbersProps = {
 
       <section class="card-tree-info__detail-tree-container">
         <h4 class="none">트리 정보</h4>
-        <TextBookInfo :data = textBookInfoProps />
+        <TextBookInfoNoTitle :data = textBookInfoProps />
         <!-- <div th:replace="~{fragments/text :: text-book-info--no-title(${authors},${translators},${publisher},${page},${seed})}"></div> -->
       </section>
 

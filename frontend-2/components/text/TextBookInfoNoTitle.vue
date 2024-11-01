@@ -1,45 +1,42 @@
 <script setup>
-defineProps({
-    authors: {
-        type: Array,
-        required: true
-    },
-    translators: {
-        type: Array,
-        default: () => []
-    },
-    publisher: {
-        type: String,
-        required: true
-    },
-    page: {
-        type: [Number, String],
-        required: true
-    },
-    seed: {
-        type: String,
-        required: true
-    }
-})
+import { defineProps } from 'vue';
+const {data} = defineProps(['data']);
+function seedConverter(seedId) {
+  switch (seedId) {
+    case 1:
+      return '도서';
+    case 2:
+      return '생각';
+    case 3:
+      return '문장';
+    case 4:
+      return '공부';
+    case 5:
+      return '영상';
+    default:
+      return '알 수 없는 유형';
+  }
+};
+let seed = seedConverter(data.seed);
 </script>
 
 <template>
     <!-- text-book-info--no-title(authors,translators, publisher, page,seed) -->
     <div class="text-book-info--no-title">
         <div class="text-book-info--no-title__creators">
-            <div v-for="(author, index) in authors" :key="'author-' + index" class="text-book-info--no-title__creators">
-                <span class="text-book-info-create-info">{{ author }}</span>
-                <span class="text-book-info-create-info">|</span>
+            <div  class="text-book-info--no-title__creators">
+                <span class="text-book-info-create-info">{{ data.authors }} </span>
+                <span class="text-book-info-create-info"> | </span>
             </div>
-            <div v-if="translators" v-for="(translator, index) in translators" :key="'translator-' + index" class="text-book-info--no-title__creators">
+            <div v-if="data.translators" v-for="translator of data.translators" class="text-book-info--no-title__creators">
                 <span class="text-book-info-create-info">{{ translator }}</span>
-                <span class="text-book-info-create-info">|</span>
+                <span class="text-book-info-create-info"> | </span>
             </div>
-            <span class="text-book-info-create-info">{{ publisher }}</span>
+            <span class="text-book-info-create-info">{{ data.publisher }}</span>
         </div>
         <div>
             <span class="text-book-info--no-title__page">총 페이지 수:</span>
-            <span class="text-book-info--no-title__page">{{ page }}</span>
+            <span class="text-book-info--no-title__page">{{ data.page }}</span>
         </div>
         <div>
             <p class="text-book-info--no-title__seed">{{ seed }}</p>

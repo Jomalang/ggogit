@@ -1,10 +1,8 @@
 <script setup>
-
 const props = defineProps({
     link: String,
     text: String
 });
-
 </script>
 
 <template>

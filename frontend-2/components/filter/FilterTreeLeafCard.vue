@@ -8,22 +8,24 @@ const props = defineProps({
     default: 'Default Title'
   }
 })
+const emit = defineEmits(['popup','bookMark']);
+const bookMark = ref();
 </script>
 
 <template>
   <div id="branchSortFilter" class="filter-tree-leaf__card">
     <div class="filter-tree-leaf__gap">
       <label>
-        <input class="filter-tree-list-img filterEvent" type="radio" name="bookMark" data-id="" checked/>
+        <input @click="emit('bookMark', bookMark='')" class="filter-tree-list-img filterEvent" type="radio" name="bookMark" data-id="" checked/>
       </label>
       <label>
-        <input class="filter-tree-list-btn filterEvent" type="radio" name="bookMark" data-id="0" label="북마크"/>
+        <input @click="emit('bookMark', bookMark=1)" class="filter-tree-list-btn filterEvent" type="radio" name="bookMark" data-id="1" label="북마크"/>
       </label>
       <label>
-        <input class="filter-tree-list-btn filterEvent" type="radio" name="bookMark" data-id="1" label="라스트 리프"/>
+        <input @click="emit('bookMark', bookMark=0)" class="filter-tree-list-btn filterEvent" type="radio" name="bookMark" data-id="0" label="라스트 리프"/>
       </label>
     </div>
-    <div class="filter-tree-leaf__card-sort" id="filter-tree-leaf__card-sort">
+    <div @click="emit('popup')" class="filter-tree-leaf__card-sort" id="filter-tree-leaf__card-sort">
       <input class="bar-search-current__detail-input" type="checkbox" id="bar-search-current__detail"/>
       <label class="bar-search-current__detail" for="bar-search-current__detail">{{props.filterName}}</label>
     </div>

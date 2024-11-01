@@ -2,6 +2,8 @@ package io.ggogit.ggogit.domain.aop;
 
 import io.ggogit.ggogit.util.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.springframework.security.access.AccessDeniedException;
@@ -28,6 +30,12 @@ public class AuthorizationAspect {
         if (!memberId.equals(tokenMemberId)) {
             throw new AccessDeniedException("권한이 없습니다.");
         }
+    }
+
+    //bearer token을 추출 메서드
+    @Around(value = "execution(* io.ggogit.ggogit.api..*Controller.*(..)) && args(accessToken, ..)", argNames =  "pjp, accessToken")
+    public Object jwtSubString(ProceedingJoinPoint pjp, String accessToken) throws Throwable {
+        return pjp.proceed(new Object[]{resolveToken(accessToken)});
     }
 
     private String resolveToken(String accessToken) {

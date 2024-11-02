@@ -1,27 +1,21 @@
 <script setup>
 
-const props = defineProps({
-  label: String,
-  name: String,
-  modelValue: String,
-  placeholder: String
-});
-
-const emit = defineEmits(['update:modelValue']);
+const { data } = defineProps(["data"]);
+const emit = defineEmits(['inputData']);
 
 </script>
 
 <template>
-  <!-- text-area__box(label, placeholder, name) -->
   <div class="input-textarea__box">
     <label class="input-textarea__label tree-input__large-text-label">
-      <span>{{ label }}</span>
+      <span>{{ data.label }}</span>
       <textarea
         class="input-textarea__textarea tree-input__large-textarea"
-        :name="name"
-        :value="modelValue"
-        @input="$emit('update:modelValue', $event.target.value)"
-        :placeholder="placeholder"
+        :class="{ 'input-text__input--warning': !data.validate }"
+        :name="data.name"
+        :value="data.value"
+        @input="$emit('inputData', $event.target.value)"
+        :placeholder="data.placeholder"
       ></textarea>
     </label>
   </div>
@@ -58,5 +52,9 @@ const emit = defineEmits(['update:modelValue']);
   font-weight: var(--semi-bold);
   color: var(--main1);
   outline: 2px solid var(--main1, #323a27);
+}
+
+.input-text__input--warning {
+  outline: 2px solid var(--warning);
 }
 </style>

@@ -33,10 +33,10 @@ public class AuthorizationAspect {
     }
 
     //bearer token을 추출 메서드
-    @Around(value = "execution(* io.ggogit.ggogit.api..*Controller.*(..)) && args(accessToken, ..)", argNames =  "pjp, accessToken")
-    public Object jwtSubString(ProceedingJoinPoint pjp, String accessToken) throws Throwable {
-        return pjp.proceed(new Object[]{resolveToken(accessToken)});
-    }
+//    @Around(value = "execution(* io.ggogit.ggogit.api..*Controller.*(..)) && args(accessToken, ..)", argNames =  "pjp, accessToken")
+//    public Object jwtSubString(ProceedingJoinPoint pjp, String accessToken) throws Throwable {
+//        return pjp.proceed(new Object[]{resolveToken(accessToken)});
+//    }
 
     private String resolveToken(String accessToken) {
         if (StringUtils.hasText(accessToken) && accessToken.startsWith("Bearer ")) {

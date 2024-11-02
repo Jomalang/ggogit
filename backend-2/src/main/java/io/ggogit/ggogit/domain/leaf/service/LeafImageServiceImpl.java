@@ -34,4 +34,9 @@ public class LeafImageServiceImpl implements LeafImageService {
         }
         return null;
     }
+
+    @Override
+    public boolean exists(String filename, UploadFolderType uploadFolderType) {
+        return imageRepository.isImageExists(filename, uploadFolderType);
+    }
 }

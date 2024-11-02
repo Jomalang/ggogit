@@ -39,7 +39,7 @@ const commentCount = ref("/jpg/leaf-profile.jpg");
     <section class="book-detail-book-info-container">
       <h1 class="none">도서 제목 및 저자 정보</h1>
       <TextBookInfo :data="{
-              seed: '시/에세이',
+              bookCategoryName: '시/에세이',
               title: '무정형의 삶',
               author: '올라프',
               translators: null,

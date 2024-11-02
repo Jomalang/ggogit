@@ -83,7 +83,7 @@ public class LeafBookServiceImpl implements LeafBookService {
         treeTmpRepository.delete(treeTmp);
 
         // 여기에 이미지 로직 생성
-        if (book.getImageFile() != null) {
+        if (book.getImageFile() != null && book.getMember().getId() != 999L) {
             imageRepositoryImpl.moveImage(book.getImageFile(), UploadFolderType.TMP, UploadFolderType.BOOK);
         }
 
@@ -130,10 +130,6 @@ public class LeafBookServiceImpl implements LeafBookService {
         if (leafTags.size() != leafTagIds.size()) {
             throw new IllegalArgumentException("LeafTag 데이터가 없습니다.");
         }
-
-        // 이미지 경로 이동
-        String content = leaf.getContent();
-        leaf.setContent(content.replace("/leaf/image-print", "/saved/leaf/image-print"));
 
         // `System`은 `Leaf` 데이터 저장
         leafRepository.save(leaf);

@@ -125,25 +125,6 @@ public class TreeController {
 //        return list;
 //    }
 
-    @PostMapping
-    public ResponseEntity<TreeTmpResponse> createBookTreeTmp (
-            @ModelAttribute TreeTmpRequest dto,
-            @RequestParam(required = false) MultipartFile image
-            // @SessionAttribute Member member
-    ) throws IOException {
-        TreeTmp treeTmp = dto.toTreeTmp();
-        Long memberId = 1000L; // 테스트용 코드
-        Long seedId = dto.getSeedId();
-        Long bookCategoryId = dto.getBookCategoryId();
-
-        Long treeTmpId = treeTmpService
-                .save(treeTmp, memberId, seedId, bookCategoryId, image.getBytes(), image.getOriginalFilename());
-
-        TreeTmpResponse resp = TreeTmpResponse.of(treeTmpId, "도서 트리 임시 저장 성공");
-
-        return new ResponseEntity<>(resp, HttpStatus.CREATED);
-    }
-
     @GetMapping("/{treeId}/branches")
     public ResponseEntity<TreeDetailResponse> getBranchList(
             @PathVariable Long treeId,

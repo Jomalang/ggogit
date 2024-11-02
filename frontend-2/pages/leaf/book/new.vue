@@ -6,18 +6,31 @@ import { onMounted, reactive, watch } from "vue";
 import axios, {HttpStatusCode} from "axios";
 
 // ----------------------- Model ----------------------- //
-
 const config = useRuntimeConfig();
 const router = useRouter();
 
-
+const treeFormData = useState('treeFormData');
 const leafFormData = useState('leafFormData', () => ({
+
+  // 페이지 번호
   startPage: undefined,
+  startPageValidation: true,
   endPage: undefined,
+  endPageValidation: true,
+
+  // 태그 데이터
   tagIds: [],
+  tagSelected: true,
+
+  // 제목
   title: undefined,
+  titleValidation: true,
+
+  // 내용
   content: undefined,
-  visibility: undefined,
+
+  // 공개성
+  visibility: true,
 }));
 
 const selectedTags = useState('selectedTags', () => ({
@@ -65,7 +78,7 @@ onMounted(() => {
           console.log("서버에 저장된 파일 명 : ", filename);
 
           // addImageBlobHook의 callback을 통해 디스크에 저장된 이미지 에디터에 렌더링
-          const imageUrl = `${config.public.apiBase}/leaf/image-print?filename=${filename}`;
+          const imageUrl = `${config.public.apiBase}/leaf/image/${filename}`;
           callback(imageUrl, "image alt attribute");
           console.log(blob);
           console.log(callback);
@@ -85,13 +98,67 @@ onMounted(() => {
 });
 
 // ----------------------- Function ----------------------- //
+const inputTitle = (title) => {
+  leafFormData.value.title = title;
+  leafFormData.value.titleValidation = true;
+};
+
+const inputStartPage = (data) => {
+  leafFormData.value.startPage = data.number;
+  leafFormData.value.startPageValidation = data.isValidate;
+  pageValidation();
+  console.log("startPage : ", leafFormData.value);
+};
+
+const inputEndPage = (data) => {
+  leafFormData.value.endPage = data.number;
+  leafFormData.value.endPageValidation = data.isValidate;
+  pageValidation();
+  console.log("endPage : ", leafFormData.value);
+};
+
+const pageValidation = () => {
+  // 마지막 페이지가 시작 페이지보다 큰지 확인
+  if (leafFormData.value.startPage <= leafFormData.value.endPage) {
+    leafFormData.value.startPageValidation = true;
+    leafFormData.value.endPageValidation = true;
+  }
+};
+
 const tagDrop = (tag) => {
   console.log("tagDrop : ", tag);
   const index = selectedTags.value.items.findIndex((item) => item.id === tag.id);
   selectedTags.value.items.splice(index, 1);
 };
 
+const validate = () => {
+
+  if (!leafFormData.value.startPage || !leafFormData.value.startPageValidation) {
+    leafFormData.value.startPageValidation = false;
+    alert("시작 페이지를 잘못 입력하셨습니다.");
+    return false;
+  }
+
+  if (!leafFormData.value.endPage || !leafFormData.value.endPageValidation) {
+    leafFormData.value.endPageValidation = false;
+    alert("마지막 페이지를 잘못 입력하셨습니다.");
+    return false;
+  }
+
+  if (!leafFormData.value.title) {
+    leafFormData.value.titleValidation = false;
+    alert("리프 제목을 입력해 주세요.");
+    return false;
+  }
+
+  return true;
+};
+
 const submitHandler = async () => {
+
+  if (!validate()) {
+    return;
+  }
 
   console.log("leafFormData POST > : ", leafFormData.value);
   const response = await axios.post(`${config.public.apiBase}/book/first/leaves`, leafFormData.value);
@@ -123,10 +190,7 @@ const submitHandler = async () => {
 
     <section class="first-log-title-container">
       <h1 class="none"></h1>
-      <TextMainTitleCenter
-          title="트리 첫번째 기록"
-          size="28"
-      ></TextMainTitleCenter>
+      <TextMainTitleCenter title="트리 첫번째 기록" size="28"></TextMainTitleCenter>
     </section>
 
     <form
@@ -146,8 +210,13 @@ const submitHandler = async () => {
         <section class="first-log_page-input-container">
           <h1 class="none">리프 페이지</h1>
           <InputPageNumber
-              v-model:start-page="leafFormData.startPage"
-              v-model:end-page="leafFormData.endPage"
+              :data="{
+                startPage: leafFormData.startPage,
+                endPage: leafFormData.endPage,
+                maxPage: treeFormData.totalPage,
+              }"
+              @startPage="inputStartPage"
+              @endPage="inputEndPage"
           >
           </InputPageNumber>
         </section>
@@ -160,10 +229,15 @@ const submitHandler = async () => {
         <section class="input-form__input-container">
           <h1 class="none">로그이름 입력</h1>
           <InputTextBox
-              label="*제목"
-              name="title"
-              placeholder="리프 제목을 입려해 주세요."
-              v-model="leafFormData.title"
+              :data="{
+                label: '*제목',
+                name: 'title',
+                placeholder: '리프 제목을 입력해 주세요.',
+                value: leafFormData.title,
+                validate: leafFormData.titleValidation,
+                validateMessage: '리프 제목을 입력해 주세요.'
+              }"
+              @inputData="inputTitle"
           ></InputTextBox>
         </section>
 

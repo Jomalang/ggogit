@@ -39,7 +39,7 @@ public class LeafImageController {
     }
 
     @GetMapping(
-            value = "/leaf/image-print",
+            value = "/leaf/image/{filename}",
             produces = {
                     MediaType.IMAGE_GIF_VALUE,
                     MediaType.IMAGE_JPEG_VALUE,
@@ -47,8 +47,11 @@ public class LeafImageController {
             }
     )
     public byte[] print(
-            @RequestParam final String filename
+            @PathVariable final String filename
     ) {
+        if (leafImageService.exists(filename, UploadFolderType.LEAF)) {
+            return leafImageService.print(filename, UploadFolderType.LEAF);
+        }
         return leafImageService.print(filename, UploadFolderType.TMP);
     }
 

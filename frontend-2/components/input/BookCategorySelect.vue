@@ -1,11 +1,6 @@
 <script setup>
 
-const props = defineProps({
-  isSelected: Boolean,
-  id: Number,
-  name: String
-});
-
+const { data } = defineProps(["data"]);
 const emit = defineEmits(['drop']);
 
 </script>
@@ -14,12 +9,14 @@ const emit = defineEmits(['drop']);
   <div class="input-tag-select-box">
     <p class="input-tag-select__label-text">도서 카테고리 선택</p>
     <div class="input-tag-select__bg">
-      <div class="input-tag-select__button-box">
+      <div class="input-tag-select__button-box"
+           :class="{ 'input-text__input--warning': !data.isSelected }">
         <div class="input-tag-select__tag-box">
-          <p v-if="!isSelected" class="input-tag-select__placeholder">도서 카테고리를 선택해주세요</p>
+          <p v-if="!data.isSelected || data.name === null"
+             class="input-tag-select__placeholder" >도서 카테고리를 선택해주세요</p>
           <div v-else class="input-tag-select__tag">
             <label class="input-tag-select__tag-label">
-              <span class="input-tag-select__tag-text">{{ name }}</span>
+              <span class="input-tag-select__tag-text">{{ data.name }}</span>
               <button
                   class="input-tag-select__tag-delete-btn"
                   type="button"
@@ -27,7 +24,7 @@ const emit = defineEmits(['drop']);
               >
                 <img src="/svg/x-button.svg" alt="next-button" />
               </button>
-              <input class="none input-tag-select__input" name="bookCategoryId" :value="id" />
+              <input class="none input-tag-select__input" name="bookCategoryId" :value="data.id" />
             </label>
           </div>
         </div>
@@ -132,4 +129,9 @@ const emit = defineEmits(['drop']);
   padding: 6px 12px 6px 12px;
   background-color: var(--main1, #323a27);
 }
+
+.input-text__input--warning {
+  outline: 2px solid var(--warning);
+}
+
 </style>

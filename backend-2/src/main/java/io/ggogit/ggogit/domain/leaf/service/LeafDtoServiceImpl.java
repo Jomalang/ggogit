@@ -22,6 +22,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -49,7 +50,7 @@ public class LeafDtoServiceImpl implements LeafDtoService {
         List<TreeNode> treeNodes = treeStructure.findAll(leafId, isOwner);
 
         // LeafItemResponse 로 변환
-        return getLeafItemResponse(treeNodes);
+        return getLeafItemResponse(treeNodes, leafId);
     }
 
     @Override
@@ -75,17 +76,17 @@ public class LeafDtoServiceImpl implements LeafDtoService {
                 .leafCount(treeNodes.size())
                 .likeCount(likeCount)
                 .viewCount(viewCount)
-                .updateTime(treeNodes.getLast().getValue().getUpdateTime())
+                .updateTime(treeNodes.getFirst().getValue().getUpdateTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
                 .build();
     }
 
     @Override
     @Transactional(readOnly = true)
-    public LeafItemResponse getLeafNodeToEnd(Long leafId, boolean isOwner) {
+    public LeafItemToEndResponse getLeafNodeToEnd(Long leafId, boolean isOwner) {
         List<Leaf> leafNodes = getTreeLeafs(leafId);
         TreeStructure treeStructure = new TreeStructure(leafNodes);
         List<TreeNode> treeNodes = treeStructure.findToEnd(leafId, isOwner);
-        return getLeafItemResponse(treeNodes);
+        return getLeafItemToEndResponse(treeNodes, leafId);
     }
 
     @Override
@@ -287,7 +288,28 @@ public class LeafDtoServiceImpl implements LeafDtoService {
         return response;
     }
 
-    private LeafItemResponse getLeafItemResponse(List<TreeNode> treeNodes) {
+    @Override
+    public String getSeedType(Long leafId) {
+        Leaf leaf = leafRepository.findById(leafId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 리프가 존재하지 않습니다."));
+        return leaf.getTree().getSeed().getId().equals(1L) ? "book" : "etc";
+    }
+
+    private LeafItemToEndResponse getLeafItemToEndResponse(List<TreeNode> treeNodes, Long leafId) {
+        LeafItemToEndResponse response = new LeafItemToEndResponse();
+        for (TreeNode treeNode : treeNodes) {
+            // 리프 노드의 태그 조회
+            List<LeafTagMap> leafTagMaps = leafTagMapRepository.findByLeaf(treeNode.getValue());
+            List<LeafTag> leafTags = new ArrayList<>();
+            for (LeafTagMap leafTagMap : leafTagMaps) {
+                leafTags.add(leafTagMap.getLeafTag());
+            }
+            response.addItem(treeNode, leafTags, leafId);
+        }
+        return response;
+    }
+
+    private LeafItemResponse getLeafItemResponse(List<TreeNode> treeNodes, Long leafId) {
         LeafItemResponse response = new LeafItemResponse();
         for (TreeNode treeNode : treeNodes) {
             // 리프 노드의 태그 조회
@@ -296,7 +318,7 @@ public class LeafDtoServiceImpl implements LeafDtoService {
             for (LeafTagMap leafTagMap : leafTagMaps) {
                 leafTags.add(leafTagMap.getLeafTag());
             }
-            response.addItem(treeNode, leafTags);
+            response.addItem(treeNode, leafTags, leafId);
         }
         return response;
     }

@@ -47,11 +47,11 @@ public class LeafController {
      * 리프 리스트 노드의 End 까지 조회
      */
     @GetMapping("/leaves/{leafId}/end")
-    public ResponseEntity<LeafItemResponse> getLeafNodesToEnd(
+    public ResponseEntity<LeafItemToEndResponse> getLeafNodesToEnd(
             @PathVariable Long leafId
     ) {
         boolean isOwner = true;
-        LeafItemResponse responses = leafDtoService.getLeafNodeToEnd(leafId, isOwner);
+        LeafItemToEndResponse responses = leafDtoService.getLeafNodeToEnd(leafId, isOwner);
         return new ResponseEntity<>(responses, HttpStatus.OK);
     }
 
@@ -144,6 +144,18 @@ public class LeafController {
             @RequestParam(value = "size", defaultValue = "10") int size
     ) {
         LeafCardResponse responses = leafDtoService.getLeafCards(bookId, page, size);
+        return new ResponseEntity<>(responses, HttpStatus.OK);
+    }
+
+    /**
+     * 리프 씨드 타입
+     */
+    @GetMapping("/leaves/{leafId}/seed")
+    public ResponseEntity<LeafSeedResponse> getLeafSeed(
+            @PathVariable Long leafId
+    ) {
+        String seedType = leafDtoService.getSeedType(leafId);
+        LeafSeedResponse responses = LeafSeedResponse.of(seedType);
         return new ResponseEntity<>(responses, HttpStatus.OK);
     }
 }

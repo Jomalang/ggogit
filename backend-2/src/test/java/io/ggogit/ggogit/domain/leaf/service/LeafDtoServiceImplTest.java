@@ -2,6 +2,7 @@ package io.ggogit.ggogit.domain.leaf.service;
 
 import io.ggogit.ggogit.api.leaf.dto.LeafBranchInfoResponse;
 import io.ggogit.ggogit.api.leaf.dto.LeafItemResponse;
+import io.ggogit.ggogit.api.leaf.dto.LeafItemToEndResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +52,7 @@ class LeafDtoServiceImplTest {
         Long leafId = 31L;
 
         // when
-        LeafItemResponse leafItemResponse = leafDtoService.getLeafNodeToEnd(leafId, true);
+        LeafItemToEndResponse leafItemResponse = leafDtoService.getLeafNodeToEnd(leafId, true);
 
         // then
         System.out.println(leafItemResponse);

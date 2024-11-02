@@ -17,7 +17,6 @@ public class BookDetailResponse {
     private Long id;
     private String publishDate;
     private Integer totalPage;
-    private Long bookCategoryId;
     private String author;
     private String isbn;
     private String publisher;
@@ -26,12 +25,17 @@ public class BookDetailResponse {
     private String createTime;
     private String updateTime;
 
+    // 도서 카테고리
+    private Long bookCategoryId;
+    private String bookCategoryName;
+
     public static BookDetailResponse of(Book book) {
         return BookDetailResponse.builder()
                 .id(book.getId())
                 .publishDate(book.getPublishDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
                 .totalPage(book.getTotalPage())
                 .bookCategoryId(book.getBookCategory().getId())
+                .bookCategoryName(book.getBookCategory().getName())
                 .author(book.getAuthor())
                 .isbn(book.getIsbn())
                 .publisher(book.getPublisher())

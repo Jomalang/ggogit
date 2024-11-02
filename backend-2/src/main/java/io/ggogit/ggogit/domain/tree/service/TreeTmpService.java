@@ -9,4 +9,6 @@ public interface TreeTmpService {
     Long save(TreeTmp treeTmp, Long memberId, Long seedId, Long bookCategoryId, byte[] bytes, String originalFilename);
 
     TreeTmp getTreeTmp(Long memberId);
+
+    Long save(TreeTmp treeTmp, Long memberId, Long bookId);
 }

@@ -1,7 +1,9 @@
 package io.ggogit.ggogit.domain.tree.service;
 
+import io.ggogit.ggogit.domain.book.entity.Book;
 import io.ggogit.ggogit.domain.book.entity.BookCategory;
 import io.ggogit.ggogit.domain.book.repository.BookCategoryRepository;
+import io.ggogit.ggogit.domain.book.repository.BookRepository;
 import io.ggogit.ggogit.domain.image.repository.ImageRepositoryImpl;
 import io.ggogit.ggogit.domain.member.entity.Member;
 import io.ggogit.ggogit.domain.member.repository.MemberRepository;
@@ -24,6 +26,7 @@ public class TreeTmpServiceImpl implements TreeTmpService {
     private final MemberRepository memberRepository;
     private final SeedRepository seedRepository;
     private final ImageRepositoryImpl imageRepository;
+    private final BookRepository bookRepository;
 
     @Override
     public void deleteTmpById(Long memberId) {
@@ -55,7 +58,7 @@ public class TreeTmpServiceImpl implements TreeTmpService {
             treeTmp.setBookCategory(bookCategory);
         }
 
-        Seed seed = seedRepository.findById(seedId)
+        Seed seed = seedRepository.findById(seedId) // 도서 씨앗을 선택한 경우
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 씨앗입니다."));
         treeTmp.setSeed(seed);
 
@@ -77,5 +80,26 @@ public class TreeTmpServiceImpl implements TreeTmpService {
     public TreeTmp getTreeTmp(Long memberId) {
         return treeTmpRepository.findByMemberId(memberId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 임시 트리입니다."));
+    }
+
+    @Override
+    @Transactional
+    public Long save(TreeTmp treeTmp, Long memberId, Long bookId) {
+
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다."));
+        treeTmp.setMember(member);
+
+        Seed seed = seedRepository.findById(1L) // 도서 씨앗을 선택한 경우
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 씨앗입니다."));
+        treeTmp.setSeed(seed);
+
+        Book book = bookRepository.findById(bookId) // 도서 씨앗을 선택한 경우
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 책입니다."));
+        treeTmp.setBook(book);
+
+        treeTmpRepository.save(treeTmp);
+
+        return treeTmp.getId();
     }
 }

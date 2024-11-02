@@ -131,10 +131,6 @@ public class LeafBookServiceImpl implements LeafBookService {
             throw new IllegalArgumentException("LeafTag 데이터가 없습니다.");
         }
 
-        // 이미지 경로 이동
-        String content = leaf.getContent();
-        leaf.setContent(content.replace("/leaf/image-print", "/saved/leaf/image-print"));
-
         // `System`은 `Leaf` 데이터 저장
         leafRepository.save(leaf);
 

@@ -266,7 +266,7 @@ const inputDescription = (value) => {
         </section>
 
         <section class="input-form__input-container">
-          <h1 claSELECT * FROM TREE_SAVE_TMP ss="none">도서 이름 입력</h1>
+          <h1 class="none">도서 이름 입력</h1>
           <InputTextBox
               :data="{
                 label: '*도서 이름',

@@ -1,6 +1,6 @@
 package io.ggogit.ggogit.domain.tree.entity;
 
-import io.ggogit.ggogit.api.tree.dto.BookTreeTmpRequest;
+import io.ggogit.ggogit.api.tree.dto.TreeTmpRequest;
 import io.ggogit.ggogit.domain.book.entity.Book;
 import io.ggogit.ggogit.domain.book.entity.BookCategory;
 import io.ggogit.ggogit.domain.member.entity.Member;
@@ -91,7 +91,7 @@ public class TreeTmp {
     @Column(name = "VERSION", nullable = false)
     private Long version;
 
-    public static TreeTmp ofBook(BookTreeTmpRequest request, Book book, Seed seed, Member member) {
+    public static TreeTmp ofBook(TreeTmpRequest request, Book book, Seed seed, Member member) {
         return  TreeTmp.builder()
                 .member(member)
                 .bookCategory(book.getBookCategory())
@@ -107,7 +107,7 @@ public class TreeTmp {
                 .visibility(request.getVisibility())
                 .build();
     }
-    public static TreeTmp ofEtc(BookTreeTmpRequest request, Seed seed, Member member) {
+    public static TreeTmp ofEtc(TreeTmpRequest request, Seed seed, Member member) {
         return  TreeTmp.builder()
                 .member(member)
                 .seed(seed)

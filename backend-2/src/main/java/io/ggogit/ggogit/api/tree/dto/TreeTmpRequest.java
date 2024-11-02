@@ -14,7 +14,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class BookTreeTmpRequest {
+public class TreeTmpRequest {
 
     // 도서 정보 (Book Tree인 경우 사용)
     @NotNull(message = "도서 정보를 입력해 주세요.")

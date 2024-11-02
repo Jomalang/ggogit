@@ -153,7 +153,7 @@ public class ImageRepositoryImpl {
      * @param targetFolder 이미지 파일을 이동할 폴더 타입을 입력받습니다.
      */
     public void moveAllImages(String content, UploadFolderType sourceFolder, UploadFolderType targetFolder) {
-        String regex = "filename=([\\w.]+)";
+        String regex = "/leaf/image/([\\w.]+)";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(content);
 

@@ -213,7 +213,7 @@ const submitHandler = async () => {
               :data="{
                 startPage: leafFormData.startPage,
                 endPage: leafFormData.endPage,
-                maxPage: 1000
+                maxPage: treeFormData.totalPage,
               }"
               @startPage="inputStartPage"
               @endPage="inputEndPage"

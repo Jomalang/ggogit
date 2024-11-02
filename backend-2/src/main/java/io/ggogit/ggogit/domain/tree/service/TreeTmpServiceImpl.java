@@ -38,19 +38,11 @@ public class TreeTmpServiceImpl implements TreeTmpService {
     @Transactional // 직접 등록 도서
     public Long save(TreeTmp treeTmp, Long memberId, Long seedId, @Nullable Long bookCategoryId, @Nullable byte[] img, @Nullable String imgFileName) {
 
-        // 기존에 있는 임시 트리 삭제
-        TreeTmp savedTreeTmp = treeTmpRepository.findByMemberId(memberId).orElse(null);
-        if (savedTreeTmp != null) {
-            if (savedTreeTmp.getImageFile() != null) {
-                imageRepository.deleteImage(savedTreeTmp.getImageFile(), UploadFolderType.TMP);
-            }
-            treeTmpRepository.delete(savedTreeTmp);
-        }
-
-        Member member = memberRepository.findById(memberId) // 회원이 존재하는지 확인 TODO: 나중에 제거 해야함
+        Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다."));
-
         treeTmp.setMember(member);
+
+        removeExistingTreeTmp(memberId); // 기존에 있는 임시 트리 삭제
 
         if (bookCategoryId != null) {  // 도서 카테고리를 선택한 경우
             BookCategory bookCategory = bookCategoryRepository.findById(bookCategoryId)
@@ -90,6 +82,8 @@ public class TreeTmpServiceImpl implements TreeTmpService {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다."));
         treeTmp.setMember(member);
 
+        removeExistingTreeTmp(memberId); // 기존에 있는 임시 트리 삭제
+
         Seed seed = seedRepository.findById(1L) // 도서 씨앗을 선택한 경우
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 씨앗입니다."));
         treeTmp.setSeed(seed);
@@ -101,5 +95,15 @@ public class TreeTmpServiceImpl implements TreeTmpService {
         treeTmpRepository.save(treeTmp);
 
         return treeTmp.getId();
+    }
+
+    private void removeExistingTreeTmp(Long memberId) {
+        TreeTmp savedTreeTmp = treeTmpRepository.findByMemberId(memberId).orElse(null);
+        if (savedTreeTmp != null) {
+            if (savedTreeTmp.getImageFile() != null) {
+                imageRepository.deleteImage(savedTreeTmp.getImageFile(), UploadFolderType.TMP);
+            }
+            treeTmpRepository.delete(savedTreeTmp);
+        }
     }
 }

@@ -13,6 +13,9 @@ const treeFormData = useState('treeFormData', () => ({
 
   bookId: null,
 
+  // 트리 총 페이지 정보
+  totalPage: null,
+
   // 트리 정보
   treeTitle: "",
   treeTitleValid: true,

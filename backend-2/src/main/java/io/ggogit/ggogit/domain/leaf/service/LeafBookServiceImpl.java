@@ -83,7 +83,7 @@ public class LeafBookServiceImpl implements LeafBookService {
         treeTmpRepository.delete(treeTmp);
 
         // 여기에 이미지 로직 생성
-        if (book.getImageFile() != null) {
+        if (book.getImageFile() != null && book.getMember().getId() != 999L) {
             imageRepositoryImpl.moveImage(book.getImageFile(), UploadFolderType.TMP, UploadFolderType.BOOK);
         }
 

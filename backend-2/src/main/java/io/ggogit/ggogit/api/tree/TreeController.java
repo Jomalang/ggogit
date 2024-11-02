@@ -148,6 +148,7 @@ public class TreeController {
 
         List<LeafBranchResponse> branchList = leafDtoService.findBranchByFilter(treeId, hasOwner, bookMark);
         totalPage = branchList.size();
+
         branchList = sortLeafList(branchList, filterName.getValue(), sortName.getValue());
 
         if(page >= 0) {

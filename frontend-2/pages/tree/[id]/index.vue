@@ -106,6 +106,7 @@ const filterNameHandler = (e) => {
 watchEffect(() => {
   if (infoData.value) {
     info = infoData.value;
+    console.log(info.coverImageName);
   }
   if(branchData.value) {
     branch = null;

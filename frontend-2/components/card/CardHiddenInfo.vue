@@ -71,7 +71,7 @@ const cardReactNumbersProps = {
       </section>
 
       <section v-if="progress>=80" class="card-tree-memoir-create-btn-container">
-        <LinkFullWidth :link="`/memoir/${data.treeId}/reg`" text="회고록 작성" />
+        <LinkFullWidth :link="'/memoir/' + data.treeId +'/reg'" text="회고록 작성" />
       </section>
 
     </section>

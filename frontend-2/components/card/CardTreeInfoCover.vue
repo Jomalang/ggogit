@@ -3,12 +3,20 @@
 
 const {data} = defineProps(['data']);
 
+const img = ref(false)
+
+onMounted(async () => {
+  await console.log(data.coverImageName);
+  if(data.coverImageName){
+    img.value = true;
+  }
+});
 </script>
 
 <template>
   <div class="card-tree-info-cover-frame">
     <div class="card-tree-info-cover">
-      <img v-if="data.coverImageName" class="card-tree-info-cover" :src="data.coverImageName" alt="cover">
+      <img v-if="img" class="card-tree-info-cover" :src="data.coverImageName" alt="cover">
       <img v-else class="card-tree-info-cover" src="/public/svg/tree-icon--white.svg" alt="cover">
     </div>
     <div class="card-tree-title-frame">

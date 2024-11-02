@@ -156,8 +156,10 @@ public class TreeController {
 
 //        Boolean hasOwner = treeService.isOwner(treeId, member.getId());
         Boolean hasOwner = true;//테스트용 코드
+        int totalPage = 0;
 
         List<LeafBranchResponse> branchList = leafDtoService.findBranchByFilter(treeId, hasOwner, bookMark);
+        totalPage = branchList.size();
         branchList = sortLeafList(branchList, filterName.getValue(), sortName.getValue());
 
         if(page >= 0) {
@@ -166,7 +168,7 @@ public class TreeController {
                     .limit(size)
                     .collect(Collectors.toList());
         }
-        TreeDetailResponse response = TreeDetailResponse.of(branchList, branchList.size());
+        TreeDetailResponse response = TreeDetailResponse.of(branchList, totalPage);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
     @GetMapping("/{treeId}/leafs")

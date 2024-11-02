@@ -1,6 +1,7 @@
 <script setup>
 
-import { defineProps } from 'vue';
+import { defineProps, defineEmits } from 'vue';
+import { useScroll } from '@vueuse/core';
 
 const props = defineProps({
   items: {
@@ -18,6 +19,14 @@ const formatDate = (date) => {
   };
   return new Date(date).toLocaleString('ko-KR', options);
 };
+
+// 무한 스크롤
+
+defineEmits(['loadMore']);
+
+
+
+
 </script>
 
 <template>
@@ -25,7 +34,7 @@ const formatDate = (date) => {
   <NuxtLink class="card-branch__list-frame"
     v-for="item in props.items"
     :key="item.id"
-    :to="{ name: 'leaf-id', params: { id: item.id }}"
+    :to="`/leaf/${item.id}`"
   >
     <div class="branch-info-frame">
       <div class="branch-img-frame">

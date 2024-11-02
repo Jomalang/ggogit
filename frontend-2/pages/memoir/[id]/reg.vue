@@ -23,6 +23,7 @@ const tmpRenderUrl = `${
 
 //트리 아이디
 const treeId = useRoute().params.id;
+const route = useRoute();
 
 //editor 객체
 let editor;
@@ -38,17 +39,19 @@ const memoir = ref({
 const memoirId = ref(0);
 
 const book = ref({
-  bookId: 0,
-  bookTitle: "default-title",
-  bookAuthor: "default-author",
+  id: 0,
+  title: "default-title",
+  author: "default-author",
   //배열로 전달
-  bookTranslator: ["default-translator"],
-  bookPublisher: "default-publisher",
-  bookImage: "book-cover-dummy1.svg",
-  bookCategory: "default-category",
+  translator: ["default-translator"],
+  publisher: "default-publisher",
+  imageFile: "book-cover-dummy1.svg",
+  category: {id: 0, name: "default-category"},
 });
 
 const fileNames = ref([]);
+
+
 
 //----------------function----------------
 //save로직
@@ -123,17 +126,25 @@ onMounted(() => {
   });
 });
 
+watch(
+    () => route.fullPath,
+    (newPath, oldPath) => {
+      console.log('이전 경로:', oldPath);
+      console.log('새 경로:', newPath);
+    }
+);
+
 // TODO: 도서, 트리 API이용해 데이터 가져오기
 onBeforeMount(async () => {
   const { data, error } = await useFetch(
-    import.meta.env.VITE_API_BASE_URL + "book/tree/" + treeId
+    import.meta.env.VITE_API_BASE_URL + "books/tree/" + treeId
   );
 
   if (error.value) {
     console.error("트리 정보 조회 실패 : ", error.value);
     return;
   } else {
-    book.value = data.value.book;
+    book.value = data.value;
   }
 });
 </script>
@@ -160,19 +171,13 @@ onBeforeMount(async () => {
       <section class="tree-reg-cover__container">
         <h4 class="none">도서 커버</h4>
         <LInkOneImageDetail
-          :src="`book/${book.bookImage}`"
+          :src="`${book.imageFile}`"
           :href="'javascript:history.back()'"
         />
       </section>
       <section class="tree-reg-book-info__container">
         <h4 class="none">도서 정보</h4>
-        <TextBookInfo
-          :seed="book.bookCategory"
-          :title="book.bookTitle"
-          :author="book.bookAuthor"
-          :translators="book.bookTranslator"
-          :publisher="book.bookPublisher"
-        />
+        <TextBookInfo :data="book"/>
       </section>
     </section>
 

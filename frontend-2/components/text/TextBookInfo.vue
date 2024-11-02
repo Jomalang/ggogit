@@ -29,7 +29,7 @@ function seedConverter(seedId) {
   }
 };
 let seed = (() => {
-  if (typeof data.seed === 'number' && data.seed > 0) {
+  if (typeof data.seed === 'number') {
     return seedConverter(data.seed);
   } else if (typeof data.seed === 'string') {
     return data.seed;

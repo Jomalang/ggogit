@@ -4,21 +4,57 @@ import "@toast-ui/editor/dist/toastui-editor.css";
 
 import { onBeforeMount, onMounted, reactive } from "vue";
 
-//-------------------------------변수 선언--------------------------------
-const treeInfoList = reactive([]);
-const seedList = reactive([]);
+//-------------------변수 선언--------------------
+
+const config = useRuntimeConfig();
+const treeInfoList = ref([]);
+const seedList = ref([]);
 
 //TODO: JWT토큰 있다면 전송하게끔 로직 수정 필요
-onBeforeMount(async () => {
-  const { data, error, referch } = await useFetch("trees", {
-    baseURL: import.meta.env.VITE_API_BASE_URL,
+const FetchData = async () => {
+  const {
+    data: seedData,
+    error: seedError,
+    status: seedStatus,
+  } = await useFetch("seeds", {
+    baseURL: `${config.public.apiBase}`,
     method: "GET",
+    initialCache: true,
+  });
+  const {
+    data: treeData,
+    error: treeError,
+    status: treeStatus,
+  } = await useFetch("trees/tree-home", {
+    baseURL: `${config.public.apiBase}`,
+    method: "GET",
+    params: {
+      mid: useRoute().query.mid,
+    },
+    initialCache: true,
   });
 
-  await treeInfoList.push(...data.data);
-});
+  watchEffect(() => {
+    if (treeStatus.value === "success" && treeData.value) {
+      treeInfoList.value = [...treeData.value.treeInfoResponseList];
+    } else {
+      console.log("treeData.value is null");
+    }
 
-onMounted(() => {
+    if (seedStatus.value === "success" && seedData.value) {
+      seedList.value = [...seedData.value.items];
+    } else {
+      console.log("seedData.value is null");
+    }
+  });
+};
+
+FetchData();
+
+//-------------------LifeCycle-------------------
+onMounted(async () => {
+  await nextTick();
+
   const carouselList = document.querySelector(".tree-book-bg__list");
   // carousel item 너비
   // const width = document.querySelector(".mid__item").clientWidth;
@@ -28,30 +64,33 @@ onMounted(() => {
   const carouselItems = document.querySelectorAll(".mid__item");
   // carousel item 전체 갯수
   const carouselItemCount = carouselItems.length / 3;
-  // --------------- 한 가운데 item 찾아내기 위한 IntersectionObserver코드 --------------
-  const container = carouselList.querySelector(".tree-book-bg");
-  const observer = new IntersectionObserver(
-    (entries) => {
-      let selectedElement = null;
 
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("selected");
-        } else {
-          entry.target.classList.remove("selected");
+  if (!import.meta.env.SSR) {
+    // ----- 한 가운데 item 찾아내기 위한 IntersectionObserver코드 --------
+    const container = carouselList.querySelector(".tree-book-bg");
+    const observer = new IntersectionObserver(
+      (entries) => {
+        let selectedElement = null;
+
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("selected");
+          } else {
+            entry.target.classList.remove("selected");
+          }
+        });
+        selectedElement = calcMidTree();
+        if (selectedElement) {
+          bookExRemoveNone(selectedElement);
         }
-      });
-      selectedElement = calcMidTree();
-      if (selectedElement) {
-        bookExRemoveNone(selectedElement);
-      }
-    },
-    { root: container, threshold: 0.6 }
-  );
+      },
+      { root: container, threshold: 0.6 }
+    );
 
-  carouselItems.forEach((item) => {
-    observer.observe(item);
-  });
+    carouselItems.forEach((item) => {
+      observer.observe(item);
+    });
+  }
 
   //-----------------------------------carousel 이동 로직-----------------------------------
 
@@ -231,7 +270,7 @@ onMounted(() => {
 
   // PC
   carouselList.addEventListener("mousedown", (e) => dragStart(e, e.clientX));
-  // window.addEventListener("mousemove", (e) => dragging(e, e.clientX));
+  window.addEventListener("mousemove", (e) => dragging(e, e.clientX));
   window.addEventListener("mousemove", throttledDragging, { passive: false });
   window.addEventListener("mouseup", (e) => dragEnd(e));
 
@@ -239,9 +278,9 @@ onMounted(() => {
   carouselList.addEventListener("touchstart", (e) =>
     dragStart(e, e.targetTouches[0].clientX)
   );
-  // window.addEventListener("touchmove", (e) =>
-  //   dragging(e, e.targetTouches[0].clientX)
-  // );
+  window.addEventListener("touchmove", (e) =>
+    dragging(e, e.targetTouches[0].clientX)
+  );
 
   window.addEventListener("touchmove", throttledDragging, { passive: false });
   window.addEventListener("touchend", (e) => dragEnd(e));
@@ -250,130 +289,124 @@ onMounted(() => {
 </script>
 
 <template>
-  <body>
-    <header>
-      <h1 class="none">나의 트리</h1>
-      <section class="header-search-container">
-        <h2 class="none">나의 트리 검색 링크</h2>
-        <HeaderSearchLink />
-      </section>
-    </header>
+  <header>
+    <h1 class="none">나의 트리</h1>
+    <section class="header-search-container">
+      <h2 class="none">나의 트리 검색 링크</h2>
+      <HeaderSearchLink />
+    </section>
+  </header>
 
-    <main>
-      <section class="my-tree-container">
-        <h2 class="none">나의 트리 정보</h2>
-        <section class="my-tree-title-container">
-          <h3>
-            <TextMainTitle :data="{ title: '나의 트리', size: 28 }" />
-          </h3>
+  <main>
+    <section class="my-tree-container">
+      <h2 class="none">나의 트리 정보</h2>
+      <section class="my-tree-title-container">
+        <h3>
+          <TextMainTitle :data="{ title: '나의 트리', size: 28 }" />
+        </h3>
+      </section>
+
+      <section class="book-tree-info-container">
+        <h3 class="none">최근 트리 이미지 캐러셀</h3>
+        <section class="book-img-container">
+          <div>
+            <BackgroundBgTreeBookCovers :treeInfoList="treeInfoList" />
+          </div>
         </section>
 
-        <section class="book-tree-info-container">
-          <h3 class="none">최근 트리 이미지 캐러셀</h3>
-          <section class="book-img-container">
-            <div>
-              <BgTreeBookCovers :trees="treeInfoList" />
-            </div>
-          </section>
+        <section>
+          <h3 class="none">트리 약식 정보</h3>
+          <ul>
+            <li
+              class="none textbox-recent-tree-info__frame"
+              v-for="(tree, index) in treeInfoList"
+              :key="index"
+              :class="index"
+            >
+              <TextRecentTreeInfo :tree="tree" />
+            </li>
+          </ul>
+        </section>
 
-          <section>
-            <h3 class="none">트리 약식 정보</h3>
-            <ul>
-              <li
-                class="none textbox-recent-tree-info__frame"
-                v-for="(tree, index) in treeInfoList"
-                :key="index"
-                :class="index"
-              >
-                <RecentTreeInfo :tree="tree" />
-              </li>
-            </ul>
-          </section>
-
-          <section class="book-tree-explanation-container">
-            <h3 class="none">트리 설명</h3>
-            <ul class="book-tree-explanation-list">
-              <li
-                class="book-tree-explanation-item none"
-                v-for="tree in treeInfoList"
-                :key="index"
-                :class="index"
-              >
-                <RecentTreeEx :text="tree.description" />
-                <section
-                  class="card-progress-home-container"
-                  :readingPage="tree.readingPage"
-                  :totalPage="tree.bookTotalPage"
+        <section class="book-tree-explanation-container">
+          <h3 class="none">트리 설명</h3>
+          <ul class="book-tree-explanation-list">
+            <li
+              class="book-tree-explanation-item none"
+              v-for="(tree, index) in treeInfoList"
+              :key="index"
+              :class="index"
+            >
+              <TextRecentTreeEx :text="tree.description" />
+              <section class="card-progress-home-container">
+                <h4 class="none">트리 진행률</h4>
+                <div v-if="tree.seedId === 1">
+                  <CardProgressBar
+                    :progress="
+                      tree.seedId === 1
+                        ? (
+                            (tree.readingPage * 100.0) /
+                            tree.bookTotalPage
+                          ).toFixed(1)
+                        : 0
+                    "
+                    :readingPage="tree.readingPage"
+                    :totalPage="tree.totalPage"
+                  />
+                </div>
+                <CardReactNumbers
                   :leaf="tree.treeLeafCnt"
                   :like="tree.treeLikeCnt"
                   :view="tree.treeViewCnt"
-                  :progress="
-                    tree.seedId === 1
-                      ? (
-                          (tree.readingPage * 100.0) /
-                          tree.bookTotalPage
-                        ).toFixed(1)
-                      : 0
-                  "
-                >
-                  <h4 class="none">트리 진행률</h4>
-                  <div v-if="tree.seedId === 1">
-                    <CardProgressBar
-                      :progress="progress"
-                      :readingPage="readingPage"
-                      :totalPage="totalPage"
-                    />
-                  </div>
-                  <CardReactNumbers :leaf="leaf" :like="like" :view="view" />
-                </section>
-              </li>
-            </ul>
-          </section>
+                />
+              </section>
+            </li>
+          </ul>
         </section>
       </section>
-
-      <section class="my-tree-list">
-        <h2 class="none">나의 트리 목록</h2>
-        <div>{{ treeInfoList.length }}</div>
-        <section id="seed-filter">
-          <h2 class="none">트리 정렬 필터 버튼</h2>
-          <div>
-            <FilterTreeList :seedList="seedList" />
-          </div>
-        </section>
-      </section>
-
-      <section>
-        <h2 class="none">트리 검색 결과</h2>
-        <section class="tree-card-list" id="tree-card-list">
-          <h3 class="none">트리 검색 리스트</h3>
-          <div
-            class="card-tree-details"
-            v-for="tree in treeInfoList"
-            :key="tree.id"
-          >
-            <CardTreeDetails :tree="tree" />
-          </div>
-        </section>
-      </section>
-    </main>
-
-    <footer>
-      <Footer :noticeText="`개발중입니다.`" />
-    </footer>
-
-    <section class="nav-back-container">
-      <h3 class="none">네비 바 뒤 공백</h3>
     </section>
 
-    <aside class="nav-container">
-      <section class="short-btn-container">
-        <h4 class="none">트리 생성 버튼</h4>
-        <BtnShortGreen href="/seed/index" text="트리 생성" />
+    <section class="my-tree-list">
+      <h2 class="none">나의 트리 목록</h2>
+      <TextTreeCount :num="treeInfoList.length" />
+      <section id="seed-filter">
+        <h2 class="none">트리 정렬 필터 버튼</h2>
+        <div>
+          <FilterTreeList :seedList="seedList" />
+        </div>
       </section>
-      <NavigationBar active="home" />
-    </aside>
-  </body>
+    </section>
+
+    <section>
+      <h2 class="none">트리 검색 결과</h2>
+      <section class="tree-card-list" id="tree-card-list">
+        <h3 class="none">트리 검색 리스트</h3>
+        <div
+          class="card-tree-details"
+          v-for="tree in treeInfoList"
+          :key="tree.treeId"
+        >
+          <CardTreeDetails :tree="tree" />
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <footer>
+    <Footer :noticeText="`개발중입니다.`" />
+  </footer>
+
+  <section class="nav-back-container">
+    <h3 class="none">네비 바 뒤 공백</h3>
+  </section>
+
+  <aside class="nav-container">
+    <section class="short-btn-container">
+      <h4 class="none">트리 생성 버튼</h4>
+      <ButtonBtnShortAGreen :link="`/seed/index`" :text="`트리 생성`" />
+    </section>
+    <NavNavigationBar active="home" />
+  </aside>
 </template>
 
 <style></style>

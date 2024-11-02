@@ -18,6 +18,7 @@ import io.ggogit.ggogit.domain.tree.repository.TreeBookRepository;
 import io.ggogit.ggogit.domain.tree.repository.TreeImageRepository;
 import io.ggogit.ggogit.domain.tree.repository.TreeRepository;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -37,6 +38,7 @@ public class TreeServiceImpl implements TreeService {
     private final TreeImageRepository treeImageRepository;
     private final MemberRepository memberRepository;
     private final LeafRepository leafRepository;
+    private final ModelMapper modelMapper;
 
     @Override
     public void register(Tree tree) {
@@ -184,25 +186,25 @@ public class TreeServiceImpl implements TreeService {
         });
     }
 
-//    @Override
-//    public List<TreeInfoResponse> findTreeInfoResponseList(Long memberId) {
-//        List<Tree> treeList = treeRepository.findTreeByMemberIdFetch(memberId);
-//        return treeList.stream()
-//                .map(tree -> {
-//                    tree.get
-//            LocalDateTime lastestLeafTime = null;
-//            Long viewCount = 0L;
-//            Long likeCount = 0L;
-//            Long leafCount = 0L;
-//            for (Leaf leaf : leafList) {
-//                viewCount += leaf.getViewCount();
-//                likeCount += leaf.getLikeCount();
-//                leafCount++;
-//            }
-//            lastestLeafTime = tree.getUpdateTime();
-//            return TreeInfoResponse.of(tree, lastestLeafTime != null ? lastestLeafTime : LocalDateTime.now(), leafCount, likeCount, viewCount);
-//        }).toList();
-//    }
+    @Override
+    public List<TreeInfoResponse> findTreeInfoResponseList(Long memberId) {
+        List<Tree> trees = treeRepository.findTreeByMemberIdFetch(memberId);
 
+        return trees.stream().map(tree -> {
+            LocalDateTime lastestLeafTime = null;
+            Long viewCount = 0L;
+            Long likeCount = 0L;
+            Long leafCount = 0L;
+            List<Leaf> leafs = tree.getLeaf();
+            for (Leaf leaf : leafs) {
+                viewCount += leaf.getViewCount();
+                likeCount += leaf.getLikeCount();
+                leafCount++;
+                if(lastestLeafTime == null || lastestLeafTime.isBefore(leaf.getUpdateTime() != null ? leaf.getUpdateTime() : LocalDateTime.now()))
+                    lastestLeafTime = leaf.getUpdateTime();
+            }
+            return TreeInfoResponse.of(tree, lastestLeafTime != null ? lastestLeafTime : LocalDateTime.now(), leafCount, likeCount, viewCount);
 
+        }).toList();
+    }
 }

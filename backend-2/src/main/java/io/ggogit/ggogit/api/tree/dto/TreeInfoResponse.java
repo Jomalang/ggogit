@@ -1,10 +1,7 @@
 package io.ggogit.ggogit.api.tree.dto;
 
 import io.ggogit.ggogit.domain.tree.entity.Tree;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -14,8 +11,10 @@ import java.time.format.DateTimeFormatter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@ToString(of = {"bookId", "bookCategory", "bookTitle", "bookAuthor", "bookTranslator", "bookPublisher", "bookPublishedYear", "bookTotalPage", "treeId", "memberId", "seedId", "title", "description", "visibility", "leafCreatedAt", "createdAt", "readingPage", "coverImageName", "treeLeafCnt", "treeLikeCnt", "treeViewCnt"})
 public class TreeInfoResponse {
 
+    //books
     private Long bookId;
     private String bookCategory;
     private String bookTitle;
@@ -24,9 +23,11 @@ public class TreeInfoResponse {
     private String bookPublisher;
     private String bookPublishedYear;
     private Integer bookTotalPage;
+    //relationship identifiers
     private Long treeId;
     private Long memberId ;
     private Long seedId;
+    //trees
     private String title;
     private String description;
     private Boolean visibility;
@@ -34,6 +35,7 @@ public class TreeInfoResponse {
     private String  createdAt;
     private Integer readingPage ;
     private String coverImageName;
+    //computed
     private Long treeLeafCnt;
     private Long treeLikeCnt;
     private Long treeViewCnt;

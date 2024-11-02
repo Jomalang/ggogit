@@ -1,32 +1,36 @@
-<script setup lang="ts">
-// const cardReactNumbersProps = {
-//   leaf: data.treeLeafCnt,
-//   like: data.treeLikeCnt,
-//   view: data.treeViewCnt,
-// };
-import { defineProps } from 'vue';
+<script setup>
+import { defineProps } from "vue";
 
-const {data} = defineProps(['data']);
+const props = defineProps({
+  leaf: 0,
+  like: 0,
+  view: 0,
+});
 
 function modifyCount(count) {
-  return 999 < count ? '999+' : String(count);
+  return 999 < count ? "999+" : String(count);
 }
-
 </script>
 
 <template>
   <div class="card-reading-progress-status__list">
     <p class="card-reading-progress-status__leaf">
       리프
-      <span class="card-reading-progress-status__num">{{ modifyCount(data.leaf) }}</span>
+      <span class="card-reading-progress-status__num">{{
+        modifyCount(props.leaf)
+      }}</span>
     </p>
     <p class="card-reading-progress-status__like">
       좋아요
-      <span class="card-reading-progress-status__num">{{ modifyCount(data.like) }}</span>
+      <span class="card-reading-progress-status__num">{{
+        modifyCount(props.like)
+      }}</span>
     </p>
     <p class="card-reading-progress-status__views">
       조회수
-      <span class="card-reading-progress-status__num">{{ modifyCount(data.view) }}</span>
+      <span class="card-reading-progress-status__num">{{
+        modifyCount(props.view)
+      }}</span>
     </p>
   </div>
 </template>

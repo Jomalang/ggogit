@@ -1,22 +1,23 @@
 <script setup>
-
-const { data } = defineProps(['data']);
-/*
-treeId
-coverImageName
-length
- */
-
+const props = defineProps({
+  treeInfoList: {
+    type: Array,
+    required: true,
+  },
+});
+const treeInfoList = ref(props.treeInfoList);
+watchEffect(() => {
+  treeInfoList.value = props.treeInfoList;
+});
 </script>
 
 <template>
   <div class="tree-book-bg">
     <ul class="tree-book-bg__list">
       <li
-        class="mid__item"
-        v-for="(tree, index) in data"
+        :class="`mid__item ${index}`"
+        v-for="(tree, index) in treeInfoList"
         :key="index"
-        :class="index"
       >
         <a :href="`/tree/detail/${tree.treeId}`">
           <img
@@ -26,7 +27,7 @@ length
           />
         </a>
       </li>
-      <li v-if="data.length === 1" class="mid__item 1">
+      <li v-if="treeInfoList.length === 1" class="mid__item 1">
         <a href="/seed/index">
           <img
             class="mid__img"
@@ -35,7 +36,7 @@ length
           />
         </a>
       </li>
-      <li v-if="data.length <= 2" class="mid__item 2">
+      <li v-if="treeInfoList.length <= 2" class="mid__item 2">
         <a href="/seed/index">
           <img
             class="mid__img"
@@ -45,10 +46,9 @@ length
         </a>
       </li>
       <li
-        class="mid__item"
-        v-for="(tree, index) in data"
+        :class="`mid__item ${index}`"
+        v-for="(tree, index) in treeInfoList"
         :key="index"
-        :class="index"
       >
         <a :href="`/tree/detail/${tree.treeId}`">
           <img
@@ -58,7 +58,7 @@ length
           />
         </a>
       </li>
-      <li v-if="data.length === 1" class="mid__item 1">
+      <li v-if="treeInfoList.length === 1" class="mid__item 1">
         <a href="/seed/index">
           <img
             class="mid__img"
@@ -67,7 +67,7 @@ length
           />
         </a>
       </li>
-      <li v-if="data.length <= 2" class="mid__item 2">
+      <li v-if="treeInfoList.length <= 2" class="mid__item 2">
         <a href="/seed/index">
           <img
             class="mid__img"
@@ -77,10 +77,9 @@ length
         </a>
       </li>
       <li
-        class="mid__item"
-        v-for="(tree, index) in data"
+        :class="`mid__item ${index}`"
+        v-for="(tree, index) in treeInfoList"
         :key="index"
-        :class="index"
       >
         <a :href="`/tree/detail/${tree.treeId}`">
           <img
@@ -90,7 +89,7 @@ length
           />
         </a>
       </li>
-      <li v-if="data.length === 1" class="mid__item 1">
+      <li v-if="treeInfoList.length === 1" class="mid__item 1">
         <a href="/seed/index">
           <img
             class="mid__img"
@@ -99,7 +98,7 @@ length
           />
         </a>
       </li>
-      <li v-if="data.length <= 2" class="mid__item 2">
+      <li v-if="treeInfoList.length <= 2" class="mid__item 2">
         <a href="/seed/index">
           <img
             class="mid__img"

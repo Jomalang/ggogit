@@ -45,7 +45,7 @@ public class LeafBookServiceImpl implements LeafBookService {
     private final LeafBookRepository leafBookRepository;
     private final SeedRepository seedRepository;
 
-    private final ImageRepositoryImpl imageRepositoryImpl;
+    private final ImageRepositoryImpl imageRepository;
 
 
     @Override
@@ -81,14 +81,14 @@ public class LeafBookServiceImpl implements LeafBookService {
 
         // `System`은 `TreeTmp` 데이터를 삭제한다.
         treeTmpRepository.delete(treeTmp);
-
+        
         // 여기에 이미지 로직 생성
         if (book.getImageFile() != null && book.getMember().getId() != 999L) {
-            imageRepositoryImpl.moveImage(book.getImageFile(), UploadFolderType.TMP, UploadFolderType.BOOK);
+            imageRepository.moveImage(book.getImageFile(), UploadFolderType.TMP, UploadFolderType.BOOK);
         }
 
         // 리프 이미지 경로 이동
-        imageRepositoryImpl.moveAllImages(leaf.getContent(), UploadFolderType.TMP, UploadFolderType.LEAF);
+        imageRepository.moveAllImages(leaf.getContent(), UploadFolderType.TMP, UploadFolderType.LEAF);
 
         return savedLeafBook;
     }

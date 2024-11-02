@@ -19,23 +19,22 @@ public class LeafEtcController {
 
     private final LeafEtcService leafEtcService;
 
-    @PostMapping("/etc/first/leafs")
+    @PostMapping("/etc/first/leaves")
     public ResponseEntity<EtcLeafResponse> createFirstEtcLeaf(
             @Valid @RequestBody EtcLeafRequest dto
     ) {
         dto.isValidate();
         Long memberId = 1000L; // TODO: 로그인 정보에서 가져오기
         Leaf leaf = dto.toLeaf();
-        Long seedId = dto.getSeedId();
         List<Long> leafTagIds = dto.getTagIds();
 
-        Leaf saved = leafEtcService.createFirstLeafEtc(memberId, leaf, leafTagIds, seedId);
+        Leaf saved = leafEtcService.createFirstLeafEtc(memberId, leaf, leafTagIds);
 
         EtcLeafResponse response = EtcLeafResponse.of(saved, "첫번째 기타 리프 생성 성공");
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    @PostMapping("/etc/leafs/{parentLeafId}")
+    @PostMapping("/etc/leaves/{parentLeafId}")
     public ResponseEntity<EtcLeafResponse> createEtcLeaf(
             @PathVariable Long parentLeafId,
             @Valid @RequestBody EtcLeafRequest dto
@@ -56,7 +55,7 @@ public class LeafEtcController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    @PutMapping("/etc/leafs/{leafId}")
+    @PutMapping("/etc/leaves/{leafId}")
     public ResponseEntity<EtcLeafResponse> updateEtcLeaf(
             @PathVariable Long leafId,
             @Valid @RequestBody EtcLeafRequest dto
@@ -77,7 +76,7 @@ public class LeafEtcController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @DeleteMapping("/etc/leafs/{leafId}")
+    @DeleteMapping("/etc/leaves/{leafId}")
     public ResponseEntity<EtcLeafResponse> deleteEtcLeaf(
             @PathVariable Long leafId
     ) {

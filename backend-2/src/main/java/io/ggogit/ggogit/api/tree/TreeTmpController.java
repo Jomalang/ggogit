@@ -2,7 +2,7 @@ package io.ggogit.ggogit.api.tree;
 
 import io.ggogit.ggogit.api.tree.dto.BookAutoTreeTmpRequest;
 import io.ggogit.ggogit.api.tree.dto.TreeTmpTotalPageResponse;
-import io.ggogit.ggogit.api.tree.dto.BookTreeTmpRequest;
+import io.ggogit.ggogit.api.tree.dto.TreeTmpRequest;
 import io.ggogit.ggogit.api.tree.dto.TreeTmpResponse;
 import io.ggogit.ggogit.domain.tree.entity.TreeTmp;
 import io.ggogit.ggogit.domain.tree.service.TreeTmpService;
@@ -23,7 +23,7 @@ public class TreeTmpController {
 
     @PostMapping
     public ResponseEntity<TreeTmpResponse> createBookTreeTmp(
-            @ModelAttribute BookTreeTmpRequest dto,
+            @ModelAttribute TreeTmpRequest dto,
             @RequestParam(required = false) MultipartFile image
     ) throws IOException {
         TreeTmp treeTmp = dto.toTreeTmp();

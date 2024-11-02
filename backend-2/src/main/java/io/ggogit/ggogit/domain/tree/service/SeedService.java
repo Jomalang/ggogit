@@ -11,6 +11,6 @@ public interface SeedService {
 
     Seed getByEngName(String name);
 
-    Optional<Seed> get(Long id);
+    Seed get(Long id);
 
 }

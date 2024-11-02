@@ -48,8 +48,7 @@ public class Tree {
     @JoinColumn(name = "TREEBOOK_ID")
     private TreeBook treeBook;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "LEAF_ID")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "tree")
     private List<Leaf> leaf;
 
     @NotNull

@@ -1,5 +1,6 @@
 package io.ggogit.ggogit.domain.leaf.service;
 
+import io.ggogit.ggogit.domain.image.repository.ImageRepositoryImpl;
 import io.ggogit.ggogit.domain.leaf.entity.*;
 import io.ggogit.ggogit.domain.leaf.repository.LeafImageRepository;
 import io.ggogit.ggogit.domain.leaf.repository.LeafRepository;
@@ -12,12 +13,13 @@ import io.ggogit.ggogit.domain.tree.entity.Seed;
 import io.ggogit.ggogit.domain.tree.entity.Tree;
 import io.ggogit.ggogit.domain.tree.entity.TreeImage;
 import io.ggogit.ggogit.domain.tree.entity.TreeTmp;
-import io.ggogit.ggogit.domain.tree.repository.SeedRepository;
 import io.ggogit.ggogit.domain.tree.repository.TreeImageRepository;
 import io.ggogit.ggogit.domain.tree.repository.TreeRepository;
 import io.ggogit.ggogit.domain.tree.repository.TreeTmpRepository;
+import io.ggogit.ggogit.type.UploadFolderType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,19 +32,21 @@ public class LeafEtcServiceImpl implements LeafEtcService {
     private final static int LEAF_MAX_CHILD_COUNT = 3;
 
     private final MemberRepository memberRepository;
-    private final SeedRepository seedRepository;
+
     private final TreeTmpRepository treeTmpRepository;
+    private final TreeRepository treeRepository;
+    private final TreeImageRepository treeImageRepository;
+
     private final LeafTagMapRepository leafTagMapRepository;
     private final LeafImageRepository leafImageRepository;
     private final LeafRepository leafRepository;
     private final LeafTagRepository leafTagRepository;
-    private final TreeRepository treeRepository;
-    private final TreeImageRepository treeImageRepository;
 
-    private final ImageSaveUtil imageSaveUtil;
+    private final ImageRepositoryImpl imageRepository;
 
     @Override
-    public Leaf createFirstLeafEtc(Long memberId, Leaf leaf, List<Long> leafTagIds, Long seedId) {
+    @Transactional
+    public Leaf createFirstLeafEtc(Long memberId, Leaf leaf, List<Long> leafTagIds) {
 
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new IllegalArgumentException("Member 데이터가 없습니다."));
@@ -51,31 +55,29 @@ public class LeafEtcServiceImpl implements LeafEtcService {
         TreeTmp treeTmp = treeTmpRepository.findByMemberId(memberId)
                 .orElseThrow(() -> new IllegalArgumentException("TreeTmp 데이터가 없습니다."));
 
-        Seed seed = seedRepository.findById(seedId)
-                .orElseThrow(() -> new IllegalArgumentException("Seed 데이터가 없습니다."));
-
+        Seed seed = treeTmp.getSeed();
         Tree tree = Tree.of(treeTmp, member, seed);
         treeRepository.save(tree);
         leaf.setTree(tree);
-
-        // 트리 이미지 저장
-        String treeImagePath = treeTmp.getImageFile();
-        if (treeImagePath != null) {
-            String fileName = imageSaveUtil.extractFileName(treeImagePath);
-            String toFileName = imageSaveUtil.moveImageFile(fileName,"tree", true);
-            TreeImage treeImage = TreeImage.of(tree, toFileName);
-            treeImageRepository.save(treeImage);
-        }
 
         Leaf savedLeaf = createLogic(memberId, leaf, leafTagIds);
 
         // `System`은 `TreeTmp` 데이터를 삭제한다.
         treeTmpRepository.delete(treeTmp);
 
+        String treeImagePath = treeTmp.getImageFile();
+        if (treeImagePath != null) { // 트리 이미지가 있으면 이동
+            imageRepository.moveImage(treeImagePath, UploadFolderType.TMP, UploadFolderType.TREE);
+        }
+
+        // 리프 이미지 모두 이동
+        imageRepository.moveAllImages(leaf.getContent(), UploadFolderType.TMP, UploadFolderType.LEAF);
+
         return savedLeaf;
     }
 
     private Leaf createLogic(Long memberId, Leaf leaf, List<Long> leafTagIds) {
+
         // `System`은 입력받은 데이터에서 `LeafTag` 데이터를 조회 후 `LeafTag` 데이터를 생성후 저장한다.
         List<LeafTag> leafTags = new ArrayList<>();
         for (Long leafTagId : leafTagIds) {
@@ -87,23 +89,8 @@ public class LeafEtcServiceImpl implements LeafEtcService {
             leafTags.add(leafTag);
         }
 
-        // `System`은 입력받은 데이터에서 `Leaf` 컨텐츠의 이미지 이동 및 경로 변경.
-        String content = leaf.getContent();
-        List<String> filesNames = imageSaveUtil.extractImageFileNames(content);
-        for (String fileName : filesNames) {
-            imageSaveUtil.moveImageFile(fileName, "leaf"); // 이미지 파일 이동
-            String changedContent = imageSaveUtil.changeTagImageSrc(content, fileName); // 태그의 이미지 경로 변경
-            leaf.setContent(changedContent);
-        }
-
         // `System`은 `Leaf` 데이터 저장
         leafRepository.save(leaf);
-
-        // `System`은 `Leaf` 이미지를 저장한다.
-        for (String fileName : filesNames) { // TODO: 이미지 파일이 없는 경우 예외 처리
-            LeafImage leafImage = LeafImage.of(leaf.getId(), fileName);
-            leafImageRepository.save(leafImage);
-        }
 
         // `System`은 `LeafTagMap` 데이터를 생성후 저장한다.
         for (LeafTag leafTag : leafTags) {

@@ -2,21 +2,19 @@
 import {onMounted, watch} from "vue";
 import axios, { HttpStatusCode } from "axios";
 import {useRouter} from "#vue-router";
+import {value} from "lodash/seq.js";
 
 // ----------------------- Model ----------------------- //
-const router = useRouter();
 const route = useRoute();
+const router = useRouter();
 const config = useRuntimeConfig();
-const bookId = route.params.id;
+const seedId = route.params.id;
 
 const treeFormData = useState('treeFormData', () => ({
+  // 트리 씨앗 정보
+  seedId: Number(seedId),
 
-  bookId: null,
-
-  // 트리 총 페이지 정보
-  totalPage: null,
-
-  // 트리 정보
+  // 트리 제목
   treeTitle: "",
   treeTitleValid: true,
 
@@ -27,21 +25,22 @@ const treeFormData = useState('treeFormData', () => ({
   // 공개 여부 정보
   visibility: false,
   visibilityValid: true,
+
+  // 이미지 정보
+  imageData: "",
 }));
 
+watch(treeFormData.value, (newVal) => {
+  console.log("treeFormData:", newVal);
+});
+
 // ----------------------- API ----------------------- //
-const { data } = await useFetch(`/books/${bookId}`, {
-  method: "GET",
+const { data: seedData, error: infoError } = await useFetch(() => `seeds/${seedId}`, {
   baseURL: config.public.apiBase,
-  headers: {
-    "Content-Type": "application/json",
-  },
 });
 
 watchEffect(() => {
-  console.log("watchEffect data : ", data.value);
-  treeFormData.value.totalPage = data.value.totalPage;
-  treeFormData.value.bookId = data.value.id;
+  console.log("seedData:", seedData.value);
 });
 
 // ----------------------- Life Cycle ----------------------- //
@@ -53,22 +52,13 @@ onMounted(() => {
 });
 
 // ----------------------- Function ----------------------- //
-
-const inputTreeTitle = (value) => {
-  console.log("inputTreeTitle : ", value);
-  treeFormData.value.treeTitle = value;
-  treeFormData.value.treeTitleValid = true;
-  console.log(treeFormData.value);
-};
-
-const inputDescription = (value) => {
-  console.log("inputDescription : ", value);
-  treeFormData.value.description = value;
-  treeFormData.value.descriptionValid = true;
-  console.log(treeFormData.value);
+const handleImageSelected = (imageData) => {
+  console.log("Selected image data:", imageData);
+  treeFormData.value.imageData = imageData;
 };
 
 const validateCheck = () => {
+
   // 트리 이름 확인
   if (!treeFormData.value.treeTitle) {
     treeFormData.value.treeTitleValid = false;
@@ -91,38 +81,56 @@ const validateCheck = () => {
   }
 
   return true;
-}
+};
 
 const submitFormHandler = async (e) => {
 
+  // 검증 로직
   if (!validateCheck()) {
     return;
   }
 
   e.preventDefault(); // 데이터 전송 로직
   try {
+    const treeFormDataToSend = new FormData();
+    for (const key in treeFormData.value) {
+      treeFormDataToSend.append(key, treeFormData.value[key]);
+    }
+
+    // 이미지 파일이 있을 경우
+    const imgTag = document.getElementById("input-book-img-box__img-id");
+    if (imgTag && imgTag.src) {
+      const response = await fetch(imgTag.src);
+      const blob = await response.blob();
+      treeFormDataToSend.append("image", blob, "image.jpg");
+    }
 
     const response = await axios.post(
-        "http://localhost:8080/api/v1/trees/auto",
+        "http://localhost:8080/api/v1/trees",
+        treeFormDataToSend,
         {
-          bookId: treeFormData.value.bookId,
-          treeTitle: treeFormData.value.treeTitle,
-          description: treeFormData.value.description,
-          visibility: treeFormData.value.visibility,
-        },
-        {
-          headers: { "Content-Type": "application/json" },
+          headers: {"Content-Type": "multipart/form-data"},
         }
     );
 
     if (response.status !== HttpStatusCode.Created) {
       throw new Error("Network response was not ok");
     }
-
-    router.push("/leaf/book/new");
+    
+    router.push("/leaf/etc/new");
   } catch (error) {
     console.error("Error submitting form:", error);
   }
+};
+
+const inputTreeTitle = (value) => {
+  treeFormData.value.treeTitle = value;
+  treeFormData.value.treeTitleValid = true;
+};
+
+const inputDescription = (value) => {
+  treeFormData.value.description = value;
+  treeFormData.value.descriptionValid = true;
 };
 
 </script>
@@ -132,7 +140,7 @@ const submitFormHandler = async (e) => {
     <h1 class="none">도서 트리 생성 페이지</h1>
     <section class="tob-bar-back-container">
       <h1 class="none">트리 생성 상단 바</h1>
-      <TopBarBack title="트리 생성" link="/tree/seed"></TopBarBack>
+      <TopBarBack title="트리 생성" link=""></TopBarBack>
     </section>
   </header>
 
@@ -140,46 +148,27 @@ const submitFormHandler = async (e) => {
     <section class="book-tree-input-form-container">
       <h1 class="none">도서 정보 입력</h1>
 
-      <section class="tree-book-auto-title-container">
-        <TextMainTitle :data="{ title: '도서 정보', size: 28 }"></TextMainTitle>
+      <section class="select-title-container">
+        <TextMainTitle :data="{ title: `${seedData.name}`, size: 28 }"></TextMainTitle>
       </section>
 
-      <section class="tree-reg-cover-info__container">
-        <h3 class="none">도서 커버 및 도서 정보</h3>
-        <section class="tree-reg-cover__container">
-          <h4 class="none">도서 커버</h4>
-          <LinkOneImageDetail
-              :href="`/book/${data.id}`"
-              :src="data.imageFile">
-          </LinkOneImageDetail>
-        </section>
-        <section class="tree-reg-book-info__container">
-          <h4 class="none">도서 정보</h4>
-          <TextBookInfo :data="{
-            title: data.title,
-            authors: data.authors,
-            translators: data.translators,
-            publisher: data.publisher,
-            bookCategoryName: data.bookCategoryName,
-            page: data.page,
-            seed: data.seed,
-          }"></TextBookInfo>
-        </section>
-      </section>
-
-      <section class="tree-info-card__container">
-        <CardTreeInfoCard :data="{ date: data.publishDate, pageCount: data.totalPage }" />
-      </section>
-
-
-      <form class="tree-book-auto-form-container">
-
+      <form class="book-tree-input-form">
         <section class="none">
-          <input type="text" name="bookId" :value="data.id">
+          <h1 class="none">씨앗 카테고리</h1>
+          <input
+              type="number"
+              name="seedCategoryId"
+              v-model="treeFormData.seedId"
+          />
+        </section>
+
+        <section class="book-tree-input-form__photo-container">
+          <h1 class="none">트리 이미지 입력</h1>
+          <InputBookInputImg @image-selected="handleImageSelected"></InputBookInputImg>
         </section>
 
         <section class="input-form__input-container">
-          <h1 class="none">트리 이름 입력</h1>
+          <h1 class="none">트리이름 입력</h1>
           <InputTextBox
               :data="{
                 label: '*트리 이름',
@@ -187,7 +176,7 @@ const submitFormHandler = async (e) => {
                 placeholder: '트리 이름을 입력해주세요',
                 value: treeFormData.treeTitle,
                 validate: treeFormData.treeTitleValid,
-                validateMessage: '트리 이름을 입력해주세요',
+                validateMessage: '트리 이름을 입력해주세요.'
               }"
               @inputData="inputTreeTitle"
           >
@@ -195,10 +184,10 @@ const submitFormHandler = async (e) => {
         </section>
 
         <section class="book-tree-input-form__large-input-container">
-          <h1 class="none">설명글 작성</h1>
+          <h1 class="none">설명글 or URL</h1>
           <InputTextareaBox
               :data="{
-                label: '*설명글',
+                label: '*설명글 or URL',
                 name: 'description',
                 placeholder: '트리에 대한 설명을 입력해주세요',
                 value: treeFormData.description,
@@ -222,7 +211,6 @@ const submitFormHandler = async (e) => {
               @click.prevent="submitFormHandler"
           ></ButtonSubmitBtnFullBar>
         </section>
-
       </form>
     </section>
   </main>

@@ -2,6 +2,7 @@
 import {onMounted, watch} from "vue";
 import axios, { HttpStatusCode } from "axios";
 import {useRouter} from "#vue-router";
+import {value} from "lodash/seq.js";
 
 // ----------------------- Model ----------------------- //
 const router = useRouter();
@@ -12,20 +13,45 @@ const treeFormData = useState('treeFormData', () => ({
 
   // 도서 정보
   bookTitle: "",
+  bookTitleValid: true,
+
+  // 지은이 정보
   author: "",
+  authorValid: true,
+
+  // 출판일 정보
   publishDate: "",
+  publishDateValid: true,
+
+  // 출판사 정보
   publisher: "",
+  publisherValid: true,
+
+  // 총 페이지 정보
   totalPage: "",
+  totalPageValid: true,
 
   // 도서 카테고리 정보
   bookCategoryId: null,
+  bookCategoryIdValid: true,
+
+  // 도서 카테고리 이름 정보
   bookCategoryName: null,
-  isSelected: false,
+  bookCategorySelected: true,
 
   // 트리 정보
   treeTitle: "",
+  treeTitleValid: true,
+
+  // 트리 설명 정보
   description: "",
-  visibility: true,
+  descriptionValid: true,
+
+  // 공개 여부 정보
+  visibility: false,
+  visibilityValid: true,
+
+  // 이미지 정보
   imageData: "",
 }));
 
@@ -47,7 +73,83 @@ const handleImageSelected = (imageData) => {
   treeFormData.value.imageData = imageData;
 };
 
+const validateCheck = () => {
+
+  let isValid = true;
+
+  // 도서 이름 확인
+  if (!treeFormData.value.bookTitle) {
+    treeFormData.value.bookTitleValid = false;
+    alert("도서 이름을 입력해주세요.");
+    return false;
+  }
+
+  // 지은이 확인
+  if (!treeFormData.value.author) {
+    treeFormData.value.authorValid = false;
+    alert("지은이 이름을 입력해주세요.");
+    return false;
+  }
+
+  // 출판사 확인
+  if (!treeFormData.value.publisher) {
+    treeFormData.value.publisherValid = false;
+    alert("출판사를 입력해주세요.");
+    return false;
+  }
+
+  // 출판일 확인
+  if (!treeFormData.value.publishDate) {
+    treeFormData.value.publishDateValid = false;
+    alert("출판일을 입력해주세요.");
+    return false;
+  }
+
+  // 총페이지 확인
+  if (!treeFormData.value.totalPage) {
+    treeFormData.value.totalPageValid = false;
+    alert("총페이지를 입력해주세요.");
+    return false;
+  }
+
+  // 카테고리 확인
+  if (!treeFormData.value.bookCategoryId) {
+    treeFormData.value.bookCategoryIdValid = false;
+    alert("카테고리를 선택해주세요.");
+    return false;
+  }
+
+  // 트리 이름 확인
+  if (!treeFormData.value.treeTitle) {
+    treeFormData.value.treeTitleValid = false;
+    alert("트리 이름을 입력해주세요.");
+    return false;
+  }
+
+  // 트리 설명 확인
+  if (!treeFormData.value.description) {
+    treeFormData.value.descriptionValid = false;
+    alert("트리 설명을 입력해주세요.");
+    return false;
+  }
+
+  // 공개 여부 확인
+  if (!treeFormData.value.visibilityValid) {
+    treeFormData.value.visibilityValid = false;
+    alert("공개 여부를 선택해주세요.");
+    return false;
+  }
+
+  return isValid;
+};
+
 const submitFormHandler = async (e) => {
+
+  // 검증 로직
+  if (!validateCheck()) {
+    return;
+  }
+
   e.preventDefault(); // 데이터 전송 로직
   try {
     const treeFormDataToSend = new FormData();
@@ -75,6 +177,7 @@ const submitFormHandler = async (e) => {
       throw new Error("Network response was not ok");
     }
 
+    // alert("트리가 생성되었습니다.");
     router.push("/leaf/book/new");
   } catch (error) {
     console.error("Error submitting form:", error);
@@ -84,7 +187,42 @@ const submitFormHandler = async (e) => {
 const dropBookCategory = () => {
   treeFormData.value.bookCategoryId = null;
   treeFormData.value.bookCategoryName = null;
-  treeFormData.value.isSelected = false;
+  treeFormData.value.bookCategorySelected = false;
+};
+
+const inputBookTitle = (value) => {
+  treeFormData.value.bookTitle = value;
+  treeFormData.value.bookTitleValid = true;
+};
+
+const inputAuthor = (value) => {
+  treeFormData.value.author = value;
+  treeFormData.value.authorValid = true;
+};
+
+const inputPublisher = (value) => {
+  treeFormData.value.publisher = value;
+  treeFormData.value.publisherValid = true;
+};
+
+const inputPublishDate = (value) => {
+  treeFormData.value.publishDate = value;
+  treeFormData.value.publishDateValid = true;
+};
+
+const inputTotalPage = (value) => {
+  treeFormData.value.totalPage = value;
+  treeFormData.value.totalPageValid = true;
+};
+
+const inputTreeTitle = (value) => {
+  treeFormData.value.treeTitle = value;
+  treeFormData.value.treeTitleValid = true;
+};
+
+const inputDescription = (value) => {
+  treeFormData.value.description = value;
+  treeFormData.value.descriptionValid = true;
 };
 
 </script>
@@ -130,10 +268,15 @@ const dropBookCategory = () => {
         <section class="input-form__input-container">
           <h1 class="none">도서 이름 입력</h1>
           <InputTextBox
-              label="*도서 이름"
-              name="bookTitle"
-              v-model="treeFormData.bookTitle"
-              placeholder="도서 이름을 입력해주세요"
+              :data="{
+                label: '*도서 이름',
+                name: 'bookTitle',
+                placeholder: '도서 이름을 입력해주세요',
+                value: treeFormData.bookTitle,
+                validate: treeFormData.bookTitleValid,
+                validateMessage: '도서 이름을 입력해주세요.'
+              }"
+              @inputData="inputBookTitle"
           >
           </InputTextBox>
         </section>
@@ -141,10 +284,15 @@ const dropBookCategory = () => {
         <section class="input-form__input-container">
           <h1 class="none">지은이 입력</h1>
           <InputTextBox
-              label="*지은이"
-              name="author"
-              v-model="treeFormData.author"
-              placeholder="지은이를 입력해주세요"
+              :data="{
+                label: '*지은이 이름',
+                name: 'author',
+                placeholder: '지은이 이름을 입력해주세요',
+                value: treeFormData.author,
+                validate: treeFormData.authorValid,
+                validateMessage: '지은이 이름을 입력해주세요.'
+              }"
+              @inputData="inputAuthor"
           >
           </InputTextBox>
         </section>
@@ -152,33 +300,48 @@ const dropBookCategory = () => {
         <section class="input-form__input-container">
           <h1 class="none">출판사 입력</h1>
           <InputTextBox
-              label="*출판사"
-              name="publisher"
-              v-model="treeFormData.publisher"
-              placeholder="출판사를 입력해주세요"
+              :data="{
+                label: '*출판사',
+                name: 'publisher',
+                placeholder: '출판사를 입력해주세요',
+                value: treeFormData.publisher,
+                validate: treeFormData.publisherValid,
+                validateMessage: '출판사를 입력해주세요.'
+              }"
+              @inputData="inputPublisher"
           >
           </InputTextBox>
         </section>
 
         <section class="input-form__input-container">
-          <h1 class="none">출판사 입력</h1>
-          <InputTextBox
-              label="*출판일"
-              name="publishDate"
-              v-model="treeFormData.publishDate"
-              placeholder="출판일을 입력해주세요"
+          <h1 class="none">출판일 입력</h1>
+          <InputTextDateBox
+              :data="{
+                label: '*출판일',
+                name: 'publishDate',
+                placeholder: '출판일을 입력해주세요',
+                value: treeFormData.publishDate,
+                validate: treeFormData.publishDateValid,
+                validateMessage: '출판일을 입력해주세요. (2024-11-01 형식)'
+              }"
+              @inputData="inputPublishDate"
           >
-          </InputTextBox>
+          </InputTextDateBox>
         </section>
 
         <section class="input-form__input-container">
           <h1 class="none">총페이지 입력</h1>
           <InputTextNumberBox
-              label="*총페이지"
-              name="totalPage"
-              :min="1"
-              v-model="treeFormData.totalPage"
-              placeholder="총페이지를 입력해주세요"
+              :data="{
+                label: '*총페이지',
+                name: 'totalPage',
+                placeholder: '총페이지를 입력해주세요',
+                min: 0,
+                value: treeFormData.totalPage,
+                validate: treeFormData.totalPageValid,
+                validateMessage: '양수의 숫자만 입력해주세요.'
+              }"
+              @inputData="inputTotalPage"
           >
           </InputTextNumberBox>
         </section>
@@ -186,9 +349,11 @@ const dropBookCategory = () => {
         <section class="input-form__input-container">
           <h1 class="none">카테고리 선택</h1>
           <InputBookCategorySelect
-              :isSelected="treeFormData.isSelected"
-              :id="treeFormData.bookCategoryId"
-              :name="treeFormData.bookCategoryName"
+              :data="{
+                id: treeFormData.bookCategoryId,
+                name: treeFormData.bookCategoryName,
+                isSelected: treeFormData.bookCategorySelected
+              }"
               @drop="dropBookCategory"
           >
           </InputBookCategorySelect >
@@ -197,10 +362,15 @@ const dropBookCategory = () => {
         <section class="input-form__input-container">
           <h1 class="none">트리이름 입력</h1>
           <InputTextBox
-              label="*트리 이름"
-              name="treeTitle"
-              v-model="treeFormData.treeTitle"
-              placeholder="트리 이름을 입력해주세요"
+              :data="{
+                label: '*트리 이름',
+                name: 'treeTitle',
+                placeholder: '트리 이름을 입력해주세요',
+                value: treeFormData.treeTitle,
+                validate: treeFormData.treeTitleValid,
+                validateMessage: '트리 이름을 입력해주세요.'
+              }"
+              @inputData="inputTreeTitle"
           >
           </InputTextBox>
         </section>
@@ -208,10 +378,15 @@ const dropBookCategory = () => {
         <section class="book-tree-input-form__large-input-container">
           <h1 class="none">설명글 작성</h1>
           <InputTextareaBox
-              label="*트리 설명"
-              name="description"
-              v-model="treeFormData.description"
-              placeholder="트리를 설명할 글을 작성해 주세요"
+              :data="{
+                label: '*설명글',
+                name: 'description',
+                placeholder: '트리에 대한 설명을 입력해주세요',
+                value: treeFormData.description,
+                validate: treeFormData.descriptionValid,
+                validateMessage: '트리에 대한 설명을 입력해주세요.'
+              }"
+              @inputData="inputDescription"
           >
           </InputTextareaBox>
         </section>

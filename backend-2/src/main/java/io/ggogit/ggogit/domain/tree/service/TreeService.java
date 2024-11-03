@@ -30,6 +30,7 @@ public interface TreeService  {
     Page<TreeInfoResponse> findTreeInfoResponseList(Long memberId, Pageable pageable);
 
     List<TreeInfoResponse> findTreeInfoResponseList(Long memberId);
+    List<TreeInfoResponse> findTreeInfoResponseList(Long memberId, Long seedId);
 
     //TreeInfoDto 생성
 //    List<TreeInfoResponse> findTreeInfoResponse(Long memberId);

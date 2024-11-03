@@ -8,7 +8,7 @@ import { defineProps } from "vue";
 
 const props = defineProps({
   progress: 0,
-  readPage: 0,
+  readingPage: 0,
   totalPage: 0,
 });
 
@@ -17,7 +17,7 @@ function progressStyle(progress) {
 }
 
 const progress = props.progress;
-const readPage = props.readPage;
+const readPage = props.readingPage;
 const fullPage = props.totalPage;
 </script>
 
@@ -39,7 +39,7 @@ const fullPage = props.totalPage;
       </div>
       <div class="card-reading-progress__page-num">
         <span class="card-progress-page__current">{{ readPage }}</span>
-        <span class="card-progress-page__sep">/</span>
+        <span class="card-progress-page__sep"> / </span>
         <span class="card-progress-page__total"> {{ fullPage }} </span>
       </div>
     </div>

@@ -28,4 +28,16 @@ public class TreeQueryRepositoryImpl implements TreeQueryRepository {
                 .where(tree.member.id.eq(memberId))
                 .fetch();
     }
+
+    @Override
+    public List<Tree> findTreeByMemberIdFetch(Long memberId, Long seedId) {
+        return queryFactory
+                .selectFrom(tree)
+                .join(tree.leaf, leaf).fetchJoin()
+                .join(tree.book, book).fetchJoin()
+                .join(tree.book.bookCategory, bookCategory).fetchJoin()
+                .where(tree.member.id.eq(memberId).and(tree.seed.id.eq(seedId)))
+                .fetch();
+
+    }
 }

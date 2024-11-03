@@ -223,4 +223,15 @@ public class TreeController {
 
         return new ResponseEntity<>(TreeInfoResponseHome.of(treeInfoResponseList), HttpStatus.OK);
     }
+
+    @GetMapping("tree-home-sort")
+    public ResponseEntity<TreeInfoResponseHome> getTreeInfoResponsesSort(
+            @RequestParam(value = "mid",defaultValue = "1") Long mid,
+            @RequestParam(value = "s", required = false) Long seedId
+    ) {
+        Long memberId = mid;
+        List<TreeInfoResponse> treeInfoResponseList = treeService.findTreeInfoResponseList(memberId, seedId);
+
+        return new ResponseEntity<>(TreeInfoResponseHome.of(treeInfoResponseList), HttpStatus.OK);
+    }
 }

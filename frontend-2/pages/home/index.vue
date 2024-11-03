@@ -9,30 +9,24 @@ import { onBeforeMount, onMounted, reactive } from "vue";
 const config = useRuntimeConfig();
 const treeInfoList = ref([]);
 const seedList = ref([]);
+let observer = null;
 
 //TODO: JWT토큰 있다면 전송하게끔 로직 수정 필요
-const FetchData = async () => {
-  const {
-    data: seedData,
-    error: seedError,
-    status: seedStatus,
-  } = await useFetch("seeds", {
+const fetchData = async () => {
+  const { data: seedData, status: seedStatus } = await useFetch("seeds", {
     baseURL: `${config.public.apiBase}`,
     method: "GET",
-    initialCache: true,
   });
-  const {
-    data: treeData,
-    error: treeError,
-    status: treeStatus,
-  } = await useFetch("trees/tree-home", {
-    baseURL: `${config.public.apiBase}`,
-    method: "GET",
-    params: {
-      mid: useRoute().query.mid,
-    },
-    initialCache: true,
-  });
+  const { data: treeData, status: treeStatus } = await useFetch(
+    "trees/tree-home",
+    {
+      baseURL: `${config.public.apiBase}`,
+      method: "GET",
+      params: {
+        mid: useRoute().query.mid,
+      },
+    }
+  );
 
   watchEffect(() => {
     if (treeStatus.value === "success" && treeData.value) {
@@ -49,12 +43,9 @@ const FetchData = async () => {
   });
 };
 
-FetchData();
-
 //-------------------LifeCycle-------------------
 onMounted(async () => {
-  await nextTick();
-
+  await fetchData();
   const carouselList = document.querySelector(".tree-book-bg__list");
   // carousel item 너비
   // const width = document.querySelector(".mid__item").clientWidth;
@@ -67,8 +58,8 @@ onMounted(async () => {
 
   if (!import.meta.env.SSR) {
     // ----- 한 가운데 item 찾아내기 위한 IntersectionObserver코드 --------
-    const container = carouselList.querySelector(".tree-book-bg");
-    const observer = new IntersectionObserver(
+    // const container = carouselList.querySelector(".tree-book-bg");
+    observer = new IntersectionObserver(
       (entries) => {
         let selectedElement = null;
 
@@ -84,12 +75,60 @@ onMounted(async () => {
           bookExRemoveNone(selectedElement);
         }
       },
-      { root: container, threshold: 0.6 }
+      { threshold: 0.3 }
     );
 
     carouselItems.forEach((item) => {
       observer.observe(item);
     });
+
+    //--------------------------------가운데 트리 확대 로직--------------------------------
+    const bookExRemoveNone = (selectedElement) => {
+      const id = selectedElement.classList[1];
+
+      carouselList.querySelectorAll(".mid__item").forEach((item) => {
+        if (item === selectedElement) {
+          item.querySelector(".mid__img").classList.add("center__img");
+        } else {
+          item.querySelector(".mid__img").classList.remove("center__img");
+        }
+      });
+
+      document
+        .querySelectorAll(".textbox-recent-tree-info__frame")
+        .forEach((item) => {
+          if (item.classList.contains(id)) {
+            item.classList.remove("none");
+          } else {
+            item.classList.add("none");
+          }
+        });
+
+      document
+        .querySelectorAll(".book-tree-explanation-item")
+        .forEach((item) => {
+          if (item.classList.contains(id)) {
+            item.classList.remove("none");
+          } else {
+            item.classList.add("none");
+          }
+        });
+    };
+
+    const calcMidTree = () => {
+      let ids = [];
+      let ret = null;
+      carouselList.querySelectorAll(".selected").forEach((item) => {
+        ids.push(item.classList[1]);
+      });
+      const midId = String(ids[1]);
+      carouselList.querySelectorAll(".selected").forEach((item) => {
+        if (item.classList[1] === midId) {
+          ret = item;
+        }
+      });
+      return ret;
+    };
   }
 
   //-----------------------------------carousel 이동 로직-----------------------------------
@@ -152,7 +191,7 @@ onMounted(async () => {
 
       // 기본 동작 방지 (특히 모바일에서의 스크롤)
       if (e.type.includes("touch")) {
-        e.preventDefault(); // 기본 터치 스크롤 동작을 방지
+        // e.preventDefault(); // 기본 터치 스크롤 동작을 방지
       }
 
       // 오른쪽으로 최대 이동한 경우
@@ -215,51 +254,7 @@ onMounted(async () => {
       carouselList.style.transform = `translateX(${currentTranslateX}px)`;
     }
   };
-  //--------------------------------가운데 트리 확대 로직--------------------------------
-  const bookExRemoveNone = (selectedElement) => {
-    const id = selectedElement.classList[1];
 
-    carouselList.querySelectorAll(".mid__item").forEach((item) => {
-      if (item === selectedElement) {
-        item.querySelector(".mid__img").classList.add("center__img");
-      } else {
-        item.querySelector(".mid__img").classList.remove("center__img");
-      }
-    });
-
-    document
-      .querySelectorAll(".textbox-recent-tree-info__frame")
-      .forEach((item) => {
-        if (item.classList.contains(id)) {
-          item.classList.remove("none");
-        } else {
-          item.classList.add("none");
-        }
-      });
-
-    document.querySelectorAll(".book-tree-explanation-item").forEach((item) => {
-      if (item.classList.contains(id)) {
-        item.classList.remove("none");
-      } else {
-        item.classList.add("none");
-      }
-    });
-  };
-
-  const calcMidTree = () => {
-    let ids = [];
-    let ret = null;
-    carouselList.querySelectorAll(".selected").forEach((item) => {
-      ids.push(item.classList[1]);
-    });
-    const midId = String(ids[1]);
-    carouselList.querySelectorAll(".selected").forEach((item) => {
-      if (item.classList[1] === midId) {
-        ret = item;
-      }
-    });
-    return ret;
-  };
   //---------------------eventListener 등록---------------------
   //쓰로틀링 적용
   const throttledDragging = _.throttle((e) => {
@@ -285,6 +280,7 @@ onMounted(async () => {
   window.addEventListener("touchmove", throttledDragging, { passive: false });
   window.addEventListener("touchend", (e) => dragEnd(e));
 });
+
 //---------------------------onMounted 끝-----------------------------------
 </script>
 
@@ -318,10 +314,9 @@ onMounted(async () => {
           <h3 class="none">트리 약식 정보</h3>
           <ul>
             <li
-              class="none textbox-recent-tree-info__frame"
               v-for="(tree, index) in treeInfoList"
+              :class="`textbox-recent-tree-info__frame ${index} none`"
               :key="index"
-              :class="index"
             >
               <TextRecentTreeInfo :tree="tree" />
             </li>
@@ -332,10 +327,11 @@ onMounted(async () => {
           <h3 class="none">트리 설명</h3>
           <ul class="book-tree-explanation-list">
             <li
-              class="book-tree-explanation-item none"
               v-for="(tree, index) in treeInfoList"
+              :class="`book-tree-explanation-item
+              ${index}
+              none`"
               :key="index"
-              :class="index"
             >
               <TextRecentTreeEx :text="tree.description" />
               <section class="card-progress-home-container">
@@ -351,7 +347,7 @@ onMounted(async () => {
                         : 0
                     "
                     :readingPage="tree.readingPage"
-                    :totalPage="tree.totalPage"
+                    :totalPage="tree.bookTotalPage"
                   />
                 </div>
                 <CardReactNumbers

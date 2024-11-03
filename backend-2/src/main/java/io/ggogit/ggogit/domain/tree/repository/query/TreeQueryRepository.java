@@ -13,4 +13,5 @@ public interface TreeQueryRepository {
      * @return TreeList
      */
     public List<Tree> findTreeByMemberIdFetch(Long memberId);
+    public List<Tree> findTreeByMemberIdFetch(Long memberId, Long seedId);
 }

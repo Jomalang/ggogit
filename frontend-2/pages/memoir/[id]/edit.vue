@@ -5,18 +5,13 @@ import "@toast-ui/editor/dist/toastui-editor.css";
 
 //----------------variable----------------
 //save 호출 API
-const tmpSaveUrl = `${
-  import.meta.env.VITE_API_BASE_URL
-}memoir-image/upload-tmp`;
+const config = useRuntimeConfig();
+const tmpSaveUrl = `${config.public.apiBase}memoir-image/upload-tmp`;
 
 //이미지 전체 경로 호출 API
-const tmpPathUrl = `${
-  import.meta.env.VITE_API_BASE_URL
-}memoir-image/path-tmp?fileName=`;
+const tmpPathUrl = `${config.public.apiBase}memoir-image/path-tmp?fileName=`;
 
-const tmpRenderUrl = `${
-  import.meta.env.VITE_API_BASE_URL
-}memoir-image/return-byte?filePath=`;
+const tmpRenderUrl = `${config.public.apiBase}memoir-image/return-byte?filePath=`;
 
 //editor 객체
 let editor;
@@ -24,23 +19,9 @@ const memoirId = ref(0);
 memoirId.value = useRoute().params.id;
 //----------------model---------------
 
-const memoir = reactive({
-  title: "",
-  text: "",
-  visibility: true,
-});
-
-const book = ref({
-  bookId: 0,
-  bookTitle: "default-title",
-  bookAuthor: "default-author",
-  //배열로 전달
-  bookTranslator: ["default-translator"],
-  bookPublisher: "default-publisher",
-  bookImage: "book-cover-dummy1.svg",
-  bookCategory: "default-category",
-});
-
+const memoir = reactive({});
+const book = ref({});
+const tree = ref({});
 const fileNames = ref([]);
 
 //----------------function----------------
@@ -50,12 +31,9 @@ const editPost = async () => {
   memoir.text = editor.getHTML();
 
   //fetch
-  const response = await $fetch("/memoir/" + memoirId.value, {
+  const response = await $fetch("memoir/" + memoirId.value, {
     method: "PUT",
-    baseURL: import.meta.env.VITE_API_BASE_URL,
-    headers: {
-      "Content-Type": "application/json",
-    },
+    baseURL: `${config.public.apiBase}`,
     body: JSON.stringify({
       title: memoir.title,
       text: memoir.text,
@@ -79,24 +57,22 @@ const editPost = async () => {
   await navigateTo(`/memoir/${memoirId.value}`);
 };
 
+const { data } = await useFetch(`memoir/${useRoute().params.id}`, {
+  method: "GET",
+  baseURL: `${config.public.apiBase}`,
+});
+
+if (data.value) {
+  memoir.value = data.value.memoirDto;
+  book.value = data.value.bookDto;
+  tree.value = data.value.treeDto;
+} else {
+  console.error("회고록 조회 실패 : ", error.value);
+  alert(error.value.data.message);
+}
+
 //---------------Life Cycle----------------
-onMounted(async () => {
-  const { data } = await useFetch(`/memoir/${useRoute().params.id}`, {
-    method: "GET",
-    baseURL: import.meta.env.VITE_API_BASE_URL,
-  });
-
-  if (data.value) {
-    Object.assign(memoir, data.value.memoirDto);
-    Object.assign(book, data.value.bookDto);
-    console.log(memoir);
-    console.log(memoir.text);
-    console.log(memoir.id);
-  } else {
-    console.error("회고록 조회 실패 : ", error.value);
-    alert(error.value.data.message);
-  }
-
+onMounted(() => {
   editor = new Editor({
     el: document.querySelector("#editor"),
     height: "450px",
@@ -134,20 +110,6 @@ onMounted(async () => {
     },
   });
 });
-
-// TODO: 도서, 트리 API이용해 데이터 가져오기
-// onBeforeMount(async () => {
-//   const { data, error } = await useFetch(
-//     import.meta.env.VITE_API_BASE_URL + "tree/" + treeId
-//   );
-
-//   if (error.value) {
-//     console.error("트리 정보 조회 실패 : ", error.value);
-//     return;
-//   } else {
-//     book.value = data.value.book;
-//   }
-// });
 </script>
 
 <template>
@@ -157,7 +119,7 @@ onMounted(async () => {
 
     <section>
       <h2 class="none">회고록 생성</h2>
-      <TopBarBack :title="`회고록 수정`" :link="`/trees/${id}`" />
+      <TopBarBack :title="`회고록 수정`" :link="`/tree/${tree.id}`" />
     </section>
   </header>
 
@@ -172,19 +134,13 @@ onMounted(async () => {
       <section class="tree-reg-cover__container">
         <h4 class="none">도서 커버</h4>
         <LinkOneImageDetail
-          :src="`book/${book.bookImage}`"
+          :src="book.imageFile"
           :href="'javascript:history.back()'"
         />
       </section>
       <section class="tree-reg-book-info__container">
         <h4 class="none">도서 정보</h4>
-        <TextBookInfo
-          :seed="book.bookCategory"
-          :title="book.bookTitle"
-          :author="book.bookAuthor"
-          :translators="book.bookTranslator"
-          :publisher="book.bookPublisher"
-        />
+        <TextBookInfo :data="book" />
       </section>
     </section>
 

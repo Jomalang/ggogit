@@ -39,7 +39,9 @@ const props = defineProps({
       <div class="card-tree-detail__box">
         <!--반복문으로 넣어야 할듯..-->
         <div class="card-tree-detail__tags">
-          <span class="card-tree-detail__tag">{{ props.data.category }}</span>
+          <span class="card-tree-detail__tag">{{
+            props.data.bookCategoryName
+          }}</span>
         </div>
 
         <!---->

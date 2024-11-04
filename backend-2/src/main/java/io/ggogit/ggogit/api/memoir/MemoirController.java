@@ -1,6 +1,7 @@
 package io.ggogit.ggogit.api.memoir;
 
 import io.ggogit.ggogit.api.book.dto.BookDetailResponse;
+import io.ggogit.ggogit.api.book.dto.BookInfoResponse;
 import io.ggogit.ggogit.api.member.dto.MemberInfoResponse;
 import io.ggogit.ggogit.api.member.session.SessionConst;
 import io.ggogit.ggogit.api.memoir.dto.MemoirRequest;
@@ -40,7 +41,7 @@ public class MemoirController {
         MemoirDto memoirDto = MemoirDto.of(memoir, "");
         Tree tree = memoir.getTree();
         TreeLightInfoResponse treeDto = TreeLightInfoResponse.of(tree);
-        BookDetailResponse BookDto = BookDetailResponse.of(tree.getBook());
+        BookInfoResponse BookDto = BookInfoResponse.of(tree.getBook());
         MemberInfoResponse memberDto = MemberInfoResponse.of(tree.getMember());
 
         MemoirResponse memoirResponse = MemoirResponse.of(memoirDto, BookDto, treeDto, memberDto);

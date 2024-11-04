@@ -65,7 +65,7 @@ const setItemRef = (index) => (el) => {
 // 마운트 시 스크롤 이벤트 등록 (passive: true)
 onMounted(() => {
   if (scrollContainer.value) {
-    console.log("Scroll container found:", scrollContainer.value);
+    // console.log("Scroll container found:", scrollContainer.value);
     scrollContainer.value.addEventListener("scroll", handleScroll, {
       passive: true,
     });

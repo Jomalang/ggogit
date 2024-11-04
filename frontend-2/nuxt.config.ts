@@ -21,11 +21,14 @@ export default defineNuxtConfig({
       "tree/book/new": {
         ssr: false, // "/editor/toast" 경로에 대해서는 SSR을 비활성화
       },
+      "leaf": {
+        ssr: false, // 화면에 따른 window 객체의 값으로 인해 SSR을 비활성화
+      },
       "leaf/book/new": {
         ssr: false, // "/editor/toast" 경로에 대해서는 SSR을 비활성화
       },
-      "leaf": {
-        ssr: false, // 화면에 따른 window 객체의 값으로 인해 SSR을 비활성화
+      "leaf/book/:id/new": {
+        ssr: false, // "/editor/toast" 경로에 대해서는 SSR을 비활성화
       },
       "leaf/etc/new": {
         ssr: false, // "/editor/toast" 경로에 대해서는 SSR을 비활성화
@@ -43,5 +46,8 @@ export default defineNuxtConfig({
         ssr: false, // "/editor/toast" 경로에 대해서는 SSR을 비활성화
       },
     },
+  },
+  router: {
+    middleware: ['checkTreeFormData']
   },
 });

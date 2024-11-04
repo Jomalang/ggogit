@@ -1,19 +1,21 @@
-<script setup lang="ts">
+<script setup>
 
-import {BeforeLeafItemProps} from "@/types/types";
+const { data } = defineProps(['data']);
 
-const props = defineProps<{
-  beforeLeafData: BeforeLeafItemProps;
-}>();
+/*
+id: Number;
+title: String;
+date: String;
+tags: Array<LeafTag>;
+*/
 
-setTimeout((): void => {
-  const element: HTMLElement | null = document.querySelector('.before-log-box');
+setTimeout(() => {
+  const element = document.querySelector('.before-log-box');
   if (element) {
     element.classList.add('before-log-box--show');
   } else {
     console.error('Element with class "before-log-box" not found.');
   }
-
 }, 500); // 0.5초 뒤에 이벤트를 등록한다.
 
 </script>
@@ -27,11 +29,11 @@ setTimeout((): void => {
     </div>
     <div class="before-log__text-box">
       <p class="before-log__text">이전 로그</p>
-      <p class="before-log__title">{{ beforeLeafData.title }}</p>
-      <p class="before-log__date">{{ beforeLeafData.date }}</p>
+      <p class="before-log__title">{{ data.title }}</p>
+      <p class="before-log__date">{{ data.date }}</p>
       <ul class="before-log__tags">
         <li class="before-log__tag"
-            v-for="tag in beforeLeafData.tags"
+            v-for="tag in data.tags"
             :key="tag.id"
         >{{ tag.name }}
         </li>

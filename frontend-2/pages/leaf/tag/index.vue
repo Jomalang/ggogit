@@ -47,7 +47,7 @@ const tagListApi = async () => {
     const response = await axios.get(`${config.public.apiBase}/tags?s=${searchValue.name}`);
 
     if (response.status !== HttpStatusCode.Ok) {
-      console.log("태그 리스트 조회 실패 : ", response);
+      // console.log("태그 리스트 조회 실패 : ", response);
     }
 
     // 선택 되어있는 태그 제외
@@ -59,7 +59,7 @@ const tagListApi = async () => {
     });
 
   } catch (error) {
-    console.log("태그 리스트 조회 실패 : ", error);
+    // console.log("태그 리스트 조회 실패 : ", error);
   }
 };
 

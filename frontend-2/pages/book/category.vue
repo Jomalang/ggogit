@@ -49,7 +49,7 @@ const chooseBookCategory = (category) => {
     treeFormData.value.bookCategoryId = category.id;
     treeFormData.value.bookCategoryName = category.name;
     treeFormData.value.bookCategorySelected = true;
-    console.log('Selected book category:', category);
+    // console.log('Selected book category:', category);
     router.push('/tree/book/new');
 };
 

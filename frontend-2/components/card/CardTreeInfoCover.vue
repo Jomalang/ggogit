@@ -6,7 +6,7 @@ const {data} = defineProps(['data']);
 const img = ref(false)
 
 onMounted(async () => {
-  await console.log(data.coverImageName);
+  await // console.log(data.coverImageName);
   if(data.coverImageName){
     img.value = true;
   }

@@ -1,7 +1,10 @@
 <script setup>
 
 const props = defineProps({
-  visibility: Boolean
+  visibility: {
+    type: Boolean,
+    required: true,
+  }
 });
 
 const emit = defineEmits(['update:visibility']);

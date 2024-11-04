@@ -203,18 +203,13 @@ public class LeafDtoServiceImpl implements LeafDtoService {
         Leaf leaf = leafRepository.findById(leafId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 리프가 존재하지 않습니다."));
 
-        // 이전 리프 조회
-        if (leaf.getParentLeaf() == null) {
-            throw new IllegalArgumentException("이전 리프가 존재하지 않습니다.");
-        }
-
         List<LeafTagMap> leafTagMaps = leafTagMapRepository.findByLeaf(leaf);
         List<LeafTag> leafTags = new ArrayList<>();
         for (LeafTagMap leafTagMap : leafTagMaps) {
             leafTags.add(leafTagMap.getLeafTag());
         }
 
-        return LeafBeforeNodeInfoResponse.of(leaf.getParentLeaf(), leafTags);
+        return LeafBeforeNodeInfoResponse.of(leaf, leafTags);
     }
 
     @Override
@@ -293,6 +288,20 @@ public class LeafDtoServiceImpl implements LeafDtoService {
         Leaf leaf = leafRepository.findById(leafId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 리프가 존재하지 않습니다."));
         return leaf.getTree().getSeed().getId().equals(1L) ? "book" : "etc";
+    }
+
+    @Override
+    public int getBookPage(Long leafId) {
+        Leaf leaf = leafRepository.findById(leafId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 리프가 존재하지 않습니다."));
+
+        Tree tree = leaf.getTree();
+
+        if (!tree.getSeed().getId().equals(1L)) {
+            throw new IllegalArgumentException("해당 리프는 도서가 아닙니다.");
+        }
+
+        return tree.getBook().getTotalPage();
     }
 
     private LeafItemToEndResponse getLeafItemToEndResponse(List<TreeNode> treeNodes, Long leafId) {

@@ -112,14 +112,14 @@ onMounted(() => {
           });
           // 컨트롤러에서 전달받은 디스크에 저장된 파일 명
           const fileName = await response.text();
-          console.log("서버에 저장된 파일 명 : ", fileName);
+          // console.log("서버에 저장된 파일 명 : ", fileName);
           //TODO: 최종 save되는 이미지 이름만 저장해야 함.
           fileNames.value.push(fileName);
 
           //획득한 이미지경로 바탕으로 바이트 코드 획득
           callback(tmpRenderUrl + `${fileName}`, "image alt");
         } catch (error) {
-          console.log("업로드 실패 : ", error);
+          // console.log("업로드 실패 : ", error);
         }
       },
     },
@@ -129,8 +129,8 @@ onMounted(() => {
 watch(
     () => route.fullPath,
     (newPath, oldPath) => {
-      console.log('이전 경로:', oldPath);
-      console.log('새 경로:', newPath);
+      // console.log('이전 경로:', oldPath);
+      // console.log('새 경로:', newPath);
     }
 );
 

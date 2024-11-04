@@ -31,7 +31,7 @@ const treeFormData = useState('treeFormData', () => ({
 }));
 
 watch(treeFormData.value, (newVal) => {
-  console.log("treeFormData:", newVal);
+  // console.log("treeFormData:", newVal);
 });
 
 // ----------------------- API ----------------------- //
@@ -40,7 +40,7 @@ const { data: seedData, error: infoError } = await useFetch(() => `seeds/${seedI
 });
 
 watchEffect(() => {
-  console.log("seedData:", seedData.value);
+  // console.log("seedData:", seedData.value);
 });
 
 // ----------------------- Life Cycle ----------------------- //
@@ -53,7 +53,7 @@ onMounted(() => {
 
 // ----------------------- Function ----------------------- //
 const handleImageSelected = (imageData) => {
-  console.log("Selected image data:", imageData);
+  // console.log("Selected image data:", imageData);
   treeFormData.value.imageData = imageData;
 };
 
@@ -116,7 +116,10 @@ const submitFormHandler = async (e) => {
     if (response.status !== HttpStatusCode.Created) {
       throw new Error("Network response was not ok");
     }
-    
+
+    // 데이터 초기화
+    treeFormData.value = {};
+
     router.push("/leaf/etc/new");
   } catch (error) {
     console.error("Error submitting form:", error);

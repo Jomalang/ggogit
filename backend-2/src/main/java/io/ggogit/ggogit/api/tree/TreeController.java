@@ -83,7 +83,7 @@ public class TreeController {
 //            @SessionAttribute Member member
     ) {
 //        Long memberId = member.getId();
-        Long memberId = mid;
+        Long memberId = 227L;
 
         TreeInfoResponse treeInfoResponse = treeService.findTreeInfoResponse(memberId, treeId);
         return new ResponseEntity<> (treeInfoResponse, HttpStatus.OK);
@@ -144,8 +144,11 @@ public class TreeController {
 
 //        Boolean hasOwner = treeService.isOwner(treeId, member.getId());
         Boolean hasOwner = true;//테스트용 코드
+        int totalPage = 0;
 
         List<LeafBranchResponse> branchList = leafDtoService.findBranchByFilter(treeId, hasOwner, bookMark);
+        totalPage = branchList.size();
+
         branchList = sortLeafList(branchList, filterName.getValue(), sortName.getValue());
 
         if(page >= 0) {
@@ -154,7 +157,7 @@ public class TreeController {
                     .limit(size)
                     .collect(Collectors.toList());
         }
-        TreeDetailResponse response = TreeDetailResponse.of(branchList, branchList.size());
+        TreeDetailResponse response = TreeDetailResponse.of(branchList, totalPage);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
     @GetMapping("/{treeId}/leafs")
@@ -204,16 +207,34 @@ public class TreeController {
         return leafList.stream().sorted(comparator).collect(Collectors.toList());
     }
 
+    //Access Token을 받아서 TreeInfoResponseHome을 반환하는 API
 //    @GetMapping("tree-home")
 //    public ResponseEntity<TreeInfoResponseHome> getTreeInfoResponses(
 //       @RequestHeader(value="Authorization") String accessToken) {
 //
 //        Long memberId = jwtTokenProvider.getMemberIdFromToken(accessToken);
-//        List<Tree> trees = treeService.findAllByMemberId(memberId);
+//        List<TreeInfoResponse> treeInfoResponseList = treeService.findTreeInfoResponseList(memberId);
 //
-//        for(Tree tree : trees){
-//            TreeInfoResponse.of(tree, )
-//        }
-//
+//        return new ResponseEntity<>(TreeInfoResponseHome.of(treeInfoResponseList), HttpStatus.OK);
 //    }
+    @GetMapping("tree-home")
+    public ResponseEntity<TreeInfoResponseHome> getTreeInfoResponses(
+            @RequestParam(value = "mid",defaultValue = "1") Long mid) {
+
+        Long memberId = mid;
+        List<TreeInfoResponse> treeInfoResponseList = treeService.findTreeInfoResponseList(memberId);
+
+        return new ResponseEntity<>(TreeInfoResponseHome.of(treeInfoResponseList), HttpStatus.OK);
+    }
+
+    @GetMapping("tree-home-sort")
+    public ResponseEntity<TreeInfoResponseHome> getTreeInfoResponsesSort(
+            @RequestParam(value = "mid",defaultValue = "1") Long mid,
+            @RequestParam(value = "seedId", required = false) Long seedId
+    ) {
+        Long memberId = mid;
+        List<TreeInfoResponse> treeInfoResponseList = treeService.findTreeInfoResponseList(memberId, seedId);
+
+        return new ResponseEntity<>(TreeInfoResponseHome.of(treeInfoResponseList), HttpStatus.OK);
+    }
 }

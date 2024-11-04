@@ -1,16 +1,29 @@
-<script setup lang="ts">
-import { CardBookPreviewsProps } from "@/types/types";
+<script setup>
 import { onBeforeMount, ref } from "vue";
 import { defineProps } from "vue";
 
-const props = defineProps<{
-  data: CardBookPreviewsProps;
-}>();
+const props = defineProps({
+  data: Object,
+  default: {
+    id: 22,
+    publishDate: "2007-07-21",
+    totalPage: 759,
+    author: "J.K. 롤링",
+    isbn: "978-3-16-148410-0",
+    publisher: "블룸즈버리",
+    title: "해리 포터와 죽음의 성물",
+    imageFile: "/png/book-example.png",
+    createTime: "24-10-01",
+    updateTime: "24-10-01",
+    bookCategoryId: 4,
+    bookCategoryName: "판타지",
+  },
+});
 </script>
 
 <template>
   <div class="card-tree-details">
-    <a class="card-tree-detail" :href="props.data.link">
+    <NuxtLink class="card-tree-detail" :to="props.data.link">
       <img
         v-if="props.data.imageFile !== undefined"
         class="card-tree__book-cover"
@@ -44,7 +57,7 @@ const props = defineProps<{
           {{ props.data.createTime }}
         </div>
       </div>
-    </a>
+    </NuxtLink>
   </div>
 </template>
 

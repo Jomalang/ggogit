@@ -65,7 +65,7 @@ const { data: infoData, error: infoError } = useFetch(() => `trees/${treeId}/inf
   baseURL: config.public.apiBase,
 });
 
-const { data: branchData, error: branchError } = useFetch(() => `trees/${treeId}/branches`, {
+const { data: branchData, error: branchError, refresh } = useFetch(() => `trees/${treeId}/branches`, {
   baseURL: config.public.apiBase,
   params: queryParam,
 });
@@ -75,10 +75,6 @@ const bookMarkHandler = (bookMark) => {
   queryParam.bookMark = bookMark;
 };
 
-const filterHandler = (e) => {
-  filterQuery = e;
-  filterNameHandler(e);
-}
 const sortHandler = (e) => {
   sortQuery = e;
 }
@@ -103,6 +99,12 @@ const filterNameHandler = (e) => {
  }
 }
 
+const loadMore = () => {
+  queryParam.page += 1;
+  refresh();
+};
+
+
 watchEffect(() => {
   if (infoData.value) {
     info = infoData.value;
@@ -123,11 +125,11 @@ watchEffect(() => {
     <section class="reg-book-search-container">
       <h2 class="none">트리 검색</h2>
 
-      <InputBackSearch
+      <InputSearchWithBackBtn
         placeholder="검색할 트리를 입력해주세요"
         href="javascript:history.back()"
         api=""
-        >트리 검색 상단 바</InputBackSearch>
+        >트리 검색 상단 바</InputSearchWithBackBtn>
     </section>
   </header>
   <main>
@@ -165,7 +167,9 @@ watchEffect(() => {
         <div id="card-branch__list-frame">
           <div>
           <CardBranchList
-              :items="branch.items"></CardBranchList>
+              :items="branch.items"
+              @loadMore="loadMore"
+          ></CardBranchList>
           </div>
         </div>
       </section>
@@ -191,7 +195,7 @@ watchEffect(() => {
         <div class="filter-attribute__bg">
           <h2 class="filter-attribute__title">정렬 기준</h2>
             <ul id="filter-tab__list1">
-              <li @click="filterHandler( 10)" class="filter-tab__item">
+              <li @click="filterNameHandler( 10)" class="filter-tab__item">
                 <label class="filter-tab__item-label">
                   <input
                     class="filter-tab__item-radio"
@@ -210,7 +214,7 @@ watchEffect(() => {
                   </div>
                 </label>
               </li>
-              <li @click="filterHandler(11)" class="filter-tab__item">
+              <li @click="filterNameHandler(11)" class="filter-tab__item">
                 <label class="filter-tab__item-label">
                   <input
                     class="filter-tab__item-radio"
@@ -228,7 +232,7 @@ watchEffect(() => {
                   </div>
                 </label>
               </li>
-              <li @click="filterHandler(12)" class="filter-tab__item">
+              <li @click="filterNameHandler(12)" class="filter-tab__item">
                 <label class="filter-tab__item-label">
                   <input
                     class="filter-tab__item-radio"
@@ -246,7 +250,7 @@ watchEffect(() => {
                   </div>
                 </label>
               </li>
-              <li @click="filterHandler(13)" class="filter-tab__item">
+              <li @click="filterNameHandler(13)" class="filter-tab__item">
                 <label class="filter-tab__item-label">
                   <input
                       class="filter-tab__item-radio"
@@ -264,7 +268,7 @@ watchEffect(() => {
                   </div>
                 </label>
               </li>
-              <li @click="filterHandler(14)" class="filter-tab__item">
+              <li @click="filterNameHandler(14)" class="filter-tab__item">
                 <label class="filter-tab__item-label">
                   <input
                       class="filter-tab__item-radio"

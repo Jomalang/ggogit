@@ -1,5 +1,6 @@
 package io.ggogit.ggogit.api.tree.dto;
 
+import io.ggogit.ggogit.api.book.dto.BookCategoryResponse;
 import io.ggogit.ggogit.api.book.dto.BookInfoResponse;
 import io.ggogit.ggogit.domain.member.entity.Member;
 import io.ggogit.ggogit.domain.tree.entity.Seed;
@@ -55,42 +56,6 @@ public class TreeCardRequest {
                 .title(this.title)
                 .visibility(this.visibility)
                 .leafCreatedAt(this.leafCreatedAt)
-                .build();
-    }
-    public static TreeCardRequest toEntity(BookInfoResponse bookInfoResponse, boolean complateBook, Tree tree, Seed Seed, Long memberId){
-        LocalDate publishYear = bookInfoResponse.getPublishDate();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy");
-        return TreeCardRequest.builder()
-                .bookId(bookInfoResponse.getId())
-                .bookCategory(bookInfoResponse.getCategory().getName())
-                .bookTitle(bookInfoResponse.getTitle())
-                .bookAuthor(bookInfoResponse.getAuthor())
-                .bookTranslator(bookInfoResponse.getTranslator())
-                .bookPublisher(bookInfoResponse.getPublisher())
-                .bookPublishedYear(publishYear.format(formatter))
-                .bookComplete(complateBook)
-                .coverImageName(bookInfoResponse.getImageFile())
-                .treeId(tree.getId())
-                .memberId(memberId)
-                .seedId(Seed.getId())
-                .seedKorName(Seed.getKorName())
-                .title(tree.getTitle())
-                .visibility(tree.getVisibility())
-                .leafCreatedAt(tree.getUpdateTime())
-                .build();
-    }
-
-    public static TreeCardRequest toEntity(String coverImage, Member member, Tree tree, Seed seed, String nickname){
-        return TreeCardRequest.builder()
-                .coverImageName(coverImage)
-                .treeId(tree.getId())
-                .bookAuthor(nickname)
-                .memberId(member.getId())
-                .seedId(seed.getId())
-                .seedKorName(seed.getKorName())
-                .title(tree.getTitle())
-                .visibility(tree.getVisibility())
-                .leafCreatedAt(tree.getUpdateTime())
                 .build();
     }
 }

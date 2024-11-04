@@ -7,6 +7,7 @@ import LinkFullWidth from "~/components/button/LinkFullWidth.vue";
 import TextBookInfo from "~/components/text/TextBookInfo.vue";
 
 const {data} = defineProps(['data']);
+const progress = (data.readingPage * 100 / data.bookTotalPage).toFixed(2);
 
 function translatorsConverter(translators) {
   if (!translators) {
@@ -27,7 +28,7 @@ const textBookInfoProps = {
 };
 
 const cardProgressBarProps = {
-  progress: (data.readingPage * 100 / data.bookTotalPage).toFixed(2),
+  progress: progress,
   readPage: data.readingPage,
   fullPage: data.bookTotalPage,
 };
@@ -69,8 +70,8 @@ const cardReactNumbersProps = {
         </div>
       </section>
 
-      <section class="card-tree-memoir-create-btn-container none">
-        <LinkFullWidth link="#" text="회고록 작성" />
+      <section v-if="progress>=80" class="card-tree-memoir-create-btn-container">
+        <LinkFullWidth :link="'/memoir/' + data.treeId +'/reg'" text="회고록 작성" />
       </section>
 
     </section>

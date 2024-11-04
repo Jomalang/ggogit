@@ -3,19 +3,17 @@ import { reactive, ref } from "vue";
 
 //---------------variable----------------
 const apiUrl = `${import.meta.env.VITE_API_BASE_URL}books`;
-let keyword = ref("");
-let size = ref(0);
+const keyword = ref("");
 const books = ref([]);
 const page = ref(1);
+const totalPage = ref(0);
+const totalCount = ref(0);
+const limit = ref(10);
+const scrollContainer = ref(null);
 //-------------handler----------------
 
 const handleBookResult = (data) => {
   books.value = data || [];
-  console.log("-----book.value-----");
-  console.log(books.value);
-  console.log("-----------------");
-  page.value = data.page || 1;
-  size.value = books.value.length || 0;
   console.log(`length=${books.value.length}`);
 };
 
@@ -23,6 +21,49 @@ const handleKeyword = (query) => {
   keyword.value = query;
   console.log(`keyword=${keyword.value}`);
 };
+
+const handlePage = (p) => {
+  page.value = p;
+  console.log(`page=${page.value}`);
+};
+
+const handleTotalPage = (totalP) => {
+  totalPage.value = totalP;
+  console.log(`totalPages=${totalPage.value}`);
+};
+
+const handleTotalCount = (totalC) => {
+  totalCount.value = totalC;
+  console.log(`totalCount=${totalCount.value}`);
+};
+
+const handleScroll = () => {
+  const container = scrollContainer.value;
+  const { scrollTop, clientHeight, scrollHeight } = container;
+  if (scrollTop + clientHeight >= scrollHeight) {
+    console.log("scroll end");
+    //최대 페이지까지만 증가
+    if (parseInt(page.value) < parseInt(totalPage.value)) {
+      page.value = parseInt(page.value) + 1;
+      console.log(`page=${page.value}`);
+    }
+  }
+};
+
+//-------------life cycle----------------
+onMounted(() => {
+  watch(
+    [scrollContainer],
+    () => {
+      if (scrollContainer.value) {
+        scrollContainer.value.addEventListener("scroll", handleScroll, {
+          passive: false,
+        });
+      }
+    },
+    { immediate: true }
+  );
+});
 </script>
 
 <template>
@@ -34,14 +75,18 @@ const handleKeyword = (query) => {
         :placeholder="`검색할 도서를 입력해주세요.`"
         :href="`./seed/index`"
         :api="apiUrl"
+        :page="page"
         @bookResult="handleBookResult"
         @req="handleKeyword"
+        @page="handlePage"
+        @totalCount="handleTotalCount"
+        @totalPage="handleTotalPage"
       />
     </section>
 
     <section>
       <h2 class="none">검색 결과 개수 및 최근 수정한 순서</h2>
-      <TopBarSearchResultNum :num="size" />
+      <TopBarSearchResultNum :num="totalCount" />
     </section>
   </header>
 
@@ -56,14 +101,16 @@ const handleKeyword = (query) => {
       </div>
     </section>
 
-    <section class="tree-card-list" v-else-if="size >= 1">
+    <section class="tree-card-list" v-else-if="totalCount >= 1">
       <h3 class="none">도서 검색 결과</h3>
-      <div v-for="book in books" :key="book.id">
-        <CardBookPreviews :data="book" />
+      <div class="scroll-container" ref="scrollContainer">
+        <div v-for="book in books" :key="book.id">
+          <CardBookPreviews :data="book" />
+        </div>
       </div>
     </section>
 
-    <section v-else="size === 0">
+    <section v-else="totalCount === 0">
       <h3 class="none">검색 결과 없음</h3>
       <div class="text-info-container">
         <TextInfo
@@ -92,4 +139,12 @@ const handleKeyword = (query) => {
   </aside>
 </template>
 
-<style scoped></style>
+<style scoped>
+.scroll-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  overflow-y: auto;
+  height: 480px;
+}
+</style>

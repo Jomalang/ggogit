@@ -4,15 +4,21 @@
 //   readPage: data.readingPage,
 //   fullPage: data.bookTotalPage,
 // };
-import {defineProps} from 'vue';
+import { defineProps } from "vue";
 
-const {data} = defineProps(['data']);
+const props = defineProps({
+  progress: 0,
+  readingPage: 0,
+  totalPage: 0,
+});
 
 function progressStyle(progress) {
   return `width: ${progress}%;`;
 }
 
-
+const progress = props.progress;
+const readPage = props.readingPage;
+const fullPage = props.totalPage;
 </script>
 
 <template>
@@ -20,18 +26,21 @@ function progressStyle(progress) {
     <div class="card-reading-progress__title">
       <h2>독서 진행률</h2>
       <div>
-        <span class="card-reading-progress__num">{{ data.progress }}</span>
+        <span class="card-reading-progress__num">{{ progress }}</span>
         <span class="card-reading-progress__sep">%</span>
       </div>
     </div>
     <div class="card-reading-progress-content">
       <div class="card-reading-progress__bar-container">
-        <div class="card-reading-progress__bar" :style="progressStyle(data.progress)"></div>
+        <div
+          class="card-reading-progress__bar"
+          :style="progressStyle(progress)"
+        ></div>
       </div>
       <div class="card-reading-progress__page-num">
-        <span class="card-progress-page__current">{{ data.readPage }}</span>
-        <span class="card-progress-page__sep">/</span>
-        <span class="card-progress-page__total"> {{ data.fullPage }} </span>
+        <span class="card-progress-page__current">{{ readPage }}</span>
+        <span class="card-progress-page__sep"> / </span>
+        <span class="card-progress-page__total"> {{ fullPage }} </span>
       </div>
     </div>
   </div>

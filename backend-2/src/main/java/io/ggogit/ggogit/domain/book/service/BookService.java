@@ -3,6 +3,7 @@ package io.ggogit.ggogit.domain.book.service;
 
 import io.ggogit.ggogit.api.book.dto.BookInfoResponse;
 import io.ggogit.ggogit.domain.book.entity.Book;
+import org.springframework.data.domain.Page;
 import org.springframework.web.multipart.MultipartFile;
 import io.ggogit.ggogit.domain.book.entity.BookCategory;
 import org.springframework.stereotype.Service;
@@ -41,7 +42,7 @@ public interface BookService {
      * @return
      */
     //목록 조회 + 페이징, 정렬, 검색 기능
-    List<Book> getBooks(int page, String query, String filter);
+    Page<Book> getBooks(int page, String query, String filter);
 
     int saveAll(List<Book> books);
 
@@ -94,4 +95,6 @@ public interface BookService {
      * @return
      */
     boolean apiCheck(Long bookId);
+
+    Book findByTreeId(Long treeId);
 }

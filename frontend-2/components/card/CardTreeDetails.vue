@@ -1,40 +1,16 @@
-<script setup lang="ts">
-
+<script setup>
 import { computed } from "vue";
 
-interface CardTreeDetailsProps {
-    treeId: string;
-    coverImageName: string;
-    bookCategory: string;
-    bookTitle: string;
-    treeTitle: string
-    bookPublishedYear: string;
-    bookComplete: boolean;
-    bookAuthor: string;
-    bookTranslator: string;
-    bookPublisher: string;
-    leafCreatedAt: string;
-}
+const props = defineProps({
+  tree: {
+    type: Object,
+    required: true,
+  },
+});
 
-const data: CardTreeDetailsProps  = {
-    treeId: '',
-    coverImageName: '',
-    bookCategory: '도서',
-    bookTitle: '운명이란 무엇인가?',
-    bookComplete: true,
-    treeTitle: '운명이란 무엇인가?',
-    bookPublishedYear: '2024',
-    bookAuthor: '유시민',
-    bookTranslator: '유시민',
-    bookPublisher: '생각의 길',
-    leafCreatedAt: '2024-07-15'
-};
+const tree = ref(props.tree);
 
-const detailLink = computed(() => `/tree/detail/${data.treeId}`);
-const props = defineProps<{
-    data: CardTreeProps;
-}>();
-
+const detailLink = computed(() => `/tree/detail/${tree.treeId}`);
 </script>
 
 <template>
@@ -42,33 +18,53 @@ const props = defineProps<{
 
   <div class="card-tree-details">
     <a class="card-tree-detail" :href="detailLink">
-
       <div class="card-tree__img-frame">
-        <img v-if="coverImageName" class="card-tree__book-cover" alt="treeCover" :src="data.coverImageName"/>
-        <img v-else class="card-tree__book-cover" src="/public/svg/tree-icon--white.svg" alt="treeCover"/>
+        <img
+          v-if="tree.coverImageName"
+          class="card-tree__book-cover"
+          alt="treeCover"
+          :src="tree.coverImageName"
+        />
+        <img
+          v-else
+          class="card-tree__book-cover"
+          src="/public/svg/tree-icon--white.svg"
+          alt="treeCover"
+        />
       </div>
 
       <div class="card-tree-detail__box">
         <!--반복문으로 넣어야 할듯..-->
-          <div class="card-tree-detail__tags">
-            <span class="card-tree-detail__tag">{{ data.bookCategory }}</span>
-          </div>
+        <div class="card-tree-detail__tags">
+          <span class="card-tree-detail__tag">{{ tree.bookCategory }}</span>
+        </div>
         <!---->
         <div class="card-tree-detail__slot">
-          <p class="card-tree-detail__name">{{ data.bookTitle }}</p>
-          <div v-if="data.bookComplete" class="card-tree-detail__complete-icon" ></div>
+          <p class="card-tree-detail__name">{{ tree.bookTitle }}</p>
+          <div
+            v-if="tree.bookComplete"
+            class="card-tree-detail__complete-icon"
+          ></div>
         </div>
-        <p class="card-tree-detail__explanation">{{data.treeTitle}}</p>
+        <p class="card-tree-detail__explanation">{{ tree.treeTitle }}</p>
         <div class="card-tree-detail__info">
-          <span class="card-tree-detail__info">{{ data.bookPublishedYear }}</span>
+          <span class="card-tree-detail__info">{{
+            tree.bookPublishedYear
+          }}</span>
           <span class="card-tree-detail__info"> / </span>
-          <span class="card-tree-detail__info">{{ data.bookAuthor }}</span>
+          <span class="card-tree-detail__info">{{ tree.bookAuthor }}</span>
           <span class="card-tree-detail__info"> / </span>
-          <span v-if="data.bookTranslator" class="card-tree-detail__info">{{ data.bookTranslator }}</span>
-          <span class="card-tree-detail__info" v-if="data.bookTranslator">/</span>
-          <span class="card-tree-detail__info">{{ data.bookPublisher }}</span>
+          <span v-if="tree.bookTranslator" class="card-tree-detail__info">{{
+            data.bookTranslator
+          }}</span>
+          <span class="card-tree-detail__info" v-if="tree.bookTranslator"
+            >/</span
+          >
+          <span class="card-tree-detail__info">{{ tree.bookPublisher }}</span>
         </div>
-        <span class="card-tree-detail__info-created-date">{{ data.leafCreatedAt }}</span>
+        <span class="card-tree-detail__info-created-date">{{
+          tree.leafCreatedAt
+        }}</span>
       </div>
     </a>
   </div>
@@ -86,7 +82,7 @@ const props = defineProps<{
   width: 100%;
   display: flex;
   flex-direction: row;
-  gap:10px
+  gap: 10px;
 }
 
 .card-tree__book-cover {
@@ -115,7 +111,7 @@ const props = defineProps<{
   font-size: 10px;
   margin-right: 2px;
 }
-.card-tree-detail__slot{
+.card-tree-detail__slot {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -127,12 +123,12 @@ const props = defineProps<{
   align-items: center;
   justify-content: space-between;
 }
-.card-tree-detail__complete-icon{
+.card-tree-detail__complete-icon {
   display: inline-flex;
   width: 20px;
   height: 20px;
   background-color: var(--main1);
-  mask-image:url("/svg/card-tree-details-complete.svg");
+  mask-image: url("/svg/card-tree-details-complete.svg");
   mask-size: contain;
   mask-repeat: no-repeat;
   mask-position: center;

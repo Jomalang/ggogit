@@ -2,9 +2,6 @@
 import { onBeforeMount, onMounted, ref } from "vue";
 import Editor from "@toast-ui/editor";
 import "@toast-ui/editor/dist/toastui-editor.css";
-import LInkOneImageDetail from "~/components/link/LinkOneImageDetail.vue";
-import SubmitBtnFullBar from "~/components/button/SubmitBtnFullBar.vue";
-import NavigationBar from "~/components/nav/NavigationBar.vue";
 
 //----------------variable----------------
 //save 호출 API
@@ -151,7 +148,6 @@ onMounted(async () => {
 //     book.value = data.value.book;
 //   }
 // });
-
 </script>
 
 <template>
@@ -175,7 +171,7 @@ onMounted(async () => {
       <h3 class="none">도서 커버 및 도서 정보</h3>
       <section class="tree-reg-cover__container">
         <h4 class="none">도서 커버</h4>
-        <LInkOneImageDetail
+        <LinkOneImageDetail
           :src="`book/${book.bookImage}`"
           :href="'javascript:history.back()'"
         />
@@ -248,7 +244,7 @@ onMounted(async () => {
     <section class="register__input-container--last">
       <h3 class="none">회고록 생성 버튼</h3>
       <!-- 컴포넌트 -->
-      <SubmitBtnFullBar :text="'회고록 수정하기'" @click="editPost" />
+      <ButtonSubmitBtnFullBar :text="'회고록 수정하기'" @click="editPost" />
     </section>
   </main>
 
@@ -259,7 +255,7 @@ onMounted(async () => {
   <aside>
     <section class="nav-container">
       <h2 class="none">네비게이션 바</h2>
-      <NavigationBar :active="`home`" />
+      <NavNavigationBar :active="`home`" />
     </section>
   </aside>
 </template>

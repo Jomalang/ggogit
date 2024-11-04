@@ -24,7 +24,6 @@ public interface TreeService  {
     Long getMemberId(Long treeId);
 
     Seed getSeedByTreeId(Long treeId);
-    Page<TreeCardRequest> findTreeCardRequestList(Long seedId, Long memberId, Pageable pageable);
 
     TreeInfoResponse findTreeInfoResponse(Long memberId, Long treeId);
     Page<TreeInfoResponse> findTreeInfoResponseList(Long memberId, Pageable pageable);

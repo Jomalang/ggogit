@@ -2,8 +2,10 @@ package io.ggogit.ggogit.api.book.dto;
 
 import io.ggogit.ggogit.domain.book.entity.Book;
 import io.ggogit.ggogit.domain.book.entity.BookCategory;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -17,7 +19,7 @@ public class BookInfoResponse {
     Integer totalPage;
     String translator;
     //TODO 차후 List<String>으로 진행할지, category 계층화 시킬것인지 고민해야함. 알라딘 카테고리는 계층화 되어있음.
-    BookCategory category;
+    BookCategoryDto category;
     LocalDate publishDate;
     String author;
     String publisher;
@@ -30,7 +32,7 @@ public class BookInfoResponse {
                 .imageFile(book.getImageFile())
                 .title(book.getTitle())
                 .totalPage(book.getTotalPage())
-                .category(book.getBookCategory())
+                .category(BookCategoryDto.of(book.getBookCategory()))
                 .publishDate(book.getPublishDate())
                 .author(book.getAuthor())
                 .translator(book.getTranslator())
@@ -38,4 +40,21 @@ public class BookInfoResponse {
                 .createTime(book.getCreateTime())
                 .build();
     }
+
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
+    private static class BookCategoryDto {
+        private Long id;
+        private String name;
+
+        public static BookCategoryDto of(final BookCategory bookCategory) {
+            return BookCategoryDto.builder()
+                    .id(bookCategory.getId())
+                    .name(bookCategory.getName())
+                    .build();
+        }
+    }
 }
+

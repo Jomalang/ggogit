@@ -14,6 +14,7 @@ VALUES
     (8, '2024-10-08 17:00:00', 'user8@example.com', 'Introduction of user8', false, 'nickname8', 'password8hash', '2024-10-08 17:00:00', 'user8', 1, 'USER'),
     (9, '2024-10-09 18:00:00', 'user9@example.com', 'Introduction of user9', false, 'nickname9', 'password9hash', '2024-10-09 18:00:00', 'user9', 1, 'USER'),
     (10, '2024-10-10 19:00:00', 'user10@example.com', 'Introduction of user10', false, 'nickname10', 'password10hash', '2024-10-10 19:00:00', 'user10', 1, 'USER'),
+    (227, '2024-10-10 19:00:00', 'admin227@ggogit.io', 'Introduction of userTest', false, 'treeTest', 'treeAPI', '2024-10-10 19:00:00', 'API', 1, 'ADMIN'),
     (999, '2024-10-10 19:00:00', 'admin@ggogit.io', 'Introduction of user10', false, 'API', 'API', '2024-10-10 19:00:00', 'API', 1, 'ADMIN'),
     (998, '2024-10-10 19:00:00', 'gksxorb147@naver.com', 'Introduction of user10', false, 'API', '$2a$10$YOSCvr2AcsMbSv36aYWFp.14..6ruvlkD3/QabL2FowYffwr26XWO', '2024-10-10 19:00:00', 'API', 1, 'ADMIN');
 
@@ -530,7 +531,16 @@ VALUES
 INSERT INTO `tree`
 (`id`, `book_mark_count`, `create_time`, `description`, `is_deleted`, `title`, `update_time`, `version`, `visibility`, `book_id`, `member_id`, `seed_id`)
 VALUES
-    (10000, 0, '2024-10-01 10:00:00', '테스트 데이터', false, '토마토 나무', '2024-10-01 10:00:00', 1, true, 1, 1000, 1);
+    (10000, 0, '2024-10-01 10:00:00', '테스트 데이터', false, '토마토 나무', '2024-10-01 10:00:00', 1, true, 1, 227, 1);
+
+INSERT INTO `tree_book`
+(`tree_id`, `create_time`, `is_deleted`, `reading_page`, `update_time`, `version`)
+VALUES
+    (10000, '2024-11-01 09:00:00', false, 700, '2024-11-01 09:00:00', 1);
+
+UPDATE tree
+SET treebook_id = (SELECT tree_id FROM tree_book WHERE tree_id = 10000)
+WHERE id = 10000;
 
 INSERT INTO `leaf`
 (`id`, `book_mark`, `child_leaf_count`, `content`, `create_time`, `is_deleted`, `like_count`, `title`, `update_time`, `version`, `view_count`, `visibility`, `parent_leaf_id`, `tree_id`)

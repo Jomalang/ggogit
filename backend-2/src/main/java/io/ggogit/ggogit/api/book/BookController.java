@@ -1,9 +1,6 @@
 package io.ggogit.ggogit.api.book;
 
-import io.ggogit.ggogit.api.book.dto.BookDetailResponse;
-import io.ggogit.ggogit.api.book.dto.BookListResponse;
-import io.ggogit.ggogit.api.book.dto.BookRequest;
-import io.ggogit.ggogit.api.book.dto.BookResponse;
+import io.ggogit.ggogit.api.book.dto.*;
 import io.ggogit.ggogit.domain.book.entity.Book;
 import io.ggogit.ggogit.domain.book.service.BookService;
 import lombok.RequiredArgsConstructor;
@@ -75,5 +72,13 @@ public class BookController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @GetMapping("/tree/{treeId}")
+    public ResponseEntity<BookInfoResponse>  findBookByTreeId(
+        @PathVariable Long treeId
+    ) {
+        Book book = bookService.findByTreeId(treeId);
+        BookInfoResponse response = BookInfoResponse.of(book);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
     // 리스트 조회
 }

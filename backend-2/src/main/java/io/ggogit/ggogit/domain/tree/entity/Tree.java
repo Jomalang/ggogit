@@ -44,7 +44,7 @@ public class Tree {
     @JoinColumn(name = "BOOK_ID")
     private Book book;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "TREEBOOK_ID")
     private TreeBook treeBook;
 

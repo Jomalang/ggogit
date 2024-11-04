@@ -11,12 +11,37 @@ import { defineProps } from 'vue';
 // };
 
 const { data } = defineProps(['data']);
+// seedConverter 함수 정의
+function seedConverter(seedId) {
+  switch (seedId) {
+    case 1:
+      return '도서';
+    case 2:
+      return '생각';
+    case 3:
+      return '문장';
+    case 4:
+      return '공부';
+    case 5:
+      return '영상';
+    default:
+      return '알 수 없는 유형';
+  }
+};
+let seed = (() => {
+  if (typeof data.seed === 'number') {
+    return seedConverter(data.seed);
+  } else if (typeof data.seed === 'string') {
+    return data.seed;
+  }
+  return '알 수 없는 유형';
+})();
 </script>
 
 <template>
   <div class="text-book-info">
     <div class="text-book-info__frame">
-      <p class="text-book-info__seed">{{ data.bookCategoryName }}</p>
+      <p class="text-book-info__seed">{{ seed }}</p>
     </div>
     <div class="text-book-info__frame">
       <p class="text-book-info__title">{{ data.title }}</p>

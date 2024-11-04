@@ -1,6 +1,6 @@
 <script setup>
 
-import { defineProps } from 'vue';
+import { defineProps, defineEmits, onMounted, onUnmounted } from 'vue';
 
 const props = defineProps({
   items: {
@@ -18,36 +18,106 @@ const formatDate = (date) => {
   };
   return new Date(date).toLocaleString('ko-KR', options);
 };
+
+// 무한 스크롤
+
+const emit = defineEmits(['loadMore']);
+const scrollContainer = ref(null);
+const itemRefs = ref([]);
+const isLoaded = ref(false);
+const mergedProps = ref({
+  items: []
+});
+
+let scrollNume = 5;
+
+// 스크롤 이벤트 핸들러
+const handleScroll = () => {
+  const container = scrollContainer.value;
+
+  // 스크롤 위치 계산
+  const { scrollTop, clientHeight } = container;
+
+  // 6번째 항목이 화면 하단에 도달했는지 확인
+  const sixthItem = itemRefs.value[scrollNume]; // 인덱스는 0부터 시작하므로 6번째는 index=5
+  if (sixthItem) {
+    const sixthItemRect = sixthItem.getBoundingClientRect();
+    const containerRect = container.getBoundingClientRect();
+
+    // sixthItem의 하단이 컨테이너의 하단과 같거나 지나갔는지 확인
+    if (sixthItemRect.bottom <= containerRect.bottom && !isLoaded.value) {
+      let newItems = itemRefs.value[scrollNume];
+      if(sixthItem === newItems) {
+        scrollNume += 10;
+        isLoaded.value = true;
+        emit('loadMore'); // 부모에게 알림
+      }
+    }
+  }
+};
+
+// 각 리스트 항목에 대한 ref 설정
+const setItemRef = (index) => (el) => {
+  if (el) {
+    itemRefs.value[index] = el;
+  }
+};
+
+// 마운트 시 스크롤 이벤트 등록 (passive: true)
+onMounted(() => {
+  if (scrollContainer.value) {
+    console.log('Scroll container found:', scrollContainer.value);
+    scrollContainer.value.addEventListener('scroll', handleScroll, { passive: true });
+  }
+});
+
+// 언마운트 시 스크롤 이벤트 제거
+onUnmounted(() => {
+  if (scrollContainer.value) {
+    scrollContainer.value.removeEventListener('scroll', handleScroll);
+  }
+});
+
+watch(() => props.items, (newData) => {
+  mergedProps.value.items.push(...newData);    // 새로운 데이터를 기존 데이터와 병합
+  isLoaded.value = false;
+}, { immediate: true});
+
 </script>
 
 <template>
-  <!-- th:fragment="card-branch__list(lists)" -->
-  <NuxtLink class="card-branch__list-frame"
-    v-for="item in props.items"
-    :key="item.id"
-    :to="{ name: 'leaf-id', params: { id: item.id }}"
-  >
-    <div class="branch-info-frame">
-      <div class="branch-img-frame">
-        <img v-if="item.bookMark" src="/public/svg/card-bookmark-icon.svg" alt="브랜치 이미지">
-        <img v-else src="/public/svg/card-branch-represent-icon.svg" alt="브랜치 이미지" >
+  <div ref="scrollContainer" class="scroll-container">
+    <NuxtLink class="card-branch__list-frame"
+      v-for="(item, index) in mergedProps.items"
+      :key="item.id"
+      :to="`/leaf/${item.id}`"
+    >
+      <div class="branch-info-frame" :ref="setItemRef(index)">
+        <div class="branch-img-frame">
+          <img v-if="item.bookMark" src="/public/svg/card-bookmark-icon.svg" alt="브랜치 이미지">
+          <img v-else src="/public/svg/card-branch-represent-icon.svg" alt="브랜치 이미지" >
+        </div>
+        <div class="branch-detail-info">
+          <p class="branch-detail-info--name">{{ item.title }}</p>
+        </div>
       </div>
-      <div class="branch-detail-info">
-        <p class="branch-detail-info--name">{{ item.title }}</p>
+      <div class="branch-card-bottom-info-frame">
+        <div class="branch-card-bottom-info">
+          <span>리프 <p>{{ item.leafCount }}</p></span>
+          <span>조회수 <p>{{ item.viewCount }}</p></span></div>
+        <div class="branch-card-bottom-info">
+          <p class="branch-detail-info--regdate">{{formatDate(item.updateTime)}}</p>
+        </div>
       </div>
-    </div>
-    <div class="branch-card-bottom-info-frame">
-      <div class="branch-card-bottom-info">
-        <span>리프 <p>{{ item.leafCount }}</p></span>
-        <span>조회수 <p>{{ item.viewCount }}</p></span></div>
-      <div class="branch-card-bottom-info">
-        <p class="branch-detail-info--regdate">{{formatDate(item.updateTime)}}</p>
-      </div>
-    </div>
-  </NuxtLink>
+    </NuxtLink>
+  </div>
 </template>
 
 <style scoped>
+.scroll-container{
+  overflow-y: auto;
+  height: 480px;
+}
 .card-branch__list-frame {
   padding: 14px 16px;
   display: flex;

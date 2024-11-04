@@ -27,6 +27,7 @@ import java.time.LocalDateTime;
 @SQLRestriction("is_deleted = false")
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "LEAF")
+@ToString(of={"id", "title", "content", "viewCount", "likeCount", "childLeafCount"})
 public class Leaf {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

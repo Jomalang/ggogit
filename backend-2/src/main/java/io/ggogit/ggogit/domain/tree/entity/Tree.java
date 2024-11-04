@@ -29,6 +29,7 @@ import java.util.List;
 @SQLRestriction("is_deleted = false")
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "TREE")
+@ToString(of = {"id", "title", "description", "createTime", "updateTime"})
 public class Tree {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -72,7 +73,7 @@ public class Tree {
     @Column(name = "BOOK_MARK_COUNT", nullable = false)
     private Integer bookMarkCount = 0;
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "tree")
+    @OneToOne(mappedBy = "tree")
     private Memoir memoir;
 
     @NotNull

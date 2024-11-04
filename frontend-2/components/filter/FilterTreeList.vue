@@ -1,15 +1,40 @@
-<script setup lang="ts">
+<script setup>
+const props = defineProps({
+  seedList: {
+    type: Array,
+    required: true,
+  },
+});
 
+const emit = defineEmits(["seedFilter"]);
+
+const seedList = ref(props.seedList);
+watchEffect(() => {
+  seedList.value = props.seedList;
+});
 </script>
 
 <template>
   <!-- (seedList) -->
-  <div class="filter-tree-list" >
+  <div class="filter-tree-list">
     <label>
-      <input class="filter-tree-list-img seedFilterEvent" type="radio" name="treeList" data-id="0" label="" checked/>
+      <input
+        class="filter-tree-list-img seedFilterEvent"
+        type="radio"
+        name="seedList"
+        key="0"
+        checked
+      />
     </label>
-    <label>
-      <input class="filter-tree-list-btn seedFilterEvent" type="radio" name="treeList" data-id="${seed.id}"/>
+    <label v-for="(seed, index) in seedList">
+      <input
+        class="filter-tree-list-btn seedFilterEvent"
+        type="radio"
+        name="seedList"
+        :key="index + 1"
+        :label="`${seed.korName}`"
+        @click="$emit('seedFilter', seed.id)"
+      />
     </label>
   </div>
 </template>
@@ -21,7 +46,7 @@
   gap: 5px;
   flex-direction: row;
 }
-.filter-tree-list-img{
+.filter-tree-list-img {
   background-image: url("/svg/sort.svg");
   background-size: 50%;
   background-position: center;

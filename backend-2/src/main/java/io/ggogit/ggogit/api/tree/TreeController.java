@@ -207,16 +207,34 @@ public class TreeController {
         return leafList.stream().sorted(comparator).collect(Collectors.toList());
     }
 
+    //Access Token을 받아서 TreeInfoResponseHome을 반환하는 API
 //    @GetMapping("tree-home")
 //    public ResponseEntity<TreeInfoResponseHome> getTreeInfoResponses(
 //       @RequestHeader(value="Authorization") String accessToken) {
 //
 //        Long memberId = jwtTokenProvider.getMemberIdFromToken(accessToken);
-//        List<Tree> trees = treeService.findAllByMemberId(memberId);
+//        List<TreeInfoResponse> treeInfoResponseList = treeService.findTreeInfoResponseList(memberId);
 //
-//        for(Tree tree : trees){
-//            TreeInfoResponse.of(tree, )
-//        }
-//
+//        return new ResponseEntity<>(TreeInfoResponseHome.of(treeInfoResponseList), HttpStatus.OK);
 //    }
+    @GetMapping("tree-home")
+    public ResponseEntity<TreeInfoResponseHome> getTreeInfoResponses(
+            @RequestParam(value = "mid",defaultValue = "1") Long mid) {
+
+        Long memberId = mid;
+        List<TreeInfoResponse> treeInfoResponseList = treeService.findTreeInfoResponseList(memberId);
+
+        return new ResponseEntity<>(TreeInfoResponseHome.of(treeInfoResponseList), HttpStatus.OK);
+    }
+
+    @GetMapping("tree-home-sort")
+    public ResponseEntity<TreeInfoResponseHome> getTreeInfoResponsesSort(
+            @RequestParam(value = "mid",defaultValue = "1") Long mid,
+            @RequestParam(value = "seedId", required = false) Long seedId
+    ) {
+        Long memberId = mid;
+        List<TreeInfoResponse> treeInfoResponseList = treeService.findTreeInfoResponseList(memberId, seedId);
+
+        return new ResponseEntity<>(TreeInfoResponseHome.of(treeInfoResponseList), HttpStatus.OK);
+    }
 }

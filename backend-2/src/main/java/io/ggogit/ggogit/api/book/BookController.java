@@ -5,6 +5,7 @@ import io.ggogit.ggogit.domain.book.entity.Book;
 import io.ggogit.ggogit.domain.book.service.BookService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,12 +35,15 @@ public class BookController {
         if(query == null || query.length() < 2) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        List<Book> books = bookService.getBooks(page, query, filter);
+        Page<Book> totalBooks = bookService.getBooks(page, query, filter);
+        List<Book> books = totalBooks.getContent();
+        String totalCount = String.valueOf(totalBooks.getTotalElements());
+        String totalPage = String.valueOf(totalBooks.getTotalPages());
         if(books.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         List<BookDetailResponse> list = books.stream().map(BookDetailResponse::of).toList();
-        BookListResponse response = BookListResponse.of(list, String.valueOf(page));
+        BookListResponse response = BookListResponse.of(list, String.valueOf(page), totalCount, totalPage);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

@@ -1,12 +1,16 @@
 <script setup>
 const props = defineProps({
     link: String,
-    text: String
+    text: String,
+    visibility: {
+        type: Boolean,
+        default: true,
+    }
 });
 </script>
 
 <template>
-  <a class="text__btn--green" :href="link">{{ text }}</a>
+  <RouterLink class="text__btn--green" v-if="visibility" :to="link">{{ text }}</RouterLink>
 </template>
 
 <style>

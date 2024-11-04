@@ -16,5 +16,5 @@ public class LeafBranchInfoResponse {
     Integer leafCount;
     Integer likeCount;
     Integer viewCount;
-    LocalDateTime updateTime;
+    String updateTime;
 }

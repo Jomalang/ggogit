@@ -17,7 +17,7 @@ const treeId = Number(useRoute().params.id);
 let filterQuery = 10;
 let sortQuery = 1;
 let filterName = ref('최근 수정 순');
-let listSwitch = ref('bf10s1');
+
 
 const queryParam = reactive({
   filter: 10,
@@ -61,10 +61,10 @@ const closePopup = () => {
   filterBack1.classList.add('none');
   filterBack2.classList.add('none');
 
-  listSwitch.value = `b${queryParam.bookMark}f${queryParam.filter}s${queryParam.sort}`;
   queryParam.filter = filterQuery;
   queryParam.sort = sortQuery;
   queryParam.page = 0;
+  newSwitch.value = `b${queryParam.bookMark}f${queryParam.filter}s${queryParam.sort}`;
 }
 
 const { data: infoData, error: infoError } = useFetch(() => `trees/${treeId}/info`, {
@@ -80,7 +80,7 @@ const { data: branchData, error: branchError, refresh } = useFetch(() => `trees/
 const bookMarkHandler = (bookMark) => {
   queryParam.bookMark = bookMark;
   queryParam.page = 0;
-  listSwitch.value = `b${queryParam.bookMark}f${queryParam.filter}s${queryParam.sort}`;
+  newSwitch.value = `b${queryParam.bookMark}f${queryParam.filter}s${queryParam.sort}`;
 };
 
 const sortHandler = (e) => {
@@ -88,43 +88,54 @@ const sortHandler = (e) => {
 }
 
 const filterNameHandler = (e) => {
- switch (e) {
-   case 10:
-     filterName.value = "최근 수정 순";
-     break;
-   case 11:
-     filterName.value = "제목 순";
-     break;
-   case 12:
-     filterName.value = "리프 수 순";
-     break;
-   case 13:
-     filterName.value = "조회 수 순";
-     break;
-   case 14:
-     filterName.value = "좋아요 수 순";
-     break;
- }
+  filterQuery = e;
+  switch (e) {
+    case 10:
+      filterName.value = "최근 수정 순";
+      break;
+    case 11:
+      filterName.value = "제목 순";
+      break;
+    case 12:
+      filterName.value = "리프 수 순";
+      break;
+    case 13:
+      filterName.value = "조회 수 순";
+      break;
+    case 14:
+      filterName.value = "좋아요 수 순";
+      break;
+  }
 }
 
 const loadMore = () => {
   queryParam.page += 1;
 };
 
-
 watchEffect(() => {
   if (infoData.value) {
     info = infoData.value;
   }
-  if(branchData.value) {
-    branch = null;
-    branch = branchData.value;
-    console.log(branch.items);
-    // branch.items가 배열인지 확인한 후 병합
-    mergedBranch.value.items.push(...branch.items);
-    console.log(mergedBranch.value.items);
+
+  if (branchData.value) {
+    // branch 객체 자체를 재할당하지 않고 속성만 업데이트
+    branch.items = [...branchData.value.items];
+    branch.totalCount = branchData.value.totalCount;
+
+    // queryParam.page가 0이면 리스트 초기화, 그렇지 않으면 병합
+    if (queryParam.page === 0) {
+      mergedBranch.value.items = [...branch.items]; // 새 리스트로 덮어쓰기
+    } else {
+      mergedBranch.value.items.push(...branch.items); // 기존 리스트에 병합
+    }
+
+    // 중복 제거 (Set 사용)
+    mergedBranch.value.items = [...new Set(mergedBranch.value.items.map(item => item.id))].map(id =>
+        mergedBranch.value.items.find(item => item.id === id)
+    );
   }
 });
+
 </script>
 
 
@@ -179,6 +190,7 @@ watchEffect(() => {
           <div>
           <CardBranchList
               :items="mergedBranch.items"
+              :totalCnt="branch.totalCount"
               @loadMore="loadMore"
           ></CardBranchList>
           </div>

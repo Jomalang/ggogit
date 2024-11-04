@@ -6,49 +6,54 @@ const props = defineProps({
   items: {
     type: Array,
     default: () => []
+  },
+  totalCnt:{
+    type: Number,
+    default: 0
   }
 })
 const formatDate = (date) => {
   const options = {
-    year: '2-digit', // '24' 형식으로 출력
-    month: '2-digit', // '10' 형식으로 출력
-    day: '2-digit', // '01' 형식으로 출력
-    hour: 'numeric', // 시간 출력 (24시간제)
-    minute: 'numeric', // 분 출력
+    year: "2-digit", // '24' 형식으로 출력
+    month: "2-digit", // '10' 형식으로 출력
+    day: "2-digit", // '01' 형식으로 출력
+    hour: "numeric", // 시간 출력 (24시간제)
+    minute: "numeric", // 분 출력
   };
   return new Date(date).toLocaleString('ko-KR', options);
 };
 
 // 무한 스크롤
 
+// 이벤트 정의
 const emit = defineEmits(['loadMore']);
+
+// 스크롤 관련 변수
 const scrollContainer = ref(null);
 const itemRefs = ref([]);
-const isLoaded = ref(false);
+let scrollIndex = 5; // 초기 스크롤 인덱스
 
-let scrollNume = 5;
 
 // 스크롤 이벤트 핸들러
 const handleScroll = () => {
   const container = scrollContainer.value;
 
-  // 스크롤 위치 계산
+  if (!container) return;
+
+  // 컨테이너의 스크롤 위치 계산
   const { scrollTop, clientHeight } = container;
 
-  // 6번째 항목이 화면 하단에 도달했는지 확인
-  const sixthItem = itemRefs.value[scrollNume]; // 인덱스는 0부터 시작하므로 6번째는 index=5
-  if (sixthItem) {
-    const sixthItemRect = sixthItem.getBoundingClientRect();
+  // 다음 항목이 화면 하단에 도달했는지 확인
+  const nextItem = itemRefs.value[scrollIndex];
+
+  if (nextItem) {
+    const nextItemRect = nextItem.getBoundingClientRect();
     const containerRect = container.getBoundingClientRect();
 
-    // sixthItem의 하단이 컨테이너의 하단과 같거나 지나갔는지 확인
-    if (sixthItemRect.bottom <= containerRect.bottom && !isLoaded.value) {
-      let newItems = itemRefs.value[scrollNume];
-      if(sixthItem === newItems) {
-        scrollNume += 10;
-        isLoaded.value = true;
-        emit('loadMore'); // 부모에게 알림
-      }
+    // 다음 항목의 하단이 컨테이너 하단과 같거나 지나갔는지 확인
+    if (nextItemRect.bottom <= containerRect.bottom && scrollIndex < props.totalCnt - 1) {
+      scrollIndex += 10; // 다음 배치를 위한 인덱스 증가
+      emit('loadMore'); // 부모에게 추가 데이터 요청
     }
   }
 };
@@ -74,20 +79,25 @@ onUnmounted(() => {
   }
 });
 
-
+// props.items.length를 감시하여 스크롤 인덱스 초기화
+watch(() => props.items.length, (newLength) => {
+  if (newLength === 10) {
+    scrollIndex = 5; // 초기화
+  }
+});
 </script>
 
 <template>
   <div ref="scrollContainer" class="scroll-container">
     <NuxtLink class="card-branch__list-frame"
-      v-for="(item, index) in props.items"
-      :key="item.id"
-      :to="`/leaf/${item.id}`"
+              v-for="(item, index) in props.items"
+              :key="item.id"
+              :to="`/leaf/${item.id}`"
     >
       <div class="branch-info-frame" :ref="setItemRef(index)">
         <div class="branch-img-frame">
           <img v-if="item.bookMark" src="/public/svg/card-bookmark-icon.svg" alt="브랜치 이미지">
-          <img v-else src="/public/svg/card-branch-represent-icon.svg" alt="브랜치 이미지" >
+          <img v-else src="/public/svg/card-branch-represent-icon.svg" alt="브랜치 이미지">
         </div>
         <div class="branch-detail-info">
           <p class="branch-detail-info--name">{{ item.title }}</p>
@@ -96,9 +106,10 @@ onUnmounted(() => {
       <div class="branch-card-bottom-info-frame">
         <div class="branch-card-bottom-info">
           <span>리프 <p>{{ item.leafCount }}</p></span>
-          <span>조회수 <p>{{ item.viewCount }}</p></span></div>
+          <span>조회수 <p>{{ item.viewCount }}</p></span>
+        </div>
         <div class="branch-card-bottom-info">
-          <p class="branch-detail-info--regdate">{{formatDate(item.updateTime)}}</p>
+          <p class="branch-detail-info--regdate">{{ formatDate(item.updateTime) }}</p>
         </div>
       </div>
     </NuxtLink>

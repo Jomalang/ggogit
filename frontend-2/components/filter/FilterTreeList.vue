@@ -5,6 +5,9 @@ const props = defineProps({
     required: true,
   },
 });
+
+const emit = defineEmits(["seedFilter"]);
+
 const seedList = ref(props.seedList);
 watchEffect(() => {
   seedList.value = props.seedList;
@@ -30,6 +33,7 @@ watchEffect(() => {
         name="seedList"
         :key="index + 1"
         :label="`${seed.korName}`"
+        @click="$emit('seedFilter', seed.id)"
       />
     </label>
   </div>

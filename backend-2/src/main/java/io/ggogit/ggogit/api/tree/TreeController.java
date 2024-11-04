@@ -227,7 +227,7 @@ public class TreeController {
     @GetMapping("tree-home-sort")
     public ResponseEntity<TreeInfoResponseHome> getTreeInfoResponsesSort(
             @RequestParam(value = "mid",defaultValue = "1") Long mid,
-            @RequestParam(value = "s", required = false) Long seedId
+            @RequestParam(value = "seedId", required = false) Long seedId
     ) {
         Long memberId = mid;
         List<TreeInfoResponse> treeInfoResponseList = treeService.findTreeInfoResponseList(memberId, seedId);

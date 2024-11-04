@@ -1,6 +1,5 @@
 <script setup>
 import _ from "lodash";
-import "@toast-ui/editor/dist/toastui-editor.css";
 
 import { onBeforeMount, onMounted, reactive } from "vue";
 
@@ -8,44 +7,65 @@ import { onBeforeMount, onMounted, reactive } from "vue";
 
 const config = useRuntimeConfig();
 const treeInfoList = ref([]);
+const filterTreeInfoList = ref([]);
 const seedList = ref([]);
+const seedId = ref(0);
 let observer = null;
 
 //TODO: JWT토큰 있다면 전송하게끔 로직 수정 필요
-const fetchData = async () => {
-  const { data: seedData, status: seedStatus } = await useFetch("seeds", {
+
+const { data: seedData, status: seedStatus } = await useFetch("seeds", {
+  baseURL: `${config.public.apiBase}`,
+  method: "GET",
+});
+
+const { data: treeData, status: treeStatus } = await useFetch(
+  "trees/tree-home",
+  {
     baseURL: `${config.public.apiBase}`,
     method: "GET",
-  });
-  const { data: treeData, status: treeStatus } = await useFetch(
-    "trees/tree-home",
+    params: {
+      mid: useRoute().query.mid,
+    },
+  }
+);
+
+const newTreeFetch = async (newSeedId) => {
+  seedId.value = newSeedId;
+  const { data: filterTreeData, status: filterTreeStatus } = await useFetch(
+    "trees/tree-home-sort",
     {
       baseURL: `${config.public.apiBase}`,
       method: "GET",
       params: {
+        seedId: seedId.value,
         mid: useRoute().query.mid,
       },
     }
   );
-
-  watchEffect(() => {
-    if (treeStatus.value === "success" && treeData.value) {
-      treeInfoList.value = [...treeData.value.treeInfoResponseList];
-    } else {
-      console.log("treeData.value is null");
-    }
-
-    if (seedStatus.value === "success" && seedData.value) {
-      seedList.value = [...seedData.value.items];
-    } else {
-      console.log("seedData.value is null");
-    }
-  });
+  if (filterTreeStatus.value === "success" && filterTreeData.value) {
+    console.log("ok");
+    filterTreeInfoList.value = [...filterTreeData.value.treeInfoResponseList];
+  }
 };
 
+watchEffect(() => {
+  if (treeStatus.value === "success" && treeData.value) {
+    treeInfoList.value = [...treeData.value.treeInfoResponseList];
+    filterTreeInfoList.value = [...treeData.value.treeInfoResponseList];
+  } else {
+    console.log("treeData.value is null");
+  }
+
+  if (seedStatus.value === "success" && seedData.value) {
+    seedList.value = [...seedData.value.items];
+  } else {
+    console.log("seedData.value is null");
+  }
+});
+
 //-------------------LifeCycle-------------------
-onMounted(async () => {
-  await fetchData();
+onMounted(() => {
   const carouselList = document.querySelector(".tree-book-bg__list");
   // carousel item 너비
   // const width = document.querySelector(".mid__item").clientWidth;
@@ -55,10 +75,9 @@ onMounted(async () => {
   const carouselItems = document.querySelectorAll(".mid__item");
   // carousel item 전체 갯수
   const carouselItemCount = carouselItems.length / 3;
-
+  const container = carouselList.querySelector(".tree-book-bg");
   if (!import.meta.env.SSR) {
     // ----- 한 가운데 item 찾아내기 위한 IntersectionObserver코드 --------
-    // const container = carouselList.querySelector(".tree-book-bg");
     observer = new IntersectionObserver(
       (entries) => {
         let selectedElement = null;
@@ -75,7 +94,7 @@ onMounted(async () => {
           bookExRemoveNone(selectedElement);
         }
       },
-      { threshold: 0.3 }
+      { root: container, threshold: 0.3 }
     );
 
     carouselItems.forEach((item) => {
@@ -368,7 +387,7 @@ onMounted(async () => {
       <section id="seed-filter">
         <h2 class="none">트리 정렬 필터 버튼</h2>
         <div>
-          <FilterTreeList :seedList="seedList" />
+          <FilterTreeList :seedList="seedList" @seed-filter="newTreeFetch" />
         </div>
       </section>
     </section>
@@ -377,9 +396,21 @@ onMounted(async () => {
       <h2 class="none">트리 검색 결과</h2>
       <section class="tree-card-list" id="tree-card-list">
         <h3 class="none">트리 검색 리스트</h3>
+        <div v-if="filterTreeInfoList.length === 0">
+          <div class="tree-card-list__main">
+            <div class="card-tree__img-frame-no-tree">
+              <img
+                class="card-tree__book-cover"
+                src="/png/no-tree-mid-book.png"
+                alt="treeCover"
+              />
+            </div>
+            <p class="text--title20">조회된 트리가 없습니다.</p>
+          </div>
+        </div>
         <div
           class="card-tree-details"
-          v-for="tree in treeInfoList"
+          v-for="tree in filterTreeInfoList"
           :key="tree.treeId"
         >
           <CardTreeDetails :tree="tree" />

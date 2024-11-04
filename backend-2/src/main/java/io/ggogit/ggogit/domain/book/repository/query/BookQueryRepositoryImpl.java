@@ -6,6 +6,8 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import io.ggogit.ggogit.domain.book.entity.Book;
 import io.ggogit.ggogit.domain.book.entity.QBook;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
@@ -19,7 +21,7 @@ public class BookQueryRepositoryImpl implements BookQueryRepository {
 
     private final JPAQueryFactory queryFactory;
 
-    public List<Book> findByFilter(String filter, String query, Pageable pageable){
+    public Page<Book> findByFilter(String filter, String query, Pageable pageable){
 
         BooleanBuilder booleanBuilder = new BooleanBuilder();
 
@@ -32,10 +34,15 @@ public class BookQueryRepositoryImpl implements BookQueryRepository {
                 .where(booleanBuilder)
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
-                .orderBy(book.id.desc())
+                .orderBy(book.id.asc())
                 .fetch();
 
-        return result;
+        long total = queryFactory
+                .selectFrom(book)
+                .where(booleanBuilder)
+                .fetch().size();
+
+        return new PageImpl<>(result, pageable, total);
 
 
     }

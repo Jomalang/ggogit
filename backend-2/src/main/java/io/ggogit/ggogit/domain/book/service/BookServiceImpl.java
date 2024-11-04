@@ -10,6 +10,7 @@ import io.ggogit.ggogit.domain.member.repository.MemberRepository;
 import io.ggogit.ggogit.domain.tree.entity.Tree;
 import io.ggogit.ggogit.domain.tree.repository.TreeRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -31,16 +32,16 @@ public class BookServiceImpl implements BookService {
 
     //목록 조회 + 페이징, 정렬, 검색 기능
     @Override
-    public List<Book> getBooks(int page, String query, String filter) {
+    public Page<Book> getBooks(int page, String query, String filter) {
         int limit = 10;
-        int offset = (page - 1) * limit;
+        int offset = (page - 1);
 
         //TODO: 정렬기준 추가
         Sort sort = Sort.by(Sort.Order.desc("id"));
         Pageable pageable = PageRequest.of(offset, limit, sort);
 
         if (query == null) {
-            return bookRepository.findAll(pageable).getContent();
+            return bookRepository.findAll(pageable);
         } else{
             return bookRepository.findByFilter(filter, query, pageable);
         }

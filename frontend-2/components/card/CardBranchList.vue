@@ -139,7 +139,7 @@ onUnmounted(() => {
   border-radius: 4px;
   background: var(--main1);
 }
-.branch-img-frame-lock{
+.branch-img-frame-lock {
   width: 40px;
   height: 40px;
   display: flex;
@@ -179,7 +179,7 @@ onUnmounted(() => {
   align-items: end;
   gap: 10px;
 }
-.branch-card-bottom-info  span {
+.branch-card-bottom-info span {
   display: flex;
   align-items: end;
   color: var(--text-sub);

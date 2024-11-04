@@ -1,32 +1,31 @@
 <script setup>
-
-import { defineProps, defineEmits, onMounted, onUnmounted } from 'vue';
+import { defineProps, defineEmits, onMounted, onUnmounted } from "vue";
 
 const props = defineProps({
   items: {
     type: Array,
-    default: () => []
-  }
-})
+    default: () => [],
+  },
+});
 const formatDate = (date) => {
   const options = {
-    year: '2-digit', // '24' 형식으로 출력
-    month: '2-digit', // '10' 형식으로 출력
-    day: '2-digit', // '01' 형식으로 출력
-    hour: 'numeric', // 시간 출력 (24시간제)
-    minute: 'numeric', // 분 출력
+    year: "2-digit", // '24' 형식으로 출력
+    month: "2-digit", // '10' 형식으로 출력
+    day: "2-digit", // '01' 형식으로 출력
+    hour: "numeric", // 시간 출력 (24시간제)
+    minute: "numeric", // 분 출력
   };
-  return new Date(date).toLocaleString('ko-KR', options);
+  return new Date(date).toLocaleString("ko-KR", options);
 };
 
 // 무한 스크롤
 
-const emit = defineEmits(['loadMore']);
+const emit = defineEmits(["loadMore"]);
 const scrollContainer = ref(null);
 const itemRefs = ref([]);
 const isLoaded = ref(false);
 const mergedProps = ref({
-  items: []
+  items: [],
 });
 
 let scrollNume = 5;
@@ -47,10 +46,10 @@ const handleScroll = () => {
     // sixthItem의 하단이 컨테이너의 하단과 같거나 지나갔는지 확인
     if (sixthItemRect.bottom <= containerRect.bottom && !isLoaded.value) {
       let newItems = itemRefs.value[scrollNume];
-      if(sixthItem === newItems) {
+      if (sixthItem === newItems) {
         scrollNume += 10;
         isLoaded.value = true;
-        emit('loadMore'); // 부모에게 알림
+        emit("loadMore"); // 부모에게 알림
       }
     }
   }
@@ -66,36 +65,50 @@ const setItemRef = (index) => (el) => {
 // 마운트 시 스크롤 이벤트 등록 (passive: true)
 onMounted(() => {
   if (scrollContainer.value) {
-    console.log('Scroll container found:', scrollContainer.value);
-    scrollContainer.value.addEventListener('scroll', handleScroll, { passive: true });
+    console.log("Scroll container found:", scrollContainer.value);
+    scrollContainer.value.addEventListener("scroll", handleScroll, {
+      passive: true,
+    });
   }
 });
 
 // 언마운트 시 스크롤 이벤트 제거
 onUnmounted(() => {
   if (scrollContainer.value) {
-    scrollContainer.value.removeEventListener('scroll', handleScroll);
+    scrollContainer.value.removeEventListener("scroll", handleScroll);
   }
 });
 
-watch(() => props.items, (newData) => {
-  mergedProps.value.items.push(...newData);    // 새로운 데이터를 기존 데이터와 병합
-  isLoaded.value = false;
-}, { immediate: true});
-
+watch(
+  () => props.items,
+  (newData) => {
+    mergedProps.value.items.push(...newData); // 새로운 데이터를 기존 데이터와 병합
+    isLoaded.value = false;
+  },
+  { immediate: true }
+);
 </script>
 
 <template>
   <div ref="scrollContainer" class="scroll-container">
-    <NuxtLink class="card-branch__list-frame"
+    <NuxtLink
+      class="card-branch__list-frame"
       v-for="(item, index) in mergedProps.items"
       :key="item.id"
       :to="`/leaf/${item.id}`"
     >
       <div class="branch-info-frame" :ref="setItemRef(index)">
         <div class="branch-img-frame">
-          <img v-if="item.bookMark" src="/public/svg/card-bookmark-icon.svg" alt="브랜치 이미지">
-          <img v-else src="/public/svg/card-branch-represent-icon.svg" alt="브랜치 이미지" >
+          <img
+            v-if="item.bookMark"
+            src="/public/svg/card-bookmark-icon.svg"
+            alt="브랜치 이미지"
+          />
+          <img
+            v-else
+            src="/public/svg/card-branch-represent-icon.svg"
+            alt="브랜치 이미지"
+          />
         </div>
         <div class="branch-detail-info">
           <p class="branch-detail-info--name">{{ item.title }}</p>
@@ -103,10 +116,19 @@ watch(() => props.items, (newData) => {
       </div>
       <div class="branch-card-bottom-info-frame">
         <div class="branch-card-bottom-info">
-          <span>리프 <p>{{ item.leafCount }}</p></span>
-          <span>조회수 <p>{{ item.viewCount }}</p></span></div>
+          <span
+            >리프
+            <p>{{ item.leafCount }}</p></span
+          >
+          <span
+            >조회수
+            <p>{{ item.viewCount }}</p></span
+          >
+        </div>
         <div class="branch-card-bottom-info">
-          <p class="branch-detail-info--regdate">{{formatDate(item.updateTime)}}</p>
+          <p class="branch-detail-info--regdate">
+            {{ formatDate(item.updateTime) }}
+          </p>
         </div>
       </div>
     </NuxtLink>
@@ -114,7 +136,7 @@ watch(() => props.items, (newData) => {
 </template>
 
 <style scoped>
-.scroll-container{
+.scroll-container {
   overflow-y: auto;
   height: 480px;
 }
@@ -147,7 +169,7 @@ watch(() => props.items, (newData) => {
   border-radius: 4px;
   background: var(--main1);
 }
-.branch-img-frame-lock{
+.branch-img-frame-lock {
   width: 40px;
   height: 40px;
   display: flex;
@@ -187,7 +209,7 @@ watch(() => props.items, (newData) => {
   align-items: end;
   gap: 10px;
 }
-.branch-card-bottom-info  span {
+.branch-card-bottom-info span {
   display: flex;
   align-items: end;
   color: var(--text-sub);

@@ -25,7 +25,7 @@ public interface LeafDtoService {
     /**
      * 리프 노드의 End 까지 조회
      */
-    LeafItemResponse getLeafNodeToEnd(Long leafId, boolean isOwner);
+    LeafItemToEndResponse getLeafNodeToEnd(Long leafId, boolean isOwner);
 
     Page<Leaf> findLeafByTreeId(Long leafId, Boolean isOwner, Pageable pageable);
 
@@ -50,4 +50,6 @@ public interface LeafDtoService {
     LeafBookCardResponse getLeafBookCards(Long memberId, int page, int size);
 
     LeafCardResponse getLeafCards(Long bookId, int page, int size);
+
+    String getSeedType(Long leafId);
 }

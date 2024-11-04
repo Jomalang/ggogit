@@ -136,7 +136,7 @@ class LeafTree {
             const x = event.touches[0].pageX - node.offsetLeft;
             const distance = x - startX;
 
-            if (Math.abs(distance) > threshold) {
+                if (Math.abs(distance) > threshold) {
                 let isMove = false;
                 if (0 < distance && 0 < currentIndex) {
                     currentIndex--; // 왼쪽으로 스와이프

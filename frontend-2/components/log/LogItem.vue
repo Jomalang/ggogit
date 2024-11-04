@@ -32,25 +32,22 @@ import {LeafItemProps} from "@/types/types";
 * <LogItem :item-data="leafData" />
 * */
 
-const props = defineProps<{
-  itemData: LeafItemProps;
-}>();
-
-const currentDirection = ref<Direction>(props.itemData.direction);
+const { data } = defineProps(["data"]);
+const currentDirection = ref<Direction>(data.direction);
 
 const components = {
-  [Direction.INIT]: LogItemInit,
-  [Direction.START_DOWN]: LogItemStartDown,
-  [Direction.START_RIGHT]: LogItemStartRight,
-  [Direction.START_SIDE]: LogItemStartSide,
-  [Direction.START_LEFT]: LogItemStartLeft,
-  [Direction.DOWN]: LogItemDown,
-  [Direction.RIGHT]: LogItemRight,
-  [Direction.SIDE]: LogItemSide,
-  [Direction.LEFT]: LogItemLeft,
-  [Direction.END_RIGHT]: LogItemEndRight,
-  [Direction.END_LEFT]: LogItemEndLeft,
-  [Direction.END_UP]: LogItemEndUp
+  [Direction.INIT]: LogItemInit, // 0
+  [Direction.START_DOWN]: LogItemStartDown, // 1
+  [Direction.START_RIGHT]: LogItemStartRight, // 2
+  [Direction.START_SIDE]: LogItemStartSide, // 3
+  [Direction.START_LEFT]: LogItemStartLeft, // 4
+  [Direction.DOWN]: LogItemDown, // 5
+  [Direction.RIGHT]: LogItemRight, // 6
+  [Direction.SIDE]: LogItemSide, // 7
+  [Direction.LEFT]: LogItemLeft, // 8
+  [Direction.END_RIGHT]: LogItemEndRight, // 9
+  [Direction.END_LEFT]: LogItemEndLeft, // 10
+  [Direction.END_UP]: LogItemEndUp // 11
 };
 
 const DynamicComponent = components[currentDirection.value];
@@ -58,7 +55,7 @@ const DynamicComponent = components[currentDirection.value];
 </script>
 
 <template>
-  <component :is="DynamicComponent" :item-data="props.itemData" />
+  <component :is="DynamicComponent" :item-data="data" />
 </template>
 
 <style>

@@ -1,6 +1,5 @@
 package io.ggogit.ggogit.api.leaf.dto;
 
-import io.ggogit.ggogit.domain.leaf.entity.Leaf;
 import io.ggogit.ggogit.domain.leaf.entity.LeafTag;
 import io.ggogit.ggogit.domain.leaf.structure.TreeNode;
 import lombok.AllArgsConstructor;
@@ -14,11 +13,11 @@ import java.util.List;
 @Data
 @Builder
 @AllArgsConstructor
-public class LeafItemResponse {
+public class LeafItemToEndResponse {
 
     private List<LeafItemDto> items;
 
-    public LeafItemResponse() {
+    public LeafItemToEndResponse() {
         this.items = new ArrayList<>();
     }
 
@@ -51,7 +50,7 @@ public class LeafItemResponse {
                     .childLeafIds(node.getChildren().stream().map(leafNode -> leafNode.getValue().getId()).toList())
                     .title(node.getValue().getTitle())
                     .tags(tags.stream().map(LeafTagDto::of).toList())
-                    .focused(node.getValue().getId().equals(leafId))
+                    .focused(false)
                     .direction(node.getDirection().getNum())
                     .createTime(
                             node.getValue().getCreateTime() == null ? "" :

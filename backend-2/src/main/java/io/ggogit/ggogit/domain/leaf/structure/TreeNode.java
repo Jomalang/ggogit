@@ -18,11 +18,13 @@ public class TreeNode {
     private TreeNode parent;
     private List<TreeNode> children;
     private LeafDirectionType direction;
+    private boolean focus;
 
     public TreeNode(Leaf value) {
         this.value = value;
         this.children = new ArrayList<>();
         this.direction = LeafDirectionType.INIT;
+        this.focus = false;
     }
 
     public void addChild(TreeNode child) {

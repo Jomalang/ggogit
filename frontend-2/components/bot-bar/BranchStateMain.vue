@@ -15,15 +15,15 @@ const props = defineProps<{
           <img class="branch-state__box-image" src='/svg/branch-box--icon.svg' alt="브랜치 아이콘"/>
         </div>
       </div>
-      <p class="branch-state__name">{{ branch.branch }}</p>
+      <p class="branch-state__name">{{ branch.branchName }}</p>
     </div>
     <div class="branch-state__info">
       <div class="branch-state__stats">
-        <p>로그<span class="branch-state__nums">{{ branch.log }}</span></p>
-        <p>좋아요<span class="branch-state__nums">{{ branch.like }}</span></p>
-        <p>조회<span class="branch-state__nums">{{ branch.view }}</span></p>
+        <p>리프<span class="branch-state__nums">{{ branch.leafCount }}</span></p>
+        <p>좋아요<span class="branch-state__nums">{{ branch.likeCount }}</span></p>
+        <p>조회<span class="branch-state__nums">{{ branch.viewCount }}</span></p>
       </div>
-      <p class="branch-state__date">{{ branch.date }}</p>
+      <p class="branch-state__date">{{ branch.updateTime }}</p>
     </div>
   </div>
 </template>

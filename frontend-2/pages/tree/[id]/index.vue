@@ -16,8 +16,9 @@ import InputBackSearch from "~/components/input/InputBackSearch.vue";
 const treeId = Number(useRoute().params.id);
 let filterQuery = 10;
 let sortQuery = 1;
-
 let filterName = ref('최근 수정 순');
+let listSwitch = ref('bf10s1');
+
 const queryParam = reactive({
   filter: 10,
   sort: 1,
@@ -29,6 +30,9 @@ let info = reactive({});
 let branch = reactive({
   items: [],
   totalCount: 0
+});
+const mergedBranch = ref({
+  items: []
 });
 
 const config = useRuntimeConfig();
@@ -57,8 +61,10 @@ const closePopup = () => {
   filterBack1.classList.add('none');
   filterBack2.classList.add('none');
 
+  listSwitch.value = `b${queryParam.bookMark}f${queryParam.filter}s${queryParam.sort}`;
   queryParam.filter = filterQuery;
   queryParam.sort = sortQuery;
+  queryParam.page = 0;
 }
 
 const { data: infoData, error: infoError } = useFetch(() => `trees/${treeId}/info`, {
@@ -73,6 +79,8 @@ const { data: branchData, error: branchError, refresh } = useFetch(() => `trees/
 
 const bookMarkHandler = (bookMark) => {
   queryParam.bookMark = bookMark;
+  queryParam.page = 0;
+  listSwitch.value = `b${queryParam.bookMark}f${queryParam.filter}s${queryParam.sort}`;
 };
 
 const sortHandler = (e) => {
@@ -101,7 +109,6 @@ const filterNameHandler = (e) => {
 
 const loadMore = () => {
   queryParam.page += 1;
-  refresh();
 };
 
 
@@ -111,7 +118,11 @@ watchEffect(() => {
   }
   if(branchData.value) {
     branch = null;
-    branch = branchData;
+    branch = branchData.value;
+    console.log(branch.items);
+    // branch.items가 배열인지 확인한 후 병합
+    mergedBranch.value.items.push(...branch.items);
+    console.log(mergedBranch.value.items);
   }
 });
 </script>
@@ -167,7 +178,7 @@ watchEffect(() => {
         <div id="card-branch__list-frame">
           <div>
           <CardBranchList
-              :items="branch.items"
+              :items="mergedBranch.items"
               @loadMore="loadMore"
           ></CardBranchList>
           </div>

@@ -25,9 +25,6 @@ const emit = defineEmits(['loadMore']);
 const scrollContainer = ref(null);
 const itemRefs = ref([]);
 const isLoaded = ref(false);
-const mergedProps = ref({
-  items: []
-});
 
 let scrollNume = 5;
 
@@ -66,7 +63,6 @@ const setItemRef = (index) => (el) => {
 // 마운트 시 스크롤 이벤트 등록 (passive: true)
 onMounted(() => {
   if (scrollContainer.value) {
-    console.log('Scroll container found:', scrollContainer.value);
     scrollContainer.value.addEventListener('scroll', handleScroll, { passive: true });
   }
 });
@@ -78,17 +74,13 @@ onUnmounted(() => {
   }
 });
 
-watch(() => props.items, (newData) => {
-  mergedProps.value.items.push(...newData);    // 새로운 데이터를 기존 데이터와 병합
-  isLoaded.value = false;
-}, { immediate: true});
 
 </script>
 
 <template>
   <div ref="scrollContainer" class="scroll-container">
     <NuxtLink class="card-branch__list-frame"
-      v-for="(item, index) in mergedProps.items"
+      v-for="(item, index) in props.items"
       :key="item.id"
       :to="`/leaf/${item.id}`"
     >

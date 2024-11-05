@@ -64,7 +64,6 @@ const closePopup = () => {
   queryParam.filter = filterQuery;
   queryParam.sort = sortQuery;
   queryParam.page = 0;
-  newSwitch.value = `b${queryParam.bookMark}f${queryParam.filter}s${queryParam.sort}`;
 }
 
 const { data: infoData, error: infoError } = useFetch(() => `trees/${treeId}/info`, {
@@ -80,7 +79,6 @@ const { data: branchData, error: branchError, refresh } = useFetch(() => `trees/
 const bookMarkHandler = (bookMark) => {
   queryParam.bookMark = bookMark;
   queryParam.page = 0;
-  newSwitch.value = `b${queryParam.bookMark}f${queryParam.filter}s${queryParam.sort}`;
 };
 
 const sortHandler = (e) => {
@@ -114,7 +112,7 @@ const loadMore = () => {
 
 watchEffect(() => {
   if (infoData.value) {
-    info = infoData.value;
+    Object.assign(info, infoData.value);
   }
 
   if (branchData.value) {

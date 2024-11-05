@@ -44,12 +44,14 @@ public class LeafBookCardResponse {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class ItemDto {
+        // 카드 타입
+        String cardType = "LEAF";
         // 도서 카테고리
         String bookCategory;
         // 도서 제목
         String bookTitle;
         // 도서 이미지
-        String bookImage;
+        String cardImage;
         // 트리 씨앗 값
         Long treeSeedId;
         // 트리 씨앗 값
@@ -59,7 +61,7 @@ public class LeafBookCardResponse {
         // 트리 이미지
         String treeImage;
         // 도서 출판 날짜
-        String bookPublishDate;
+        String bookPublishedYear;
         // 도서 출판사
         String bookPublisher;
         // 도서 작가
@@ -69,9 +71,9 @@ public class LeafBookCardResponse {
         // 리프 내용
         String leafContent;
         // 리프 작성 날짜
-        String leafWriteDate;
+        String updateTime;
         // 리프 조회수
-        Integer leafViewCount;
+        Integer ViewCount;
 
         public static ItemDto of(Leaf leaf, Tree tree, Book book, BookCategory bookCategory) {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -79,18 +81,18 @@ public class LeafBookCardResponse {
             return ItemDto.builder()
                     .bookCategory(bookCategory.getName())
                     .bookTitle(book.getTitle())
-                    .bookImage(book.getImageFile())
+                    .cardImage(book.getImageFile())
                     .treeSeedId(tree.getSeed().getId())
                     .treeSeed(tree.getSeed().getKorName())
                     .treeTitle(tree.getTitle())
                     .treeImage(null)
-                    .bookPublishDate(book.getPublishDate().format(formatter))
+                    .bookPublishedYear(book.getPublishDate().format(formatter))
                     .bookPublisher(book.getPublisher())
                     .bookAuthor(book.getAuthor())
                     .leafTitle(leaf.getTitle())
                     .leafContent(leaf.getContent())
-                    .leafWriteDate(leaf.getUpdateTime().format(formatter))
-                    .leafViewCount(leaf.getViewCount())
+                    .updateTime(leaf.getUpdateTime().format(formatter))
+                    .ViewCount(leaf.getViewCount())
                     .build();
         }
 
@@ -100,18 +102,18 @@ public class LeafBookCardResponse {
             return ItemDto.builder()
                     .bookCategory(null)
                     .bookTitle(null)
-                    .bookImage(null)
+                    .cardImage(null)
                     .treeSeedId(tree.getSeed().getId())
                     .treeSeed(tree.getSeed().getKorName())
                     .treeTitle(tree.getTitle())
                     .treeImage(treeImage == null ? null : treeImage.getName())
-                    .bookPublishDate(null)
+                    .bookPublishedYear(null)
                     .bookPublisher(null)
                     .bookAuthor(null)
                     .leafTitle(leaf.getTitle())
                     .leafContent(leaf.getContent())
-                    .leafWriteDate(leaf.getUpdateTime().format(formatter))
-                    .leafViewCount(leaf.getViewCount())
+                    .updateTime(leaf.getUpdateTime().format(formatter))
+                    .ViewCount(leaf.getViewCount())
                     .build();
         }
     }

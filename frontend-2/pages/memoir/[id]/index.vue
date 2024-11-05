@@ -127,50 +127,50 @@ onMounted(() => {
 
   viewer.setMarkdown(memoir.value.text);
 
-  function commentTabActive() {
-    const commentTab = document.querySelector(".comment-filter-tab-id");
+  // function commentTabActive() {
+  //   const commentTab = document.querySelector(".comment-filter-tab-id");
 
-    commentTab.classList.add("book-detail-comment-tab-container--active");
+  //   commentTab.classList.add("book-detail-comment-tab-container--active");
 
-    document.body.classList.add("no-scroll");
-    window.scrollTo({ behavior: "smooth" });
-  }
+  //   document.body.classList.add("no-scroll");
+  //   window.scrollTo({ behavior: "smooth" });
+  // }
 
-  function commentTabInactive() {
-    const commentTab = document.querySelector(".comment-filter-tab-id");
+  // function commentTabInactive() {
+  //   const commentTab = document.querySelector(".comment-filter-tab-id");
 
-    commentTab.classList.remove("book-detail-comment-tab-container--active");
-    document.body.classList.remove("no-scroll");
-  }
-  document
-    .getElementById("bar-comment-id")
-    .addEventListener("click", commentTabActive);
-  document
-    .getElementById("top-bar-comment__back-icon-box-id")
-    .addEventListener("click", commentTabInactive);
-  document
-    .querySelector(".top-bar-comment__line-box")
-    .addEventListener("click", commentTabInactive);
+  //   commentTab.classList.remove("book-detail-comment-tab-container--active");
+  //   document.body.classList.remove("no-scroll");
+  // }
+  // document
+  //   .getElementById("bar-comment-id")
+  //   .addEventListener("click", commentTabActive);
+  // document
+  //   .getElementById("top-bar-comment__back-icon-box-id")
+  //   .addEventListener("click", commentTabInactive);
+  // document
+  //   .querySelector(".top-bar-comment__line-box")
+  //   .addEventListener("click", commentTabInactive);
 
-  document
-    .getElementById("input-comment-input__input-id")
-    .addEventListener("focus", function () {
-      const submitBtn = document.getElementById(
-        "input-comment-input__submit-id"
-      );
-      setTimeout(() => {
-        submitBtn.classList.add("input-comment-input__submit--active");
-      }, 100);
-    });
+  // document
+  //   .getElementById("input-comment-input__input-id")
+  //   .addEventListener("focus", function () {
+  //     const submitBtn = document.getElementById(
+  //       "input-comment-input__submit-id"
+  //     );
+  //     setTimeout(() => {
+  //       submitBtn.classList.add("input-comment-input__submit--active");
+  //     }, 100);
+  //   });
 
-  document
-    .getElementById("input-comment-input__input-id")
-    .addEventListener("focusout", function () {
-      const submitBtn = document.getElementById(
-        "input-comment-input__submit-id"
-      );
-      submitBtn.classList.remove("input-comment-input__submit--active");
-    });
+  // document
+  //   .getElementById("input-comment-input__input-id")
+  //   .addEventListener("focusout", function () {
+  //     const submitBtn = document.getElementById(
+  //       "input-comment-input__submit-id"
+  //     );
+  //     submitBtn.classList.remove("input-comment-input__submit--active");
+  //   });
 });
 </script>
 
@@ -210,7 +210,7 @@ onMounted(() => {
     </section>
 
     <!-- 댓글 -->
-    <section class="tree-index-comment-container">
+    <!-- <section class="tree-index-comment-container">
       <h1 class="none">댓글</h1>
       <BarComment
         :profileImg="`/svg/comment-profile.svg`"
@@ -223,7 +223,7 @@ onMounted(() => {
         <h1 class="none">댓글 탭</h1>
         <TabComment />
       </section>
-    </section>
+    </section> -->
 
     <section class="user-another-records">
       <h2 class="none">작성자 다른 기록들</h2>

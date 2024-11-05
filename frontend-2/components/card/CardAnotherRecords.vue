@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { CardType } from "@/types/types";
-import { CardItemProps } from "@/types/types";
+import type { CardItemProps } from "@/types/types";
 
 // const item: CardItemProps = {
 //   cardType: CardType.LEAF,
@@ -23,7 +23,9 @@ const props = defineProps<{
   item: CardItemProps;
 }>();
 
-function modifyCount(count) {
+const item = ref(props.item);
+
+function modifyCount(count: number) {
   return count > 999 ? "999+" : String(count);
 }
 </script>

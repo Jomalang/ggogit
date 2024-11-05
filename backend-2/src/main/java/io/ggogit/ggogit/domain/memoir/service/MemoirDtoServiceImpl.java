@@ -24,7 +24,7 @@ public class MemoirDtoServiceImpl implements MemoirDtoService {
                 .map(tree -> {
                     MemoirCardDtoResponse dto = MemoirCardDtoResponse.of(tree.getMemoir(), tree);
                     long leafNum = tree.getLeaf().stream().count();
-                    dto.setLeafNums(leafNum);
+                    dto.setLeafCount(leafNum);
                     return dto;
                 }
                 ).toList();

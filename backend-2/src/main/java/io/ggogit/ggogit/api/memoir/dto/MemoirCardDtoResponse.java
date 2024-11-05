@@ -16,17 +16,14 @@ import java.time.format.DateTimeFormatter;
 @Getter @Setter
 public class MemoirCardDtoResponse {
 
+    private String cardType = "MEMOIR";
     //회고록
-    private Long id;
-    private Long treeId;
-    private String title;
+    private String memoirTitle;
     private String updateTime;
     private Boolean visibility;
 
-
     //도서
-    private Long bookId;
-    private String bookCoverPath;
+    private String cardImage;
     private String bookCategory; //Book entity와 자료형 다름
     private String bookTitle;
     private String bookAuthor;
@@ -36,7 +33,7 @@ public class MemoirCardDtoResponse {
 
     //조회수, 리프
     private Long views;
-    private Long leafNums;
+    private Long leafCount;
 
     public static String changeBookPublishedYear(LocalDate bookPublishedYear) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy");
@@ -51,13 +48,10 @@ public class MemoirCardDtoResponse {
     //views와 leafNums는 Dto생성 이후 클라이언트 코드가 나중에 추가해야함!!!!!
     public static MemoirCardDtoResponse of(Memoir memoir, Tree tree) {
         return MemoirCardDtoResponse.builder()
-                .id(memoir.getId())
-                .treeId(memoir.getTree().getId())
-                .title(memoir.getTitle())
+                .memoirTitle(memoir.getTitle())
                 .updateTime(MemoirCardDtoResponse.changeUpdateTime(memoir.getUpdateTime()))
                 .visibility(memoir.getVisibility())
-                .bookId(tree.getBook().getId())
-                .bookCoverPath(tree.getBook().getImageFile())
+                .cardImage(tree.getBook().getImageFile())
                 .bookCategory(tree.getBook().getBookCategory().getName())
                 .bookTitle(tree.getBook().getTitle())
                 .bookAuthor(tree.getBook().getAuthor())
@@ -65,9 +59,6 @@ public class MemoirCardDtoResponse {
                 .bookPublisher(tree.getBook().getPublisher())
                 .bookPublishedYear(MemoirCardDtoResponse.changeBookPublishedYear(tree.getBook().getPublishDate()))
                 .build();
-
-
-
     }
 }
 

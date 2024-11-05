@@ -6,7 +6,6 @@ const {data} = defineProps(['data']);
 const img = ref(false)
 
 onMounted(async () => {
-  await console.log(data.coverImageName);
   if(data.coverImageName){
     img.value = true;
   }
@@ -14,6 +13,7 @@ onMounted(async () => {
 </script>
 
 <template>
+  <client-only>
   <div class="card-tree-info-cover-frame">
     <div class="card-tree-info-cover">
       <img v-if="img" class="card-tree-info-cover" :src="data.coverImageName" alt="cover">
@@ -24,6 +24,7 @@ onMounted(async () => {
       <p class="card-book-title">{{ data.bookTitle }}</p>
     </div>
   </div>
+  </client-only>
 </template>
 
 <style scoped>

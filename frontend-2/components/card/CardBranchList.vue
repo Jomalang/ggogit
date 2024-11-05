@@ -1,6 +1,7 @@
 <script setup>
 
 import { defineProps, defineEmits, onMounted, onUnmounted } from 'vue';
+import {debounce} from "lodash";
 
 const props = defineProps({
   items: {
@@ -19,6 +20,7 @@ const formatDate = (date) => {
     day: "2-digit", // '01' 형식으로 출력
     hour: "numeric", // 시간 출력 (24시간제)
     minute: "numeric", // 분 출력
+    timeZone: "Asia/Seoul" // 한국 시간대
   };
   return new Date(date).toLocaleString('ko-KR', options);
 };
@@ -33,30 +35,22 @@ const scrollContainer = ref(null);
 const itemRefs = ref([]);
 let scrollIndex = 5; // 초기 스크롤 인덱스
 
+const handleScroll = debounce(() => {
 
-// 스크롤 이벤트 핸들러
-const handleScroll = () => {
   const container = scrollContainer.value;
-
   if (!container) return;
 
-  // 컨테이너의 스크롤 위치 계산
-  const { scrollTop, clientHeight } = container;
-
-  // 다음 항목이 화면 하단에 도달했는지 확인
   const nextItem = itemRefs.value[scrollIndex];
-
   if (nextItem) {
     const nextItemRect = nextItem.getBoundingClientRect();
     const containerRect = container.getBoundingClientRect();
 
-    // 다음 항목의 하단이 컨테이너 하단과 같거나 지나갔는지 확인
     if (nextItemRect.bottom <= containerRect.bottom && scrollIndex < props.totalCnt - 1) {
-      scrollIndex += 10; // 다음 배치를 위한 인덱스 증가
-      emit('loadMore'); // 부모에게 추가 데이터 요청
+      scrollIndex += 10;
+      emit('loadMore');
     }
   }
-};
+}, 200); // 디바운스 적용
 
 // 각 리스트 항목에 대한 ref 설정
 const setItemRef = (index) => (el) => {

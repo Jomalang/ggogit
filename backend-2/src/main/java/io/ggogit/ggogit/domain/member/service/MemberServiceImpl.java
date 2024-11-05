@@ -1,6 +1,7 @@
 package io.ggogit.ggogit.domain.member.service;
 
 import io.ggogit.ggogit.api.member.dto.MemberRefreshResponse;
+import io.ggogit.ggogit.api.member.dto.MemberResponse;
 import io.ggogit.ggogit.domain.member.entity.EmailJoinToken;
 import io.ggogit.ggogit.domain.member.entity.Member;
 import io.ggogit.ggogit.domain.member.entity.PassWordRest;
@@ -10,6 +11,7 @@ import io.ggogit.ggogit.domain.member.repository.MemberRepository;
 import io.ggogit.ggogit.domain.member.repository.PassWordRestRepository;
 import io.ggogit.ggogit.domain.tree.entity.Tree;
 import io.ggogit.ggogit.util.JwtTokenProvider;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
@@ -199,17 +201,23 @@ public class MemberServiceImpl implements MemberService {
 
 
     @Override
-    public Optional<Member> findByNickname(String nickname) {
-        return memberRepository.findByNickname(nickname);
+    public MemberResponse findByNickname(String nickname) {
+        Member member = memberRepository.findByNickname(nickname)
+                .orElseThrow(() -> new EntityNotFoundException(nickname + "은 존재하지 않은 회원입니다."));
+        return MemberResponse.of(member); // MemberResponse.of() 메서드에 Member 객체를 전달
     }
 
     @Override
-    public Optional<Member> findByUsername(String username) {
-        return memberRepository.findByUsername(username);
+    public MemberResponse findByUsername(String username) {
+        Member member = memberRepository.findByUsername(username)
+                .orElseThrow(() -> new EntityNotFoundException(username + "은 존재하지 않은 회원입니다."));
+        return MemberResponse.of(member);
     }
 
     @Override
-    public Optional<Member> findByTrees(List<Tree> trees) {
-        return memberRepository.findByTrees(trees);
+    public MemberResponse findByEmail(String email) {
+        Member member = memberRepository.findByEmail(email)
+                .orElseThrow(() -> new EntityNotFoundException(email + "은 존재하지 않은 회원입니다."));
+        return MemberResponse.of(member);
     }
 }

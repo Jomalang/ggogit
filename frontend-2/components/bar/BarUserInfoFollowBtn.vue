@@ -29,14 +29,6 @@ const props = defineProps({
       </div>
     </div>
     <div>
-      <div class="bar-user-info__user-name--color-main1">
-        {{ props.username }}
-      </div>
-      <div class="bar-user-info__user-id--color-main1">
-        {{ props.userid }}
-      </div>
-    </div>
-    <div>
       <!-- TODO: followId 사용 관련 로직 구현 필요. -->
       <form class="bar-user-info__right-btns" action="" method="post">
         <input

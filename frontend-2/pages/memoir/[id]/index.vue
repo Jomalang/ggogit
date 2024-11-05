@@ -99,33 +99,22 @@ const { data: memoirCardData, error: memoirCardError } = await useFetch(
 );
 
 if (leafCardData.value) {
-  console.log(leafCardData.value);
+  leafItems.value = [...leafCardData.value.items];
+  console.log(leafItems.value);
 }
 
 if (treeCardData.value) {
-  console.log(treeCardData.value);
+  treeItems.value = [...treeCardData.value.treeCardResponses];
+  console.log(treeItems.value);
 }
 
 if (memoirCardData.value) {
-  console.log(memoirCardData.value);
+  memoirItems.value = [...memoirCardData.value.memoirCardDtoResponses];
+  console.log(memoirItems.value);
 }
 
 //-----------function----------------
-function commentTabActive() {
-  const commentTab = document.querySelector(".comment-filter-tab-id");
 
-  commentTab.classList.add("book-detail-comment-tab-container--active");
-
-  document.body.classList.add("no-scroll");
-  window.scrollTo({ behavior: "smooth" });
-}
-
-function commentTabInactive() {
-  const commentTab = document.querySelector(".comment-filter-tab-id");
-
-  commentTab.classList.remove("book-detail-comment-tab-container--active");
-  document.body.classList.remove("no-scroll");
-}
 //----------------Life Cycle----------------
 
 onMounted(() => {
@@ -138,6 +127,21 @@ onMounted(() => {
 
   viewer.setMarkdown(memoir.value.text);
 
+  function commentTabActive() {
+    const commentTab = document.querySelector(".comment-filter-tab-id");
+
+    commentTab.classList.add("book-detail-comment-tab-container--active");
+
+    document.body.classList.add("no-scroll");
+    window.scrollTo({ behavior: "smooth" });
+  }
+
+  function commentTabInactive() {
+    const commentTab = document.querySelector(".comment-filter-tab-id");
+
+    commentTab.classList.remove("book-detail-comment-tab-container--active");
+    document.body.classList.remove("no-scroll");
+  }
   document
     .getElementById("bar-comment-id")
     .addEventListener("click", commentTabActive);
@@ -234,7 +238,7 @@ onMounted(() => {
       </section>
       <section class="branch-tree-another-record-list-container">
         <h1 class="none">트리 리스트</h1>
-        <CardAnotherRecordsList :items="treeItem" />
+        <CardAnotherRecordsList :items="treeItems" />
       </section>
 
       <section class="branch-tree-other-recode-sub-title-container">
@@ -244,7 +248,7 @@ onMounted(() => {
       <section class="branch-tree-another-record-list-container">
         <h1 class="none">회고록 리스트</h1>
         <section class="book-detail-other-tree-card-container">
-          <CardAnotherRecordsList :items="memoirItem" />
+          <CardAnotherRecordsList :items="memoirItems" />
         </section>
       </section>
 
@@ -254,7 +258,7 @@ onMounted(() => {
 
       <section class="branch-tree-another-record-list-container">
         <h1 class="none">리프 리스트</h1>
-        <CardAnotherRecordsList :items="leafItem" />
+        <CardAnotherRecordsList :items="leafItems" />
       </section>
     </section>
   </main>

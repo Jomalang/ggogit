@@ -4,6 +4,7 @@ import io.ggogit.ggogit.api.book.dto.BookInfoResponse;
 import io.ggogit.ggogit.api.tree.dto.TreeCardRequest;
 import io.ggogit.ggogit.api.tree.dto.TreeCardResponse;
 import io.ggogit.ggogit.api.tree.dto.TreeInfoResponse;
+import io.ggogit.ggogit.api.tree.dto.TreeSearchQuery;
 import io.ggogit.ggogit.domain.book.entity.Book;
 import io.ggogit.ggogit.domain.book.repository.BookRepository;
 import io.ggogit.ggogit.domain.leaf.entity.Leaf;
@@ -18,10 +19,13 @@ import io.ggogit.ggogit.domain.tree.repository.SeedRepository;
 import io.ggogit.ggogit.domain.tree.repository.TreeBookRepository;
 import io.ggogit.ggogit.domain.tree.repository.TreeImageRepository;
 import io.ggogit.ggogit.domain.tree.repository.TreeRepository;
+import io.ggogit.ggogit.type.FilterType;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -233,5 +237,22 @@ public class TreeServiceImpl implements TreeService {
             return TreeInfoResponse.of(tree, lastestLeafTime != null ? lastestLeafTime : LocalDateTime.now(), leafCount, likeCount, viewCount);
 
         }).toList();
+    }
+
+    @Override
+    public Page<Tree> findTreeByQueryAndMemberId(TreeSearchQuery query, Long memberId) {
+
+        int size = 10;
+        FilterType sortFilter = FilterType.fromNumber(query.getSort());
+        Sort sort = null;
+        if("ASC".equals(sortFilter.name())) {
+            sort = Sort.by(Sort.Direction.ASC, "updateTime");
+        } else {
+            sort = Sort.by(Sort.Direction.DESC, "updateTime");
+        }
+
+        Pageable pageable = PageRequest.of(query.getPage() - 1, size, sort);
+
+        return treeRepository.findByQueryAndMemberId(query.getQuery(), memberId, pageable);
     }
 }

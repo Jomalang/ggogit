@@ -44,19 +44,30 @@ public class TreeController {
     private final JwtTokenProvider jwtTokenProvider;
     private final MemberService memberService;
 
-    @GetMapping("/search")
-    public String treeSearch() {
-        return "view/tree/search/index";
-    }
 
-    @PostMapping("/search")
-    public String treeSearch(
-            @RequestParam("treeSearchText") String treeSearchText,
-            RedirectAttributes redirectAttributes
+    @GetMapping("/search")
+    public Page<TreeSearchResultResponse> treeSearch(
+            @Valid @ModelAttribute TreeSearchQuery query
     ) {
-        System.out.println(treeSearchText);
-        redirectAttributes.addAttribute("treeSearchText", treeSearchText);
-        return "redirect:/tree/search/result/{treeSearchText}";
+        //TODO: security 도입 후 사용자 정보 가져오기 로직 추가 예정
+        Long memberId = 227L;
+
+
+        Page<Tree> trees = treeService.findTreeByQueryAndMemberId(query, memberId);
+
+        // Tree 객체들을 TreeSearchResultResponse로 변환
+        List<TreeSearchResultResponse> responseList = trees.stream()
+                .map(tree -> {
+                    if ("도서".equals(tree.getSeed().getKorName())) {
+                        return TreeSearchResultResponse.ofBook(tree); // '도서'일 때의 변환
+                    } else {
+                        return TreeSearchResultResponse.ofEtc(tree); // '도서'가 아닐 때의 변환
+                    }
+                })
+                .collect(Collectors.toList());
+
+        // 새로운 Page 객체 생성
+        return new PageImpl<>(responseList, trees.getPageable(), trees.getTotalElements());
     }
 
     @GetMapping("/search/result/{treeSearchText}")

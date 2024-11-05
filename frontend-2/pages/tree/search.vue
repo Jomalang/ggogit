@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 import { reactive, ref } from "vue";
 import InputBackSearchTree from "~/components/input/InputBackSearchTree.vue";
 

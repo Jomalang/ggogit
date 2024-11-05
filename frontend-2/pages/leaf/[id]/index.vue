@@ -1,11 +1,19 @@
 <script setup>
-import "@toast-ui/editor/dist/toastui-editor.css";
-import { ref } from "vue";
 
-const leafId = ref(1);
+import { ref } from "vue";
+import "@toast-ui/editor/dist/toastui-editor.css";
+import Viewer from '@toast-ui/editor/dist/toastui-editor-viewer';
+import CardHiddenInfo from "~/components/card/CardHiddenInfo.vue";
+import CardTreeInfoCover from "~/components/card/CardTreeInfoCover.vue";
+
+
 const coverImageName = ref("background-image.png");
 const myProfile = ref("/jpg/leaf-profile.jpg");
+const config = useRuntimeConfig();
+const route = useRoute();
+const leafId = route.params.id;
 
+// ---------------------- Model ----------------------
 let cardHiddenInfo = reactive({
   hiddenText: '자세히',
   authors: '작가 이름',
@@ -28,7 +36,62 @@ const editor = ref({
   visibility: 1,
 });
 
-import Viewer from '@toast-ui/editor/dist/toastui-editor-viewer';
+const leafPageInfo = reactive({
+  title: '내용',
+  size: 28,
+  startPage: 100,
+  endPage: 200
+});
+
+const leafMember = reactive({
+  id: 1,
+  nickName: '닉네임',
+  userName: '유저이름',
+  email: '이메일',
+  backImgName: '배경이미지',
+  profileImgName: '프로필이미지',
+});
+
+let info = reactive({});
+
+// ----------------------  API ----------------------
+const { data: infoData, error: infoError } = await useFetch(() => `trees/leaves/${leafId}/info`, {
+  baseURL: config.public.apiBase,
+});
+
+const { data: leafDetailData, error: leafDetailDataError } = await useFetch(() => `leaves/${leafId}`, {
+  baseURL: config.public.apiBase,
+});
+
+const { data: leafMemberInfo, error: leafMemberInfoError } = await useFetch(() => `leaves/${leafId}/member`, {
+  baseURL: config.public.apiBase,
+});
+
+watchEffect(() => {
+  if (infoData.value) {
+    console.log('infoData.value', infoData.value);
+    Object.assign(info, infoData.value);
+  }
+
+  if (leafDetailData.value) {
+    console.log('leafDetailData.value', leafDetailData.value);
+    editor.value.title = leafDetailData.value.leafTitle;
+    editor.value.text = leafDetailData.value.leafContent;
+    leafPageInfo.startPage = leafDetailData.value.startPage;
+    leafPageInfo.endPage = leafDetailData.value.endPage;
+  }
+
+  if (leafMemberInfo.value) {
+    leafMember.id = leafMemberInfo.value.id;
+    leafMember.nickName = leafMemberInfo.value.nickName;
+    leafMember.userName = leafMemberInfo.value.userName;
+    leafMember.email = leafMemberInfo.value.email;
+    leafMember.backImgName = leafMemberInfo.value.backImgName;
+    leafMember.profileImgName = leafMemberInfo.value.profileImgName;
+  }
+});
+// ---------------------- LifeCycle ----------------------
+
 onMounted(() => {
   const viewer = new Viewer({
     el: document.querySelector("#viewer"),
@@ -48,23 +111,26 @@ onMounted(() => {
     <BackgroundDetail
         :edit="`/leaves/${leafId}/edit`"
         :backImgPath="coverImageName"
-        :username="`조현진`"
-        :userid="`hyeonjin`"
-        :memoirTitle="`리프 디테일 제목입니다`"
-        :userUrl="`userUrl`"
+        :username="leafMember.nickName"
+        :userid="leafMember.email"
+        :memoirTitle="leafDetailData.leafTitle"
+        :userUrl="`/member/${leafMember.id}`"
     />
   </header>
 
   <main>
-
+    <section class="user-tree-info__container">
+      <h2 class="none">트리 정보</h2>
+      <CardTreeInfoCover :data="info">트리 정보</CardTreeInfoCover>
+    </section>
     <section class="branch-tree-detail-container">
       <h2 class="none">트리 상세 설명</h2>
-      <!-- 트리 상세 설명 -->
+      <CardHiddenInfo :data ="info" >트리 상세 설명</CardHiddenInfo>
     </section>
 
     <section class="leaf-page-info-container">
       <h2 class="none">도서 읽은 정보</h2>
-      <BarLeafReadingPageInfo :data="{ title: '회고록', size: 28, startPage: 100, endPage: 200 }" ></BarLeafReadingPageInfo>
+      <BarLeafReadingPageInfo :data="leafPageInfo" ></BarLeafReadingPageInfo>
     </section>
 
     <!-- 에디터 뷰어 -->

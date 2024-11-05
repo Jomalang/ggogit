@@ -1,7 +1,7 @@
 <script setup lang="ts">
 interface Props {
   followId: string;
-  userimg: string;
+  userImg: string;
   username: string;
   userid: string;
 }
@@ -24,14 +24,6 @@ const props = defineProps<Props>();
               <div class="bar-user-info__user-name--color-main1">{{props.username}}</div>
               <div class="bar-user-info__user-id--color-main1">{{props.userid}}</div>
           </div>
-      </div>
-      <div>
-        <div class="bar-user-info__user-name--color-main1">
-          {{ props.username }}
-        </div>
-        <div class="bar-user-info__user-id--color-main1">
-          {{ props.userid }}
-        </div>
       </div>
     <div>
       <form class="bar-user-info__right-btns" action="#" method="post">

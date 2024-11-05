@@ -2,6 +2,7 @@ package io.ggogit.ggogit.api.leaf;
 
 import io.ggogit.ggogit.api.leaf.dto.LeafBookCardResponse;
 import io.ggogit.ggogit.api.leaf.dto.*;
+import io.ggogit.ggogit.api.member.dto.MemberInfoResponse;
 import io.ggogit.ggogit.domain.leaf.service.LeafDtoService;
 import io.ggogit.ggogit.domain.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -169,4 +170,27 @@ public class LeafController {
         int bookPage = leafDtoService.getBookPage(leafId);
         return new ResponseEntity<>(bookPage, HttpStatus.OK);
     }
+
+    /**
+     * 리프 디테일 정보
+     */
+    @GetMapping("/leaves/{leafId}")
+    public ResponseEntity<LeafDetailResponse> getLeafDetail(
+            @PathVariable Long leafId
+    ) {
+        LeafDetailResponse responses = leafDtoService.getLeafDetail(leafId);
+        return new ResponseEntity<>(responses, HttpStatus.OK);
+    }
+
+    /**
+     * 리프 회원 정보
+     */
+    @GetMapping("/leaves/{leafId}/member")
+    public ResponseEntity<MemberInfoResponse> getMemberInfo(
+            @PathVariable Long leafId
+    ) {
+        MemberInfoResponse responses = leafDtoService.getMemberInfo(leafId);
+        return new ResponseEntity<>(responses, HttpStatus.OK);
+    }
+
 }

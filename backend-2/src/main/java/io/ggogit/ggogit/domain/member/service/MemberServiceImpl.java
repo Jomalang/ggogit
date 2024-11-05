@@ -1,5 +1,6 @@
 package io.ggogit.ggogit.domain.member.service;
 
+import io.ggogit.ggogit.api.member.dto.MemberInfoResponse;
 import io.ggogit.ggogit.api.member.dto.MemberRefreshResponse;
 import io.ggogit.ggogit.api.member.dto.MemberResponse;
 import io.ggogit.ggogit.domain.member.entity.EmailJoinToken;

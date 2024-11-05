@@ -38,11 +38,14 @@ const cardReactNumbersProps = {
   like: data.treeLikeCnt,
   view: data.treeViewCnt,
 };
+onMounted(() => {
 
+});
 </script>
 
 <template>
   <!-- (hiddentext, authors,translators,publisher,page,seed, treedescription, progress,readpage,fullpage, leaf,like,view) -->
+  <client-only>
   <div class="card-tree-info__detail-frame">
     <input class="card-tree-info__detail-input" type="checkbox" id="card-tree-info__detail"/>
     <label class="card-tree-info__detail" for="card-tree-info__detail">자세히</label>
@@ -65,17 +68,25 @@ const cardReactNumbersProps = {
           v-if="data.bookTotalPage != null"
           class="card-progress__container" >
         <div class="card-reading-progress-no-background">
-          <CardProgressBar :data="cardProgressBarProps" />
-          <CardReactNumbers :data="cardReactNumbersProps" />
+          <CardProgressBar
+              :progress = "progress"
+              :readingPage = "data.readingPage"
+              :totalPage = "data.bookTotalPage"
+          />
+          <CardReactNumbers
+              :leaf = "data.treeLeafCnt"
+              :like = "data.treeLikeCnt"
+              :view = "data.treeViewCnt"
+          />
         </div>
       </section>
 
       <section v-if="progress>=80" class="card-tree-memoir-create-btn-container">
         <LinkFullWidth :link="'/memoir/' + data.treeId +'/reg'" text="회고록 작성" />
       </section>
-
     </section>
   </div>
+  </client-only>
 </template>
 
 <style scoped>

@@ -12,6 +12,7 @@ const props = defineProps({
 </script>
 
 <template>
+  <client-only>
     <div class="text-main-title-side-text__frame">
         <span class="text-main-title text--title24">
           {{ props.title }}
@@ -20,6 +21,7 @@ const props = defineProps({
           {{ props.number }} 개
         </span>
     </div>
+  </client-only>
 </template>
 
 <style scoped>

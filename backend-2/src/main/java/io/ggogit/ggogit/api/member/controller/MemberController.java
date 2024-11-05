@@ -4,6 +4,7 @@ import io.ggogit.ggogit.api.member.dto.*;
 import io.ggogit.ggogit.domain.member.entity.Member;
 import io.ggogit.ggogit.domain.member.service.MemberService;
 import io.ggogit.ggogit.domain.tree.entity.Tree;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -160,26 +161,24 @@ public class MemberController {
     }
 
     // 닉네임으로 회원 조회
-    @GetMapping("/nickname/{nickname}")
-    public ResponseEntity<Member> findByNickname(@PathVariable String nickname) {
-        Optional<Member> member = memberService.findByNickname(nickname);
-        return member.map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+    @PostMapping("/nickname")
+    public ResponseEntity<MemberResponse> findByNickname(@RequestBody MemberRequest memberRequest) {
+        MemberResponse memberResponse = memberService.findByNickname(memberRequest.getNickname());
+        return new ResponseEntity<>(memberResponse, HttpStatus.OK);
     }
 
     // 사용자 이름으로 회원 조회
-    @GetMapping("/username/{username}")
-    public ResponseEntity<Member> findByUsername(@PathVariable String username) {
-        Optional<Member> member = memberService.findByUsername(username);
-        return member.map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+    @PostMapping("/username")
+    public ResponseEntity<MemberResponse> findByUsername(@RequestBody MemberRequest memberRequest) {
+        MemberResponse memberResponse = memberService.findByUsername(memberRequest.getUsername());
+        return new ResponseEntity<>(memberResponse, HttpStatus.OK);
     }
 
-    // 트리로 회원 조회
-    @PostMapping("/trees")
-    public ResponseEntity<Member> findByTrees(@RequestBody List<Tree> trees) {
-        Optional<Member> member = memberService.findByTrees(trees);
-        return member.map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+    // 이메일로 회원 조회
+    @PostMapping("/email")
+    public ResponseEntity<MemberResponse> findByEmail(@RequestBody MemberRequest memberRequest) {
+        MemberResponse memberResponse = memberService.findByEmail(memberRequest.getEmail());
+        return new ResponseEntity<>(memberResponse, HttpStatus.OK);
     }
+
 }

@@ -2,12 +2,10 @@
 import { onMounted, ref } from "vue";
 import "@toast-ui/editor/dist/toastui-editor.css";
 import Viewer from "@toast-ui/editor/dist/toastui-editor-viewer";
-import UserInfoBackHeaderMemoirTitle from "~/components/background/UserInfoBackHeaderMemoirTitle.vue";
-import NavigationBar from "~/components/nav/NavigationBar.vue";
-import Comment from "~/components/bar/Comment.vue";
 
 //----------------variable----------------
 let isOnwer = ref(false);
+const config = useRuntimeConfig();
 
 //----------------Model----------------
 let tree = reactive({
@@ -52,37 +50,85 @@ let book = reactive({
   updateTime: "24-10-01",
 });
 
-const config = useRuntimeConfig();
+//fetch
+const { data, error } = await useFetch(`/memoirs/${useRoute().params.id}`, {
+  method: "GET",
+  baseURL: `${config.public.apiBase}`,
+});
+
+if (data.value) {
+  memoir.value = data.value.memoirDto;
+  book.value = data.value.bookDto;
+  member.value = data.value.memberDto;
+  tree.value = data.value.treeDto;
+  isOnwer.value = data.value.owner;
+} else {
+  console.error("회고록 조회 실패 : ");
+  //이전페이지로 이동
+  // useRouter().back();
+}
+
 //카드 아이템
-const treeItem = reactive({});
-const memoirItem = reactive({});
-const leafItem = reactive({});
+const treeItems = ref([]);
+const memoirItems = ref([]);
+const leafItems = ref([]);
 
-//----------------Life Cycle----------------
-
-onMounted(async () => {
-  //fetch
-  const { data, error } = await useFetch(`/memoir/${useRoute().params.id}`, {
+//fetch
+const { data: leafCardData, error: leafCardError } = await useFetch(
+  `/members/${member.id}/leaves/book/cards`,
+  {
     method: "GET",
     baseURL: `${config.public.apiBase}`,
-  });
-
-  if (data.value) {
-    Object.assign(memoir, data.value.memoirDto);
-    Object.assign(book, data.value.bookDto);
-    Object.assign(member, data.value.memberDto);
-    Object.assign(tree, data.value.treeDto);
-    isOnwer.value = await data.value.owner;
-    console.log(memoir);
-    console.log(memoir.text);
-    console.log(memoir.id);
-  } else {
-    console.error("회고록 조회 실패 : ", error.value);
-    alert(error.value.data.message);
-    //이전페이지로 이동
-    useRouter().back();
   }
+);
 
+const { data: treeCardData, error: treeCardError } = await useFetch(
+  `trees/members/${member.id}/trees/book/cards`,
+  {
+    method: "GET",
+    baseURL: `${config.public.apiBase}`,
+  }
+);
+
+const { data: memoirCardData, error: memoirCardError } = await useFetch(
+  `memoirs/members/${member.id}/memoirs/book/cards`,
+  {
+    method: "GET",
+    baseURL: `${config.public.apiBase}`,
+  }
+);
+
+if (leafCardData.value) {
+  console.log(leafCardData.value);
+}
+
+if (treeCardData.value) {
+  console.log(treeCardData.value);
+}
+
+if (memoirCardData.value) {
+  console.log(memoirCardData.value);
+}
+
+//-----------function----------------
+function commentTabActive() {
+  const commentTab = document.querySelector(".comment-filter-tab-id");
+
+  commentTab.classList.add("book-detail-comment-tab-container--active");
+
+  document.body.classList.add("no-scroll");
+  window.scrollTo({ behavior: "smooth" });
+}
+
+function commentTabInactive() {
+  const commentTab = document.querySelector(".comment-filter-tab-id");
+
+  commentTab.classList.remove("book-detail-comment-tab-container--active");
+  document.body.classList.remove("no-scroll");
+}
+//----------------Life Cycle----------------
+
+onMounted(() => {
   //viewer 렌더링
   const viewer = new Viewer({
     el: document.querySelector("#viewer"),
@@ -90,25 +136,7 @@ onMounted(async () => {
     initialValue: "hello",
   });
 
-  console.log(memoir);
-  console.log(memoir.text);
-  await viewer.setMarkdown(memoir.text);
-
-  function commentTabActive() {
-    const commentTab = document.getElementById("comment-filter-tab-id");
-
-    commentTab.classList.add("book-detail-comment-tab-container--active");
-
-    document.body.classList.add("no-scroll");
-    window.scrollTo({ behavior: "smooth" });
-  }
-
-  function commentTabInactive() {
-    const commentTab = document.getElementById("comment-filter-tab-id");
-
-    commentTab.classList.remove("book-detail-comment-tab-container--active");
-    document.body.classList.remove("no-scroll");
-  }
+  viewer.setMarkdown(memoir.value.text);
 
   document
     .getElementById("bar-comment-id")
@@ -117,7 +145,7 @@ onMounted(async () => {
     .getElementById("top-bar-comment__back-icon-box-id")
     .addEventListener("click", commentTabInactive);
   document
-    .getElementById("top-bar-comment__line-box")
+    .querySelector(".top-bar-comment__line-box")
     .addEventListener("click", commentTabInactive);
 
   document
@@ -146,20 +174,20 @@ onMounted(async () => {
   <!-- TODO:본인 회고록인 경우에만 수정,삭제 버튼이 보이게 하기 -->
   <Title>회고록</Title>
   <header>
-    <UserInfoBackHeaderMemoirTitle
-      :edit="`/memoir/${memoir.id}/edit`"
-      :delete="`/memoir/${memoir.id}`"
+    <BackgroundUserInfoBackHeaderMemoirTitle
+      :edit="`/memoirs/${memoir.id}/edit`"
+      :delete="`/memoirs/${memoir.id}`"
       :backimgpath="member.backImgName"
-      :username="member.nickName"
-      :userid="member.email"
-      :memoirtitle="book.title"
-      :userurl="member.email"
+      :userName="member.nickName"
+      :userId="member.email"
+      :bookTitle="book.title"
+      :userUrl="member.email"
     />
   </header>
 
   <main>
-    <section class="my-tree-list">
-      <TextMainTitle :data="{ title: '회고록', size: 28 }" />
+    <section class="my-tree-list memoir-title">
+      <TextMainTitle :data="{ title: memoir.value.title, size: 28 }" />
       <h2 class="none">에디터 뷰어</h2>
 
       <!-- 에디터 뷰어-->
@@ -173,13 +201,17 @@ onMounted(async () => {
         :userimg="member.profileImgName"
         :username="member.nickName"
         :userid="member.email"
+        :follow-id="member.id"
       />
     </section>
 
     <!-- 댓글 -->
     <section class="tree-index-comment-container">
       <h1 class="none">댓글</h1>
-      <Comment :profileImg="`/svg/comment-profile.svg`" commentCount="199" />
+      <BarComment
+        :profileImg="`/svg/comment-profile.svg`"
+        :commentCount="199"
+      />
       <section
         id="comment-filter-tab-id"
         class="book-detail-comment-tab-container"
@@ -194,7 +226,7 @@ onMounted(async () => {
       <!-- 컴포넌트 -->
       <section class="user-another-records-title-container">
         <TextMainTitle
-          :data="{ title: `${username}의 다른 최근 기록들`, size: 28 }"
+          :data="{ title: `${member.nickName}의 다른 최근 기록들`, size: 28 }"
         />
       </section>
       <section class="branch-tree-other-recode-sub-title-container">
@@ -237,7 +269,7 @@ onMounted(async () => {
     <section class="nav-container">
       <h2 class="none">네비게이션</h2>
       <!-- 트리 생성 언더바  -->
-      <NavigationBar :active="'home'" />
+      <NavNavigationBar :active="'home'" />
     </section>
   </aside>
 </template>

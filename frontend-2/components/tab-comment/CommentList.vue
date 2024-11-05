@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed } from "vue";
 
 interface Comment {
   commentId: number;
@@ -12,7 +12,7 @@ interface Comment {
 }
 
 const props = defineProps<{
-  comments: Comment[]
+  comments: Comment[];
 }>();
 
 const timeSince = (createTime: Date | string) => {
@@ -33,10 +33,17 @@ const timeSince = (createTime: Date | string) => {
   <!-- ==========================================
      FRAGMENT: 댓글 리스트 (memberImage, memberNickname, createTime, commentContent, )
      ========================================== -->
-  <section id="comment-filter-tab-id" class="book-detail-comment-tab-container book-detail-comment-tab-container--active">
+  <section
+    id="comment-filter-tab-id"
+    class="book-detail-comment-tab-container book-detail-comment-tab-container--active"
+  >
     <div class="tab-comment-list-box">
       <ul class="tab-comment__list">
-        <li class="tab-comment__item" v-for="comment in comments" :key="comments.commentId">
+        <li
+          class="tab-comment__item"
+          v-for="comment in comments"
+          :key="comment.commentId"
+        >
           <div>
             <a :href="`${comment.memberId}`">
               <div class="card-log__author-img-frame">
@@ -48,47 +55,51 @@ const timeSince = (createTime: Date | string) => {
               </div>
             </a>
           </div>
-          <div class="card-log__info" >
-              <div class="card-log__create">
-                <a :href="`${comment.memberImage}`">
-                <span class="card-log__create-info">{{ comment.memberNickname }}</span>
+          <div class="card-log__info">
+            <div class="card-log__create">
+              <a :href="`${comment.memberImage}`">
+                <span class="card-log__create-info">{{
+                  comment.memberNickname
+                }}</span>
                 <span class="card-log__create-info">·</span>
-                <span class="card-log__create-info">{{ timeSince(comment.createTime) }}</span>
-                </a>
-            <div class="card-log__content-form">
-              <input
-                class="card-log__content-detail-show"
-                type="checkbox"
-                id="card-log__content-detail"
-              />
-              <label
-                class="card-log__content-detail"
-                for="card-log__content-detail"
-              ></label>
-              <p class="card-log__content">
-                {{ comment.commentContent }}
-              </p>
-            </div>
-            <div class="card-log__like-info">
-              <input
+                <span class="card-log__create-info">{{
+                  timeSince(comment.createTime)
+                }}</span>
+              </a>
+              <div class="card-log__content-form">
+                <input
+                  class="card-log__content-detail-show"
+                  type="checkbox"
+                  id="card-log__content-detail"
+                />
+                <label
+                  class="card-log__content-detail"
+                  for="card-log__content-detail"
+                ></label>
+                <p class="card-log__content">
+                  {{ comment.commentContent }}
+                </p>
+              </div>
+              <div class="card-log__like-info">
+                <input
                   :name="String(comment.commentId)"
                   :id="'card-log__like-' + comment.commentId"
                   class="card-log__like"
                   type="checkbox"
-              />
-              <label
+                />
+                <label
                   class="card-log__like-frame"
                   :for="'card-log__like-' + comment.commentId"
-              >
-                <img
-                  class="card-log__like-icon"
-                  src="/svg/tumbsup-off.svg"
-                  alt="like"
-                />
-              </label>
-              <p class="card-log__like-num">{{comment.likeCount}}</p>
-            </div>
+                >
+                  <img
+                    class="card-log__like-icon"
+                    src="/svg/tumbsup-off.svg"
+                    alt="like"
+                  />
+                </label>
+                <p class="card-log__like-num">{{ comment.likeCount }}</p>
               </div>
+            </div>
           </div>
           <a class="card-log__detail-frame-link" href="#">
             <div class="card-log__detail-frame">
@@ -165,10 +176,9 @@ const timeSince = (createTime: Date | string) => {
 .card-log__author-img {
   object-fit: cover;
 }
-.card-log__info{
+.card-log__info {
   display: flex;
   flex-grow: 1;
-
 }
 .card-log__create {
   display: flex;
@@ -205,7 +215,7 @@ const timeSince = (createTime: Date | string) => {
   letter-spacing: var(--letter-spacing-main);
   height: 14px;
   cursor: pointer;
-  content: '자세히 보기';
+  content: "자세히 보기";
 }
 
 .card-log__content-detail-show:not(:checked) ~ .card-log__content {
@@ -231,7 +241,7 @@ const timeSince = (createTime: Date | string) => {
   letter-spacing: var(--letter-spacing-main);
   height: 14px;
   cursor: pointer;
-  content: '간략히 보기';
+  content: "간략히 보기";
 }
 
 .card-log__content-detail-show:checked ~ .card-log__content {
@@ -269,13 +279,12 @@ const timeSince = (createTime: Date | string) => {
 }
 
 .card-log__like:disabled + .card-log__like-frame {
-  background-image: url('/public/svg/tumbsup-off.svg');
+  background-image: url("/public/svg/tumbsup-off.svg");
 }
 
 .card-log__like:checked + .card-log__like-frame {
-  background-image: url('/public/svg/tumbsup-on.svg');
+  background-image: url("/public/svg/tumbsup-on.svg");
 }
-
 
 .card-log__detail-frame-link {
   height: 24px;

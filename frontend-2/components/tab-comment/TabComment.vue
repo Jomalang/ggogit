@@ -1,8 +1,4 @@
-<script setup>
-import TopBarComment from "../top-bar/TopBarComment.vue";
-import CommentList from "./CommentList.vue";
-import CommentInput from "../input/CommentInput.vue";
-</script>
+<script setup></script>
 
 <template>
   <!-- ==========================================
@@ -11,8 +7,21 @@ import CommentInput from "../input/CommentInput.vue";
       ========================================== -->
   <div class="tab-comment-box">
     <TopBarComment />
-    <CommentList />
-    <CommentInput />
+    <!-- 댓글 API이용한 fetch 추가 필요 -->
+    <TabCommentList
+      :comments="[
+        {
+          memberId: 1,
+          memberImage: '/svg/comment-profile.svg',
+          memberNickname: '닉네임',
+          createTime: '2021-10-10',
+          commentContent: '댓글내용',
+          commentId: 1,
+        },
+      ]"
+    />
+    <!-- 댓글 save API 필요 -->
+    <InputCommentInput :action="'#'" />
   </div>
 </template>
 

@@ -34,7 +34,7 @@ const savePost = async () => {
   memoir.value.text = editor.getHTML();
 
   //useFetch
-  const { data, error } = await useFetch("memoir/" + treeId, {
+  const { data, error } = await useFetch("memoirs/" + treeId, {
     method: "POST",
     baseURL: `${config.public.apiBase}`,
     headers: {
@@ -57,7 +57,7 @@ const savePost = async () => {
     alert("회고록이 등록되었습니다.");
     memoirId.value = data.value.id;
     //리다이렉션
-    await navigateTo(`/memoir/${memoirId.value}`);
+    await navigateTo(`/memoirs/${memoirId.value}`);
   }
 };
 

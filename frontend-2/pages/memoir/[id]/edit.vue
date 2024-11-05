@@ -31,7 +31,7 @@ const editPost = async () => {
   memoir.text = editor.getHTML();
 
   //fetch
-  const response = await $fetch("memoir/" + memoirId.value, {
+  const response = await $fetch("memoirs/" + memoirId.value, {
     method: "PUT",
     baseURL: `${config.public.apiBase}`,
     body: JSON.stringify({
@@ -54,10 +54,10 @@ const editPost = async () => {
   // }
   memoirId.value = response.id;
   //리다이렉션
-  await navigateTo(`/memoir/${memoirId.value}`);
+  await navigateTo(`/memoirs/${memoirId.value}`);
 };
 
-const { data } = await useFetch(`memoir/${useRoute().params.id}`, {
+const { data } = await useFetch(`memoirs/${useRoute().params.id}`, {
   method: "GET",
   baseURL: `${config.public.apiBase}`,
 });

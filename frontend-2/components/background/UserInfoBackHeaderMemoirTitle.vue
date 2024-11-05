@@ -1,29 +1,36 @@
 <script setup>
 import BarUserInfoNoProfileBtn from "@/components/bar/BarUserInfoNoProfileBtn.vue";
 import BarMemoirTitleBtn from "@/components/bar/BarMemoirTitleBtn.vue";
-defineProps({
-  backimgpath: String,
-  edit: String,
-  username: String,
-  userid: String,
-  memoirTitle: String,
-  userUrl: String,
+const props = defineProps({
+  edit: "",
+  delete: "",
+  backimgpath: "",
+  userName: "",
+  userId: "",
+  bookTitle: "",
+  userUrl: "",
 });
 
 const backgroundStyle = computed(() => ({
-  backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('/png/${props.backimgpath}')`,
+  //TODO: 배경 뒤 이미지 API제작
+  backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('${props.backimgpath}')`,
 }));
-
 </script>
 
 <template>
   <div class="user-tree-user-info-container" :style="backgroundStyle">
     <section class="user-info__top-bar-container">
-      <TopBarTransparent :edit="edit" :delete="delete" />
+      <TopBarTransparent :edit="props.edit" :delete="props.delete" />
     </section>
     <section class="user-info__user-info-bar-container">
-      <BarUserInfoNoProfileBtn :username="username" :userid="userid" />
-      <BarMemoirTitleBtn :memoirTitle="memoirTitle" :userUrl="userUrl" />
+      <BarUserInfoNoProfileBtn
+        :username="props.userName"
+        :userid="props.userId"
+      />
+      <BarMemoirTitleBtn
+        :memoirTitle="props.bookTitle"
+        :userUrl="props.userUrl"
+      />
     </section>
   </div>
 </template>

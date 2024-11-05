@@ -38,7 +38,7 @@ public class TreeCardResponse {
     private Boolean visibility;
     private LocalDateTime leafCreatedAt;
 
-    public static TreeCardResponse toEntity(Book book, boolean complateBook, Tree tree, Seed Seed, Long memberId){
+    public static TreeCardResponse toEntity(Book book, boolean isCompletedBook, Tree tree, Seed Seed, Long memberId){
         LocalDate publishYear = book.getPublishDate();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy");
         return TreeCardResponse.builder()
@@ -49,7 +49,7 @@ public class TreeCardResponse {
                 .bookTranslator(book.getTranslator())
                 .bookPublisher(book.getPublisher())
                 .bookPublishedYear(publishYear.format(formatter))
-                .bookComplete(complateBook)
+                .bookComplete(isCompletedBook)
                 .coverImageName(book.getImageFile())
                 .treeId(tree.getId())
                 .memberId(memberId)

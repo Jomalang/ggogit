@@ -4,6 +4,7 @@ import io.ggogit.ggogit.api.book.dto.BookDetailResponse;
 import io.ggogit.ggogit.api.book.dto.BookInfoResponse;
 import io.ggogit.ggogit.api.member.dto.MemberInfoResponse;
 import io.ggogit.ggogit.api.member.session.SessionConst;
+import io.ggogit.ggogit.api.memoir.dto.MemoirCardDtoResponseList;
 import io.ggogit.ggogit.api.memoir.dto.MemoirRequest;
 import io.ggogit.ggogit.api.memoir.dto.MemoirDto;
 import io.ggogit.ggogit.api.memoir.dto.MemoirResponse;
@@ -12,6 +13,7 @@ import io.ggogit.ggogit.domain.book.entity.Book;
 import io.ggogit.ggogit.domain.book.service.BookService;
 import io.ggogit.ggogit.domain.member.entity.Member;
 import io.ggogit.ggogit.domain.memoir.entity.Memoir;
+import io.ggogit.ggogit.domain.memoir.service.MemoirDtoService;
 import io.ggogit.ggogit.domain.memoir.service.MemoirService;
 import io.ggogit.ggogit.domain.tree.entity.Tree;
 import lombok.RequiredArgsConstructor;
@@ -25,11 +27,12 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("memoir")
+@RequestMapping("memoirs")
 @RequiredArgsConstructor
 public class MemoirController {
 
     private final MemoirService memoirService;
+    private final MemoirDtoService memoirDtoService;
     private final BookService bookService;
 
     //memoir 조회 - 소유권 할당
@@ -123,5 +126,12 @@ public class MemoirController {
 //        }
         memoirService.removeMemoir(memoirId);
         return ResponseEntity.noContent().build();
+    }
+
+    //Memoir Card 조회
+    @GetMapping("members/{memberId}/memoirs/book/cards")
+    public ResponseEntity<MemoirCardDtoResponseList> getMemoirCards(@PathVariable(name="memberId") Long memberId) {
+        MemoirCardDtoResponseList memoirCardDtoResponseList = memoirDtoService.getMemoirCardDtoResponseList(memberId);
+        return new ResponseEntity<>(memoirCardDtoResponseList, HttpStatus.OK);
     }
 }

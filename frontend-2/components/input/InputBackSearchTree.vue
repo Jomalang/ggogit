@@ -10,51 +10,51 @@ const props = defineProps({
 //-----------------emit-----------------
 const emit = defineEmits([
   "req",
-  "bookResult",
+  "result",
   "page",
   "totalCount",
   "totalPage",
 ]);
 //-----------------ref-----------------
-const bookResult = ref([]);
+const result = ref([]);
 const query = ref("");
-const filter = ref("title");
+const filter = ref(0);
 const page = ref(1);
 const totalCount = ref(0);
 const totalPage = ref(0);
 
 watch(page, () => {
-  if (page.value > 1) {
+  if (page.value > 0) {
     createReq(query.value, filter.value, page.value);
     console.log("new page");
   }
 });
 
-const createReq = async (query, filter, currentPage) => {
+const createReq = async (query, sort, currentPage) => {
   try {
     const response = await $fetch(props.api, {
       method: "GET",
       params: {
-        q: query,
-        f: filter,
-        p: currentPage,
+        query: query,
+        sort: sort,
+        page: currentPage,
       },
     });
     if (response !== undefined) {
-      if (currentPage === 1) {
-        bookResult.value = response.books;
+      if (currentPage === 0) {
+        result.value = response.content;
       } else {
-        bookResult.value = [...bookResult.value, ...response.books];
+        result.value = [...result.value, ...response.content];
       }
       page.value = currentPage;
       totalCount.value = response.totalCount;
       totalPage.value = response.totalPage;
     } else {
-      bookResult.value = [];
+      result.value = [];
       totalCount.value = 0;
       totalPage.value = 1;
     }
-    emit("bookResult", bookResult.value);
+    emit("result", result.value);
     emit("req", query);
     emit("page", page.value);
     emit("totalCount", totalCount.value);
@@ -92,13 +92,13 @@ onUpdated(() => {
           :placeholder="props.placeholder"
           v-model="query"
           autocomplete="off"
-          @keyup.enter="createReq(query, filter, 1)"
+          @keyup.enter="createReq(query, filter, 0)"
         />
         <button class="search-bar--close" type="reset">
           <img src="/public/svg/close-button.svg" alt="close-btn" />
         </button>
       </label>
-      <button @click="createReq(query, filter, 1)">
+      <button @click="createReq(query, filter, 0)">
         <img src="/public/svg/lens.svg" alt="lens" />
       </button>
     </div>

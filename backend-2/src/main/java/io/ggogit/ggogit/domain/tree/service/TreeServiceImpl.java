@@ -251,7 +251,7 @@ public class TreeServiceImpl implements TreeService {
             sort = Sort.by(Sort.Direction.DESC, "updateTime");
         }
 
-        Pageable pageable = PageRequest.of(query.getPage() - 1, size, sort);
+        Pageable pageable = PageRequest.of(query.getPage(), size, sort);
 
         return treeRepository.findByQueryAndMemberId(query.getQuery(), memberId, pageable);
     }

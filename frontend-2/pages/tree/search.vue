@@ -3,24 +3,25 @@ import { reactive, ref } from "vue";
 import InputBackSearchTree from "~/components/input/InputBackSearchTree.vue";
 
 //---------------variable----------------
-const apiUrl = `${import.meta.env.VITE_API_BASE_URL}`;
-const keyword = ref("");
-const books = ref([]);
-const page = ref(1);
+const query = ref("");
+const trees = ref([]);
+const page = ref(0);
 const totalPage = ref(0);
 const totalCount = ref(0);
 const limit = ref(10);
 const scrollContainer = ref(null);
+const config = useRuntimeConfig();
+const apiUrl = config.public.apiBase + "/trees/search";
 //-------------handler----------------
 
 const handleTreeResult = (data) => {
-  books.value = data || [];
-  console.log(`length=${books.value.length}`);
+  trees.value = data || [];
+  console.log(`length=${trees.value.length}`);
 };
 
 const handleKeyword = (query) => {
-  keyword.value = query;
-  console.log(`keyword=${keyword.value}`);
+  query.value = query;
+  console.log(`query=${query.value}`);
 };
 
 const handlePage = (p) => {
@@ -77,7 +78,7 @@ onMounted(() => {
           :href="`./seed/index`"
           :api="apiUrl"
           :page="page"
-          @treeResult="handleTreeResult"
+          @result="handleTreeResult"
           @req="handleKeyword"
           @page="handlePage"
           @totalCount="handleTotalCount"
@@ -92,7 +93,7 @@ onMounted(() => {
   </header>
 
   <main>
-    <section v-if="keyword === ''">
+    <section v-if="query === ''">
       <div class="text-info-container">
         <h2 class="none">검색 시작 안내</h2>
         <TextInfo

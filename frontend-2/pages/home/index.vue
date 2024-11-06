@@ -32,20 +32,19 @@ const { data: treeData, status: treeStatus } = await useFetch(
 
 const newTreeFetch = async (newSeedId) => {
   seedId.value = newSeedId;
-  const { data: filterTreeData, status: filterTreeStatus } = await useFetch(
-    "trees/tree-home-sort",
-    {
-      baseURL: `${config.public.apiBase}`,
-      method: "GET",
-      params: {
-        seedId: seedId.value,
-        mid: useRoute().query.mid,
-      },
-    }
-  );
-  if (filterTreeStatus.value === "success" && filterTreeData.value) {
-    // console.log("ok");
-    filterTreeInfoList.value = [...filterTreeData.value.treeInfoResponseList];
+  const response = await $fetch("trees/tree-home-sort", {
+    baseURL: `${config.public.apiBase}`,
+    method: "GET",
+    params: {
+      seedId: seedId.value,
+      mid: useRoute().query.mid,
+    },
+  });
+  if (response) {
+    console.log("ok");
+    console.log(response);
+    filterTreeInfoList.value = [...response.treeInfoResponseList];
+
   }
 };
 

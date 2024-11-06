@@ -1,60 +1,29 @@
 <script setup>
-import { defineProps } from 'vue';
+import { defineProps } from "vue";
 
-// const textBookInfoProps = {
-//   title: data.title,
-//   authors: data.authors,
-//   translators: translators,
-//   publisher: data.publisher,
-//   page: data.page,
-//   seed: data.seed,
-// };
-
-const { data } = defineProps(['data']);
-// seedConverter 함수 정의
-function seedConverter(seedId) {
-  switch (seedId) {
-    case 1:
-      return '도서';
-    case 2:
-      return '생각';
-    case 3:
-      return '문장';
-    case 4:
-      return '공부';
-    case 5:
-      return '영상';
-    default:
-      return '알 수 없는 유형';
-  }
-};
-let seed = (() => {
-  if (typeof data.seed === 'number') {
-    return seedConverter(data.seed);
-  } else if (typeof data.seed === 'string') {
-    return data.seed;
-  }
-  return '알 수 없는 유형';
-})();
+const config = useRuntimeConfig();
+const { data } = defineProps(["data"]);
 </script>
 
 <template>
   <div class="text-book-info">
     <div class="text-book-info__frame">
-      <p class="text-book-info__seed">{{ seed }}</p>
+      <p class="text-book-info__seed">{{ data.category.name }}</p>
     </div>
     <div class="text-book-info__frame">
       <p class="text-book-info__title">{{ data.title }}</p>
     </div>
     <div class="text-book-info__create-frame">
       <div class="text-book-info__create">
-        <span class="text-book-info-create-info">{{ data.authors }}</span>
+        <span class="text-book-info-create-info">{{ data.author }}</span>
         <span class="text-book-info-create-info">·</span>
       </div>
-      <div v-if="data.translators && data.translators.length"
-           v-for="(translator, index) in data.translators"
-           :key="index"
-           class="text-book-info__create">
+      <div
+        v-if="data.translators && data.translators.length"
+        v-for="(translator, index) in data.translators"
+        :key="index"
+        class="text-book-info__create"
+      >
         <span class="text-book-info-create-info">{{ data.translators }}</span>
         <span class="text-book-info-create-info">·</span>
       </div>

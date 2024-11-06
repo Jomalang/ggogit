@@ -24,7 +24,6 @@ export interface CardItemProps {
   cardType: CardType;
   cardImage: string;
   bookCategory: string;
-  coverPath: string;
 
   /* 도서 정보 경우 경우  */
   bookTitle?: string;

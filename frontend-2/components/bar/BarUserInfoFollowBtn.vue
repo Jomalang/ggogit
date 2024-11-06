@@ -1,11 +1,10 @@
-<script setup lang="ts">
-interface Props {
-  followId: string;
-  userImg: string;
-  username: string;
-  userid: string;
-}
-const props = defineProps<Props>();
+<script setup>
+const props = defineProps({
+  followId: "",
+  userimg: "",
+  username: "",
+  userid: "",
+});
 </script>
 
 <template>
@@ -16,17 +15,22 @@ const props = defineProps<Props>();
       TODO: followId 사용 관련 로직 구현 필요.
   ==========================================-->
   <div class="bar-user-info-follow-btn-frame">
-      <div class="bar-user-info__left-content">
-          <div class="bar-user-info__img-wrapper">
-              <img :src="`${props.userImg}`" alt="user-profile">
-          </div>
-          <div>
-              <div class="bar-user-info__user-name--color-main1">{{props.username}}</div>
-              <div class="bar-user-info__user-id--color-main1">{{props.userid}}</div>
-          </div>
+    <div class="bar-user-info__left-content">
+      <div class="bar-user-info__img-wrapper">
+        <img :src="`${props.userImg}`" alt="user-profile" />
       </div>
+      <div>
+        <div class="bar-user-info__user-name--color-main1">
+          {{ props.username }}
+        </div>
+        <div class="bar-user-info__user-id--color-main1">
+          {{ props.userid }}
+        </div>
+      </div>
+    </div>
     <div>
-      <form class="bar-user-info__right-btns" action="#" method="post">
+      <!-- TODO: followId 사용 관련 로직 구현 필요. -->
+      <form class="bar-user-info__right-btns" action="" method="post">
         <input
           class="__follow-btn"
           type="checkbox"

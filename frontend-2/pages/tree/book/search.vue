@@ -73,7 +73,7 @@ onMounted(() => {
       <h2 class="none">도서 검색 창</h2>
       <InputBackSearch
         :placeholder="`검색할 도서를 입력해주세요.`"
-        :href="`./seed/index`"
+        :href="`/tree/seed`"
         :api="apiUrl"
         :page="page"
         @bookResult="handleBookResult"

@@ -28,22 +28,22 @@ watchEffect(() => {
         </a>
       </li>
       <li v-if="treeInfoList.length === 1" class="mid__item 1">
-        <a href="/seed/index">
+        <NuxtLink :to="`/tree/seed`">
           <img
             class="mid__img"
             src="/public/png/tree-book-blank.png"
             alt="도서 예시 이미지"
           />
-        </a>
+        </NuxtLink>
       </li>
       <li v-if="treeInfoList.length <= 2" class="mid__item 2">
-        <a href="/seed/index">
+        <NuxtLink :to="`/tree/seed`">
           <img
             class="mid__img"
             src="/public/png/tree-book-blank.png"
             alt="도서 예시 이미지"
           />
-        </a>
+        </NuxtLink>
       </li>
       <li
         :class="`mid__item ${index}`"
@@ -59,22 +59,22 @@ watchEffect(() => {
         </a>
       </li>
       <li v-if="treeInfoList.length === 1" class="mid__item 1">
-        <a href="/seed/index">
+        <NuxtLink :to="`/tree/seed`">
           <img
             class="mid__img"
             src="/public/png/tree-book-blank.png"
             alt="도서 예시 이미지"
           />
-        </a>
+        </NuxtLink>
       </li>
       <li v-if="treeInfoList.length <= 2" class="mid__item 2">
-        <a href="/seed/index">
+        <NuxtLink :to="`/tree/seed`">
           <img
             class="mid__img"
             src="/public/png/tree-book-blank.png"
             alt="도서 예시 이미지"
           />
-        </a>
+        </NuxtLink>
       </li>
       <li
         :class="`mid__item ${index}`"
@@ -90,22 +90,22 @@ watchEffect(() => {
         </a>
       </li>
       <li v-if="treeInfoList.length === 1" class="mid__item 1">
-        <a href="/seed/index">
+        <NuxtLink :to="`/tree/seed`">
           <img
             class="mid__img"
             src="/public/png/tree-book-blank.png"
             alt="도서 예시 이미지"
           />
-        </a>
+        </NuxtLink>
       </li>
       <li v-if="treeInfoList.length <= 2" class="mid__item 2">
-        <a href="/seed/index">
+        <NuxtLink :to="`/tree/seed`">
           <img
             class="mid__img"
             src="/public/png/tree-book-blank.png"
             alt="도서 예시 이미지"
           />
-        </a>
+        </NuxtLink>
       </li>
     </ul>
   </div>

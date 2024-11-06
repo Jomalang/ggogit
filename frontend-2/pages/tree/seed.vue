@@ -42,13 +42,12 @@ const filterTabDownHandler = () => {
   const filterTab = document.querySelector(".filter-tab-container");
   setTimeout(() => filterTab.classList.add("none"), 300);
 };
-
 </script>
 
 <template>
   <header class="top-bar-back-container">
     <h1 class="none">씨앗 선택</h1>
-    <TopBarBack title="트리 생성" link=""></TopBarBack>
+    <TopBarBack title="트리 생성" :link=""></TopBarBack>
   </header>
 
   <main>
@@ -60,16 +59,16 @@ const filterTabDownHandler = () => {
     <section class="btn-select-container">
       <h2 class="none">씨앗 선택 버튼</h2>
       <FilterFullWidth
-          text="씨앗 선택"
-          @click="filterTabUpHandler"
+        text="씨앗 선택"
+        @click="filterTabUpHandler"
       ></FilterFullWidth>
     </section>
 
     <section class="filter-tab-container none" @click="filterTabDownHandler">
       <h2 class="none">씨앗 선택</h2>
       <FilterTabGet
-          :data="seeds"
-          @backButtonClick="filterTabDownHandler"
+        :data="seeds"
+        @backButtonClick="filterTabDownHandler"
       ></FilterTabGet>
     </section>
   </main>

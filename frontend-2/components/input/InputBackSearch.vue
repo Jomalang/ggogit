@@ -80,9 +80,9 @@ onUpdated(() => {
   <!-- input-back-search(placeholder, href, method, name) -->
   <div class="search__form">
     <div>
-      <a :href="props.href">
+      <NuxtLink :to="props.href">
         <img src="/public/svg/back.svg" alt="back button" />
-      </a>
+      </NuxtLink>
     </div>
     <div class="search-bar">
       <label class="search-bar--label">

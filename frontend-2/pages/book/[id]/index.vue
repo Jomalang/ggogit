@@ -1,32 +1,31 @@
 <script setup>
-
-import {ref} from "vue";
+import { ref } from "vue";
 
 const coverImageName = ref("/png/book-example.png");
 const commentCount = ref("/jpg/leaf-profile.jpg");
-
 </script>
 
 <template>
-
   <main>
     <section class="book-detail-bg-container">
       <h1 class="none">도서 배경 이미지</h1>
 
       <section class="book-detail-top-bar-container">
         <h1 class="none">뒤로가기 상단바</h1>
-        <TopBarClearBack :link="`javascript:history.back()`" />
+        <TopBarClearBack :link="`#`" />
       </section>
 
-      <BackgroundBookDetail :data="{
-              imgSrc: coverImageName,
-              src: '',
-              backImgPath: '',
-              userImg: '',
-              username: '',
-              userid: '',
-              userUrl: '',
-          }" />
+      <BackgroundBookDetail
+        :data="{
+          imgSrc: coverImageName,
+          src: '',
+          backImgPath: '',
+          userImg: '',
+          username: '',
+          userid: '',
+          userUrl: '',
+        }"
+      />
       <section class="book-detail-like-bar-container">
         <h1 class="none">좋아요 및 공유</h1>
         <BarLikeShare
@@ -38,13 +37,14 @@ const commentCount = ref("/jpg/leaf-profile.jpg");
 
     <section class="book-detail-book-info-container">
       <h1 class="none">도서 제목 및 저자 정보</h1>
-      <TextBookInfo :data="{
-              bookCategoryName: '시/에세이',
-              title: '무정형의 삶',
-              author: '올라프',
-              translators: null,
-              publisher: '위즈덤하우스',
-      }"
+      <TextBookInfo
+        :data="{
+          bookCategoryName: '시/에세이',
+          title: '무정형의 삶',
+          author: '올라프',
+          translators: null,
+          publisher: '위즈덤하우스',
+        }"
       />
     </section>
 

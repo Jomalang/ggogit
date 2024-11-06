@@ -44,6 +44,7 @@ const newTreeFetch = async (newSeedId) => {
     console.log("ok");
     console.log(response);
     filterTreeInfoList.value = [...response.treeInfoResponseList];
+
   }
 };
 
@@ -52,13 +53,13 @@ watchEffect(() => {
     treeInfoList.value = [...treeData.value.treeInfoResponseList];
     filterTreeInfoList.value = [...treeData.value.treeInfoResponseList];
   } else {
-    console.log("treeData.value is null");
+    // console.log("treeData.value is null");
   }
 
   if (seedStatus.value === "success" && seedData.value) {
     seedList.value = [...seedData.value.items];
   } else {
-    console.log("seedData.value is null");
+    // console.log("seedData.value is null");
   }
 });
 
@@ -213,13 +214,13 @@ onMounted(() => {
 
       // 오른쪽으로 최대 이동한 경우
       if (nextTranslateX < -midWidth * (carouselItemCount * 3)) {
-        console.log("right end");
+        // console.log("right end");
         nextTranslateX = -midWidth * (carouselItemCount * 3);
       }
 
       // 왼쪽으로 최대 이동한 경우
       else if (nextTranslateX > 0) {
-        console.log("left end");
+        // console.log("left end");
         nextTranslateX = 0;
       }
       carouselList.style.transform = `translateX(${nextTranslateX}px)`;

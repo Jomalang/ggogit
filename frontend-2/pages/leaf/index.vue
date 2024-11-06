@@ -1,48 +1,296 @@
-<script setup lang="ts">
-import {
-  Branch,
-  TextBtnGreenProps,
-  TextMainTitleRightProps,
-} from "@/types/types";
+<script setup>
 
-import { ref } from "vue";
 import { useRoute } from "vue-router";
+import {Tree} from "~/ composables/Tree.js";
 
-// leaf_id 가져오기
+// ----------------------- Model ----------------------- //
 const route = useRoute();
-const leafId = route.query.leaf_id as string;
+const config = useRuntimeConfig();
+const leafId = Number(route.query.leafId);
 
-const branch = ref<Branch>({
-  branch: "브랜치 이름",
-  log: 0,
-  like: 0,
-  view: 0,
-  date: "2024-10-19",
+const screenWidth = ref(0);
+const targetNode = ref(null);
+const isDragging = ref(false);
+const seedType = ref({});
+const tree = ref({});
+
+const branch = reactive({
+  branchName: "브랜치 이름",
+  leafCount: 10,
+  likeCount: 10,
+  viewCount: 10,
+  updateTime: "2024-10-19",
 });
 
-setTimeout(() => {
-  branch.value = {
-    branch: "브랜치 이름",
-    log: 10,
-    like: 10,
-    view: 10,
-    date: "2024-10-19",
-  };
-}, 5_000);
+const leafCreateBtn = reactive({
+  id: leafId,
+  canCreate: true,
+});
 
-const title = ref<TextMainTitleRightProps>({
+const touchValue = reactive({
+  cooldown: 1000, // 쿨다운 시간 (밀리초단위 1000 = 1초)
+  lastEventTime: new Date().getTime(),
+  moveStartX: 0,
+  moveLock: false,
+  threshold: window.innerWidth * 0.2, // 스와이프 인식 거리
+});
+
+const breadcrumb = reactive({
+  treeName: "트리이름",
+  branchName: "브랜치 이름",
+  leafName: "리프 이름",
+});
+
+const focusNodeDate = reactive({
   title: "2024년 10월 19일",
   size: 24,
 });
 
-const btn = ref<TextBtnGreenProps>({
-  text: "리프 생성",
-  link: "/app/leaf/create",
+const btn = reactive({
+  text: "리프 생성"
 });
+
+const nodes = ref([]);
+
+const { data: seedTypeData, error: seedTypeDataError } = await useFetch(() => `leaves/${leafId}/seed`, {
+  baseURL: config.public.apiBase,
+});
+
+const { data: breadcrumbData, error: breadcrumbDataError } = await useFetch(() => `leaves/${leafId}/breadcrumb`, {
+  baseURL: config.public.apiBase,
+});
+
+const { data: leafAllData, error: leafAllDataError } = await useFetch(() => `leaves/${leafId}/all`, {
+  baseURL: config.public.apiBase,
+});
+
+const { data: branchInfoData, error: branchInfoDataError } = await useFetch(() => `leaves/${leafId}/branch`, {
+  baseURL: config.public.apiBase,
+});
+
+// ----------------------- Init ----------------------- //
+if (seedTypeData.value) {
+  seedType.value = seedTypeData.value.seedType;
+}
+
+if (leafAllData.value) {
+  tree.value = new Tree(leafAllData.value);
+  nodes.value = tree.value.getNodeAll(leafId); // 리프 보여주는 구간
+}
+
+if (breadcrumbData.value) {
+  breadcrumb.treeName = breadcrumbData.value.treeName;
+  breadcrumb.branchName = breadcrumbData.value.branchName;
+  breadcrumb.leafName = breadcrumbData.value.leafName;
+}
+
+if (branchInfoData.value) {
+  branch.branchName = branchInfoData.value.branchName;
+  branch.leafCount = branchInfoData.value.leafCount;
+  branch.likeCount = branchInfoData.value.likeCount;
+  branch.viewCount = branchInfoData.value.viewCount;
+  branch.createdAt = branchInfoData.value.createdAt;
+}
+
+// ----------------------- Life Cycle ----------------------- //
+onBeforeMount(() => {
+  // 화면 크기 변경 리스너 제거
+  window.removeEventListener('resize', updateWidth);
+});
+
+onMounted(() => {
+  screenWidth.value = window.innerWidth;
+
+  // 화면 크기 변경에 대응하도록 리스너 추가
+  window.addEventListener('resize', updateWidth);
+  document.body.addEventListener('scroll', scrollHandler);
+  scrollToElement();
+});
+
+onUnmounted(() => {
+  // 화면 크기 변경 리스너 제거
+  window.removeEventListener('resize', updateWidth);
+  document.body.removeEventListener('scroll', scrollHandler);
+});
+
+
+// ----------------------- Function ----------------------- //
+
+const  updateWidth = () => {
+  screenWidth.value = window.innerWidth;
+  // console.log("화면 크기 변경", screenWidth.value);
+}
+
+const scrollHandler = (event) => {
+  // console.log("스크롤 이벤트 발생", event);
+  findFocusNode();
+};
+
+const findFocusNode = () => {
+  const nodes = document.querySelectorAll('.node');
+  const focusY = (window.innerHeight / 2);
+  // const focusX = (window.innerWidth / 2);
+
+  // console.log('start > scroll');
+  // 포커스 적용 계산
+  let minDistance = Number.MAX_SAFE_INTEGER;
+  let minNode = null;
+  for (let node of nodes) { // 가장 가까운 노드 찾기
+    node.classList.remove('node--active');
+    const position = node.getBoundingClientRect();
+    const dist = distanceY(position.y, focusY);
+
+    if (dist < minDistance) {
+      minDistance = dist;
+      minNode = node;
+    }
+  }
+
+  // 포커스 적용
+  const focusNodeId = minNode.getAttribute('data-id');
+  for (let node of nodes) {
+    let id = node.getAttribute('data-id');
+    if (id === focusNodeId) {
+      leafCreateBtn.id = id;
+      leafCreateBtn.canCreate = tree.value.isCreateBranch(id);
+      // console.log('focus node', id);
+      node.classList.add('node--active');
+    }
+  }
+
+  // 날짜 변경
+  const item = minNode.closest('.leaf-item');
+  const dateTag = item.querySelector('.log-item__date'); // 화면 날짜 적용
+  if (dateTag.innerText === '') {
+    focusNodeDate.title = '비공개 리프입니다.';
+  } else {
+    focusNodeDate.title = formatDate(dateTag.innerText); // 화면 날짜 적용;
+  }
+
+  // 브래드 스크럼 변경
+  const titleTag = item.querySelector('.log-item__title');
+  if (titleTag.innerText === '') {
+    breadcrumb.leafName = '비공개 리프입니다.';
+  } else {
+    breadcrumb.leafName = titleTag.innerText;
+  }
+};
+
+const formatDate = (dateString) => {
+  const [year, month, day] = dateString.split('-');
+  return `${year}년 ${month}월 ${day}일`;
+}
+
+const distanceY = (y1, y2) => {
+  return Math.abs(y2 - y1);
+}
+
+const touchStartHandler = (event) => {
+  nodeSideStartEventHandler(event, targetNode.value[0]);
+};
+
+const touchMoveHandler = async (event, node) => {
+  await nodeSideMoveEventHandler(event, node);
+};
+
+const nodeSideStartEventHandler = (event, node) => {
+  if (event.type === 'touchstart') {
+    touchValue.moveStartX = event.touches[0].pageX - event.currentTarget.offsetLeft;
+  } else if (event.type === 'mousedown') {
+    isDragging.value = true;
+    touchValue.moveStartX = event.pageX - event.currentTarget.offsetLeft;
+  }
+}
+
+const nodeSideMoveEventHandler = async (event, node) => {
+  const currentTime = new Date().getTime();
+
+  if (currentTime - touchValue.lastEventTime < touchValue.cooldown) {
+    return; // 쿨다운 시간동안 이벤트 무시
+  }
+
+  let currentX = 0;
+  if (event.type === 'touchmove') {
+    currentX = event.touches[0].pageX - event.currentTarget.offsetLeft;
+  } else if (event.type === 'mousemove') {
+    if (!isDragging.value) { return; } // 드래그 중이 아닐때
+    currentX = event.pageX - event.currentTarget.offsetLeft;
+  }
+
+  const diffX = currentX - touchValue.moveStartX;
+  if (!(Math.abs(diffX) > touchValue.threshold)) {
+    return; // 스와이프 인식 거리 이하
+  }
+
+  if (touchValue.moveLock) {
+    return; // 스와이프 이동 중
+  }
+
+    // 스와이프 인식 거리 이상 이동
+  if (0 < diffX && 0 < node.translateIndex) { // 왼쪽으로 스와이프
+    // console.log('인덱스 스와이프값 감소');
+    node.translateIndex--;
+    touchValue.moveLock = true;
+  } else if (diffX < 0 && node.translateIndex < node.childLength - 1) { // 오른쪽으로 스와이프
+    // console.log('인덱스 스와이프값 증가');
+    node.translateIndex++;
+    touchValue.moveLock = true;
+  }
+
+  // 스와이프 이동
+  // console.log('스와이프 이동');
+  // console.log('node', node); // 현재 스와이프 이동한 노드의 자식들을 호출함
+
+  // 리프 정보 변경
+  // console.log("타겟 노드", node.id);
+  const nodeIndex = await nodes.value.findIndex((item) => item.id === node.id);
+  // console.log("새로운 리스트", nodes.value.slice(0, nodeIndex + 1));
+  nodes.value = nodes.value.slice(0, nodeIndex + 1);
+
+  const swipeChildId = node.getSwipeChildId; // console.log('getSwipeChildId', node.getSwipeChildId); // 스와이프 이동한 노드의 자식들을 호출함
+  const newChildrenNode = await tree.value.getNodeToEnd(swipeChildId);
+
+  for (let child of newChildrenNode) {
+    child.translateIndexInit();
+    nodes.value.push(child);
+  }
+
+  // 브랜치 정보 변경
+  const branchInfoData = tree.value.getBranchInfo(swipeChildId);
+  branchInfoData.then((data) => {
+    // 브랜치 정보 변경
+    branch.branchName = data.branchName;
+    branch.leafCount = data.leafCount;
+    branch.likeCount = data.likeCount;
+    branch.viewCount = data.viewCount;
+    branch.updateTime = data.updateTime;
+    // 브래드 스크럼 변경
+    breadcrumb.branchName = data.branchName;
+  });
+  // console.log('branchInfoData', branchInfoData);
+
+  // console.log('new children nodes', newChildrenNode);
+  findFocusNode(); // 새로운 포커싱
+  touchValue.lastEventTime = new Date().getTime();
+  touchValue.moveLock = false;
+
+  if (event.type === 'mousemove') {
+    isDragging.value = false;
+  }
+};
+
+const mouseUpHandler = () => {
+  isDragging.value = false;
+};
+
+const scrollToElement = () => {
+  // console.log('scrollToElement', targetNode);
+  targetNode.value[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+};
 
 </script>
 
-<template>
+<template @scroll="scrollHandler">
   <header class="log-list-header-container">
     <h1 class="none">리프 목록</h1>
     <section>
@@ -54,27 +302,46 @@ const btn = ref<TextBtnGreenProps>({
       <h1 class="none">현재 포커싱 리프 정보</h1>
       <section class="log-path-container">
         <h1 class="none">리프 경로</h1>
-        <LogPath
-            tree="트리이름"
-            branch="브랜치 이름"
-            leaf="리프 이름"
-        ></LogPath>
+        <BarLogPath
+            :data="{
+                tree: breadcrumb.treeName,
+                branch: breadcrumb.branchName,
+                leaf: breadcrumb.leafName
+            }"
+        ></BarLogPath>
       </section>
 
       <section class="log-list-date-title-container">
         <h1 class="none">리프 날짜</h1>
-        <TextMainTitleRight
-            :title="title.title"
-            :size="title.size"
-        ></TextMainTitleRight>
+        <TextMainTitleRight :title="focusNodeDate.title" :size="focusNodeDate.size"></TextMainTitleRight>
       </section>
     </section>
   </header>
 
-  <main>
+  <main @mouseup="mouseUpHandler">
     <section class="log-list-container">
       <h1 class="none">리프 리스트</h1>
-      <!-- 리프 리스트 -->
+      <section
+               v-for="node in nodes"
+               :ref="node.id === leafId ? 'targetNode' : ''"
+      >
+        <div class="log-item-container"
+             @touchstart="touchStartHandler"
+             @touchmove="(event) => touchMoveHandler(event, node)"
+             @mousedown="touchStartHandler"
+             @mousemove="(event) => touchMoveHandler(event, node)"
+             :style="{ transform: `translateX(-${node.translateSize(screenWidth)}px)` }">
+          <div v-if="node.isLeft" class="log-item__left-box">
+            <LogItem :data="node.leftData"></LogItem>
+          </div>
+          <div class="log-item__mid-box">
+            <LogItem :data="node.midData"></LogItem>
+          </div>
+          <div v-if="node.isRight" class="log-item__right-box">
+            <LogItem :data="node.rightData"></LogItem>
+          </div>
+        </div>
+      </section>
     </section>
   </main>
 
@@ -82,17 +349,23 @@ const btn = ref<TextBtnGreenProps>({
     <h1 class="none">브랜치 정보 알림 하단 바</h1>
     <section class="log-list-bot-btn-container">
       <h1 class="none">리프 생성 버튼</h1>
-      <BtnShortAGreen :btn="btn"></BtnShortAGreen>
+      <ButtonBtnShortAGreen :visibility="leafCreateBtn.canCreate" :link="`/leaf/${seedType}/${leafCreateBtn.id}/new`" :text="`리프 생성`"/>
     </section>
 
     <section class="log-list-bot-bar-info-container">
       <h1 class="none">브랜치 정보 하단 바</h1>
-      <BranchStateMain :branch="branch"></BranchStateMain>
+      <BotBarBranchStateMain :branch="branch"></BotBarBranchStateMain>
     </section>
   </aside>
 </template>
 
 <style scoped>
+
+main {
+  width: 100%;
+  height: 100%;
+}
+
 .log-list-header-container {
   width: 100%;
   position: fixed;

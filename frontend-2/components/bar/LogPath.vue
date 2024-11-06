@@ -1,12 +1,11 @@
-<script setup lang="ts">
+<script setup>
 
-interface Props {
-  tree: string;
-  branch: string;
-  leaf: string;
-}
-
-const props = defineProps<Props>();
+const { data } = defineProps(['data'])
+/*
+tree: string;
+branch: string;
+leaf: string;
+*/
 </script>
 
 <template>
@@ -15,11 +14,11 @@ const props = defineProps<Props>();
       ========================================== -->
 <div class="log-path-box">
     <p class="log-path-box__frame">
-        <span class="log-path-box__tree-name" >{{props.tree}}</span>
+        <span class="log-path-box__tree-name" >{{data.tree}}</span>
         /
-        <span class="log-path-box__branch-name" >{{props.branch}}</span>
+        <span class="log-path-box__branch-name" >{{data.branch}}</span>
         /
-      <span class="log-path-box__branch-name" >{{props.leaf}}</span>
+      <span class="log-path-box__branch-name" >{{data.leaf}}</span>
     </p>
 </div>
 </template>

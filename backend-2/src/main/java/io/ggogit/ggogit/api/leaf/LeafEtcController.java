@@ -24,7 +24,7 @@ public class LeafEtcController {
             @Valid @RequestBody EtcLeafRequest dto
     ) {
         dto.isValidate();
-        Long memberId = 1000L; // TODO: 로그인 정보에서 가져오기
+        Long memberId = 777L; // TODO: 로그인 정보에서 가져오기
         Leaf leaf = dto.toLeaf();
         List<Long> leafTagIds = dto.getTagIds();
 
@@ -40,7 +40,7 @@ public class LeafEtcController {
             @Valid @RequestBody EtcLeafRequest dto
     ) {
         dto.isValidate();
-        Long memberId = 1000L; // TODO: 로그인 정보에서 가져오기
+        Long memberId = 777L; // TODO: 로그인 정보에서 가져오기
 
         if (!leafEtcService.isOwner(memberId, parentLeafId)) {
             throw new IllegalArgumentException("해당 리프에 대한 권한이 없습니다.");
@@ -61,7 +61,7 @@ public class LeafEtcController {
             @Valid @RequestBody EtcLeafRequest dto
     ) {
         dto.isValidate();
-        Long memberId = 1000L; // TODO: 로그인 정보에서 가져오기
+        Long memberId = 777L; // TODO: 로그인 정보에서 가져오기
 
         if (!leafEtcService.isOwner(memberId, leafId)) {
             throw new IllegalArgumentException("해당 리프에 대한 권한이 없습니다.");
@@ -81,7 +81,7 @@ public class LeafEtcController {
             @PathVariable Long leafId
     ) {
 
-        Long memberId = 1000L; // TODO: 로그인 정보에서 가져오기
+        Long memberId = 777L; // TODO: 로그인 정보에서 가져오기
 
         if (!leafEtcService.isOwner(memberId, leafId)) {
             throw new IllegalArgumentException("해당 리프에 대한 권한이 없습니다.");

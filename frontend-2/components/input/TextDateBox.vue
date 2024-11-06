@@ -13,12 +13,12 @@ const dateInput = (value) => {
 
   // // 숫자랑 -만 입력 가능
   if (!/^[0-9-]*$/.test(value)) {
-    console.log('value', value);
+    // console.log('value', value);
     validate.value = false;
     validateMessage.value = '숫자만 입력해주세요.';
 
-    console.log('validate', validate.value);
-    console.log('validateMessage', validateMessage.value);
+    // console.log('validate', validate.value);
+    // console.log('validateMessage', validateMessage.value);
     return;
   }
 

@@ -657,23 +657,28 @@ VALUES
 
 INSERT INTO tree (id, member_id, seed_id, title, description, book_mark_count, visibility, update_time, create_time, book_id, version) VALUES (3000, 1000, 1, 'testTree2', 'test입니다.2', 0, 1, '2024-09-16 22:28:47.000000', '2024-09-16 22:28:48.000000', 10, 1);
 
-INSERT INTO leaf (id, tree_id, parent_leaf_id, visibility, view_count, like_count, title, content, child_leaf_count, book_mark, update_time, create_time, version) VALUES (31, 3000, null, 1, 1, 1, 'node1', 'node1', 3, 1, '2024-09-16 09:17:19.994000', '2024-09-16 09:17:19.994000', 1);
-INSERT INTO leaf (id, tree_id, parent_leaf_id, visibility, view_count, like_count, title, content, child_leaf_count, book_mark, update_time, create_time, version) VALUES (32, 3000, 31, 0, 2, 2, 'node2', 'node2', 3, 0, '2024-09-16 09:17:19.994000', '2024-09-17 09:17:19.994000', 1);
-INSERT INTO leaf (id, tree_id, parent_leaf_id, visibility, view_count, like_count, title, content, child_leaf_count, book_mark, update_time, create_time, version) VALUES (33, 3000, 32, 1, 3, 3, 'node3', 'node3', 2, 1, '2024-09-16 09:17:19.994000', '2024-09-18 09:17:19.994000', 1);
-INSERT INTO leaf (id, tree_id, parent_leaf_id, visibility, view_count, like_count, title, content, child_leaf_count, book_mark, update_time, create_time, version) VALUES (34, 3000, 33, 1, 4, 4, 'node4', 'node4', 0, 0, '2024-09-16 09:17:19.994000', '2024-09-19 09:17:19.994000', 1);
-INSERT INTO leaf (id, tree_id, parent_leaf_id, visibility, view_count, like_count, title, content, child_leaf_count, book_mark, update_time, create_time, version) VALUES (35, 3000, 32, 1, 5, 5, 'node5', 'node5', 1, 0, '2024-09-16 09:17:19.994000', '2024-09-20 09:17:19.994000', 1);
-INSERT INTO leaf (id, tree_id, parent_leaf_id, visibility, view_count, like_count, title, content, child_leaf_count, book_mark, update_time, create_time, version) VALUES (36, 3000, 33, 1, 6, 6, 'node6', 'node6', 0, 0, '2024-09-16 09:17:19.994000', '2024-09-21 09:17:19.994000', 1);
-INSERT INTO leaf (id, tree_id, parent_leaf_id, visibility, view_count, like_count, title, content, child_leaf_count, book_mark, update_time, create_time, version) VALUES (37, 3000, 35, 0, 7, 7, 'node7', 'node7', 2, 1, '2024-09-16 09:17:19.994000', '2024-09-22 09:17:19.994000', 1);
-INSERT INTO leaf (id, tree_id, parent_leaf_id, visibility, view_count, like_count, title, content, child_leaf_count, book_mark, update_time, create_time, version) VALUES (38, 3000, 37, 1, 8, 8, 'node8', 'node8', 0, 0, '2024-09-16 09:17:19.994000', '2024-09-23 09:17:19.994000', 1);
-INSERT INTO leaf (id, tree_id, parent_leaf_id, visibility, view_count, like_count, title, content, child_leaf_count, book_mark, update_time, create_time, version) VALUES (39, 3000, 32, 1, 9, 9, 'node9', 'node9', 0, 0, '2024-09-16 09:17:19.994000', '2024-09-24 09:17:19.994000', 1);
-INSERT INTO leaf (id, tree_id, parent_leaf_id, visibility, view_count, like_count, title, content, child_leaf_count, book_mark, update_time, create_time, version) VALUES (40, 3000, 37, 1, 10, 10, 'node10', 'node10', 0, 0, '2024-09-16 09:17:19.994000', '2024-09-25 09:17:19.994000', 1);
-INSERT INTO leaf (id, tree_id, parent_leaf_id, visibility, view_count, like_count, title, content, child_leaf_count, book_mark, update_time, create_time, version) VALUES (41, 3000, 31, 1, 11, 11, 'node11', 'node11', 1, 0, '2024-09-16 09:17:19.994000', '2024-09-26 09:17:19.994000', 1);
-INSERT INTO leaf (id, tree_id, parent_leaf_id, visibility, view_count, like_count, title, content, child_leaf_count, book_mark, update_time, create_time, version) VALUES (42, 3000, 31, 1, 12, 12, 'node12', 'node12', 2, 1, '2024-09-16 09:17:19.994000', '2024-09-27 09:17:19.994000', 1);
-INSERT INTO leaf (id, tree_id, parent_leaf_id, visibility, view_count, like_count, title, content, child_leaf_count, book_mark, update_time, create_time, version) VALUES (43, 3000, 42, 1, 13, 13, 'node13', 'node13', 0, 0, '2024-09-16 09:17:19.994000', '2024-09-28 09:17:19.994000', 1);
-INSERT INTO leaf (id, tree_id, parent_leaf_id, visibility, view_count, like_count, title, content, child_leaf_count, book_mark, update_time, create_time, version) VALUES (44, 3000, 42, 1, 14, 14, 'node14', 'node14', 0, 0, '2024-09-16 09:17:19.994000', '2024-09-29 09:17:19.994000', 1);
-INSERT INTO leaf (id, tree_id, parent_leaf_id, visibility, view_count, like_count, title, content, child_leaf_count, book_mark, update_time, create_time, version) VALUES (45, 3000, 41, 1, 15, 15, 'node15', 'node15', 2, 1, '2024-09-16 09:17:19.994000', '2024-09-30 09:17:19.994000', 1);
-INSERT INTO leaf (id, tree_id, parent_leaf_id, visibility, view_count, like_count, title, content, child_leaf_count, book_mark, update_time, create_time, version) VALUES (46, 3000, 45, 1, 16, 16, 'node16', 'node16', 0, 0, '2024-09-16 09:17:19.994000', '2024-09-30 10:17:19.994000', 1);
-INSERT INTO leaf (id, tree_id, parent_leaf_id, visibility, view_count, like_count, title, content, child_leaf_count, book_mark, update_time, create_time, version) VALUES (47, 3000, 45, 1, 17, 17, 'node17', 'node17', 0, 0, '2024-09-16 09:17:19.994000', '2024-09-30 11:17:19.994000', 1);
+INSERT INTO `tree_book`
+(`tree_id`, `create_time`, `is_deleted`, `reading_page`, `update_time`, `version`)
+VALUES
+    (3000, '2024-10-01 09:00:00', false, 5, '2024-10-01 09:00:00', 1);
+
+INSERT INTO leaf (id, tree_id, parent_leaf_id, visibility, view_count, like_count, title, content, child_leaf_count, book_mark, update_time, create_time, version) VALUES (31, 3000, null, 1, 1, 1, 'node31', 'node1', 3, 1, '2024-09-16 09:17:19.994000', '2024-09-16 09:17:19.994000', 1);
+INSERT INTO leaf (id, tree_id, parent_leaf_id, visibility, view_count, like_count, title, content, child_leaf_count, book_mark, update_time, create_time, version) VALUES (32, 3000, 31, 0, 2, 2, 'node32', 'node2', 3, 0, '2024-09-16 09:17:19.994000', '2024-09-17 09:17:19.994000', 1);
+INSERT INTO leaf (id, tree_id, parent_leaf_id, visibility, view_count, like_count, title, content, child_leaf_count, book_mark, update_time, create_time, version) VALUES (33, 3000, 32, 1, 3, 3, 'node33', 'node3', 2, 1, '2024-09-16 09:17:19.994000', '2024-09-18 09:17:19.994000', 1);
+INSERT INTO leaf (id, tree_id, parent_leaf_id, visibility, view_count, like_count, title, content, child_leaf_count, book_mark, update_time, create_time, version) VALUES (34, 3000, 33, 1, 4, 4, 'node34', 'node4', 0, 0, '2024-09-16 09:17:19.994000', '2024-09-19 09:17:19.994000', 1);
+INSERT INTO leaf (id, tree_id, parent_leaf_id, visibility, view_count, like_count, title, content, child_leaf_count, book_mark, update_time, create_time, version) VALUES (35, 3000, 32, 1, 5, 5, 'node35', 'node5', 1, 0, '2024-09-16 09:17:19.994000', '2024-09-20 09:17:19.994000', 1);
+INSERT INTO leaf (id, tree_id, parent_leaf_id, visibility, view_count, like_count, title, content, child_leaf_count, book_mark, update_time, create_time, version) VALUES (36, 3000, 33, 1, 6, 6, 'node36', 'node6', 0, 0, '2024-09-16 09:17:19.994000', '2024-09-21 09:17:19.994000', 1);
+INSERT INTO leaf (id, tree_id, parent_leaf_id, visibility, view_count, like_count, title, content, child_leaf_count, book_mark, update_time, create_time, version) VALUES (37, 3000, 35, 0, 7, 7, 'node37', 'node7', 2, 1, '2024-09-16 09:17:19.994000', '2024-09-22 09:17:19.994000', 1);
+INSERT INTO leaf (id, tree_id, parent_leaf_id, visibility, view_count, like_count, title, content, child_leaf_count, book_mark, update_time, create_time, version) VALUES (38, 3000, 37, 1, 8, 8, 'node38', 'node8', 0, 0, '2024-09-16 09:17:19.994000', '2024-09-23 09:17:19.994000', 1);
+INSERT INTO leaf (id, tree_id, parent_leaf_id, visibility, view_count, like_count, title, content, child_leaf_count, book_mark, update_time, create_time, version) VALUES (39, 3000, 32, 1, 9, 9, 'node39', 'node9', 0, 0, '2024-09-16 09:17:19.994000', '2024-09-24 09:17:19.994000', 1);
+INSERT INTO leaf (id, tree_id, parent_leaf_id, visibility, view_count, like_count, title, content, child_leaf_count, book_mark, update_time, create_time, version) VALUES (40, 3000, 37, 1, 10, 10, 'node40', 'node10', 0, 0, '2024-09-16 09:17:19.994000', '2024-09-25 09:17:19.994000', 1);
+INSERT INTO leaf (id, tree_id, parent_leaf_id, visibility, view_count, like_count, title, content, child_leaf_count, book_mark, update_time, create_time, version) VALUES (41, 3000, 31, 1, 11, 11, 'node41', 'node11', 1, 0, '2024-09-16 09:17:19.994000', '2024-09-26 09:17:19.994000', 1);
+INSERT INTO leaf (id, tree_id, parent_leaf_id, visibility, view_count, like_count, title, content, child_leaf_count, book_mark, update_time, create_time, version) VALUES (42, 3000, 31, 1, 12, 12, 'node42', 'node12', 2, 1, '2024-09-16 09:17:19.994000', '2024-09-27 09:17:19.994000', 1);
+INSERT INTO leaf (id, tree_id, parent_leaf_id, visibility, view_count, like_count, title, content, child_leaf_count, book_mark, update_time, create_time, version) VALUES (43, 3000, 42, 1, 13, 13, 'node43', 'node13', 0, 0, '2024-09-16 09:17:19.994000', '2024-09-28 09:17:19.994000', 1);
+INSERT INTO leaf (id, tree_id, parent_leaf_id, visibility, view_count, like_count, title, content, child_leaf_count, book_mark, update_time, create_time, version) VALUES (44, 3000, 42, 1, 14, 14, 'node44', 'node14', 0, 0, '2024-09-16 09:17:19.994000', '2024-09-29 09:17:19.994000', 1);
+INSERT INTO leaf (id, tree_id, parent_leaf_id, visibility, view_count, like_count, title, content, child_leaf_count, book_mark, update_time, create_time, version) VALUES (45, 3000, 41, 1, 15, 15, 'node45', 'node15', 2, 1, '2024-09-16 09:17:19.994000', '2024-09-30 09:17:19.994000', 1);
+INSERT INTO leaf (id, tree_id, parent_leaf_id, visibility, view_count, like_count, title, content, child_leaf_count, book_mark, update_time, create_time, version) VALUES (46, 3000, 45, 1, 16, 16, 'node46', 'node16', 0, 0, '2024-09-16 09:17:19.994000', '2024-09-30 10:17:19.994000', 1);
+INSERT INTO leaf (id, tree_id, parent_leaf_id, visibility, view_count, like_count, title, content, child_leaf_count, book_mark, update_time, create_time, version) VALUES (47, 3000, 45, 1, 17, 17, 'node47', 'node17', 0, 0, '2024-09-16 09:17:19.994000', '2024-09-30 11:17:19.994000', 1);
 
 
 INSERT INTO leaf_tag_map (leaf_id, leaf_tag_id, version) VALUES (31, 10001, 1);
@@ -834,3 +839,16 @@ VALUES
 
 -- INSERT INTO tree_save_tmp (total_page, visibility, book_category_id, book_id, create_time, id, member_id, seed_id, version, description, tree_title, author, book_title, image_file, publisher)
 -- VALUES (123, TRUE, 1, NULL, '2024-10-30 21:21:06.566287', 1, 1000, 1, 0, 'sdfasdfasdf123123', 'ss', 'asdasdas', 'dasdadasdasd', '2041ee883f98439689ff32c74a40b995..jpg', NULL);
+
+-- ====================================================== --
+-- 기타 트리 트리 예시
+-- ====================================================== --
+INSERT INTO `tree`
+(`id`, `book_mark_count`, `create_time`, `description`, `is_deleted`, `title`, `update_time`, `version`, `visibility`, `book_id`, `member_id`, `seed_id`)
+VALUES
+    (8880, 6, '2024-10-01 10:00:00', '기타 트리 예시 입니다.', false, '기타 트리 예시', '2024-10-01 10:00:00', 1, true, 1, 777, 2);
+
+INSERT INTO `leaf`
+(`id`, `book_mark`, `child_leaf_count`, `content`, `create_time`, `is_deleted`, `like_count`, `title`, `update_time`, `version`, `view_count`, `visibility`, `parent_leaf_id`, `tree_id`)
+VALUES
+    (100, false, 0, '첫 번째 잎의 내용입니다. 이 잎은 나무의 생장에 중요한 역할을 합니다.', '2024-10-01 08:00:00', false, 10, '첫 번째 잎', '2024-10-01 08:00:00', 1, 50, true, null, 8880);

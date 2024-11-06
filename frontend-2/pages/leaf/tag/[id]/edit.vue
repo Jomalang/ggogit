@@ -75,7 +75,7 @@ const tagDeleteApi = async () => {
         `http://localhost:8080/api/v1/tags/${tag.id}`
     );
 
-    console.log("response : ", response);
+    // console.log("response : ", response);
     if (response.status !== HttpStatusCode.NoContent) {
       throw new Error("태그 정보를 삭제하는데 실패했습니다.");
     }
@@ -107,7 +107,7 @@ const tagUpdateHandler = () => {
 
 const changeTagNameHandler = (tagName) => {
   newTagName = tagName;
-  console.log("태그 이름 변경 : ", newTagName);
+  // console.log("태그 이름 변경 : ", newTagName);
 };
 
 const tagDeleteHandler = () => {

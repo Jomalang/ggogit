@@ -20,7 +20,7 @@ const props = defineProps<{
 
       <div class="log-item__mid-branch">
         <div class="log-item__line-top"></div>
-        <div class="log-item__circle node"></div>
+        <div class="log-item__circle node" :data-id="props.itemData.id"></div>
         <div class="log-item__line-bot"></div>
       </div>
       <div class="log-item__info-box">

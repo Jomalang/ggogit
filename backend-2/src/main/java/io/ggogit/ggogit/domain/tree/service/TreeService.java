@@ -17,6 +17,9 @@ public interface TreeService  {
     Tree get(Long treeId);
     List<Tree> findAllByMemberId(Long memberId);
 
+
+    Page<Tree> findAllPages(Long memberId, Pageable pageable);
+
     Boolean getComplate(Long treeId);
     Boolean isOwner(Long treeId, Long memberId);
     Integer getTreeCount(Long id);
@@ -26,6 +29,7 @@ public interface TreeService  {
     Seed getSeedByTreeId(Long treeId);
 
     TreeInfoResponse findTreeInfoResponse(Long memberId, Long treeId);
+
     Page<TreeInfoResponse> findTreeInfoResponseList(Long memberId, Pageable pageable);
 
     List<TreeInfoResponse> findTreeInfoResponseList(Long memberId);

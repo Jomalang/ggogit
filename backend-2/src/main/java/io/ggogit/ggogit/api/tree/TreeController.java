@@ -3,6 +3,7 @@ package io.ggogit.ggogit.api.tree;
 import io.ggogit.ggogit.api.leaf.dto.LeafBranchResponse;
 import io.ggogit.ggogit.api.tree.dto.*;
 
+import io.ggogit.ggogit.domain.book.entity.Book;
 import io.ggogit.ggogit.domain.leaf.entity.Leaf;
 import io.ggogit.ggogit.domain.leaf.service.LeafDtoService;
 import io.ggogit.ggogit.domain.member.entity.Member;
@@ -236,5 +237,22 @@ public class TreeController {
         List<TreeInfoResponse> treeInfoResponseList = treeService.findTreeInfoResponseList(memberId, seedId);
 
         return new ResponseEntity<>(TreeInfoResponseHome.of(treeInfoResponseList), HttpStatus.OK);
+    }
+
+    @GetMapping("/members/{memberId}/trees/book/cards")
+    public ResponseEntity<TreeCardResponseList> getTreeBookCardResponse(
+            @RequestParam(value="memberId", required = true , defaultValue = "1") Long memberId
+    ) {
+        int page = 0;
+        int size = 10;
+        Sort sort = Sort.by(Sort.Order.desc("updateTime"));
+        Pageable pageable = PageRequest.of(page, size, sort);
+
+        List<Tree> allByMemberId = treeService.findAllPages(memberId, pageable).getContent();
+        List<TreeCardResponse> treeCardResponses = allByMemberId.stream()
+                .map(tree -> TreeCardResponse.toEntity(tree.getBook(), true, tree, tree.getSeed(), memberId))
+                .toList();
+
+        return new ResponseEntity<>(TreeCardResponseList.of(treeCardResponses), HttpStatus.OK);
     }
 }

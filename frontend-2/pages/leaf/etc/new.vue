@@ -37,6 +37,10 @@ const leafCreateUrl = useState('leafCreateUrl', () => {
 watchEffect(() => {
   // console.log("leafFormData : ", leafFormData);
   // console.log("selectedTags : ", selectedTags);
+
+  if (selectedTags.value.items.length !== 0) {
+    leafFormData.value.tagIds = selectedTags.value.items.map((tag) => tag.id);
+  }
 });
 
 // ----------------------- Life Cycle ----------------------- //

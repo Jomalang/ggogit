@@ -6,10 +6,11 @@ const config = useRuntimeConfig();
 
 export class Tree {
 
-    constructor(initialData) {
+    constructor(initialData, seedType) {
         this.root = ref({});
         this.nodes = reactive([]);
         this.edgeNodes = reactive([]);
+        this._seedType = seedType;
         this.addNodeAll(initialData.items);
     }
 
@@ -22,7 +23,7 @@ export class Tree {
     addNodeAll(data) {
         for (let item of data) {
             // console.log("item 노드 데이터 추가", item.id, item);
-            let node = new Node(item); // 노드 객체로 변환
+            let node = new Node(item, this._seedType); // 노드 객체로 변환
             this.addNode(node); // 노드를 추가하면서 트리 생성
         }
     }

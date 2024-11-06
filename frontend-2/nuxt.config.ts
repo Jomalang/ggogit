@@ -27,7 +27,13 @@ export default defineNuxtConfig({
       "leaf/book/new": {
         ssr: false, // "/editor/toast" 경로에 대해서는 SSR을 비활성화
       },
+      "leaf/book/:id/edit": {
+        ssr: false, // "/editor/toast" 경로에 대해서는 SSR을 비활성화
+      },
       "leaf/book/:id/new": {
+        ssr: false, // "/editor/toast" 경로에 대해서는 SSR을 비활성화
+      },
+      "leaf/book/:id": {
         ssr: false, // "/editor/toast" 경로에 대해서는 SSR을 비활성화
       },
       "leaf/etc/new": {

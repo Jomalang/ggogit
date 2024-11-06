@@ -6,14 +6,13 @@ import Viewer from '@toast-ui/editor/dist/toastui-editor-viewer';
 import CardHiddenInfo from "~/components/card/CardHiddenInfo.vue";
 import CardTreeInfoCover from "~/components/card/CardTreeInfoCover.vue";
 
-
 const coverImageName = ref("background-image.png");
 const myProfile = ref("/jpg/leaf-profile.jpg");
 const config = useRuntimeConfig();
 const route = useRoute();
 const leafId = route.params.id;
 
-// ---------------------- Model ----------------------
+// ---------------------- Model ---------------------- //
 let cardHiddenInfo = reactive({
   hiddenText: '자세히',
   authors: '작가 이름',
@@ -54,7 +53,7 @@ const leafMember = reactive({
 
 let info = reactive({});
 
-// ----------------------  API ----------------------
+// ----------------------  API ---------------------- //
 const { data: infoData, error: infoError } = await useFetch(() => `trees/leaves/${leafId}/info`, {
   baseURL: config.public.apiBase,
 });
@@ -90,7 +89,7 @@ watchEffect(() => {
     leafMember.profileImgName = leafMemberInfo.value.profileImgName;
   }
 });
-// ---------------------- LifeCycle ----------------------
+// ---------------------- LifeCycle -------------------- //
 
 onMounted(() => {
   const viewer = new Viewer({
@@ -109,7 +108,7 @@ onMounted(() => {
 
   <header>
     <BackgroundDetail
-        :edit="`/leaves/${leafId}/edit`"
+        :edit="`/leaf/book/${leafId}/edit`"
         :backImgPath="coverImageName"
         :username="leafMember.nickName"
         :userid="leafMember.email"
@@ -142,10 +141,10 @@ onMounted(() => {
     <!-- 팔로우 -->
     <section class="follow-container">
       <BarUserInfoFollowBtn
-          :followId="1"
-          :userImg="myProfile"
-          :username="`사용자 이름`"
-          :userid="`@gksxorb147`"
+          :followId="leafMember.id"
+          :userImg="leafMember.profileImgName"
+          :username="leafMember.userName"
+          :userid="leafMember.email"
       />
     </section>
 

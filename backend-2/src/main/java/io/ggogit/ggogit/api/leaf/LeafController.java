@@ -42,7 +42,7 @@ public class LeafController {
             LeafItemResponse responses = leafDtoService.getLeafNodeRootToEnd(leafId, isOwner);
         return new ResponseEntity<>(responses, HttpStatus.OK);
     }
-
+    
     /**
      * 리프 리스트 노드의 End 까지 조회
      */
@@ -63,17 +63,6 @@ public class LeafController {
             @PathVariable Long leafId
     ) {
         LeafBookDetailResponse response = leafDtoService.getBookDetail(leafId);
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
-
-    /**
-     * 도서 리프 수정 상세 조회
-     */
-    @GetMapping("/book/leaves/{leafId}/edit")
-    public ResponseEntity<LeafBookEditDetailResponse> getLeafBookEditDetail(
-            @PathVariable Long leafId
-    ) {
-        LeafBookEditDetailResponse response = leafDtoService.getLeafBookEditDetail(leafId);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -192,5 +181,4 @@ public class LeafController {
         MemberInfoResponse responses = leafDtoService.getMemberInfo(leafId);
         return new ResponseEntity<>(responses, HttpStatus.OK);
     }
-
 }

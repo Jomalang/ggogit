@@ -42,6 +42,11 @@ const leafCreateUrl = useState('leafCreateUrl', () => {
 });
 
 watchEffect(() => {
+
+  if (selectedTags.value.items) { // 리프 태그 데이터 적용
+    leafFormData.value.tagIds = selectedTags.value.items.map((tag) => tag.id);
+  }
+
   // console.log("leafFormData : ", leafFormData);
   // console.log("selectedTags : ", selectedTags);
 });
@@ -161,6 +166,7 @@ const submitHandler = async () => {
   }
 
   // console.log("leafFormData POST > : ", leafFormData.value);
+  console.log("POST : ", leafFormData.value);
   const response = await axios.post(`${config.public.apiBase}/book/first/leaves`, leafFormData.value);
 
   if (response.status !== HttpStatusCode.Created) {
@@ -170,9 +176,10 @@ const submitHandler = async () => {
   // 데이터 초기화
   treeFormData.value = {};
   leafFormData.value = {};
+  selectedTags.value = {};
 
   let leafId = response.data.leafId;
-  router.push(`/leaf/?leafId=${leafId}`);
+  // router.push(`/leaf/?leafId=${leafId}`);
 };
 
 </script>

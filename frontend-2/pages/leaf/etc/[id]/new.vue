@@ -62,6 +62,10 @@ watchEffect(() => {
     beforeLogData.tags = beforeLeafData.value.tags;
   }
 
+  if (selectedTags.value.items.length !== 0) {
+    leafFormData.value.tagIds = selectedTags.value.items.map((tag) => tag.id);
+  }
+
   // console.log("leafFormData : ", leafFormData);
   // console.log("selectedTags : ", selectedTags);
 });

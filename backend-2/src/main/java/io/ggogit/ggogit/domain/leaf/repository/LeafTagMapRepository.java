@@ -10,5 +10,7 @@ import java.util.List;
 
 public interface LeafTagMapRepository extends JpaRepository<LeafTagMap, LeafTagMapId> {
     List<LeafTagMap> findByLeaf(Leaf leaf);
+    List<LeafTagMap> findByLeafAndActiveIsTrue(Leaf leaf);
+
     List<LeafTagMap> findByLeafTag(LeafTag leafTag);
 }

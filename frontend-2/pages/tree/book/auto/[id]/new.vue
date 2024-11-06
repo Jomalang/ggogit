@@ -39,7 +39,7 @@ const { data } = await useFetch(`/books/${bookId}`, {
 });
 
 watchEffect(() => {
-  console.log("watchEffect data : ", data.value);
+  // console.log("watchEffect data : ", data.value);
   treeFormData.value.totalPage = data.value.totalPage;
   treeFormData.value.bookId = data.value.id;
 });
@@ -55,17 +55,17 @@ onMounted(() => {
 // ----------------------- Function ----------------------- //
 
 const inputTreeTitle = (value) => {
-  console.log("inputTreeTitle : ", value);
+  // console.log("inputTreeTitle : ", value);
   treeFormData.value.treeTitle = value;
   treeFormData.value.treeTitleValid = true;
-  console.log(treeFormData.value);
+  // console.log(treeFormData.value);
 };
 
 const inputDescription = (value) => {
-  console.log("inputDescription : ", value);
+  // console.log("inputDescription : ", value);
   treeFormData.value.description = value;
   treeFormData.value.descriptionValid = true;
-  console.log(treeFormData.value);
+  // console.log(treeFormData.value);
 };
 
 const validateCheck = () => {

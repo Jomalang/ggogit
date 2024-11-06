@@ -52,4 +52,6 @@ public interface LeafDtoService {
     LeafCardResponse getLeafCards(Long bookId, int page, int size);
 
     String getSeedType(Long leafId);
+
+    int getBookPage(Long leafId);
 }

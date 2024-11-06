@@ -56,7 +56,7 @@ const treeFormData = useState('treeFormData', () => ({
 }));
 
 watch(treeFormData.value, (newVal) => {
-  console.log("treeFormData:", newVal);
+  // console.log("treeFormData:", newVal);
 });
 
 // ----------------------- Life Cycle ----------------------- //
@@ -69,7 +69,7 @@ onMounted(() => {
 
 // ----------------------- Function ----------------------- //
 const handleImageSelected = (imageData) => {
-  console.log("Selected image data:", imageData);
+  // console.log("Selected image data:", imageData);
   treeFormData.value.imageData = imageData;
 };
 

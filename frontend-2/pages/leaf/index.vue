@@ -31,6 +31,7 @@ const touchValue = reactive({
   cooldown: 1000, // 쿨다운 시간 (밀리초단위 1000 = 1초)
   lastEventTime: new Date().getTime(),
   moveStartX: 0,
+  moveLock: false,
   threshold: window.innerWidth * 0.2, // 스와이프 인식 거리
 });
 
@@ -92,6 +93,11 @@ if (branchInfoData.value) {
 }
 
 // ----------------------- Life Cycle ----------------------- //
+onBeforeMount(() => {
+  // 화면 크기 변경 리스너 제거
+  window.removeEventListener('resize', updateWidth);
+});
+
 onMounted(() => {
   screenWidth.value = window.innerWidth;
 
@@ -101,16 +107,18 @@ onMounted(() => {
   scrollToElement();
 });
 
-onBeforeMount(() => {
+onUnmounted(() => {
   // 화면 크기 변경 리스너 제거
   window.removeEventListener('resize', updateWidth);
+  document.body.removeEventListener('scroll', scrollHandler);
 });
+
 
 // ----------------------- Function ----------------------- //
 
 const  updateWidth = () => {
   screenWidth.value = window.innerWidth;
-  console.log("화면 크기 변경", screenWidth.value);
+  // console.log("화면 크기 변경", screenWidth.value);
 }
 
 const scrollHandler = (event) => {
@@ -145,7 +153,7 @@ const findFocusNode = () => {
     if (id === focusNodeId) {
       leafCreateBtn.id = id;
       leafCreateBtn.canCreate = tree.value.isCreateBranch(id);
-      console.log('focus node', id);
+      // console.log('focus node', id);
       node.classList.add('node--active');
     }
   }
@@ -166,8 +174,6 @@ const findFocusNode = () => {
   } else {
     breadcrumb.leafName = titleTag.innerText;
   }
-
-  btn.link = `/leaf/`; // 버튼 생성 링크 (여기 작업 진행중)
 };
 
 const formatDate = (dateString) => {
@@ -212,36 +218,40 @@ const nodeSideMoveEventHandler = async (event, node) => {
   }
 
   const diffX = currentX - touchValue.moveStartX;
-
   if (!(Math.abs(diffX) > touchValue.threshold)) {
     return; // 스와이프 인식 거리 이하
   }
 
-  // 스와이프 인식 거리 이상 이동
-  let isMove = false;
-
-  if (0 < diffX && 0 < node.translateIndex) { // 왼쪽으로 스와이프
-    node.translateIndex--;
-    isMove = true;
-  } else if (diffX < 0 && node.translateIndex < node.childLength - 1) { // 오른쪽으로 스와이프
-    node.translateIndex++;
-    isMove = true;
+  if (touchValue.moveLock) {
+    return; // 스와이프 이동 중
   }
 
-  if (!isMove) { return; } // 스와이프 이동 없음
+    // 스와이프 인식 거리 이상 이동
+  if (0 < diffX && 0 < node.translateIndex) { // 왼쪽으로 스와이프
+    // console.log('인덱스 스와이프값 감소');
+    node.translateIndex--;
+    touchValue.moveLock = true;
+  } else if (diffX < 0 && node.translateIndex < node.childLength - 1) { // 오른쪽으로 스와이프
+    // console.log('인덱스 스와이프값 증가');
+    node.translateIndex++;
+    touchValue.moveLock = true;
+  }
 
   // 스와이프 이동
-  console.log('스와이프 이동');
-  console.log('node', node); // 현재 스와이프 이동한 노드의 자식들을 호출함
+  // console.log('스와이프 이동');
+  // console.log('node', node); // 현재 스와이프 이동한 노드의 자식들을 호출함
 
   // 리프 정보 변경
+  // console.log("타겟 노드", node.id);
   const nodeIndex = await nodes.value.findIndex((item) => item.id === node.id);
+  // console.log("새로운 리스트", nodes.value.slice(0, nodeIndex + 1));
   nodes.value = nodes.value.slice(0, nodeIndex + 1);
 
-  const swipeChildId = node.getSwipeChildId; console.log('getSwipeChildId', node.getSwipeChildId); // 스와이프 이동한 노드의 자식들을 호출함
+  const swipeChildId = node.getSwipeChildId; // console.log('getSwipeChildId', node.getSwipeChildId); // 스와이프 이동한 노드의 자식들을 호출함
   const newChildrenNode = await tree.value.getNodeToEnd(swipeChildId);
 
   for (let child of newChildrenNode) {
+    child.translateIndexInit();
     nodes.value.push(child);
   }
 
@@ -257,11 +267,12 @@ const nodeSideMoveEventHandler = async (event, node) => {
     // 브래드 스크럼 변경
     breadcrumb.branchName = data.branchName;
   });
-  console.log('branchInfoData', branchInfoData);
+  // console.log('branchInfoData', branchInfoData);
 
   // console.log('new children nodes', newChildrenNode);
   findFocusNode(); // 새로운 포커싱
-  touchValue.lastEventTime = currentTime;
+  touchValue.lastEventTime = new Date().getTime();
+  touchValue.moveLock = false;
 
   if (event.type === 'mousemove') {
     isDragging.value = false;
@@ -273,7 +284,7 @@ const mouseUpHandler = () => {
 };
 
 const scrollToElement = () => {
-  console.log('scrollToElement', targetNode);
+  // console.log('scrollToElement', targetNode);
   targetNode.value[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
 };
 
@@ -310,22 +321,25 @@ const scrollToElement = () => {
   <main @mouseup="mouseUpHandler">
     <section class="log-list-container">
       <h1 class="none">리프 리스트</h1>
-      <section class="log-item-container"
+      <section
                v-for="node in nodes"
-               :style="{ transform: `translateX(-${node.translateSize(screenWidth)}px)` }"
                :ref="node.id === leafId ? 'targetNode' : ''"
-               @touchstart="touchStartHandler"
-               @touchmove="(event) => touchMoveHandler(event, node)"
-               @mousedown="touchStartHandler"
-               @mousemove="(event) => touchMoveHandler(event, node)">
-        <div v-if="node.isLeft" class="log-item__left-box">
-          <LogItem :data="node.leftData"></LogItem>
-        </div>
-        <div class="log-item__mid-box">
-          <LogItem :data="node.midData"></LogItem>
-        </div>
-        <div v-if="node.isRight" class="log-item__right-box">
-          <LogItem :data="node.rightData"></LogItem>
+      >
+        <div class="log-item-container"
+             @touchstart="touchStartHandler"
+             @touchmove="(event) => touchMoveHandler(event, node)"
+             @mousedown="touchStartHandler"
+             @mousemove="(event) => touchMoveHandler(event, node)"
+             :style="{ transform: `translateX(-${node.translateSize(screenWidth)}px)` }">
+          <div v-if="node.isLeft" class="log-item__left-box">
+            <LogItem :data="node.leftData"></LogItem>
+          </div>
+          <div class="log-item__mid-box">
+            <LogItem :data="node.midData"></LogItem>
+          </div>
+          <div v-if="node.isRight" class="log-item__right-box">
+            <LogItem :data="node.rightData"></LogItem>
+          </div>
         </div>
       </section>
     </section>

@@ -42,14 +42,14 @@ const leafCreateUrl = useState('leafCreateUrl', () => {
 });
 
 watchEffect(() => {
-  console.log("leafFormData : ", leafFormData);
-  console.log("selectedTags : ", selectedTags);
+  // console.log("leafFormData : ", leafFormData);
+  // console.log("selectedTags : ", selectedTags);
 });
 
 // ----------------------- Life Cycle ----------------------- //
 
 onMounted(() => {
-  console.log("leafFormData : ", leafFormData);
+  // console.log("leafFormData : ", leafFormData);
 
   const editor = new Editor({
     el: document.querySelector("#editor"),
@@ -75,15 +75,15 @@ onMounted(() => {
           });
           // 컨트롤러에서 전달받은 디스크에 저장된 파일 명
           const filename = await response.text();
-          console.log("서버에 저장된 파일 명 : ", filename);
+          // console.log("서버에 저장된 파일 명 : ", filename);
 
           // addImageBlobHook의 callback을 통해 디스크에 저장된 이미지 에디터에 렌더링
           const imageUrl = `${config.public.apiBase}/leaf/image/${filename}`;
           callback(imageUrl, "image alt attribute");
-          console.log(blob);
-          console.log(callback);
+          // console.log(blob);
+          // console.log(callback);
         } catch (error) {
-          console.log("업로드 실패 : ", error);
+          // console.log("업로드 실패 : ", error);
         }
       },
     },
@@ -91,8 +91,8 @@ onMounted(() => {
 
   editor.on("change", () => {
     document.querySelector("#editor-text").textContent = editor.getMarkdown();
-    console.log("editor.getMarkdown() : ", editor.getMarkdown());
-    console.log("leafFormData.value : ", leafFormData.value);
+    // console.log("editor.getMarkdown() : ", editor.getMarkdown());
+    // console.log("leafFormData.value : ", leafFormData.value);
     leafFormData.value.content = editor.getMarkdown();
   });
 });
@@ -107,14 +107,14 @@ const inputStartPage = (data) => {
   leafFormData.value.startPage = data.number;
   leafFormData.value.startPageValidation = data.isValidate;
   pageValidation();
-  console.log("startPage : ", leafFormData.value);
+  // console.log("startPage : ", leafFormData.value);
 };
 
 const inputEndPage = (data) => {
   leafFormData.value.endPage = data.number;
   leafFormData.value.endPageValidation = data.isValidate;
   pageValidation();
-  console.log("endPage : ", leafFormData.value);
+  // console.log("endPage : ", leafFormData.value);
 };
 
 const pageValidation = () => {
@@ -126,7 +126,7 @@ const pageValidation = () => {
 };
 
 const tagDrop = (tag) => {
-  console.log("tagDrop : ", tag);
+  // console.log("tagDrop : ", tag);
   const index = selectedTags.value.items.findIndex((item) => item.id === tag.id);
   selectedTags.value.items.splice(index, 1);
 };
@@ -160,12 +160,16 @@ const submitHandler = async () => {
     return;
   }
 
-  console.log("leafFormData POST > : ", leafFormData.value);
+  // console.log("leafFormData POST > : ", leafFormData.value);
   const response = await axios.post(`${config.public.apiBase}/book/first/leaves`, leafFormData.value);
 
   if (response.status !== HttpStatusCode.Created) {
     throw new Error("Network response was not ok");
   }
+  
+  // 데이터 초기화
+  treeFormData.value = {};
+  leafFormData.value = {};
 
   let leafId = response.data.leafId;
   router.push(`/leaf/?leafId=${leafId}`);

@@ -5,7 +5,7 @@ const { data } = defineProps(['data']);
 const emit = defineEmits(['startPage', 'endPage']);
 
 const isValidate = ref(true);
-const message = ref(isValidate.valueMessage);
+const message = ref("");
 
 const inputStartPage = (number) => {
 
@@ -56,7 +56,7 @@ const inputEndPage = (number) => {
 <template>
   <div class="input-page-number-box">
     <div class="input-page-number-text-box">
-      <p class="input-page-number__title">*읽은 페이지</p>
+      <p class="input-page-number__title">*페이지</p>
       <p class="input-page-number__max-page">{{ data.maxPage }} Max</p>
     </div>
     <div class="input-page-number__frame">

@@ -8,13 +8,8 @@ export class Node {
         this._parent = ref({});
         this._children = reactive([]);
         this._focus = data.focused;
-
-        console.log("this._data", this._data);
-        if (this._data.childLeafIds.length === 3) {
-            this._translateIndex = 1;
-        } else {
-            this._translateIndex = 0;
-        }
+        this._translateIndex = 0;
+        this.translateIndexInit();
     }
 
     get parentLeafId() {
@@ -23,6 +18,10 @@ export class Node {
 
     get translateIndex() {
         return this._translateIndex;
+    }
+
+    set translateIndex(index) {
+        this._translateIndex = index;
     }
 
     get direction() {
@@ -37,10 +36,6 @@ export class Node {
         return this._data.childLeafIds[this._translateIndex];
     }
 
-    set translateIndex(index) {
-        this._translateIndex = index;
-    }
-
     set focus(focus) {
         this._focus = focus;
     }
@@ -48,11 +43,6 @@ export class Node {
     // 브랜치를 생성 가능한지
     get isCreateBranch() {
         return this._data.childLeafIds.length < 3;
-    }
-
-    translateSize(screenWidth) {
-        // console.log("translateSize screenWidth", screenWidth, "this._translateIndex", this._translateIndex);
-        return screenWidth * this._translateIndex;
     }
 
     get link() {
@@ -132,7 +122,7 @@ export class Node {
     }
 
     get edgeCheck() {
-        console.log("edgeCheck node Id", this._data.id, "this._children", this._children);
+        // console.log("edgeCheck node Id", this._data.id, "this._children", this._children);
         return 0 <= this._children.length && this._children.length <= 2;
     }
 
@@ -140,13 +130,31 @@ export class Node {
         return this._children;
     }
 
+    get childLeafIds() {
+        return this._data.childLeafIds;
+    }
+
+    translateIndexInit() {
+        // console.log("this._data", this._data);
+        if (this._data.childLeafIds.length === 3) {
+            this._translateIndex = 1;
+        } else {
+            this._translateIndex = 0;
+        }
+    }
+
+    translateSize(screenWidth) {
+        // console.log("translateSize screenWidth", screenWidth, "this._translateIndex", this._translateIndex);
+        return screenWidth * this._translateIndex;
+    }
+
     addChild(node) {
-        console.log("addChild node 자식 추가", node);
+        // console.log("addChild node 자식 추가", node);
         this._children.push(node);
     }
 
     initParent(parent) {
-        console.log("initParent parent 부모 초기화", parent);
+        // console.log("initParent parent 부모 초기화", parent);
         this._parent.value = parent;
     }
 

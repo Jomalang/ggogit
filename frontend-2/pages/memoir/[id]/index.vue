@@ -74,9 +74,9 @@ onMounted(async () => {
     Object.assign(member, data.value.memberDto);
     Object.assign(tree, data.value.treeDto);
     isOnwer.value = await data.value.owner;
-    console.log(memoir);
-    console.log(memoir.text);
-    console.log(memoir.id);
+    // console.log(memoir);
+    // console.log(memoir.text);
+    // console.log(memoir.id);
   } else {
     console.error("회고록 조회 실패 : ", error.value);
     alert(error.value.data.message);
@@ -91,8 +91,8 @@ onMounted(async () => {
     initialValue: "hello",
   });
 
-  console.log(memoir);
-  console.log(memoir.text);
+  // console.log(memoir);
+  // console.log(memoir.text);
   await viewer.setMarkdown(memoir.text);
 
   // function commentTabActive() {

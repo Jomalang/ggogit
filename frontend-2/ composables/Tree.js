@@ -21,33 +21,33 @@ export class Tree {
 
     addNodeAll(data) {
         for (let item of data) {
-            console.log("item 노드 데이터 추가", item.id, item);
+            // console.log("item 노드 데이터 추가", item.id, item);
             let node = new Node(item); // 노드 객체로 변환
             this.addNode(node); // 노드를 추가하면서 트리 생성
         }
     }
 
     addNode(node) {
-        console.log("addNode Call : node", node);
-        console.log("this.root", this.root, "node.data.parentLeafId", node.parentLeafId);
+        // console.log("addNode Call : node", node);
+        // console.log("this.root", this.root, "node.data.parentLeafId", node.parentLeafId);
 
         if (node.parentLeafId === null) {
-            console.log("ROOT 등록 완료"); // 루트 데이터 추가
+            // console.log("ROOT 등록 완료"); // 루트 데이터 추가
             this.initRoot(node);
             return; // 루트 노드 추가 후 종료
         }
 
         // 일반 리프 데이터 추가
 
-        let parentNode = this.findParentNode(node); console.log("parentNode", parentNode); // << 여기 진행중
+        let parentNode = this.findParentNode(node); // console.log("parentNode", parentNode); // << 여기 진행중
         node.initParent(parentNode); // 자식 노드에 부모 노드 추가
         this.nodes.push(node); // 전체 노드에 자식 노드 추가
 
         if (parentNode.edgeCheck) {
-            console.log("엣지 노드 추가"); // // 엣지 노드인 경우 추가
+            // console.log("엣지 노드 추가"); // // 엣지 노드인 경우 추가
             this.edgeNodes.push(node);
         } else {
-            console.log("엣지 노드 추가 X");
+            // console.log("엣지 노드 추가 X");
             this.edgeNodes = this.edgeNodes // 엣지 노드가 아닌 경우 제거
                 .filter(edgeNode => edgeNode.id !== parentNode.id);
         }
@@ -55,10 +55,10 @@ export class Tree {
         parentNode.addChild(node); // 부모 노드에 자식 노드 추가
     }
 
-    findParentNode(node) { console.log("this.edgeNodes", this.edgeNodes);
+    findParentNode(node) { // console.log("this.edgeNodes", this.edgeNodes);
         for (let edgeNode of this.edgeNodes) {
-            console.log("edgeNode", edgeNode);
-            console.log(edgeNode.id, node.parentLeafId);
+            // console.log("edgeNode", edgeNode);
+            // console.log(edgeNode.id, node.parentLeafId);
             if (edgeNode.id === node.parentLeafId) {
                 return edgeNode;
             }
@@ -73,15 +73,15 @@ export class Tree {
         let nodes = [];
 
         // 부모 노드 찾기
-        console.log("부모 노드 찾기 시작");
+        // console.log("부모 노드 찾기 시작");
         this.findToRoot(leafId, nodes);
         nodes.reverse(); // 순서 뒤집기
 
         // 자식 노드 찾기
-        console.log("자식 노드 찾기 시작");
+        // console.log("자식 노드 찾기 시작");
         this.findToEnd(leafId, nodes);
 
-        console.log("nodes", nodes);
+        // console.log("nodes", nodes);
         return nodes;
     }
 
@@ -89,11 +89,11 @@ export class Tree {
      * LeafId 부터 End 노드까지 조회
      * */
     async getNodeToEnd(leafId) {
-        console.log("LeafId 부터 End 노드까지 조회", leafId);
+        // console.log("LeafId 부터 End 노드까지 조회", leafId);
         let nodes = [];
 
         if (!this.hasNode(leafId)) { // 노드가 존재하지 않는 경우 API 호출
-            console.log("노드가 존재하지 않는 경우 API 호출");
+            // console.log("노드가 존재하지 않는 경우 API 호출");
             await this.fetchNode(leafId);
         }
 
@@ -102,10 +102,10 @@ export class Tree {
         nodes.push(node);
 
         // 자식 노드 찾기
-        console.log("자식 노드 찾기 시작");
+        // console.log("자식 노드 찾기 시작");
         this.findToEnd(leafId, nodes);
 
-        console.log("nodes", nodes);
+        // console.log("nodes", nodes);
         return nodes;
     }
 
@@ -116,7 +116,7 @@ export class Tree {
         try {
             const response = await axios.get(`${config.public.apiBase}/leaves/${leafId}/end`);
             const data = response.data;
-            console.log("data 새로운 데이터 fetch", data.items);
+            // console.log("data 새로운 데이터 fetch", data.items);
             this.addNodeAll(data.items);
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -140,8 +140,20 @@ export class Tree {
      * */
     findToRoot(leafId, nodes) {
         let node = this.findNode(leafId);
-        nodes.push(node);
 
+        console.log("findToRoot 시작", node.id);
+        if (node.hasChildren() && 1 <= nodes.length) { // 브랜치가 역으로 올라갈 때 translateIndex 설정
+            let childNode = nodes[nodes.length - 1];
+            console.log("childNode", childNode);
+            for (let i = 0; i < node.childLeafIds.length; i++) {
+                if (node.childLeafIds[i] === childNode.id) {
+                    node.translateIndex = i;
+                    break;
+                }
+            }
+        }
+
+        nodes.push(node);
         if (node.parentLeafId === null) {
             return; // 부모인 경우 종료
         }
@@ -155,11 +167,11 @@ export class Tree {
     findToEnd(leafId, nodes) {
         let node = this.findNode(leafId);
 
-        console.log("findToEnd 시작", node);
-        console.log("node.hasChildren()", node.hasChildren());
+        // console.log("findToEnd 시작", node);
+        // console.log("node.hasChildren()", node.hasChildren());
         while (node.hasChildren()) {
             let childNodes = node.children;
-            console.log("childNodes", childNodes);
+            // console.log("childNodes", childNodes);
             if (childNodes.length === 1) {
                 node = childNodes[0];
             }
@@ -174,12 +186,13 @@ export class Tree {
     }
 
     isCreateBranch(leafId) {
+        // console.log("isCreateBranch", leafId);
         let node = this.findNode(leafId);
         return node.isCreateBranch;
     }
 
     findNode(leafId) {
-        console.log("노드 리스트", this.nodes);
+        // console.log("노드 리스트", this.nodes);
 
         leafId = Number(leafId);
         for (let node of this.nodes) {
@@ -193,6 +206,7 @@ export class Tree {
 
     async getBranchInfo(swipeChildId) {
         try {
+            // console.log("브랜치 조회 API 호출", swipeChildId);
             const response = await axios.get(`${config.public.apiBase}/leaves/${swipeChildId}/branch`);
             return response.data;
             // console.log("data 새로운 데이터 fetch", data.items);

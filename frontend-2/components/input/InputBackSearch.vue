@@ -26,7 +26,7 @@ const totalPage = ref(0);
 watch(page, () => {
   if (page.value > 1) {
     createReq(query.value, filter.value, page.value);
-    console.log("new page");
+    // console.log("new page");
   }
 });
 

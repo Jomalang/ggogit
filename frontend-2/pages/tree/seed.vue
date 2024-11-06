@@ -19,7 +19,7 @@ onMounted(() => {
 const fetchData = async () => {
   try {
     const response = await axios.get("http://localhost:8080/api/v1/seeds");
-    console.log(response.data);
+    // console.log(response.data);
     seeds.filterName = "씨앗 선택";
     seeds.filterItems = response.data.items;
   } catch (error) {

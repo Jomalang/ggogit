@@ -122,6 +122,9 @@ public class LeafEtcServiceImpl implements LeafEtcService {
         parentLeaf.setChildLeafCount(parentLeaf.getChildLeafCount() + 1);
         leafRepository.save(parentLeaf);
 
+        // 리프 이미지 모두 이동
+        imageRepository.moveAllImages(leaf.getContent(), UploadFolderType.TMP, UploadFolderType.LEAF);
+
         return savedLeaf;
     }
 

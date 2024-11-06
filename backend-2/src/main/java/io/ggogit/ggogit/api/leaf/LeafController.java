@@ -37,7 +37,6 @@ public class LeafController {
     public ResponseEntity<LeafItemResponse> getLeafNodesRootToEnd(
             @PathVariable Long leafId
     ) {
-
         boolean isOwner = true;
             LeafItemResponse responses = leafDtoService.getLeafNodeRootToEnd(leafId, isOwner);
         return new ResponseEntity<>(responses, HttpStatus.OK);
@@ -157,5 +156,17 @@ public class LeafController {
         String seedType = leafDtoService.getSeedType(leafId);
         LeafSeedResponse responses = LeafSeedResponse.of(seedType);
         return new ResponseEntity<>(responses, HttpStatus.OK);
+    }
+
+    /**
+     * 리프 도서 트리의 총 도서 페이지 수
+     * @param leafId
+     */
+    @GetMapping("/leaves/{leafId}/book/page")
+    public ResponseEntity<Integer> getBookPage(
+            @PathVariable Long leafId
+    ) {
+        int bookPage = leafDtoService.getBookPage(leafId);
+        return new ResponseEntity<>(bookPage, HttpStatus.OK);
     }
 }

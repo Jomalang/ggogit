@@ -215,21 +215,6 @@ public class LeafDtoServiceImpl implements LeafDtoService {
 
     @Override
     @Transactional(readOnly = true)
-    public LeafEtcEditDetailResponse getEtcLeafEditDetail(Long leafId) {
-        Leaf leaf = leafRepository.findById(leafId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 리프가 존재하지 않습니다."));
-
-        List<LeafTagMap> leafTagMaps = leafTagMapRepository.findByLeafAndActiveIsTrue(leaf);
-        List<LeafTag> leafTags = new ArrayList<>();
-        for (LeafTagMap leafTagMap : leafTagMaps) {
-            leafTags.add(leafTagMap.getLeafTag());
-        }
-
-        return LeafEtcEditDetailResponse.of(leaf, leafTags);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
     public LeafEtcDetailResponse getLeafEtcDetail(Long leafId) {
 
         Leaf leaf = leafRepository.findById(leafId)

@@ -3,8 +3,6 @@
 import { ref } from "vue";
 import "@toast-ui/editor/dist/toastui-editor.css";
 import Viewer from '@toast-ui/editor/dist/toastui-editor-viewer';
-import CardHiddenInfo from "~/components/card/CardHiddenInfo.vue";
-import CardTreeInfoCover from "~/components/card/CardTreeInfoCover.vue";
 
 const coverImageName = ref("background-image.png");
 const myProfile = ref("/jpg/leaf-profile.jpg");
@@ -108,7 +106,7 @@ onMounted(() => {
 
   <header>
     <BackgroundDetail
-        :edit="`/leaf/book/${leafId}/edit`"
+        :edit="`/leaf/etc/${leafId}/edit`"
         :backImgPath="coverImageName"
         :username="leafMember.nickName"
         :userid="leafMember.email"
@@ -118,18 +116,10 @@ onMounted(() => {
   </header>
 
   <main>
-    <section class="user-tree-info__container">
-      <h2 class="none">트리 정보</h2>
-      <CardTreeInfoCover :data="info">트리 정보</CardTreeInfoCover>
-    </section>
-    <section class="branch-tree-detail-container">
-      <h2 class="none">트리 상세 설명</h2>
-      <CardHiddenInfo :data ="info" >트리 상세 설명</CardHiddenInfo>
-    </section>
 
     <section class="leaf-page-info-container">
-      <h2 class="none">도서 읽은 정보</h2>
-      <BarLeafReadingPageInfo :data="leafPageInfo" ></BarLeafReadingPageInfo>
+      <h2 class="none">제목</h2>
+      <text-main-title :data="{ title: '내용', size: 28 }"></text-main-title>
     </section>
 
     <!-- 에디터 뷰어 -->

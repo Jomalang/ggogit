@@ -1,5 +1,7 @@
 package io.ggogit.ggogit.api.leaf;
 
+
+import io.ggogit.ggogit.api.leaf.dto.EtcLeafEditResponse;
 import io.ggogit.ggogit.api.leaf.dto.EtcLeafRequest;
 import io.ggogit.ggogit.api.leaf.dto.EtcLeafResponse;
 import io.ggogit.ggogit.domain.leaf.entity.Leaf;
@@ -89,6 +91,14 @@ public class LeafEtcController {
 
         leafEtcService.deleteLeafEtc(leafId);
         EtcLeafResponse response = EtcLeafResponse.of(leafId, "기타 리프 삭제 성공");
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("/etc/leaves/{leafId}/edit")
+    public ResponseEntity<EtcLeafEditResponse> getEtcLeafEdit(
+            @PathVariable Long leafId
+    ) {
+        EtcLeafEditResponse response = leafEtcService.getLeafEtcEdit(leafId);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

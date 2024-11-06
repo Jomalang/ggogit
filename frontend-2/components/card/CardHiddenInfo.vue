@@ -4,7 +4,6 @@ import { defineProps } from 'vue';
 import CardProgressBar from "~/components/card/CardProgressBar.vue";
 import CardReactNumbers from "~/components/card/CardReactNumbers.vue";
 import LinkFullWidth from "~/components/button/LinkFullWidth.vue";
-import TextBookInfo from "~/components/text/TextBookInfo.vue";
 
 const {data} = defineProps(['data']);
 const progress = (data.readingPage * 100 / data.bookTotalPage).toFixed(2);

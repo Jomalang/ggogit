@@ -42,7 +42,7 @@ public class LeafController {
             LeafItemResponse responses = leafDtoService.getLeafNodeRootToEnd(leafId, isOwner);
         return new ResponseEntity<>(responses, HttpStatus.OK);
     }
-    
+
     /**
      * 리프 리스트 노드의 End 까지 조회
      */
@@ -74,17 +74,6 @@ public class LeafController {
             @PathVariable Long leafId
     ) {
         LeafEtcDetailResponse response = leafDtoService.getLeafEtcDetail(leafId);
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
-
-    /**
-     * 기타 리프 수정 상세 조회
-     */
-    @GetMapping("/etc/leaves/{leafId}/edit")
-    public ResponseEntity<LeafEtcEditDetailResponse> getEtcLeafEditDetail(
-            @PathVariable Long leafId
-    ) {
-        LeafEtcEditDetailResponse response = leafDtoService.getEtcLeafEditDetail(leafId);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

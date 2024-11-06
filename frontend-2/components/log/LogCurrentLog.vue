@@ -28,7 +28,7 @@ setTimeout(() => {
       <div class="before-log__circle"></div>
     </div>
     <div class="before-log__text-box">
-      <p class="before-log__text">수정 로그</p>
+      <p class="before-log__text">기존 정보</p>
       <p class="before-log__title">{{ data.title }}</p>
       <p class="before-log__date">{{ data.date }}</p>
       <ul class="before-log__tags">

@@ -73,8 +73,8 @@ if (seedTypeData.value) {
   seedType.value = seedTypeData.value.seedType;
 }
 
-if (leafAllData.value) {
-  tree.value = new Tree(leafAllData.value);
+if (leafAllData.value && seedTypeData.value) {
+  tree.value = new Tree(leafAllData.value, seedTypeData.value.seedType);
   nodes.value = tree.value.getNodeAll(leafId); // 리프 보여주는 구간
 }
 

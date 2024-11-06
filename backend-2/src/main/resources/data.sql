@@ -71,7 +71,8 @@ VALUES
     (7, '2024-10-07 16:00:00', false, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxzE0-W4cDj64hPIMW9d5Jfc86aocVsxYq9Q&s', '2024-10-07 16:00:00', 1),
     (8, '2024-10-08 17:00:00', false, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxzE0-W4cDj64hPIMW9d5Jfc86aocVsxYq9Q&s', '2024-10-08 17:00:00', 1),
     (9, '2024-10-09 18:00:00', false, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxzE0-W4cDj64hPIMW9d5Jfc86aocVsxYq9Q&s', '2024-10-09 18:00:00', 1),
-    (10, '2024-10-10 19:00:00', false, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxzE0-W4cDj64hPIMW9d5Jfc86aocVsxYq9Q&s', '2024-10-10 19:00:00', 1);
+    (10, '2024-10-10 19:00:00', false, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxzE0-W4cDj64hPIMW9d5Jfc86aocVsxYq9Q&s', '2024-10-10 19:00:00', 1),
+    (999, '2024-10-10 19:00:00', false, '/jpg/leaf-profile.jpg', '2024-10-10 19:00:00', 1);
 
 -- ====================================================== --
 -- 도서 카테고리 데이터
@@ -655,7 +656,7 @@ VALUES
     (20000, false, 1, '첫 번째 잎의 내용입니다. 이 잎은 나무의 생장에 중요한 역할을 합니다.', '2024-10-01 08:00:00', false, 10, '첫 번째 잎', '2024-10-01 08:00:00', 1, 50, true, null, 20000),
     (20001, false, 0, '첫 번째 잎의 내용입니다. 이 잎은 나무의 생장에 중요한 역할을 합니다.', '2024-10-01 08:00:00', false, 10, '첫 번째 잎', '2024-10-01 08:00:00', 1, 50, true, null, 20000);
 
-INSERT INTO tree (id, member_id, seed_id, title, description, book_mark_count, visibility, update_time, create_time, book_id, version) VALUES (3000, 1000, 1, 'testTree2', 'test입니다.2', 0, 1, '2024-09-16 22:28:47.000000', '2024-09-16 22:28:48.000000', 10, 1);
+INSERT INTO tree (id, member_id, seed_id, title, description, book_mark_count, visibility, update_time, create_time, book_id, version) VALUES (3000, 1000, 2, 'testTree2', 'test입니다.2', 0, 1, '2024-09-16 22:28:47.000000', '2024-09-16 22:28:48.000000', 10, 1);
 
 INSERT INTO `tree_book`
 (`tree_id`, `create_time`, `is_deleted`, `reading_page`, `update_time`, `version`)

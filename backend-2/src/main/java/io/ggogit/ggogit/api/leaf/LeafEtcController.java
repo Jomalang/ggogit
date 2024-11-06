@@ -1,5 +1,7 @@
 package io.ggogit.ggogit.api.leaf;
 
+
+import io.ggogit.ggogit.api.leaf.dto.EtcLeafEditResponse;
 import io.ggogit.ggogit.api.leaf.dto.EtcLeafRequest;
 import io.ggogit.ggogit.api.leaf.dto.EtcLeafResponse;
 import io.ggogit.ggogit.domain.leaf.entity.Leaf;
@@ -24,7 +26,7 @@ public class LeafEtcController {
             @Valid @RequestBody EtcLeafRequest dto
     ) {
         dto.isValidate();
-        Long memberId = 777L; // TODO: 로그인 정보에서 가져오기
+        Long memberId = 1000L; // TODO: 로그인 정보에서 가져오기
         Leaf leaf = dto.toLeaf();
         List<Long> leafTagIds = dto.getTagIds();
 
@@ -40,7 +42,7 @@ public class LeafEtcController {
             @Valid @RequestBody EtcLeafRequest dto
     ) {
         dto.isValidate();
-        Long memberId = 777L; // TODO: 로그인 정보에서 가져오기
+        Long memberId = 1000L; // TODO: 로그인 정보에서 가져오기
 
         if (!leafEtcService.isOwner(memberId, parentLeafId)) {
             throw new IllegalArgumentException("해당 리프에 대한 권한이 없습니다.");
@@ -61,7 +63,7 @@ public class LeafEtcController {
             @Valid @RequestBody EtcLeafRequest dto
     ) {
         dto.isValidate();
-        Long memberId = 777L; // TODO: 로그인 정보에서 가져오기
+        Long memberId = 1000L; // TODO: 로그인 정보에서 가져오기
 
         if (!leafEtcService.isOwner(memberId, leafId)) {
             throw new IllegalArgumentException("해당 리프에 대한 권한이 없습니다.");
@@ -81,7 +83,7 @@ public class LeafEtcController {
             @PathVariable Long leafId
     ) {
 
-        Long memberId = 777L; // TODO: 로그인 정보에서 가져오기
+        Long memberId = 1000L; // TODO: 로그인 정보에서 가져오기
 
         if (!leafEtcService.isOwner(memberId, leafId)) {
             throw new IllegalArgumentException("해당 리프에 대한 권한이 없습니다.");
@@ -89,6 +91,14 @@ public class LeafEtcController {
 
         leafEtcService.deleteLeafEtc(leafId);
         EtcLeafResponse response = EtcLeafResponse.of(leafId, "기타 리프 삭제 성공");
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("/etc/leaves/{leafId}/edit")
+    public ResponseEntity<EtcLeafEditResponse> getEtcLeafEdit(
+            @PathVariable Long leafId
+    ) {
+        EtcLeafEditResponse response = leafEtcService.getLeafEtcEdit(leafId);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

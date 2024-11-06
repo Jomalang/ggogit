@@ -2,13 +2,14 @@ import { reactive, ref } from "vue";
 
 export class Node {
 
-    constructor(data) {
+    constructor(data, seedType) {
         // console.log("data", data);
         this._data = reactive(data);
         this._parent = ref({});
         this._children = reactive([]);
         this._focus = data.focused;
         this._translateIndex = 0;
+        this._seedType = seedType;
         this.translateIndexInit();
     }
 
@@ -46,7 +47,7 @@ export class Node {
     }
 
     get link() {
-        return '/leaf/' + this._data.id;
+        return `/leaf/${this._seedType}/${this._data.id}`;
     }
 
     get leftData() {

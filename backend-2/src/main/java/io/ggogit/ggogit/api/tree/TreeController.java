@@ -77,6 +77,7 @@ public class TreeController {
         redirectAttributes.addAttribute("treeSearchText", treeSearchText);
         return "redirect:/tree/search/result/{treeSearchText}";
     }
+
     @GetMapping("{id}/info")
     public ResponseEntity<TreeInfoResponse> getTreeInfoResponse(
             @PathVariable(value = "id") Long treeId,
@@ -89,6 +90,20 @@ public class TreeController {
         TreeInfoResponse treeInfoResponse = treeService.findTreeInfoResponse(memberId, treeId);
         return new ResponseEntity<> (treeInfoResponse, HttpStatus.OK);
     }
+
+    /**
+     * 리프 아이디로 트리 정보 조회
+     * */
+    @GetMapping("leaves/{leafId}/info")
+    public ResponseEntity<TreeInfoResponse> getTreeInfoResponseByLeafId(
+            @PathVariable Long leafId
+    ) {
+        Long memberId = 227L;
+        Tree tree = leafDtoService.getTree(leafId);
+        TreeInfoResponse treeInfoResponse = treeService.findTreeInfoResponse(memberId, tree.getId());
+        return new ResponseEntity<> (treeInfoResponse, HttpStatus.OK);
+    }
+
 
 //    @GetMapping("{id}/info")
 //    public Page<TreeInfoResponse> getTreeInfoResponseList(

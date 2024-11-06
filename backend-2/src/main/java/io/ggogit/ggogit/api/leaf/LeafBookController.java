@@ -1,5 +1,6 @@
 package io.ggogit.ggogit.api.leaf;
 
+import io.ggogit.ggogit.api.leaf.dto.BookLeafEditResponse;
 import io.ggogit.ggogit.api.leaf.dto.BookLeafRequest;
 import io.ggogit.ggogit.api.leaf.dto.BookLeafResponse;
 import io.ggogit.ggogit.domain.leaf.entity.Leaf;
@@ -93,5 +94,20 @@ public class LeafBookController {
         leafBookService.deleteLeafBook(leafId);
         BookLeafResponse response = BookLeafResponse.of(leafId, "도서 리프 삭제 성공");
         return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("/book/leaves/{leafId}/edit")
+    public ResponseEntity<BookLeafEditResponse> getEdit(
+            @PathVariable Long leafId
+    ) {
+        Long memberId = 1000L; // TODO: 로그인 정보에서 memberId 가져오기
+
+        if (!leafBookService.isOwner(memberId, leafId)) {
+            throw new IllegalArgumentException("해당 리프에 대한 권한이 없습니다.");
+        }
+
+        BookLeafEditResponse response = leafBookService.getEdit(leafId);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+
     }
 }

@@ -1,6 +1,7 @@
 <script setup>
 import { reactive, ref } from "vue";
 import InputBackSearchTree from "~/components/input/InputBackSearchTree.vue";
+import {debounce} from "lodash";
 
 //---------------variable----------------
 const query = ref("");
@@ -8,10 +9,11 @@ const trees = ref([]);
 const page = ref(0);
 const totalPage = ref(0);
 const totalCount = ref(0);
-const limit = ref(10);
 const scrollContainer = ref(null);
 const config = useRuntimeConfig();
 const apiUrl = config.public.apiBase + "/trees/search";
+let filterName = "최근 수정한 순"
+let sort = ref(0);
 //-------------handler----------------
 
 const handleTreeResult = (data) => {
@@ -19,8 +21,8 @@ const handleTreeResult = (data) => {
   console.log(`length=${trees.value.length}`);
 };
 
-const handleKeyword = (query) => {
-  query.value = query;
+const handleKeyword = (words) => {
+  query.value = words;
   console.log(`query=${query.value}`);
 };
 
@@ -39,18 +41,29 @@ const handleTotalCount = (totalC) => {
   console.log(`totalCount=${totalCount.value}`);
 };
 
-const handleScroll = () => {
+const handleScroll = debounce(() => {
   const container = scrollContainer.value;
   const { scrollTop, clientHeight, scrollHeight } = container;
+
   if (scrollTop + clientHeight >= scrollHeight) {
     console.log("scroll end");
-    //최대 페이지까지만 증가
+
+    // 최대 페이지까지만 증가
     if (parseInt(page.value) < parseInt(totalPage.value)) {
       page.value = parseInt(page.value) + 1;
       console.log(`page=${page.value}`);
     }
   }
-};
+}, 300); // 디바운스 적용으로 스크롤 이벤트 과도한 호출 방지
+const sortHandler = debounce(() => {
+  page.value = 0;
+  if(sort.value === 0)
+    sort.value = 1;
+  else
+    sort.value = 0;
+
+});
+
 
 //-------------life cycle----------------
 onMounted(() => {
@@ -78,6 +91,7 @@ onMounted(() => {
           :href="`./seed/index`"
           :api="apiUrl"
           :page="page"
+          :sort="sort"
           @result="handleTreeResult"
           @req="handleKeyword"
           @page="handlePage"
@@ -88,7 +102,7 @@ onMounted(() => {
 
     <section>
       <h2 class="none">검색 결과 개수 및 최근 수정한 순서</h2>
-      <TopBarSearchResultNum :num="totalCount" />
+      <TopBarSearchResultNumAndFilter :num="totalCount" :filterName="filterName" @sort="sortHandler"/>
     </section>
   </header>
 
@@ -121,7 +135,6 @@ onMounted(() => {
         />
       </div>
     </section>
-  </main>
 
   <section class="btn-select-container--right">
     <h2 class="none">트리 직접 등록 버튼</h2>
@@ -132,10 +145,8 @@ onMounted(() => {
     />
   </section>
 
-  <div class="nav-back-container">
-    <h2 class="none">네비게이션 뒤 공백</h2>
-  </div>
 
+  </main>
   <aside class="nav-container">
     <NavNavigationBar active="home" />
   </aside>
@@ -144,9 +155,10 @@ onMounted(() => {
 <style scoped>
 .scroll-container {
   display: flex;
+  margin-bottom: 10px;
   flex-direction: column;
   gap: 20px;
   overflow-y: auto;
-  height: 480px;
+  height: 650px;
 }
 </style>

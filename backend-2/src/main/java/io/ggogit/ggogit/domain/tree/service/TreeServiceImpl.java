@@ -243,16 +243,15 @@ public class TreeServiceImpl implements TreeService {
     public Page<Tree> findTreeByQueryAndMemberId(TreeSearchQuery query, Long memberId) {
 
         int size = 10;
-        FilterType sortFilter = FilterType.fromNumber(query.getSort());
         Sort sort = null;
-        if("ASC".equals(sortFilter.name())) {
-            sort = Sort.by(Sort.Direction.ASC, "updateTime");
+        if(query.getSort() == 0) {
+            sort = Sort.by("updateTime").ascending();
         } else {
-            sort = Sort.by(Sort.Direction.DESC, "updateTime");
+            sort = Sort.by( "updateTime").descending();
         }
 
         Pageable pageable = PageRequest.of(query.getPage(), size, sort);
 
-        return treeRepository.findByQueryAndMemberId(query.getQuery(), memberId, pageable);
+        return treeRepository.findByQueryAndMemberId(query.getQuery(), query.getFilter(), memberId, pageable);
     }
 }

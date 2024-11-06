@@ -23,4 +23,7 @@ public class TreeSearchQuery {
     @Max(1)
     @Min(0)
     private Long sort;
+
+    @NotNull
+    private String filter;
 }

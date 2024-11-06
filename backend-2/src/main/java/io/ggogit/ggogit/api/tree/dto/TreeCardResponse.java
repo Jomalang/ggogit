@@ -21,7 +21,7 @@ import java.time.format.DateTimeFormatter;
 @AllArgsConstructor
 @Builder
 public class TreeCardResponse {
-    private String cardType = "TREE";
+    private int cardType = 0;
     private String bookCategory;
     private String bookTitle;
     private String bookAuthor;
@@ -31,14 +31,21 @@ public class TreeCardResponse {
     private Boolean bookCompleted;
     private String cardImage;
     private String seedKorName;
+    private Long leafCount;
     private String treeTitle;
     private Boolean visibility;
-    private LocalDateTime updateTime;
+    private String updateTime;
+
+    public static String changeUpdateTime(LocalDateTime updateTime) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy-MM-dd HH:mm");
+        return updateTime.format(formatter);
+    }
 
     public static TreeCardResponse toEntity(Book book, boolean isCompletedBook, Tree tree, Seed Seed, Long memberId){
         LocalDate publishYear = book.getPublishDate();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy");
         return TreeCardResponse.builder()
+                .cardType(0)
                 .bookCategory(book.getBookCategory().getName())
                 .bookTitle(book.getTitle())
                 .bookAuthor(book.getAuthor())
@@ -48,9 +55,10 @@ public class TreeCardResponse {
                 .bookCompleted(isCompletedBook)
                 .cardImage(book.getImageFile())
                 .seedKorName(Seed.getKorName())
+                .leafCount((long) tree.getLeaf().size())
                 .treeTitle(tree.getTitle())
                 .visibility(tree.getVisibility())
-                .updateTime(tree.getUpdateTime())
+                .updateTime(TreeCardResponse.changeUpdateTime(tree.getUpdateTime()))
                 .build();
     }
 

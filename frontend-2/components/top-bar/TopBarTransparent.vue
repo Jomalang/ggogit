@@ -8,23 +8,27 @@ const deleteResource = () => {
   console.log(props.delete);
   if (confirm("정말 삭제하시겠습니까?")) {
     const { data } = $fetch(props.delete, {
-      baseURL: import.meta.env.VITE_API_BASE_URL,
+      baseURL: useRuntimeConfig().public.apiBase,
       method: "DELETE",
     });
     navigateTo("/home");
   }
+};
+
+const goBack = () => {
+  useRouter().back();
 };
 </script>
 
 <template>
   <!--top-bar__transparent(edit)-->
   <div class="top-bar__transparent-frame">
-    <a
-      class="top-bar__transparent-back-btn"
-      href="javascript:history.back()"
-    ></a>
+    <div class="top-bar__transparent-back-btn" @click="useGoBack"></div>
     <div class="top-bar__transparent-btns">
-      <a class="top-bar__transparent-setting-btn" :href="edit"></a>
+      <NuxtLink
+        class="top-bar__transparent-setting-btn"
+        :to="props.edit"
+      ></NuxtLink>
       <button
         class="top-bar__transparent-delete-btn"
         @click="deleteResource"

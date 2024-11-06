@@ -2,28 +2,14 @@
 import { CardType } from "@/types/types";
 import type { CardItemProps } from "@/types/types";
 
-// const item: CardItemProps = {
-//   cardType: CardType.LEAF,
-//   bookCategory: '도서 카테고리',
-//   bookTitle: '도서 제목',
-//   title: '제목입니다.',
-//   treeTitle: '트리 제목입니다.',
-//   memoirTitle: '회고록 제목입니다.',
-//   bookPublishedYear: '2024',
-//   bookAuthor: '유시민',
-//   bookPublisher: '프리미엄',
-//   leafTitle: '웹툰이지만 로깅합니다',
-//   leafContent: '코딩 테스트 합격자 되기 자바스크립트 편의 영감 기록을 남기는 이유는 다음과 같습니다. 영감 기록을 작성하면 책에서 배운 내용을 정리하고 이해도를 높일 수 있습니다.',
-//   leafCount: 1000,
-//   viewCount: 1000,
-//   updateTime: "2024-07-11",
-// };
+const config = useRuntimeConfig();
+//TODO : 알라딘 책 이미지일 경우 알라딘 이미지 api로 요청해야 함.
+const ImageApi = `${config.public.apiBase}/images`;
 
 const props = defineProps<{
   item: CardItemProps;
 }>();
-
-const item = ref(props.item);
+const item = props.item;
 
 function modifyCount(count: number) {
   return count > 999 ? "999+" : String(count);
@@ -39,22 +25,22 @@ function modifyCount(count: number) {
         <div v-if="item.cardType === CardType.TREE">
           <img
             class="card-another-records__top-cover-box"
-            src="/public/svg/card-book__info-cover.svg"
+            :src="ImageApi + `/tree/` + item.cardImage"
             alt="트리 이미지"
           />
         </div>
         <div v-else-if="item.cardType === CardType.MEMOIR">
           <img
             class="card-another-records__top-cover-box"
-            src="/public/svg/card-book__log-info-cover.svg"
-            alt="회고록 아이콘"
+            :src="ImageApi + `/memoir/` + item.cardImage"
+            alt="회고록 이미지"
           />
         </div>
         <div v-else-if="item.cardType === CardType.LEAF">
           <img
             class="card-another-records__top-cover-box"
-            src="/public/svg/card-book__log-info-cover.svg"
-            alt="리프 아이콘"
+            :src="ImageApi + `/leaf/` + item.cardImage"
+            alt="리프 이미지"
           />
         </div>
 
@@ -189,7 +175,7 @@ function modifyCount(count: number) {
   width: 100%;
   height: 120px;
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
 }
 
 .card-another-records__top-cover-box {

@@ -1,19 +1,24 @@
 <script setup>
-import BarUserInfoNoProfileBtn from "@/components/bar/BarUserInfoNoProfileBtn.vue";
-import BarMemoirTitleBtn from "@/components/bar/BarMemoirTitleBtn.vue";
 const props = defineProps({
   edit: "",
   delete: "",
-  backimgpath: "",
+  backImgPath: "",
   userName: "",
   userId: "",
   bookTitle: "",
   userUrl: "",
 });
 
+console.log("BackgroundUserInfoBackHeaderMemoirTitle");
+console.log(props);
+
+const config = useRuntimeConfig();
+//TODO: 배경 이미지과 프로필 이미지 구별해야 함.
+const memberBackImageUrl = `${config.public.apiBase}/images/member/${props.backImgPath}`;
+
 const backgroundStyle = computed(() => ({
   //TODO: 배경 뒤 이미지 API제작
-  backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('${props.backimgpath}')`,
+  backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('${memberBackImageUrl}')`,
 }));
 </script>
 

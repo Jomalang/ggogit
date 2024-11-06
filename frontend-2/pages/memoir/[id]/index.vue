@@ -8,7 +8,7 @@ let isOnwer = ref(false);
 const config = useRuntimeConfig();
 
 //----------------Model----------------
-let tree = reactive({
+let tree = ref({
   id: 1,
   memberId: 1,
   seedId: 1,
@@ -20,7 +20,7 @@ let tree = reactive({
   updatedAt: "2024-10-01T10:00",
 });
 
-let member = reactive({
+let member = ref({
   id: 1,
   nickName: "nickname1",
   userName: "user1",
@@ -29,14 +29,14 @@ let member = reactive({
   profileImgName: "",
 });
 
-let memoir = reactive({
+let memoir = ref({
   id: 0,
   title: "",
   text: "",
   visibility: true,
 });
 
-let book = reactive({
+let book = ref({
   id: 1,
   publishDate: "2007",
   totalPage: 759,
@@ -65,7 +65,7 @@ if (data.value) {
 } else {
   console.error("회고록 조회 실패 : ");
   //이전페이지로 이동
-  // useRouter().back();
+  useRouter().push("/home");
 }
 
 //카드 아이템
@@ -75,7 +75,7 @@ const leafItems = ref([]);
 
 //fetch
 const { data: leafCardData, error: leafCardError } = await useFetch(
-  `/members/${member.id}/leaves/book/cards`,
+  `/members/${member.value.id}/leaves/book/cards`,
   {
     method: "GET",
     baseURL: `${config.public.apiBase}`,
@@ -83,7 +83,7 @@ const { data: leafCardData, error: leafCardError } = await useFetch(
 );
 
 const { data: treeCardData, error: treeCardError } = await useFetch(
-  `trees/members/${member.id}/trees/book/cards`,
+  `trees/members/${member.value.id}/trees/book/cards`,
   {
     method: "GET",
     baseURL: `${config.public.apiBase}`,
@@ -91,7 +91,7 @@ const { data: treeCardData, error: treeCardError } = await useFetch(
 );
 
 const { data: memoirCardData, error: memoirCardError } = await useFetch(
-  `memoirs/members/${member.id}/memoirs/book/cards`,
+  `memoirs/members/${member.value.id}/memoirs/book/cards`,
   {
     method: "GET",
     baseURL: `${config.public.apiBase}`,
@@ -179,9 +179,9 @@ onMounted(() => {
   <Title>회고록</Title>
   <header>
     <BackgroundUserInfoBackHeaderMemoirTitle
-      :edit="`/memoirs/${memoir.id}/edit`"
+      :edit="`/memoir/${memoir.id}/edit`"
       :delete="`/memoirs/${memoir.id}`"
-      :backimgpath="member.backImgName"
+      :backImgPath="member.backImgName"
       :userName="member.nickName"
       :userId="member.email"
       :bookTitle="book.title"
@@ -191,7 +191,7 @@ onMounted(() => {
 
   <main>
     <section class="my-tree-list memoir-title">
-      <TextMainTitle :data="{ title: memoir.value.title, size: 28 }" />
+      <TextMainTitle :data="{ title: memoir.title, size: 28 }" />
       <h2 class="none">에디터 뷰어</h2>
 
       <!-- 에디터 뷰어-->
@@ -233,7 +233,10 @@ onMounted(() => {
           :data="{ title: `${member.nickName}의 다른 최근 기록들`, size: 28 }"
         />
       </section>
-      <section class="branch-tree-other-recode-sub-title-container">
+      <section
+        v-if="treeItems.length > 0"
+        class="branch-tree-other-recode-sub-title-container"
+      >
         <TextMainTitle :data="{ title: `트리`, size: 24 }" />
       </section>
       <section class="branch-tree-another-record-list-container">
@@ -241,7 +244,10 @@ onMounted(() => {
         <CardAnotherRecordsList :items="treeItems" />
       </section>
 
-      <section class="branch-tree-other-recode-sub-title-container">
+      <section
+        v-if="memoirItems.length > 0"
+        class="branch-tree-other-recode-sub-title-container"
+      >
         <TextMainTitle :data="{ title: `회고록`, size: 24 }" />
       </section>
 
@@ -252,8 +258,11 @@ onMounted(() => {
         </section>
       </section>
 
-      <section class="branch-tree-other-recode-sub-title-container">
-        <TextMainTitle :data="{ title: `로그`, size: 24 }" />
+      <section
+        v-if="leafItems.length > 0"
+        class="branch-tree-other-recode-sub-title-container"
+      >
+        <TextMainTitle :data="{ title: `리프`, size: 24 }" />
       </section>
 
       <section class="branch-tree-another-record-list-container">

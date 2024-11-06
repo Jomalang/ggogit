@@ -18,7 +18,6 @@ import java.util.List;
 @Builder
 public class LeafCardResponse {
 
-    String cardType = "LEAF";
     List<ItemDto> items;
     Integer totalPage;
     Integer currentPage;

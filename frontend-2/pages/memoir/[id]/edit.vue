@@ -19,7 +19,7 @@ const memoirId = ref(0);
 memoirId.value = useRoute().params.id;
 //----------------model---------------
 
-const memoir = reactive({});
+const memoir = ref({});
 const book = ref({});
 const tree = ref({});
 const fileNames = ref([]);
@@ -77,7 +77,7 @@ onMounted(() => {
     el: document.querySelector("#editor"),
     height: "450px",
     initialEditType: "wysiwyg",
-    initialValue: memoir.text,
+    initialValue: memoir.value.text,
     previewStyle: "vertical",
     placeholder: "무엇을 느끼셨나요?",
     usageStatistics: false,
@@ -119,7 +119,7 @@ onMounted(() => {
 
     <section>
       <h2 class="none">회고록 생성</h2>
-      <TopBarBack :title="`회고록 수정`" :link="`/tree/${tree.id}`" />
+      <TopBarBack :title="`회고록 수정`" :link="`/memoir/${memoirId}`" />
     </section>
   </header>
 

@@ -23,7 +23,11 @@ let editor;
 //----------------model---------------
 
 const book = ref({});
-const memoir = ref({});
+const memoir = ref({
+  title: "",
+  text: "",
+  visibility: true,
+});
 const memoirId = ref(0);
 const fileNames = ref([]);
 
@@ -57,7 +61,7 @@ const savePost = async () => {
     alert("회고록이 등록되었습니다.");
     memoirId.value = data.value.id;
     //리다이렉션
-    await navigateTo(`/memoirs/${memoirId.value}`);
+    await navigateTo(`/memoir/${memoirId.value}`);
   }
 };
 

@@ -1,6 +1,8 @@
 package io.ggogit.ggogit.domain.tree.repository.query;
 
 import io.ggogit.ggogit.domain.tree.entity.Tree;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -14,4 +16,5 @@ public interface TreeQueryRepository {
      */
     public List<Tree> findTreeByMemberIdFetch(Long memberId);
     public List<Tree> findTreeByMemberIdFetch(Long memberId, Long seedId);
+    public Page<Tree> findTreeByMemberIdFetch(Long memberId, Pageable pageable);
 }

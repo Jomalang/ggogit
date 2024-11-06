@@ -5,6 +5,9 @@ import { type CardItemProps, CardType } from "@/types/types";
 const props = defineProps<{
   items: CardItemProps[];
 }>();
+
+console.log("CardAnotherRecordsList");
+console.log(props.items);
 </script>
 
 <template>
@@ -21,4 +24,27 @@ const props = defineProps<{
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.card-another-records-list-box {
+  display: flex;
+  overflow-x: auto;
+  padding-bottom: 10px;
+  margin: 0;
+  list-style: none;
+}
+
+.card-another-records-list-box::-webkit-scrollbar {
+  display: none;
+}
+
+.card-another-records__list {
+  display: flex;
+}
+
+.card-another-records__list li:last-child {
+  margin-right: 60px; /* 마지막 아이템의 오른쪽에 공백 추가 */
+}
+.card-another-records__list-empty-space {
+  height: 160px;
+}
+</style>

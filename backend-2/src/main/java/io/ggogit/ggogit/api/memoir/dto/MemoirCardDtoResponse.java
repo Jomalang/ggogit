@@ -16,7 +16,7 @@ import java.time.format.DateTimeFormatter;
 @Getter @Setter
 public class MemoirCardDtoResponse {
 
-    private String cardType = "MEMOIR";
+    private int cardType = 1;
     //회고록
     private String memoirTitle;
     private String updateTime;
@@ -48,6 +48,7 @@ public class MemoirCardDtoResponse {
     //views와 leafNums는 Dto생성 이후 클라이언트 코드가 나중에 추가해야함!!!!!
     public static MemoirCardDtoResponse of(Memoir memoir, Tree tree) {
         return MemoirCardDtoResponse.builder()
+                .cardType(1)
                 .memoirTitle(memoir.getTitle())
                 .updateTime(MemoirCardDtoResponse.changeUpdateTime(memoir.getUpdateTime()))
                 .visibility(memoir.getVisibility())

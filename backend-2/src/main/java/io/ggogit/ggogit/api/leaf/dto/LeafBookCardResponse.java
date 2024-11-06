@@ -45,7 +45,7 @@ public class LeafBookCardResponse {
     @NoArgsConstructor
     public static class ItemDto {
         // 카드 타입
-        String cardType = "LEAF";
+        int cardType = 2;
         // 도서 카테고리
         String bookCategory;
         // 도서 제목
@@ -76,9 +76,11 @@ public class LeafBookCardResponse {
         Integer ViewCount;
 
         public static ItemDto of(Leaf leaf, Tree tree, Book book, BookCategory bookCategory) {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            DateTimeFormatter formatterTime = DateTimeFormatter.ofPattern("yy-MM-dd HH:mm");
+            DateTimeFormatter formatterDate = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
             return ItemDto.builder()
+                    .cardType(2)
                     .bookCategory(bookCategory.getName())
                     .bookTitle(book.getTitle())
                     .cardImage(book.getImageFile())
@@ -86,18 +88,18 @@ public class LeafBookCardResponse {
                     .treeSeed(tree.getSeed().getKorName())
                     .treeTitle(tree.getTitle())
                     .treeImage(null)
-                    .bookPublishedYear(book.getPublishDate().format(formatter))
+                    .bookPublishedYear(book.getPublishDate().format(formatterDate))
                     .bookPublisher(book.getPublisher())
                     .bookAuthor(book.getAuthor())
                     .leafTitle(leaf.getTitle())
                     .leafContent(leaf.getContent())
-                    .updateTime(leaf.getUpdateTime().format(formatter))
+                    .updateTime(leaf.getUpdateTime().format(formatterTime))
                     .ViewCount(leaf.getViewCount())
                     .build();
         }
 
         public static ItemDto of(Leaf leaf, Tree tree, TreeImage treeImage) {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy-MM-dd HH:mm");
 
             return ItemDto.builder()
                     .bookCategory(null)

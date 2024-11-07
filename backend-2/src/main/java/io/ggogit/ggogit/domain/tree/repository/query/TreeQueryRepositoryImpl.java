@@ -16,6 +16,9 @@ import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 
@@ -109,4 +112,22 @@ public class TreeQueryRepositoryImpl implements TreeQueryRepository {
 
         return PageableExecutionUtils.getPage(trees, pageable, () -> total != null ? total : 0);
     }
+
+    @Override
+    public Page<Tree> findTreeByMemberIdFetch(Long memberId, Pageable pageable) {
+        List<Tree> result = queryFactory
+                .selectFrom(tree)
+                .join(tree.leaf, leaf).fetchJoin()
+                .join(tree.book, book).fetchJoin()
+                .join(tree.book.bookCategory, bookCategory).fetchJoin()
+                .join(tree.treeBook, treeBook).fetchJoin()
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .where(tree.member.id.eq(memberId))
+                .fetch();
+
+        return new PageImpl<>(result, pageable, result.size());
+    }
+
+
 }

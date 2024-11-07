@@ -63,6 +63,8 @@ const createReq = async (query, sort, currentPage, filter) => {
         result.value = [];
       }
 
+      console.log(response.content);
+
       // 새로운 데이터를 추가
       result.value = [...result.value, ...response.content];
 
@@ -133,7 +135,8 @@ onUpdated(() => {
     </div>
   </div>
 
-  <div class="search-filter-log">
+  <div class="search-filter-frame">
+    <div class="search-filter-log">
     <label class="search-filter-log__checkbox-labal">
       <input
         class="search-filter-log__checkbox-input"
@@ -165,6 +168,10 @@ onUpdated(() => {
       />
       <span class="search-filter-log__checkbox-input-text">출판사</span>
     </label>
+    </div>
+    <NuxtLink class="search-filter-log__nuxt-link" to="/leaf/search">
+      리프 검색 이동
+    </NuxtLink>
   </div>
 </template>
 
@@ -238,17 +245,20 @@ button {
 .search-bar-img {
   height: 18px;
 }
+
+
 /* 필터 */
+.search-filter-frame{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .search-filter-log {
   margin-top: 18px;
   display: flex;
   white-space: nowrap;
   scrollbar-width: none;
-  gap: 10px;
-}
-.search-filter {
-  display: flex;
-  justify-content: flex-start;
   gap: 10px;
 }
 
@@ -268,7 +278,19 @@ button {
   user-select: none;
   flex-shrink: 0;
 }
-
+.search-filter-log__nuxt-link {
+  margin-top: 18px;
+  font-family: "Pretendard", serif;
+  font-size: 12px;
+  font-weight: var(--medium, 500);
+  color: var(--text-sub, #767676);
+  border-radius: 8px;
+  background-color: #f7f7f7;
+  padding: 12px 20px;
+  cursor: pointer;
+  user-select: none;
+  flex-shrink: 0;
+}
 .search-filter-log__checkbox-input:checked
   + .search-filter-log__checkbox-input-text {
   background-color: var(--main1, #323a27);

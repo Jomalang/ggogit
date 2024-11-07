@@ -5,20 +5,20 @@ import {debounce} from "lodash";
 
 //---------------variable----------------
 const query = ref("");
-const trees = ref([]);
+const leaves = ref([]);
 const page = ref(0);
 const totalPage = ref(0);
 const totalCount = ref(0);
 const scrollContainer = ref(null);
 const config = useRuntimeConfig();
-const apiUrl = config.public.apiBase + "/trees/search";
+const apiUrl = config.public.apiBase + "/leaves/search";
 let filterName = "최근 수정한 순"
 let sort = ref(0);
 //-------------handler----------------
 
 const handleTreeResult = (data) => {
-  trees.value = data || [];
-  console.log(`length=${trees.value.length}`);
+  leaves.value = data || [];
+  console.log(`length=${leaves.value.length}`);
 };
 
 const handleKeyword = (words) => {
@@ -83,11 +83,11 @@ onMounted(() => {
 
 <template>
   <header class="reg-book-search-container">
-    <h1 class="none">트리 검색</h1>
+    <h1 class="none">리프 검색</h1>
     <section>
-      <h2 class="none">트리 검색 창</h2>
-      <InputBackSearchTree
-          :placeholder="`검색할 트리를 입력해주세요.`"
+      <h2 class="none">리프 검색 창</h2>
+      <InputBackSearchLeaf
+          :placeholder="`검색할 리프를 입력해주세요.`"
           :href="`./seed/index`"
           :api="apiUrl"
           :page="page"
@@ -111,17 +111,17 @@ onMounted(() => {
       <div class="text-info-container">
         <h2 class="none">검색 시작 안내</h2>
         <TextInfo
-            :text="'현재 검색중인 트리가 없습니다'"
-            :boldText="'트리를 검색하거나 직접 등록해주세요'"
+            :text="'현재 검색중인 리프가 없습니다'"
+            :boldText="'리프를 검색하거나 직접 등록해주세요'"
         />
       </div>
     </section>
 
     <section class="tree-card-list" v-else-if="totalCount >= 1">
-      <h3 class="none">트리 검색 결과</h3>
+      <h3 class="none">리프 검색 결과</h3>
       <div class="scroll-container" ref="scrollContainer">
-        <div v-for="tree in trees" :key="tree.treeId">
-          <CardTreePreviews :data="tree" />
+        <div v-for="tree in leaves" :key="tree.treeId">
+          <CardLeafPreviews :data="tree" />
         </div>
       </div>
     </section>
@@ -137,11 +137,11 @@ onMounted(() => {
     </section>
 
   <section class="btn-select-container--right">
-    <h2 class="none">트리 직접 등록 버튼</h2>
+    <h2 class="none">리프 직접 등록 버튼</h2>
     <!-- TODO: href변경하기 -->
     <ButtonBtnShortAGreen
         :link="`/tree/seed`"
-        :text="`트리 직접 등록하기`"
+        :text="`리프 직접 등록하기`"
     />
   </section>
 

@@ -2,24 +2,16 @@
 import { onBeforeMount, onMounted, ref } from "vue";
 import Editor from "@toast-ui/editor";
 import "@toast-ui/editor/dist/toastui-editor.css";
-import LInkOneImageDetail from "~/components/link/LinkOneImageDetail.vue";
-import SubmitBtnFullBar from "~/components/button/SubmitBtnFullBar.vue";
-import NavigationBar from "~/components/nav/NavigationBar.vue";
 
 //----------------variable----------------
+const config = useRuntimeConfig();
 //save 호출 API
-const tmpSaveUrl = `${
-  import.meta.env.VITE_API_BASE_URL
-}/memoir-image/upload-tmp`;
+const tmpSaveUrl = `${config.public.apiBase}/memoir-image/upload-tmp`;
 
 //이미지 전체 경로 호출 API
-const tmpPathUrl = `${
-  import.meta.env.VITE_API_BASE_URL
-}/memoir-image/path-tmp?fileName=`;
+const tmpPathUrl = `${config.public.apiBase}/memoir-image/path-tmp?fileName=`;
 
-const tmpRenderUrl = `${
-  import.meta.env.VITE_API_BASE_URL
-}/memoir-image/return-byte?filePath=`;
+const tmpRenderUrl = `${config.public.apiBase}/memoir-image/return-byte?filePath=`;
 
 //트리 아이디
 const treeId = useRoute().params.id;
@@ -30,28 +22,14 @@ let editor;
 
 //----------------model---------------
 
+const book = ref({});
 const memoir = ref({
   title: "",
   text: "",
   visibility: true,
 });
-
 const memoirId = ref(0);
-
-const book = ref({
-  id: 0,
-  title: "default-title",
-  author: "default-author",
-  //배열로 전달
-  translator: ["default-translator"],
-  publisher: "default-publisher",
-  imageFile: "book-cover-dummy1.svg",
-  category: {id: 0, name: "default-category"},
-});
-
 const fileNames = ref([]);
-
-
 
 //----------------function----------------
 //save로직
@@ -60,9 +38,9 @@ const savePost = async () => {
   memoir.value.text = editor.getHTML();
 
   //useFetch
-  const { data, error } = await useFetch("/memoir/" + treeId, {
+  const { data, error } = await useFetch("memoirs/" + treeId, {
     method: "POST",
-    baseURL: import.meta.env.VITE_API_BASE_URL,
+    baseURL: `${config.public.apiBase}`,
     headers: {
       "Content-Type": "application/json",
     },
@@ -86,6 +64,19 @@ const savePost = async () => {
     await navigateTo(`/memoir/${memoirId.value}`);
   }
 };
+
+const { data, error } = await useFetch(`books/tree/${treeId}`, {
+  method: "GET",
+  baseURL: `${config.public.apiBase}`,
+});
+
+if (data.value) {
+  book.value = data.value;
+} else {
+  console.error("도서 조회 실패 : ", error.value);
+  alert(error.value.data.message);
+  //이전페이지로 이동
+}
 
 //---------------Life Cycle----------------
 onMounted(() => {
@@ -125,28 +116,6 @@ onMounted(() => {
     },
   });
 });
-
-watch(
-    () => route.fullPath,
-    (newPath, oldPath) => {
-      // console.log('이전 경로:', oldPath);
-      // console.log('새 경로:', newPath);
-    }
-);
-
-// TODO: 도서, 트리 API이용해 데이터 가져오기
-onBeforeMount(async () => {
-  const { data, error } = await useFetch(
-    import.meta.env.VITE_API_BASE_URL + "books/tree/" + treeId
-  );
-
-  if (error.value) {
-    console.error("트리 정보 조회 실패 : ", error.value);
-    return;
-  } else {
-    book.value = data.value;
-  }
-});
 </script>
 
 <template>
@@ -156,7 +125,7 @@ onBeforeMount(async () => {
 
     <section>
       <h2 class="none">회고록 생성</h2>
-      <TopBarBack :title="`회고록 생성`" :link="`/trees/${id}`" />
+      <TopBarBack :title="`회고록 생성`" :link="`/tree/${treeId}`" />
     </section>
   </header>
 
@@ -170,14 +139,14 @@ onBeforeMount(async () => {
       <h3 class="none">도서 커버 및 도서 정보</h3>
       <section class="tree-reg-cover__container">
         <h4 class="none">도서 커버</h4>
-        <LInkOneImageDetail
-          :src="`${book.imageFile}`"
+        <LinkOneImageDetail
+          :src="book.imageFile"
           :href="'javascript:history.back()'"
         />
       </section>
       <section class="tree-reg-book-info__container">
         <h4 class="none">도서 정보</h4>
-        <TextBookInfo :data="book"/>
+        <TextBookInfo :data="book" />
       </section>
     </section>
 
@@ -237,7 +206,7 @@ onBeforeMount(async () => {
     <section class="register__input-container--last">
       <h3 class="none">회고록 생성 버튼</h3>
       <!-- 컴포넌트 -->
-      <SubmitBtnFullBar :text="'회고록 생성하기'" @click="savePost" />
+      <ButtonSubmitBtnFullBar :text="'회고록 생성하기'" @click="savePost" />
     </section>
   </main>
 
@@ -248,7 +217,7 @@ onBeforeMount(async () => {
   <aside>
     <section class="nav-container">
       <h2 class="none">네비게이션 바</h2>
-      <NavigationBar :active="`home`" />
+      <NavNavigationBar :active="`home`" />
     </section>
   </aside>
 </template>

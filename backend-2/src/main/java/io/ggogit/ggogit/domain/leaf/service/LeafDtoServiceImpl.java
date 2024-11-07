@@ -1,6 +1,7 @@
 package io.ggogit.ggogit.domain.leaf.service;
 
 import io.ggogit.ggogit.api.leaf.dto.*;
+import io.ggogit.ggogit.api.member.dto.MemberInfoResponse;
 import io.ggogit.ggogit.domain.book.entity.Book;
 import io.ggogit.ggogit.domain.book.entity.BookCategory;
 import io.ggogit.ggogit.domain.leaf.entity.Leaf;
@@ -203,28 +204,13 @@ public class LeafDtoServiceImpl implements LeafDtoService {
         Leaf leaf = leafRepository.findById(leafId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 리프가 존재하지 않습니다."));
 
-        List<LeafTagMap> leafTagMaps = leafTagMapRepository.findByLeaf(leaf);
+        List<LeafTagMap> leafTagMaps = leafTagMapRepository.findByLeafAndActiveIsTrue(leaf);
         List<LeafTag> leafTags = new ArrayList<>();
         for (LeafTagMap leafTagMap : leafTagMaps) {
             leafTags.add(leafTagMap.getLeafTag());
         }
 
         return LeafBeforeNodeInfoResponse.of(leaf, leafTags);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public LeafEtcEditDetailResponse getEtcLeafEditDetail(Long leafId) {
-        Leaf leaf = leafRepository.findById(leafId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 리프가 존재하지 않습니다."));
-
-        List<LeafTagMap> leafTagMaps = leafTagMapRepository.findByLeaf(leaf);
-        List<LeafTag> leafTags = new ArrayList<>();
-        for (LeafTagMap leafTagMap : leafTagMaps) {
-            leafTags.add(leafTagMap.getLeafTag());
-        }
-
-        return LeafEtcEditDetailResponse.of(leaf, leafTags);
     }
 
     @Override
@@ -304,11 +290,37 @@ public class LeafDtoServiceImpl implements LeafDtoService {
         return tree.getBook().getTotalPage();
     }
 
+    @Override
+    public Tree getTree(Long leafId) {
+        Leaf leaf = leafRepository.findById(leafId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 리프가 존재하지 않습니다."));
+        return leaf.getTree();
+    }
+
+    @Override
+    public LeafDetailResponse getLeafDetail(Long leafId) {
+        Leaf leaf = leafRepository.findById(leafId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 리프가 존재하지 않습니다."));
+
+        LeafBook leafBook = leafBookRepository.findByLeaf(leaf)
+                .orElse(null);
+
+        return LeafDetailResponse.of(leaf, leafBook);
+    }
+
+    @Override
+    public MemberInfoResponse getMemberInfo(Long leafId) {
+        Leaf leaf = leafRepository.findById(leafId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 리프가 존재하지 않습니다."));
+
+        Member member = leaf.getTree().getMember();
+        return MemberInfoResponse.ofNoEmailDomain(member);
+    }
+
     private LeafItemToEndResponse getLeafItemToEndResponse(List<TreeNode> treeNodes, Long leafId) {
         LeafItemToEndResponse response = new LeafItemToEndResponse();
-        for (TreeNode treeNode : treeNodes) {
-            // 리프 노드의 태그 조회
-            List<LeafTagMap> leafTagMaps = leafTagMapRepository.findByLeaf(treeNode.getValue());
+        for (TreeNode treeNode : treeNodes) { // 리프 노드의 태그 조회
+            List<LeafTagMap> leafTagMaps = leafTagMapRepository.findByLeafAndActiveIsTrue(treeNode.getValue());
             List<LeafTag> leafTags = new ArrayList<>();
             for (LeafTagMap leafTagMap : leafTagMaps) {
                 leafTags.add(leafTagMap.getLeafTag());
@@ -320,9 +332,8 @@ public class LeafDtoServiceImpl implements LeafDtoService {
 
     private LeafItemResponse getLeafItemResponse(List<TreeNode> treeNodes, Long leafId) {
         LeafItemResponse response = new LeafItemResponse();
-        for (TreeNode treeNode : treeNodes) {
-            // 리프 노드의 태그 조회
-            List<LeafTagMap> leafTagMaps = leafTagMapRepository.findByLeaf(treeNode.getValue());
+        for (TreeNode treeNode : treeNodes) { // 리프 노드의 태그 조회
+            List<LeafTagMap> leafTagMaps = leafTagMapRepository.findByLeafAndActiveIsTrue(treeNode.getValue());
             List<LeafTag> leafTags = new ArrayList<>();
             for (LeafTagMap leafTagMap : leafTagMaps) {
                 leafTags.add(leafTagMap.getLeafTag());

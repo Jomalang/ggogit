@@ -1,5 +1,6 @@
 package io.ggogit.ggogit.domain.leaf.service;
 
+import io.ggogit.ggogit.api.leaf.dto.BookLeafEditResponse;
 import io.ggogit.ggogit.domain.book.entity.Book;
 import io.ggogit.ggogit.domain.book.repository.BookRepository;
 import io.ggogit.ggogit.domain.image.repository.ImageRepositoryImpl;
@@ -191,27 +192,23 @@ public class LeafBookServiceImpl implements LeafBookService {
             leafTagMapRepository.save(leafTagMap);
         }
 
-        for (Long leafTagId : toLeafTagIds) {
-            LeafTag leafTag = leafTagRepository.findById(leafTagId)
-                    .orElseThrow(() -> new IllegalArgumentException("LeafTag 데이터가 없습니다."));
+        List<LeafTag> leafTags = leafTagRepository.findAllById(toLeafTagIds);
+        if (leafTags.size() != toLeafTagIds.size()) {
+            throw new IllegalArgumentException("LeafTag 데이터가 없습니다.");
+        }
 
-            if (!Objects.equals(leafTag.getMember().getId(), memberId)) {
-                throw new IllegalArgumentException("LeafTag 데이터의 권한이 없습니다.");
-            }
-
-            // 리프 태그 맵핑 수정
-            LeafTagMapId leafTagMapId = LeafTagMapId.of(leaf.getId(), leafTag.getId());
+        for (LeafTag leafTag : leafTags) {
+            LeafTagMapId leafTagMapId = LeafTagMapId.of(leaf.getId(), leafTag.getId()); // 리프 태그 맵핑 수정
             leafTagMapRepository.findById(leafTagMapId).ifPresentOrElse(
-                leafTagMap -> { // 이미 있는 경우 활성화
-                    leafTagMap.setActive(true);
-                    leafTagMapRepository.save(leafTagMap);
-                },
-                () -> { // 없는 경우 생성
-                    LeafTagMap leafTagMap = LeafTagMap.of(leaf, leafTag);
-                    leafTagMapRepository.save(leafTagMap);
-                }
+                    leafTagMap -> { // 이미 있는 경우 활성화
+                        leafTagMap.setActive(true);
+                        leafTagMapRepository.save(leafTagMap);
+                    },
+                    () -> { // 없는 경우 생성
+                        LeafTagMap leafTagMap = LeafTagMap.of(leaf, leafTag);
+                        leafTagMapRepository.save(leafTagMap);
+                    }
             );
-
         }
 
         return leafBook;
@@ -243,6 +240,24 @@ public class LeafBookServiceImpl implements LeafBookService {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public BookLeafEditResponse getEdit(Long leafId) {
+
+        Leaf leaf = leafRepository.findById(leafId)
+                .orElseThrow(() -> new IllegalArgumentException("Leaf 데이터가 없습니다."));
+
+        LeafBook leafBook = leafBookRepository.findByLeaf(leaf)
+                .orElseThrow(() -> new IllegalArgumentException("LeafBook 데이터가 없습니다."));
+
+        List<LeafTag> leafTags = leafTagMapRepository.findByLeafAndActiveIsTrue(leaf).stream()
+                .map(LeafTagMap::getLeafTag)
+                .toList();
+
+        return BookLeafEditResponse.of(leaf, leafBook, leafTags);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public boolean isOwner(Long memberId, Long leafId) {
 
         Leaf leaf = leafRepository.findById(leafId)

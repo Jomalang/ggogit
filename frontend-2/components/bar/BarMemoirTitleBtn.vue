@@ -24,7 +24,7 @@ const props = defineProps<Props>();
         id="bar-user-info__like"
       />
       <label class="__like-bold" for="bar-user-info__like"></label>
-      <a class="bar-user-info__share-btn" :href="`${props.userurl}`"></a>
+      <a class="bar-user-info__share-btn" :href="`${props.userUrl}`"></a>
     </div>
   </div>
 </template>

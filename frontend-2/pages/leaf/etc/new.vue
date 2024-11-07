@@ -37,6 +37,11 @@ const leafCreateUrl = useState('leafCreateUrl', () => {
 watchEffect(() => {
   // console.log("leafFormData : ", leafFormData);
   // console.log("selectedTags : ", selectedTags);
+
+  if (selectedTags.value.items.length !== 0) {
+    leafFormData.value.tagIds = selectedTags.value.items.map((tag) => tag.id);
+  }
+
 });
 
 // ----------------------- Life Cycle ----------------------- //
@@ -98,8 +103,8 @@ const inputTitle = (title) => {
 
 const tagDrop = (tag) => {
   // console.log("tagDrop : ", tag);
-  const index = selectedTags.value.items.findIndex((item) => item.id === tag.id);
-  selectedTags.value.items.splice(index, 1);
+  selectedTags.value.items = selectedTags.value.items.filter((item) => item.id !== tag.id);
+  leafFormData.value.tagIds = selectedTags.value.items.map((tag) => tag.id);
 };
 
 const validate = () => {

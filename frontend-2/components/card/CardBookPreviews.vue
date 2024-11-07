@@ -1,51 +1,33 @@
 <script setup>
+import { onBeforeMount, ref } from "vue";
 import { defineProps } from "vue";
 
 const props = defineProps({
   data: Object,
   default: {
-    treeId: "",
-    treeTitle: "",
-    treeCreatedAt: "",
-    seedKorName: "",
-    treeDescription: "",
-    coverImageName: "",
-    bookCategory: "",
-    bookTitle: "",
-    bookAuthor: "",
-    bookTranslator: "",
-    bookPublisher: "",
-    bookPublishedYear: "",
+    id: 22,
+    publishDate: "2007-07-21",
+    totalPage: 759,
+    author: "J.K. 롤링",
+    isbn: "978-3-16-148410-0",
+    publisher: "블룸즈버리",
+    title: "해리 포터와 죽음의 성물",
+    imageFile: "/png/book-example.png",
+    createTime: "24-10-01",
+    updateTime: "24-10-01",
+    bookCategoryId: 4,
+    bookCategoryName: "판타지",
   },
 });
-
-const formatDateYear = (date) => {
-  return new Date(date).getFullYear().toString();
-};
-
-const formatDate = (date) => {
-  const options = {
-    year: "2-digit", // '23' 형식으로 출력
-    month: "2-digit", // '10' 형식으로 출력
-    day: "2-digit" // '01' 형식으로 출력
-  };
-
-  // '2023. 10. 01.' 형식으로 반환된 문자열을 '-'로 대체하고, 공백을 제거
-  return new Date(date).toLocaleDateString('ko-KR', options)
-      .replace(/\./g, '-') // '.'을 '-'로 변경
-      .replace(/ /g, '')   // 공백 제거
-      .slice(0, -1);       // 마지막에 붙는 '-' 제거
-};
-
 </script>
 
 <template>
   <div class="card-tree-details">
-    <NuxtLink class="card-tree-detail" :to="`${data.treeId}`">
+    <NuxtLink class="card-tree-detail" :to="props.data.link">
       <img
-        v-if="data.coverImageName !== undefined"
+        v-if="props.data.imageFile !== undefined"
         class="card-tree__book-cover"
-        :src="data.coverImageName"
+        :src="props.data.imageFile"
         alt="도서 이미지"
       />
       <img
@@ -55,23 +37,24 @@ const formatDate = (date) => {
         alt="도서 기본 이미지"
       />
       <div class="card-tree-detail__box">
+        <!--반복문으로 넣어야 할듯..-->
         <div class="card-tree-detail__tags">
-          <span class="card-tree-detail__tag">{{ data.seedKorName }}</span>
-          <span class="card-tree-detail__tag">{{ data.bookCategory }}</span>
+          <span class="card-tree-detail__tag">{{ props.data.category }}</span>
         </div>
 
         <!---->
-        <p class="card-tree-detail__name">{{ data.treeTitle }}</p>
-        <p class="card-tree-detail__info">{{ data.bookTitle }}</p>
+        <p class="card-tree-detail__name">{{ props.data.title }}</p>
         <div class="card-tree-detail__info">
-          <span class="card-tree-detail__info">{{ formatDateYear(data.bookPublishedYear) }}</span>
-          <span class="card-tree-detail__info"> &nbsp;  </span>
-          <span class="card-tree-detail__info">{{ data.bookAuthor }}</span>
-          <span class="card-tree-detail__info">  &nbsp; </span>
-          <span class="card-tree-detail__info">{{ data.bookPublisher }}</span>
+          <span class="card-tree-detail__info">{{
+            props.data.publishDate
+          }}</span>
+          <span class="card-tree-detail__info"> / </span>
+          <span class="card-tree-detail__info">{{ props.data.author }}</span>
+          <span class="card-tree-detail__info"> / </span>
+          <span class="card-tree-detail__info">{{ props.data.publisher }}</span>
         </div>
         <div class="card-tree-detail__info-created-date">
-          {{ formatDate(data.treeCreatedAt) }}
+          {{ props.data.createTime }}
         </div>
       </div>
     </NuxtLink>

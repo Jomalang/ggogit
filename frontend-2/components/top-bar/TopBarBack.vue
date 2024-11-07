@@ -1,22 +1,25 @@
 <script setup>
-
 const props = defineProps({
-    title: String,
-    link: String
+  title: "",
+  link: "",
 });
+
+const goBack = () => {
+  useRouter().push(props.link);
+};
 </script>
 
 <template>
   <!-- top-bar-back(title, link)-->
   <div class="top-bar--green">
     <div class="top-bar__frame">
-      <p class="top-bar__title">{{ title }}</p>
-      <RouterLink class="tob-bar__back-link" :to="link">
+      <p class="top-bar__title">{{ props.title }}</p>
+      <div class="tob-bar__back-link" @click="goBack">
         <img
           src="/public/svg/back-arrow-icon.svg"
           alt="top-bar--backarrow.svg"
         />
-      </RouterLink>
+      </div>
       <div class="top-bar__text"></div>
     </div>
   </div>

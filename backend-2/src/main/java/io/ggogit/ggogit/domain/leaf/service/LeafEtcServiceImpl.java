@@ -1,12 +1,12 @@
 package io.ggogit.ggogit.domain.leaf.service;
 
+import io.ggogit.ggogit.api.leaf.dto.EtcLeafEditResponse;
 import io.ggogit.ggogit.domain.image.repository.ImageRepositoryImpl;
 import io.ggogit.ggogit.domain.leaf.entity.*;
 import io.ggogit.ggogit.domain.leaf.repository.LeafImageRepository;
 import io.ggogit.ggogit.domain.leaf.repository.LeafRepository;
 import io.ggogit.ggogit.domain.leaf.repository.LeafTagMapRepository;
 import io.ggogit.ggogit.domain.leaf.repository.LeafTagRepository;
-import io.ggogit.ggogit.domain.leaf.util.ImageSaveUtil;
 import io.ggogit.ggogit.domain.member.entity.Member;
 import io.ggogit.ggogit.domain.member.repository.MemberRepository;
 import io.ggogit.ggogit.domain.tree.entity.Seed;
@@ -66,6 +66,7 @@ public class LeafEtcServiceImpl implements LeafEtcService {
         treeTmpRepository.delete(treeTmp);
 
         String treeImagePath = treeTmp.getImageFile();
+        treeImageRepository.save(TreeImage.of(tree, treeImagePath));
         if (treeImagePath != null) { // 트리 이미지가 있으면 이동
             imageRepository.moveImage(treeImagePath, UploadFolderType.TMP, UploadFolderType.TREE);
         }
@@ -102,6 +103,7 @@ public class LeafEtcServiceImpl implements LeafEtcService {
     }
 
     @Override
+    @Transactional
     public Leaf createLeafEtc(Long memberId, Long parentLeafId, Leaf leaf, List<Long> leafTagIds) {
 
         // `System`은 부모 `Leaf` 데이터를 조회한다.
@@ -129,6 +131,7 @@ public class LeafEtcServiceImpl implements LeafEtcService {
     }
 
     @Override
+    @Transactional
     public Leaf updateLeafEtc(Long memberId, Long leafId, Leaf toLeaf, List<Long> toLeafTagIds) {
 
         Leaf leaf = leafRepository.findById(leafId)
@@ -173,6 +176,7 @@ public class LeafEtcServiceImpl implements LeafEtcService {
     }
 
     @Override
+    @Transactional
     public void deleteLeafEtc(Long leafId) {
 
         Leaf leaf = leafRepository.findById(leafId)
@@ -194,11 +198,28 @@ public class LeafEtcServiceImpl implements LeafEtcService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public boolean isOwner(Long memberId, Long parentLeafId) {
 
         Leaf leaf = leafRepository.findById(parentLeafId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 리프를 찾을 수 없습니다."));
 
         return leaf.getTree().getMember().getId().equals(memberId);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public EtcLeafEditResponse getLeafEtcEdit(Long leafId) {
+
+            Leaf leaf = leafRepository.findById(leafId)
+                    .orElseThrow(() -> new IllegalArgumentException("Leaf 데이터가 없습니다."));
+
+            List<LeafTagMap> leafTagMaps = leafTagMapRepository.findByLeafAndActiveIsTrue(leaf);
+            List<LeafTag> leafTags = new ArrayList<>();
+            for (LeafTagMap leafTagMap : leafTagMaps) {
+                leafTags.add(leafTagMap.getLeafTag());
+            }
+
+            return EtcLeafEditResponse.of(leaf, leafTags);
     }
 }

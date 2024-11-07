@@ -2,6 +2,7 @@ package io.ggogit.ggogit.api.leaf;
 
 import io.ggogit.ggogit.api.leaf.dto.LeafBookCardResponse;
 import io.ggogit.ggogit.api.leaf.dto.*;
+import io.ggogit.ggogit.api.member.dto.MemberInfoResponse;
 import io.ggogit.ggogit.domain.leaf.service.LeafDtoService;
 import io.ggogit.ggogit.domain.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -66,17 +67,6 @@ public class LeafController {
     }
 
     /**
-     * 도서 리프 수정 상세 조회
-     */
-    @GetMapping("/book/leaves/{leafId}/edit")
-    public ResponseEntity<LeafBookEditDetailResponse> getLeafBookEditDetail(
-            @PathVariable Long leafId
-    ) {
-        LeafBookEditDetailResponse response = leafDtoService.getLeafBookEditDetail(leafId);
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
-
-    /**
      * 기타 리프 디테일 조회
      */
     @GetMapping("/etc/leaves/{leafId}")
@@ -84,17 +74,6 @@ public class LeafController {
             @PathVariable Long leafId
     ) {
         LeafEtcDetailResponse response = leafDtoService.getLeafEtcDetail(leafId);
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
-
-    /**
-     * 기타 리프 수정 상세 조회
-     */
-    @GetMapping("/etc/leaves/{leafId}/edit")
-    public ResponseEntity<LeafEtcEditDetailResponse> getEtcLeafEditDetail(
-            @PathVariable Long leafId
-    ) {
-        LeafEtcEditDetailResponse response = leafDtoService.getEtcLeafEditDetail(leafId);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -168,5 +147,27 @@ public class LeafController {
     ) {
         int bookPage = leafDtoService.getBookPage(leafId);
         return new ResponseEntity<>(bookPage, HttpStatus.OK);
+    }
+
+    /**
+     * 리프 디테일 정보
+     */
+    @GetMapping("/leaves/{leafId}")
+    public ResponseEntity<LeafDetailResponse> getLeafDetail(
+            @PathVariable Long leafId
+    ) {
+        LeafDetailResponse responses = leafDtoService.getLeafDetail(leafId);
+        return new ResponseEntity<>(responses, HttpStatus.OK);
+    }
+
+    /**
+     * 리프 회원 정보
+     */
+    @GetMapping("/leaves/{leafId}/member")
+    public ResponseEntity<MemberInfoResponse> getMemberInfo(
+            @PathVariable Long leafId
+    ) {
+        MemberInfoResponse responses = leafDtoService.getMemberInfo(leafId);
+        return new ResponseEntity<>(responses, HttpStatus.OK);
     }
 }

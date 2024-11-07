@@ -1,7 +1,5 @@
 package io.ggogit.ggogit.domain.tree.service;
 
-import io.ggogit.ggogit.api.book.dto.BookInfoResponse;
-import io.ggogit.ggogit.api.tree.dto.TreeCardRequest;
 import io.ggogit.ggogit.api.tree.dto.TreeCardResponse;
 import io.ggogit.ggogit.api.tree.dto.TreeInfoResponse;
 import io.ggogit.ggogit.api.tree.dto.TreeSearchQuery;
@@ -68,6 +66,11 @@ public class TreeServiceImpl implements TreeService {
 
     @Override
     public List<Tree> findAllByMemberId(Long memberId) { return  treeRepository.findByMemberId(memberId); }
+
+    @Override
+    public Page<Tree> findAllPages(Long memberId, Pageable pageable){
+        return treeRepository.findTreeByMemberIdFetch(memberId, pageable);
+    }
 
     @Override
     public Boolean getComplate(Long treeId) {

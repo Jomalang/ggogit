@@ -2,7 +2,9 @@ package io.ggogit.ggogit.domain.leaf.service;
 
 
 import io.ggogit.ggogit.api.leaf.dto.*;
+import io.ggogit.ggogit.api.member.dto.MemberInfoResponse;
 import io.ggogit.ggogit.domain.leaf.entity.Leaf;
+import io.ggogit.ggogit.domain.tree.entity.Tree;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -43,8 +45,6 @@ public interface LeafDtoService {
 
     LeafBeforeNodeInfoResponse getLeafBeforeNodeInfo(Long leafId);
 
-    LeafEtcEditDetailResponse getEtcLeafEditDetail(Long leafId);
-
     LeafEtcDetailResponse getLeafEtcDetail(Long leafId);
 
     LeafBookCardResponse getLeafBookCards(Long memberId, int page, int size);
@@ -54,4 +54,10 @@ public interface LeafDtoService {
     String getSeedType(Long leafId);
 
     int getBookPage(Long leafId);
+
+    Tree getTree(Long leafId);
+
+    LeafDetailResponse getLeafDetail(Long leafId);
+
+    MemberInfoResponse getMemberInfo(Long leafId);
 }

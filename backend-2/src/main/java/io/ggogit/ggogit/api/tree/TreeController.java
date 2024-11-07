@@ -3,6 +3,7 @@ package io.ggogit.ggogit.api.tree;
 import io.ggogit.ggogit.api.leaf.dto.LeafBranchResponse;
 import io.ggogit.ggogit.api.tree.dto.*;
 
+import io.ggogit.ggogit.domain.book.entity.Book;
 import io.ggogit.ggogit.domain.leaf.entity.Leaf;
 import io.ggogit.ggogit.domain.leaf.service.LeafDtoService;
 import io.ggogit.ggogit.domain.member.entity.Member;
@@ -87,6 +88,7 @@ public class TreeController {
         redirectAttributes.addAttribute("treeSearchText", treeSearchText);
         return "redirect:/tree/search/result/{treeSearchText}";
     }
+
     @GetMapping("{id}/info")
     public ResponseEntity<TreeInfoResponse> getTreeInfoResponse(
             @PathVariable(value = "id") Long treeId,
@@ -99,6 +101,20 @@ public class TreeController {
         TreeInfoResponse treeInfoResponse = treeService.findTreeInfoResponse(memberId, treeId);
         return new ResponseEntity<> (treeInfoResponse, HttpStatus.OK);
     }
+
+    /**
+     * 리프 아이디로 트리 정보 조회
+     * */
+    @GetMapping("leaves/{leafId}/info")
+    public ResponseEntity<TreeInfoResponse> getTreeInfoResponseByLeafId(
+            @PathVariable Long leafId
+    ) {
+        Long memberId = 227L;
+        Tree tree = leafDtoService.getTree(leafId);
+        TreeInfoResponse treeInfoResponse = treeService.findTreeInfoResponse(memberId, tree.getId());
+        return new ResponseEntity<> (treeInfoResponse, HttpStatus.OK);
+    }
+
 
 //    @GetMapping("{id}/info")
 //    public Page<TreeInfoResponse> getTreeInfoResponseList(
@@ -247,5 +263,22 @@ public class TreeController {
         List<TreeInfoResponse> treeInfoResponseList = treeService.findTreeInfoResponseList(memberId, seedId);
 
         return new ResponseEntity<>(TreeInfoResponseHome.of(treeInfoResponseList), HttpStatus.OK);
+    }
+
+    @GetMapping("/members/{memberId}/trees/book/cards")
+    public ResponseEntity<TreeCardResponseList> getTreeBookCardResponse(
+            @RequestParam(value="memberId", required = true , defaultValue = "1") Long memberId
+    ) {
+        int page = 0;
+        int size = 10;
+        Sort sort = Sort.by(Sort.Order.desc("updateTime"));
+        Pageable pageable = PageRequest.of(page, size, sort);
+
+        List<Tree> allByMemberId = treeService.findAllPages(memberId, pageable).getContent();
+        List<TreeCardResponse> treeCardResponses = allByMemberId.stream()
+                .map(tree -> TreeCardResponse.toEntity(tree.getBook(), true, tree, tree.getSeed(), memberId))
+                .toList();
+
+        return new ResponseEntity<>(TreeCardResponseList.of(treeCardResponses), HttpStatus.OK);
     }
 }

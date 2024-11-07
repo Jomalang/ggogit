@@ -1,8 +1,6 @@
 package io.ggogit.ggogit.api.member.dto;
 
 import io.ggogit.ggogit.domain.member.entity.Member;
-import io.ggogit.ggogit.domain.member.entity.MemberBackgroundImage;
-import io.ggogit.ggogit.domain.member.entity.MemberProfileImage;
 import lombok.*;
 
 @Getter @Setter
@@ -18,15 +16,26 @@ public class MemberInfoResponse {
     private String backImgName;
     private String profileImgName;
 
-    public static MemberInfoResponse of(Member member){
+    public static MemberInfoResponse of(Member member) {
         return MemberInfoResponse.builder()
                 .id(member.getId())
                 .userName(member.getUsername())
                 .nickName(member.getNickname())
                 .email(member.getEmail())
-                .backImgName(member.getMemberBackgroundImage().getName())
-                .profileImgName(member.getMemberProfileImage().getName())
+                .backImgName(member.getMemberBackgroundImage() == null ? null : member.getMemberBackgroundImage().getName())
+                .profileImgName(member.getMemberProfileImage() == null ? null : member.getMemberProfileImage().getName())
                 .build();
     }
 
+    // 이메일 뒷부분 숨기기
+    public static MemberInfoResponse ofNoEmailDomain(Member member) {
+        return MemberInfoResponse.builder()
+                .id(member.getId())
+                .userName(member.getUsername())
+                .nickName(member.getNickname())
+                .email(member.getEmail().split("@")[0])
+                .backImgName(member.getMemberBackgroundImage() == null ? null : member.getMemberBackgroundImage().getName())
+                .profileImgName(member.getMemberProfileImage() == null ? null : member.getMemberProfileImage().getName())
+                .build();
+    }
 }

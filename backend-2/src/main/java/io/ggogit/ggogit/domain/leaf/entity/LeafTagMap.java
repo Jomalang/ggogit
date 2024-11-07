@@ -31,7 +31,7 @@ public class LeafTagMap {
     @Builder.Default
     @ColumnDefault("1")
     @Column(name = "ACTIVE", nullable = false)
-    private Boolean active = false;
+    private Boolean active = true;
 
     @Version
     @Column(name = "VERSION", nullable = false)

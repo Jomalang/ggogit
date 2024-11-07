@@ -17,7 +17,8 @@ public class MemoirRequest {
     @NotNull(message = "내용을 입력해 주세요.")
     private String text;
     @NotNull(message = "공개여부를 설정해주세요.")
-    private Boolean visibility;
+    @Builder.Default
+    private Boolean visibility = true;
 
     private List<String> fileNames = new ArrayList<>();
 

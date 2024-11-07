@@ -9,22 +9,22 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+@Builder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class LeafEtcEditDetailResponse {
+public class EtcLeafEditResponse {
 
+    private List<LeafTagDto> tags;
     private String title;
     private String content;
-    private List<LeafTagDto> tags;
     private Boolean visibility;
 
-    public static LeafEtcEditDetailResponse of(Leaf leaf, List<LeafTag> leafTags) {
-        return LeafEtcEditDetailResponse.builder()
+    public static EtcLeafEditResponse of(Leaf leaf, List<LeafTag> tags) {
+        return EtcLeafEditResponse.builder()
+                .tags(tags.stream().map(LeafTagDto::of).toList())
                 .title(leaf.getTitle())
                 .content(leaf.getContent())
-                .tags(leafTags.stream().map(LeafTagDto::of).toList())
                 .visibility(leaf.getVisibility())
                 .build();
     }

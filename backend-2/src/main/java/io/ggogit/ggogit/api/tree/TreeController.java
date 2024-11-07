@@ -256,7 +256,7 @@ public class TreeController {
 
     @GetMapping("/members/{memberId}/trees/book/cards")
     public ResponseEntity<TreeCardResponseList> getTreeBookCardResponse(
-            @RequestParam(value="memberId", required = true , defaultValue = "1") Long memberId
+            @PathVariable(value="memberId", required = true) Long memberId
     ) {
         int page = 0;
         int size = 10;
@@ -270,4 +270,23 @@ public class TreeController {
 
         return new ResponseEntity<>(TreeCardResponseList.of(treeCardResponses), HttpStatus.OK);
     }
+
+    @GetMapping("members/{memberId}/books/{bookId}/trees/cards")
+    public ResponseEntity<TreeCardResponseList> getBookTreeResponse(
+            @PathVariable(name="memberId", required = true) Long memberId,
+            @PathVariable(name="bookId", required = true) Long bookId){
+
+        List<Tree> allByBookId = treeService.findAllByBookId(memberId, bookId).getContent();
+        System.out.println("size = " + String.valueOf(allByBookId.size()));
+        //해당 책에 멤버가 소유한 트리가 없을 경우
+        if(allByBookId.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        List<TreeCardResponse> treeCardResponses = allByBookId.stream()
+                .map(tree -> TreeCardResponse.toEntity(tree.getBook(), true, tree, tree.getSeed(), memberId))
+                .toList();
+
+        return new ResponseEntity<>(TreeCardResponseList.of(treeCardResponses), HttpStatus.OK);
+    }
+
 }

@@ -19,7 +19,12 @@ const memoirId = ref(0);
 memoirId.value = useRoute().params.id;
 //----------------model---------------
 
-const memoir = ref({});
+const memoir = ref({
+  title: "",
+  text: "",
+  visibility: true,
+  fileNames: [],
+});
 const book = ref({});
 const tree = ref({});
 const fileNames = ref([]);
@@ -28,18 +33,18 @@ const fileNames = ref([]);
 //수정로직
 const editPost = async () => {
   //에디터에서 작성한 내용을 획득
-  memoir.text = editor.getHTML();
+  memoir.value.text = editor.getHTML();
 
   //fetch
   const response = await $fetch("memoirs/" + memoirId.value, {
     method: "PUT",
     baseURL: `${config.public.apiBase}`,
-    body: JSON.stringify({
-      title: memoir.title,
-      text: memoir.text,
-      visibility: memoir.visibility,
+    body: {
+      title: memoir.value.title,
+      text: memoir.value.text,
+      visibility: memoir.value.visibility,
       fileNames: fileNames.value,
-    }),
+    },
   });
   // console.log(response);
 
@@ -54,7 +59,7 @@ const editPost = async () => {
   // }
   memoirId.value = response.id;
   //리다이렉션
-  await navigateTo(`/memoirs/${memoirId.value}`);
+  await navigateTo(`/memoir/${memoirId.value}`);
 };
 
 const { data } = await useFetch(`memoirs/${useRoute().params.id}`, {
@@ -70,7 +75,6 @@ if (data.value) {
   console.error("회고록 조회 실패 : ", error.value);
   alert(error.value.data.message);
 }
-
 
 //---------------Life Cycle----------------
 onMounted(() => {

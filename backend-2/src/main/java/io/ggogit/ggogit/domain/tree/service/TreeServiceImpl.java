@@ -16,10 +16,13 @@ import io.ggogit.ggogit.domain.tree.repository.SeedRepository;
 import io.ggogit.ggogit.domain.tree.repository.TreeBookRepository;
 import io.ggogit.ggogit.domain.tree.repository.TreeImageRepository;
 import io.ggogit.ggogit.domain.tree.repository.TreeRepository;
+import io.ggogit.ggogit.domain.tree.repository.query.TreeQueryRepositoryImpl;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -236,6 +239,16 @@ public class TreeServiceImpl implements TreeService {
             return TreeInfoResponse.of(tree, lastestLeafTime != null ? lastestLeafTime : LocalDateTime.now(), leafCount, likeCount, viewCount);
 
         }).toList();
+    }
+
+    @Override
+    public Page<Tree> findAllByBookId(Long memberId, Long bookId) {
+        int page = 0;
+        int size = 10;
+        Sort sort = Sort.by(Sort.Direction.DESC, "updateTime");
+        Pageable pageable = PageRequest.of(page, size, sort);
+
+        return treeRepository.findAllByMemberIdAndBookId(memberId, bookId, pageable);
     }
 
 

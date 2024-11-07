@@ -1,43 +1,34 @@
 <script setup>
-import TopBarTransparent from "@/components/top-bar/TopBarTransparent.vue";
-import BarUserInfo from "@/components/bar/BarUserInfo.vue";
+const { data } = defineProps(["data"]);
+const config = useRuntimeConfig();
 
-const { data } = defineProps(['data']);
+const backImageUrl = useGetImageUrl(data.imageFile, "book");
 /*
-imgSrc: String,
+imageFile: String,
 src: String,
-backimgpath: String,
-
-userImg: String,
-username: String,
-userid: String,
-userUrl: String
 */
 
 const backgroundImage = computed(() => {
   return {
-    backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('/uploads/image/book/${data.backimgpath}')`
-  }
+    backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('')`,
+  };
 });
-
 </script>
 
 <template>
   <div id="bg-book-detail-box-id" class="bg-book-detail-box">
-    <img class="bg-book-detail__image" :src="data.imgSrc" alt="도서 이미지" />
-    <div id="bg-book-detail__front-img-box-id" class="bg-book-detail__front-img-box">
-      <img class="bg-book-detail__front-img" :src="data.imgSrc" alt="도서 이미지" />
+    <img class="bg-book-detail__image" :src="backImageUrl" alt="도서 이미지" />
+    <div
+      id="bg-book-detail__front-img-box-id"
+      class="bg-book-detail__front-img-box"
+    >
+      <img
+        class="bg-book-detail__front-img"
+        :src="backImageUrl"
+        alt="도서 이미지"
+      />
     </div>
-    <div class="user-tree-user-info-container" :style="backgroundImage">
-      <section class="user-info__top-bar-container">
-        <top-bar-transparent :src="data.src" />
-      </section>
-      <section class="user-info__user-info-bar-container">
-        <bar-user-info
-            :data="{ 'userImg': data.userImg, 'username': data.username, 'userid': data.userid, 'userUrl': data.userUrl }"
-        />
-      </section>
-    </div>
+    <div class="user-tree-user-info-container" :style="backgroundImage"></div>
   </div>
 </template>
 

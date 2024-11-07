@@ -3,6 +3,48 @@ import { ref } from "vue";
 
 const coverImageName = ref("/png/book-example.png");
 const commentCount = ref("/jpg/leaf-profile.jpg");
+const config = useRuntimeConfig();
+const bookId = useRoute().params.id;
+
+//=== model ========================================
+
+const book = ref({});
+const myTreeCards = ref([]);
+
+//=== fetch ========================================
+const {
+  data: bookData,
+  status: bookStatus,
+  error: bookError,
+} = await useFetch(`books/${bookId}`, {
+  method: "GET",
+  baseURL: `${config.public.apiBase}`,
+});
+
+if (bookData.value) {
+  book.value = bookData.value;
+}
+
+//TODO: MembmerId는 상태관리 추가되면 가져와야 함 (현재는 임시로 1로 설정)
+const memberId = 1;
+const {
+  data: treeCardsData,
+  status: treeCardsStatus,
+  error: treeCardsError,
+} = await useFetch(`trees/members/${memberId}/books/${bookId}/trees/cards`, {
+  method: "GET",
+  baseURL: `${config.public.apiBase}`,
+});
+
+if (treeCardsData.value) {
+  console.log(treeCardsData);
+  myTreeCards.value = [...treeCardsData.value.treeCardResponses];
+  console.log(myTreeCards.value);
+}
+
+if (treeCardsError.value === "noContent") {
+  myTreeCards.value = [];
+}
 </script>
 
 <template>
@@ -17,13 +59,8 @@ const commentCount = ref("/jpg/leaf-profile.jpg");
 
       <BackgroundBookDetail
         :data="{
-          imgSrc: coverImageName,
-          src: '',
-          backImgPath: '',
-          userImg: '',
-          username: '',
-          userid: '',
-          userUrl: '',
+          imageFile: bookData.imageFile,
+          backImgPath: bookData.imageFile,
         }"
       />
       <section class="book-detail-like-bar-container">
@@ -39,17 +76,26 @@ const commentCount = ref("/jpg/leaf-profile.jpg");
       <h1 class="none">도서 제목 및 저자 정보</h1>
       <TextBookInfo
         :data="{
-          bookCategoryName: '시/에세이',
-          title: '무정형의 삶',
-          author: '올라프',
-          translators: null,
-          publisher: '위즈덤하우스',
+          category: {
+            name: bookData.bookCategoryName,
+            id: bookData.bookCategoryId,
+          },
+          title: bookData.title,
+          author: bookData.author,
+          translators: bookData.translators,
+          publisher: bookData.publisher,
         }"
       />
     </section>
 
     <section class="book-detail-book-info-container">
-      <CardTreeInfoCard :data="{ date: '2024-10-25', pageCount: 200 }" />
+      <CardTreeInfoCard
+        :data="{
+          date: bookData.publishDate,
+          pageCount: bookData.totalPage,
+          isbn: bookData.isbn,
+        }"
+      />
       <h1 class="none">도서 기본 정보</h1>
     </section>
 
@@ -69,13 +115,19 @@ const commentCount = ref("/jpg/leaf-profile.jpg");
     <section class="book-detail-my-tree-container">
       <h1 class="none">도서의 나의 트리 정보</h1>
       <section class="book-detail-my-tree-title-container">
-        <TextMainTitle :data="{ title: '나의 트리', size: 28 }"></TextMainTitle>
+        <TextMainTitle :data="{ title: '이 책의 나의 트리', size: 28 }" />
       </section>
 
       <section class="book-detail-my-tree-list-container">
+        <!-- 이 부분은 추후에 어플리케이션이 사용자 정보를 상태 유지 가능할때 기능 추가 할 예정 -->
         <h1 class="none">나의 트리 리스트</h1>
         <section class="book-detail-my-tree-card-container">
-          <CardTreeList :list="null" />
+          <CardTreeList v-if="myTreeCards.length > 1" :list="myTreeCards" />
+          <TextMainTitle
+            class="book-detail-my-tree-no-tree-container"
+            v-else
+            :data="{ title: '아직 트리가 없어요!', size: 20 }"
+          />
         </section>
       </section>
     </section>
@@ -83,7 +135,9 @@ const commentCount = ref("/jpg/leaf-profile.jpg");
     <section class="book-detail-other-recode-container">
       <h1 class="none">도서의 다른 기록 보기</h1>
       <section class="book-detail-other-recode-title-container">
-        <TextMainTitle :data="{ title: '다른 기록 보기', size: 28 }" />
+        <TextMainTitle
+          :data="{ title: '이 도서의 다른 기록 보기', size: 28 }"
+        />
       </section>
 
       <section class="book-detail-other-recode-sub-title-container">
@@ -121,12 +175,27 @@ const commentCount = ref("/jpg/leaf-profile.jpg");
     </section>
   </main>
 
-  <aside class="book-detail-bot-aside-container">
-    <h1 class="none">트리 생성 하단 바</h1>
-    <div th:replace="fragments/bot-bar :: create-tree"></div>
-  </aside>
+  <Footer :noticeText="`개발 중입니다.`" />
 
-  <footer th:replace="~{fragments/footer :: footer}"></footer>
+  <section class="nav-back-container">
+    <h2 class="none">네비바 뒤 공백</h2>
+  </section>
+
+  <aside>
+    <section class="nav-container">
+      <h2 class="none">네비게이션</h2>
+      <section class="short-btn-container">
+        <h4 class="none">트리 생성 버튼</h4>
+        <ButtonBtnShortAGreen
+          :link="`/tree/book/auto/${bookId}/new`"
+          :text="`트리
+        생성`"
+        />
+      </section>
+
+      <NavNavigationBar :active="'home'" />
+    </section>
+  </aside>
 </template>
 
 <style scoped>

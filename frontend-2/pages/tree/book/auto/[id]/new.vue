@@ -1,7 +1,7 @@
 <script setup>
-import {onMounted, watch} from "vue";
+import { onMounted, watch } from "vue";
 import axios, { HttpStatusCode } from "axios";
-import {useRouter} from "#vue-router";
+import { useRouter } from "#vue-router";
 
 // ----------------------- Model ----------------------- //
 const router = useRouter();
@@ -9,8 +9,7 @@ const route = useRoute();
 const config = useRuntimeConfig();
 const bookId = route.params.id;
 
-const treeFormData = useState('treeFormData', () => ({
-
+const treeFormData = useState("treeFormData", () => ({
   bookId: null,
 
   // 트리 총 페이지 정보
@@ -91,28 +90,26 @@ const validateCheck = () => {
   }
 
   return true;
-}
+};
 
 const submitFormHandler = async (e) => {
-
   if (!validateCheck()) {
     return;
   }
 
   e.preventDefault(); // 데이터 전송 로직
   try {
-
     const response = await axios.post(
-        "http://localhost:8080/api/v1/trees/auto",
-        {
-          bookId: treeFormData.value.bookId,
-          treeTitle: treeFormData.value.treeTitle,
-          description: treeFormData.value.description,
-          visibility: treeFormData.value.visibility,
-        },
-        {
-          headers: { "Content-Type": "application/json" },
-        }
+      "http://localhost:8080/api/v1/trees/auto",
+      {
+        bookId: treeFormData.value.bookId,
+        treeTitle: treeFormData.value.treeTitle,
+        description: treeFormData.value.description,
+        visibility: treeFormData.value.visibility,
+      },
+      {
+        headers: { "Content-Type": "application/json" },
+      }
     );
 
     if (response.status !== HttpStatusCode.Created) {
@@ -124,7 +121,6 @@ const submitFormHandler = async (e) => {
     console.error("Error submitting form:", error);
   }
 };
-
 </script>
 
 <template>
@@ -148,48 +144,51 @@ const submitFormHandler = async (e) => {
         <h3 class="none">도서 커버 및 도서 정보</h3>
         <section class="tree-reg-cover__container">
           <h4 class="none">도서 커버</h4>
-          <LinkOneImageDetail
-              :href="`/book/${data.id}`"
-              :src="data.imageFile">
+          <LinkOneImageDetail :href="`/book/${data.id}`" :src="data.imageFile">
           </LinkOneImageDetail>
         </section>
         <section class="tree-reg-book-info__container">
           <h4 class="none">도서 정보</h4>
-          <TextBookInfo :data="{
-            title: data.title,
-            authors: data.authors,
-            translators: data.translators,
-            publisher: data.publisher,
-            bookCategoryName: data.bookCategoryName,
-            page: data.page,
-            seed: data.seed,
-          }"></TextBookInfo>
+          <TextBookInfo
+            :data="{
+              title: data.title,
+              authors: data.authors,
+              translators: data.translators,
+              publisher: data.publisher,
+              category: {
+                name: data.bookCategoryName,
+                id: data.bookCategoryId,
+              },
+              page: data.page,
+              seed: data.seed,
+            }"
+          />
         </section>
       </section>
 
       <section class="tree-info-card__container">
-        <CardTreeInfoCard :data="{ date: data.publishDate, pageCount: data.totalPage }" />
+        <CardTreeInfoCard
+          :data="{ date: data.publishDate, pageCount: data.totalPage }"
+        />
       </section>
 
-
       <form class="tree-book-auto-form-container">
-
         <section class="none">
-          <input type="text" name="bookId" :value="data.id">
+          <input type="text" name="bookId" :value="data.id" />
         </section>
 
         <section class="input-form__input-container">
           <h1 class="none">트리 이름 입력</h1>
           <InputTextBox
-              :data="{
-                label: '*트리 이름',
-                name: 'treeTitle',
-                placeholder: '트리 이름을 입력해주세요',
-                value: treeFormData.treeTitle,
-                validate: treeFormData.treeTitleValid,
-                validateMessage: '트리 이름을 입력해주세요',
-              }"
-              @inputData="inputTreeTitle"
+            :data="{
+              label: '*트리 이름',
+              name: 'treeTitle',
+              placeholder: '트리 이름을 입력해주세요',
+              value: treeFormData.treeTitle,
+              validate: treeFormData.treeTitleValid,
+              validateMessage: '트리 이름을 입력해주세요',
+            }"
+            @inputData="inputTreeTitle"
           >
           </InputTextBox>
         </section>
@@ -197,32 +196,34 @@ const submitFormHandler = async (e) => {
         <section class="book-tree-input-form__large-input-container">
           <h1 class="none">설명글 작성</h1>
           <InputTextareaBox
-              :data="{
-                label: '*설명글',
-                name: 'description',
-                placeholder: '트리에 대한 설명을 입력해주세요',
-                value: treeFormData.description,
-                validate: treeFormData.descriptionValid,
-                validateMessage: '트리에 대한 설명을 입력해주세요.'
-              }"
-              @inputData="inputDescription"
+            :data="{
+              label: '*설명글',
+              name: 'description',
+              placeholder: '트리에 대한 설명을 입력해주세요',
+              value: treeFormData.description,
+              validate: treeFormData.descriptionValid,
+              validateMessage: '트리에 대한 설명을 입력해주세요.',
+            }"
+            @inputData="inputDescription"
           >
           </InputTextareaBox>
         </section>
 
         <section class="input-form__input-container">
           <h1 class="none">공개성 선택</h1>
-          <InputVisibility name="visibility" v-model="treeFormData.visibility"></InputVisibility>
+          <InputVisibility
+            name="visibility"
+            v-model="treeFormData.visibility"
+          ></InputVisibility>
         </section>
 
         <section class="book-tree-submit-container">
           <h1 class="none">트리 생성 버튼</h1>
           <ButtonSubmitBtnFullBar
-              text="트리 생성"
-              @click.prevent="submitFormHandler"
+            text="트리 생성"
+            @click.prevent="submitFormHandler"
           ></ButtonSubmitBtnFullBar>
         </section>
-
       </form>
     </section>
   </main>

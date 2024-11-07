@@ -23,11 +23,11 @@ const props = defineProps({
 
 <template>
   <div class="card-tree-details">
-    <NuxtLink class="card-tree-detail" :to="props.data.link">
+    <NuxtLink class="card-tree-detail" :to="`/book/${props.data.id}`">
       <img
         v-if="props.data.imageFile !== undefined"
         class="card-tree__book-cover"
-        :src="props.data.imageFile"
+        :src="useGetImageUrl(props.data.imageFile)"
         alt="도서 이미지"
       />
       <img

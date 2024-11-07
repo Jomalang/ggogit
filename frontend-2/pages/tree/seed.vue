@@ -20,7 +20,7 @@ const fetchData = async () => {
   try {
     const response = await axios.get("http://localhost:8080/api/v1/seeds");
     // console.log(response.data);
-    seeds.filterName = "씨앗 선택";
+    seeds.filterName = "`씨앗 선택`";
     seeds.filterItems = response.data.items;
   } catch (error) {
     console.error("Error fetching data:", error);
@@ -47,7 +47,7 @@ const filterTabDownHandler = () => {
 <template>
   <header class="top-bar-back-container">
     <h1 class="none">씨앗 선택</h1>
-    <TopBarBack title="트리 생성" :link=""></TopBarBack>
+    <TopBarBack :title="`트리 생성`" :link="`#`"></TopBarBack>
   </header>
 
   <main>
@@ -59,7 +59,7 @@ const filterTabDownHandler = () => {
     <section class="btn-select-container">
       <h2 class="none">씨앗 선택 버튼</h2>
       <FilterFullWidth
-        text="씨앗 선택"
+        :text="`씨앗 선택`"
         @click="filterTabUpHandler"
       ></FilterFullWidth>
     </section>

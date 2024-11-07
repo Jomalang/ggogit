@@ -461,15 +461,21 @@ home-tree__reg-4--search-book__input
 }
 
 .book-detail-my-tree-container {
-  margin: 64px 0 0 0;
+  margin: 20px 24px 0 24px;
 }
 
 .book-detail-my-tree-list-container {
-  margin: 0 0 60px 0;
+  margin: 0 0px 60px 0px;
 }
 
 .book-detail-my-tree-title-container {
-  margin: 0 24px 24px 24px;
+  margin: 0 0px 24px 0px;
+}
+
+.book-detail-my-tree-no-tree-container{
+  padding-top: 10px;
+  display: flex;
+  justify-self: center;
 }
 
 .book-detail-other-recode-container {
@@ -603,7 +609,7 @@ home-tree__reg-4--search-book__input
 }
 
 .tree-book-auto-title-container {
-    margin: 24px 16px 60px 16px;
+    margin: 24px 16px 40px 16px;
 }
 
 .tree-book-auto-form-container {

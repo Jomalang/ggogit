@@ -4,7 +4,6 @@ import type { CardItemProps } from "@/types/types";
 
 const config = useRuntimeConfig();
 //TODO : 알라딘 책 이미지일 경우 알라딘 이미지 api로 요청해야 함.
-const ImageApi = `${config.public.apiBase}/images`;
 
 const props = defineProps<{
   item: CardItemProps;
@@ -25,21 +24,22 @@ function modifyCount(count: number) {
         <div v-if="item.cardType === CardType.TREE">
           <img
             class="card-another-records__top-cover-box"
-            :src="ImageApi + `/tree/` + item.cardImage"
+            :src="useGetImageUrl(item.cardImage, 'tree')"
             alt="트리 이미지"
           />
         </div>
         <div v-else-if="item.cardType === CardType.MEMOIR">
           <img
             class="card-another-records__top-cover-box"
-            :src="ImageApi + `/memoir/` + item.cardImage"
-            alt="회고록 이미지"
+            :src="useGetImageUrl(item.cardImage, 'memoir')"
+            alt="트리 이미지"
           />
+          alt="회고록 이미지" />
         </div>
         <div v-else-if="item.cardType === CardType.LEAF">
           <img
             class="card-another-records__top-cover-box"
-            :src="ImageApi + `/leaf/` + item.cardImage"
+            :src="useGetImageUrl(item.cardImage, 'leaf')"
             alt="리프 이미지"
           />
         </div>

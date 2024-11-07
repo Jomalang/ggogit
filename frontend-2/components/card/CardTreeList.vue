@@ -1,16 +1,19 @@
-<script setup lang="ts">
-import CardTree from "@/components/card/CardTree.vue";
+<script setup>
+import { defineProps } from "vue";
 
+const props = defineProps({
+  data: {
+    type: Array,
+    default: () => [],
+  },
+});
 </script>
 
 <template>
   <div class="card-tree-list-box">
     <ul class="card-tree__list">
       <li class="card-tree__item">
-        <CardTree data="" />
-      </li>
-      <li class="card-tree__item">
-        <CardTree data="" />
+        <CardTree :data="props.data" />
       </li>
     </ul>
   </div>

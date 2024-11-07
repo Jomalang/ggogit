@@ -16,19 +16,28 @@ const emit = defineEmits([
   "page",
   "totalCount",
   "totalPage",
+  "filterName",
 ]);
+//-----------------filter-----------------
+let filterQuery = 10;
+let sortQuery = 0;
+let searchQuery = 'title';
+
 //-----------------ref-----------------
 const result = ref([]);
 const query = ref("");
 const page = ref(1);
 const totalCount = ref(0);
 const totalPage = ref(0);
-const filter = ref("title");
+const filterName = ref("최근 수정 순");
+const filter = ref(10);
+const searchFilter = ref('title');
+const sort = ref(0);
 //-----------------watcher-----------------
 // page 값이 변경될 때 요청
 watch(page, () => {
   if (page.value > 0) {
-    createReq(query.value, props.sort, page.value, filter.value); // props.sort 사용
+    createReq(query.value, props.sort, page.value, searchFilter.value, filterName.value, filter.value); // props.sort 사용
     console.log("new page");
   }
 });
@@ -41,11 +50,11 @@ watch(() => props.sort, (newSort) => {
   page.value = 0;
 
   // 새로운 sort 값으로 fetch 요청
-  createReq(query.value, newSort, page.value, filter.value);
+  createReq(query.value, newSort, page.value, searchFilter.value, filterName.value, filter.value);
 });
 
 //-----------------methods-----------------
-const createReq = async (query, sort, currentPage, filter) => {
+const createReq = async (query, sort, currentPage, searchFilter, filter) => {
   try {
     const response = await $fetch(props.api, {
       method: "GET",
@@ -53,6 +62,7 @@ const createReq = async (query, sort, currentPage, filter) => {
         query: query,
         sort: sort,
         page: currentPage,
+        searchFilter : searchFilter,
         filter : filter
       },
     });
@@ -120,10 +130,42 @@ const closePopup = () => {
   filterBack1.classList.add('none');
   filterBack2.classList.add('none');
 
-  queryParam.filter = filterQuery;
-  queryParam.sort = sortQuery;
-  queryParam.page = 0;
+  searchFilter.value = searchQuery;
+  filter.value = filterQuery;
+  sort.value = sortQuery;
+  page.value = 0;
+
+  if(query.value !== ""){
+    createReq(query.value, sort.value, page.value, searchFilter.value, filterName.value, filter.value);
+  }
+  emit("filterName", filterName.value);
 }
+
+const searchFilterHandler = (e) => {
+  searchQuery = e;
+}
+
+const filterNameHandler = (e) => {
+  filterQuery = e;
+  switch (e) {
+    case 10:
+      filterName.value = "최근 수정 순";
+      break;
+    case 11:
+      filterName.value = "제목 순";
+      break;
+    case 13:
+      filterName.value = "조회 수 순";
+      break;
+    case 14:
+      filterName.value = "좋아요 수 순";
+      break;
+  }
+}
+const sortHandler = (e) => {
+  sortQuery = e;
+}
+
 
 //-----------------lifeCycle-----------------
 onUpdated(() => {
@@ -149,13 +191,13 @@ onUpdated(() => {
           :placeholder="props.placeholder"
           v-model="query"
           autocomplete="off"
-          @keyup.enter="createReq(query, sort, 0, filter)"
+          @keyup.enter="createReq(query, sort, 0, searchFilter, filter)"
         />
         <button class="search-bar--close" type="reset">
           <img src="/public/svg/close-button.svg" alt="close-btn" />
         </button>
       </label>
-      <button @click="createReq(query, sort, 0, filter)">
+      <button @click="createReq(query, sort, 0, searchFilter, filter)">
         <img src="/public/svg/lens.svg" alt="lens" />
       </button>
     </div>
@@ -184,14 +226,72 @@ onUpdated(() => {
           >
             <img src="/public/svg/tab-back.svg" alt="뒤로가기 버튼" />
           </button>
-          <h1 class="filter-tab__header--title">정렬 선택</h1>
+          <h1 class="filter-tab__header--title">필터 선택</h1>
         </div>
 
         <div class="filter-list-frame">
           <div class="filter-attribute__bg">
+            <h2 class="filter-attribute__title">검색 기준</h2>
+            <ul id="filter-tab__list1" class="filter-tab__list1">
+              <li @click="filterNameHandler()" class="filter-tab__item">
+                <label class="filter-tab__item-label">
+                  <input
+                      class="filter-tab__item-radio"
+                      type="radio"
+                      name="searchFilter"
+                      value="10"
+                      checked
+                  />
+                  <span class="filter-tab__item--label-text">제목 검색</span>
+                  <div class="filter-tab__icon-box">
+                    <img
+                        class="filter-tab__icon-img"
+                        src="/svg/tab-check-btn.svg"
+                        alt="필터 버튼"
+                    />
+                  </div>
+                </label>
+              </li>
+              <li @click="filterNameHandler()" class="filter-tab__item">
+                <label class="filter-tab__item-label">
+                  <input
+                      class="filter-tab__item-radio"
+                      type="radio"
+                      name="searchFilter"
+                      value="11"
+                  />
+                  <span class="filter-tab__item--label-text">내용 검색</span>
+                  <div class="filter-tab__icon-box">
+                    <img
+                        class="filter-tab__icon-img"
+                        src="/svg/tab-check-btn.svg"
+                        alt="필터 버튼"
+                    />
+                  </div>
+                </label>
+              </li>
+              <li @click="filterNameHandler()" class="filter-tab__item">
+                <label class="filter-tab__item-label">
+                  <input
+                      class="filter-tab__item-radio"
+                      type="radio"
+                      name="searchFilter"
+                      value="12"
+                  />
+                  <span class="filter-tab__item--label-text">제목 + 내용 검색</span>
+                  <div class="filter-tab__icon-box">
+                    <img
+                        class="filter-tab__icon-img"
+                        src="/svg/tab-check-btn.svg"
+                        alt="필터 버튼"
+                    />
+                  </div>
+                </label>
+              </li>
+            </ul>
             <h2 class="filter-attribute__title">정렬 기준</h2>
-            <ul id="filter-tab__list1">
-              <li @click="filterNameHandler( 10)" class="filter-tab__item">
+            <ul id="filter-tab__list1" class="filter-tab__list1">
+              <li @click="filterNameHandler(10)" class="filter-tab__item">
                 <label class="filter-tab__item-label">
                   <input
                       class="filter-tab__item-radio"
@@ -200,7 +300,7 @@ onUpdated(() => {
                       value="10"
                       checked
                   />
-                  <span class="filter-tab__item--label-text">최근 수정</span>
+                  <span class="filter-tab__item--label-text"> 최근 수정 </span>
                   <div class="filter-tab__icon-box">
                     <img
                         class="filter-tab__icon-img"
@@ -219,24 +319,6 @@ onUpdated(() => {
                       value="11"
                   />
                   <span class="filter-tab__item--label-text">제목</span>
-                  <div class="filter-tab__icon-box">
-                    <img
-                        class="filter-tab__icon-img"
-                        src="/svg/tab-check-btn.svg"
-                        alt="필터 버튼"
-                    />
-                  </div>
-                </label>
-              </li>
-              <li @click="filterNameHandler(12)" class="filter-tab__item">
-                <label class="filter-tab__item-label">
-                  <input
-                      class="filter-tab__item-radio"
-                      type="radio"
-                      name="filter"
-                      value="12"
-                  />
-                  <span class="filter-tab__item--label-text">리프 수</span>
                   <div class="filter-tab__icon-box">
                     <img
                         class="filter-tab__icon-img"
@@ -563,7 +645,15 @@ button {
 }
 
 .filter-tab__list{
+  padding-right: 10px;
+  padding-left: 10px;
   margin-bottom: 250px;
+}
+.filter-tab__list1{
+  padding-right: 10px;
+  padding-left: 10px;
+  border-bottom: solid 1px var(--main2--opacity40);
+margin-bottom: 20px;
 }
 
 </style>

@@ -12,7 +12,7 @@ const totalCount = ref(0);
 const scrollContainer = ref(null);
 const config = useRuntimeConfig();
 const apiUrl = config.public.apiBase + "/leaves/search";
-let filterName = "최근 수정한 순"
+let filterName = ref("최근 수정한 순")
 let sort = ref(0);
 //-------------handler----------------
 
@@ -40,6 +40,10 @@ const handleTotalCount = (totalC) => {
   totalCount.value = totalC;
   console.log(`totalCount=${totalCount.value}`);
 };
+const handleFilterName = (filter) => {
+  filterName.value = filter;
+  console.log(`filterName=${filterName.value}`);
+};
 
 const handleScroll = debounce(() => {
   const container = scrollContainer.value;
@@ -63,6 +67,7 @@ const sortHandler = debounce(() => {
     sort.value = 0;
 
 });
+
 
 
 //-------------life cycle----------------
@@ -97,6 +102,7 @@ onMounted(() => {
           @page="handlePage"
           @totalCount="handleTotalCount"
           @totalPage="handleTotalPage"
+          @filterName="handleFilterName"
       />
     </section>
 
@@ -135,16 +141,6 @@ onMounted(() => {
         />
       </div>
     </section>
-
-  <section class="btn-select-container--right">
-    <h2 class="none">리프 직접 등록 버튼</h2>
-    <!-- TODO: href변경하기 -->
-    <ButtonBtnShortAGreen
-        :link="`/tree/seed`"
-        :text="`리프 직접 등록하기`"
-    />
-  </section>
-
 
   </main>
   <aside class="nav-container">

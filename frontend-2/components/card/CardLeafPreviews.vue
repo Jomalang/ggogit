@@ -22,67 +22,69 @@ const props = defineProps({
 </script>
 
 <template>
-  <div class="card-tree-details">
-    <NuxtLink class="card-tree-detail" :to="`${props.data.treeId}`">
+  <div class="card-leaf-details">
+    <NuxtLink class="card-leaf-detail" :to="`${props.data.leafId}`">
+      <div  class="card-leaf-detail">
       <img
         v-if="props.data.coverImageName !== undefined"
-        class="card-tree__book-cover"
+        class="card-leaf__book-cover"
         :src="`/png/${props.data.coverImageName}`"
         alt="도서 이미지"
       />
       <img
         v-else
-        class="card-tree__book-cover"
-        src="/svg/tree-icon--white.svg"
+        class="card-leaf__book-cover"
+        src="/svg/leaf-icon--white.svg"
         alt="도서 기본 이미지"
       />
-      <div class="card-tree-detail__box">
-        <div class="card-tree-detail__tags">
-          <span class="card-tree-detail__tag">{{ props.data.seedKorName }}</span>
-          <span class="card-tree-detail__tag">{{ props.data.bookCategory }}</span>
+      <div class="card-leaf-detail__box">
+        <div class="card-leaf-detail__tags">
+          <span class="card-leaf-detail__tag">{{ props.data.seedKorName }}</span>
+          <span class="card-leaf-detail__tag">{{ props.data.bookCategory }}</span>
         </div>
 
         <!---->
-        <p class="card-tree-detail__name">{{ props.data.treeTitle }}</p>
-        <p class="card-tree-detail__info">{{ props.data.bookTitle }}</p>
-        <div class="card-tree-detail__info">
-          <span class="card-tree-detail__info">{{props.data.bookPublishedYear}}</span>
-          <span class="card-tree-detail__info"> &nbsp; </span>
-          <span class="card-tree-detail__info">{{ props.data.bookAuthor }}</span>
-          <span class="card-tree-detail__info"> &nbsp; </span>
-          <span class="card-tree-detail__info">{{ props.data.bookPublisher }}</span>
+        <p class="card-leaf-detail__name">{{ props.data.leafTitle }}</p>
+        <p class="card-leaf-detail__info">{{ props.data.bookTitle }}</p>
+        <div class="card-leaf-detail__info">
+          <span class="card-leaf-detail__info">{{props.data.bookPublishedYear}}</span>
+          <span class="card-leaf-detail__info"> &nbsp; </span>
+          <span class="card-leaf-detail__info">{{ props.data.bookAuthor }}</span>
+          <span class="card-leaf-detail__info"> &nbsp; </span>
+          <span class="card-leaf-detail__info">{{ props.data.bookPublisher }}</span>
         </div>
-        <div class="card-tree-detail__info-created-date">
+        <div class="card-leaf-detail__info-created-date">
           {{ props.data.treeCreatedAt }}
         </div>
+      </div>
       </div>
     </NuxtLink>
   </div>
 </template>
 
 <style scoped>
-.card-tree-details {
+.card-leaf-details {
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
 }
 
-.card-tree-detail {
+.card-leaf-detail {
   width: 100%;
   display: flex;
   flex-direction: row;
   gap: 10px;
 }
 
-.card-tree__book-cover {
+.card-leaf__book-cover {
   height: 120px;
   width: 80px;
   border-radius: 4px;
   background-color: var(--main1);
 }
 
-.card-tree-detail__box {
+.card-leaf-detail__box {
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -90,54 +92,35 @@ const props = defineProps({
   letter-spacing: var(--letter-spacing-main);
 }
 
-.card-tree-detail__tags {
+.card-leaf-detail__tags {
   line-height: var(--line-height-sub);
 }
 
-.card-tree-detail__tag {
+.card-leaf-detail__tag {
   color: var(--text-sub);
   font-size: 10px;
   margin-right: 2px;
 }
-.card-tree-detail__slot {
+.card-leaf-detail__slot {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.card-tree-detail__name {
+.card-leaf-detail__name {
   font-size: 18px;
   font-weight: var(--bold);
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
-.card-tree-detail__complete-icon {
-  display: inline-flex;
-  width: 20px;
-  height: 20px;
-  background-color: var(--main1);
-  mask-image: url("/svg/card-tree-details-complete.svg");
-  mask-size: contain;
-  mask-repeat: no-repeat;
-  mask-position: center;
-}
 
-.card-tree-detail__explanation {
-  font-size: 14px;
-  font-weight: var(--regular);
-  color: var(--text-sub);
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-
-.card-tree-detail__info {
+.card-leaf-detail__info {
   font-size: 14px;
   font-weight: var(--regular);
   color: var(--text-sub);
 }
 
-.card-tree-detail__info-created-date {
+.card-leaf-detail__info-created-date {
   font-size: 14px;
   font-weight: var(--regular);
   color: var(--text-sub);

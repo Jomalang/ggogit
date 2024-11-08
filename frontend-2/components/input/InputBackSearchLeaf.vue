@@ -30,6 +30,7 @@ const page = ref(1);
 const totalCount = ref(0);
 const totalPage = ref(0);
 const filterName = ref("최근 수정 순");
+const searchFilterName = ref("제목 검색");
 const filter = ref(10);
 const searchFilter = ref('title');
 const sort = ref(0);
@@ -143,6 +144,17 @@ const closePopup = () => {
 
 const searchFilterHandler = (e) => {
   searchQuery = e;
+  switch (e) {
+    case 'title':
+      searchFilterName.value = "제목 검색";
+      break;
+    case 'content':
+      searchFilterName.value = "내용 검색";
+      break;
+    case 'all':
+      searchFilterName.value = "제목 + 내용 검색";
+      break;
+  }
 }
 
 const filterNameHandler = (e) => {
@@ -204,8 +216,13 @@ onUpdated(() => {
   </div>
 
   <div class="search-filter-frame">
-    <div @click.prevent="openPopup" class="search-filter-log__checkbox-input-text">
-        <img class="" src="/svg/sort.svg">
+    <div class="search-filter-frame-search">
+      <span @click.prevent="openPopup" class="search-filter-log__checkbox-input-img">
+          <img class="" src="/svg/sort-white.svg">
+      </span>
+      <span @click.prevent="openPopup" class="search-filter-log__checkbox-input-text">
+        <p>{{searchFilterName}}</p>
+      </span>
     </div>
     <NuxtLink class="search-filter-log__nuxt-link" to="/tree/search">
       트리 검색 이등
@@ -233,7 +250,7 @@ onUpdated(() => {
           <div class="filter-attribute__bg">
             <h2 class="filter-attribute__title">검색 기준</h2>
             <ul id="filter-tab__list1" class="filter-tab__list1">
-              <li @click="filterNameHandler()" class="filter-tab__item">
+              <li @click="searchFilterHandler('title')" class="filter-tab__item">
                 <label class="filter-tab__item-label">
                   <input
                       class="filter-tab__item-radio"
@@ -252,7 +269,7 @@ onUpdated(() => {
                   </div>
                 </label>
               </li>
-              <li @click="filterNameHandler()" class="filter-tab__item">
+              <li @click="searchFilterHandler('content')" class="filter-tab__item">
                 <label class="filter-tab__item-label">
                   <input
                       class="filter-tab__item-radio"
@@ -270,7 +287,7 @@ onUpdated(() => {
                   </div>
                 </label>
               </li>
-              <li @click="filterNameHandler()" class="filter-tab__item">
+              <li @click="searchFilterHandler('all')" class="filter-tab__item">
                 <label class="filter-tab__item-label">
                   <input
                       class="filter-tab__item-radio"
@@ -492,6 +509,11 @@ button {
   justify-content: space-between;
   align-items: center;
 }
+  .search-filter-frame-search{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
 
 .search-filter-log {
   display: flex;
@@ -514,11 +536,27 @@ button {
   flex-shrink: 0;
 }
 
+.search-filter-log__checkbox-input-img {
+  margin-top: 18px;
+  border-radius: 8px;
+  font-family: "Pretendard", serif;
+  font-size: 12px;
+  font-weight: var(--medium, 500);
+  background-color: var(--main1, #323a27);
+  padding: 9px 9px;
+  cursor: pointer;
+  user-select: none;
+  flex-shrink: 0;
+}
 .search-filter-log__checkbox-input-text {
   margin-top: 18px;
   border-radius: 8px;
-  background-color: var(--main1--opacity10, #767676);
-  padding: 9px 9px;
+  font-family: "Pretendard", serif;
+  font-size: 12px;
+  font-weight: var(--medium, 500);
+  color: var(--text-sub, #767676);
+  background-color: #f7f7f7;
+  padding: 12px 20px;
   cursor: pointer;
   user-select: none;
   flex-shrink: 0;

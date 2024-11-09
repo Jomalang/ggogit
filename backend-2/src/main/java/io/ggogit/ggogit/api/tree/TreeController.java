@@ -256,7 +256,7 @@ public class TreeController {
 
     @GetMapping("/members/{memberId}/trees/book/cards")
     public ResponseEntity<TreeCardResponseList> getTreeBookCardResponse(
-            @RequestParam(value="memberId", required = true , defaultValue = "1") Long memberId
+            @PathVariable(value = "memberId") Long memberId
     ) {
         int page = 0;
         int size = 10;

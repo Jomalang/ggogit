@@ -3,15 +3,13 @@ package io.ggogit.ggogit.api.book;
 import io.ggogit.ggogit.api.book.dto.*;
 import io.ggogit.ggogit.domain.book.entity.Book;
 import io.ggogit.ggogit.domain.book.service.BookService;
+import io.ggogit.ggogit.type.AladinBookSearchType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.util.List;
 
 
 @RestController
@@ -21,30 +19,23 @@ import java.util.List;
 public class BookController {
 
     private final BookService bookService;
+
     // 목록 조회
     @GetMapping
     public ResponseEntity<BookListResponse> getList(
-            @RequestParam(name="p", required=true, defaultValue="1") int page,
-            @RequestParam(name="q", required=false) String query,
-            @RequestParam(name="f", required=true, defaultValue="title") String filter
+        @RequestParam(name="p", defaultValue="1") int page,
+        @RequestParam(name="q", required=false) String query,
+        @RequestParam(name="f", defaultValue="keyword") String filter
     ) {
-        log.info("query={}", query);
-        log.info("filter={}", filter);
-        log.info("page={}", page);
-
-        if(query == null || query.length() < 2) {
+        if (!AladinBookSearchType.isExist(filter)) { // 필터 검색 조건이 잘못된 경우
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        Page<Book> totalBooks = bookService.getBooks(page, query, filter);
-        List<Book> books = totalBooks.getContent();
-        String totalCount = String.valueOf(totalBooks.getTotalElements());
-        String totalPage = String.valueOf(totalBooks.getTotalPages());
-        if(books.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-        List<BookDetailResponse> list = books.stream().map(BookDetailResponse::of).toList();
-        BookListResponse response = BookListResponse.of(list, String.valueOf(page), totalCount, totalPage);
 
+        if (query == null || query.length() < 2) { // 검색어가 2글자 미만일 경우 검색하지 않음
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        BookListResponse response = bookService.getSearchBookList(page, query, filter);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

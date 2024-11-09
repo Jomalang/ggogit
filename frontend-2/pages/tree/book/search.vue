@@ -1,8 +1,9 @@
 <script setup>
 import { reactive, ref } from "vue";
-
+import router from "#app/plugins/router.js";
+const config = useRuntimeConfig();
 //---------------variable----------------
-const apiUrl = `${import.meta.env.VITE_API_BASE_URL}books`;
+const apiUrl = `${config.public.apiBase}/books`;
 const keyword = ref("");
 const books = ref([]);
 const page = ref(1);
@@ -50,6 +51,12 @@ const handleScroll = () => {
   }
 };
 
+const dropListHandler = () => {
+  console.log("dropListHandler");
+  books.value = [];
+  totalCount.value = 0;
+};
+
 //-------------life cycle----------------
 onMounted(() => {
   watch(
@@ -76,6 +83,7 @@ onMounted(() => {
         :href="`./seed/index`"
         :api="apiUrl"
         :page="page"
+        @dropListEvent="dropListHandler"
         @bookResult="handleBookResult"
         @req="handleKeyword"
         @page="handlePage"
@@ -110,7 +118,7 @@ onMounted(() => {
       </div>
     </section>
 
-    <section v-else="totalCount === 0">
+    <section v-else>
       <h3 class="none">검색 결과 없음</h3>
       <div class="text-info-container">
         <TextInfo
@@ -140,6 +148,7 @@ onMounted(() => {
 </template>
 
 <style scoped>
+
 .scroll-container {
   display: flex;
   flex-direction: column;
@@ -147,4 +156,31 @@ onMounted(() => {
   overflow-y: auto;
   height: 480px;
 }
+
+/* /home/tree/search/list.html */
+.tree-card-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-left: 24px;
+  margin-right: 24px;
+}
+
+.tree-card-list__main {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 24px;
+  margin-left: 24px;
+  margin-right: 24px;
+  align-items: center;
+}
+
+.tree-card-list::after {
+  content: " ";
+  display: block;
+  width: 100%;
+  height: 50px;
+}
+
 </style>

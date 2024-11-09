@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @Builder
@@ -37,14 +38,16 @@ public class BookDetailResponse {
                 .bookCategoryId(book.getBookCategory().getId())
                 .bookCategoryName(book.getBookCategory().getName())
                 .author(book.getAuthor())
-                .isbn(book.getIsbn())
+                .isbn(String.valueOf(book.getIsbn()))
                 .publisher(book.getPublisher())
                 .title(book.getTitle())
                 .imageFile(book.getImageFile())
-                .createTime(book.getCreateTime()
-                        .format(DateTimeFormatter.ofPattern("yy-MM-dd")))
-                .updateTime(book.getUpdateTime()
-                        .format(DateTimeFormatter.ofPattern("yy-MM-dd")))
+                .createTime(
+                        book.getCreateTime() == null ? LocalDateTime.now().format(DateTimeFormatter.ofPattern("yy-MM-dd")) : // 새로운 데이터 생성시 현재 날짜로 설정
+                        book.getCreateTime().format(DateTimeFormatter.ofPattern("yy-MM-dd")))
+                .updateTime(
+                        book.getUpdateTime() == null ? LocalDateTime.now().format(DateTimeFormatter.ofPattern("yy-MM-dd")) : // 새로운 데이터 생성시 현재 날짜로 설정
+                        book.getUpdateTime().format(DateTimeFormatter.ofPattern("yy-MM-dd")))
                 .build();
     }
 }

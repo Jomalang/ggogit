@@ -10,6 +10,7 @@ const page = ref(1);
 const totalPage = ref(0);
 const totalCount = ref(0);
 const limit = ref(10);
+const searchLoading = ref(false);
 const scrollContainer = ref(null);
 //-------------handler----------------
 
@@ -57,6 +58,11 @@ const dropListHandler = () => {
   totalCount.value = 0;
 };
 
+const searchLoadingPage = (isLoading) => {
+  console.log(`searchLoadingPage=${isLoading}`);
+  searchLoading.value = isLoading;
+};
+
 //-------------life cycle----------------
 onMounted(() => {
   watch(
@@ -74,6 +80,16 @@ onMounted(() => {
 </script>
 
 <template>
+
+  <section v-if="searchLoading" class="search-blur-container">
+    <h2 class="none">검색 블러 컨테이너</h2>
+    <div class="blur-bg">
+      <div class="info-box">
+        <p>도서를 검색중입니다    <span class="dot">·</span><span class="dot">·</span><span class="dot">·</span></p>
+      </div>
+    </div>
+  </section>
+
   <header class="reg-book-search-container">
     <h1 class="none">도서 검색</h1>
     <section>
@@ -89,6 +105,7 @@ onMounted(() => {
         @page="handlePage"
         @totalCount="handleTotalCount"
         @totalPage="handleTotalPage"
+        @loading="searchLoadingPage"
       />
     </section>
 
@@ -181,6 +198,52 @@ onMounted(() => {
   display: block;
   width: 100%;
   height: 50px;
+}
+
+.blur-bg {
+  z-index: 100;
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(0, 0, 0, 0.6);
+
+  .info-box {
+    position: absolute;
+    top: 300px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 250px;
+    height: 100px;
+    background-color: var(--main2);
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    p {
+      font-size: 18px;
+      font-weight: bold;
+      text-align: center;
+
+      .dot:nth-child(1) { --i: 0; }
+      .dot:nth-child(2) { --i: 1; }
+      .dot:nth-child(3) { --i: 2; }
+
+      .dot {
+        display: inline-block;
+        animation: dot-blink 1s infinite;
+        animation-delay: calc(0.1s * var(--i));
+      }
+    }
+  }
+}
+
+@keyframes dot-blink {
+  0% { transform: translateY(0); }
+  25% { transform: translateY(-10px); }
+  50% { transform: translateY(0); }
+  75% { transform: translateY(10px); }
+  100% { transform: translateY(0); }
 }
 
 </style>

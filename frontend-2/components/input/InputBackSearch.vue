@@ -14,7 +14,8 @@ const emit = defineEmits([
   "page",
   "totalCount",
   "totalPage",
-  "dropListEvent"
+  "dropListEvent",
+  "loading"
 ]);
 //-----------------ref-----------------
 const bookResult = ref([]);
@@ -33,6 +34,7 @@ watch(page, () => {
 
 const createReq = async (query, filter, currentPage) => {
   try {
+    emit("loading", true); // Emit loading event
     const response = await $fetch(props.api, {
       method: "GET",
       params: {
@@ -66,6 +68,8 @@ const createReq = async (query, filter, currentPage) => {
     } else {
       alert("오류가 발생했습니다. 다시 시도해 주세요.");q
     }
+  } finally {
+    emit("loading", false); // Emit loading event
   }
 };
 

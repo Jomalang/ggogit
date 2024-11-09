@@ -258,10 +258,10 @@ public class TreeController {
     public ResponseEntity<TreeCardResponseList> getTreeBookCardResponse(
             @PathVariable(value="memberId", required = true) Long memberId
     ) {
-        int page = 0;
-        int size = 10;
+        int offset = 0;
+        int limit = 10;
         Sort sort = Sort.by(Sort.Order.desc("updateTime"));
-        Pageable pageable = PageRequest.of(page, size, sort);
+        Pageable pageable = PageRequest.of(offset, limit, sort);
 
         List<Tree> allByMemberId = treeService.findAllPages(memberId, pageable).getContent();
         List<TreeCardResponse> treeCardResponses = allByMemberId.stream()

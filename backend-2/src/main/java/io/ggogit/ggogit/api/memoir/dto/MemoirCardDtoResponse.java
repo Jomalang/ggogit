@@ -16,6 +16,7 @@ import java.time.format.DateTimeFormatter;
 @Getter @Setter
 public class MemoirCardDtoResponse {
 
+    @Builder.Default
     private int cardType = 1;
     //회고록
     private String memoirTitle;

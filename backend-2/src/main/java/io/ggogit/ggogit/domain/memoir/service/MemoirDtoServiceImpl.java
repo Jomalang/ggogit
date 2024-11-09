@@ -21,10 +21,10 @@ public class MemoirDtoServiceImpl implements MemoirDtoService {
     private final TreeRepository treeRepository;
 
     public MemoirCardDtoResponseList getMemoirCardDtoResponseList(Long memberId) {
-        int page = 0;
-        int size = 10;
+        int offset = 0;
+        int limit = 10;
         Sort sort = Sort.by(Sort.Direction.DESC, "updateTime");
-        Pageable pageable = PageRequest.of(page, size, sort);
+        Pageable pageable = PageRequest.of(offset, limit, sort);
 
         List<Tree> trees = treeRepository.findTreeByMemberIdFetch(memberId, pageable).getContent();
         List<MemoirCardDtoResponse> memoirCardDtoResponses = trees.stream().filter(tree -> tree.getMemoir() != null)

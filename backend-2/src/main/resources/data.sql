@@ -560,9 +560,9 @@ INSERT INTO `tree_book`
 VALUES
     (10000, '2024-11-01 09:00:00', false, 700, '2024-11-01 09:00:00', 1);
 
-UPDATE tree
-SET treebook_id = (SELECT tree_id FROM tree_book WHERE tree_id = 10000)
-WHERE id = 10000;
+-- UPDATE tree
+-- SET treebook_id = (SELECT tree_id FROM tree_book WHERE tree_id = 10000)
+-- WHERE id = 10000;
 
 INSERT INTO `leaf`
 (`id`, `book_mark`, `child_leaf_count`, `content`, `create_time`, `is_deleted`, `like_count`, `title`, `update_time`, `version`, `view_count`, `visibility`, `parent_leaf_id`, `tree_id`)

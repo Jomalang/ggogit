@@ -21,6 +21,7 @@ import java.time.format.DateTimeFormatter;
 @AllArgsConstructor
 @Builder
 public class TreeCardResponse {
+    @Builder.Default
     private int cardType = 0;
     private String bookCategory;
     private String bookTitle;

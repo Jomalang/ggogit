@@ -22,7 +22,7 @@ watchEffect(() => {
         <a :href="`/tree/detail/${tree.treeId}`">
           <img
             class="mid__img"
-            :src="tree.coverImageName"
+            :src="useGetImageUrl(tree.coverImageName)"
             alt="도서 예시 이미지"
           />
         </a>
@@ -53,7 +53,7 @@ watchEffect(() => {
         <a :href="`/tree/detail/${tree.treeId}`">
           <img
             class="mid__img"
-            :src="tree.coverImageName"
+            :src="useGetImageUrl(tree.coverImageName)"
             alt="도서 예시 이미지"
           />
         </a>
@@ -84,7 +84,7 @@ watchEffect(() => {
         <a :href="`/tree/detail/${tree.treeId}`">
           <img
             class="mid__img"
-            :src="tree.coverImageName"
+            :src="useGetImageUrl(tree.coverImageName)"
             alt="도서 예시 이미지"
           />
         </a>

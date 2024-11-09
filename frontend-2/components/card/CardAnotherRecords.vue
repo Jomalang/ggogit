@@ -32,9 +32,8 @@ function modifyCount(count: number) {
           <img
             class="card-another-records__top-cover-box"
             :src="useGetImageUrl(item.cardImage, 'memoir')"
-            alt="트리 이미지"
+            alt="회고록 이미지"
           />
-          alt="회고록 이미지" />
         </div>
         <div v-else-if="item.cardType === CardType.LEAF">
           <img

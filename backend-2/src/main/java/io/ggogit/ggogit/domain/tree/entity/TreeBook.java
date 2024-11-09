@@ -27,7 +27,6 @@ public class TreeBook {
     @Column(name = "TREE_ID", nullable = false)
     private Long id;
 
-    @MapsId
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "TREE_ID", nullable = false)
     private Tree tree;

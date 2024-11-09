@@ -122,7 +122,7 @@ if (treeCardsError.value === "noContent") {
         <!-- 이 부분은 추후에 어플리케이션이 사용자 정보를 상태 유지 가능할때 기능 추가 할 예정 -->
         <h1 class="none">나의 트리 리스트</h1>
         <section class="book-detail-my-tree-card-container">
-          <CardTreeList v-if="myTreeCards.length > 1" :list="myTreeCards" />
+          <CardTreeList v-if="myTreeCards.length >= 1" :data="myTreeCards" />
           <TextMainTitle
             class="book-detail-my-tree-no-tree-container"
             v-else

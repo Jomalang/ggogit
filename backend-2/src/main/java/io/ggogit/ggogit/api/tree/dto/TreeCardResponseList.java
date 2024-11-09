@@ -12,6 +12,7 @@ import java.util.List;
 @Builder
 public class TreeCardResponseList {
 
+    @Builder.Default
     private List<TreeCardResponse> treeCardResponses = new ArrayList<>();
     private long totalCount;
 

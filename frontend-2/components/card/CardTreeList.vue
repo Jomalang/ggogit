@@ -7,13 +7,19 @@ const props = defineProps({
     default: () => [],
   },
 });
+
+console.log(props.data);
 </script>
 
 <template>
   <div class="card-tree-list-box">
     <ul class="card-tree__list">
-      <li class="card-tree__item">
-        <CardTree :data="props.data" />
+      <li
+        class="card-tree__item"
+        v-for="(treeCard, index) in props.data"
+        :key="index"
+      >
+        <CardTree :data="treeCard" />
       </li>
     </ul>
   </div>

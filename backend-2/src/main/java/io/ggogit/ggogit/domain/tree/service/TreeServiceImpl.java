@@ -245,10 +245,10 @@ public class TreeServiceImpl implements TreeService {
 
     @Override
     public Page<Tree> findAllByBookId(Long memberId, Long bookId) {
-        int page = 0;
-        int size = 10;
+        int pageNumber = 0;
+        int limit = 10;
         Sort sort = Sort.by(Sort.Direction.DESC, "updateTime");
-        Pageable pageable = PageRequest.of(page, size, sort);
+        Pageable pageable = PageRequest.of(pageNumber, limit, sort);
 
         return treeRepository.findAllByMemberIdAndBookId(memberId, bookId, pageable);
     }

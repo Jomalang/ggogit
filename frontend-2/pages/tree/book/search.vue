@@ -151,10 +151,10 @@ onMounted(() => {
 
 .scroll-container {
   display: flex;
+  height: 100%;
   flex-direction: column;
   gap: 20px;
   overflow-y: auto;
-  height: 480px;
 }
 
 /* /home/tree/search/list.html */

@@ -56,10 +56,16 @@ public class BookServiceImpl implements BookService {
     public BookListResponse getSearchBookList(int page, String query, String searchType) {
         List<Book> books = aladinClient.fetchBooks(query, searchType); // 알라딘 도서 API 검색
 
+        Member member = memberRepository.findById(999L)
+                .orElseThrow(() -> new IllegalArgumentException("API 관리자 회원이 존재하지 않습니다."));
+
         for (Book book : books) { // DB에 존재하는지 확인
             bookRepository.findByIsbn(book.getIsbn()).ifPresentOrElse(
                 b -> book.setId(b.getId()), // 이미 존재하는 경우 ID를 설정
-                () -> bookRepository.save(book) // 존재하지 않는 경우 저장
+                () -> {
+                    book.setMember(member);
+                    bookRepository.save(book); // 새로운 책 저장
+                }
             );
         }
 

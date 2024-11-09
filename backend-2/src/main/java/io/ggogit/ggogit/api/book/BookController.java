@@ -67,6 +67,15 @@ public class BookController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @GetMapping("/{bookId}/info")
+    public ResponseEntity<BookInfoResponse>  findBookInfo(
+        @PathVariable Long bookId
+    ) {
+        Book book = bookService.findById(bookId);
+        BookInfoResponse response = BookInfoResponse.of(book);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
     @GetMapping("/tree/{treeId}")
     public ResponseEntity<BookInfoResponse>  findBookByTreeId(
         @PathVariable Long treeId

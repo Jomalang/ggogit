@@ -47,7 +47,7 @@ public class TreeSearchResultResponse {
                 .treeCreatedAt(tree.getCreateTime().toString())
                 .seedKorName(tree.getSeed().getKorName())
                 .treeDescription(tree.getDescription())
-                .coverImageName(tree.getTreeImage().getName())
+                .coverImageName(tree.getTreeImage() == null || tree.getTreeImage().getName() == null ? "" : tree.getTreeImage().getName())
                 .build();
     }
 }

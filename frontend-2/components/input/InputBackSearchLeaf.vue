@@ -38,7 +38,7 @@ const sort = ref(0);
 // page 값이 변경될 때 요청
 watch(page, () => {
   if (page.value > 0) {
-    createReq(query.value, props.sort, page.value, searchFilter.value, filterName.value, filter.value); // props.sort 사용
+    createReq(query.value, props.sort, page.value, searchFilter.value, filterQuery); // props.sort 사용
     console.log("new page");
   }
 });
@@ -51,7 +51,7 @@ watch(() => props.sort, (newSort) => {
   page.value = 0;
 
   // 새로운 sort 값으로 fetch 요청
-  createReq(query.value, newSort, page.value, searchFilter.value, filterName.value, filter.value);
+  createReq(query.value, newSort, page.value, searchFilter.value, filterQuery);
 });
 
 //-----------------methods-----------------
@@ -80,8 +80,8 @@ const createReq = async (query, sort, currentPage, searchFilter, filter) => {
       result.value = [...result.value, ...response.content];
 
       // 중복 제거
-      result.value = [...new Set(result.value.map(value => value.treeId))].map((treeId) =>
-          result.value.find((value) => value.treeId === treeId));
+      result.value = [...new Set(result.value.map(value => value.leafId))].map((leafId) =>
+          result.value.find((value) => value.leafId === leafId));
 
       // 페이지 정보 업데이트
       page.value = currentPage;
@@ -94,6 +94,7 @@ const createReq = async (query, sort, currentPage, searchFilter, filter) => {
       totalPage.value = 1;
     }
 
+    console.log(result.value);
     // 부모에게 결과 전달
     emit("result", result.value);
     emit("req", query);
@@ -132,12 +133,11 @@ const closePopup = () => {
   filterBack2.classList.add('none');
 
   searchFilter.value = searchQuery;
-  filter.value = filterQuery;
   sort.value = sortQuery;
   page.value = 0;
 
   if(query.value !== ""){
-    createReq(query.value, sort.value, page.value, searchFilter.value, filterName.value, filter.value);
+    createReq(query.value, sort.value, page.value, searchFilter.value, filterQuery);
   }
   emit("filterName", filterName.value);
 }

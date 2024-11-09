@@ -133,17 +133,16 @@ public class LeafQueryDslRepositoryImpl implements LeafQueryDslRepository {
     }
 
     @Override
-    public Page<Leaf> findByQueryAndMemberId(String query, String filter, String searchFilter, Long memberId, Pageable pageable) {
+    public Page<Leaf> findByQueryAndMemberId(String query, String searchFilter, Long memberId, Pageable pageable) {
         QLeaf leaf = QLeaf.leaf;
 
         if (query == null) {
             query = "";
         }
 
-
         BooleanExpression condition = leaf.tree.member.id.eq(memberId);
 
-        switch (filter) {
+        switch (searchFilter) {
             case "title":
                 condition = condition.and(leaf.title.lower().like("%" + query.toLowerCase() + "%"));
                 break;
@@ -155,7 +154,7 @@ public class LeafQueryDslRepositoryImpl implements LeafQueryDslRepository {
                         .or(leaf.content.lower().like("%" + query.toLowerCase() + "%")));
                 break;
             default:
-                throw new IllegalArgumentException("Invalid filter: " + filter);
+                throw new IllegalArgumentException("Invalid filter: " + searchFilter);
         }
 
         // Sort 정보를 가져와서 동적으로 orderBy 조건을 추가

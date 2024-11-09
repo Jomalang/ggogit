@@ -15,5 +15,5 @@ public interface LeafQueryDslRepository {
 
     Page<Leaf> getLeafCards(Long bookId, int page, int size);
 
-    Page<Leaf> findByQueryAndMemberId(String query, @NotNull String filter, @NotNull String searchFilter, Long memberId, Pageable pageable);
+    Page<Leaf> findByQueryAndMemberId(String query, @NotNull String searchFilter, Long memberId, Pageable pageable);
 }

@@ -19,13 +19,29 @@ const props = defineProps({
     bookPublishedYear: ""
   },
 });
+
+const formatDate = (date) => {
+  const options = {
+    year: "2-digit", // '24' 형식으로 출력
+    month: "2-digit", // '10' 형식으로 출력
+    day: "2-digit", // '01' 형식으로 출력
+    hour: "2-digit",
+    hour12: false,// 시간 출력 (24시간제)
+    minute: "2-digit", // 분 출력
+    timeZone: "Asia/Seoul" // 한국 시간대
+  };
+  return new Date(date).toLocaleString('ko-KR', options);
+};
+const formatYear = (date) => {
+  return new Date(date).getFullYear();
+};
 </script>
 
 <template>
   <div class="card-tree-details">
     <NuxtLink class="card-tree-detail" :to="`${props.data.treeId}`">
       <img
-        v-if="props.data.coverImageName !== undefined"
+        v-if="props.data.coverImageName !== ''"
         class="card-tree__book-cover"
         :src="`/png/${props.data.coverImageName}`"
         alt="도서 이미지"
@@ -46,14 +62,14 @@ const props = defineProps({
         <p class="card-tree-detail__name">{{ props.data.treeTitle }}</p>
         <p class="card-tree-detail__info">{{ props.data.bookTitle }}</p>
         <div class="card-tree-detail__info">
-          <span class="card-tree-detail__info">{{props.data.bookPublishedYear}}</span>
+          <span class="card-tree-detail__info">{{formatYear(props.data.bookPublishedYear)}}</span>
           <span class="card-tree-detail__info"> &nbsp; </span>
           <span class="card-tree-detail__info">{{ props.data.bookAuthor }}</span>
           <span class="card-tree-detail__info"> &nbsp; </span>
           <span class="card-tree-detail__info">{{ props.data.bookPublisher }}</span>
         </div>
         <div class="card-tree-detail__info-created-date">
-          {{ props.data.treeCreatedAt }}
+          {{ formatDate(props.data.treeCreatedAt) }}
         </div>
       </div>
     </NuxtLink>

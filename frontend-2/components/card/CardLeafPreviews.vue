@@ -2,6 +2,8 @@
 import { onBeforeMount, ref } from "vue";
 import { defineProps } from "vue";
 
+let path = ref("");
+
 const props = defineProps({
   data: Object,
   default: {
@@ -19,11 +21,37 @@ const props = defineProps({
     bookPublishedYear: ""
   },
 });
+const formatDate = (date) => {
+  const options = {
+    year: "2-digit", // '24' 형식으로 출력
+    month: "2-digit", // '10' 형식으로 출력
+    day: "2-digit", // '01' 형식으로 출력
+    hour: "2-digit",
+    hour12: false,// 시간 출력 (24시간제)
+    minute: "2-digit", // 분 출력
+    timeZone: "Asia/Seoul" // 한국 시간대
+  };
+  return new Date(date).toLocaleString('ko-KR', options);
+};
+const formatYear = (date) => {
+  return new Date(date).getFullYear();
+};
+function modifyCount(count) {
+  return count > 999 ? "999+" : String(count);
+};
+
+onBeforeMount(() => {
+  if(props.data.seedKorName === "도서") {
+    path.value = `/leaf/book/${props.data.leafId}`;
+  } else {
+    path.value = `/leaf/etx/${props.data.leafId}`;
+  }
+});
 </script>
 
 <template>
-  <div class="card-leaf-details">
-    <NuxtLink class="card-leaf-detail" :to="`${props.data.leafId}`">
+  <div >
+    <NuxtLink :to=path>
       <div  class="card-leaf-detail">
       <img
         v-if="props.data.coverImageName !== undefined"
@@ -44,19 +72,33 @@ const props = defineProps({
         </div>
 
         <!---->
-        <p class="card-leaf-detail__name">{{ props.data.leafTitle }}</p>
+        <p class="card-leaf-detail__name">{{ props.data.treeTitle }}</p>
         <p class="card-leaf-detail__info">{{ props.data.bookTitle }}</p>
         <div class="card-leaf-detail__info">
-          <span class="card-leaf-detail__info">{{props.data.bookPublishedYear}}</span>
+          <span class="card-leaf-detail__info">{{formatYear(props.data.bookPublishedYear)}}</span>
           <span class="card-leaf-detail__info"> &nbsp; </span>
           <span class="card-leaf-detail__info">{{ props.data.bookAuthor }}</span>
           <span class="card-leaf-detail__info"> &nbsp; </span>
           <span class="card-leaf-detail__info">{{ props.data.bookPublisher }}</span>
         </div>
-        <div class="card-leaf-detail__info-created-date">
-          {{ props.data.treeCreatedAt }}
-        </div>
       </div>
+      </div>
+      <div class="card-leaf-detail__box">
+        <div class="card-leaf-detail-content">
+            <span class="card-leaf-detail__name">
+              {{ props.data.leafTitle }}
+            </span>
+          <span class="card-leaf-detail__info-created-date">
+              {{ formatDate(props.data.leafUpdatedAt) }}
+            </span>
+        </div>
+        <p>{{props.data.leafContent}}</p>
+        <div class="card-leaf-detail__count">
+          <span class="card-leaf-detail__info-bold">{{modifyCount(props.data.likeCount)}}</span>
+          <span class="card-leaf-detail__info">좋아요 수</span>
+          <span class="card-leaf-detail__info-bold">{{modifyCount(props.data.viewCount)}}</span>
+          <span class="card-leaf-detail__info">조회 수</span>
+        </div>
       </div>
     </NuxtLink>
   </div>
@@ -74,6 +116,15 @@ const props = defineProps({
   width: 100%;
   display: flex;
   flex-direction: row;
+  gap: 10px;
+}
+
+.card-leaf-detail-content {
+  width: 100%;
+  margin-top: 8px;
+  margin-bottom: 6px;
+  display: flex;
+  justify-content: space-between;
   gap: 10px;
 }
 
@@ -101,10 +152,11 @@ const props = defineProps({
   font-size: 10px;
   margin-right: 2px;
 }
-.card-leaf-detail__slot {
+.card-leaf-detail__count{
+  margin-right: 8px;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  justify-content: end;
+  gap: 10px;
 }
 .card-leaf-detail__name {
   font-size: 18px;
@@ -120,13 +172,19 @@ const props = defineProps({
   color: var(--text-sub);
 }
 
+.card-leaf-detail__info-bold {
+  font-size: 14px;
+  font-weight: var(--bold);
+  color: var(--text-sub);
+}
+
 .card-leaf-detail__info-created-date {
+  margin-right: 8px;
   font-size: 14px;
   font-weight: var(--regular);
   color: var(--text-sub);
   display: flex;
   flex-direction: column-reverse;
   align-items: flex-end;
-  flex-grow: 1;
 }
 </style>

@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class LeafSearchResultResponse {
     private Long treeId;
+    private Long leafId;
     private String treeTitle;
     private String seedKorName;
     private String treeDescription;
@@ -25,10 +26,13 @@ public class LeafSearchResultResponse {
     private String leafTitle;
     private String leafContent;
     private String leafUpdatedAt;
+    private Integer likeCount;
+    private Integer viewCount;
 
     public static LeafSearchResultResponse ofBook(Leaf leaf) {
         return new LeafSearchResultResponse().builder()
                 .treeId(leaf.getTree().getId())
+                .leafId(leaf.getId())
                 .treeTitle(leaf.getTree().getTitle())
                 .seedKorName(leaf.getTree().getSeed().getKorName())
                 .coverImageName(leaf.getTree().getBook().getImageFile())
@@ -41,17 +45,22 @@ public class LeafSearchResultResponse {
                 .leafTitle(leaf.getTitle())
                 .leafContent(leaf.getContent())
                 .leafUpdatedAt(leaf.getUpdateTime().toString())
+                .likeCount(leaf.getLikeCount())
+                .viewCount(leaf.getViewCount())
                 .build();
     }
     public static LeafSearchResultResponse ofEtc(Leaf leaf) {
         return new LeafSearchResultResponse().builder()
                 .treeId(leaf.getTree().getId())
+                .leafId(leaf.getId())
                 .treeTitle(leaf.getTree().getTitle())
                 .seedKorName(leaf.getTree().getSeed().getKorName())
-                .coverImageName(leaf.getTree().getTreeImage().getName())
+                .coverImageName(leaf.getTree().getTreeImage() == null || leaf.getTree().getTreeImage().getName() == null ? "" : leaf.getTree().getTreeImage().getName())
                 .leafTitle(leaf.getTitle())
                 .leafContent(leaf.getContent())
                 .leafUpdatedAt(leaf.getUpdateTime().toString())
+                .likeCount(leaf.getLikeCount())
+                .viewCount(leaf.getViewCount())
                 .build();
     }
 }

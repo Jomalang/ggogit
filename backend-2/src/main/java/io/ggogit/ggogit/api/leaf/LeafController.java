@@ -28,10 +28,10 @@ public class LeafController {
 
 
     /**
-     * 리프 리스트 조회
+     * 리프 검색
      */
     @GetMapping("/leaves/search")
-    public Page<LeafSearchResultResponse> getLeafList(
+    public Page<LeafSearchResultResponse> searchLeaves(
             @Valid @ModelAttribute LeafSearchQuery query
     ) {
         Long memberId = 227L;

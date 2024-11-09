@@ -18,7 +18,8 @@ let sort = ref(0);
 
 const handleTreeResult = (data) => {
   leaves.value = data || [];
-  console.log(`length=${leaves.value.length}`);
+
+  console.log(data);
 };
 
 const handleKeyword = (words) => {
@@ -126,8 +127,8 @@ onMounted(() => {
     <section class="tree-card-list" v-else-if="totalCount >= 1">
       <h3 class="none">리프 검색 결과</h3>
       <div class="scroll-container" ref="scrollContainer">
-        <div v-for="tree in leaves" :key="tree.treeId">
-          <CardLeafPreviews :data="tree" />
+        <div v-for="leaf in leaves" :key="leaf.treeId">
+          <CardLeafPreviews :data="leaf" />
         </div>
       </div>
     </section>

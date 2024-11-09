@@ -24,7 +24,9 @@ public class LeafSearchQuery {
     private Long sort;
 
     @NotNull
-    private String filter;
+    @Max(14)
+    @Min(0)
+    private Long filter;
 
     @NotNull
     private String searchFilter;

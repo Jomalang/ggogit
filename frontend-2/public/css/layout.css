@@ -220,6 +220,7 @@ home-tree__reg-4--search-book__input
 .tree-reg-cover-info__container {
   width: 100%;
   height: 326px;
+  margin-bottom: 50px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -236,7 +237,6 @@ home-tree__reg-4--search-book__input
   padding-left: 24px;
   padding-right: 24px;
   width: 100%;
-  height: 100px;
   background: var(--main2--opacity40);
 }
 .tree-info-card__container {

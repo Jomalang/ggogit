@@ -85,7 +85,7 @@ public class TreeController {
 //            @SessionAttribute Member member
     ) {
 //        Long memberId = member.getId();
-        Long memberId = 227L;
+        Long memberId = 1000L;
 
         TreeInfoResponse treeInfoResponse = treeService.findTreeInfoResponse(memberId, treeId);
         return new ResponseEntity<> (treeInfoResponse, HttpStatus.OK);
@@ -98,7 +98,7 @@ public class TreeController {
     public ResponseEntity<TreeInfoResponse> getTreeInfoResponseByLeafId(
             @PathVariable Long leafId
     ) {
-        Long memberId = 227L;
+        Long memberId = 1000L;
         Tree tree = leafDtoService.getTree(leafId);
         TreeInfoResponse treeInfoResponse = treeService.findTreeInfoResponse(memberId, tree.getId());
         return new ResponseEntity<> (treeInfoResponse, HttpStatus.OK);

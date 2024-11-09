@@ -78,6 +78,9 @@ public class LeafBookServiceImpl implements LeafBookService {
         TreeBook treeBook = TreeBook.of(tree);
         treeBookRepository.save(treeBook);
 
+        tree.setTreeBook(treeBook);
+        treeRepository.save(tree); // TreeBook 맵핑
+
         LeafBook savedLeafBook = createLogic(memberId, leaf, leafBook, leafTagIds);
 
         // `System`은 `TreeTmp` 데이터를 삭제한다.

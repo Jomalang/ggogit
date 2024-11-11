@@ -17,6 +17,7 @@ const treeId = Number(useRoute().params.id);
 let filterQuery = 10;
 let sortQuery = 1;
 let filterName = ref('최근 수정 순');
+let searchFilterName = ref('전체');
 
 
 const queryParam = reactive({
@@ -79,6 +80,16 @@ const { data: branchData, error: branchError, refresh } = await useFetch(() => `
 const bookMarkHandler = (bookMark) => {
   queryParam.bookMark = bookMark;
   queryParam.page = 0;
+  switch (bookMark){
+    case 1:
+      searchFilterName.value = "북마크";
+      break;
+    case 0:
+      searchFilterName.value = "마지막 리프";
+      break;
+    default:
+      searchFilterName.value = "전체";
+  }
 };
 
 const sortHandler = (e) => {
@@ -182,6 +193,7 @@ watchEffect(() => {
             @popup="openPopup"
             @bookMark="bookMarkHandler"
             :filterName="filterName"
+            :searchFilterName="searchFilterName"
         ></FilterTreeLeafCard>
         </div>
       </section>
@@ -201,39 +213,98 @@ watchEffect(() => {
     <section>
       <div  @click.prevent="closePopup" class="filter-tab-container none" id="filter-bg"></div>
       <div class="filter-tab-container--30 none" id="filter-bg-blur">
-      <h2 class="none">정렬 선택</h2>
-      <div id="filter-tab" class="filter-tab__box--30">
-        <div class="filter-tab__header">
-          <button
-              @click.prevent="closePopup"
-            id="filter-tab-close-btn"
-            class="filter-tab__btn--back"
-            type="button"
-          >
-            <img src="/public/svg/tab-back.svg" alt="뒤로가기 버튼" />
-          </button>
-          <h1 class="filter-tab__header--title">정렬 선택</h1>
-        </div>
+        <h2 class="none">정렬 선택</h2>
+        <div id="filter-tab" class="filter-tab__box--30">
+          <div class="filter-tab__header">
+            <button
+                @click.prevent="closePopup"
+              id="filter-tab-close-btn"
+              class="filter-tab__btn--back"
+              type="button"
+            >
+              <img src="/public/svg/tab-back.svg" alt="뒤로가기 버튼" />
+            </button>
+            <h1 class="filter-tab__header--title">정렬 선택</h1>
+          </div>
 
-        <div class="filter-list-frame">
-        <div class="filter-attribute__bg">
-          <h2 class="filter-attribute__title">정렬 기준</h2>
+          <div class="filter-list-frame">
+          <div class="filter-attribute__bg">
+            <div class="filter-attribute__bg">
+              <h2 class="filter-attribute__title">브랜치 검색 기준</h2>
+              <ul id="filter-tab__list">
+                <li @click="bookMarkHandler( 1)" class="filter-tab__item">
+                  <label class="filter-tab__item-label">
+                    <input
+                        class="filter-tab__item-radio"
+                        type="radio"
+                        name="searchFilter"
+                        value="0"
+                        checked
+                    />
+                    <span class="filter-tab__item--label-text">북마크</span>
+                    <div class="filter-tab__icon-box">
+                      <img
+                          class="filter-tab__icon-img"
+                          src="/svg/tab-check-btn.svg"
+                          alt="필터 버튼"
+                      />
+                    </div>
+                  </label>
+                </li>
+                <li @click="bookMarkHandler(0)" class="filter-tab__item">
+                  <label class="filter-tab__item-label">
+                    <input
+                        class="filter-tab__item-radio"
+                        type="radio"
+                        name="searchFilter"
+                        value="1"
+                    />
+                    <span class="filter-tab__item--label-text">마지막 리프</span>
+                    <div class="filter-tab__icon-box">
+                      <img
+                          class="filter-tab__icon-img"
+                          src="/svg/tab-check-btn.svg"
+                          alt="필터 버튼"
+                      />
+                    </div>
+                  </label>
+                </li>
+                <li @click="bookMarkHandler('')" class="filter-tab__item">
+                  <label class="filter-tab__item-label">
+                    <input
+                        class="filter-tab__item-radio"
+                        type="radio"
+                        name="searchFilter"
+                        value=""
+                    />
+                    <span class="filter-tab__item--label-text">전체</span>
+                    <div class="filter-tab__icon-box">
+                      <img
+                          class="filter-tab__icon-img"
+                          src="/svg/tab-check-btn.svg"
+                          alt="필터 버튼"
+                      />
+                    </div>
+                  </label>
+                </li>
+              </ul>
+            <h2 class="filter-attribute__title">정렬 기준</h2>
             <ul id="filter-tab__list1">
               <li @click="filterNameHandler( 10)" class="filter-tab__item">
                 <label class="filter-tab__item-label">
                   <input
-                    class="filter-tab__item-radio"
-                    type="radio"
-                    name="filter"
-                    value="10"
-                    checked
+                      class="filter-tab__item-radio"
+                      type="radio"
+                      name="filter"
+                      value="10"
+                      checked
                   />
                   <span class="filter-tab__item--label-text">최근 수정</span>
                   <div class="filter-tab__icon-box">
                     <img
-                      class="filter-tab__icon-img"
-                      src="/svg/tab-check-btn.svg"
-                      alt="필터 버튼"
+                        class="filter-tab__icon-img"
+                        src="/svg/tab-check-btn.svg"
+                        alt="필터 버튼"
                     />
                   </div>
                 </label>
@@ -241,17 +312,17 @@ watchEffect(() => {
               <li @click="filterNameHandler(11)" class="filter-tab__item">
                 <label class="filter-tab__item-label">
                   <input
-                    class="filter-tab__item-radio"
-                    type="radio"
-                    name="filter"
-                    value="11"
+                      class="filter-tab__item-radio"
+                      type="radio"
+                      name="filter"
+                      value="11"
                   />
                   <span class="filter-tab__item--label-text">제목</span>
                   <div class="filter-tab__icon-box">
                     <img
-                      class="filter-tab__icon-img"
-                      src="/svg/tab-check-btn.svg"
-                      alt="필터 버튼"
+                        class="filter-tab__icon-img"
+                        src="/svg/tab-check-btn.svg"
+                        alt="필터 버튼"
                     />
                   </div>
                 </label>
@@ -259,17 +330,17 @@ watchEffect(() => {
               <li @click="filterNameHandler(12)" class="filter-tab__item">
                 <label class="filter-tab__item-label">
                   <input
-                    class="filter-tab__item-radio"
-                    type="radio"
-                    name="filter"
-                    value="12"
+                      class="filter-tab__item-radio"
+                      type="radio"
+                      name="filter"
+                      value="12"
                   />
                   <span class="filter-tab__item--label-text">리프 수</span>
                   <div class="filter-tab__icon-box">
                     <img
-                      class="filter-tab__icon-img"
-                      src="/svg/tab-check-btn.svg"
-                      alt="필터 버튼"
+                        class="filter-tab__icon-img"
+                        src="/svg/tab-check-btn.svg"
+                        alt="필터 버튼"
                     />
                   </div>
                 </label>
@@ -311,7 +382,7 @@ watchEffect(() => {
                 </label>
               </li>
             </ul>
-          <div class="filter-attribute__bg">
+            <div class="filter-attribute__bg">
             <h2 class="filter-attribute__title">정렬 순서</h2>
             <ul class="filter-tab__list" id="filter-tab__list2">
               <li @click="sortHandler(1)" class="filter-tab__item">
@@ -354,6 +425,7 @@ watchEffect(() => {
             </ul>
           </div>
         </div>
+          </div>
         </div>
       </div>
       </div>

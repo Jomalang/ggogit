@@ -6,6 +6,10 @@ const props = defineProps({
   filterName: {
     type: String,
     default: 'Default Title'
+  },
+  searchFilterName:{
+    type: String,
+    default: '전체'
   }
 })
 const emit = defineEmits(['popup','bookMark']);
@@ -15,19 +19,16 @@ const bookMark = ref();
 <template>
   <div id="branchSortFilter" class="filter-tree-leaf__card">
     <div class="filter-tree-leaf__gap">
-      <label>
-        <input @click="emit('bookMark', bookMark='')" class="filter-tree-list-img filterEvent" type="radio" name="bookMark" data-id="" checked/>
+      <label @click="emit('popup')" class="filter-tree-list-img filterEvent">
+
       </label>
-      <label>
-        <input @click="emit('bookMark', bookMark=1)" class="filter-tree-list-btn filterEvent" type="radio" name="bookMark" data-id="1" label="북마크"/>
-      </label>
-      <label>
-        <input @click="emit('bookMark', bookMark=0)" class="filter-tree-list-btn filterEvent" type="radio" name="bookMark" data-id="0" label="라스트 리프"/>
+      <label @click="emit('popup')" class="filter-tree-list-btn filterEvent">
+        {{props.searchFilterName}}
       </label>
     </div>
-    <div @click="emit('popup')" class="filter-tree-leaf__card-sort" id="filter-tree-leaf__card-sort">
-      <input class="bar-search-current__detail-input" type="checkbox" id="bar-search-current__detail"/>
+    <div  class="filter-tree-leaf__card-sort" id="filter-tree-leaf__card-sort">
       <label class="bar-search-current__detail" for="bar-search-current__detail">{{props.filterName}}</label>
+      <img src="">
     </div>
   </div>
 </template>
@@ -70,7 +71,7 @@ const bookMark = ref();
   font-size: 16px;
 }
 
-.filter-tree-list-img:checked {
+.filter-tree-list-img{
   background-color: var(--btn-active);
   background-image: url("/svg/sort-white.svg");
   color: var(--white);

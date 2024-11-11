@@ -38,7 +38,7 @@ const sort = ref(0);
 // page 값이 변경될 때 요청
 watch(page, () => {
   if (page.value > 0) {
-    createReq(query.value, props.sort, page.value, searchFilter.value, filterQuery); // props.sort 사용
+    createReq(props.sort, page.value, searchFilter.value, filterQuery,false); // props.sort 사용
     console.log("new page");
   }
 });
@@ -51,16 +51,20 @@ watch(() => props.sort, (newSort) => {
   page.value = 0;
 
   // 새로운 sort 값으로 fetch 요청
-  createReq(query.value, newSort, page.value, searchFilter.value, filterQuery);
+  createReq(newSort, page.value, searchFilter.value, filterQuery, false);
 });
 
 //-----------------methods-----------------
-const createReq = async (query, sort, currentPage, searchFilter, filter) => {
+const createReq = async (sort, currentPage, searchFilter, filter, isChange) => {
+  let queryContent = "";
+  if(isChange){
+    queryContent = query.value
+  }
   try {
     const response = await $fetch(props.api, {
       method: "GET",
       params: {
-        query: query,
+        query: queryContent,
         sort: sort,
         page: currentPage,
         searchFilter : searchFilter,
@@ -137,7 +141,7 @@ const closePopup = () => {
   page.value = 0;
 
   if(query.value !== ""){
-    createReq(query.value, sort.value, page.value, searchFilter.value, filterQuery);
+    createReq(sort.value, page.value, searchFilter.value, filterQuery, false);
   }
   emit("filterName", filterName.value);
 }
@@ -178,6 +182,9 @@ const sortHandler = (e) => {
   sortQuery = e;
 }
 
+const dropQueryHandler = () => {
+  query.value = "";
+}
 
 //-----------------lifeCycle-----------------
 onUpdated(() => {
@@ -203,13 +210,13 @@ onUpdated(() => {
           :placeholder="props.placeholder"
           v-model="query"
           autocomplete="off"
-          @keyup.enter="createReq(query, sort, 0, searchFilter, filter)"
+          @keyup.enter="createReq(sort, 0, searchFilter, filter, true)"
         />
-        <button class="search-bar--close" type="reset">
+        <button @click="dropQueryHandler" class="search-bar--close" type="reset">
           <img src="/public/svg/close-button.svg" alt="close-btn" />
         </button>
       </label>
-      <button @click="createReq(query, sort, 0, searchFilter, filter)">
+      <button @click="createReq(sort, 0, searchFilter, filter, true)">
         <img src="/public/svg/lens.svg" alt="lens" />
       </button>
     </div>

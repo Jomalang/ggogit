@@ -16,7 +16,8 @@ VALUES
     (10, '2024-10-10 19:00:00', 'user10@example.com', 'Introduction of user10', false, 'nickname10', 'password10hash', '2024-10-10 19:00:00', 'user10', 1, 'USER'),
     (227, '2024-10-10 19:00:00', 'admin227@ggogit.io', 'Introduction of userTest', false, 'treeTest', 'treeAPI', '2024-10-10 19:00:00', 'API', 1, 'ADMIN'),
     (999, '2024-10-10 19:00:00', 'admin@ggogit.io', 'Introduction of user10', false, 'API', 'API', '2024-10-10 19:00:00', 'API', 1, 'ADMIN'),
-    (998, '2024-10-10 19:00:00', 'gksxorb147@naver.com', 'Introduction of user10', false, 'API', '$2a$10$YOSCvr2AcsMbSv36aYWFp.14..6ruvlkD3/QabL2FowYffwr26XWO', '2024-10-10 19:00:00', 'API', 1, 'ADMIN');
+    (998, '2024-10-10 19:00:00', 'gksxorb147@naver.com', 'Introduction of user10', false, 'API', '$2a$10$YOSCvr2AcsMbSv36aYWFp.14..6ruvlkD3/QabL2FowYffwr26XWO', '2024-10-10 19:00:00', 'API', 1, 'ADMIN'),
+    (997, '2024-10-10 19:00:00', 'test@naver.com', 'Introduction of user10', false, 'API', '$2a$10$cQ4tsAT3IoQkyKpoNH6Lf.DKE8dN9pSJGgRtY0SyxnbmjlJD.DWx6', '2024-10-10 19:00:00', 'API', 1, 'ADMIN');
 
 ALTER TABLE `member` ALTER COLUMN id RESTART WITH 100000;
 

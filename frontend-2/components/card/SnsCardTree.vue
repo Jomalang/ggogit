@@ -32,7 +32,7 @@ function modifyCount(count: number) {
         >
           <img
             class="sns-card-tree__top-tree-img"
-            src="/public/svg/tree-icon--white.svg"
+            src="/public/png/tree-icon-white.png"
             alt="트리 아이콘"
           />
         </div>

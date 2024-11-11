@@ -29,7 +29,7 @@ function modifyCount(count: number) {
         <div class="card-tree__top-tree-icon-box">
           <img
             class="card-tree__top-tree-img"
-            src="/public/svg/tree-icon--white.svg"
+            src="/public/png/tree-icon-white.png"
             alt="트리 아이콘"
           />
         </div>

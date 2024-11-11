@@ -48,8 +48,8 @@ const formatYear = (date) => {
       />
       <img
         v-else
-        class="card-tree__book-cover"
-        src="/svg/tree-icon--white.svg"
+        class="card-tree__book-cover-default"
+        src="/png/tree-icon-white.png"
         alt="도서 기본 이미지"
       />
       <div class="card-tree-detail__box">
@@ -94,6 +94,14 @@ const formatYear = (date) => {
 .card-tree__book-cover {
   height: 120px;
   width: 80px;
+  border-radius: 4px;
+  background-color: var(--main1);
+}
+
+.card-tree__book-cover-default {
+  height: 120px;
+  width: 80px;
+  object-fit: contain;
   border-radius: 4px;
   background-color: var(--main1);
 }

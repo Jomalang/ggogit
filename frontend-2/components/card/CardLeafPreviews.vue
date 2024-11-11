@@ -50,7 +50,7 @@ onBeforeMount(() => {
 </script>
 
 <template>
-  <div >
+  <div class="leaf-list-frame">
     <NuxtLink :to=path>
       <div  class="card-leaf-detail">
       <img
@@ -105,6 +105,10 @@ onBeforeMount(() => {
 </template>
 
 <style scoped>
+.leaf-list-frame {
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--main1--opacity10);
+}
 .card-leaf-details {
   width: 100%;
   display: flex;

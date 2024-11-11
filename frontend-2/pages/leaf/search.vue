@@ -61,6 +61,7 @@ const handleScroll = debounce(() => {
   }
 }, 300); // 디바운스 적용으로 스크롤 이벤트 과도한 호출 방지
 const sortHandler = debounce(() => {
+  if(leaves.value.length === 0) return;
   page.value = 0;
   if (sort.value === 0) sort.value = 1;
   else sort.value = 0;
@@ -104,11 +105,7 @@ onMounted(() => {
 
     <section>
       <h2 class="none">검색 결과 개수 및 최근 수정한 순서</h2>
-      <TopBarSearchResultNumAndFilter
-        :num="totalCount"
-        :filterName="filterName"
-        @sort="sortHandler"
-      />
+      <TopBarSearchResultNumAndFilter :num="totalCount" :filterName="filterName"/>
     </section>
   </header>
 
@@ -151,6 +148,8 @@ onMounted(() => {
 .scroll-container {
   display: flex;
   margin-bottom: 10px;
+  margin-left: 24px;
+  margin-right: 26px;
   flex-direction: column;
   gap: 20px;
   overflow-y: auto;

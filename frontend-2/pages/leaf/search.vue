@@ -1,7 +1,7 @@
 <script setup>
 import { reactive, ref } from "vue";
 import InputBackSearchTree from "~/components/input/InputBackSearchTree.vue";
-import {debounce} from "lodash";
+import { debounce } from "lodash";
 
 //---------------variable----------------
 const query = ref("");
@@ -12,7 +12,7 @@ const totalCount = ref(0);
 const scrollContainer = ref(null);
 const config = useRuntimeConfig();
 const apiUrl = config.public.apiBase + "/leaves/search";
-let filterName = ref("최근 수정한 순")
+let filterName = ref("최근 수정한 순");
 let sort = ref(0);
 //-------------handler----------------
 
@@ -63,27 +63,22 @@ const handleScroll = debounce(() => {
 const sortHandler = debounce(() => {
   if(leaves.value.length === 0) return;
   page.value = 0;
-  if(sort.value === 0)
-    sort.value = 1;
-  else
-    sort.value = 0;
-
+  if (sort.value === 0) sort.value = 1;
+  else sort.value = 0;
 });
-
-
 
 //-------------life cycle----------------
 onMounted(() => {
   watch(
-      [scrollContainer],
-      () => {
-        if (scrollContainer.value) {
-          scrollContainer.value.addEventListener("scroll", handleScroll, {
-            passive: false,
-          });
-        }
-      },
-      { immediate: true }
+    [scrollContainer],
+    () => {
+      if (scrollContainer.value) {
+        scrollContainer.value.addEventListener("scroll", handleScroll, {
+          passive: false,
+        });
+      }
+    },
+    { immediate: true }
   );
 });
 </script>
@@ -94,17 +89,17 @@ onMounted(() => {
     <section>
       <h2 class="none">리프 검색 창</h2>
       <InputBackSearchLeaf
-          :placeholder="`검색할 리프를 입력해주세요.`"
-          :href="`./seed/index`"
-          :api="apiUrl"
-          :page="page"
-          :sort="sort"
-          @result="handleTreeResult"
-          @req="handleKeyword"
-          @page="handlePage"
-          @totalCount="handleTotalCount"
-          @totalPage="handleTotalPage"
-          @filterName="handleFilterName"
+        :placeholder="`검색할 리프를 입력해주세요.`"
+        :href="`./seed/index`"
+        :api="apiUrl"
+        :page="page"
+        :sort="sort"
+        @result="handleTreeResult"
+        @req="handleKeyword"
+        @page="handlePage"
+        @totalCount="handleTotalCount"
+        @totalPage="handleTotalPage"
+        @filterName="handleFilterName"
       />
     </section>
 
@@ -119,8 +114,8 @@ onMounted(() => {
       <div class="text-info-container">
         <h2 class="none">검색 시작 안내</h2>
         <TextInfo
-            :text="'현재 검색중인 리프가 없습니다'"
-            :boldText="'리프를 검색하거나 직접 등록해주세요'"
+          :text="'현재 검색중인 리프가 없습니다'"
+          :boldText="'리프를 검색하거나 직접 등록해주세요'"
         />
       </div>
     </section>
@@ -138,12 +133,11 @@ onMounted(() => {
       <h3 class="none">검색 결과 없음</h3>
       <div class="text-info-container">
         <TextInfo
-            :text="'검색 결과가 없습니다.'"
-            :boldText="'다시 검색하거나 직접 등록해주세요'"
+          :text="'검색 결과가 없습니다.'"
+          :boldText="'다시 검색하거나 직접 등록해주세요'"
         />
       </div>
     </section>
-
   </main>
   <aside class="nav-container">
     <NavNavigationBar active="home" />
@@ -160,5 +154,29 @@ onMounted(() => {
   gap: 20px;
   overflow-y: auto;
   height: 630px;
+}
+.tree-card-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-left: 24px;
+  margin-right: 24px;
+}
+
+.tree-card-list__main {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 24px;
+  margin-left: 24px;
+  margin-right: 24px;
+  align-items: center;
+}
+
+.tree-card-list::after {
+  content: " ";
+  display: block;
+  width: 100%;
+  height: 50px;
 }
 </style>

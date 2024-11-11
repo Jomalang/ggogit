@@ -8,6 +8,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
+import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
@@ -45,10 +46,10 @@ public class Tree {
     @JoinColumn(name = "BOOK_ID")
     private Book book;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "TREEBOOK_ID")
+    @OneToOne(mappedBy = "tree")
     private TreeBook treeBook;
 
+    @BatchSize(size = 100)
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "tree")
     private List<Leaf> leaf;
 

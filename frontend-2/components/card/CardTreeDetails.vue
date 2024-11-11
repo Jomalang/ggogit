@@ -23,7 +23,7 @@ const detailLink = computed(() => `/tree/detail/${tree.treeId}`);
           v-if="tree.coverImageName"
           class="card-tree__book-cover"
           alt="treeCover"
-          :src="tree.coverImageName"
+          :src="useGetImageUrl(tree.coverImageName)"
         />
         <img
           v-else

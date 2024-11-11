@@ -45,7 +45,7 @@ VALUES
 INSERT INTO `member_background_image`
 (`member_id`, `create_time`, `is_deleted`, `name`, `update_time`, `version`)
 VALUES
-    (1, '2024-10-01 10:00:00', false, 'book-example.png', '2024-10-01 10:00:00', 1),
+    (1, '2024-10-01 10:00:00', false, 'book-example2.png', '2024-10-01 10:00:00', 1),
     (2, '2024-10-02 11:00:00', false, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRRTuzwnsO7lyoky8uX-foTR0eO51pgwVhciw&s', '2024-10-02 11:00:00', 1),
     (3, '2024-10-03 12:00:00', false, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRRTuzwnsO7lyoky8uX-foTR0eO51pgwVhciw&s', '2024-10-03 12:00:00', 1),
     (4, '2024-10-04 13:00:00', false, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRRTuzwnsO7lyoky8uX-foTR0eO51pgwVhciw&s', '2024-10-04 13:00:00', 1),
@@ -560,9 +560,9 @@ INSERT INTO `tree_book`
 VALUES
     (10000, '2024-11-01 09:00:00', false, 700, '2024-11-01 09:00:00', 1);
 
-UPDATE tree
-SET treebook_id = (SELECT tree_id FROM tree_book WHERE tree_id = 10000)
-WHERE id = 10000;
+-- UPDATE tree
+-- SET treebook_id = (SELECT tree_id FROM tree_book WHERE tree_id = 10000)
+-- WHERE id = 10000;
 
 INSERT INTO `leaf`
 (`id`, `book_mark`, `child_leaf_count`, `content`, `create_time`, `is_deleted`, `like_count`, `title`, `update_time`, `version`, `view_count`, `visibility`, `parent_leaf_id`, `tree_id`)

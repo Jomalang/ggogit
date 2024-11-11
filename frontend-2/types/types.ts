@@ -81,11 +81,11 @@ export interface CardProgressBarProps {
 
 export interface SnsCardTreeProps {
   cardType: CardType;
-  treeTitle: string;
-  treeDate: string;
-  memoirText: string;
+  title: string;
+  updateDate: string;
+  content: string;
   nickname: string;
-  nicknameId: string;
+  emailId: string;
   leafCount: number;
   viewCount: number;
 }

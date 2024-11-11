@@ -434,4 +434,29 @@ onMounted(() => {
   </aside>
 </template>
 
-<style></style>
+<style scoped>
+.tree-card-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-left: 24px;
+  margin-right: 24px;
+}
+
+.tree-card-list__main {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 24px;
+  margin-left: 24px;
+  margin-right: 24px;
+  align-items: center;
+}
+
+.tree-card-list::after {
+  content: " ";
+  display: block;
+  width: 100%;
+  height: 50px;
+}
+</style>

@@ -187,7 +187,6 @@ function modifyCount(count: number) {
 }
 
 .sns-card-tree__memoir-text-box {
-  overflow: hidden;
   margin-bottom: 20px;
   text-overflow: ellipsis;
   overflow: hidden;

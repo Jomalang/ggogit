@@ -1,8 +1,13 @@
 package io.ggogit.ggogit.domain.tree.repository.query;
 
+import com.querydsl.core.types.Order;
+import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.types.dsl.PathBuilder;
+import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import io.ggogit.ggogit.domain.leaf.entity.Leaf;
+import io.ggogit.ggogit.domain.tree.entity.QTree;
 import io.ggogit.ggogit.domain.tree.entity.Tree;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

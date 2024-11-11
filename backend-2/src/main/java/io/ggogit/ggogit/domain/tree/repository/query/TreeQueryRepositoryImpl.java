@@ -58,7 +58,6 @@ public class TreeQueryRepositoryImpl implements TreeQueryRepository {
                 .join(tree.treeBook, treeBook).fetchJoin()
                 .where(tree.member.id.eq(memberId).and(tree.seed.id.eq(seedId)))
                 .fetch();
-
     }
 
     @Override
@@ -127,22 +126,6 @@ public class TreeQueryRepositoryImpl implements TreeQueryRepository {
                 .fetchOne();
 
         return PageableExecutionUtils.getPage(trees, pageable, () -> total != null ? total : 0);
-    }
-
-    @Override
-    public Page<Tree> findTreeByMemberIdFetch(Long memberId, Pageable pageable) {
-        List<Tree> result = queryFactory
-                .selectFrom(tree)
-                .join(tree.leaf, leaf).fetchJoin()
-                .join(tree.book, book).fetchJoin()
-                .join(tree.book.bookCategory, bookCategory).fetchJoin()
-                .join(tree.treeBook, treeBook).fetchJoin()
-                .offset(pageable.getOffset())
-                .limit(pageable.getPageSize())
-                .where(tree.member.id.eq(memberId))
-                .fetch();
-
-        return new PageImpl<>(result, pageable, result.size());
     }
 
 

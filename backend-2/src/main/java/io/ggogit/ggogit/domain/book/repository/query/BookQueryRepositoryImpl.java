@@ -1,10 +1,8 @@
 package io.ggogit.ggogit.domain.book.repository.query;
 
 import com.querydsl.core.BooleanBuilder;
-import com.querydsl.core.types.Expression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import io.ggogit.ggogit.domain.book.entity.Book;
-import io.ggogit.ggogit.domain.book.entity.QBook;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -43,7 +41,5 @@ public class BookQueryRepositoryImpl implements BookQueryRepository {
                 .fetch().size();
 
         return new PageImpl<>(result, pageable, total);
-
-
     }
 }

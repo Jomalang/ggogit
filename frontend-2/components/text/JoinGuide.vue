@@ -2,7 +2,6 @@
 
 const { data } = defineProps(['data']);
 
-
 </script>
 
 <template>
@@ -10,7 +9,10 @@ const { data } = defineProps(['data']);
     <div class="join-guide">
         <p class="text--title14">{{ data.infoText }}</p>
         <NuxtLink :to="data.href">
-          <p class="text--title16">{{ data.label }}</p>
+          <span class="text--title16">{{ data.label }}</span>
+        </NuxtLink>
+        <NuxtLink v-if="data.isFind" to="/member/find/email">
+          / <span class="text--title16">계정 찾기</span>
         </NuxtLink>
     </div>
 </template>

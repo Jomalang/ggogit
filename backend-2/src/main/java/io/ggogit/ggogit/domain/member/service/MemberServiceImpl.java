@@ -16,7 +16,6 @@ import jakarta.mail.internet.MimeMessage;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -57,6 +56,15 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    public boolean existsEmail(String email, String username) {
+
+        Member member = memberRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("회원이 존재하지 않습니다."));
+
+        return member.getUsername().equals(username);
+    }
+
+    @Override
     @Transactional
     public void joinSendEmail(String email) throws MessagingException {
 
@@ -86,6 +94,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    @Transactional
     public void passwordResetSendEmail(String email) throws MessagingException {
 
         // 기존 이메일 인증 정보 삭제
@@ -97,7 +106,6 @@ public class MemberServiceImpl implements MemberService {
         StringBuilder emailContent = new StringBuilder();
         emailContent.append("http://localhost:3000/member/password-reset?key=");
         emailContent.append(token);
-
 
         Context context = new Context();
         context.setVariable("link", emailContent.toString());
@@ -124,9 +132,8 @@ public class MemberServiceImpl implements MemberService {
         Member member = memberRepository.findByEmail(passWordRest.getEmail())
                 .orElseThrow(() -> new IllegalArgumentException("가입되지 않은 이메일입니다."));
 
-        member.setPassword(password);
+        member.setPassword(passwordEncoder.encode(secretKey + password)); // 비밀번호 암호화
         memberRepository.save(member);
-
         passWordRestRepository.deleteByEmail(passWordRest.getEmail());
     }
 
@@ -241,6 +248,12 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public EmailJoinToken findEmailJoinToken(String key) {
         return emailJoinTokenRepository.findByUuid(key)
+                .orElseThrow(() -> new IllegalArgumentException("회원 가입 이메일 전송을 진행하지 않은 이메일입니다."));
+    }
+
+    @Override
+    public PassWordRest findPassWordRest(String key) {
+        return passWordRestRepository.findByUuid(key)
                 .orElseThrow(() -> new IllegalArgumentException("회원 가입 이메일 전송을 진행하지 않은 이메일입니다."));
     }
 }

@@ -120,7 +120,8 @@ const submitHandler = () => {
     <TextJoinGuide :data="{
       infoText: '계정이 없으신가요?',
       label: '회원가입',
-      href: '/member/email-send'
+      href: '/member/join/email',
+      isFind: true
     }" />
   </div>
 </template>

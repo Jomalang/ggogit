@@ -220,6 +220,7 @@ home-tree__reg-4--search-book__input
 .tree-reg-cover-info__container {
   width: 100%;
   height: 326px;
+  margin-bottom: 50px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -236,7 +237,6 @@ home-tree__reg-4--search-book__input
   padding-left: 24px;
   padding-right: 24px;
   width: 100%;
-  height: 100px;
   background: var(--main2--opacity40);
 }
 .tree-info-card__container {
@@ -250,31 +250,6 @@ home-tree__reg-4--search-book__input
   width: 100%;
   bottom: 0;
   z-index: 20;
-}
-
-/* /home/tree/search/list.html */
-.tree-card-list {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  margin-left: 24px;
-  margin-right: 24px;
-}
-.tree-card-list__main {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  margin-top: 24px;
-  margin-left: 24px;
-  margin-right: 24px;
-  align-items: center;
-}
-
-.tree-card-list::after {
-  content: " ";
-  display: block;
-  width: 100%;
-  height: 50px;
 }
 
 .first-log-title-container {

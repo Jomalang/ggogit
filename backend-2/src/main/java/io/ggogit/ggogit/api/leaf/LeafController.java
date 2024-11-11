@@ -3,15 +3,21 @@ package io.ggogit.ggogit.api.leaf;
 import io.ggogit.ggogit.api.leaf.dto.LeafBookCardResponse;
 import io.ggogit.ggogit.api.leaf.dto.*;
 import io.ggogit.ggogit.api.member.dto.MemberInfoResponse;
+import io.ggogit.ggogit.api.tree.dto.TreeSearchResultResponse;
+import io.ggogit.ggogit.domain.leaf.entity.Leaf;
 import io.ggogit.ggogit.domain.leaf.service.LeafDtoService;
 import io.ggogit.ggogit.domain.member.service.MemberService;
+import io.ggogit.ggogit.domain.tree.entity.Tree;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -20,6 +26,32 @@ public class LeafController {
     private final LeafDtoService leafDtoService;
     private final MemberService memberService;
 
+
+    /**
+     * 리프 검색
+     */
+    @GetMapping("/leaves/search")
+    public Page<LeafSearchResultResponse> searchLeaves(
+            @Valid @ModelAttribute LeafSearchQuery query
+    ) {
+        Long memberId = 227L;
+
+        Page<Leaf> leaves = leafDtoService.findLeafByQueryAndMemberId(query, memberId);
+
+        // Tree 객체들을 TreeSearchResultResponse로 변환
+        List<LeafSearchResultResponse> responseList = leaves.stream()
+                .map(leaf -> {
+                    if ("도서".equals(leaf.getTree().getSeed().getKorName())) {
+                        return LeafSearchResultResponse.ofBook(leaf); // '도서'일 때의 변환
+                    } else {
+                        return LeafSearchResultResponse.ofEtc(leaf); // '도서'가 아닐 때의 변환
+                    }
+                })
+                .collect(Collectors.toList());
+
+        // 새로운 Page 객체 생성
+        return new PageImpl<>(responseList, leaves.getPageable(), leaves.getTotalElements());
+    }
     /**
      * 리프 리스트 화면 하단 브랜치 정보 조회
      */

@@ -20,6 +20,18 @@ public enum FilterType {
     private final String description;
 
 
+    public static String findFieldByNum(Long number) {
+        switch (number.intValue()) {
+            case 11:
+                return "title";
+            case 13:
+                return "viewCount";
+            case 14:
+                return "likeCount";
+            default:
+                return "updateTime";
+        }
+    }
     // number로 FilterType을 찾는 메서드
     public static FilterType fromNumber(Long number) {
         for (FilterType filter : FilterType.values()) {

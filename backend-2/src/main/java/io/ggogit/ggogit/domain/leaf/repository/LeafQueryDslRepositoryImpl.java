@@ -1,18 +1,25 @@
 package io.ggogit.ggogit.domain.leaf.repository;
 
+import com.querydsl.core.types.Order;
+import com.querydsl.core.types.OrderSpecifier;
+import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.types.dsl.PathBuilder;
 import com.querydsl.jpa.JPAExpressions;
+import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import io.ggogit.ggogit.domain.leaf.entity.Leaf;
 import io.ggogit.ggogit.domain.leaf.entity.QLeaf;
 import io.ggogit.ggogit.domain.tree.entity.QTree;
+import io.ggogit.ggogit.domain.tree.entity.Tree;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.*;
+import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
+
+import static io.ggogit.ggogit.domain.leaf.entity.QLeaf.*;
 
 @Repository
 @RequiredArgsConstructor
@@ -123,5 +130,57 @@ public class LeafQueryDslRepositoryImpl implements LeafQueryDslRepository {
                 .fetch();
 
         return new PageImpl<>(leaves, PageRequest.of(page, size), count);
+    }
+
+    @Override
+    public Page<Leaf> findByQueryAndMemberId(String query, String searchFilter, Long memberId, Pageable pageable) {
+        QLeaf leaf = QLeaf.leaf;
+
+        if (query == null) {
+            query = "";
+        }
+
+        BooleanExpression condition = leaf.tree.member.id.eq(memberId);
+
+        switch (searchFilter) {
+            case "title":
+                condition = condition.and(leaf.title.lower().like("%" + query.toLowerCase() + "%"));
+                break;
+            case "content":
+                condition = condition.and(leaf.content.lower().like("%" + query.toLowerCase() + "%"));
+                break;
+            case "all":
+                condition = condition.and(leaf.title.lower().like("%" + query.toLowerCase() + "%")
+                        .or(leaf.content.lower().like("%" + query.toLowerCase() + "%")));
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid filter: " + searchFilter);
+        }
+
+        // Sort 정보를 가져와서 동적으로 orderBy 조건을 추가
+        JPAQuery<Leaf> jpaQuery = queryFactory
+                .selectFrom(leaf)
+                .where(condition)
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize());
+
+        // Sort 적용
+        for (Sort.Order order : pageable.getSort()) {
+            PathBuilder<Object> pathBuilder = new PathBuilder<>(leaf.getType(), leaf.getMetadata());
+            jpaQuery.orderBy(new OrderSpecifier(
+                    order.isAscending() ? Order.ASC : Order.DESC,
+                    pathBuilder.get(order.getProperty())
+            ));
+        }
+
+        List<Leaf> leaves = jpaQuery.fetch();
+
+        Long total = queryFactory
+                .select(leaf.count())
+                .from(leaf)
+                .where(condition)
+                .fetchOne();
+
+        return PageableExecutionUtils.getPage(leaves, pageable, () -> total != null ? total : 0);
     }
 }

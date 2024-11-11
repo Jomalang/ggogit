@@ -21,7 +21,7 @@ class AladinClientTest {
         String query = "자바 프로그래밍";
 
         // when
-        List<Book> books = aladinClient.fetchBooks(query);
+        List<Book> books = aladinClient.fetchBooks(query, "title");
         for (Book book : books) {
             System.out.println(book.getIsbn() + " : " + book.getTotalPage());
         }

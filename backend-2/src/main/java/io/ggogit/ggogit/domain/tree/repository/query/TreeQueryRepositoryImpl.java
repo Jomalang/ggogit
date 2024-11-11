@@ -10,12 +10,12 @@ import io.ggogit.ggogit.domain.tree.entity.QTree;
 import io.ggogit.ggogit.domain.tree.entity.Tree;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.support.PageableExecutionUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -62,6 +62,22 @@ public class TreeQueryRepositoryImpl implements TreeQueryRepository {
     }
 
     @Override
+    public Page<Tree> findTreeByMemberIdFetch(Long memberId, Pageable pageable) {
+        List<Tree> result = queryFactory
+                .selectFrom(tree)
+                .join(tree.leaf, leaf).fetchJoin()
+                .join(tree.book, book).fetchJoin()
+                .join(tree.book.bookCategory, bookCategory).fetchJoin()
+                .join(tree.treeBook, treeBook).fetchJoin()
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .where(tree.member.id.eq(memberId))
+                .fetch();
+
+        return new PageImpl<>(result, pageable, result.size());
+    }
+
+    @Override
     public Page<Tree> findByQueryAndMemberId(String query, String filter, Long memberId, Pageable pageable) {
         QTree tree = QTree.tree; // QTree는 QueryDSL로 생성된 Q타입 클래스입니다.
 
@@ -73,14 +89,14 @@ public class TreeQueryRepositoryImpl implements TreeQueryRepository {
 
         switch (filter) {
             case "title":
-                condition = condition.and(tree.title.like("%" + query + "%")
+                condition = condition.and(tree.title.lower().like("%" + query.toLowerCase() + "%")
                         .or(tree.book.title.like("%" + query + "%")));
                 break;
             case "author":
-                condition = condition.and(tree.book.author.like("%" + query + "%"));
+                condition = condition.and(tree.book.author.lower().like("%" + query.toLowerCase() + "%"));
                 break;
             case "publisher":
-                condition = condition.and(tree.book.publisher.like("%" + query + "%"));
+                condition = condition.and(tree.book.publisher.lower().like("%" + query.toLowerCase() + "%"));
                 break;
             default:
                 throw new IllegalArgumentException("Invalid filter: " + filter);

@@ -5,6 +5,7 @@ import io.ggogit.ggogit.api.leaf.dto.*;
 import io.ggogit.ggogit.api.member.dto.MemberInfoResponse;
 import io.ggogit.ggogit.domain.leaf.entity.Leaf;
 import io.ggogit.ggogit.domain.tree.entity.Tree;
+import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -60,4 +61,6 @@ public interface LeafDtoService {
     LeafDetailResponse getLeafDetail(Long leafId);
 
     MemberInfoResponse getMemberInfo(Long leafId);
+
+    Page<Leaf> findLeafByQueryAndMemberId(@Valid LeafSearchQuery query, Long memberId);
 }

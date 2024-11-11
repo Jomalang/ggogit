@@ -17,9 +17,12 @@ import io.ggogit.ggogit.domain.member.entity.Member;
 import io.ggogit.ggogit.domain.tree.entity.Tree;
 import io.ggogit.ggogit.domain.tree.entity.TreeImage;
 import io.ggogit.ggogit.domain.tree.repository.TreeImageRepository;
+import io.ggogit.ggogit.type.FilterType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -315,6 +318,24 @@ public class LeafDtoServiceImpl implements LeafDtoService {
 
         Member member = leaf.getTree().getMember();
         return MemberInfoResponse.ofNoEmailDomain(member);
+    }
+
+    @Override
+    public Page<Leaf> findLeafByQueryAndMemberId(LeafSearchQuery query, Long memberId) {
+
+        int size = 10;
+        Sort sort = null;
+        String  filter = FilterType.findFieldByNum(query.getFilter());
+
+        if(query.getSort() == 0) {
+            sort = Sort.by(filter).ascending();
+        } else {
+            sort = Sort.by( filter).descending();
+        }
+
+        Pageable pageable = PageRequest.of(query.getPage(), size, sort);
+
+        return leafRepository.findByQueryAndMemberId(query.getQuery(), query.getSearchFilter(), memberId, pageable);
     }
 
     private LeafItemToEndResponse getLeafItemToEndResponse(List<TreeNode> treeNodes, Long leafId) {

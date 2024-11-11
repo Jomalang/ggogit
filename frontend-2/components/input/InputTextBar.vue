@@ -26,6 +26,7 @@ const inputData = (e) => {
         :type="data.inputType"
         @input="inputData"
         autocomplete="off"
+        :disabled="data.disabled"
         :class="{ 'input-text__input--warning': !data.isValid }"
       />
     </label>

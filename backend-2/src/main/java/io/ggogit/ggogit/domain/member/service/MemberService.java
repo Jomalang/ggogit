@@ -2,7 +2,9 @@ package io.ggogit.ggogit.domain.member.service;
 
 import io.ggogit.ggogit.api.member.dto.MemberRefreshResponse;
 import io.ggogit.ggogit.api.member.dto.MemberResponse;
+import io.ggogit.ggogit.domain.member.entity.EmailJoinToken;
 import io.ggogit.ggogit.domain.member.entity.Member;
+import jakarta.mail.MessagingException;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
@@ -10,7 +12,7 @@ public interface MemberService {
 
     boolean existsEmail(@Email String email);
 
-    void joinSendEmail(@Email String email);
+    void joinSendEmail(@Email String email) throws MessagingException;
 
     boolean existsEmailJoinToken(@Email String email, @NotBlank String joinToken);
 
@@ -28,7 +30,7 @@ public interface MemberService {
 
     String generateRefreshToken(Member member);
 
-    void passwordResetSendEmail(String email);
+    void passwordResetSendEmail(String email) throws MessagingException;
 
     void passwordReset(String password, String token);
 
@@ -39,4 +41,6 @@ public interface MemberService {
     MemberResponse findByUsername(String username);
 
     MemberResponse findByEmail(String email);
+
+    EmailJoinToken findEmailJoinToken(String key);
 }

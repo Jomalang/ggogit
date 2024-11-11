@@ -1,5 +1,7 @@
 <script setup>
 
+import {HttpStatusCode} from "axios";
+
 const config = useRuntimeConfig();
 const router = useRouter();
 
@@ -30,7 +32,7 @@ const loginApi = async () => {
       })
     });
 
-    if (response.status === 200) {
+    if (response.status === HttpStatusCode.Ok) {
       const data = await response.json();
       console.log(data);
     } else {
@@ -84,7 +86,7 @@ const submitHandler = () => {
 
 <template>
   <div class="login-member__join-page-container">
-    <ButtonLoginJoinPageBackBtn />
+    <ButtonLoginJoinPageBackBtn :data="{ link: '/' }" />
     <TextLoginPageInfo :data="{
       label: '로그인',
       infoText: '이메일로 로그인을 진행합니다.'

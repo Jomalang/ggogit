@@ -1,7 +1,12 @@
-<script setup lang="ts">
-const props = defineProps<{
-  text: string;
-}>();
+<script setup>
+
+const { data } = defineProps(['data']);
+const emit = defineEmits(['checkEvent']);
+
+const checkEvent = (e) => {
+  emit('checkEvent', e.target.checked);
+}
+
 </script>
 
 <template>
@@ -10,12 +15,13 @@ const props = defineProps<{
     <div class="join-policy-agreement">
       <div class="checkbox">
         <label>
-          <input type="checkbox" class="checkbox__input" value="true" name="policyAgreement" th:field="*{policyAgreement}"/>
+          <input type="checkbox" class="checkbox__input" value="true" name="policyAgreement"
+                 @change="checkEvent"/>
           <span class="checkbox__check"></span>
         </label>
       </div>
       <p><a class="text--underline" href="#">이용약관</a>과 <a class="text--underline" href="#">개인정보 취급 방침</a>에 동의합니다.</p>
-      <div class = "text--errors" th:errors="*{policyAgreement}"></div>
+      <div class = "text--errors"></div>
     </div>
   </section>
 

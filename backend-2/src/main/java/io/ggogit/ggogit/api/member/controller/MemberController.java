@@ -1,8 +1,11 @@
 package io.ggogit.ggogit.api.member.controller;
 
 import io.ggogit.ggogit.api.member.dto.*;
+import io.ggogit.ggogit.domain.member.entity.EmailJoinToken;
 import io.ggogit.ggogit.domain.member.entity.Member;
 import io.ggogit.ggogit.domain.member.service.MemberService;
+import jakarta.mail.MessagingException;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,7 +31,7 @@ public class MemberController {
     @PostMapping("/join/send-email")
     public ResponseEntity<MemberSendEmailResponse> joinSendEmail(
             @RequestBody MemberSendEmailRequest dto
-    ) {
+    ) throws MessagingException {
         // 기존 회원 확인
         if (memberService.existsEmail(dto.getEmail())) {
             MemberSendEmailResponse response = MemberSendEmailResponse.of(false, "이미 가입된 이메일입니다.");
@@ -41,6 +44,16 @@ public class MemberController {
         // 이메일 전송
         memberService.joinSendEmail(dto.getEmail());
         MemberSendEmailResponse response = MemberSendEmailResponse.of("이메일 전송 완료");
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    // 이메일 인증 확인된 이메일 조회
+    @PostMapping("/join/check-email")
+    public ResponseEntity<MemberCheckEmailResponse> checkEmail(
+            @Valid @RequestBody MemberCheckEmailRequest dto
+    ) {
+        EmailJoinToken emailJoinToken = memberService.findEmailJoinToken(dto.getKey());
+        MemberCheckEmailResponse response = MemberCheckEmailResponse.of(emailJoinToken);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -59,7 +72,7 @@ public class MemberController {
         Member member = dto.toMember();
         memberService.join(member);
         MemberJoinResponse response = MemberJoinResponse.of("회원 가입 완료");
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     // JWT 토큰 신규 발급
@@ -127,7 +140,7 @@ public class MemberController {
     @PostMapping("/password-reset/send-email")
     public ResponseEntity<MemberPasswordResetSendEmailResponse> passwordResetSendEmail(
             @RequestBody MemberPasswordResetSendEmailRequest dto
-    ) {
+    ) throws MessagingException {
 
         // 사용자 확인
         if (!memberService.existsEmail(dto.getEmail())) {

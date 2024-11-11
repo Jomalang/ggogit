@@ -1,6 +1,6 @@
 package io.ggogit.ggogit.domain.tree.service;
 
-import io.ggogit.ggogit.api.tree.dto.TreeCardResponse;
+import io.ggogit.ggogit.api.tree.dto.TreeBookCardResponse;
 import io.ggogit.ggogit.api.tree.dto.TreeInfoResponse;
 import io.ggogit.ggogit.domain.book.entity.Book;
 import io.ggogit.ggogit.domain.book.repository.BookRepository;
@@ -16,7 +16,6 @@ import io.ggogit.ggogit.domain.tree.repository.SeedRepository;
 import io.ggogit.ggogit.domain.tree.repository.TreeBookRepository;
 import io.ggogit.ggogit.domain.tree.repository.TreeImageRepository;
 import io.ggogit.ggogit.domain.tree.repository.TreeRepository;
-import io.ggogit.ggogit.domain.tree.repository.query.TreeQueryRepositoryImpl;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -117,7 +116,7 @@ public class TreeServiceImpl implements TreeService {
                 .orElseThrow(()-> new IllegalArgumentException("해당하는 Tree가 없습니다."))).getMember().getId(); }
 
 
-    public Page<TreeCardResponse> findTreeCardRequestList(Long seedId, Long memberId, Pageable pageable) {
+    public Page<TreeBookCardResponse> findTreeCardRequestList(Long seedId, Long memberId, Pageable pageable) {
         Page<Tree> treeList = treeRepository.findByMemberIdAndSeedId(memberId, seedId, pageable);
         return treeList.map(tree -> {
             if (tree.getSeed().getId() == 1){
@@ -137,7 +136,7 @@ public class TreeServiceImpl implements TreeService {
                     readingPage = 0;
                 boolean complateBook = (readingPage * 100.0 / totalPage) >= 80;
 
-                return TreeCardResponse.toEntity(tmpBook, complateBook, tree, tmpSeed, memberId);
+                return TreeBookCardResponse.toEntity(tmpBook, complateBook, tree, tmpSeed, memberId);
 
             }else {
                 TreeImage treeImage = treeImageRepository.findById(tree.getId())
@@ -149,7 +148,7 @@ public class TreeServiceImpl implements TreeService {
                 String coverImage = treeImage.getName();
                 String seedKorName = tmpSeed.getKorName();
                 String nickname = tmpMember.getNickname();
-                return TreeCardResponse.toEntity(coverImage, tmpMember, tree, tmpSeed, nickname);
+                return TreeBookCardResponse.toEntity(coverImage, tmpMember, tree, tmpSeed, nickname);
             }
         });
     }
@@ -253,5 +252,9 @@ public class TreeServiceImpl implements TreeService {
         return treeRepository.findAllByMemberIdAndBookId(memberId, bookId, pageable);
     }
 
-
+    @Override
+    public Page<Tree> findAllCardByBookId(Long bookId, int page, int size) {
+        Pageable pageable = PageRequest.of(page-1, size, Sort.by(Sort.Direction.DESC, "updateTime"));
+        return treeRepository.findTreeByBookIdFetch(bookId, pageable);
+    }
 }

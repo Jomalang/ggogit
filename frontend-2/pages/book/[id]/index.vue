@@ -10,6 +10,9 @@ const bookId = useRoute().params.id;
 
 const book = ref({});
 const myTreeCards = ref([]);
+const bookTreeCards = ref([]);
+const bookMemoirCards = ref([]);
+const bookleafCards = ref([]);
 
 //=== fetch ========================================
 const {
@@ -37,13 +40,51 @@ const {
 });
 
 if (treeCardsData.value) {
-  console.log(treeCardsData);
-  myTreeCards.value = [...treeCardsData.value.treeCardResponses];
-  console.log(myTreeCards.value);
+  myTreeCards.value = [...treeCardsData.value.treeBookCardResponse];
 }
 
 if (treeCardsError.value === "noContent") {
   myTreeCards.value = [];
+}
+
+//=== cards fetch ========================================
+const {
+  data: bookleafCradsData,
+  error: bookleafCradsError,
+  status: bookleafCradsStatus,
+} = await useFetch(`books/${bookId}/leaves/cards`, {
+  method: "GET",
+  baseURL: `${config.public.apiBase}`,
+});
+
+if (bookleafCradsData.value) {
+  bookleafCards.value = [...bookleafCradsData.value.items];
+}
+
+const {
+  data: bookMemoirCradsData,
+  error: bookMemoirCradsError,
+  status: bookMemoirCradsStatus,
+} = await useFetch(`memoirs/books/${bookId}/memoirs/cards`, {
+  method: "GET",
+  baseURL: `${config.public.apiBase}`,
+});
+
+if (bookMemoirCradsData.value) {
+  bookMemoirCards.value = [...bookMemoirCradsData.value.items];
+}
+
+const {
+  data: bookTreeCradsData,
+  error: bookTreeCradsError,
+  status: bookTreeCradsStatus,
+} = await useFetch(`trees/books/${bookId}/trees/cards`, {
+  method: "GET",
+  baseURL: `${config.public.apiBase}`,
+});
+
+if (bookTreeCradsData.value) {
+  bookTreeCards.value = [...bookTreeCradsData.value.items];
 }
 </script>
 
@@ -141,35 +182,35 @@ if (treeCardsError.value === "noContent") {
       </section>
 
       <section class="book-detail-other-recode-sub-title-container">
-        <TextMainTitle :data="{ title: '트리 리스트', size: 28 }" />
+        <TextMainTitle :data="{ title: '🌲 트리', size: 24 }" />
       </section>
 
       <section class="book-detail-other-tree-list-container">
         <h1 class="none">트리 리스트</h1>
         <section class="book-detail-other-tree-card-container">
-          <CardSnsCardTreeList :list="`type1`" />
+          <CardSnsCardTreeList :list="bookTreeCards" />
         </section>
       </section>
 
       <section class="book-detail-other-recode-sub-title-container">
-        <TextMainTitle :data="{ title: '회고록 리스트', size: 24 }" />
+        <TextMainTitle :data="{ title: '📖 회고록', size: 24 }" />
       </section>
 
       <section class="book-detail-other-tree-list-container">
         <h1 class="none">회고록 리스트</h1>
         <section class="book-detail-other-tree-card-container">
-          <CardSnsCardTreeList :list="`type2`" />
+          <CardSnsCardTreeList :list="bookMemoirCards" />
         </section>
       </section>
 
       <section class="book-detail-other-recode-sub-title-container">
-        <TextMainTitle :data="{ title: '리프 리스트', size: 24 }" />
+        <TextMainTitle :data="{ title: '🌿 리프', size: 24 }" />
       </section>
 
       <section class="book-detail-other-tree-list-container">
         <h1 class="none">리프 리스트</h1>
         <section class="book-detail-other-tree-card-container">
-          <CardSnsCardTreeList :list="`type3`" />
+          <CardSnsCardTreeList :list="bookleafCards" />
         </section>
       </section>
     </section>
@@ -198,8 +239,4 @@ if (treeCardsError.value === "noContent") {
   </aside>
 </template>
 
-<style scoped>
-.book-detail-comment-container {
-  margin: 60px 0;
-}
-</style>
+<style scoped></style>

@@ -69,6 +69,13 @@ public class Memoir {
     @Column(name = "UPDATE_TIME")
     private LocalDateTime updateTime;
 
+    @NotNull
+    @Generated
+    @ColumnDefault("0")
+    @Builder.Default
+    @Column(name = "VIEW_COUNT", nullable = false)
+    private Integer viewCount = 0;
+
     @Version
     @Column(name = "VERSION")
     private Long version;

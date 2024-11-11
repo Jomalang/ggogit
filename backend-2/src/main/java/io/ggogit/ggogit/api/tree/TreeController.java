@@ -3,14 +3,10 @@ package io.ggogit.ggogit.api.tree;
 import io.ggogit.ggogit.api.leaf.dto.LeafBranchResponse;
 import io.ggogit.ggogit.api.tree.dto.*;
 
-import io.ggogit.ggogit.domain.book.entity.Book;
 import io.ggogit.ggogit.domain.leaf.entity.Leaf;
 import io.ggogit.ggogit.domain.leaf.service.LeafDtoService;
-import io.ggogit.ggogit.domain.member.entity.Member;
 import io.ggogit.ggogit.domain.member.service.MemberService;
-import io.ggogit.ggogit.domain.member.service.MemberServiceImpl;
 import io.ggogit.ggogit.domain.tree.entity.Tree;
-import io.ggogit.ggogit.domain.tree.entity.TreeTmp;
 import io.ggogit.ggogit.domain.tree.service.SeedService;
 import io.ggogit.ggogit.domain.tree.service.TreeService;
 import io.ggogit.ggogit.domain.tree.service.TreeTmpService;
@@ -19,16 +15,13 @@ import io.ggogit.ggogit.util.JwtTokenProvider;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
-import org.apache.coyote.Response;
 import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.io.IOException;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -255,7 +248,7 @@ public class TreeController {
     }
 
     @GetMapping("/members/{memberId}/trees/book/cards")
-    public ResponseEntity<TreeCardResponseList> getTreeBookCardResponse(
+    public ResponseEntity<TreeBookCardResponseList> getTreeBookCardResponse(
             @PathVariable(value="memberId", required = true) Long memberId
     ) {
         int offset = 0;
@@ -264,15 +257,15 @@ public class TreeController {
         Pageable pageable = PageRequest.of(offset, limit, sort);
 
         List<Tree> allByMemberId = treeService.findAllPages(memberId, pageable).getContent();
-        List<TreeCardResponse> treeCardResponses = allByMemberId.stream()
-                .map(tree -> TreeCardResponse.toEntity(tree.getBook(), true, tree, tree.getSeed(), memberId))
+        List<TreeBookCardResponse> treeBookCardRespons = allByMemberId.stream()
+                .map(tree -> TreeBookCardResponse.toEntity(tree.getBook(), true, tree, tree.getSeed(), memberId))
                 .toList();
 
-        return new ResponseEntity<>(TreeCardResponseList.of(treeCardResponses), HttpStatus.OK);
+        return new ResponseEntity<>(TreeBookCardResponseList.of(treeBookCardRespons), HttpStatus.OK);
     }
 
     @GetMapping("members/{memberId}/books/{bookId}/trees/cards")
-    public ResponseEntity<TreeCardResponseList> getBookTreeResponse(
+    public ResponseEntity<TreeBookCardResponseList> getBookTreeResponse(
             @PathVariable(name="memberId", required = true) Long memberId,
             @PathVariable(name="bookId", required = true) Long bookId){
 
@@ -282,11 +275,20 @@ public class TreeController {
         if(allByBookId.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        List<TreeCardResponse> treeCardResponses = allByBookId.stream()
-                .map(tree -> TreeCardResponse.toEntity(tree.getBook(), true, tree, tree.getSeed(), memberId))
+        List<TreeBookCardResponse> treeBookCardRespons = allByBookId.stream()
+                .map(tree -> TreeBookCardResponse.toEntity(tree.getBook(), true, tree, tree.getSeed(), memberId))
                 .toList();
 
-        return new ResponseEntity<>(TreeCardResponseList.of(treeCardResponses), HttpStatus.OK);
+        return new ResponseEntity<>(TreeBookCardResponseList.of(treeBookCardRespons), HttpStatus.OK);
+    }
+
+    @GetMapping("books/{bookId}/trees/cards")
+    public ResponseEntity<TreeCardDtoResponse> getTreeCardDtoResponse(
+            @PathVariable(name="bookId") Long bookId,
+            @RequestParam(value = "page", defaultValue = "1") int page,
+            @RequestParam(value = "size", defaultValue = "10") int size) {
+        Page<Tree> trees = treeService.findAllCardByBookId(bookId, page, size);
+        return new ResponseEntity<>(TreeCardDtoResponse.of(trees), HttpStatus.OK);
     }
 
 }

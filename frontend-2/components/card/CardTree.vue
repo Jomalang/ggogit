@@ -86,7 +86,7 @@ function modifyCount(count: number) {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 8px;
+  margin-bottom: 16px;
 }
 
 .card-tree__top-tree-icon-box {

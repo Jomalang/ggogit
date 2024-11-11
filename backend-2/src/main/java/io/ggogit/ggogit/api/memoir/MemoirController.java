@@ -1,15 +1,10 @@
 package io.ggogit.ggogit.api.memoir;
 
-import io.ggogit.ggogit.api.book.dto.BookDetailResponse;
 import io.ggogit.ggogit.api.book.dto.BookInfoResponse;
 import io.ggogit.ggogit.api.member.dto.MemberInfoResponse;
 import io.ggogit.ggogit.api.member.session.SessionConst;
-import io.ggogit.ggogit.api.memoir.dto.MemoirCardDtoResponseList;
-import io.ggogit.ggogit.api.memoir.dto.MemoirRequest;
-import io.ggogit.ggogit.api.memoir.dto.MemoirDto;
-import io.ggogit.ggogit.api.memoir.dto.MemoirResponse;
+import io.ggogit.ggogit.api.memoir.dto.*;
 import io.ggogit.ggogit.api.tree.dto.TreeLightInfoResponse;
-import io.ggogit.ggogit.domain.book.entity.Book;
 import io.ggogit.ggogit.domain.book.service.BookService;
 import io.ggogit.ggogit.domain.member.entity.Member;
 import io.ggogit.ggogit.domain.memoir.entity.Memoir;
@@ -128,10 +123,22 @@ public class MemoirController {
         return ResponseEntity.noContent().build();
     }
 
-    //Memoir Card 조회
+    //MemoirBookCard 조회 (회고록, 리프 디테일)
     @GetMapping("members/{memberId}/memoirs/book/cards")
-    public ResponseEntity<MemoirCardDtoResponseList> getMemoirCards(@PathVariable(name="memberId") Long memberId) {
-        MemoirCardDtoResponseList memoirCardDtoResponseList = memoirDtoService.getMemoirCardDtoResponseList(memberId);
-        return new ResponseEntity<>(memoirCardDtoResponseList, HttpStatus.OK);
+    public ResponseEntity<MemoirBookCardDtoResponseList> getMemoirCards(@PathVariable(name="memberId") Long memberId) {
+        MemoirBookCardDtoResponseList memoirBookCardDtoResponseList = memoirDtoService.getMemoirBookCardDtoResponseList(memberId);
+        return new ResponseEntity<>(memoirBookCardDtoResponseList, HttpStatus.OK);
     }
+
+    /**
+     * MemoirCard 조회(도서 디테일)
+     */
+    @GetMapping("books/{bookId}/memoirs/cards")
+    public ResponseEntity<MemoirCardDtoResponse> getMemoirCards(@PathVariable(name="bookId") Long bookId,
+                                                               @RequestParam(value = "page", defaultValue = "1") int page,
+                                                               @RequestParam(value = "size", defaultValue = "10") int size) {
+        MemoirCardDtoResponse memoirCardDtoResponse = memoirDtoService.getMemoirCardDtoResponse(bookId, page, size);
+        return new ResponseEntity<>(memoirCardDtoResponse, HttpStatus.OK);
+    }
+
 }

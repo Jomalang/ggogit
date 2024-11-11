@@ -1,9 +1,8 @@
 package io.ggogit.ggogit.api.tree.dto;
 
-import io.ggogit.ggogit.api.book.dto.BookCategoryResponse;
-import io.ggogit.ggogit.api.book.dto.BookInfoResponse;
 import io.ggogit.ggogit.domain.book.entity.Book;
 import io.ggogit.ggogit.domain.book.entity.BookCategory;
+import io.ggogit.ggogit.domain.leaf.entity.Leaf;
 import io.ggogit.ggogit.domain.member.entity.Member;
 import io.ggogit.ggogit.domain.tree.entity.Seed;
 import io.ggogit.ggogit.domain.tree.entity.Tree;
@@ -20,7 +19,7 @@ import java.time.format.DateTimeFormatter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class TreeCardResponse {
+public class TreeBookCardResponse {
     @Builder.Default
     private int cardType = 0;
     private String bookCategory;
@@ -33,6 +32,7 @@ public class TreeCardResponse {
     private String cardImage;
     private String seedKorName;
     private Long leafCount;
+    private Long viewCount;
     private String treeTitle;
     private Boolean visibility;
     private String updateTime;
@@ -42,10 +42,10 @@ public class TreeCardResponse {
         return updateTime.format(formatter);
     }
 
-    public static TreeCardResponse toEntity(Book book, boolean isCompletedBook, Tree tree, Seed Seed, Long memberId){
+    public static TreeBookCardResponse toEntity(Book book, boolean isCompletedBook, Tree tree, Seed Seed, Long memberId){
         LocalDate publishYear = book.getPublishDate();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy");
-        return TreeCardResponse.builder()
+        return TreeBookCardResponse.builder()
                 .cardType(0)
                 .bookCategory(book.getBookCategory().getName())
                 .bookTitle(book.getTitle())
@@ -57,14 +57,15 @@ public class TreeCardResponse {
                 .cardImage(book.getImageFile())
                 .seedKorName(Seed.getKorName())
                 .leafCount((long) tree.getLeaf().size())
+                .viewCount((long) tree.getLeaf().stream().mapToInt(Leaf::getViewCount).sum())
                 .treeTitle(tree.getTitle())
                 .visibility(tree.getVisibility())
-                .updateTime(TreeCardResponse.changeUpdateTime(tree.getUpdateTime()))
+                .updateTime(TreeBookCardResponse.changeUpdateTime(tree.getUpdateTime()))
                 .build();
     }
 
-    public static TreeCardResponse toEntity(String coverImage, Member member, Tree tree, Seed seed, String nickname){
-        return TreeCardResponse.builder()
+    public static TreeBookCardResponse toEntity(String coverImage, Member member, Tree tree, Seed seed, String nickname){
+        return TreeBookCardResponse.builder()
                 .cardImage(coverImage)
                 .bookAuthor(nickname)
                 .seedKorName(seed.getKorName())

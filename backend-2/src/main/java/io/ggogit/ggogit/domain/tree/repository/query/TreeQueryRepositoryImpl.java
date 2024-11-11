@@ -103,13 +103,30 @@ public class TreeQueryRepositoryImpl implements TreeQueryRepository {
                 .limit(pageable.getPageSize())
                 .fetch();
 
-        for(Tree t : result){
-            System.out.println("tree = " + t.toString());
-        }
-
 
         return new PageImpl<>(result, pageable, result.size());
     }
 
 
+    public Page<Tree> findTreeByBookIdFetch(Long bookId, Pageable pageable){
+
+        List<Tree> result = queryFactory
+                .selectFrom(tree)
+                .join(tree.book, book).fetchJoin()
+                .join(tree.member, member).fetchJoin()
+                .join(tree.treeBook, treeBook).fetchJoin()
+                .join(tree.memoir, memoir).fetchJoin()
+                .where(bookEq(bookId))
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+
+        if(result.isEmpty()) System.out.println("result is empty");
+        for(Tree t : result){
+            System.out.println("nickname:" + t.getMember().getNickname());
+        }
+
+
+        return new PageImpl<>(result, pageable, result.size());
+    }
 }

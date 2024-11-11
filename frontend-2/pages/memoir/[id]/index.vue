@@ -99,18 +99,18 @@ const { data: memoirCardData, error: memoirCardError } = await useFetch(
 );
 
 if (leafCardData.value) {
+  console.log(leafCardData.value);
   leafItems.value = [...leafCardData.value.items];
-  console.log(leafItems.value);
 }
 
 if (treeCardData.value) {
-  treeItems.value = [...treeCardData.value.treeCardResponses];
-  console.log(treeItems.value);
+  console.log(treeCardData.value);
+  treeItems.value = [...treeCardData.value.treeBookCardResponse];
 }
 
 if (memoirCardData.value) {
-  memoirItems.value = [...memoirCardData.value.memoirCardDtoResponses];
-  console.log(memoirItems.value);
+  console.log(memoirCardData.value);
+  memoirItems.value = [...memoirCardData.value.memoirBookCardDtoResponse];
 }
 
 //-----------function----------------
@@ -237,7 +237,7 @@ onMounted(() => {
         v-if="treeItems.length > 0"
         class="branch-tree-other-recode-sub-title-container"
       >
-        <TextMainTitle :data="{ title: `트리`, size: 24 }" />
+        <TextMainTitle :data="{ title: `🌲 트리`, size: 24 }" />
       </section>
       <section class="branch-tree-another-record-list-container">
         <h1 class="none">트리 리스트</h1>
@@ -248,7 +248,7 @@ onMounted(() => {
         v-if="memoirItems.length > 0"
         class="branch-tree-other-recode-sub-title-container"
       >
-        <TextMainTitle :data="{ title: `회고록`, size: 24 }" />
+        <TextMainTitle :data="{ title: `📖 회고록`, size: 24 }" />
       </section>
 
       <section class="branch-tree-another-record-list-container">
@@ -262,7 +262,7 @@ onMounted(() => {
         v-if="leafItems.length > 0"
         class="branch-tree-other-recode-sub-title-container"
       >
-        <TextMainTitle :data="{ title: `리프`, size: 24 }" />
+        <TextMainTitle :data="{ title: `🌿 리프`, size: 24 }" />
       </section>
 
       <section class="branch-tree-another-record-list-container">

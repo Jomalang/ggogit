@@ -465,7 +465,7 @@ home-tree__reg-4--search-book__input
 }
 
 .book-detail-my-tree-list-container {
-  margin: 0 0px 60px 0px;
+  margin: 0 0px 30px 0px;
 }
 
 .book-detail-my-tree-title-container {
@@ -473,14 +473,14 @@ home-tree__reg-4--search-book__input
 }
 
 .book-detail-my-tree-no-tree-container{
-  padding-top: 10px;
   display: flex;
-  justify-self: center;
+  padding-top: 10px;
+  justify-content: center;
 }
 
 .book-detail-other-recode-container {
   background-color: var(--main3, #f5f8f1);
-  padding: 40px 0 300px 0;
+  padding: 40px 0 100px 0;
 }
 
 .book-detail-other-recode-title-container {
@@ -488,7 +488,7 @@ home-tree__reg-4--search-book__input
 }
 
 .book-detail-other-recode-sub-title-container {
-  margin: 70px 24px 16px 24px;
+  margin: 40px 24px 16px 24px;
 }
 
 .book-detail-bot-aside-container {
@@ -512,6 +512,9 @@ home-tree__reg-4--search-book__input
 .book-detail-comment-tab-container--active {
   top: 265px; /* 최종 위치 */
   transform: translateY(0); /* 원래 위치로 이동 */
+}
+.book-detail-comment-container {
+  margin: 30px 0;
 }
 .user-tree-user-info-container {
   padding: 35px 24px 10px;

@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, watch } from "vue";
+import {onMounted, ref, watch} from "vue";
 import axios, { HttpStatusCode } from "axios";
 import { useRouter } from "#vue-router";
 
@@ -8,6 +8,7 @@ const router = useRouter();
 const route = useRoute();
 const config = useRuntimeConfig();
 const bookId = route.params.id;
+const book = ref({});
 
 const treeFormData = useState("treeFormData", () => ({
   bookId: null,
@@ -26,10 +27,13 @@ const treeFormData = useState("treeFormData", () => ({
   // 공개 여부 정보
   visibility: false,
   visibilityValid: true,
+
+  // 생성 경로
+  createUrl: `/tree/book/auto/${bookId}/new`,
 }));
 
 // ----------------------- API ----------------------- //
-const { data } = await useFetch(`/books/${bookId}`, {
+const { data } = await useFetch(`/books/${bookId}/info`, {
   method: "GET",
   baseURL: config.public.apiBase,
   headers: {
@@ -39,8 +43,12 @@ const { data } = await useFetch(`/books/${bookId}`, {
 
 watchEffect(() => {
   // console.log("watchEffect data : ", data.value);
-  treeFormData.value.totalPage = data.value.totalPage;
-  treeFormData.value.bookId = data.value.id;
+  if (data.value) {
+    treeFormData.value.totalPage = data.value.totalPage;
+    treeFormData.value.bookId = data.value.id;
+    book.value = data.value;
+  }
+
 });
 
 // ----------------------- Life Cycle ----------------------- //

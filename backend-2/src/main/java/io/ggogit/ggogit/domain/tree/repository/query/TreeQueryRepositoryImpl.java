@@ -6,11 +6,19 @@ import io.ggogit.ggogit.domain.leaf.entity.Leaf;
 import io.ggogit.ggogit.domain.tree.entity.Tree;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.support.PageableExecutionUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static io.ggogit.ggogit.domain.book.entity.QBook.book;
@@ -102,9 +110,59 @@ public class TreeQueryRepositoryImpl implements TreeQueryRepository {
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
+  
+          return new PageImpl<>(result, pageable, result.size());
+    }
+  
+    public Page<Tree> findByQueryAndMemberId(String query, String filter, Long memberId, Pageable pageable) {
+        QTree tree = QTree.tree; // QTree는 QueryDSL로 생성된 Q타입 클래스입니다.
 
+        if (query == null) {
+            query = "";
+        }
 
-        return new PageImpl<>(result, pageable, result.size());
+        BooleanExpression condition = tree.member.id.eq(memberId);
+
+        switch (filter) {
+            case "title":
+                condition = condition.and(tree.title.lower().like("%" + query.toLowerCase() + "%")
+                        .or(tree.book.title.like("%" + query + "%")));
+                break;
+            case "author":
+                condition = condition.and(tree.book.author.lower().like("%" + query.toLowerCase() + "%"));
+                break;
+            case "publisher":
+                condition = condition.and(tree.book.publisher.lower().like("%" + query.toLowerCase() + "%"));
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid filter: " + filter);
+        }
+
+        // Sort 정보를 가져와서 동적으로 orderBy 조건을 추가
+        JPAQuery<Tree> jpaQuery = queryFactory
+                .selectFrom(tree)
+                .where(condition)
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize());
+
+        // Sort 적용
+        for (Sort.Order order : pageable.getSort()) {
+            PathBuilder<Object> pathBuilder = new PathBuilder<>(tree.getType(), tree.getMetadata());
+            jpaQuery.orderBy(new OrderSpecifier(
+                    order.isAscending() ? Order.ASC : Order.DESC,
+                    pathBuilder.get(order.getProperty())
+            ));
+        }
+
+        List<Tree> trees = jpaQuery.fetch();
+
+        Long total = queryFactory
+                .select(tree.count())
+                .from(tree)
+                .where(condition)
+                .fetchOne();
+
+        return PageableExecutionUtils.getPage(trees, pageable, () -> total != null ? total : 0);
     }
 
 

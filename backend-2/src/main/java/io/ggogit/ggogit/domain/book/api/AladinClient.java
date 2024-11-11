@@ -9,6 +9,7 @@ import io.ggogit.ggogit.domain.book.entity.Book;
 import io.ggogit.ggogit.domain.book.entity.BookCategory;
 import io.ggogit.ggogit.domain.book.repository.BookCategoryRepository;
 import io.ggogit.ggogit.domain.book.repository.BookRepository;
+import io.ggogit.ggogit.type.AladinBookSearchType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -33,9 +34,9 @@ public class AladinClient {
 
     private final String ALADIN_ITEM_LOOKUP_URL = "https://www.aladin.co.kr/ttb/api/ItemLookUp.aspx";
 
-    public List<Book> fetchBooks(String keyword) {
+    public List<Book> fetchBooks(String keyword, String searchType) {
 
-        String url = getAladinItemSearchUrl(keyword);
+        String url = getAladinItemSearchUrl(keyword, searchType);
         RestTemplate restTemplate = new RestTemplate();
 
         log.info("Aladin API를 통해 책 정보를 가져옵니다. keyword={}", keyword);
@@ -92,9 +93,10 @@ public class AladinClient {
         return books;
     }
 
-    private String getAladinItemSearchUrl(String keyword) {
+    private String getAladinItemSearchUrl(String keyword, String searchType) {
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(ALADIN_ITEM_SEARCH_URL)
                 .queryParam("ttbkey", apiKey)
+                .queryParam("QueryType", AladinBookSearchType.of(searchType).getApiValue()) // 검색 조건(제목, 저자, 출판사)
                 .queryParam("Query", keyword) // 도서 검색 결과
                 .queryParam("MaxResults", 100) // 최대 수 100
                 .queryParam("Cover", "Big")

@@ -99,6 +99,9 @@ public class Tree {
     @Column(name = "UPDATE_TIME", nullable = false)
     private LocalDateTime updateTime;
 
+    @OneToOne(mappedBy = "tree")
+    private TreeImage treeImage;
+
     @Version
     @Column(name = "VERSION", nullable = false)
     private Long version;

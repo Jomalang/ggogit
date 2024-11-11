@@ -18,8 +18,9 @@ const formatDate = (date) => {
     year: "2-digit", // '24' 형식으로 출력
     month: "2-digit", // '10' 형식으로 출력
     day: "2-digit", // '01' 형식으로 출력
-    hour: "numeric", // 시간 출력 (24시간제)
-    minute: "numeric", // 분 출력
+    hour: "2-digit",
+    hour12: false,// 시간 출력 (24시간제)
+    minute: "2-digit", // 분 출력
     timeZone: "Asia/Seoul" // 한국 시간대
   };
   return new Date(date).toLocaleString('ko-KR', options);

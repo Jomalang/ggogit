@@ -5,30 +5,45 @@ import { defineProps } from "vue";
 const props = defineProps({
   data: Object,
   default: {
-    id: 22,
-    publishDate: "2007-07-21",
-    totalPage: 759,
-    author: "J.K. 롤링",
-    isbn: "978-3-16-148410-0",
-    publisher: "블룸즈버리",
-    title: "해리 포터와 죽음의 성물",
-    imageFile: "/png/book-example.png",
-    createTime: "24-10-01",
-    updateTime: "24-10-01",
-    bookCategoryId: 4,
-    bookCategoryName: "판타지",
-    link: "/tree/book/22",
+    treeId: 227,
+    treeTitle: "",
+    treeCreatedAt: "",
+    seedKorName: "",
+    treeDescription: "",
+    coverImageName: "",
+    bookCategory: "",
+    bookTitle: "",
+    bookAuthor: "",
+    bookTranslator: "",
+    bookPublisher: "",
+    bookPublishedYear: ""
   },
 });
+
+const formatDate = (date) => {
+  const options = {
+    year: "2-digit", // '24' 형식으로 출력
+    month: "2-digit", // '10' 형식으로 출력
+    day: "2-digit", // '01' 형식으로 출력
+    hour: "2-digit",
+    hour12: false,// 시간 출력 (24시간제)
+    minute: "2-digit", // 분 출력
+    timeZone: "Asia/Seoul" // 한국 시간대
+  };
+  return new Date(date).toLocaleString('ko-KR', options);
+};
+const formatYear = (date) => {
+  return new Date(date).getFullYear();
+};
 </script>
 
 <template>
   <div class="card-tree-details">
-    <NuxtLink class="card-tree-detail" :to="`/tree/book/auto/${props.data.id}/new`">
+    <NuxtLink class="card-tree-detail" :to="`${props.data.treeId}`">
       <img
-        v-if="props.data.imageFile !== undefined"
+        v-if="props.data.coverImageName !== ''"
         class="card-tree__book-cover"
-        :src="useGetImageUrl(props.data.imageFile)"
+        :src="`/png/${props.data.coverImageName}`"
         alt="도서 이미지"
       />
       <img
@@ -38,26 +53,23 @@ const props = defineProps({
         alt="도서 기본 이미지"
       />
       <div class="card-tree-detail__box">
-        <!--반복문으로 넣어야 할듯..-->
         <div class="card-tree-detail__tags">
-          <span class="card-tree-detail__tag">{{
-            props.data.bookCategoryName
-          }}</span>
+          <span class="card-tree-detail__tag">{{ props.data.seedKorName }}</span>
+          <span class="card-tree-detail__tag">{{ props.data.bookCategory }}</span>
         </div>
 
         <!---->
-        <p class="card-tree-detail__name ellipsis">{{ props.data.title }}</p>
+        <p class="card-tree-detail__name">{{ props.data.treeTitle }}</p>
+        <p class="card-tree-detail__info">{{ props.data.bookTitle }}</p>
         <div class="card-tree-detail__info">
-          <span class="card-tree-detail__info">{{
-            props.data.publishDate
-          }}</span>
-          <span class="card-tree-detail__info"> / </span>
-          <span class="card-tree-detail__info">{{ props.data.author }}</span>
-          <span class="card-tree-detail__info"> / </span>
-          <span class="card-tree-detail__info">{{ props.data.publisher }}</span>
+          <span class="card-tree-detail__info">{{formatYear(props.data.bookPublishedYear)}}</span>
+          <span class="card-tree-detail__info"> &nbsp; </span>
+          <span class="card-tree-detail__info">{{ props.data.bookAuthor }}</span>
+          <span class="card-tree-detail__info"> &nbsp; </span>
+          <span class="card-tree-detail__info">{{ props.data.bookPublisher }}</span>
         </div>
         <div class="card-tree-detail__info-created-date">
-          {{ props.data.createTime }}
+          {{ formatDate(props.data.treeCreatedAt) }}
         </div>
       </div>
     </NuxtLink>
@@ -150,13 +162,4 @@ const props = defineProps({
   align-items: flex-end;
   flex-grow: 1;
 }
-
-.ellipsis {
-  display: -webkit-box;       /* Flexbox를 사용하여 요소가 줄바꿈되도록 설정 */
-  -webkit-line-clamp: 2;      /* 표시할 줄 수 설정 (여기서는 3줄) */
-  -webkit-box-orient: vertical;
-  overflow: hidden;           /* 넘친 텍스트를 숨김 */
-  text-overflow: ellipsis;    /* 넘친 부분에 ... 추가 */
-}
-
 </style>

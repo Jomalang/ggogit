@@ -1,8 +1,11 @@
 package io.ggogit.ggogit.domain.book.service;
 
 
+import io.ggogit.ggogit.api.book.dto.BookDetailResponse;
 import io.ggogit.ggogit.api.book.dto.BookInfoResponse;
+import io.ggogit.ggogit.api.book.dto.BookListResponse;
 import io.ggogit.ggogit.domain.book.entity.Book;
+import io.ggogit.ggogit.type.AladinBookSearchType;
 import org.springframework.data.domain.Page;
 import org.springframework.web.multipart.MultipartFile;
 import io.ggogit.ggogit.domain.book.entity.BookCategory;
@@ -43,6 +46,8 @@ public interface BookService {
      */
     //목록 조회 + 페이징, 정렬, 검색 기능
     Page<Book> getBooks(int page, String query, String filter);
+
+    BookListResponse getSearchBookList(int page, String query, String searchType);
 
     int saveAll(List<Book> books);
 

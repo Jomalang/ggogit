@@ -53,6 +53,9 @@ const treeFormData = useState("treeFormData", () => ({
 
   // 이미지 정보
   imageData: "",
+
+  // 트리 생성 경로
+  createUrl: `/tree/book/new`,
 }));
 
 watch(treeFormData.value, (newVal) => {

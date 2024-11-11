@@ -28,7 +28,7 @@ const detailLink = computed(() => `/tree/detail/${tree.treeId}`);
         <img
           v-else
           class="card-tree__book-cover"
-          src="/public/svg/tree-icon--white.svg"
+          src="/public/png/tree-icon-white.png"
           alt="treeCover"
         />
       </div>

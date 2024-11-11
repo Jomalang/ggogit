@@ -17,7 +17,7 @@ onMounted(async () => {
   <div class="card-tree-info-cover-frame">
     <div class="card-tree-info-cover">
       <img v-if="img" class="card-tree-info-cover" :src="`/png/${data.coverImageName}`" alt="cover">
-      <img v-else class="card-tree-info-cover" src="/public/svg/tree-icon--white.svg" alt="cover">
+      <img v-else class="card-tree-info-cover" src="/png/tree-icon-white.png" alt="cover">
     </div>
     <div class="card-tree-title-frame">
       <p class="card-tree-title">{{ data.title }}</p>

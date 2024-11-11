@@ -154,11 +154,12 @@ watch(() => props.items.length, (newLength) => {
 }
 .branch-detail-info {
   padding-top: 1px;
+  padding-left: 2px;
   padding-bottom: 1px;
   display: flex;
   flex-grow: 1;
   min-width: 0;
-  align-items: center;
+  align-items: first;
   text-align: left;
 }
 .branch-detail-info--regdate {

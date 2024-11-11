@@ -1,27 +1,25 @@
 <script setup lang="ts">
-
 interface CardTreeProps {
   treeTitle: string;
-  treeDate: string;
+  updateTime: string;
   leafCount: number;
   viewCount: number;
 }
 
-const data: CardTreeProps  = {
-  treeTitle: '트리 제목',
-  treeDate: '2024-07-10',
+const data: CardTreeProps = {
+  treeTitle: "트리 제목",
+  updateTime: "2024-07-10",
   leafCount: 1000,
-  viewCount: 500
+  viewCount: 500,
 };
 
 const props = defineProps<{
   data: CardTreeProps;
 }>();
 
-function modifyCount(count) {
-  return 999 < count ? '999+' : String(count);
+function modifyCount(count: number) {
+  return 999 < count ? "999+" : String(count);
 }
-
 </script>
 
 <template>
@@ -29,30 +27,40 @@ function modifyCount(count) {
     <div class="card-tree__top-box">
       <a href="">
         <div class="card-tree__top-tree-icon-box">
-          <img class="card-tree__top-tree-img" src="/public/svg/tree-icon--white.svg" alt="트리 아이콘">
+          <img
+            class="card-tree__top-tree-img"
+            src="/public/svg/tree-icon--white.svg"
+            alt="트리 아이콘"
+          />
         </div>
       </a>
       <div class="card-tree__top-sns-icon-box">
         <div class="card-tree__top-share-icon-box">
-          <img src="/public/svg/comment.svg" alt="댓글 아이콘">
+          <img src="/public/svg/comment.svg" alt="댓글 아이콘" />
         </div>
         <div class="card-tree__top-like-icon-box">
-          <img src="/public/svg/like.svg" alt="좋아요 아이콘">
+          <img src="/public/svg/like.svg" alt="좋아요 아이콘" />
         </div>
       </div>
     </div>
     <a href="">
       <div class="card-tree__bot-box">
         <div class="card-tree__bot-info-box">
-          <p class="card-tree__bot-title">{{ data.treeTitle }}</p>
-          <p class="card-tree__bot-date">{{ data.treeDate }}</p>
+          <p class="card-tree__bot-title">{{ props.data.treeTitle }}</p>
+          <p class="card-tree__bot-date">{{ props.data.updateTime }}</p>
         </div>
         <div class="card-tree__bot-statistics-box">
           <p class="card-tree__bot-leaf-text">
-            <span class="card-tree__bot-leaf-count">{{ modifyCount(data.leafCount) }}</span> 리프
+            <span class="card-tree__bot-leaf-count">{{
+              modifyCount(props.data.leafCount)
+            }}</span>
+            리프
           </p>
           <p class="card-tree__bot-view-text">
-            <span class="card-tree__bot-view-count">{{ modifyCount(data.viewCount) }}</span> 조회수
+            <span class="card-tree__bot-view-count">{{
+              modifyCount(props.data.viewCount)
+            }}</span>
+            조회수
           </p>
         </div>
       </div>
@@ -78,7 +86,7 @@ function modifyCount(count) {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 8px;
+  margin-bottom: 16px;
 }
 
 .card-tree__top-tree-icon-box {

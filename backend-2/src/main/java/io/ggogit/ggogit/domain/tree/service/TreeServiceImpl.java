@@ -1,6 +1,6 @@
 package io.ggogit.ggogit.domain.tree.service;
 
-import io.ggogit.ggogit.api.tree.dto.TreeCardResponse;
+import io.ggogit.ggogit.api.tree.dto.TreeBookCardResponse;
 import io.ggogit.ggogit.api.tree.dto.TreeInfoResponse;
 import io.ggogit.ggogit.api.tree.dto.TreeSearchQuery;
 import io.ggogit.ggogit.domain.book.entity.Book;
@@ -17,6 +17,7 @@ import io.ggogit.ggogit.domain.tree.repository.SeedRepository;
 import io.ggogit.ggogit.domain.tree.repository.TreeBookRepository;
 import io.ggogit.ggogit.domain.tree.repository.TreeImageRepository;
 import io.ggogit.ggogit.domain.tree.repository.TreeRepository;
+import jakarta.transaction.Transactional;
 import io.ggogit.ggogit.type.FilterType;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -32,6 +33,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class TreeServiceImpl implements TreeService {
 
     private final TreeRepository treeRepository;
@@ -116,7 +118,7 @@ public class TreeServiceImpl implements TreeService {
                 .orElseThrow(()-> new IllegalArgumentException("해당하는 Tree가 없습니다."))).getMember().getId(); }
 
 
-    public Page<TreeCardResponse> findTreeCardRequestList(Long seedId, Long memberId, Pageable pageable) {
+    public Page<TreeBookCardResponse> findTreeCardRequestList(Long seedId, Long memberId, Pageable pageable) {
         Page<Tree> treeList = treeRepository.findByMemberIdAndSeedId(memberId, seedId, pageable);
         return treeList.map(tree -> {
             if (tree.getSeed().getId() == 1){
@@ -136,7 +138,7 @@ public class TreeServiceImpl implements TreeService {
                     readingPage = 0;
                 boolean complateBook = (readingPage * 100.0 / totalPage) >= 80;
 
-                return TreeCardResponse.toEntity(tmpBook, complateBook, tree, tmpSeed, memberId);
+                return TreeBookCardResponse.toEntity(tmpBook, complateBook, tree, tmpSeed, memberId);
 
             }else {
                 TreeImage treeImage = treeImageRepository.findById(tree.getId())
@@ -148,7 +150,7 @@ public class TreeServiceImpl implements TreeService {
                 String coverImage = treeImage.getName();
                 String seedKorName = tmpSeed.getKorName();
                 String nickname = tmpMember.getNickname();
-                return TreeCardResponse.toEntity(coverImage, tmpMember, tree, tmpSeed, nickname);
+                return TreeBookCardResponse.toEntity(coverImage, tmpMember, tree, tmpSeed, nickname);
             }
         });
     }
@@ -243,8 +245,22 @@ public class TreeServiceImpl implements TreeService {
     }
 
     @Override
-    public Page<Tree> findTreeByQueryAndMemberId(TreeSearchQuery query, Long memberId) {
+    public Page<Tree> findAllByBookId(Long memberId, Long bookId) {
+        int pageNumber = 0;
+        int limit = 10;
+        Sort sort = Sort.by(Sort.Direction.DESC, "updateTime");
+        Pageable pageable = PageRequest.of(pageNumber, limit, sort);
 
+        return treeRepository.findAllByMemberIdAndBookId(memberId, bookId, pageable);
+    }
+
+    @Override
+    public Page<Tree> findAllCardByBookId(Long bookId, int page, int size) {
+        Pageable pageable = PageRequest.of(page-1, size, Sort.by(Sort.Direction.DESC, "updateTime"));
+        return treeRepository.findTreeByBookIdFetch(bookId, pageable);
+    }
+  
+    public Page<Tree> findTreeByQueryAndMemberId(TreeSearchQuery query, Long memberId) {
         int size = 10;
         Sort sort = null;
         if(query.getSort() == 0) {

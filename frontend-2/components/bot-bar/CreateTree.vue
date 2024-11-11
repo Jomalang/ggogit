@@ -1,10 +1,5 @@
-<script setup  lang="ts">
-interface Props {
-  bookId: number;
-}
-
-const props = defineProps<Props>();
-
+<script setup>
+const props = defineProps({ bookId: "1" });
 </script>
 
 <template>
@@ -12,17 +7,9 @@ const props = defineProps<Props>();
        FRAGMENT: 트리생성 하단바
        ========================================== -->
   <div class="bot-bar-create-tree-box">
-      <div id="bot-bar-create-tree__icon-box-id" class="bot-bar-create-tree__icon-box">
-          <img class="bot-bar-create-tree__comment-icon" src="/public/svg/comment--white.svg" alt="댓글 아이콘"/>
-      </div>
-      <div class="bot-bar-create-tree__icon-box">
-          <img class="bot-bar-create-tree__like-icon" src="/public/svg/like--white.svg" alt="좋아요 아이콘"/>
-      </div>
-      <a :href="`${props.bookId}`" class="bot-bar-create-tree__link">
-          <p class="bot-bar-create-tree__tree-create-btn">
-              트리 생성
-          </p>
-      </a>
+    <NuxtLink :to="`${props.bookId}`" class="bot-bar-create-tree__link">
+      <p class="bot-bar-create-tree__tree-create-btn">트리 생성</p>
+    </NuxtLink>
   </div>
 </template>
 

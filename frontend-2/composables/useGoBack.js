@@ -1,3 +1,5 @@
 export default function useGoBack() {
-  useRouter().back();
+  return () => {
+    window.history.back();
+  };
 }

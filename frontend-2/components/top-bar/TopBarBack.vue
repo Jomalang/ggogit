@@ -14,12 +14,12 @@ const goBack = () => {
   <div class="top-bar--green">
     <div class="top-bar__frame">
       <p class="top-bar__title">{{ props.title }}</p>
-      <div class="tob-bar__back-link" @click="goBack">
+      <NuxtLink class="tob-bar__back-link" :to="props.link">
         <img
           src="/public/svg/back-arrow-icon.svg"
           alt="top-bar--backarrow.svg"
         />
-      </div>
+      </NuxtLink>
       <div class="top-bar__text"></div>
     </div>
   </div>

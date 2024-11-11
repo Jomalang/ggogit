@@ -44,7 +44,6 @@ const newTreeFetch = async (newSeedId) => {
     console.log("ok");
     console.log(response);
     filterTreeInfoList.value = [...response.treeInfoResponseList];
-
   }
 };
 

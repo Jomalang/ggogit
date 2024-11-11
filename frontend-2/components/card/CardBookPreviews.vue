@@ -28,7 +28,7 @@ const props = defineProps({
       <img
         v-if="props.data.imageFile !== undefined"
         class="card-tree__book-cover"
-        :src="props.data.imageFile"
+        :src="useGetImageUrl(props.data.imageFile)"
         alt="도서 이미지"
       />
       <img

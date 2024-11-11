@@ -17,4 +17,6 @@ public interface TreeQueryRepository {
     public List<Tree> findTreeByMemberIdFetch(Long memberId);
     public List<Tree> findTreeByMemberIdFetch(Long memberId, Long seedId);
     public Page<Tree> findTreeByMemberIdFetch(Long memberId, Pageable pageable);
+
+    public  Page<Tree> findByQueryAndMemberId(String query, String filter, Long memberId, Pageable pageable);
 }

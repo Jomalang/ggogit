@@ -145,11 +145,15 @@ watchEffect(() => {
     <section class="reg-book-search-container">
       <h2 class="none">트리 검색</h2>
 
-      <InputSearchWithBackBtn
-        placeholder="검색할 트리를 입력해주세요"
-        href="javascript:history.back()"
-        api=""
-        >트리 검색 상단 바</InputSearchWithBackBtn>
+      <NuxtLink
+          :to="`/tree/search`"
+          class="back-btn">
+        <InputSearchWithBackBtn
+          placeholder="검색할 트리를 입력해주세요"
+          href="javascript:history.back()"
+          api=""
+          >트리 검색 상단 바</InputSearchWithBackBtn>
+      </NuxtLink>
     </section>
   </header>
   <main>
@@ -181,7 +185,6 @@ watchEffect(() => {
         ></FilterTreeLeafCard>
         </div>
       </section>
-
       <section class="branch-filter-result-list__container">
         <h3 class="none">브랜치 리스트</h3>
         <div id="card-branch__list-frame">

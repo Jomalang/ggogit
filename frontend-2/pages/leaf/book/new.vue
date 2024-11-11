@@ -159,6 +159,14 @@ const validate = () => {
   return true;
 };
 
+const dataInit = () => {
+  treeFormData.value = {};
+  leafFormData.value = {};
+  selectedTags.value = {
+    items: [],
+  };
+};
+
 const submitHandler = async () => {
 
   if (!validate()) {
@@ -172,14 +180,11 @@ const submitHandler = async () => {
   if (response.status !== HttpStatusCode.Created) {
     throw new Error("Network response was not ok");
   }
-  
-  // 데이터 초기화
-  treeFormData.value = {};
-  leafFormData.value = {};
-  selectedTags.value = {};
+
+  dataInit(); // 데이터 초기화
 
   let leafId = response.data.leafId;
-  // router.push(`/leaf/?leafId=${leafId}`);
+  router.push(`/leaf/?leafId=${leafId}`);
 };
 
 </script>
@@ -189,7 +194,7 @@ const submitHandler = async () => {
     <h1 class="none">리프 생성 페이지</h1>
     <section class="tob-bar-back-container">
       <h1 class="none">리프 생성 상단 바</h1>
-      <TopBarBack title="리프 생성" link="/tree/book/reg"></TopBarBack>
+      <TopBarBack title="리프 생성" :link="treeFormData.createUrl"></TopBarBack>
     </section>
   </header>
 

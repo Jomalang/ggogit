@@ -72,6 +72,7 @@ const { data } = defineProps(["data"]);
 .text-book-info__create-frame {
   display: flex;
   gap: 2px;
+  margin-bottom: 20px;
 }
 
 .text-book-info-create-info {

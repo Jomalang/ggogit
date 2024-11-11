@@ -1,6 +1,8 @@
 package io.ggogit.ggogit.domain.book.service;
 
 import io.ggogit.ggogit.api.book.dto.BookInfoResponse;
+import io.ggogit.ggogit.api.book.dto.BookListResponse;
+import io.ggogit.ggogit.domain.book.api.AladinClient;
 import io.ggogit.ggogit.domain.book.entity.Book;
 import io.ggogit.ggogit.domain.book.entity.BookCategory;
 import io.ggogit.ggogit.domain.book.repository.BookCategoryRepository;
@@ -9,6 +11,7 @@ import io.ggogit.ggogit.domain.member.entity.Member;
 import io.ggogit.ggogit.domain.member.repository.MemberRepository;
 import io.ggogit.ggogit.domain.tree.entity.Tree;
 import io.ggogit.ggogit.domain.tree.repository.TreeRepository;
+import io.ggogit.ggogit.type.AladinBookSearchType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -16,6 +19,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -28,7 +32,7 @@ public class BookServiceImpl implements BookService {
     private final BookCategoryRepository bookCategoryRepository;
     private final MemberRepository memberRepository;
     private final TreeRepository treeRepository;
-
+    private final AladinClient aladinClient;
 
     //목록 조회 + 페이징, 정렬, 검색 기능
     @Override
@@ -42,18 +46,41 @@ public class BookServiceImpl implements BookService {
 
         if (query == null) {
             return bookRepository.findAll(pageable);
-        } else{
+        } else {
             return bookRepository.findByFilter(filter, query, pageable);
         }
     }
 
     @Override
+    @Transactional
+    public BookListResponse getSearchBookList(int page, String query, String searchType) {
+        List<Book> books = aladinClient.fetchBooks(query, searchType); // 알라딘 도서 API 검색
+
+        Member member = memberRepository.findById(999L)
+                .orElseThrow(() -> new IllegalArgumentException("API 관리자 회원이 존재하지 않습니다."));
+
+        for (Book book : books) { // DB에 존재하는지 확인
+            bookRepository.findByIsbn(book.getIsbn()).ifPresentOrElse(
+                b -> book.setId(b.getId()), // 이미 존재하는 경우 ID를 설정
+                () -> {
+                    book.setMember(member);
+                    bookRepository.save(book); // 새로운 책 저장
+                }
+            );
+        }
+
+        return BookListResponse.of(books);
+    }
+
+    @Override
+    @Transactional
     public int saveAll(List<Book> books) {
         List<Book> savedBooks = bookRepository.saveAll(books);
         return savedBooks.size();
     }
 
     @Override
+    @Transactional
     public Book modify(Long bookId, Book tobook, @Nullable MultipartFile imageFile) {
 
         Book book = bookRepository.findById(bookId)

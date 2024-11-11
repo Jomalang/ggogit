@@ -429,7 +429,7 @@ onMounted(() => {
   <aside class="nav-container">
     <section class="short-btn-container">
       <h4 class="none">트리 생성 버튼</h4>
-      <ButtonBtnShortAGreen :link="`/seed/index`" :text="`트리 생성`" />
+      <ButtonBtnShortAGreen :link="`/tree/seed`" :text="`트리 생성`" />
     </section>
     <NavNavigationBar active="home" />
   </aside>

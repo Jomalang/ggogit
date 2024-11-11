@@ -1,5 +1,5 @@
 <script setup>
-import {onMounted, watch} from "vue";
+import {onMounted, ref, watch} from "vue";
 import axios, { HttpStatusCode } from "axios";
 import {useRouter} from "#vue-router";
 
@@ -8,6 +8,7 @@ const router = useRouter();
 const route = useRoute();
 const config = useRuntimeConfig();
 const bookId = route.params.id;
+const book = ref({});
 
 const treeFormData = useState('treeFormData', () => ({
 
@@ -27,10 +28,13 @@ const treeFormData = useState('treeFormData', () => ({
   // 공개 여부 정보
   visibility: false,
   visibilityValid: true,
+
+  // 생성 경로
+  createUrl: `/tree/book/auto/${bookId}/new`,
 }));
 
 // ----------------------- API ----------------------- //
-const { data } = await useFetch(`/books/${bookId}`, {
+const { data } = await useFetch(`/books/${bookId}/info`, {
   method: "GET",
   baseURL: config.public.apiBase,
   headers: {
@@ -40,8 +44,12 @@ const { data } = await useFetch(`/books/${bookId}`, {
 
 watchEffect(() => {
   // console.log("watchEffect data : ", data.value);
-  treeFormData.value.totalPage = data.value.totalPage;
-  treeFormData.value.bookId = data.value.id;
+  if (data.value) {
+    treeFormData.value.totalPage = data.value.totalPage;
+    treeFormData.value.bookId = data.value.id;
+    book.value = data.value;
+  }
+
 });
 
 // ----------------------- Life Cycle ----------------------- //
@@ -155,15 +163,7 @@ const submitFormHandler = async (e) => {
         </section>
         <section class="tree-reg-book-info__container">
           <h4 class="none">도서 정보</h4>
-          <TextBookInfo :data="{
-            title: data.title,
-            authors: data.authors,
-            translators: data.translators,
-            publisher: data.publisher,
-            bookCategoryName: data.bookCategoryName,
-            page: data.page,
-            seed: data.seed,
-          }"></TextBookInfo>
+          <TextBookInfo :data="book" />
         </section>
       </section>
 
@@ -175,7 +175,7 @@ const submitFormHandler = async (e) => {
       <form class="tree-book-auto-form-container">
 
         <section class="none">
-          <input type="text" name="bookId" :value="data.id">
+          <input type="text" name="bookId" :value="book.id">
         </section>
 
         <section class="input-form__input-container">

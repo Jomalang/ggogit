@@ -26,7 +26,12 @@ import java.time.LocalDate;
 @EntityListeners(AuditingEntityListener.class)
 @SQLDelete(sql = "update book set is_deleted = true where id = ? and version = ?")
 @SQLRestriction("is_deleted = false")
-@Table(name = "BOOK")
+@Table(
+        name = "BOOK",
+        indexes = {
+                @Index(name="IDX_BOOK_ISBN", columnList = "ISBN"),
+        }
+)
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,25 +47,20 @@ public class Book {
     @JoinColumn(name = "BOOK_CATEGORY_ID")
     private BookCategory bookCategory;
 
-    @Size(max = 255)
     @NotNull
     @Column(name = "TITLE", nullable = false)
     private String title;
 
-    @Size(max = 255)
     @NotNull
     @Column(name = "AUTHOR", nullable = false)
     private String author;
 
-    @Size(max = 255)
     @Column(name = "TRANSLATOR")
     private String translator;
 
-    @Size(max = 255)
-    @Column(name = "ISBN")
+    @Column(name = "ISBN", unique = true)
     private String isbn;
 
-    @Size(max = 255)
     @NotNull
     @Column(name = "PUBLISHER", nullable = false)
     private String publisher;
@@ -72,7 +72,6 @@ public class Book {
     @Column(name = "TOTAL_PAGE", nullable = false)
     private Integer totalPage;
 
-    @Size(max = 255)
     @Column(name = "IMAGE_FILE")
     private String imageFile;
 
@@ -102,7 +101,7 @@ public class Book {
                 .bookCategory(null)
                 .title(dto.getTitle())
                 .author(dto.getAuthor())
-                .isbn(dto.getIsbn13())
+                .isbn(dto.getIsbn())
                 .publisher(dto.getPublisher())
                 .publishDate(LocalDate.parse(dto.getPubDate()))
                 .totalPage(0)

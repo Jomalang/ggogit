@@ -15,6 +15,6 @@ public class AladinServiceImpl implements AladinService {
 
     @Override
     public List<Book> fetchBookDataApi(String query) {
-        return aladinClient.fetchBooks(query);
+        return aladinClient.fetchBooks(query, "Title");
     }
 }

@@ -39,7 +39,7 @@ public class AladinClient {
         String url = getAladinItemSearchUrl(keyword, searchType);
         RestTemplate restTemplate = new RestTemplate();
 
-        log.info("Aladin API를 통해 책 정보를 가져옵니다. keyword={}", keyword);
+        // log.info("Aladin API를 통해 책 정보를 가져옵니다. keyword={}", keyword);
         String jsonResponse = restTemplate.getForObject(url, String.class);
 
         ObjectMapper mapper = new ObjectMapper();
@@ -66,18 +66,16 @@ public class AladinClient {
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
-        // TODO: 임시 도서 카테고리 등록
-        BookCategory bookCategory = bookCategoryRepository.findById(1L)
-                .orElseThrow(() -> new IllegalArgumentException("책 카테고리가 존재하지 않습니다."));
-
         for (Book book : books) {
             String url = getAladinItemLookupUrl(book.getIsbn());
+            // log.info("API 호출", url);
             RestTemplate restTemplate = new RestTemplate();
 
-            log.info("Aladin API를 통해 책 상세 정보를 가져옵니다. isbn={}", book.getIsbn());
+            // log.info("Aladin API를 통해 책 상세 정보를 가져옵니다. isbn={}", book.getIsbn());
             String jsonResponse = restTemplate.getForObject(url, String.class);
 
             System.out.println(jsonResponse);
+
             AladinLookUpResultDto searchResult;
             try {
                 searchResult = mapper.readValue(jsonResponse, AladinLookUpResultDto.class);
@@ -87,7 +85,19 @@ public class AladinClient {
 
             AladinLookUpResultDto lookUpResult = mapper.convertValue(searchResult, AladinLookUpResultDto.class);
             book.setTotalPage(lookUpResult.getItem().getFirst().getSubInfo().getItemPage());
-            book.setBookCategory(bookCategory);
+
+            // 카테고리 호출
+            Long categoryId = Long.valueOf(lookUpResult.getItem().getFirst().getCategoryId());
+            int index = lookUpResult.getItem().getFirst().getCategoryName().split(">").length - 1;
+            String categoryName = lookUpResult.getItem().getFirst().getCategoryName().split(">")[index];
+
+            // 조회
+            BookCategory category = bookCategoryRepository.findById(categoryId).orElseGet(() -> {
+                BookCategory newCategory = BookCategory.of(categoryId, categoryName);
+                return bookCategoryRepository.save(newCategory); // 없으면 저장
+            });
+
+            book.setBookCategory(category);
         }
 
         return books;

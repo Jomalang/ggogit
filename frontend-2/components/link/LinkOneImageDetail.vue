@@ -1,17 +1,17 @@
 <script setup>
 const props = defineProps({
   href: String,
-  src: String
+  src: String,
 });
 </script>
 
 <template>
   <!--link__one-imgae-detail(src,href)-->
   <div>
-    <a class="link-cover-img-anker" :href="href">
-      <img class="link-cover-img" :src="src" alt="표지" />
+    <NuxtLink class="link-cover-img-anker" :to="href">
+      <img class="link-cover-img" :src="useGetImageUrl(src)" alt="표지" />
       <p class="link-cover-img-p">자세히 보기</p>
-    </a>
+    </NuxtLink>
   </div>
 </template>
 
@@ -23,7 +23,7 @@ const props = defineProps({
 .link-cover-img-anker {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 10px;
   width: 126px;
   background: transparent;
 }

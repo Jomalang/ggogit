@@ -4,8 +4,6 @@ const props = defineProps<{
   filterName: String;
 }>();
 
-const emit = defineEmits(['sort']);
-
 </script>
 
 <template>
@@ -18,9 +16,8 @@ const emit = defineEmits(['sort']);
       <span class="top-bar-search-result-number">개</span>
       <p class="top-bar-search-result-text">의 검색 결과</p>
     </span>
-    <span @click="emit('sort')" class="filter-tree-leaf__card-sort" id="filter-tree-leaf__card-sort">
-      <input class="bar-search-current__detail-input" type="checkbox" id="bar-search-current__detail"/>
-      <label class="bar-search-current__detail" for="bar-search-current__detail">{{filterName}}</label>
+    <span class="filter-tree-leaf__card-sort" id="filter-tree-leaf__card-sort">
+      <label class="bar-search-current__detail" >{{filterName}}</label>
     </span>
   </div>
 </template>

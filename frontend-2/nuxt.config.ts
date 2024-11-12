@@ -21,7 +21,7 @@ export default defineNuxtConfig({
       "tree/book/new": {
         ssr: false, // "/editor/toast" 경로에 대해서는 SSR을 비활성화
       },
-      "leaf": {
+      leaf: {
         ssr: false, // 화면에 따른 window 객체의 값으로 인해 SSR을 비활성화
       },
       "leaf/book/new": {
@@ -60,9 +60,16 @@ export default defineNuxtConfig({
       "leaf/:id": {
         ssr: false, // "/editor/toast" 경로에 대해서는 SSR을 비활성화
       },
+      "member/login": {
+        ssr: false,
+      },
+      "member/email-send": {
+        ssr: false,
+      },
     },
   },
+  modules: ["@pinia/nuxt"],
   router: {
-    middleware: ['checkTreeFormData']
+    middleware: ["checkTreeFormData"],
   },
 });

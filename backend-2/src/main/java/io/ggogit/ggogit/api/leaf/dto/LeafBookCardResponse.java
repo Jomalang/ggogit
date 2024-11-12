@@ -45,6 +45,7 @@ public class LeafBookCardResponse {
     @NoArgsConstructor
     public static class ItemDto {
         // 카드 타입
+        @Builder.Default
         int cardType = 2;
         // 도서 카테고리
         String bookCategory;

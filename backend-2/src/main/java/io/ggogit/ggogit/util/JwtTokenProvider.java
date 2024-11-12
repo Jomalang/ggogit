@@ -32,7 +32,7 @@ public class JwtTokenProvider {
         claims.put("id", member.getId());
         claims.put("username", member.getUsername());
         claims.put("email", member.getEmail());
-        claims.put("role", member.getRole());
+        claims.put("roles", member.getRole());
 
         long expirationTime = isRefreshToken ? refreshExpirationTime : accessExpirationTime; // 만료 시간 설정
         return createToken(claims, member.getEmail(), expirationTime);

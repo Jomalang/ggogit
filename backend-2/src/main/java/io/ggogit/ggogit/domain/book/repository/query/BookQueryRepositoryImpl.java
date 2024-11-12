@@ -43,7 +43,5 @@ public class BookQueryRepositoryImpl implements BookQueryRepository {
                 .fetch().size();
 
         return new PageImpl<>(result, pageable, total);
-
-
     }
 }

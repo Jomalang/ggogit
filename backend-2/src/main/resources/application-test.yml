@@ -39,6 +39,7 @@ spring:
         dialect: org.hibernate.dialect.H2Dialect
         hbm2ddl:
           auto: create
+        default_batch_fetch_size: 100 #batch size 글로벌 설정
     defer-datasource-initialization: true
   sql:
     init:

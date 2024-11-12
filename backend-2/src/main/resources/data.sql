@@ -16,7 +16,8 @@ VALUES
     (10, '2024-10-10 19:00:00', 'user10@example.com', 'Introduction of user10', false, 'nickname10', 'password10hash', '2024-10-10 19:00:00', 'user10', 1, 'USER'),
     (227, '2024-10-10 19:00:00', 'admin227@ggogit.io', 'Introduction of userTest', false, 'treeTest', 'treeAPI', '2024-10-10 19:00:00', 'API', 1, 'ADMIN'),
     (999, '2024-10-10 19:00:00', 'admin@ggogit.io', 'Introduction of user10', false, 'API', 'API', '2024-10-10 19:00:00', 'API', 1, 'ADMIN'),
-    (998, '2024-10-10 19:00:00', 'gksxorb147@naver.com', 'Introduction of user10', false, 'API', '$2a$10$YOSCvr2AcsMbSv36aYWFp.14..6ruvlkD3/QabL2FowYffwr26XWO', '2024-10-10 19:00:00', 'API', 1, 'ADMIN');
+    (998, '2024-10-10 19:00:00', 'gksxorb147@naver.com', 'Introduction of user10', false, 'API', '$2a$10$YOSCvr2AcsMbSv36aYWFp.14..6ruvlkD3/QabL2FowYffwr26XWO', '2024-10-10 19:00:00', 'API', 1, 'ADMIN'),
+    (997, '2024-10-10 19:00:00', 'test@naver.com', 'Introduction of user10', false, 'API', '$2a$10$cQ4tsAT3IoQkyKpoNH6Lf.DKE8dN9pSJGgRtY0SyxnbmjlJD.DWx6', '2024-10-10 19:00:00', 'API', 1, 'ADMIN');
 
 ALTER TABLE `member` ALTER COLUMN id RESTART WITH 100000;
 
@@ -45,7 +46,7 @@ VALUES
 INSERT INTO `member_background_image`
 (`member_id`, `create_time`, `is_deleted`, `name`, `update_time`, `version`)
 VALUES
-    (1, '2024-10-01 10:00:00', false, 'book-example.png', '2024-10-01 10:00:00', 1),
+    (1, '2024-10-01 10:00:00', false, 'book-example2.png', '2024-10-01 10:00:00', 1),
     (2, '2024-10-02 11:00:00', false, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRRTuzwnsO7lyoky8uX-foTR0eO51pgwVhciw&s', '2024-10-02 11:00:00', 1),
     (3, '2024-10-03 12:00:00', false, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRRTuzwnsO7lyoky8uX-foTR0eO51pgwVhciw&s', '2024-10-03 12:00:00', 1),
     (4, '2024-10-04 13:00:00', false, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRRTuzwnsO7lyoky8uX-foTR0eO51pgwVhciw&s', '2024-10-04 13:00:00', 1),
@@ -560,9 +561,9 @@ INSERT INTO `tree_book`
 VALUES
     (10000, '2024-11-01 09:00:00', false, 700, '2024-11-01 09:00:00', 1);
 
-UPDATE tree
-SET treebook_id = (SELECT tree_id FROM tree_book WHERE tree_id = 10000)
-WHERE id = 10000;
+-- UPDATE tree
+-- SET treebook_id = (SELECT tree_id FROM tree_book WHERE tree_id = 10000)
+-- WHERE id = 10000;
 
 INSERT INTO `leaf`
 (`id`, `book_mark`, `child_leaf_count`, `content`, `create_time`, `is_deleted`, `like_count`, `title`, `update_time`, `version`, `view_count`, `visibility`, `parent_leaf_id`, `tree_id`)

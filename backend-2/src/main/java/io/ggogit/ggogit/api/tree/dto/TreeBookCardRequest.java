@@ -1,26 +1,17 @@
 package io.ggogit.ggogit.api.tree.dto;
 
-import io.ggogit.ggogit.api.book.dto.BookCategoryResponse;
-import io.ggogit.ggogit.api.book.dto.BookInfoResponse;
-import io.ggogit.ggogit.domain.member.entity.Member;
-import io.ggogit.ggogit.domain.tree.entity.Seed;
-import io.ggogit.ggogit.domain.tree.entity.Tree;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class TreeCardRequest {
+public class TreeBookCardRequest {
     private Long bookId;
     private String bookCategory;
     private String bookTitle;
@@ -38,8 +29,8 @@ public class TreeCardRequest {
     private Boolean visibility;
     private LocalDateTime leafCreatedAt;
 
-    public TreeCardRequest of(){
-        return TreeCardRequest.builder()
+    public TreeBookCardRequest of(){
+        return TreeBookCardRequest.builder()
                 .bookId(this.bookId)
                 .bookCategory(this.bookCategory)
                 .bookTitle(this.bookTitle)

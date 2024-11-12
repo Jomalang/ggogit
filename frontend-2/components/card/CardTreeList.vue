@@ -1,16 +1,25 @@
-<script setup lang="ts">
-import CardTree from "@/components/card/CardTree.vue";
+<script setup>
+import { defineProps } from "vue";
 
+const props = defineProps({
+  data: {
+    type: Array,
+    default: () => [],
+  },
+});
+
+console.log(props.data);
 </script>
 
 <template>
   <div class="card-tree-list-box">
     <ul class="card-tree__list">
-      <li class="card-tree__item">
-        <CardTree data="" />
-      </li>
-      <li class="card-tree__item">
-        <CardTree data="" />
+      <li
+        class="card-tree__item"
+        v-for="(treeCard, index) in props.data"
+        :key="index"
+      >
+        <CardTree :data="treeCard" />
       </li>
     </ul>
   </div>

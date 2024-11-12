@@ -20,6 +20,7 @@ public class MemoirRequest {
     @Builder.Default
     private Boolean visibility = true;
 
+    @Builder.Default
     private List<String> fileNames = new ArrayList<>();
 
     public Memoir toMemoir() {

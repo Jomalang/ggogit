@@ -10,6 +10,7 @@ import java.util.List;
 @Builder
 public class TreeInfoResponseHome {
 
+    @Builder.Default
     private List<TreeInfoResponse> treeInfoResponseList = new ArrayList<>();
 
     public static TreeInfoResponseHome of(List<TreeInfoResponse> treeInfoResponseList) {

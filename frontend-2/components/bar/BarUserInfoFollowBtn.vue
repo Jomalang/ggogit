@@ -17,7 +17,7 @@ const props = defineProps({
   <div class="bar-user-info-follow-btn-frame">
     <div class="bar-user-info__left-content">
       <div class="bar-user-info__img-wrapper">
-        <img :src="`${props.userImg}`" alt="user-profile" />
+        <img :src="useGetImageUrl(props.userimg)" alt="user-profile" />
       </div>
       <div>
         <div class="bar-user-info__user-name--color-main1">

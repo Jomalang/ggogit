@@ -1,7 +1,5 @@
 <script setup>
-
 const { data } = defineProps(["data"]);
-
 </script>
 
 <template>
@@ -11,17 +9,18 @@ const { data } = defineProps(["data"]);
       <div>
         <p class="card-tree-info__title">발행(출시)일자</p>
         <p class="card-tree-info__title">쪽수</p>
+        <p class="card-tree-info__title">ISBN</p>
       </div>
       <div>
         <p class="card-tree-info__content">{{ data.date }}</p>
         <p class="card-tree-info__content">{{ data.pageCount }}</p>
+        <p v-if="data.isbn" class="card-tree-info__content">{{ data.isbn }}</p>
       </div>
     </div>
   </div>
 </template>
 
 <style scoped>
-
 .card-tree-info-box {
   border-bottom: 1px solid var(--branch-left, #d6d8d4);
 }

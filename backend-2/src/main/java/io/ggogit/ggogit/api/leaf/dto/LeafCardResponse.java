@@ -39,10 +39,13 @@ public class LeafCardResponse {
     @NoArgsConstructor
     @Builder
     public static class ItemDto {
-        String leafTitle;
-        String leafContent;
+        @Builder.Default
+        int cardType = 2;
+
+        String title;
+        String content;
         String updateDate;
-        Integer leafViewCount;
+        Integer viewCount;
         String nickname;
         String emailId;
 
@@ -50,12 +53,12 @@ public class LeafCardResponse {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
             return ItemDto.builder()
-                    .leafTitle(leaf.getTitle())
-                    .leafContent(leaf.getContent())
+                    .title(leaf.getTitle())
+                    .content(leaf.getContent())
                     .updateDate(leaf.getUpdateTime().format(formatter))
-                    .leafViewCount(leaf.getViewCount())
+                    .viewCount(leaf.getViewCount())
                     .nickname(member.getNickname())
-                    .emailId(member.getEmail().split("@")[0])
+                    .emailId("@"+member.getEmail().split("@")[0])
                     .build();
         }
     }

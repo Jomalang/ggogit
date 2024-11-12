@@ -1,7 +1,7 @@
 <script setup>
 
 import { useRoute } from "vue-router";
-import {Tree} from "~/ composables/Tree.js";
+import {Tree} from "~/composables/Tree.js";
 
 // ----------------------- Model ----------------------- //
 const route = useRoute();

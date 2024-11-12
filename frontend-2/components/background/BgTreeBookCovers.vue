@@ -116,33 +116,31 @@ watchEffect(() => {
   /* 캐러셀 위해 90vw로 고정 */
   display: flex;
   overflow: hidden;
-  width: 90vw;
-  height: 50vw;
+  width: 100%;
 }
 
 .tree-book-bg__list {
+  --bg-10: calc(100% / 10);
   z-index: 1;
   display: flex;
   align-items: last baseline;
   justify-content: space-between;
   padding: 0;
   margin: 0;
-  gap: 10vw;
+  gap: var(--bg-10);
   /*캐러셀의 부드러운 이동을 위한 최적화*/
   will-change: transform;
 }
 .tree-book-bg__list--transition {
   transition: all, 0.6s, ease-out;
 }
-.mid__item {
-}
 
 .mid__img {
-  width: 20vw;
+  width: var(--mid-width);
   transition: width 0.2s linear;
 }
 
 .center__img {
-  width: 30vw;
+  width: var(--center-width);
 }
 </style>

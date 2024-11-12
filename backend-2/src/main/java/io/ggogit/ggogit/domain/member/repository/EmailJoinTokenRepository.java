@@ -10,4 +10,6 @@ public interface EmailJoinTokenRepository extends JpaRepository<EmailJoinToken, 
     void deleteByEmail(String email);
 
     Optional<EmailJoinToken> findByEmail(String email);
+
+    Optional<EmailJoinToken> findByUuid(String key);
 }

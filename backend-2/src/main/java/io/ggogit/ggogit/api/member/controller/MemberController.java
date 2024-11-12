@@ -112,8 +112,7 @@ public class MemberController {
 
         HttpHeaders headers = new HttpHeaders();
         headers.add(HttpHeaders.SET_COOKIE, refreshTokenCookie.toString());
-
-        MemberLoginResponse response = MemberLoginResponse.of(accessToken, accessExpirationTime, "로그인 성공");
+        MemberLoginResponse response = MemberLoginResponse.of(accessToken, refreshToken, accessExpirationTime, "로그인 성공");
         return new ResponseEntity<>(response, headers, HttpStatus.OK);
     }
 

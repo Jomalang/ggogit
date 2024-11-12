@@ -11,12 +11,14 @@ import lombok.NoArgsConstructor;
 @Builder
 public class MemberLoginResponse {
     private String accessToken;
+    private String refreshToken;
     private Long expiresIn;
     private String message;
 
-    public static MemberLoginResponse of(String token, long accessExpirationTime, String message) {
+    public static MemberLoginResponse of(String accessToken, String refreshToken, long accessExpirationTime, String message) {
         return MemberLoginResponse.builder()
-                .accessToken(token)
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
                 .expiresIn(accessExpirationTime)
                 .message(message)
                 .build();

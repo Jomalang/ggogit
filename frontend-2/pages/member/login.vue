@@ -1,9 +1,10 @@
 <script setup>
 
-import {HttpStatusCode} from "axios";
+import {useMemberDetail} from "~/composables/useMemberDetail.js";
 
 const config = useRuntimeConfig();
 const router = useRouter();
+const memberDetail = useMemberDetail();
 
 // ----------------------- Model ----------------------- //
 const loginInfo = ref({
@@ -32,15 +33,8 @@ const loginApi = async () => {
       })
     });
 
-    if (response.status === HttpStatusCode.Ok) {
-      const data = await response.json();
-      console.log(data);
-    } else {
-      console.error('로그인 실패');
-    }
-
+    memberDetail.setAuthWithToken(response.accessToken, response.refreshToken);
     router.push("/home");
-
   } catch (error) {
     alert('로그인 실패');
   }

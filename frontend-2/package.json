@@ -10,14 +10,20 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@pinia/nuxt": "^0.7.0",
     "@toast-ui/editor": "^3.2.2",
     "@toast-ui/editor-plugin-code-syntax-highlight": "^3.1.0",
     "axios": "^1.7.7",
     "frontend": "file:",
+    "jwt-decode": "^4.0.0",
     "lodash": "^4.17.21",
     "nuxt": "^3.13.2",
     "nuxt-app": "file:",
-    "vue": "^3.5.12",
-    "vue-router": "^4.4.5"
+    "vue": "latest",
+    "vue-router": "latest",
+    "vue3-google-login": "^2.0.33"
+  },
+  "overrides": {
+    "vue": "latest"
   }
 }

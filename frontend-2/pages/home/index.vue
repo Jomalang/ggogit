@@ -2,7 +2,6 @@
 import _ from "lodash";
 import { Splide, SplideSlide, SplideTrack } from "@splidejs/vue-splide";
 import "@splidejs/splide/dist/css/splide.min.css";
-import "@splidejs/vue-splide/css/sea-green";
 import { onBeforeMount, onMounted, reactive } from "vue";
 
 //-------------------변수 선언--------------------
@@ -64,29 +63,39 @@ watchEffect(() => {
   }
 });
 
-const splideMoved = (splide, destIndex) => {
-  console.log(destIndex);
-  const selectedElement = document.getElementById(`slide-${destIndex}`);
-  bookExRemoveNone(selectedElement, destIndex);
+const splideMounted = (splide) => {
+  const selectedElement = document.getElementById("slide-0");
+  bookExRemoveNone(selectedElement, 0);
 };
 
-const bookExRemoveNone = (selectedElement, Index) => {
-  console.log("bookExRemoveNone");
-  console.log(Index);
-  console.log(selectedElement);
-  selectedElement.style.transform = "scale(1.2)";
+const splideMoved = (splide, newIndex, prevIndex) => {
+  const index = newIndex;
+  const selectedElement = document.getElementById(`slide-${index}`);
+  const prevElement = document.getElementById(`slide-${prevIndex}`);
+  bookExRemoveNone(selectedElement, index);
+};
+
+const bookExRemoveNone = (selectedElement, index) => {
+  document.querySelectorAll(".slide-item").forEach((item) => {
+    if (item === selectedElement) {
+      console.log("selectedElement", selectedElement);
+      item.setAttribute("class", "slide-item item__transform");
+    } else {
+      item.setAttribute("class", "slide-item");
+    }
+  });
 
   document
     .querySelectorAll(".textbox-recent-tree-info__frame")
     .forEach((item) => {
-      if (item.classList.contains(`textbox-recent-tree-info__frame-${Index}`)) {
+      if (item.classList.contains(`slide-info-${index}`)) {
         item.classList.remove("none");
       } else {
         item.classList.add("none");
       }
     });
   document.querySelectorAll(".book-tree-explanation-item").forEach((item) => {
-    if (item.classList.contains(`book-tree-explanation-item-${Index}`)) {
+    if (item.classList.contains(`slide-progress-${index}`)) {
       item.classList.remove("none");
     } else {
       item.classList.add("none");
@@ -95,234 +104,6 @@ const bookExRemoveNone = (selectedElement, Index) => {
 };
 
 //-------------------LifeCycle-------------------
-onMounted(() => {
-  //   const carouselBox = document.querySelector(".tree-book-bg");
-  //   const carouselList = document.querySelector(".tree-book-bg__list");
-  //   // carousel item 너비
-  //   // const width = document.querySelector(".mid__item").clientWidth;
-  //   // const width = window.innerWidth * 0.3;
-  //   // const midWidth = window.innerWidth * 0.2;
-  //   const compWidth = ref(
-  //     parseFloat(window.getComputedStyle(carouselBox).width.replace("px", ""))
-  //   );
-  //   console.log(compWidth.value);
-  //   const width = compWidth.value * 0.4;
-  //   const midWidth = compWidth.value * 0.2;
-  //   // CSS 변수 설정
-  //   document.documentElement.style.setProperty(
-  //     "--center-width",
-  //     `${compWidth * 0.4}px`
-  //   );
-  //   document.documentElement.style.setProperty(
-  //     "--mid-width",
-  //     `${compWidth * 0.2}px`
-  //   );
-  //   watch(compWidth, (newValue) => {
-  //     console.log(newValue);
-  //   });
-  //   //carousel items
-  //   const carouselItems = document.querySelectorAll(".mid__item");
-  //   // carousel item 전체 갯수
-  //   const carouselItemCount = carouselItems.length / 3;
-  //   const container = carouselList.querySelector(".tree-book-bg");
-  //   if (!import.meta.env.SSR) {
-  //     // ----- 한 가운데 item 찾아내기 위한 IntersectionObserver코드 --------
-  //     observer = new IntersectionObserver(
-  //       (entries) => {
-  //         let selectedElement = null;
-  //         entries.forEach((entry) => {
-  //           if (entry.isIntersecting) {
-  //             entry.target.classList.add("selected");
-  //           } else {
-  //             entry.target.classList.remove("selected");
-  //           }
-  //         });
-  //         selectedElement = calcMidTree();
-  //         if (selectedElement) {
-  //           bookExRemoveNone(selectedElement);
-  //         }
-  //       },
-  //       { root: container, threshold: 0.3 }
-  //     );
-  //     carouselItems.forEach((item) => {
-  //       observer.observe(item);
-  //     });
-  //     //--------------------------------가운데 트리 확대 로직--------------------------------
-  //     const bookExRemoveNone = (selectedElement) => {
-  //       const id = selectedElement.classList[1];
-  //       carouselList.querySelectorAll(".mid__item").forEach((item) => {
-  //         if (item === selectedElement) {
-  //           item.querySelector(".mid__img").classList.add("center__img");
-  //         } else {
-  //           item.querySelector(".mid__img").classList.remove("center__img");
-  //         }
-  //       });
-  //       document
-  //         .querySelectorAll(".textbox-recent-tree-info__frame")
-  //         .forEach((item) => {
-  //           if (item.classList.contains(id)) {
-  //             item.classList.remove("none");
-  //           } else {
-  //             item.classList.add("none");
-  //           }
-  //         });
-  //       document
-  //         .querySelectorAll(".book-tree-explanation-item")
-  //         .forEach((item) => {
-  //           if (item.classList.contains(id)) {
-  //             item.classList.remove("none");
-  //           } else {
-  //             item.classList.add("none");
-  //           }
-  //         });
-  //     };
-  //     const calcMidTree = () => {
-  //       let ids = [];
-  //       let ret = null;
-  //       carouselList.querySelectorAll(".selected").forEach((item) => {
-  //         ids.push(item.classList[1]);
-  //       });
-  //       const midId = String(ids[1]);
-  //       carouselList.querySelectorAll(".selected").forEach((item) => {
-  //         if (item.classList[1] === midId) {
-  //           ret = item;
-  //         }
-  //       });
-  //       return ret;
-  //     };
-  //   }
-  //   //-----------------------------------carousel 이동 로직-----------------------------------
-  //   // 현재 X값, 무엇의?
-  //   let currentTranslateX = 0;
-  //   // drag 시작여부
-  //   let isMove = false;
-  //   // drag 시작위치 X값
-  //   let moveStartX = 0;
-  //   // drag에 의해 움직인 X값
-  //   let moveTranslateX = 0;
-  //   // drag에 의해 변경될 X값
-  //   let nextTranslateX = 0;
-  //   // item 이동을 위한 gap 기준값
-  //   const moveGap = 30;
-  //   // drag 종료시간을 얻기 위한 기준 시간 획득
-  //   let dragEndTime = new Date().getTime();
-  //   // drag 시작 이벤트
-  //   const dragStart = (e, clientX) => {
-  //     isMove = true;
-  //     moveStartX = clientX;
-  //     // carousel list transition 제거
-  //     carouselList.classList.remove("tree-book-bg__list--transition");
-  //     // drag 종료시점으로부터 transition 시간이 지났는지 확인
-  //     const dragEndStartGapTime = new Date().getTime() - dragEndTime; // drag 종료부터 다시 시작하기까지 걸린 시간 (단위 ms)
-  //     let dragEndStartGapTranslateX = 0; // drag 종료부터 다시 시작하기까지 이동하지 못한 translateX
-  //     if (dragEndStartGapTime <= 600) {
-  //       // transition 시간보다 적은 경우
-  //       dragEndStartGapTranslateX =
-  //         (nextTranslateX - currentTranslateX) *
-  //         ((600 - dragEndStartGapTime) / 600 / 1.5);
-  //     }
-  //     // 두번째 carousel-item 위치로 변경
-  //     currentTranslateX =
-  //       -(
-  //         ((-currentTranslateX / width) % carouselItemCount) +
-  //         carouselItemCount
-  //       ) *
-  //         width +
-  //       dragEndStartGapTranslateX;
-  //     nextTranslateX = currentTranslateX;
-  //     carouselList.style.transform = `translateX(${currentTranslateX}px)`;
-  //   };
-  //   // drag 중 이벤트
-  //   const dragging = (e) => {
-  //     if (isMove) {
-  //       let clientX = e.clientX;
-  //       if (e.type === "touchmove") {
-  //         clientX = e.targetTouches[0].clientX;
-  //       }
-  //       moveTranslateX = clientX - moveStartX;
-  //       nextTranslateX = currentTranslateX + moveTranslateX;
-  //       // 기본 동작 방지 (특히 모바일에서의 스크롤)
-  //       if (e.type.includes("touch")) {
-  //         // e.preventDefault(); // 기본 터치 스크롤 동작을 방지
-  //       }
-  //       // 오른쪽으로 최대 이동한 경우
-  //       if (nextTranslateX < -midWidth * (carouselItemCount * 3)) {
-  //         // console.log("right end");
-  //         nextTranslateX = -midWidth * (carouselItemCount * 3);
-  //       }
-  //       // 왼쪽으로 최대 이동한 경우
-  //       else if (nextTranslateX > 0) {
-  //         // console.log("left end");
-  //         nextTranslateX = 0;
-  //       }
-  //       carouselList.style.transform = `translateX(${nextTranslateX}px)`;
-  //     }
-  //   };
-  //   // drag 종료 이벤트
-  //   const dragEnd = (e) => {
-  //     if (isMove) {
-  //       // 초기화
-  //       isMove = false;
-  //       moveStartX = 0;
-  //       carouselList.classList.add("tree-book-bg__list--transition");
-  //       dragEndTime = new Date().getTime();
-  //       // 오른쪽으로 이동한 경우
-  //       if (currentTranslateX > nextTranslateX) {
-  //         if ((currentTranslateX - nextTranslateX) % width > moveGap) {
-  //           currentTranslateX =
-  //             -(Math.floor(-nextTranslateX / width) + 1) * width;
-  //         } else {
-  //           currentTranslateX = -Math.floor(-nextTranslateX / width) * width;
-  //         }
-  //       }
-  //       // 왼쪽으로 이동한 경우
-  //       else if (currentTranslateX < nextTranslateX) {
-  //         if ((nextTranslateX - currentTranslateX) % width > moveGap) {
-  //           currentTranslateX = -Math.floor(-nextTranslateX / width) * width;
-  //         } else {
-  //           currentTranslateX =
-  //             -(Math.floor(-nextTranslateX / width) + 1) * width;
-  //         }
-  //       }
-  //       // 동일한 위치인 경우
-  //       else {
-  //         // item 중간을 기준으로 오른쪽에 더 치우친 경우
-  //         if (Math.abs(currentTranslateX) % width >= width / 2) {
-  //           currentTranslateX =
-  //             -(Math.floor(-currentTranslateX / width) + 1) * width;
-  //         }
-  //         // item 중간을 기준으로 왼쪽에 더 치우친 경우
-  //         else {
-  //           currentTranslateX = -Math.floor(-currentTranslateX / width) * width;
-  //         }
-  //       }
-  //       carouselList.style.transform = `translateX(${currentTranslateX}px)`;
-  //     }
-  //   };
-  //   //---------------------eventListener 등록---------------------
-  //   //쓰로틀링 적용
-  //   const throttledDragging = _.throttle((e) => {
-  //     if (isMove) {
-  //       dragging(e);
-  //     }
-  //   }, 10);
-  //   // PC
-  //   carouselList.addEventListener("mousedown", (e) => dragStart(e, e.clientX));
-  //   window.addEventListener("mousemove", (e) => dragging(e, e.clientX));
-  //   window.addEventListener("mousemove", throttledDragging, { passive: false });
-  //   window.addEventListener("mouseup", (e) => dragEnd(e));
-  //   // Mobile
-  //   carouselList.addEventListener("touchstart", (e) =>
-  //     dragStart(e, e.targetTouches[0].clientX)
-  //   );
-  //   window.addEventListener("touchmove", (e) =>
-  //     dragging(e, e.targetTouches[0].clientX)
-  //   );
-  //   window.addEventListener("touchmove", throttledDragging, { passive: false });
-  //   window.addEventListener("touchend", (e) => dragEnd(e));
-});
-
-//---------------------------onMounted 끝-----------------------------------
 </script>
 
 <template>
@@ -353,39 +134,52 @@ onMounted(() => {
               perPage: 3,
               width: '100%',
               focus: 'center',
-              gap: '40px',
+              gap: '20px',
               heightRatio: 0.5,
+              speed: 800,
+              easing: 'ease',
+              dragMinThreshold: {
+                mouse: 100,
+                touch: 30,
+              },
+              arrow: false,
+              padding: 0,
             }"
             aria-label="Tree-books"
             @splide:moved="splideMoved"
+            @splide:mounted="splideMounted"
           >
-            <SplideSlide v-for="(tree, index) in treeInfoList">
-              <NuxtLink :to="`/tree/${tree.treeId}`">
+            <SplideSlide
+              class="slide-frame"
+              v-for="(tree, index) in treeInfoList"
+            >
+              <NuxtLink
+                class="slide-item"
+                :to="`/tree/${tree.treeId}`"
+                :id="`slide-${index}`"
+              >
                 <img
                   class="mid__img"
                   :src="useGetImageUrl(tree.coverImageName)"
                   alt="도서 예시 이미지"
-                  :id="`slide-${index}`"
                 />
               </NuxtLink>
             </SplideSlide>
             <SplideSlide v-if="treeInfoList.length === 1">
-              <NuxtLink :to="`/tree/seed`">
+              <NuxtLink class="slide-item" :to="`/tree/seed`" id="slide-1">
                 <img
                   class="mid__img"
                   src="/public/png/tree-book-blank.png"
                   alt="도서 예시 이미지"
-                  id="slide-1"
                 />
               </NuxtLink>
             </SplideSlide>
             <SplideSlide v-if="treeInfoList.length <= 2">
-              <NuxtLink :to="`/tree/seed`">
+              <NuxtLink class="slide-item" :to="`/tree/seed`" id="slide-2">
                 <img
                   class="mid__img"
                   src="/public/png/tree-book-blank.png"
                   alt="도서 예시 이미지"
-                  id="slide-2"
                 />
               </NuxtLink>
             </SplideSlide>
@@ -397,7 +191,7 @@ onMounted(() => {
           <ul>
             <li
               v-for="(tree, index) in treeInfoList"
-              :class="`textbox-recent-tree-info__frame-${index} none`"
+              :class="`textbox-recent-tree-info__frame slide-info-${index} none`"
               :key="index"
             >
               <TextRecentTreeInfo :tree="tree" />
@@ -410,7 +204,7 @@ onMounted(() => {
           <ul class="book-tree-explanation-list">
             <li
               v-for="(tree, index) in treeInfoList"
-              :class="`book-tree-explanation-item-${index} none`"
+              :class="`book-tree-explanation-item slide-progress-${index} none`"
               :key="index"
             >
               <TextRecentTreeEx :text="tree.description" />
@@ -522,9 +316,21 @@ onMounted(() => {
   width: 100%;
   height: 50px;
 }
+
+.slide-item {
+  display: block;
+  max-width: 80%;
+  margin: 30px;
+  transition: all 0.5s ease;
+}
+
 .mid__img {
   width: 100%;
   height: auto;
   object-fit: cover;
+}
+
+.item__transform {
+  transform: scale(1.2);
 }
 </style>

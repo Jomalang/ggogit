@@ -76,6 +76,7 @@ body
 }
 
 .book-img-container {
+  padding: 0 24px 0 24px;
   z-index: 2;
   display: flex;
   justify-content: center;

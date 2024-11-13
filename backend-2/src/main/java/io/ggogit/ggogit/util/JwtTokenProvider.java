@@ -31,6 +31,7 @@ public class JwtTokenProvider {
         Map<String, Object> claims = new HashMap<>();
         claims.put("id", member.getId());
         claims.put("username", member.getUsername());
+        claims.put("nickname", member.getNickname());
         claims.put("email", member.getEmail());
         claims.put("nickname", member.getNickname());
         claims.put("roles", member.getRole());
@@ -99,23 +100,5 @@ public class JwtTokenProvider {
 
     private Key getBase64SecretKey() {
         return Keys.hmacShaKeyFor(Base64.getEncoder().encode(secretKey.getBytes(StandardCharsets.UTF_8)));
-    }
-
-    // 관리자 토큰 생성
-    public String generateAdminToken() {
-        Map<String, Object> claims = new HashMap<>();
-        claims.put("id", 999);
-        claims.put("username", "admin");
-        claims.put("email", "admin@ggogit.io");
-        claims.put("role", "ADMIN");
-
-        return Jwts.builder()
-                .setClaims(claims)
-                .setSubject("admin@ggogit.io")
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                // 100년
-                .setExpiration(new Date(System.currentTimeMillis() + 1000L * 60 * 60 * 24 * 365 * 100))
-                .signWith(getBase64SecretKey(), SignatureAlgorithm.HS256)
-                .compact();
     }
 }

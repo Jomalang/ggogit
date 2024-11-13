@@ -134,7 +134,6 @@ const bookExRemoveNone = (selectedElement, index) => {
               perPage: 3,
               width: '100%',
               focus: 'center',
-              gap: '20px',
               heightRatio: 0.5,
               speed: 800,
               easing: 'ease',
@@ -142,8 +141,15 @@ const bookExRemoveNone = (selectedElement, index) => {
                 mouse: 100,
                 touch: 30,
               },
-              arrow: false,
+              arrow: true,
               padding: 0,
+              pagination: true,
+              breakpoints: {
+                768: {
+                  perPage: 2,
+                  heightRatio: 0.8,
+                },
+              },
             }"
             aria-label="Tree-books"
             @splide:moved="splideMoved"
@@ -186,7 +192,7 @@ const bookExRemoveNone = (selectedElement, index) => {
           </Splide>
         </section>
 
-        <section>
+        <section class="textbox-recent-tree-info-container">
           <h3 class="none">트리 약식 정보</h3>
           <ul>
             <li
@@ -325,11 +331,23 @@ const bookExRemoveNone = (selectedElement, index) => {
 }
 
 .mid__img {
-  width: 100%;
+  width: 90%;
   height: auto;
   object-fit: cover;
 }
 
+@media screen and (max-width: 768px) {
+  .mid__img {
+    width: 100%;
+    height: auto;
+  }
+}
+@media screen and (max-width: 480px) {
+  .mid__img {
+    width: 120%;
+    height: auto;
+  }
+}
 .item__transform {
   transform: scale(1.2);
 }

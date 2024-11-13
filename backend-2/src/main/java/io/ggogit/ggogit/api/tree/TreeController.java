@@ -86,10 +86,9 @@ public class TreeController {
     public ResponseEntity<TreeInfoResponse> getTreeInfoResponse(
             @PathVariable(value = "id") Long treeId,
             @RequestParam(value = "mid",defaultValue = "1") Long mid
-//            @SessionAttribute Member member
     ) {
-//        Long memberId = member.getId();
-        Long memberId = 227L;
+        //TODO:JWT추가해야 함 임시 하드코딩
+        Long memberId = 1L;
 
         TreeInfoResponse treeInfoResponse = treeService.findTreeInfoResponse(memberId, treeId);
         return new ResponseEntity<> (treeInfoResponse, HttpStatus.OK);

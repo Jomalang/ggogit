@@ -9,15 +9,13 @@ const props = defineProps({
 });
 
 const tree = ref(props.tree);
-
-const detailLink = computed(() => `/tree/detail/${tree.treeId}`);
 </script>
 
 <template>
   <!-- th:fragment="card-tree-details(tree)" -->
 
   <div class="card-tree-details">
-    <a class="card-tree-detail" :href="detailLink">
+    <NuxtLink class="card-tree-detail" :to="`tree/${tree.treeId}`">
       <div class="card-tree__img-frame">
         <img
           v-if="tree.coverImageName"
@@ -66,7 +64,7 @@ const detailLink = computed(() => `/tree/detail/${tree.treeId}`);
           tree.leafCreatedAt
         }}</span>
       </div>
-    </a>
+    </NuxtLink>
   </div>
 </template>
 

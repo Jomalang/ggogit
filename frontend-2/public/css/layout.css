@@ -16,7 +16,9 @@ body
   max-width: var(--max-width-1);
   margin: 0 auto;
 }
-
+.app-container:has(.landing-box){
+  max-width: 100%;
+}
 
 .header-search-container {
   padding: 30px 24px 40px 24px;

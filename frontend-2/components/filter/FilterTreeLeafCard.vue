@@ -1,18 +1,17 @@
 <script setup>
-
-import { defineProps } from 'vue';
+import { defineProps } from "vue";
 
 const props = defineProps({
   filterName: {
     type: String,
-    default: 'Default Title'
+    default: "Default Title",
   },
-  searchFilterName:{
+  searchFilterName: {
     type: String,
-    default: '전체'
-  }
-})
-const emit = defineEmits(['popup','bookMark']);
+    default: "전체",
+  },
+});
+const emit = defineEmits(["popup", "bookMark"]);
 const bookMark = ref();
 </script>
 
@@ -20,15 +19,18 @@ const bookMark = ref();
   <div id="branchSortFilter" class="filter-tree-leaf__card">
     <div class="filter-tree-leaf__gap">
       <label @click="emit('popup')" class="filter-tree-list-img filterEvent">
-
       </label>
       <label @click="emit('popup')" class="filter-tree-list-btn filterEvent">
-        {{props.searchFilterName}}
+        {{ props.searchFilterName }}
       </label>
     </div>
-    <div  class="filter-tree-leaf__card-sort" id="filter-tree-leaf__card-sort">
-      <label class="bar-search-current__detail" for="bar-search-current__detail">{{props.filterName}}</label>
-      <img src="">
+    <div class="filter-tree-leaf__card-sort" id="filter-tree-leaf__card-sort">
+      <label
+        class="bar-search-current__detail"
+        for="bar-search-current__detail"
+        >{{ props.filterName }}</label
+      >
+      <img src="" />
     </div>
   </div>
 </template>
@@ -39,12 +41,12 @@ const bookMark = ref();
   display: flex;
   justify-content: space-between;
 }
-.filter-tree-leaf__gap{
+.filter-tree-leaf__gap {
   display: flex;
   gap: 5px;
 }
 
-.filter-tree-list-img{
+.filter-tree-list-img {
   background-image: url("/svg/sort.svg");
   background-size: 50%;
   background-position: center;
@@ -71,7 +73,7 @@ const bookMark = ref();
   font-size: 16px;
 }
 
-.filter-tree-list-img{
+.filter-tree-list-img {
   background-color: var(--btn-active);
   background-image: url("/svg/sort-white.svg");
   color: var(--white);
@@ -120,7 +122,7 @@ const bookMark = ref();
   padding-bottom: 10px;
   margin-left: auto;
   content: "자세히";
-  font-size: 10px;
+  font-size: 12px;
   font-weight: var(--bold, 700);
   cursor: pointer;
 }
@@ -154,10 +156,9 @@ const bookMark = ref();
 }
 
 .bar-search-current__detail-input:checked
-~ .bar-search-current__detail-content {
+  ~ .bar-search-current__detail-content {
   width: 100%;
   display: flex;
   flex-direction: column;
 }
-
 </style>

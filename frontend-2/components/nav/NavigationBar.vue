@@ -11,113 +11,115 @@ const props = defineProps({
   <!-- navigation-bar(active) -->
   <nav class="nav-box">
     <h1 class="none">네비게이션</h1>
-    <ul class="nav-box__list">
-      <!-- 홈 -->
-      <li class="nav-box__item">
-        <a class="nav-box__link" href="/">
-          <div
-            class="nav-box__img-box"
-            :class="{ 'nav-box__img-box--active': props.active === 'home' }"
-          >
-            <img
-              class="main-nav__icon"
-              :src="
-                props.active === 'home'
-                  ? '/svg/nav-home--active.svg'
-                  : '/svg/nav-home.svg'
-              "
-              alt="홈 네비게이션 이미지"
-            />
-          </div>
-          <p
-            class="nav-box__text"
-            :class="{ 'nav-box__text--active': props.active === 'home' }"
-          >
-            홈
-          </p>
-        </a>
-      </li>
+    <div class="nav-frame">
+      <ul class="nav-box__list">
+        <!-- 홈 -->
+        <li class="nav-box__item">
+          <a class="nav-box__link" href="/">
+            <div
+              class="nav-box__img-box"
+              :class="{ 'nav-box__img-box--active': props.active === 'home' }"
+            >
+              <img
+                class="main-nav__icon"
+                :src="
+                  props.active === 'home'
+                    ? '/svg/nav-home--active.svg'
+                    : '/svg/nav-home.svg'
+                "
+                alt="홈 네비게이션 이미지"
+              />
+            </div>
+            <p
+              class="nav-box__text"
+              :class="{ 'nav-box__text--active': props.active === 'home' }"
+            >
+              홈
+            </p>
+          </a>
+        </li>
 
-      <!-- 탐색 -->
-      <li class="nav-box__item">
-        <a class="nav-box__link" href="#">
-          <div
-            class="nav-box__img-box"
-            :class="{ 'nav-box__img-box--active': props.active === 'search' }"
-          >
-            <img
-              class="main-nav__icon"
-              :src="
-                props.active === 'search'
-                  ? '/svg/nav-search--active.svg'
-                  : '/svg/nav-search.svg'
-              "
-              alt="탐색 네비게이션 이미지"
-            />
-          </div>
-          <p
-            class="nav-box__text"
-            :class="{ 'nav-box__text--active': props.active === 'search' }"
-          >
-            탐색
-          </p>
-        </a>
-      </li>
+        <!-- 탐색 -->
+        <li class="nav-box__item">
+          <a class="nav-box__link" href="#">
+            <div
+              class="nav-box__img-box"
+              :class="{ 'nav-box__img-box--active': props.active === 'search' }"
+            >
+              <img
+                class="main-nav__icon"
+                :src="
+                  props.active === 'search'
+                    ? '/svg/nav-search--active.svg'
+                    : '/svg/nav-search.svg'
+                "
+                alt="탐색 네비게이션 이미지"
+              />
+            </div>
+            <p
+              class="nav-box__text"
+              :class="{ 'nav-box__text--active': props.active === 'search' }"
+            >
+              탐색
+            </p>
+          </a>
+        </li>
 
-      <!-- 커뮤니티 -->
-      <li class="nav-box__item">
-        <a class="nav-box__link" href="#">
-          <div
-            class="nav-box__img-box"
-            :class="{
-              'nav-box__img-box--active': props.active === 'community',
-            }"
-          >
-            <img
-              class="main-nav__icon"
-              :src="
-                props.active === 'community'
-                  ? '/svg/nav-community--active.svg'
-                  : '/svg/nav-community.svg'
-              "
-              alt="커뮤니티 네비게이션 이미지"
-            />
-          </div>
-          <p
-            class="nav-box__text"
-            :class="{ 'nav-box__text--active': props.active === 'community' }"
-          >
-            커뮤니티
-          </p>
-        </a>
-      </li>
+        <!-- 커뮤니티 -->
+        <li class="nav-box__item">
+          <a class="nav-box__link" href="#">
+            <div
+              class="nav-box__img-box"
+              :class="{
+                'nav-box__img-box--active': props.active === 'community',
+              }"
+            >
+              <img
+                class="main-nav__icon"
+                :src="
+                  props.active === 'community'
+                    ? '/svg/nav-community--active.svg'
+                    : '/svg/nav-community.svg'
+                "
+                alt="커뮤니티 네비게이션 이미지"
+              />
+            </div>
+            <p
+              class="nav-box__text"
+              :class="{ 'nav-box__text--active': props.active === 'community' }"
+            >
+              커뮤니티
+            </p>
+          </a>
+        </li>
 
-      <!-- 마이페이지 -->
-      <li class="nav-box__item">
-        <a class="nav-box__link" href="#">
-          <div
-            class="nav-box__img-box"
-            :class="{ 'nav-box__img-box--active': props.active === 'mypage' }"
-          >
-            <img
-              class="main-nav__icon"
-              :src="
-                props.active === 'mypage'
-                  ? '/svg/nav-mypage--active.svg'
-                  : '/svg/nav-mypage.svg'
-              "
-              alt="마이페이지 네비게이션 이미지"
-            />
-          </div>
-          <p
-            class="nav-box__text"
-            :class="{ 'nav-box__text--active': props.active === 'mypage' }"
-          >
-            나의 꼬깃
-          </p>
-        </a>
-      </li>
-    </ul>
+        <!-- 마이페이지 -->
+        <li class="nav-box__item">
+          <a class="nav-box__link" href="#">
+            <div
+              class="nav-box__img-box"
+              :class="{ 'nav-box__img-box--active': props.active === 'mypage' }"
+            >
+              <img
+                class="main-nav__icon"
+                :src="
+                  props.active === 'mypage'
+                    ? '/svg/nav-mypage--active.svg'
+                    : '/svg/nav-mypage.svg'
+                "
+                alt="마이페이지 네비게이션 이미지"
+              />
+            </div>
+            <p
+              class="nav-box__text"
+              :class="{ 'nav-box__text--active': props.active === 'mypage' }"
+            >
+              나의 꼬깃
+            </p>
+          </a>
+        </li>
+      </ul>
+    </div>
   </nav>
 </template>
 

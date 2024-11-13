@@ -18,6 +18,8 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Slf4j
 @Component
@@ -74,7 +76,10 @@ public class AladinClient {
             // log.info("Aladin API를 통해 책 상세 정보를 가져옵니다. isbn={}", book.getIsbn());
             String jsonResponse = restTemplate.getForObject(url, String.class);
 
-            System.out.println(jsonResponse);
+            // 작가 데이터 처리
+            String[] authorAndTranslator = separateAuthorAndTranslator(book.getAuthor());
+            book.setAuthor(authorAndTranslator[0]);
+            book.setTranslator(authorAndTranslator[1]);
 
             AladinLookUpResultDto searchResult;
             try {
@@ -124,5 +129,46 @@ public class AladinClient {
                 .queryParam("output", "JS")
                 .queryParam("Version", "20131101");
         return builder.build(false).toUriString();
+    }
+
+    private String[] separateAuthorAndTranslator(String authorString) {  // 저자 데이터에서 translator 분리
+        StringBuilder authors = new StringBuilder(); // 데이터를 분리할 그릇 생성
+        StringBuilder translators = new StringBuilder();
+
+        Pattern pattern = Pattern.compile("(.*?)\\s*\\((지은이|저자|그림|저|옮긴이|감수|번역|엮은이|역|편역)\\)"); // 데이터 분리하는 정규식
+        Matcher matcher = pattern.matcher(authorString); // 분리된 데이터에서 패턴을 찾기 위해 Matcher 객체 생성
+
+        while (matcher.find()) { // 패턴에 맞는 모든 항목을 반복적으로 찾아서 처리
+            String name = matcher.group(1).trim(); // 모든 이름 데이터를 처리하고
+            String role = matcher.group(2); // 모든 역할 데이터를 처리한다
+
+            if (role.matches("지은이|저자|그림|저")) { // 역할에 따라 저자와 번역가에 저장한다
+                authors.append(name).append(" (").append(role).append("), ");
+            } else if (role.matches("옮긴이|감수|번역|엮은이|역|편역")) {
+                translators.append(name).append(" (").append(role).append("), ");
+            }
+        }
+
+        // 마지막의 쉼표 및 공백 제거
+        if (!authors.isEmpty()) {
+            authors.setLength(authors.length() - 2); // 마지막 쉼표 제거
+        }
+
+        // 번역가가 없으면 null 반환
+        String translatorResult = !translators.isEmpty() ? translators.substring(0, translators.length() - 2) : null;
+
+        // 최종적으로 저자와 번역가 문자열에서 불필요한 쉼표 및 공백 제거
+        String finalAuthors = authors.toString().replaceAll(",\\s*,", ", ").trim();
+        String finalTranslators = translatorResult != null ? translatorResult.replaceAll(",\\s*,", ", ").trim() : null;
+
+        // 문자열의 처음에 쉼표가 있는 경우 제거
+        if (finalAuthors.startsWith(",")) {
+            finalAuthors = finalAuthors.substring(1).trim();
+        }
+        if (finalTranslators != null && finalTranslators.startsWith(",")) {
+            finalTranslators = finalTranslators.substring(1).trim();
+        }
+
+        return new String[]{finalAuthors, finalTranslators}; // 각각 문자열 형태로 반환한다
     }
 }

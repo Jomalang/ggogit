@@ -1,6 +1,6 @@
 package io.ggogit.ggogit.config;
 
-import io.ggogit.ggogit.filter.JwtTokenFilter;
+import io.ggogit.ggogit.filter.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,7 +23,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @EnableWebSecurity(debug = true)
 public class SecurityConfig {
 
-    private final JwtTokenFilter jwtTokenFilter;
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -38,7 +38,7 @@ public class SecurityConfig {
                 )
                 // 필터 설정 추가
                 // 인증 필요 부분에서 적용됨
-                 .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class) // JWT 토큰 필터 추가
+                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class) // JWT 토큰 필터 추가
                 // 세션 정책 설정
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // 세션 사용하지 않음
                 .csrf().disable() // CSRF 비활성화

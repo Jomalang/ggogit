@@ -13,36 +13,23 @@ const googleLoginHandler = async () => {
     const response = await googleTokenLogin();
     const token = response.access_token;
 
-    let userInfo = await fetch(`https://www.googleapis.com/oauth2/v3/userinfo?access_token=${token}`);
-    console.log(userInfo)
-    userInfo = await userInfo.json();
-
-    const isMember = await $fetch(`${config.public.apiBase}/auth/isMember`, {
+    const authInfo = await $fetch(`${config.public.apiBase}/auth/authentication` , {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
       },
-      body: JSON.stringify({email: userInfo.email})
+      body: JSON.stringify({token})
     });
-
-    if (!isMember) { // 회원이 아닌 경우
-      console.log('userInfo', userInfo.email, userInfo.name, userInfo.picture);
-      joinInfo.setJoinInfo(userInfo);
-      console.log('joinInfo', joinInfo);
+    if (!authInfo.accessToken) { // 엑세스 토큰이 없는 경우
+      joinInfo.setJoinInfo(authInfo);
       await router.push("/member/oauth/new");
       return;
     }
 
     // 회원인 경우
-    const newTokenResponse = await $fetch(`${config.public.apiBase}/auth/newToken`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({email: userInfo.email})
-    });
-
-    memberDetail.setAuthWithToken(newTokenResponse.accessToken);
+    memberDetail.setAuthWithToken(authInfo.accessToken);
+    memberDetail.setAuth(authInfo);
     await router.push('/home');
 
   } catch (error) {

@@ -14,13 +14,8 @@ export const useMemberDetail = defineStore("ggogitMember", () => {
     return _email.value === "";
   }
 
-  function setAuthWithToken(accessToken, refreshToken) {
+  function setAuthWithToken(accessToken) {
     _accessToken.value = accessToken;
-    _refreshToken.value = refreshToken;
-    console.log('accessToken', _accessToken.value);
-    const memberInfo = jwtDecode(_accessToken.value);
-    console.log('memberInfo', memberInfo);
-    setAuth(memberInfo);
   }
 
   function setAuth(loginInfo) {

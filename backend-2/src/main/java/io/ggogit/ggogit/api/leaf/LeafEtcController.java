@@ -6,10 +6,12 @@ import io.ggogit.ggogit.api.leaf.dto.EtcLeafRequest;
 import io.ggogit.ggogit.api.leaf.dto.EtcLeafResponse;
 import io.ggogit.ggogit.domain.leaf.entity.Leaf;
 import io.ggogit.ggogit.domain.leaf.service.LeafEtcService;
+import io.ggogit.ggogit.domain.member.security.CustomUserDetails;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,10 +25,11 @@ public class LeafEtcController {
 
     @PostMapping("/etc/first/leaves")
     public ResponseEntity<EtcLeafResponse> createFirstEtcLeaf(
+            @AuthenticationPrincipal CustomUserDetails userDetails,
             @Valid @RequestBody EtcLeafRequest dto
     ) {
         dto.isValidate();
-        Long memberId = 1000L; // TODO: 로그인 정보에서 가져오기
+        Long memberId = userDetails.getId();
         Leaf leaf = dto.toLeaf();
         List<Long> leafTagIds = dto.getTagIds();
 
@@ -38,11 +41,12 @@ public class LeafEtcController {
 
     @PostMapping("/etc/leaves/{parentLeafId}")
     public ResponseEntity<EtcLeafResponse> createEtcLeaf(
+            @AuthenticationPrincipal CustomUserDetails userDetails,
             @PathVariable Long parentLeafId,
             @Valid @RequestBody EtcLeafRequest dto
     ) {
         dto.isValidate();
-        Long memberId = 1000L; // TODO: 로그인 정보에서 가져오기
+        Long memberId = userDetails.getId();
 
         if (!leafEtcService.isOwner(memberId, parentLeafId)) {
             throw new IllegalArgumentException("해당 리프에 대한 권한이 없습니다.");
@@ -59,11 +63,12 @@ public class LeafEtcController {
 
     @PutMapping("/etc/leaves/{leafId}")
     public ResponseEntity<EtcLeafResponse> updateEtcLeaf(
+            @AuthenticationPrincipal CustomUserDetails userDetails,
             @PathVariable Long leafId,
             @Valid @RequestBody EtcLeafRequest dto
     ) {
         dto.isValidate();
-        Long memberId = 1000L; // TODO: 로그인 정보에서 가져오기
+        Long memberId = userDetails.getId();
 
         if (!leafEtcService.isOwner(memberId, leafId)) {
             throw new IllegalArgumentException("해당 리프에 대한 권한이 없습니다.");
@@ -80,10 +85,10 @@ public class LeafEtcController {
 
     @DeleteMapping("/etc/leaves/{leafId}")
     public ResponseEntity<EtcLeafResponse> deleteEtcLeaf(
+            @AuthenticationPrincipal CustomUserDetails userDetails,
             @PathVariable Long leafId
     ) {
-
-        Long memberId = 1000L; // TODO: 로그인 정보에서 가져오기
+        Long memberId = userDetails.getId();
 
         if (!leafEtcService.isOwner(memberId, leafId)) {
             throw new IllegalArgumentException("해당 리프에 대한 권한이 없습니다.");

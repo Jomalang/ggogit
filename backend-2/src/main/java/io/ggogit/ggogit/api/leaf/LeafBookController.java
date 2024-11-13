@@ -6,10 +6,12 @@ import io.ggogit.ggogit.api.leaf.dto.BookLeafResponse;
 import io.ggogit.ggogit.domain.leaf.entity.Leaf;
 import io.ggogit.ggogit.domain.leaf.entity.LeafBook;
 import io.ggogit.ggogit.domain.leaf.service.LeafBookService;
+import io.ggogit.ggogit.domain.member.security.CustomUserDetails;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,10 +25,11 @@ public class LeafBookController {
 
     @PostMapping("/book/first/leaves")
     public ResponseEntity<BookLeafResponse> createFirstBookLeaf(
+        @AuthenticationPrincipal CustomUserDetails userDetails,
         @Valid @RequestBody BookLeafRequest dto
     ) {
         dto.isValidate(); // 논리 오류 확인
-        Long memberId = 1000L; // TODO: 로그인 정보에서 memberId 가져오기
+        Long memberId = userDetails.getId();
         Leaf leaf = dto.toLeaf();
         LeafBook LeafBook = dto.toLeafBook();
         List<Long> leafTagIds = dto.getTagIds();
@@ -39,11 +42,12 @@ public class LeafBookController {
 
     @PostMapping("/book/leaves/{parentLeafId}")
     public ResponseEntity<BookLeafResponse> createBookLeaf(
+            @AuthenticationPrincipal CustomUserDetails userDetails,
             @PathVariable Long parentLeafId,
             @Valid @RequestBody BookLeafRequest dto
     ) {
         dto.isValidate(); // 논리 오류 확인
-        Long memberId = 1000L; // TODO: 로그인 정보에서 memberId 가져오기
+        Long memberId = userDetails.getId();
 
         if (!leafBookService.isOwner(memberId, parentLeafId)) {
             throw new IllegalArgumentException("해당 리프에 대한 권한이 없습니다.");
@@ -61,11 +65,12 @@ public class LeafBookController {
 
     @PutMapping("/book/leaves/{leafId}")
     public ResponseEntity<BookLeafResponse> updateBookLeaf(
+            @AuthenticationPrincipal CustomUserDetails userDetails,
             @PathVariable Long leafId,
             @Valid @RequestBody BookLeafRequest dto
     ) {
         dto.isValidate(); // 논리 오류 확인
-        Long memberId = 1000L; // TODO: 로그인 정보에서 memberId 가져오기;
+        Long memberId = userDetails.getId();
 
         if (!leafBookService.isOwner(memberId, leafId)) {
             throw new IllegalArgumentException("해당 리프에 대한 권한이 없습니다.");
@@ -83,9 +88,10 @@ public class LeafBookController {
 
     @DeleteMapping("/book/leaves/{leafId}")
     public ResponseEntity<BookLeafResponse> deleteBookLeaf(
+            @AuthenticationPrincipal CustomUserDetails userDetails,
             @PathVariable Long leafId
     ) {
-        Long memberId = 1000L; // TODO: 로그인 정보에서 memberId 가져오기
+        Long memberId = userDetails.getId();
 
         if (!leafBookService.isOwner(memberId, leafId)) {
             throw new IllegalArgumentException("해당 리프에 대한 권한이 없습니다.");
@@ -98,9 +104,10 @@ public class LeafBookController {
 
     @GetMapping("/book/leaves/{leafId}/edit")
     public ResponseEntity<BookLeafEditResponse> getEdit(
+            @AuthenticationPrincipal CustomUserDetails userDetails,
             @PathVariable Long leafId
     ) {
-        Long memberId = 1000L; // TODO: 로그인 정보에서 memberId 가져오기
+        Long memberId = userDetails.getId();
 
         if (!leafBookService.isOwner(memberId, leafId)) {
             throw new IllegalArgumentException("해당 리프에 대한 권한이 없습니다.");

@@ -3,11 +3,13 @@ package io.ggogit.ggogit.api.book;
 import io.ggogit.ggogit.api.book.dto.*;
 import io.ggogit.ggogit.domain.book.entity.Book;
 import io.ggogit.ggogit.domain.book.service.BookService;
+import io.ggogit.ggogit.domain.member.security.CustomUserDetails;
 import io.ggogit.ggogit.type.AladinBookSearchType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -42,11 +44,12 @@ public class BookController {
     // 수정
     @PutMapping("/{bookId}")
     public ResponseEntity<BookResponse> modify(
+         @AuthenticationPrincipal CustomUserDetails userDetails,
          @PathVariable Long bookId,
          @RequestBody BookRequest dto,
          MultipartFile imageFile
     ) {
-        Long memberId = 1000L; // TODO: 로그인한 사용자의 ID를 가져와야 함
+        Long memberId = userDetails.getId();
 
         if (!bookService.isOwner(bookId, memberId)) {
             throw new IllegalArgumentException("본인이 등록한 책만 수정할 수 있습니다.");

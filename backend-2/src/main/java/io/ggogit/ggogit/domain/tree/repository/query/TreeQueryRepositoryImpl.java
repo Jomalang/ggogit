@@ -81,7 +81,6 @@ public class TreeQueryRepositoryImpl implements TreeQueryRepository {
                 .join(tree.member, member).fetchJoin()
                 .where(memberEq(memberId), seedEq(seedId))
                 .fetch();
-
     }
 
     @Override

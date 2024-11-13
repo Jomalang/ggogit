@@ -1,5 +1,5 @@
 import { reactive, ref } from "vue";
-import { Node } from "./Node";
+import { Node } from "./Node.js";
 import axios from "axios";
 
 const config = useRuntimeConfig();

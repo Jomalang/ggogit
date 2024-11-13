@@ -1,5 +1,4 @@
 <script setup lang="ts">
-
 interface Props {
   result: number;
 }
@@ -7,25 +6,24 @@ const props = defineProps<Props>();
 </script>
 
 <template>
-<!--==========================================
+  <!--==========================================
     ??개의 검색결과 출력 / A태그 추가 (result)
 ==========================================-->
   <div class="bar-search-result-frame">
-      <div class="bar-search-result__data-frame">
-          <span class="bar-search-result__num-data">{{props.result}} 개</span>
-          <p class="bar-search-result__num-p">의 검색 결과</p>
-      </div>
-      <div class="bar-search-current-frame">
-          <input
-                  class="bar-search-current__detail-input"
-                  type="checkbox"
-                  id="bar-search-current__detail"
-          />
-          <label
-                  class="bar-search-current__detail"
-                  for="bar-search-current__detail"
-          >최근 수정한 수</label>
-      </div>
+    <div class="bar-search-result__data-frame">
+      <span class="bar-search-result__num-data">{{ props.result }} 개</span>
+      <p class="bar-search-result__num-p">의 검색 결과</p>
+    </div>
+    <div class="bar-search-current-frame">
+      <input
+        class="bar-search-current__detail-input"
+        type="checkbox"
+        id="bar-search-current__detail"
+      />
+      <label class="bar-search-current__detail" for="bar-search-current__detail"
+        >최근 수정한 수</label
+      >
+    </div>
   </div>
 </template>
 
@@ -73,7 +71,7 @@ const props = defineProps<Props>();
   padding-bottom: 10px;
   margin-left: auto;
   content: "자세히";
-  font-size: 10px;
+  font-size: 12px;
   font-weight: var(--bold, 700);
   cursor: pointer;
 }

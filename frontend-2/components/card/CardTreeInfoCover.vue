@@ -1,12 +1,10 @@
 <script setup>
+const { data } = defineProps(["data"]);
 
-
-const {data} = defineProps(['data']);
-
-const img = ref(false)
+const img = ref(false);
 
 onMounted(async () => {
-  if(data.coverImageName){
+  if (data.coverImageName) {
     img.value = true;
   }
 });
@@ -14,16 +12,26 @@ onMounted(async () => {
 
 <template>
   <client-only>
-  <div class="card-tree-info-cover-frame">
-    <div class="card-tree-info-cover">
-      <img v-if="img" class="card-tree-info-cover" :src="`/png/${data.coverImageName}`" alt="cover">
-      <img v-else class="card-tree-info-cover" src="/png/tree-icon-white.png" alt="cover">
+    <div class="card-tree-info-cover-frame">
+      <div class="card-tree-info-cover">
+        <img
+          v-if="img"
+          class="card-tree-info-cover"
+          :src="useGetImageUrl(data.coverImageName)"
+          alt="cover"
+        />
+        <img
+          v-else
+          class="card-tree-info-cover"
+          :src="`/png/tree-icon-white.png`"
+          alt="cover"
+        />
+      </div>
+      <div class="card-tree-title-frame">
+        <p class="card-tree-title">{{ data.title }}</p>
+        <p class="card-book-title">{{ data.bookTitle }}</p>
+      </div>
     </div>
-    <div class="card-tree-title-frame">
-      <p class="card-tree-title">{{ data.title }}</p>
-      <p class="card-book-title">{{ data.bookTitle }}</p>
-    </div>
-  </div>
   </client-only>
 </template>
 
@@ -53,7 +61,7 @@ onMounted(async () => {
   letter-spacing: var(--letter-spacing-main);
 }
 .card-tree-title-frame {
-  padding-left : 5px;
+  padding-left: 5px;
 }
 
 .card-book-title {

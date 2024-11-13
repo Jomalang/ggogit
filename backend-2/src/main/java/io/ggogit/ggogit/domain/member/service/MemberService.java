@@ -50,4 +50,6 @@ public interface MemberService {
     PassWordRest findPassWordRest(String key);
 
     Member getByEmail(String email);
+
+    Member join(Member member, String profileImage);
 }

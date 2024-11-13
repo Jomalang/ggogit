@@ -2,12 +2,12 @@ import { useMemberDetail } from "./useMemberDetail";
 
 export default async function useAuthFetch(url, options = {}) {
   // 1. MemberDetail에서 token을 획득
-  const { token = {} } = useMemberDetail();
+  const _accessToken = useMemberDetail().getAuthToken() || "";
 
   // 2. 획득한 token을 헤더에 담기
   options.headers = {
     ...options.headers,
-    Authorization: `Bearer ${token}`,
+    Authorization: `Bearer ${_accessToken}`,
   };
 
   // 3. 사용자가 요청한 url과 option에, 획득한 token을 담아서 fetch 요청하기

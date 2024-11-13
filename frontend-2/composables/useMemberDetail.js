@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import {jwtDecode} from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 
 export const useMemberDetail = defineStore("ggogitMember", () => {
   const _id = ref("");
@@ -15,10 +15,14 @@ export const useMemberDetail = defineStore("ggogitMember", () => {
 
   function setAuthWithToken(accessToken) {
     _accessToken.value = accessToken;
-    console.log('accessToken', _accessToken.value);
+    console.log("accessToken", _accessToken.value);
     const memberInfo = jwtDecode(_accessToken.value);
-    console.log('memberInfo', memberInfo);
+    console.log("memberInfo", memberInfo);
     setAuth(memberInfo);
+  }
+
+  function getAuthToken() {
+    return _accessToken.value;
   }
 
   function setAuth(loginInfo) {
@@ -34,6 +38,7 @@ export const useMemberDetail = defineStore("ggogitMember", () => {
       localStorage.setItem("_ggogit_nickname", _nickname.value);
       localStorage.setItem("_ggogit_email", _email.value);
       localStorage.setItem("_ggogit_roles", JSON.stringify(_roles.value));
+      localStorage.setItem("_ggogit_accessToken", _accessToken.value);
     }
   }
 
@@ -69,11 +74,12 @@ export const useMemberDetail = defineStore("ggogitMember", () => {
 
   return {
     setAuthWithToken,
+    getAuthToken,
     isAnonymous,
     hasRole,
     setAuth,
     initAuth,
     setEmail,
-    loadUserFromStorage
+    loadUserFromStorage,
   };
 });

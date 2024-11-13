@@ -1,6 +1,5 @@
 <script setup>
-
-import {useMemberDetail} from "~/composables/useMemberDetail.js";
+import { useMemberDetail } from "~/composables/useMemberDetail.js";
 
 const config = useRuntimeConfig();
 const router = useRouter();
@@ -8,13 +7,13 @@ const memberDetail = useMemberDetail();
 
 // ----------------------- Model ----------------------- //
 const loginInfo = ref({
-  email: '',
+  email: "",
   isEmailValid: true,
-  emailValidateMessage: '이메일을 입력해주세요.',
+  emailValidateMessage: "이메일을 입력해주세요.",
 
-  password: '',
+  password: "",
   isPasswordValid: true,
-  passwordValidateMessage: '비밀번호를 입력해주세요.'
+  passwordValidateMessage: "비밀번호를 입력해주세요.",
 });
 // ----------------------- API ----------------------- //
 
@@ -23,23 +22,27 @@ const loginApi = async () => {
   try {
     // { "email": "gksxorb147@naver.com", "password": "mypassword" } < 테스트 데이터
     const response = await $fetch(`${config.public.apiBase}/members/login`, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         email: loginInfo.value.email,
-        password: loginInfo.value.password
-      })
+        password: loginInfo.value.password,
+      }),
     });
 
-    memberDetail.setAuthWithToken(response.accessToken, response.refreshToken);
-    router.push("/home");
+    memberDetail.setAuthWithToken(response.accessToken);
+    //현재 URL에서 returnUrl 값을 가져오기
+    const returnUrl = router.currentRoute.value.query.retrunUrl || "/home";
+    console.log("로그인 성공");
+    // 로그인 성공시 returnUrl로 이동
+    router.push(returnUrl);
   } catch (error) {
-    alert('로그인 실패');
+    console.log(error);
+    alert("로그인 실패");
   }
 };
-
 
 // ----------------------- Method ----------------------- //
 const inputEmail = (email) => {
@@ -51,12 +54,11 @@ const inputPassword = (password) => {
 };
 
 const submitHandler = () => {
-
   // 이메일 형식 확인
   const emailRegExp = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   if (!emailRegExp.test(loginInfo.value.email)) {
     loginInfo.value.isEmailValid = false;
-    loginInfo.value.emailValidateMessage = '이메일 형식이 올바르지 않습니다.';
+    loginInfo.value.emailValidateMessage = "이메일 형식이 올바르지 않습니다.";
   } else {
     loginInfo.value.isEmailValid = true;
   }
@@ -64,7 +66,7 @@ const submitHandler = () => {
   // 비밀번호 입력 확인
   if (loginInfo.value.password.length === 0) {
     loginInfo.value.isPasswordValid = false;
-    loginInfo.value.passwordValidateMessage = '비밀번호를 입력해주세요.';
+    loginInfo.value.passwordValidateMessage = "비밀번호를 입력해주세요.";
   } else {
     loginInfo.value.isPasswordValid = true;
   }
@@ -75,53 +77,55 @@ const submitHandler = () => {
 
   loginApi();
 };
-
 </script>
 
 <template>
   <div class="login-member__join-page-container">
     <ButtonLoginJoinPageBackBtn :data="{ link: '/' }" />
-    <TextLoginPageInfo :data="{
-      label: '로그인',
-      infoText: '이메일로 로그인을 진행합니다.'
-    }" />
+    <TextLoginPageInfo
+      :data="{
+        label: '로그인',
+        infoText: '이메일로 로그인을 진행합니다.',
+      }"
+    />
     <form @submit="submitHandler">
       <InputTextBar
-          :data="{
+        :data="{
           label: '이메일',
           name: 'email',
           placeholder: '이메일을 입력해주세요.',
           inputType: 'email',
           isValid: loginInfo.isEmailValid,
-          validateMessage: loginInfo.emailValidateMessage
+          validateMessage: loginInfo.emailValidateMessage,
         }"
-          @inputData="inputEmail"
+        @inputData="inputEmail"
       />
       <InputTextBar
-          :data="{
+        :data="{
           label: '비밀번호',
           name: 'password',
           placeholder: '비밀번호를 입력해주세요.',
           inputType: 'password',
           isValid: loginInfo.isPasswordValid,
-          validateMessage: loginInfo.passwordValidateMessage
+          validateMessage: loginInfo.passwordValidateMessage,
         }"
-          @inputData="inputPassword"
+        @inputData="inputPassword"
       />
-      <ButtonSubmitBtnFullBar text="로그인" @submit="submitHandler"/>
+      <ButtonSubmitBtnFullBar text="로그인" @submit="submitHandler" />
     </form>
     <LinkSocialLogin />
-    <TextJoinGuide :data="{
-      infoText: '계정이 없으신가요?',
-      label: '회원가입',
-      href: '/member/join/email',
-      isFind: true
-    }" />
+    <TextJoinGuide
+      :data="{
+        infoText: '계정이 없으신가요?',
+        label: '회원가입',
+        href: '/member/join/email',
+        isFind: true,
+      }"
+    />
   </div>
 </template>
 
 <style scoped>
-
 .login-member__join-page-container {
   width: auto;
   padding: 50px 24px 0 24px;

@@ -33,7 +33,6 @@ public class JwtTokenProvider {
         claims.put("username", member.getUsername());
         claims.put("nickname", member.getNickname());
         claims.put("email", member.getEmail());
-        claims.put("nickname", member.getNickname());
         claims.put("roles", member.getRole());
 
         long expirationTime = isRefreshToken ? refreshExpirationTime : accessExpirationTime; // 만료 시간 설정
@@ -99,6 +98,6 @@ public class JwtTokenProvider {
 
 
     private Key getBase64SecretKey() {
-        return Keys.hmacShaKeyFor(Base64.getEncoder().encode(secretKey.getBytes(StandardCharsets.UTF_8)));
+        return Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
     }
 }

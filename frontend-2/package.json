@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@pinia/nuxt": "^0.7.0",
+    "@splidejs/vue-splide": "^0.6.12",
     "@toast-ui/editor": "^3.2.2",
     "@toast-ui/editor-plugin-code-syntax-highlight": "^3.1.0",
     "axios": "^1.7.7",
@@ -21,6 +22,7 @@
     "nuxt": "^3.13.2",
     "nuxt-app": "file:",
     "vue": "latest",
+    "vue-carousel-3d": "^1.0.1",
     "vue-router": "latest",
     "vue3-google-login": "^2.0.33"
   },

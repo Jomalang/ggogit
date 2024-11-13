@@ -139,20 +139,68 @@ onMounted(() => {
     </section>
 
     <!-- 댓글 -->
-    <section class="book-detail-comment-container none">
-      <h1 class="none">댓글</h1>
-      <BarComment :commentCount="1" :profileImg="myProfile" />
+
+    <section class="user-another-records">
+      <h2 class="none">작성자 다른 기록들</h2>
+      <!-- 컴포넌트 -->
+      <section class="user-another-records-title-container">
+        <TextMainTitle
+            :data="{ title: `${member.nickName}의 다른 최근 기록들`, size: 28 }"
+        />
+      </section>
       <section
-          id="comment-filter-tab-id"
-          class="book-detail-comment-tab-container book-detail-comment-tab-container--active none"
+          v-if="treeItems.length > 0"
+          class="branch-tree-other-recode-sub-title-container"
       >
-        <h1 class="none">댓글 탭</h1>
-        <!-- TODO: 추후에 데이터 바인딩하면 주석 풀 것 -->
-        <!-- <TabComment /> -->
+        <TextMainTitle :data="{ title: `🌲 트리`, size: 24 }" />
+      </section>
+      <section class="branch-tree-another-record-list-container">
+        <h1 class="none">트리 리스트</h1>
+        <CardAnotherRecordsList :items="treeItems" />
+      </section>
+
+      <section
+          v-if="memoirItems.length > 0"
+          class="branch-tree-other-recode-sub-title-container"
+      >
+        <TextMainTitle :data="{ title: `📖 회고록`, size: 24 }" />
+      </section>
+
+      <section class="branch-tree-another-record-list-container">
+        <h1 class="none">회고록 리스트</h1>
+        <section class="book-detail-other-tree-card-container">
+          <CardAnotherRecordsList :items="memoirItems" />
+        </section>
+      </section>
+
+      <section
+          v-if="leafItems.length > 0"
+          class="branch-tree-other-recode-sub-title-container"
+      >
+        <TextMainTitle :data="{ title: `🌿 리프`, size: 24 }" />
+      </section>
+
+      <section class="branch-tree-another-record-list-container">
+        <h1 class="none">리프 리스트</h1>
+        <CardAnotherRecordsList :items="leafItems" />
       </section>
     </section>
 
   </main>
+
+  <Footer :noticeText="`개발 중입니다.`" />
+
+  <section class="nav-back-container">
+    <h2 class="none">네비바 뒤 공백</h2>
+  </section>
+
+  <aside>
+    <section class="nav-container">
+      <h2 class="none">네비게이션</h2>
+      <!-- 트리 생성 언더바  -->
+      <NavNavigationBar :active="'home'" />
+    </section>
+  </aside>
 
 </template>
 

@@ -42,7 +42,7 @@ const leafPageInfo = reactive({
   endPage: 200
 });
 
-const leafMember = reactive({
+const member = ref({
   id: 1,
   nickName: '닉네임',
   userName: '유저이름',
@@ -51,20 +51,61 @@ const leafMember = reactive({
   profileImgName: '프로필이미지',
 });
 
-let info = reactive({});
+const info = reactive({});
+
+//카드 아이템
+const treeItems = ref([]);
+const memoirItems = ref([]);
+const leafItems = ref([]);
 
 // ----------------------  API ---------------------- //
-const { data: infoData, error: infoError } = await useFetch(() => `trees/leaves/${leafId}/info`, {
-  baseURL: config.public.apiBase,
+const { data: infoData, error: infoError }
+    = await useFetch(() => `trees/leaves/${leafId}/info`, {
+    baseURL: config.public.apiBase,
 });
 
-const { data: leafDetailData, error: leafDetailDataError } = await useFetch(() => `leaves/${leafId}`, {
-  baseURL: config.public.apiBase,
+const { data: leafDetailData, error: leafDetailDataError }
+    = await useFetch(() => `leaves/${leafId}`, {
+    baseURL: config.public.apiBase,
 });
 
-const { data: leafMemberInfo, error: leafMemberInfoError } = await useFetch(() => `leaves/${leafId}/member`, {
-  baseURL: config.public.apiBase,
+const { data: leafMemberInfo, error: leafMemberInfoError }
+    = await useFetch(() => `leaves/${leafId}/member`, {
+    baseURL: config.public.apiBase,
 });
+
+const { data: leafCardData, error: leafCardError }
+    = await useFetch(() => `/members/${member.value.id}/leaves/book/cards`, {
+    method: "GET",
+    baseURL: `${config.public.apiBase}`,
+});
+
+const { data: treeCardData, error: treeCardError }
+    = await useFetch(() => `trees/members/${member.value.id}/trees/book/cards`, {
+    method: "GET",
+    baseURL: `${config.public.apiBase}`,
+});
+
+const { data: memoirCardData, error: memoirCardError }
+    = await useFetch(() => `memoirs/members/${member.value.id}/memoirs/book/cards`, {
+    method: "GET",
+    baseURL: `${config.public.apiBase}`,
+});
+
+if (leafCardData.value) {
+  console.log(leafCardData.value);
+  leafItems.value = [...leafCardData.value.items];
+}
+
+if (treeCardData.value) {
+  console.log(treeCardData.value);
+  treeItems.value = [...treeCardData.value.treeBookCardResponse];
+}
+
+if (memoirCardData.value) {
+  console.log(memoirCardData.value);
+  memoirItems.value = [...memoirCardData.value.memoirBookCardDtoResponse];
+}
 
 watchEffect(() => {
   if (infoData.value) {
@@ -81,12 +122,12 @@ watchEffect(() => {
   }
 
   if (leafMemberInfo.value) {
-    leafMember.id = leafMemberInfo.value.id;
-    leafMember.nickName = leafMemberInfo.value.nickName;
-    leafMember.userName = leafMemberInfo.value.userName;
-    leafMember.email = leafMemberInfo.value.email;
-    leafMember.backImgName = leafMemberInfo.value.backImgName;
-    leafMember.profileImgName = leafMemberInfo.value.profileImgName;
+    member.id = leafMemberInfo.value.id;
+    member.nickName = leafMemberInfo.value.nickName;
+    member.userName = leafMemberInfo.value.userName;
+    member.email = leafMemberInfo.value.email;
+    member.backImgName = leafMemberInfo.value.backImgName;
+    member.profileImgName = leafMemberInfo.value.profileImgName;
   }
 });
 // ---------------------- LifeCycle -------------------- //
@@ -110,10 +151,10 @@ onMounted(() => {
     <BackgroundDetail
         :edit="`/leaf/book/${leafId}/edit`"
         :backImgPath="coverImageName"
-        :username="leafMember.nickName"
-        :userid="leafMember.email"
+        :username="member.nickName"
+        :userid="member.email"
         :memoirTitle="leafDetailData.leafTitle"
-        :userUrl="`/member/${leafMember.id}`"
+        :userUrl="`/member/${member.id}`"
     />
   </header>
 
@@ -141,28 +182,76 @@ onMounted(() => {
     <!-- 팔로우 -->
     <section class="follow-container">
       <BarUserInfoFollowBtn
-          :followId="leafMember.id"
-          :userImg="leafMember.profileImgName"
-          :username="leafMember.userName"
-          :userid="leafMember.email"
+          :followId="member.id"
+          :userImg="member.profileImgName"
+          :username="member.userName"
+          :userid="member.email"
       />
     </section>
 
-    <!-- 댓글 -->
-    <section class="book-detail-comment-container none">
-      <h1 class="none">댓글</h1>
-      <BarComment :commentCount="1" :profileImg="myProfile" />
+    <!-- 댓글 나중에 구현할 기능 -->
+
+    <section class="user-another-records">
+      <h2 class="none">작성자 다른 기록들</h2>
+      <!-- 컴포넌트 -->
+      <section class="user-another-records-title-container">
+        <TextMainTitle
+            :data="{ title: `${member.nickName}의 다른 최근 기록들`, size: 28 }"
+        />
+      </section>
       <section
-          id="comment-filter-tab-id"
-          class="book-detail-comment-tab-container book-detail-comment-tab-container--active none"
+          v-if="treeItems.length > 0"
+          class="branch-tree-other-recode-sub-title-container"
       >
-        <h1 class="none">댓글 탭</h1>
-        <!-- TODO: 추후에 데이터 바인딩하면 주석 풀 것 -->
-        <!-- <TabComment /> -->
+        <TextMainTitle :data="{ title: `🌲 트리`, size: 24 }" />
+      </section>
+      <section class="branch-tree-another-record-list-container">
+        <h1 class="none">트리 리스트</h1>
+        <CardAnotherRecordsList :items="treeItems" />
+      </section>
+
+      <section
+          v-if="memoirItems.length > 0"
+          class="branch-tree-other-recode-sub-title-container"
+      >
+        <TextMainTitle :data="{ title: `📖 회고록`, size: 24 }" />
+      </section>
+
+      <section class="branch-tree-another-record-list-container">
+        <h1 class="none">회고록 리스트</h1>
+        <section class="book-detail-other-tree-card-container">
+          <CardAnotherRecordsList :items="memoirItems" />
+        </section>
+      </section>
+
+      <section
+          v-if="leafItems.length > 0"
+          class="branch-tree-other-recode-sub-title-container"
+      >
+        <TextMainTitle :data="{ title: `🌿 리프`, size: 24 }" />
+      </section>
+
+      <section class="branch-tree-another-record-list-container">
+        <h1 class="none">리프 리스트</h1>
+        <CardAnotherRecordsList :items="leafItems" />
       </section>
     </section>
 
   </main>
+
+  <Footer :noticeText="`개발 중입니다.`" />
+
+  <section class="nav-back-container">
+    <h2 class="none">네비바 뒤 공백</h2>
+  </section>
+
+  <aside>
+    <section class="nav-container">
+      <h2 class="none">네비게이션</h2>
+      <!-- 트리 생성 언더바  -->
+      <NavNavigationBar :active="'home'" />
+    </section>
+  </aside>
 
 </template>
 

@@ -6,7 +6,7 @@ POST {{host}}{{apiPath}}/members/join/send-email
 Content-Type: application/json
 
 {
-  "email": "gksxorb147@naver.com"
+  "email": "test1@naver.com"
 }
 
 ### 회원가입

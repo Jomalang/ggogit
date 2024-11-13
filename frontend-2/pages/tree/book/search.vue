@@ -54,8 +54,6 @@ const handleScroll = () => {
 
 const dropListHandler = () => {
   console.log("dropListHandler");
-  books.value = [];
-  totalCount.value = 0;
 };
 
 const searchLoadingPage = (isLoading) => {

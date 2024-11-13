@@ -1,5 +1,11 @@
+<script setup>
+
+const { data } = defineProps(['data']);
+
+</script>
+
 <template>
     <div>
-        <a href="/member/login"><img src="/svg/back.svg" alt="back-button"></a>
+      <NuxtLink :to="data.link"><img src="/svg/back.svg" alt="back-button"></NuxtLink>
     </div>
 </template>

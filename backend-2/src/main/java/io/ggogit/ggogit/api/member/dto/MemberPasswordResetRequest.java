@@ -12,6 +12,9 @@ import lombok.NoArgsConstructor;
 @Builder
 public class MemberPasswordResetRequest {
 
+    @NotBlank(message = "이메일을 입력해주세요.")
+    private String email;
+
     @NotBlank(message = "토큰을 입력해주세요.")
     private String token;
 

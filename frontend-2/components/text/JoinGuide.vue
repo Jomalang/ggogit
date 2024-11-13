@@ -1,27 +1,19 @@
 <script setup>
-const props = defineProps({
-    infoText: {
-        type: String,
-        default: '계정이 없으신가요?'
-    },
-    label: {
-        type: String,
-        default: '회원가입'
-    },
-    href: {
-        type: String,
-        required: true
-    }
-})
+
+const { data } = defineProps(['data']);
+
 </script>
 
 <template>
     <!-- join-guide(infoText, label, href) -->
     <div class="join-guide">
-        <p class="text--title14">{{ infoText }}</p>
-        <a :href="href">
-            <p class="text--title16">{{ label }}</p>
-        </a>
+        <p class="text--title14">{{ data.infoText }}</p>
+        <NuxtLink :to="data.href">
+          <span class="text--title16">{{ data.label }}</span>
+        </NuxtLink>
+        <NuxtLink v-if="data.isFind" to="/member/find/email">
+          / <span class="text--title16">계정 찾기</span>
+        </NuxtLink>
     </div>
 </template>
 
@@ -37,6 +29,7 @@ const props = defineProps({
 
 .text--title14 {
     font-size: 14px;
+    font-weight: 400;
 }
 
 .text--title16 {

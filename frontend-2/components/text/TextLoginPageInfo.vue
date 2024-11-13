@@ -1,21 +1,13 @@
 <script setup>
-const props = defineProps({
-    label: {
-        type: String,
-        default: '로그인'
-    },
-    infoText: {
-        type: String,
-        default: '이메일과 비밀번호를 입력해주세요.'
-    }
-})
+const { data } = defineProps(['data']);
+
 </script>
 
 <template>
     <!-- text-login__page-info(label, infoText) -->
     <div class="text-login__page-info">
-        <p class="text--title28">{{ label }}</p>
-        <p class="text--explain">{{ infoText }}</p>
+        <p class="text--title28">{{ data.label }}</p>
+        <p class="text--explain">{{ data.infoText }}</p>
     </div>
 </template>
 

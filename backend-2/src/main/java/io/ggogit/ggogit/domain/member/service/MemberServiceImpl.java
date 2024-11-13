@@ -256,4 +256,10 @@ public class MemberServiceImpl implements MemberService {
         return passWordRestRepository.findByUuid(key)
                 .orElseThrow(() -> new IllegalArgumentException("회원 가입 이메일 전송을 진행하지 않은 이메일입니다."));
     }
+
+    @Override
+    public Member getByEmail(String email) {
+        return memberRepository.findByEmail(email)
+                .orElseThrow(() -> new EntityNotFoundException(email + "은 존재하지 않은 회원입니다."));
+    }
 }

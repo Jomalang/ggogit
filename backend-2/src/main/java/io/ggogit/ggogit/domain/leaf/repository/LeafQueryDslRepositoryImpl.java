@@ -8,6 +8,8 @@ import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import io.ggogit.ggogit.domain.leaf.entity.Leaf;
+//import io.ggogit.ggogit.domain.leaf.entity.QLeaf;
+//import io.ggogit.ggogit.domain.tree.entity.QTree;
 import io.ggogit.ggogit.domain.leaf.entity.QLeaf;
 import io.ggogit.ggogit.domain.tree.entity.QTree;
 import io.ggogit.ggogit.domain.tree.entity.Tree;

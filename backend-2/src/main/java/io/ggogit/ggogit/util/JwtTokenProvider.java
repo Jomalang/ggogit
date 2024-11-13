@@ -21,10 +21,10 @@ public class JwtTokenProvider {
     @Value("${jwt.secret}")
     private String secretKey; // 비밀 키
 
-    @Value("${jwt.access-expiration}")
+    @Value("${jwt.access-expiration}") // 30분
     private long accessExpirationTime;
 
-    @Value("${jwt.refresh-expiration}")
+    @Value("${jwt.refresh-expiration}") // 7일
     private long refreshExpirationTime;
 
     public String generateToken(Member member, Boolean isRefreshToken) {
@@ -32,6 +32,7 @@ public class JwtTokenProvider {
         claims.put("id", member.getId());
         claims.put("username", member.getUsername());
         claims.put("email", member.getEmail());
+        claims.put("nickname", member.getNickname());
         claims.put("roles", member.getRole());
 
         long expirationTime = isRefreshToken ? refreshExpirationTime : accessExpirationTime; // 만료 시간 설정

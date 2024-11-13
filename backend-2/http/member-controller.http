@@ -61,4 +61,13 @@ content-type: application/json
 {
   "token": "c99a89e5-c580-4e15-bf76-4f8a57647995",
   "newPassword":"newpassword"
+
+}
+
+### 이메일 조회
+POST http://localhost:8080/api/v1/auth/isMember
+Content-Type: application/json
+
+{
+"email": "dlgmlrnjs213@gmail.com"
 }

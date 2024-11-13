@@ -102,7 +102,7 @@ public class MemberController {
         String accessToken = memberService.generateAccessToken(newMember);
         HttpHeaders headers = new HttpHeaders();
         MemberLoginResponse response = MemberLoginResponse.of(accessToken, accessExpirationTime, "로그인 성공");
-        return new ResponseEntity<>(response, headers, HttpStatus.OK);
+        return new ResponseEntity<>(response, headers, HttpStatus.CREATED);
     }
 
     // JWT 토큰 신규 발급

@@ -86,8 +86,7 @@ public class TreeController {
     @GetMapping("{id}/info")
     public ResponseEntity<TreeInfoResponse> getTreeInfoResponse(
             @AuthenticationPrincipal CustomUserDetails userDetails,
-            @PathVariable(value = "id") Long treeId,
-            @RequestParam(value = "mid",defaultValue = "1") Long mid
+            @PathVariable(value = "id") Long treeId
     ) {
         Long memberId = userDetails.getId();
         TreeInfoResponse treeInfoResponse = treeService.findTreeInfoResponse(memberId, treeId);
@@ -239,9 +238,9 @@ public class TreeController {
 //    }
     @GetMapping("tree-home")
     public ResponseEntity<TreeInfoResponseHome> getTreeInfoResponses(
-            @RequestParam(value = "mid",defaultValue = "1") Long mid) {
+            @AuthenticationPrincipal CustomUserDetails userDetails) {
 
-        Long memberId = mid;
+        Long memberId = userDetails.getId();
         List<TreeInfoResponse> treeInfoResponseList = treeService.findTreeInfoResponseList(memberId);
 
         return new ResponseEntity<>(TreeInfoResponseHome.of(treeInfoResponseList), HttpStatus.OK);
@@ -249,10 +248,10 @@ public class TreeController {
 
     @GetMapping("tree-home-sort")
     public ResponseEntity<TreeInfoResponseHome> getTreeInfoResponsesSort(
-            @RequestParam(value = "mid",defaultValue = "1") Long mid,
-            @RequestParam(value = "seedId", required = false) Long seedId
+            @RequestParam(value = "seedId", required = false) Long seedId,
+            @AuthenticationPrincipal CustomUserDetails userDetails
     ) {
-        Long memberId = mid;
+        Long memberId = userDetails.getId();
         List<TreeInfoResponse> treeInfoResponseList = treeService.findTreeInfoResponseList(memberId, seedId);
 
         return new ResponseEntity<>(TreeInfoResponseHome.of(treeInfoResponseList), HttpStatus.OK);

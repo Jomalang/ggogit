@@ -20,14 +20,11 @@ const { data: seedData, status: seedStatus } = await useFetch("seeds", {
   method: "GET",
 });
 
-const { data: treeData, status: treeStatus } = await useFetch(
+const { data: treeData, status: treeStatus } = await useAuthDataFetch(
   "trees/tree-home",
   {
     baseURL: `${config.public.apiBase}`,
     method: "GET",
-    params: {
-      mid: useRoute().query.mid,
-    },
   }
 );
 

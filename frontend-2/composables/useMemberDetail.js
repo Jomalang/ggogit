@@ -66,6 +66,9 @@ export const useMemberDetail = defineStore("ggogitMember", () => {
   function hasRole(role) {
     return _roles.value.includes(role);
   }
+  function setEmail(email) {
+    _email.value = email;
+  }
 
   return {
     setAuthWithToken,
@@ -73,6 +76,7 @@ export const useMemberDetail = defineStore("ggogitMember", () => {
     hasRole,
     setAuth,
     initAuth,
+    setEmail,
     loadUserFromStorage
   };
 });

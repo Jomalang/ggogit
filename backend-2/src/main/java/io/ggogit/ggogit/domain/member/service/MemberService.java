@@ -48,4 +48,6 @@ public interface MemberService {
     EmailJoinToken findEmailJoinToken(String key);
 
     PassWordRest findPassWordRest(String key);
+
+    Member getByEmail(String email);
 }

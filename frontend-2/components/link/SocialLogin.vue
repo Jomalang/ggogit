@@ -1,19 +1,47 @@
 <script setup>
-import {decodeCredential} from "vue3-google-login";
+import {decodeCredential, googleTokenLogin} from "vue3-google-login";
+import {useMemberJoinTmp} from "~/composables/useMemberJoinTmp.js";
 
 const memberDetail = useMemberDetail();
 const config = useRuntimeConfig();
+const joinInfo = useMemberJoinTmp();
+const router = useRouter();
 
-const googleLoginHandler = async (response) => {
+const googleLoginHandler = async () => {
   try {
-    const googleUser = decodeCredential(response.credential); // JWT 토큰 디코딩
-    console.log('Google User:', googleUser);
-
-    // 리소스 서버에 전송 후 memberDetail 발급받기 (예: API 호출)
-    // 예시: await axios.post('/api/login', { token: response.credential });
-
-    // 이후 memberDetail을 이용한 상태 유지 필요
-    memberDetail.value = googleUser; // 예시로 사용자 정보를 저장
+      let token;
+      let userInfo;
+      {
+        let response = await googleTokenLogin();
+        token = response.access_token;
+      }
+      userInfo = await fetch(`https://www.googleapis.com/oauth2/v3/userinfo?access_token=${token}`);
+      userInfo = await userInfo.json();
+    {
+      const isMember = await $fetch(`${config.public.apiBase}/auth/isMember`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({email: userInfo.email})
+      });
+      if (isMember) {
+        const response = await $fetch(`${config.public.apiBase}/auth/newToken`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({email: userInfo.email})
+        });
+        memberDetail.setAuthWithToken(response.accessToken, response.refreshToken);
+        await router.push('/home');
+      } else {
+        console.log('userInfo', userInfo.email, userInfo.name, userInfo.picture);
+        joinInfo.setJoinInfo(userInfo);
+        console.log('joinInfo', joinInfo);
+        await router.push("/member/new");
+      }
+    }
   } catch (error) {
     console.error('Google 로그인 중 오류 발생:', error);
   }
@@ -24,9 +52,9 @@ const googleLoginHandler = async (response) => {
 <template>
   <div class="social-login">
     <div class="social-login__icons">
-      <GoogleLogin :callback="googleLoginHandler">
+      <a @click.prevent="googleLoginHandler">
         <img src="/public/svg/google-circle.svg" alt="`구글 로그인`" />
-      </GoogleLogin>
+      </a>
       <a href="#"
         ><div>
           <img src="/public/svg/naver-circle.svg" alt="`네이버 로그인`" /></div

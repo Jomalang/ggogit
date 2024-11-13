@@ -53,6 +53,8 @@ VALUES
     (FALSE, TIMESTAMP '2024-10-10 10:00:00', 10, TIMESTAMP '2024-10-10 10:00:00', 1, '$2a$10$cQ4tsAT3IoQkyKpoNH6Lf.DKE8dN9pSJGgRtY0SyxnbmjlJD.DWx6', '감성을 담은 글쓰기를 추구하는 사용자10은 책과 글을 통해 자신을 표현합니다.', 'user10@example.com', '책나들이', '윤해솔', 'USER'),
     (FALSE, TIMESTAMP '2024-10-11 10:00:00', 999, TIMESTAMP '2024-10-11 10:00:00', 1, '$2a$10$cQ4tsAT3IoQkyKpoNH6Lf.DKE8dN9pSJGgRtY0SyxnbmjlJD.DWx6', '관리자 계정입니다.', 'admin@example.com', '관리자', '관리자', 'ADMIN');
 
+ALTER TABLE `MEMBER` ALTER COLUMN `ID` RESTART WITH 11;
+
 -- ====================================================== --
 -- 회원 배경 이미지
 -- `MEMBER_BACKGROUND_IMAGE` 테이블

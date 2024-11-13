@@ -61,7 +61,7 @@ public class AuthController {
 
         HttpHeaders headers = new HttpHeaders();
         headers.add(HttpHeaders.SET_COOKIE, refreshTokenCookie.toString());
-        MemberLoginResponse response = MemberLoginResponse.of(accessToken, refreshToken, accessExpirationTime, "New Token");
+        MemberLoginResponse response = MemberLoginResponse.of(accessToken, accessExpirationTime, "New Token");
         return new ResponseEntity<>(response, headers, HttpStatus.OK);
     }
 

@@ -3,7 +3,6 @@
 import { ref } from "vue";
 import "@toast-ui/editor/dist/toastui-editor.css";
 import Viewer from '@toast-ui/editor/dist/toastui-editor-viewer';
-import CardHiddenInfo from "~/components/card/CardHiddenInfo.vue";
 import CardTreeInfoCover from "~/components/card/CardTreeInfoCover.vue";
 
 const coverImageName = ref("background-image.png");
@@ -58,9 +57,10 @@ const treeItems = ref([]);
 const memoirItems = ref([]);
 const leafItems = ref([]);
 
+
 // ----------------------  API ---------------------- //
 const { data: infoData, error: infoError }
-    = await useFetch(() => `trees/leaves/${leafId}/info`, {
+    = await useAuthFetch(() => `trees/leaves/${leafId}/info`, {
     baseURL: config.public.apiBase,
 });
 
@@ -109,7 +109,7 @@ if (memoirCardData.value) {
 
 watchEffect(() => {
   if (infoData.value) {
-    console.log('infoData.value', infoData.value);
+    console.log('트리 디테일 데이터 확인', infoData.value);
     Object.assign(info, infoData.value);
   }
 
@@ -166,7 +166,7 @@ onMounted(() => {
     </section>
     <section class="branch-tree-detail-container">
       <h2 class="none">트리 상세 설명</h2>
-      <CardHiddenInfo :data ="info" >트리 상세 설명</CardHiddenInfo>
+      <CardEtcHiddenInfo :data ="info" >트리 상세 설명</CardEtcHiddenInfo>
     </section>
 
     <section class="leaf-page-info-container">

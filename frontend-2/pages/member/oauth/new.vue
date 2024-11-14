@@ -72,6 +72,7 @@ const joinPostApi = async () => {
       return;
     }
 
+    console.log(response.accessToken);
     useMemberDetail().setAuthWithToken(response.accessToken);
 
     alert('회원가입이 완료되었습니다.');

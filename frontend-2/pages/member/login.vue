@@ -34,6 +34,7 @@ const loginApi = async () => {
 
     memberDetail.setAuthWithToken(response.accessToken);
     //현재 URL에서 returnUrl 값을 가져오기
+    // console.log('리턴 URL 확인', router.currentRoute.value.query.retrunUrl);
     const returnUrl = router.currentRoute.value.query.retrunUrl || "/home";
     console.log("로그인 성공");
     // 로그인 성공시 returnUrl로 이동

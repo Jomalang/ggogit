@@ -243,7 +243,7 @@ const submitHandler = async () => {
     </section>
 
     <form class="input-form">
-      <section>
+      <section class="input-form__box">
         <h1 class="none">리프 생성 데이터 입력</h1>
 
         <section class="none">
@@ -307,6 +307,8 @@ const submitHandler = async () => {
           <h1 class="none">리프 생성 버튼</h1>
           <ButtonSubmitBtnFullBar text="리프 생성" @submit="submitHandler"></ButtonSubmitBtnFullBar>
         </section>
+
+        <section class="tmp-box"></section>
       </section>
     </form>
   </main>
@@ -322,4 +324,10 @@ const submitHandler = async () => {
   font-weight: var(--semi-bold);
   margin-bottom: 8px;
 }
+
+.tmp-box {
+  height: 1px;
+  width: 100%;
+}
+
 </style>

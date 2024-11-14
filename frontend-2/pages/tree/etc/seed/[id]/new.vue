@@ -1,8 +1,8 @@
 <script setup>
-import {onMounted, watch} from "vue";
+import { onMounted, watch } from "vue";
 import axios, { HttpStatusCode } from "axios";
-import {useRouter} from "#vue-router";
-import {value} from "lodash/seq.js";
+import { useRouter } from "#vue-router";
+import { value } from "lodash/seq.js";
 
 // ----------------------- Model ----------------------- //
 const route = useRoute();
@@ -10,7 +10,7 @@ const router = useRouter();
 const config = useRuntimeConfig();
 const seedId = route.params.id;
 
-const treeFormData = useState('treeFormData', () => ({
+const treeFormData = useState("treeFormData", () => ({
   // 트리 씨앗 정보
   seedId: Number(seedId),
 
@@ -35,9 +35,12 @@ watch(treeFormData.value, (newVal) => {
 });
 
 // ----------------------- API ----------------------- //
-const { data: seedData, error: infoError } = await useFetch(() => `seeds/${seedId}`, {
-  baseURL: config.public.apiBase,
-});
+const { data: seedData, error: infoError } = await useAuthFetch(
+  () => `seeds/${seedId}`,
+  {
+    baseURL: config.public.apiBase,
+  }
+);
 
 watchEffect(() => {
   // console.log("seedData:", seedData.value);
@@ -58,7 +61,6 @@ const handleImageSelected = (imageData) => {
 };
 
 const validateCheck = () => {
-
   // 트리 이름 확인
   if (!treeFormData.value.treeTitle) {
     treeFormData.value.treeTitleValid = false;
@@ -84,7 +86,6 @@ const validateCheck = () => {
 };
 
 const submitFormHandler = async (e) => {
-
   // 검증 로직
   if (!validateCheck()) {
     return;
@@ -106,11 +107,11 @@ const submitFormHandler = async (e) => {
     }
 
     const response = await axios.post(
-        "http://localhost:8080/api/v1/trees",
-        treeFormDataToSend,
-        {
-          headers: {"Content-Type": "multipart/form-data"},
-        }
+      "http://localhost:8080/api/v1/trees",
+      treeFormDataToSend,
+      {
+        headers: { "Content-Type": "multipart/form-data" },
+      }
     );
 
     if (response.status !== HttpStatusCode.Created) {
@@ -135,7 +136,6 @@ const inputDescription = (value) => {
   treeFormData.value.description = value;
   treeFormData.value.descriptionValid = true;
 };
-
 </script>
 
 <template>
@@ -152,36 +152,40 @@ const inputDescription = (value) => {
       <h1 class="none">도서 정보 입력</h1>
 
       <section class="select-title-container">
-        <TextMainTitle :data="{ title: `${seedData.name}`, size: 28 }"></TextMainTitle>
+        <TextMainTitle
+          :data="{ title: `${seedData.name}`, size: 28 }"
+        ></TextMainTitle>
       </section>
 
       <form class="book-tree-input-form">
         <section class="none">
           <h1 class="none">씨앗 카테고리</h1>
           <input
-              type="number"
-              name="seedCategoryId"
-              v-model="treeFormData.seedId"
+            type="number"
+            name="seedCategoryId"
+            v-model="treeFormData.seedId"
           />
         </section>
 
         <section class="book-tree-input-form__photo-container">
           <h1 class="none">트리 이미지 입력</h1>
-          <InputBookInputImg @image-selected="handleImageSelected"></InputBookInputImg>
+          <InputBookInputImg
+            @image-selected="handleImageSelected"
+          ></InputBookInputImg>
         </section>
 
         <section class="input-form__input-container">
           <h1 class="none">트리이름 입력</h1>
           <InputTextBox
-              :data="{
-                label: '*트리 이름',
-                name: 'treeTitle',
-                placeholder: '트리 이름을 입력해주세요',
-                value: treeFormData.treeTitle,
-                validate: treeFormData.treeTitleValid,
-                validateMessage: '트리 이름을 입력해주세요.'
-              }"
-              @inputData="inputTreeTitle"
+            :data="{
+              label: '*트리 이름',
+              name: 'treeTitle',
+              placeholder: '트리 이름을 입력해주세요',
+              value: treeFormData.treeTitle,
+              validate: treeFormData.treeTitleValid,
+              validateMessage: '트리 이름을 입력해주세요.',
+            }"
+            @inputData="inputTreeTitle"
           >
           </InputTextBox>
         </section>
@@ -189,29 +193,32 @@ const inputDescription = (value) => {
         <section class="book-tree-input-form__large-input-container">
           <h1 class="none">설명글 or URL</h1>
           <InputTextareaBox
-              :data="{
-                label: '*설명글 or URL',
-                name: 'description',
-                placeholder: '트리에 대한 설명을 입력해주세요',
-                value: treeFormData.description,
-                validate: treeFormData.descriptionValid,
-                validateMessage: '트리에 대한 설명을 입력해주세요.'
-              }"
-              @inputData="inputDescription"
+            :data="{
+              label: '*설명글 or URL',
+              name: 'description',
+              placeholder: '트리에 대한 설명을 입력해주세요',
+              value: treeFormData.description,
+              validate: treeFormData.descriptionValid,
+              validateMessage: '트리에 대한 설명을 입력해주세요.',
+            }"
+            @inputData="inputDescription"
           >
           </InputTextareaBox>
         </section>
 
         <section class="input-form__input-container">
           <h1 class="none">공개성 선택</h1>
-          <InputVisibility name="visibility" v-model="treeFormData.visibility"></InputVisibility>
+          <InputVisibility
+            name="visibility"
+            v-model="treeFormData.visibility"
+          ></InputVisibility>
         </section>
 
         <section class="book-tree-submit-container">
           <h1 class="none">트리 생성 버튼</h1>
           <ButtonSubmitBtnFullBar
-              text="트리 생성"
-              @click.prevent="submitFormHandler"
+            text="트리 생성"
+            @click.prevent="submitFormHandler"
           ></ButtonSubmitBtnFullBar>
         </section>
       </form>

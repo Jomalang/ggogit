@@ -51,7 +51,7 @@ let book = ref({
 });
 
 //fetch
-const { data, error } = await useFetch(`/memoirs/${useRoute().params.id}`, {
+const { data, error } = await useAuthFetch(`/memoirs/${useRoute().params.id}`, {
   method: "GET",
   baseURL: `${config.public.apiBase}`,
 });
@@ -74,7 +74,7 @@ const memoirItems = ref([]);
 const leafItems = ref([]);
 
 //fetch
-const { data: leafCardData, error: leafCardError } = await useFetch(
+const { data: leafCardData, error: leafCardError } = await useAuthFetch(
   `/members/${member.value.id}/leaves/book/cards`,
   {
     method: "GET",
@@ -82,7 +82,7 @@ const { data: leafCardData, error: leafCardError } = await useFetch(
   }
 );
 
-const { data: treeCardData, error: treeCardError } = await useFetch(
+const { data: treeCardData, error: treeCardError } = await useAuthFetch(
   `trees/members/${member.value.id}/trees/book/cards`,
   {
     method: "GET",
@@ -90,7 +90,7 @@ const { data: treeCardData, error: treeCardError } = await useFetch(
   }
 );
 
-const { data: memoirCardData, error: memoirCardError } = await useFetch(
+const { data: memoirCardData, error: memoirCardError } = await useAuthFetch(
   `memoirs/members/${member.value.id}/memoirs/book/cards`,
   {
     method: "GET",

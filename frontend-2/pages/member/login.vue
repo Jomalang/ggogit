@@ -1,9 +1,7 @@
 <script setup>
-import { useMemberDetail } from "~/composables/useMemberDetail.js";
-
 const config = useRuntimeConfig();
 const router = useRouter();
-const memberDetail = useMemberDetail();
+const memberDetail = useMemberStore();
 
 // ----------------------- Model ----------------------- //
 const loginInfo = ref({
@@ -32,6 +30,7 @@ const loginApi = async () => {
       }),
     });
 
+    console.log(response);
     memberDetail.setAuthWithToken(response.accessToken);
     //현재 URL에서 returnUrl 값을 가져오기
     const returnUrl = router.currentRoute.value.query.retrunUrl || "/home";

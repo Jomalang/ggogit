@@ -164,6 +164,7 @@ function modifyCount(count: number) {
 }
 
 .card-another-records__top-anker {
+  width: 100%;
   display: flex;
   flex: 1 0 auto;
   gap: 8px;
@@ -174,6 +175,7 @@ function modifyCount(count: number) {
   width: 100%;
   height: 120px;
   display: flex;
+  flex-direction: column-reverse;
   justify-content: center;
 }
 
@@ -188,13 +190,13 @@ function modifyCount(count: number) {
 }
 
 .card-another-records__mid-box {
-  display: flex;
-  flex-direction: column;
+  width: 100%;
   align-items: flex-start;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .card-another-records__mid-seed-frame {
-  display: flex;
   gap: 4px;
 }
 
@@ -212,6 +214,9 @@ function modifyCount(count: number) {
   font-weight: var(--bold);
   line-height: var(--line-height-main);
   letter-spacing: var(--letter-spacing-main);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .card-another-records__mid-another--title--sub {
@@ -220,6 +225,9 @@ function modifyCount(count: number) {
   font-weight: var(--bold);
   line-height: var(--line-height-main);
   letter-spacing: var(--letter-spacing-main);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .card-another-records__mid-work-title {
@@ -228,6 +236,9 @@ function modifyCount(count: number) {
   font-weight: var(--medium);
   line-height: var(--line-height-sub);
   letter-spacing: var(--letter-spacing-sub);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .card-another-records__info {
@@ -236,12 +247,16 @@ function modifyCount(count: number) {
   font-weight: var(--medium);
   line-height: var(--line-height-sub);
   letter-spacing: var(--letter-spacing-sub);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .card-another-records__icon-box {
+  padding-top: 10px;
   height: 21px;
   display: flex;
-  justify-content: space-between;
+  flex-direction: row-reverse;
   align-items: center;
   gap: 8px;
 }
@@ -289,32 +304,44 @@ function modifyCount(count: number) {
   background-size: contain;
 }
 
+.card-another-records__bot-nickname-box {
+  width: 100%;
+}
+
 .card-another-records__bot-box {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  width: 100%;
+  height: auto;
 }
 
 .card-another-records-log-title {
+  width: 100%;
+  margin-top: 10px;
   color: var(--text-main);
   font-size: 18px;
   font-weight: var(--bold);
   line-height: var(--line-height-main);
   letter-spacing: var(--letter-spacing-main);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .card-another-records-log-content {
+  width: 100%;
   padding-top: 10px;
   color: var(--text-sub);
   font-size: 14px;
   font-weight: var(--regular);
   line-height: var(--line-height-sub);
   letter-spacing: var(--letter-spacing-sub);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .card-another-records__bot-box-etc-info {
   width: 100%;
-  margin-top: 10px;
+  margin-top: 15px;
   display: flex;
   justify-content: space-between;
 }

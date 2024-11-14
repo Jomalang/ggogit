@@ -17,7 +17,7 @@ let filter = ref("title");
 const createReq = async (query, filter) => {
   bookResult.value = [];
   try {
-    const response = await $fetch(props.api, {
+    const response = await useAuthDataFetch(props.api, {
       method: "GET",
       params: {
         q: query,

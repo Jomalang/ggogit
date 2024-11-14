@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from "vue";
-import {value} from "lodash/seq.js";
+import { value } from "lodash/seq.js";
 //-----------------props-----------------
 const props = defineProps({
   placeholder: "",
@@ -10,13 +10,7 @@ const props = defineProps({
   page: 1,
 });
 //-----------------emit-----------------
-const emit = defineEmits([
-  "req",
-  "result",
-  "page",
-  "totalCount",
-  "totalPage",
-]);
+const emit = defineEmits(["req", "result", "page", "totalCount", "totalPage"]);
 //-----------------ref-----------------
 const result = ref([]);
 const query = ref("");
@@ -34,15 +28,18 @@ watch(page, () => {
 });
 
 // sort 값이 변경될 때 요청
-watch(() => props.sort, (newSort) => {
-  console.log(`sort changed to ${newSort}`);
+watch(
+  () => props.sort,
+  (newSort) => {
+    console.log(`sort changed to ${newSort}`);
 
-  // 페이지를 초기화하고 새로운 정렬 기준으로 요청
-  page.value = 0;
+    // 페이지를 초기화하고 새로운 정렬 기준으로 요청
+    page.value = 0;
 
-  // 새로운 sort 값으로 fetch 요청
-  createReq(newSort, page.value, filter.value, false);
-});
+    // 새로운 sort 값으로 fetch 요청
+    createReq(newSort, page.value, filter.value, false);
+  }
+);
 
 //-----------------methods-----------------
 const createReq = async (sort, currentPage, filter, isChange) => {
@@ -51,13 +48,13 @@ const createReq = async (sort, currentPage, filter, isChange) => {
     queryContent = query.value;
   }
   try {
-    const response = await $fetch(props.api, {
+    const response = await useAuthDataFetch(props.api, {
       method: "GET",
       params: {
         query: queryContent,
         sort: sort,
         page: currentPage,
-        filter : filter
+        filter: filter,
       },
     });
 
@@ -73,8 +70,9 @@ const createReq = async (sort, currentPage, filter, isChange) => {
       result.value = [...result.value, ...response.content];
 
       // 중복 제거
-      result.value = [...new Set(result.value.map(value => value.treeId))].map((treeId) =>
-          result.value.find((value) => value.treeId === treeId));
+      result.value = [
+        ...new Set(result.value.map((value) => value.treeId)),
+      ].map((treeId) => result.value.find((value) => value.treeId === treeId));
 
       // 페이지 정보 업데이트
       page.value = currentPage;
@@ -93,7 +91,6 @@ const createReq = async (sort, currentPage, filter, isChange) => {
     emit("page", page.value);
     emit("totalCount", totalCount.value);
     emit("totalPage", totalPage.value);
-
   } catch (error) {
     if (error.response && error.response.status === 400) {
       alert("검색어를 두 글자 이상 입력해 주세요.");
@@ -105,8 +102,7 @@ const createReq = async (sort, currentPage, filter, isChange) => {
 
 const dropQueryHandler = () => {
   query.value = "";
-}
-
+};
 
 //-----------------lifeCycle-----------------
 onUpdated(() => {
@@ -134,11 +130,15 @@ onUpdated(() => {
           autocomplete="off"
           @keyup.enter="createReq(sort, 0, filter, true)"
         />
-        <button @click="dropQueryHandler" class="search-bar--close" type="reset">
+        <button
+          @click="dropQueryHandler"
+          class="search-bar--close"
+          type="reset"
+        >
           <img src="/public/svg/close-button.svg" alt="close-btn" />
         </button>
       </label>
-      <button @click="createReq(sort, 0, filter,true)">
+      <button @click="createReq(sort, 0, filter, true)">
         <img src="/public/svg/lens.svg" alt="lens" />
       </button>
     </div>
@@ -146,37 +146,37 @@ onUpdated(() => {
 
   <div class="search-filter-frame">
     <div class="search-filter-log">
-    <label class="search-filter-log__checkbox-labal">
-      <input
-        class="search-filter-log__checkbox-input"
-        type="radio"
-        name="filterType"
-        value="title"
-        checked
-        v-model="filter"
-      />
-      <span class="search-filter-log__checkbox-input-text">제목</span>
-    </label>
-    <label class="search-filter-log__checkbox-labal">
-      <input
-        class="search-filter-log__checkbox-input"
-        type="radio"
-        name="filterType"
-        value="author"
-        v-model="filter"
-      />
-      <span class="search-filter-log__checkbox-input-text">저자</span>
-    </label>
-    <label class="search-filter-log__checkbox-labal">
-      <input
-        class="search-filter-log__checkbox-input"
-        type="radio"
-        name="filterType"
-        value="publisher"
-        v-model="filter"
-      />
-      <span class="search-filter-log__checkbox-input-text">출판사</span>
-    </label>
+      <label class="search-filter-log__checkbox-labal">
+        <input
+          class="search-filter-log__checkbox-input"
+          type="radio"
+          name="filterType"
+          value="title"
+          checked
+          v-model="filter"
+        />
+        <span class="search-filter-log__checkbox-input-text">제목</span>
+      </label>
+      <label class="search-filter-log__checkbox-labal">
+        <input
+          class="search-filter-log__checkbox-input"
+          type="radio"
+          name="filterType"
+          value="author"
+          v-model="filter"
+        />
+        <span class="search-filter-log__checkbox-input-text">저자</span>
+      </label>
+      <label class="search-filter-log__checkbox-labal">
+        <input
+          class="search-filter-log__checkbox-input"
+          type="radio"
+          name="filterType"
+          value="publisher"
+          v-model="filter"
+        />
+        <span class="search-filter-log__checkbox-input-text">출판사</span>
+      </label>
     </div>
     <NuxtLink class="search-filter-log__nuxt-link" to="/leaf/search">
       리프 검색 이동
@@ -255,9 +255,8 @@ button {
   height: 18px;
 }
 
-
 /* 필터 */
-.search-filter-frame{
+.search-filter-frame {
   display: flex;
   justify-content: space-between;
   align-items: center;

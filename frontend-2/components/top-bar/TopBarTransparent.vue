@@ -7,7 +7,7 @@ const props = defineProps({
 const deleteResource = () => {
   // console.log(props.delete);
   if (confirm("정말 삭제하시겠습니까?")) {
-    const { data } = $fetch(props.delete, {
+    const { data } = useAuthDataFetch(props.delete, {
       baseURL: useRuntimeConfig().public.apiBase,
       method: "DELETE",
     });

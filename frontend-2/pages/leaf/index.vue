@@ -343,6 +343,9 @@ const scrollToElement = () => {
         </div>
       </section>
     </section>
+    <section class="log-tmp-box">
+
+    </section>
   </main>
 
   <aside class="log-list-bot-bar-container">
@@ -386,11 +389,6 @@ main {
   z-index: 20;
 }
 
-.log-list-container {
-  margin: 600px 0;
-  width: 100%;
-}
-
 .log-list-bot-bar-container {
   width: 100%;
   position: fixed;
@@ -408,4 +406,10 @@ main {
   justify-content: flex-end;
   align-items: center;
 }
+
+.log-tmp-box {
+  height: 1px;
+  width: 100%;
+}
+
 </style>

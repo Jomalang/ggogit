@@ -2,6 +2,7 @@
 import axios from "axios";
 import { useRouter } from 'vue-router';
 import {onMounted, reactive, watch} from "vue";
+import useBackNavigation from "~/composables/useBackNavigation.js";
 
 // -------------------------- Model -------------------------- //
 const treeFormData = useState('treeFormData');
@@ -58,7 +59,7 @@ const chooseBookCategory = (category) => {
 <template>
   <header>
     <h1 class="none">도서 카테고리 이름</h1>
-    <TopBarBack title="도서 카테고리" link="" @click="goBack"></TopBarBack>
+    <TopBarBack title="도서 카테고리"></TopBarBack>
   </header>
   <main>
     <section>

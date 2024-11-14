@@ -1,5 +1,7 @@
 <script setup>
 import { ref } from "vue";
+import useBackNavigation from "~/composables/useBackNavigation.js";
+
 //-----------------props-----------------
 const props = defineProps({
   placeholder: "",
@@ -17,6 +19,7 @@ const emit = defineEmits([
   "dropListEvent",
   "loading"
 ]);
+
 //-----------------ref-----------------
 const bookResult = ref([]);
 const query = ref("");
@@ -84,13 +87,18 @@ onUpdated(() => {
     page.value = props.page;
   }
 });
+
+// ------------------- goBack -------------------
+const goBack = () => { useBackNavigation().popPageFromStack(); };
+const { getLastPage } = useBackNavigation();
+const lastPage = computed(() => getLastPage());
+
 </script>
 
 <template>
-  <!-- input-back-search(placeholder, href, method, name) -->
   <div class="search__form">
     <div>
-      <NuxtLink :to="props.href">
+      <NuxtLink :to="lastPage" @click="goBack()">
         <img src="/public/svg/back.svg" alt="back button" />
       </NuxtLink>
     </div>

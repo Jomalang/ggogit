@@ -1,8 +1,6 @@
 <script setup>
-import _ from "lodash";
 import { Splide, SplideSlide, SplideTrack } from "@splidejs/vue-splide";
 import "@splidejs/splide/dist/css/splide.min.css";
-import { onBeforeMount, onMounted, reactive } from "vue";
 
 //-------------------변수 선언--------------------
 

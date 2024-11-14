@@ -118,7 +118,8 @@ public class MemberController {
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
 
-        String accessToken = memberService.generateAccessToken(member);
+        Member loginMember = memberService.getByEmail(member.getEmail());
+        String accessToken = memberService.generateAccessToken(loginMember);
         HttpHeaders headers = new HttpHeaders();
         MemberLoginResponse response = MemberLoginResponse.of(accessToken, accessExpirationTime, "로그인 성공");
         return new ResponseEntity<>(response, headers, HttpStatus.OK);

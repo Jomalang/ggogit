@@ -84,6 +84,18 @@ export const useMemberStore = defineStore("memberStore", () => {
       localStorage.setItem("_ggogit_email", _email.value);
       localStorage.setItem("_ggogit_roles", JSON.stringify(_roles.value));
       localStorage.setItem("_ggogit_accessToken", _accessToken.value);
+      // CSR일때 쿠키 초기화
+      document.cookie = `_ggogit_accessToken=${""}; path=/;`;
+    }
+    // SSR일때 쿠키 초기화
+    if (import.meta.env.SSR) {
+      const event = useRequestEvent();
+      if (event) {
+        event.node.res.setHeader(
+          "Set-Cookie",
+          `_ggogit_accessToken=${""}; Path=/; HttpOnly; Secure; SameSite=Strict`
+        );
+      }
     }
   }
 

@@ -33,12 +33,11 @@ const newTreeFetch = async (newSeedId) => {
     method: "GET",
     params: {
       seedId: seedId.value,
-      mid: useRoute().query.mid,
     },
   });
   if (response) {
-    console.log("ok");
     console.log(response);
+    console.log(response.treeInfoResponseList);
     filterTreeInfoList.value = [...response.treeInfoResponseList];
   }
 };

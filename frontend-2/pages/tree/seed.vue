@@ -47,7 +47,7 @@ const filterTabDownHandler = () => {
 <template>
   <header class="top-bar-back-container">
     <h1 class="none">씨앗 선택</h1>
-    <TopBarBack :title="`트리 생성`" :link="`#`"></TopBarBack>
+    <TopBarBack :title="`트리 생성`"></TopBarBack>
   </header>
 
   <main>

@@ -45,7 +45,7 @@ export class Tree {
         this.nodes.push(node); // 전체 노드에 자식 노드 추가
 
         if (parentNode.edgeCheck) {
-            // console.log("엣지 노드 추가"); // // 엣지 노드인 경우 추가
+            // console.log("엣지 노드 추가");  // 엣지 노드인 경우 추가
             this.edgeNodes.push(node);
         } else {
             // console.log("엣지 노드 추가 X");
@@ -74,15 +74,15 @@ export class Tree {
         let nodes = [];
 
         // 부모 노드 찾기
-        // console.log("부모 노드 찾기 시작");
+         // console.log("부모 노드 찾기 시작");
         this.findToRoot(leafId, nodes);
         nodes.reverse(); // 순서 뒤집기
 
         // 자식 노드 찾기
-        // console.log("자식 노드 찾기 시작");
+         // console.log("자식 노드 찾기 시작");
         this.findToEnd(leafId, nodes);
 
-        // console.log("nodes", nodes);
+         // console.log("nodes", nodes);
         return nodes;
     }
 
@@ -90,11 +90,11 @@ export class Tree {
      * LeafId 부터 End 노드까지 조회
      * */
     async getNodeToEnd(leafId) {
-        // console.log("LeafId 부터 End 노드까지 조회", leafId);
+         // console.log("LeafId 부터 End 노드까지 조회", leafId);
         let nodes = [];
 
         if (!this.hasNode(leafId)) { // 노드가 존재하지 않는 경우 API 호출
-            // console.log("노드가 존재하지 않는 경우 API 호출");
+             // console.log("노드가 존재하지 않는 경우 API 호출");
             await this.fetchNode(leafId);
         }
 
@@ -103,10 +103,10 @@ export class Tree {
         nodes.push(node);
 
         // 자식 노드 찾기
-        // console.log("자식 노드 찾기 시작");
+         // console.log("자식 노드 찾기 시작");
         this.findToEnd(leafId, nodes);
 
-        // console.log("nodes", nodes);
+         // console.log("nodes", nodes);
         return nodes;
     }
 
@@ -117,7 +117,7 @@ export class Tree {
         try {
             const response = await axios.get(`${config.public.apiBase}/leaves/${leafId}/end`);
             const data = response.data;
-            // console.log("data 새로운 데이터 fetch", data.items);
+             // console.log("data 새로운 데이터 fetch", data.items);
             this.addNodeAll(data.items);
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -142,10 +142,10 @@ export class Tree {
     findToRoot(leafId, nodes) {
         let node = this.findNode(leafId);
 
-        console.log("findToRoot 시작", node.id);
+        // // console.log("findToRoot 시작", node.id);
         if (node.hasChildren() && 1 <= nodes.length) { // 브랜치가 역으로 올라갈 때 translateIndex 설정
             let childNode = nodes[nodes.length - 1];
-            console.log("childNode", childNode);
+            // // console.log("childNode", childNode);
             for (let i = 0; i < node.childLeafIds.length; i++) {
                 if (node.childLeafIds[i] === childNode.id) {
                     node.translateIndex = i;
@@ -168,11 +168,11 @@ export class Tree {
     findToEnd(leafId, nodes) {
         let node = this.findNode(leafId);
 
-        // console.log("findToEnd 시작", node);
-        // console.log("node.hasChildren()", node.hasChildren());
+         // console.log("findToEnd 시작", node);
+         // console.log("node.hasChildren()", node.hasChildren());
         while (node.hasChildren()) {
             let childNodes = node.children;
-            // console.log("childNodes", childNodes);
+             // console.log("childNodes", childNodes);
             if (childNodes.length === 1) {
                 node = childNodes[0];
             }
@@ -187,13 +187,13 @@ export class Tree {
     }
 
     isCreateBranch(leafId) {
-        // console.log("isCreateBranch", leafId);
+         // console.log("isCreateBranch", leafId);
         let node = this.findNode(leafId);
         return node.isCreateBranch;
     }
 
     findNode(leafId) {
-        // console.log("노드 리스트", this.nodes);
+         // console.log("노드 리스트", this.nodes);
 
         leafId = Number(leafId);
         for (let node of this.nodes) {
@@ -201,16 +201,16 @@ export class Tree {
                 return node;
             }
         }
-        console.log("노드를 찾을 수 없습니다.", leafId);
+        // // console.log("노드를 찾을 수 없습니다.", leafId);
         throw new Error("노드를 찾을 수 없습니다.");
     }
 
     async getBranchInfo(swipeChildId) {
         try {
-            // console.log("브랜치 조회 API 호출", swipeChildId);
+             // console.log("브랜치 조회 API 호출", swipeChildId);
             const response = await axios.get(`${config.public.apiBase}/leaves/${swipeChildId}/branch`);
             return response.data;
-            // console.log("data 새로운 데이터 fetch", data.items);
+             // console.log("data 새로운 데이터 fetch", data.items);
         } catch (error) {
             console.error('Error fetching data:', error);
         }

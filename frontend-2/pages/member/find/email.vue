@@ -81,7 +81,7 @@ const sendEmailHandler = () => {
 
 <template>
   <div class="login-member__join-page-container">
-    <ButtonLoginJoinPageBackBtn :data="{ link: '/member/login' }" />
+    <ButtonLoginJoinPageBackBtn/>
     <TextLoginPageInfo
       :data="{
         label: '계정 찾기',

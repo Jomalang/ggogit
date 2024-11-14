@@ -1,8 +1,9 @@
 <script setup>
+
 import Editor from "@toast-ui/editor";
 import "@toast-ui/editor/dist/toastui-editor.css";
 import { onMounted, reactive, watch } from "vue";
-import axios, { HttpStatusCode } from "axios";
+import axios, {HttpStatusCode} from "axios";
 
 // ----------------------- Model ----------------------- //
 const config = useRuntimeConfig();
@@ -23,7 +24,8 @@ const beforeLogData = reactive({
 
 const totalPage = ref(null);
 
-const leafFormData = useState("leafFormData", () => ({
+const leafFormData = useState('leafFormData', () => ({
+
   // 페이지 번호
   startPage: undefined,
   startPageValidation: true,
@@ -45,31 +47,26 @@ const leafFormData = useState("leafFormData", () => ({
   visibility: true,
 }));
 
-const selectedTags = useState("selectedTags", () => ({
+const selectedTags = useState('selectedTags', () => ({
   items: [],
 }));
 
-const leafCreateUrl = useState("leafCreateUrl", () => {
+const leafCreateUrl = useState('leafCreateUrl', () => {
   return `/leaf/book/${parentLeafId}/new`;
 });
 
-const { data: totalPageData, status: totalPageStatus } = await useAuthFetch(
-  `leaves/${parentLeafId}/book/page`,
-  {
-    baseURL: `${config.public.apiBase}`,
-    method: "GET",
-  }
-);
+const { data: totalPageData, status: totalPageStatus } = await useFetch(`leaves/${parentLeafId}/book/page`, {
+  baseURL: `${config.public.apiBase}`,
+  method: "GET",
+});
 
-const { data: beforeLeafData, status: beforeLeafStatus } = await useAuthFetch(
-  `leaves/${parentLeafId}/before`,
-  {
-    baseURL: `${config.public.apiBase}`,
-    method: "GET",
-  }
-);
+const { data: beforeLeafData, status: beforeLeafStatus } = await useFetch(`leaves/${parentLeafId}/before`, {
+  baseURL: `${config.public.apiBase}`,
+  method: "GET",
+});
 
 watchEffect(() => {
+
   if (totalPageStatus.value !== HttpStatusCode.Ok) {
     // console.log("totalPageData : ", totalPageData.value);
     totalPage.value = totalPageData.value;
@@ -117,13 +114,10 @@ onMounted(() => {
           treeFormData.append("image", blob);
 
           // MemoirFileApiController - uploadEditorImage 메서드 호출
-          const response = await fetch(
-            `${config.public.apiBase}/leaf/image-upload`,
-            {
-              method: "POST",
-              body: treeFormData,
-            }
-          );
+          const response = await fetch(`${config.public.apiBase}/leaf/image-upload`, {
+            method: "POST",
+            body: treeFormData,
+          });
           // 컨트롤러에서 전달받은 디스크에 저장된 파일 명
           const filename = await response.text();
           // console.log("서버에 저장된 파일 명 : ", filename);
@@ -178,17 +172,13 @@ const pageValidation = () => {
 
 const tagDrop = (tag) => {
   // console.log("tagDrop : ", tag);
-  selectedTags.value.items = selectedTags.value.items.filter(
-    (item) => item.id !== tag.id
-  );
+  selectedTags.value.items = selectedTags.value.items.filter((item) => item.id !== tag.id);
   leafFormData.value.tagIds = selectedTags.value.items.map((tag) => tag.id);
 };
 
 const validate = () => {
-  if (
-    !leafFormData.value.startPage ||
-    !leafFormData.value.startPageValidation
-  ) {
+
+  if (!leafFormData.value.startPage || !leafFormData.value.startPageValidation) {
     leafFormData.value.startPageValidation = false;
     alert("시작 페이지를 잘못 입력하셨습니다.");
     return false;
@@ -210,15 +200,13 @@ const validate = () => {
 };
 
 const submitHandler = async () => {
+
   if (!validate()) {
     return;
   }
 
   // console.log("leafFormData POST > : ", leafFormData.value);
-  const response = await axios.post(
-    `${config.public.apiBase}/book/leaves/${parentLeafId}`,
-    leafFormData.value
-  );
+  const response = await axios.post(`${config.public.apiBase}/book/leaves/${parentLeafId}`, leafFormData.value);
 
   if (response.status !== HttpStatusCode.Created) {
     throw new Error("Network response was not ok");
@@ -231,6 +219,7 @@ const submitHandler = async () => {
 
   router.push(`/leaf/?leafId=${leafId}`);
 };
+
 </script>
 
 <template>
@@ -238,10 +227,7 @@ const submitHandler = async () => {
     <h1 class="none">리프 생성 페이지</h1>
     <section class="tob-bar-back-container">
       <h1 class="none">리프 생성 상단 바</h1>
-      <TopBarBack
-        title="리프 생성"
-        :link="`/leaf?leafId=${parentLeafId}`"
-      ></TopBarBack>
+      <TopBarBack title="리프 생성" :link="`/leaf?leafId=${parentLeafId}`"></TopBarBack>
     </section>
   </header>
 
@@ -257,7 +243,7 @@ const submitHandler = async () => {
     </section>
 
     <form class="input-form">
-      <section>
+      <section class="input-form__box">
         <h1 class="none">리프 생성 데이터 입력</h1>
 
         <section class="none">
@@ -268,37 +254,34 @@ const submitHandler = async () => {
         <section class="first-log_page-input-container">
           <h1 class="none">리프 페이지</h1>
           <InputPageNumber
-            :data="{
-              startPage: leafFormData.startPage,
-              endPage: leafFormData.endPage,
-              maxPage: totalPage,
-            }"
-            @startPage="inputStartPage"
-            @endPage="inputEndPage"
+              :data="{
+                startPage: leafFormData.startPage,
+                endPage: leafFormData.endPage,
+                maxPage: totalPage,
+              }"
+              @startPage="inputStartPage"
+              @endPage="inputEndPage"
           >
           </InputPageNumber>
         </section>
 
         <section class="input-form__select-tag-input-container">
           <h1 class="none">리프 태그 입력</h1>
-          <InputTagSelect
-            :selectedTag="selectedTags.items"
-            @drop="tagDrop"
-          ></InputTagSelect>
+          <InputTagSelect :selectedTag="selectedTags.items" @drop="tagDrop"></InputTagSelect>
         </section>
 
         <section class="input-form__input-container">
           <h1 class="none">로그이름 입력</h1>
           <InputTextBox
-            :data="{
-              label: '*제목',
-              name: 'title',
-              placeholder: '리프 제목을 입력해 주세요.',
-              value: leafFormData.title,
-              validate: leafFormData.titleValidation,
-              validateMessage: '리프 제목을 입력해 주세요.',
-            }"
-            @inputData="inputTitle"
+              :data="{
+                label: '*제목',
+                name: 'title',
+                placeholder: '리프 제목을 입력해 주세요.',
+                value: leafFormData.title,
+                validate: leafFormData.titleValidation,
+                validateMessage: '리프 제목을 입력해 주세요.'
+              }"
+              @inputData="inputTitle"
           ></InputTextBox>
         </section>
 
@@ -317,18 +300,15 @@ const submitHandler = async () => {
 
         <section class="input-form__input-container">
           <h1 class="none">공개성 선택</h1>
-          <InputVisibility
-            v-model:visibility="leafFormData.visibility"
-          ></InputVisibility>
+          <InputVisibility v-model:visibility="leafFormData.visibility"></InputVisibility>
         </section>
 
         <section class="book-tree-submit-container">
           <h1 class="none">리프 생성 버튼</h1>
-          <ButtonSubmitBtnFullBar
-            text="리프 생성"
-            @submit="submitHandler"
-          ></ButtonSubmitBtnFullBar>
+          <ButtonSubmitBtnFullBar text="리프 생성" @submit="submitHandler"></ButtonSubmitBtnFullBar>
         </section>
+
+        <section class="tmp-box"></section>
       </section>
     </form>
   </main>
@@ -344,4 +324,10 @@ const submitHandler = async () => {
   font-weight: var(--semi-bold);
   margin-bottom: 8px;
 }
+
+.tmp-box {
+  height: 1px;
+  width: 100%;
+}
+
 </style>

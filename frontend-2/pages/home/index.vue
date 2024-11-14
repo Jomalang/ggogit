@@ -13,8 +13,6 @@ let observer = null;
 const memberDetail = useMemberStore();
 const { _nickname: username } = storeToRefs(memberDetail);
 
-//TODO: JWT토큰 있다면 전송하게끔 로직 수정 필요
-
 const { data: seedData, status: seedStatus } = await useAuthFetch("seeds", {
   baseURL: `${config.public.apiBase}`,
   method: "GET",

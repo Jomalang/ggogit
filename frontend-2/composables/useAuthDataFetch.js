@@ -1,6 +1,22 @@
 export default async function useAuthDataFetch(url, options = {}) {
-  // 1. MemberDetail에서 token을 획득
-  const _accessToken = useMemberStore().getAuthToken() || "";
+  // 1. 쿠키에서 토큰을 가져오기
+  const cookies = useRequestHeaders(["cookie"]);
+  let _accessToken = null;
+  if (import.meta.env.SSR) {
+    console.log("SSR");
+    _accessToken = cookies.cookie
+      ? cookies.cookie
+          .split("; ")
+          .find((row) => row.startsWith("_ggogit_accessToken="))
+          ?.split("=")[1]
+      : null;
+    console.log(_accessToken);
+  }
+
+  if (!import.meta.env.SSR) {
+    console.log("CSR");
+    _accessToken = localStorage.getItem("_ggogit_accessToken");
+  }
 
   // 2. 획득한 token을 헤더에 담기
   options.headers = {

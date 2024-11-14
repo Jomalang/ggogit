@@ -37,8 +37,7 @@ public class Member {
     private String email;
 
     @Size(max = 64)
-    @NotNull
-    @Column(name = "PASSWORD", nullable = false, length = 64)
+    @Column(name = "PASSWORD", length = 64)
     private String password;
 
     @Size(max = 255)

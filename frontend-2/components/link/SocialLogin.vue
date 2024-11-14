@@ -1,23 +1,62 @@
 <script setup>
-import { GoogleLogin } from "vue3-google-login";
+import {decodeCredential, googleTokenLogin} from "vue3-google-login";
+import {useMemberJoinTmp} from "~/composables/useMemberJoinTmp.js";
 
 const memberDetail = useMemberDetail();
 const config = useRuntimeConfig();
+const joinInfo = useMemberJoinTmp();
+const router = useRouter();
 
-const googleLoginHandler = async (googleUser) => {
-  console.log(googleUser);
-  //리소스 서버에 전송 후 memberDetail 발급받아야 함.
+const googleLoginHandler = async () => {
+  try {
 
-  //이후 memberDetail이용한 상태 유지 필요
+    const response = await googleTokenLogin();
+    const token = response.access_token;
+
+    let userInfo = await fetch(`https://www.googleapis.com/oauth2/v3/userinfo?access_token=${token}`);
+    userInfo = await userInfo.json();
+
+    const isMember = await $fetch(`${config.public.apiBase}/auth/isMember`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({email: userInfo.email})
+    });
+
+    if (!isMember) { // 회원이 아닌 경우
+      console.log('userInfo', userInfo.email, userInfo.name, userInfo.picture);
+      joinInfo.setJoinInfo(userInfo);
+      console.log('joinInfo', joinInfo);
+      await router.push("/member/oauth/new");
+      return;
+    }
+
+    // 회원인 경우
+    const newTokenResponse = await $fetch(`${config.public.apiBase}/auth/newToken`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({email: userInfo.email})
+    });
+
+    memberDetail.setAuthWithToken(newTokenResponse.accessToken);
+    await router.push('/home');
+
+  } catch (error) {
+    console.error('Google 로그인 중 오류 발생:', error);
+  }
 };
+
 </script>
 
 <template>
   <div class="social-login">
     <div class="social-login__icons">
-      <GoogleLogin @success="googleLoginHandler">
+      <a @click.prevent="googleLoginHandler">
         <img src="/public/svg/google-circle.svg" alt="`구글 로그인`" />
-      </GoogleLogin>
+      </a>
       <a href="#"
         ><div>
           <img src="/public/svg/naver-circle.svg" alt="`네이버 로그인`" /></div

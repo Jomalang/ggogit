@@ -1,19 +1,18 @@
 <script setup>
-
-import { defineProps } from 'vue';
+import { defineProps } from "vue";
 import CardProgressBar from "~/components/card/CardProgressBar.vue";
 import CardReactNumbers from "~/components/card/CardReactNumbers.vue";
 import LinkFullWidth from "~/components/button/LinkFullWidth.vue";
 
-const {data} = defineProps(['data']);
-const progress = (data.readingPage * 100 / data.bookTotalPage).toFixed(2);
+const { data } = defineProps(["data"]);
+const progress = ((data.readingPage * 100) / data.bookTotalPage).toFixed(2);
 
 function translatorsConverter(translators) {
   if (!translators) {
     return [];
   }
   return translators.split(",");
-};
+}
 
 let translators = translatorsConverter(data.bookTranslator ?? "");
 
@@ -37,59 +36,69 @@ const cardReactNumbersProps = {
   like: data.treeLikeCnt,
   view: data.treeViewCnt,
 };
-onMounted(() => {
-
-});
+onMounted(() => {});
 </script>
 
 <template>
   <!-- (hiddentext, authors,translators,publisher,page,seed, treedescription, progress,readpage,fullpage, leaf,like,view) -->
   <client-only>
-  <div class="card-tree-info__detail-frame">
-    <input class="card-tree-info__detail-input" type="checkbox" id="card-tree-info__detail"/>
-    <label class="card-tree-info__detail" for="card-tree-info__detail">자세히</label>
+    <div class="card-tree-info__detail-frame">
+      <input
+        class="card-tree-info__detail-input"
+        type="checkbox"
+        id="card-tree-info__detail"
+      />
+      <label class="card-tree-info__detail" for="card-tree-info__detail"
+        >자세히</label
+      >
 
-    <section class="card-tree-info__detail-content">
-      <h3 class="none">트리 상세 설명 보기</h3>
+      <section class="card-tree-info__detail-content">
+        <h3 class="none">트리 상세 설명 보기</h3>
 
-      <section class="card-tree-info__detail-tree-container">
-        <h4 class="none">트리 정보</h4>
-        <TextBookInfoNoTitle :data = textBookInfoProps />
-        <!-- <div th:replace="~{fragments/text :: text-book-info--no-title(${authors},${translators},${publisher},${page},${seed})}"></div> -->
-      </section>
+        <section class="card-tree-info__detail-tree-container">
+          <h4 class="none">트리 정보</h4>
+          <TextBookInfoNoTitle :data="textBookInfoProps" />
+          <!-- <div th:replace="~{fragments/text :: text-book-info--no-title(${authors},${translators},${publisher},${page},${seed})}"></div> -->
+        </section>
 
-      <section class="card-tree__description-title__container">
-        <!-- <h3 th:replace="~{fragments/text :: text-main-title(title='트리설명', size=18)}"></h3> -->
-        <p class="card-tree__description-content">{{ data.description }}</p>
-      </section>
+        <section class="card-tree__description-title__container">
+          <!-- <h3 th:replace="~{fragments/text :: text-main-title(title='트리설명', size=18)}"></h3> -->
+          <p class="card-tree__description-content">{{ data.description }}</p>
+        </section>
 
-      <section
+        <section
           v-if="data.bookTotalPage != null"
-          class="card-progress__container" >
-        <div class="card-reading-progress-no-background">
-          <CardProgressBar
-              :progress = "progress"
-              :readingPage = "data.readingPage"
-              :totalPage = "data.bookTotalPage"
-          />
-          <CardReactNumbers
-              :leaf = "data.treeLeafCnt"
-              :like = "data.treeLikeCnt"
-              :view = "data.treeViewCnt"
-          />
-        </div>
-      </section>
+          class="card-progress__container"
+        >
+          <div class="card-reading-progress-no-background">
+            <CardProgressBar
+              :progress="progress"
+              :readingPage="data.readingPage"
+              :totalPage="data.bookTotalPage"
+            />
+            <CardReactNumbers
+              :leaf="data.treeLeafCnt"
+              :like="data.treeLikeCnt"
+              :view="data.treeViewCnt"
+            />
+          </div>
+        </section>
 
-      <section v-if="progress>=80" class="card-tree-memoir-create-btn-container">
-        <LinkFullWidth :link="'/memoir/' + data.treeId +'/reg'" text="회고록 작성" />
+        <section
+          v-if="progress >= 80"
+          class="card-tree-memoir-create-btn-container"
+        >
+          <LinkFullWidth
+            :link="'/memoir/' + data.treeId + '/reg'"
+            text="회고록 작성"
+          />
+        </section>
       </section>
-    </section>
-  </div>
+    </div>
   </client-only>
 </template>
 
 <style scoped>
-
 .card-tree-info-cover-frame {
   display: flex;
   padding-left: 64px;
@@ -115,7 +124,7 @@ onMounted(() => {
   letter-spacing: var(--letter-spacing-main);
 }
 .card-tree-title-frame {
-  padding-left : 5px;
+  padding-left: 5px;
 }
 
 .card-book-title {
@@ -141,7 +150,7 @@ onMounted(() => {
   padding-bottom: 10px;
   margin-left: auto;
   content: "자세히";
-  font-size: 10px;
+  font-size: 12px;
   cursor: pointer;
 }
 
@@ -217,5 +226,4 @@ onMounted(() => {
   line-height: var(--line-height-sub);
   letter-spacing: var(--letter-spacing-sub);
 }
-
 </style>

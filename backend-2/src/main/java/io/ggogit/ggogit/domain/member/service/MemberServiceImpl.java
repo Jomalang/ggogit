@@ -3,11 +3,9 @@ package io.ggogit.ggogit.domain.member.service;
 
 import io.ggogit.ggogit.api.member.dto.MemberRefreshResponse;
 import io.ggogit.ggogit.api.member.dto.MemberResponse;
-import io.ggogit.ggogit.domain.member.entity.EmailJoinToken;
-import io.ggogit.ggogit.domain.member.entity.Member;
-import io.ggogit.ggogit.domain.member.entity.PassWordRest;
-import io.ggogit.ggogit.domain.member.entity.RoleType;
+import io.ggogit.ggogit.domain.member.entity.*;
 import io.ggogit.ggogit.domain.member.repository.EmailJoinTokenRepository;
+import io.ggogit.ggogit.domain.member.repository.MemberProfileImageRepository;
 import io.ggogit.ggogit.domain.member.repository.MemberRepository;
 import io.ggogit.ggogit.domain.member.repository.PassWordRestRepository;
 import io.ggogit.ggogit.util.JwtTokenProvider;
@@ -35,6 +33,7 @@ public class MemberServiceImpl implements MemberService {
     private final EmailJoinTokenRepository emailJoinTokenRepository;
     private final PassWordRestRepository passWordRestRepository;
     private final MemberRepository memberRepository;
+    private final MemberProfileImageRepository memberProfileImageRepository;
 
     private final JavaMailSender emailSender;
     private final PasswordEncoder passwordEncoder;
@@ -255,5 +254,27 @@ public class MemberServiceImpl implements MemberService {
     public PassWordRest findPassWordRest(String key) {
         return passWordRestRepository.findByUuid(key)
                 .orElseThrow(() -> new IllegalArgumentException("회원 가입 이메일 전송을 진행하지 않은 이메일입니다."));
+    }
+
+    @Override
+    public Member getByEmail(String email) {
+        return memberRepository.findByEmail(email)
+                .orElseThrow(() -> new EntityNotFoundException(email + "은 존재하지 않은 회원입니다."));
+    }
+
+    @Override
+    @Transactional
+    public Member join(Member member, String profileImage) {
+
+        member.setRole(RoleType.USER);
+
+        // 회원 저장
+        memberRepository.save(member);
+
+        // 회원 프로필 이미지 저장
+        MemberProfileImage memberProfileImage = MemberProfileImage.of(member, profileImage);
+        memberProfileImageRepository.save(memberProfileImage);
+
+        return member;
     }
 }

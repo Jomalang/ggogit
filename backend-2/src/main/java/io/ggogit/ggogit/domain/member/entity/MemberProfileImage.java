@@ -3,8 +3,7 @@ package io.ggogit.ggogit.domain.member.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
@@ -16,6 +15,9 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @SQLDelete(sql = "update member_profile_image set is_deleted = true where id = ? and version = ?")
 @SQLRestriction("is_deleted = false")
@@ -39,6 +41,7 @@ public class MemberProfileImage {
 
     @NotNull
     @ColumnDefault("0")
+    @Builder.Default
     @Column(name = "IS_DELETED", nullable = false)
     private Boolean isDeleted = false;
 
@@ -55,4 +58,11 @@ public class MemberProfileImage {
     @Version
     @Column(name = "VERSION", nullable = false)
     private Long version;
+
+    public static MemberProfileImage of(Member member, String profileImage) {
+        return MemberProfileImage.builder()
+                .member(member)
+                .name(profileImage)
+                .build();
+    }
 }

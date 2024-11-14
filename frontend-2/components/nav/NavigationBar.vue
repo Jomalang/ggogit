@@ -15,7 +15,7 @@ const props = defineProps({
       <ul class="nav-box__list">
         <!-- 홈 -->
         <li class="nav-box__item">
-          <a class="nav-box__link" href="/">
+          <NuxtLink class="nav-box__link" :to="`/home`">
             <div
               class="nav-box__img-box"
               :class="{ 'nav-box__img-box--active': props.active === 'home' }"
@@ -36,7 +36,7 @@ const props = defineProps({
             >
               홈
             </p>
-          </a>
+          </NuxtLink>
         </li>
 
         <!-- 탐색 -->

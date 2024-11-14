@@ -12,7 +12,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -85,6 +84,27 @@ public class MemberController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
+    // OAuth 회원 가입
+    @PostMapping("/oauth/join")
+    public ResponseEntity<MemberLoginResponse> oauthJoin(
+            @RequestBody MemberOAuthJoinRequest dto
+    ) {
+        // 회원 가입
+        Member member = dto.toMember();
+        String profileImage = dto.getPicture();
+
+        if (memberService.existsEmail(member.getEmail())) {
+            MemberLoginResponse response = MemberLoginResponse.of("이미 가입된 이메일입니다.");
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        }
+
+        Member newMember = memberService.join(member, profileImage);
+        String accessToken = memberService.generateAccessToken(newMember);
+        HttpHeaders headers = new HttpHeaders();
+        MemberLoginResponse response = MemberLoginResponse.of(accessToken, accessExpirationTime, "로그인 성공");
+        return new ResponseEntity<>(response, headers, HttpStatus.CREATED);
+    }
+
     // JWT 토큰 신규 발급
     @PostMapping("/login")
     public ResponseEntity<MemberLoginResponse> login(
@@ -99,20 +119,8 @@ public class MemberController {
         }
 
         String accessToken = memberService.generateAccessToken(member);
-        String refreshToken = memberService.generateRefreshToken(member);
-
-        // httpOnly 쿠키 설정
-        ResponseCookie refreshTokenCookie = ResponseCookie.from("refreshToken", refreshToken)
-                .httpOnly(true)
-                .secure(false)  // HTTPS에서만 전송
-                .path("/")   // 적용 경로 설정
-                .maxAge(7 * 24 * 60 * 60) // 7일 동안 유효
-                    .sameSite("Strict") // 다른 관련 옵션 설정 (Strict, Lax, None)
-                .build();
-
         HttpHeaders headers = new HttpHeaders();
-        headers.add(HttpHeaders.SET_COOKIE, refreshTokenCookie.toString());
-        MemberLoginResponse response = MemberLoginResponse.of(accessToken, refreshToken, accessExpirationTime, "로그인 성공");
+        MemberLoginResponse response = MemberLoginResponse.of(accessToken, accessExpirationTime, "로그인 성공");
         return new ResponseEntity<>(response, headers, HttpStatus.OK);
     }
 

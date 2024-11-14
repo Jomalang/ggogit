@@ -5,6 +5,7 @@ import io.ggogit.ggogit.api.tree.dto.*;
 
 import io.ggogit.ggogit.domain.leaf.entity.Leaf;
 import io.ggogit.ggogit.domain.leaf.service.LeafDtoService;
+import io.ggogit.ggogit.domain.member.security.CustomUserDetails;
 import io.ggogit.ggogit.domain.member.service.MemberService;
 import io.ggogit.ggogit.domain.tree.entity.Tree;
 import io.ggogit.ggogit.domain.tree.service.SeedService;
@@ -18,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -41,11 +43,10 @@ public class TreeController {
 
     @GetMapping("/search")
     public Page<TreeSearchResultResponse> treeSearch(
+            @AuthenticationPrincipal CustomUserDetails userDetails,
             @Valid @ModelAttribute TreeSearchQuery query
     ) {
-        //TODO: security 도입 후 사용자 정보 가져오기 로직 추가 예정
-        Long memberId = 227L;
-
+        Long memberId = userDetails.getId();
 
         Page<Tree> trees = treeService.findTreeByQueryAndMemberId(query, memberId);
 
@@ -84,13 +85,10 @@ public class TreeController {
 
     @GetMapping("{id}/info")
     public ResponseEntity<TreeInfoResponse> getTreeInfoResponse(
-            @PathVariable(value = "id") Long treeId,
-            @RequestParam(value = "mid",defaultValue = "1") Long mid
-//            @SessionAttribute Member member
+            @AuthenticationPrincipal CustomUserDetails userDetails,
+            @PathVariable(value = "id") Long treeId
     ) {
-//        Long memberId = member.getId();
-        Long memberId = 227L;
-
+        Long memberId = userDetails.getId();
         TreeInfoResponse treeInfoResponse = treeService.findTreeInfoResponse(memberId, treeId);
         return new ResponseEntity<> (treeInfoResponse, HttpStatus.OK);
     }
@@ -100,9 +98,10 @@ public class TreeController {
      * */
     @GetMapping("leaves/{leafId}/info")
     public ResponseEntity<TreeInfoResponse> getTreeInfoResponseByLeafId(
+            @AuthenticationPrincipal CustomUserDetails userDetails,
             @PathVariable Long leafId
     ) {
-        Long memberId = 1000L;
+        Long memberId = userDetails.getId();
         Tree tree = leafDtoService.getTree(leafId);
         TreeInfoResponse treeInfoResponse = treeService.findTreeInfoResponse(memberId, tree.getId());
         return new ResponseEntity<> (treeInfoResponse, HttpStatus.OK);
@@ -239,9 +238,9 @@ public class TreeController {
 //    }
     @GetMapping("tree-home")
     public ResponseEntity<TreeInfoResponseHome> getTreeInfoResponses(
-            @RequestParam(value = "mid",defaultValue = "1") Long mid) {
+            @AuthenticationPrincipal CustomUserDetails userDetails) {
 
-        Long memberId = mid;
+        Long memberId = userDetails.getId();
         List<TreeInfoResponse> treeInfoResponseList = treeService.findTreeInfoResponseList(memberId);
 
         return new ResponseEntity<>(TreeInfoResponseHome.of(treeInfoResponseList), HttpStatus.OK);
@@ -249,10 +248,10 @@ public class TreeController {
 
     @GetMapping("tree-home-sort")
     public ResponseEntity<TreeInfoResponseHome> getTreeInfoResponsesSort(
-            @RequestParam(value = "mid",defaultValue = "1") Long mid,
-            @RequestParam(value = "seedId", required = false) Long seedId
+            @RequestParam(value = "seedId", required = false) Long seedId,
+            @AuthenticationPrincipal CustomUserDetails userDetails
     ) {
-        Long memberId = mid;
+        Long memberId = userDetails.getId();
         List<TreeInfoResponse> treeInfoResponseList = treeService.findTreeInfoResponseList(memberId, seedId);
 
         return new ResponseEntity<>(TreeInfoResponseHome.of(treeInfoResponseList), HttpStatus.OK);

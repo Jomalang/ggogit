@@ -155,6 +155,7 @@ onMounted(() => {
         :userid="member.email"
         :memoirTitle="leafDetailData.leafTitle"
         :userUrl="`/member/${member.id}`"
+        :deleteBtnActive="false"
     />
   </header>
 

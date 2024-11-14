@@ -4,6 +4,10 @@ import useBackNavigation from "~/composables/useBackNavigation.js";
 const props = defineProps({
   edit: "",
   delete: "",
+  deleteBtnActive: {
+    type: Boolean,
+    default: true,
+  },
 });
 
 const deleteResource = () => {
@@ -35,7 +39,7 @@ const lastPage = computed(() => getLastPage());
         class="top-bar__transparent-setting-btn"
         :to="props.edit"
       ></NuxtLink>
-      <button
+      <button v-if="deleteActive"
         class="top-bar__transparent-delete-btn"
         @click="deleteResource"
       ></button>

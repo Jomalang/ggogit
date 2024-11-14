@@ -1,4 +1,6 @@
 <script setup>
+import useBackNavigation from "~/composables/useBackNavigation.js";
+
 const props = defineProps({
   edit: "",
   delete: "",
@@ -15,15 +17,19 @@ const deleteResource = () => {
   }
 };
 
-const goBack = () => {
-  useRouter().back();
-};
+const goBack = () => { useBackNavigation().popPageFromStack(); };
+const { getLastPage } = useBackNavigation();
+const lastPage = computed(() => getLastPage());
+
 </script>
 
 <template>
   <!--top-bar__transparent(edit)-->
   <div class="top-bar__transparent-frame">
-    <div class="top-bar__transparent-back-btn" @click="useGoBack"></div>
+    <NuxtLink class="top-bar__transparent-back-btn"
+              :to="lastPage"
+              @click="goBack">
+    </NuxtLink>
     <div class="top-bar__transparent-btns">
       <NuxtLink
         class="top-bar__transparent-setting-btn"

@@ -11,11 +11,23 @@ const props = defineProps({
     type: Number,
     default: 0,
   },
+<<<<<<< HEAD
   isEtcTree: {
     type: Boolean,
     default: false,
   },
 });
+=======
+});
+
+const leafLink = (item) => {
+  if (item.bookId !== null && item.bookId !== undefined && item.bookId !== "") {
+    return `/leaf/book/${item.id}`;
+  }
+  return `/leaf/etc/${item.id}`;
+};
+
+>>>>>>> 3ff660acb745981ca8606c21456bb9e683f65af0
 const formatDate = (date) => {
   const options = {
     year: "2-digit", // '24' 형식으로 출력
@@ -90,6 +102,7 @@ watch(
     }
   }
 );
+<<<<<<< HEAD
 
 //leaf Link
 const leafLink = (item) => {
@@ -98,6 +111,8 @@ const leafLink = (item) => {
   }
   return `/leaf/book/${item.id}`;
 };
+=======
+>>>>>>> 3ff660acb745981ca8606c21456bb9e683f65af0
 </script>
 
 <template>

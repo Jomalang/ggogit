@@ -41,7 +41,7 @@ const props = defineProps({
 
         <!-- 탐색 -->
         <li class="nav-box__item">
-          <a class="nav-box__link" href="#">
+          <NuxtLink class="nav-box__link" :to="`/tree/book/search`">
             <div
               class="nav-box__img-box"
               :class="{ 'nav-box__img-box--active': props.active === 'search' }"
@@ -62,7 +62,7 @@ const props = defineProps({
             >
               탐색
             </p>
-          </a>
+          </NuxtLink>
         </li>
 
         <!-- 커뮤니티 -->

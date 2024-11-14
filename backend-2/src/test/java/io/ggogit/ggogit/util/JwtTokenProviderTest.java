@@ -1,6 +1,7 @@
 package io.ggogit.ggogit.util;
 
 import io.ggogit.ggogit.domain.member.entity.Member;
+import io.ggogit.ggogit.domain.member.repository.MemberRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,9 @@ class JwtTokenProviderTest {
 
     @Autowired
     private JwtTokenProvider jwtTokenProvider;
+
+    @Autowired
+    private MemberRepository memberRepository;
 
     @Test
     @DisplayName("토큰 생성 테스트")
@@ -50,9 +54,11 @@ class JwtTokenProviderTest {
     @DisplayName("테스트 이름")
     void generateAdminToken() {
         // given
+        Member member = memberRepository.findByEmail("user1@example.com")
+                .orElseThrow(() -> new IllegalArgumentException("해당 이메일을 가진 사용자가 없습니다."));
 
         // when
-        String token = jwtTokenProvider.generateAdminToken();
+        String token = jwtTokenProvider.generateAccessToken(member);
 
         // then
         System.out.println("token = " + token);

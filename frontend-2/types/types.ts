@@ -10,14 +10,12 @@ export interface LeafItemProps {
   title: String;
   date: String;
   link: String;
-  tags: Array<LeafTag>;
 }
 
 export interface BeforeLeafItemProps {
   id: Number;
   title: String;
   date: String;
-  tags: Array<LeafTag>;
 }
 
 export interface CardItemProps {

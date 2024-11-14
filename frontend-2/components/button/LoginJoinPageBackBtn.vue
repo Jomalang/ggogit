@@ -1,11 +1,17 @@
 <script setup>
 
-const { data } = defineProps(['data']);
+import useBackNavigation from "~/composables/useBackNavigation.js";
+
+const goBack = () => { useBackNavigation().popPageFromStack(); };
+const { getLastPage } = useBackNavigation();
+const lastPage = computed(() => getLastPage());
 
 </script>
 
 <template>
     <div>
-      <NuxtLink :to="data.link"><img src="/svg/back.svg" alt="back-button"></NuxtLink>
+      <NuxtLink :to="lastPage" @click="goBack">
+        <img src="/svg/back.svg" alt="back-button">
+      </NuxtLink>
     </div>
 </template>

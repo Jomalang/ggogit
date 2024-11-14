@@ -4,8 +4,6 @@ import { onUpdated, ref } from "vue";
 //-----------------props-----------------
 const props = defineProps({
   placeholder: "",
-  href: "",
-  api: "",
 });
 //-----------------emit-----------------
 const emit = defineEmits(["req", "bookResult"]);

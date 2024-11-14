@@ -37,3 +37,8 @@ file: # 이미지 업로드 경로
 aladin:
   api:
     key: ttbrhkddlr982013001
+
+naver: # 네이버 Oauth2 로그인
+  api:
+    client_id: Y82lIjIMLGmIfTM3LzMr
+    client_secret: aaj9FW9L6D

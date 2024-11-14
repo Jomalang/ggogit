@@ -6,6 +6,7 @@ export const useMemberDetail = defineStore("ggogitMember", () => {
   const _username = ref("");
   const _email = ref("");
   const _roles = ref([]);
+  const _profileImage = ref("");
   const _token = ref("");
   const _accessToken = ref("");
   const _refreshToken = ref("");
@@ -24,6 +25,23 @@ export const useMemberDetail = defineStore("ggogitMember", () => {
     _email.value = loginInfo.email;
     _roles.value = loginInfo.roles;
     _token.value = loginInfo.token;
+
+    if (!import.meta.env.SSR) {
+      localStorage.setItem("_ggogit_id", _id.value);
+      localStorage.setItem("_ggogit_username", _username.value);
+      localStorage.setItem("_ggogit_email", _email.value);
+      localStorage.setItem("_ggogit_roles", JSON.stringify(_roles.value));
+      localStorage.setItem("_ggogit_token", _token.value);
+    }
+  }
+
+  function setLocal(id, username, email, profileImage, roles, token) {
+    _id.value = id;
+    _username.value = username;
+    _email.value = email;
+    _profileImage.value = profileImage;
+    _roles.value = roles;
+    _token.value = token;
 
     if (!import.meta.env.SSR) {
       localStorage.setItem("_ggogit_id", _id.value);
@@ -72,6 +90,7 @@ export const useMemberDetail = defineStore("ggogitMember", () => {
     setAuth,
     initAuth,
     setEmail,
+    setLocal,
     loadUserFromStorage
   };
 });

@@ -36,7 +36,7 @@ const editPost = async () => {
   memoir.value.text = editor.getHTML();
 
   //fetch
-  const response = await $fetch("memoirs/" + memoirId.value, {
+  const response = await useAuthDataFetch("memoirs/" + memoirId.value, {
     method: "PUT",
     baseURL: `${config.public.apiBase}`,
     body: {
@@ -62,7 +62,7 @@ const editPost = async () => {
   await navigateTo(`/memoir/${memoirId.value}`);
 };
 
-const { data } = await useFetch(`memoirs/${useRoute().params.id}`, {
+const { data } = await useAuthFetch(`memoirs/${useRoute().params.id}`, {
   method: "GET",
   baseURL: `${config.public.apiBase}`,
 });

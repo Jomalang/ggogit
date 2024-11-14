@@ -1,9 +1,8 @@
 <script setup>
-
 import Editor from "@toast-ui/editor";
 import "@toast-ui/editor/dist/toastui-editor.css";
 import { onMounted, reactive } from "vue";
-import axios, {HttpStatusCode} from "axios";
+import axios, { HttpStatusCode } from "axios";
 
 // ----------------------- Model ----------------------- //
 const config = useRuntimeConfig();
@@ -24,8 +23,7 @@ const beforeLogData = reactive({
 
 const totalPage = ref(null);
 
-const leafFormData = useState('leafFormData', () => ({
-
+const leafFormData = useState("leafFormData", () => ({
   // 페이지 번호
   startPage: undefined,
   startPageValidation: true,
@@ -50,31 +48,39 @@ const leafFormData = useState('leafFormData', () => ({
   isLoaded: false,
 }));
 
-const selectedTags = useState('selectedTags', () => ({
+const selectedTags = useState("selectedTags", () => ({
   items: [],
 }));
 
-const leafCreateUrl = useState('leafCreateUrl', () => {
+const leafCreateUrl = useState("leafCreateUrl", () => {
   return `/leaf/book/${leafId}/edit`;
 });
 
-const { data: totalPageData, status: totalPageStatus } = await useFetch(`leaves/${leafId}/book/page`, {
-  baseURL: `${config.public.apiBase}`,
-  method: "GET",
-});
+const { data: totalPageData, status: totalPageStatus } = await useAuthFetch(
+  `leaves/${leafId}/book/page`,
+  {
+    baseURL: `${config.public.apiBase}`,
+    method: "GET",
+  }
+);
 
-const { data: beforeLeafData, status: beforeLeafStatus } = await useFetch(`leaves/${leafId}/before`, {
-  baseURL: `${config.public.apiBase}`,
-  method: "GET",
-});
+const { data: beforeLeafData, status: beforeLeafStatus } = await useAuthFetch(
+  `leaves/${leafId}/before`,
+  {
+    baseURL: `${config.public.apiBase}`,
+    method: "GET",
+  }
+);
 
-const { data: leafEditData, status: leafEditStatus } = await useFetch(`/book/leaves/${leafId}/edit`, {
-  baseURL: `${config.public.apiBase}`,
-  method: "GET",
-});
+const { data: leafEditData, status: leafEditStatus } = await useAuthFetch(
+  `/book/leaves/${leafId}/edit`,
+  {
+    baseURL: `${config.public.apiBase}`,
+    method: "GET",
+  }
+);
 
 watchEffect(() => {
-
   if (totalPageStatus.value !== HttpStatusCode.Ok) {
     // console.log("totalPageData : ", totalPageData.value);
     totalPage.value = totalPageData.value;
@@ -88,7 +94,10 @@ watchEffect(() => {
     beforeLogData.tags = beforeLeafData.value.tags;
   }
 
-  if (!leafFormData.value.isLoaded && leafEditStatus.value !== HttpStatusCode.Ok) {
+  if (
+    !leafFormData.value.isLoaded &&
+    leafEditStatus.value !== HttpStatusCode.Ok
+  ) {
     // console.log("leafEditData : ", leafEditData.value);
     leafFormData.value.startPage = leafEditData.value.startPage;
     leafFormData.value.endPage = leafEditData.value.endPage;
@@ -130,10 +139,13 @@ onMounted(() => {
           treeFormData.append("image", blob);
 
           // MemoirFileApiController - uploadEditorImage 메서드 호출
-          const response = await fetch(`${config.public.apiBase}/leaf/image-upload`, {
-            method: "POST",
-            body: treeFormData,
-          });
+          const response = await fetch(
+            `${config.public.apiBase}/leaf/image-upload`,
+            {
+              method: "POST",
+              body: treeFormData,
+            }
+          );
           // 컨트롤러에서 전달받은 디스크에 저장된 파일 명
           const filename = await response.text();
           // console.log("서버에 저장된 파일 명 : ", filename);
@@ -188,13 +200,17 @@ const pageValidation = () => {
 
 const tagDrop = (tag) => {
   // console.log("tagDrop : ", tag);
-  selectedTags.value.items = selectedTags.value.items.filter((item) => item.id !== tag.id);
+  selectedTags.value.items = selectedTags.value.items.filter(
+    (item) => item.id !== tag.id
+  );
   leafFormData.value.tagIds = selectedTags.value.items.map((tag) => tag.id);
 };
 
 const validate = () => {
-
-  if (!leafFormData.value.startPage || !leafFormData.value.startPageValidation) {
+  if (
+    !leafFormData.value.startPage ||
+    !leafFormData.value.startPageValidation
+  ) {
     leafFormData.value.startPageValidation = false;
     alert("시작 페이지를 잘못 입력하셨습니다.");
     return false;
@@ -216,13 +232,15 @@ const validate = () => {
 };
 
 const submitHandler = async () => {
-
   if (!validate()) {
     return;
   }
 
   // console.log("leafFormData POST > : ", leafFormData.value);
-  const response = await axios.put(`${config.public.apiBase}/book/leaves/${leafId}`, leafFormData.value);
+  const response = await axios.put(
+    `${config.public.apiBase}/book/leaves/${leafId}`,
+    leafFormData.value
+  );
 
   if (response.status !== HttpStatusCode.Ok) {
     throw new Error("Network response was not ok");
@@ -235,7 +253,6 @@ const submitHandler = async () => {
 
 const dataInit = () => {
   leafFormData.value = {
-
     // 페이지 번호
     startPage: undefined,
     startPageValidation: true,
@@ -260,7 +277,6 @@ const dataInit = () => {
     isLoaded: false,
   };
 };
-
 </script>
 
 <template>
@@ -268,7 +284,10 @@ const dataInit = () => {
     <h1 class="none">리프 수정 페이지</h1>
     <section class="tob-bar-back-container">
       <h1 class="none">리프 수정 상단 바</h1>
-      <TopBarBack title="리프 수정" :link="`/leaf?leafId=${leafId}`"></TopBarBack>
+      <TopBarBack
+        title="리프 수정"
+        :link="`/leaf?leafId=${leafId}`"
+      ></TopBarBack>
     </section>
   </header>
 
@@ -295,34 +314,37 @@ const dataInit = () => {
         <section class="first-log_page-input-container">
           <h1 class="none">리프 페이지</h1>
           <InputPageNumber
-              :data="{
-                startPage: leafFormData.startPage,
-                endPage: leafFormData.endPage,
-                maxPage: totalPage,
-              }"
-              @startPage="inputStartPage"
-              @endPage="inputEndPage"
+            :data="{
+              startPage: leafFormData.startPage,
+              endPage: leafFormData.endPage,
+              maxPage: totalPage,
+            }"
+            @startPage="inputStartPage"
+            @endPage="inputEndPage"
           >
           </InputPageNumber>
         </section>
 
         <section class="input-form__select-tag-input-container">
           <h1 class="none">리프 태그 입력</h1>
-          <InputTagSelect :selectedTag="selectedTags.items" @drop="tagDrop"></InputTagSelect>
+          <InputTagSelect
+            :selectedTag="selectedTags.items"
+            @drop="tagDrop"
+          ></InputTagSelect>
         </section>
 
         <section class="input-form__input-container">
           <h1 class="none">로그이름 입력</h1>
           <InputTextBox
-              :data="{
-                label: '*제목',
-                name: 'title',
-                placeholder: '리프 제목을 입력해 주세요.',
-                value: leafFormData.title,
-                validate: leafFormData.titleValidation,
-                validateMessage: '리프 제목을 입력해 주세요.'
-              }"
-              @inputData="inputTitle"
+            :data="{
+              label: '*제목',
+              name: 'title',
+              placeholder: '리프 제목을 입력해 주세요.',
+              value: leafFormData.title,
+              validate: leafFormData.titleValidation,
+              validateMessage: '리프 제목을 입력해 주세요.',
+            }"
+            @inputData="inputTitle"
           ></InputTextBox>
         </section>
 
@@ -341,12 +363,17 @@ const dataInit = () => {
 
         <section class="input-form__input-container">
           <h1 class="none">공개성 선택</h1>
-          <InputVisibility v-model:visibility="leafFormData.visibility"></InputVisibility>
+          <InputVisibility
+            v-model:visibility="leafFormData.visibility"
+          ></InputVisibility>
         </section>
 
         <section class="book-tree-submit-container">
           <h1 class="none">리프 수정 버튼</h1>
-          <ButtonSubmitBtnFullBar text="리프 수정" @submit="submitHandler"></ButtonSubmitBtnFullBar>
+          <ButtonSubmitBtnFullBar
+            text="리프 수정"
+            @submit="submitHandler"
+          ></ButtonSubmitBtnFullBar>
         </section>
       </section>
     </form>

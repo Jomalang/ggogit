@@ -66,7 +66,7 @@ const closePopup = () => {
   queryParam.page = 0;
 };
 
-const { data: infoData, error: infoError } = await useFetch(
+const { data: infoData, error: infoError } = await useAuthFetch(
   () => `trees/${treeId}/info`,
   {
     baseURL: config.public.apiBase,
@@ -77,7 +77,7 @@ const {
   data: branchData,
   error: branchError,
   refresh,
-} = await useFetch(() => `trees/${treeId}/branches`, {
+} = await useAuthFetch(() => `trees/${treeId}/branches`, {
   baseURL: config.public.apiBase,
   params: queryParam,
 });

@@ -14,9 +14,9 @@ const router = useRouter();
 const handleLogout = async () => {
   try {
     // 로그아웃 API 호출
-    await fetch("/member/logout", { method: "POST" });
+    useMemberStore().initAuth();
     // 로그아웃 성공 후 처리
-    router.push("/index");
+    router.push("/member/login");
   } catch (error) {
     console.error("로그아웃 실패:", error);
   }

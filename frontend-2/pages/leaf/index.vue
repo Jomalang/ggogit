@@ -1,7 +1,6 @@
 <script setup>
-
 import { useRoute } from "vue-router";
-import {Tree} from "~/composables/Tree.js";
+import { Tree } from "~/composables/Tree.js";
 
 // ----------------------- Model ----------------------- //
 const route = useRoute();
@@ -47,26 +46,38 @@ const focusNodeDate = reactive({
 });
 
 const btn = reactive({
-  text: "리프 생성"
+  text: "리프 생성",
 });
 
 const nodes = ref([]);
 
-const { data: seedTypeData, error: seedTypeDataError } = await useFetch(() => `leaves/${leafId}/seed`, {
-  baseURL: config.public.apiBase,
-});
+const { data: seedTypeData, error: seedTypeDataError } = await useAuthFetch(
+  () => `leaves/${leafId}/seed`,
+  {
+    baseURL: config.public.apiBase,
+  }
+);
 
-const { data: breadcrumbData, error: breadcrumbDataError } = await useFetch(() => `leaves/${leafId}/breadcrumb`, {
-  baseURL: config.public.apiBase,
-});
+const { data: breadcrumbData, error: breadcrumbDataError } = await useAuthFetch(
+  () => `leaves/${leafId}/breadcrumb`,
+  {
+    baseURL: config.public.apiBase,
+  }
+);
 
-const { data: leafAllData, error: leafAllDataError } = await useFetch(() => `leaves/${leafId}/all`, {
-  baseURL: config.public.apiBase,
-});
+const { data: leafAllData, error: leafAllDataError } = await useAuthFetch(
+  () => `leaves/${leafId}/all`,
+  {
+    baseURL: config.public.apiBase,
+  }
+);
 
-const { data: branchInfoData, error: branchInfoDataError } = await useFetch(() => `leaves/${leafId}/branch`, {
-  baseURL: config.public.apiBase,
-});
+const { data: branchInfoData, error: branchInfoDataError } = await useAuthFetch(
+  () => `leaves/${leafId}/branch`,
+  {
+    baseURL: config.public.apiBase,
+  }
+);
 
 // ----------------------- Init ----------------------- //
 if (seedTypeData.value) {
@@ -95,31 +106,30 @@ if (branchInfoData.value) {
 // ----------------------- Life Cycle ----------------------- //
 onBeforeMount(() => {
   // 화면 크기 변경 리스너 제거
-  window.removeEventListener('resize', updateWidth);
+  window.removeEventListener("resize", updateWidth);
 });
 
 onMounted(() => {
   screenWidth.value = window.innerWidth;
 
   // 화면 크기 변경에 대응하도록 리스너 추가
-  window.addEventListener('resize', updateWidth);
-  document.body.addEventListener('scroll', scrollHandler);
+  window.addEventListener("resize", updateWidth);
+  document.body.addEventListener("scroll", scrollHandler);
   scrollToElement();
 });
 
 onUnmounted(() => {
   // 화면 크기 변경 리스너 제거
-  window.removeEventListener('resize', updateWidth);
-  document.body.removeEventListener('scroll', scrollHandler);
+  window.removeEventListener("resize", updateWidth);
+  document.body.removeEventListener("scroll", scrollHandler);
 });
-
 
 // ----------------------- Function ----------------------- //
 
-const  updateWidth = () => {
+const updateWidth = () => {
   screenWidth.value = window.innerWidth;
   // console.log("화면 크기 변경", screenWidth.value);
-}
+};
 
 const scrollHandler = (event) => {
   // console.log("스크롤 이벤트 발생", event);
@@ -127,16 +137,17 @@ const scrollHandler = (event) => {
 };
 
 const findFocusNode = () => {
-  const nodes = document.querySelectorAll('.node');
-  const focusY = (window.innerHeight / 2);
+  const nodes = document.querySelectorAll(".node");
+  const focusY = window.innerHeight / 2;
   // const focusX = (window.innerWidth / 2);
 
   // console.log('start > scroll');
   // 포커스 적용 계산
   let minDistance = Number.MAX_SAFE_INTEGER;
   let minNode = null;
-  for (let node of nodes) { // 가장 가까운 노드 찾기
-    node.classList.remove('node--active');
+  for (let node of nodes) {
+    // 가장 가까운 노드 찾기
+    node.classList.remove("node--active");
     const position = node.getBoundingClientRect();
     const dist = distanceY(position.y, focusY);
 
@@ -147,43 +158,43 @@ const findFocusNode = () => {
   }
 
   // 포커스 적용
-  const focusNodeId = minNode.getAttribute('data-id');
+  const focusNodeId = minNode.getAttribute("data-id");
   for (let node of nodes) {
-    let id = node.getAttribute('data-id');
+    let id = node.getAttribute("data-id");
     if (id === focusNodeId) {
       leafCreateBtn.id = id;
       leafCreateBtn.canCreate = tree.value.isCreateBranch(id);
       // console.log('focus node', id);
-      node.classList.add('node--active');
+      node.classList.add("node--active");
     }
   }
 
   // 날짜 변경
-  const item = minNode.closest('.leaf-item');
-  const dateTag = item.querySelector('.log-item__date'); // 화면 날짜 적용
-  if (dateTag.innerText === '') {
-    focusNodeDate.title = '비공개 리프입니다.';
+  const item = minNode.closest(".leaf-item");
+  const dateTag = item.querySelector(".log-item__date"); // 화면 날짜 적용
+  if (dateTag.innerText === "") {
+    focusNodeDate.title = "비공개 리프입니다.";
   } else {
     focusNodeDate.title = formatDate(dateTag.innerText); // 화면 날짜 적용;
   }
 
   // 브래드 스크럼 변경
-  const titleTag = item.querySelector('.log-item__title');
-  if (titleTag.innerText === '') {
-    breadcrumb.leafName = '비공개 리프입니다.';
+  const titleTag = item.querySelector(".log-item__title");
+  if (titleTag.innerText === "") {
+    breadcrumb.leafName = "비공개 리프입니다.";
   } else {
     breadcrumb.leafName = titleTag.innerText;
   }
 };
 
 const formatDate = (dateString) => {
-  const [year, month, day] = dateString.split('-');
+  const [year, month, day] = dateString.split("-");
   return `${year}년 ${month}월 ${day}일`;
-}
+};
 
 const distanceY = (y1, y2) => {
   return Math.abs(y2 - y1);
-}
+};
 
 const touchStartHandler = (event) => {
   nodeSideStartEventHandler(event, targetNode.value[0]);
@@ -194,13 +205,14 @@ const touchMoveHandler = async (event, node) => {
 };
 
 const nodeSideStartEventHandler = (event, node) => {
-  if (event.type === 'touchstart') {
-    touchValue.moveStartX = event.touches[0].pageX - event.currentTarget.offsetLeft;
-  } else if (event.type === 'mousedown') {
+  if (event.type === "touchstart") {
+    touchValue.moveStartX =
+      event.touches[0].pageX - event.currentTarget.offsetLeft;
+  } else if (event.type === "mousedown") {
     isDragging.value = true;
     touchValue.moveStartX = event.pageX - event.currentTarget.offsetLeft;
   }
-}
+};
 
 const nodeSideMoveEventHandler = async (event, node) => {
   const currentTime = new Date().getTime();
@@ -210,10 +222,12 @@ const nodeSideMoveEventHandler = async (event, node) => {
   }
 
   let currentX = 0;
-  if (event.type === 'touchmove') {
+  if (event.type === "touchmove") {
     currentX = event.touches[0].pageX - event.currentTarget.offsetLeft;
-  } else if (event.type === 'mousemove') {
-    if (!isDragging.value) { return; } // 드래그 중이 아닐때
+  } else if (event.type === "mousemove") {
+    if (!isDragging.value) {
+      return;
+    } // 드래그 중이 아닐때
     currentX = event.pageX - event.currentTarget.offsetLeft;
   }
 
@@ -226,12 +240,14 @@ const nodeSideMoveEventHandler = async (event, node) => {
     return; // 스와이프 이동 중
   }
 
-    // 스와이프 인식 거리 이상 이동
-  if (0 < diffX && 0 < node.translateIndex) { // 왼쪽으로 스와이프
+  // 스와이프 인식 거리 이상 이동
+  if (0 < diffX && 0 < node.translateIndex) {
+    // 왼쪽으로 스와이프
     // console.log('인덱스 스와이프값 감소');
     node.translateIndex--;
     touchValue.moveLock = true;
-  } else if (diffX < 0 && node.translateIndex < node.childLength - 1) { // 오른쪽으로 스와이프
+  } else if (diffX < 0 && node.translateIndex < node.childLength - 1) {
+    // 오른쪽으로 스와이프
     // console.log('인덱스 스와이프값 증가');
     node.translateIndex++;
     touchValue.moveLock = true;
@@ -274,7 +290,7 @@ const nodeSideMoveEventHandler = async (event, node) => {
   touchValue.lastEventTime = new Date().getTime();
   touchValue.moveLock = false;
 
-  if (event.type === 'mousemove') {
+  if (event.type === "mousemove") {
     isDragging.value = false;
   }
 };
@@ -285,9 +301,8 @@ const mouseUpHandler = () => {
 
 const scrollToElement = () => {
   // console.log('scrollToElement', targetNode);
-  targetNode.value[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+  targetNode.value[0].scrollIntoView({ behavior: "smooth", block: "center" });
 };
-
 </script>
 
 <template @scroll="scrollHandler">
@@ -303,17 +318,20 @@ const scrollToElement = () => {
       <section class="log-path-container">
         <h1 class="none">리프 경로</h1>
         <BarLogPath
-            :data="{
-                tree: breadcrumb.treeName,
-                branch: breadcrumb.branchName,
-                leaf: breadcrumb.leafName
-            }"
+          :data="{
+            tree: breadcrumb.treeName,
+            branch: breadcrumb.branchName,
+            leaf: breadcrumb.leafName,
+          }"
         ></BarLogPath>
       </section>
 
       <section class="log-list-date-title-container">
         <h1 class="none">리프 날짜</h1>
-        <TextMainTitleRight :title="focusNodeDate.title" :size="focusNodeDate.size"></TextMainTitleRight>
+        <TextMainTitleRight
+          :title="focusNodeDate.title"
+          :size="focusNodeDate.size"
+        ></TextMainTitleRight>
       </section>
     </section>
   </header>
@@ -322,15 +340,19 @@ const scrollToElement = () => {
     <section class="log-list-container">
       <h1 class="none">리프 리스트</h1>
       <section
-               v-for="node in nodes"
-               :ref="node.id === leafId ? 'targetNode' : ''"
+        v-for="node in nodes"
+        :ref="node.id === leafId ? 'targetNode' : ''"
       >
-        <div class="log-item-container"
-             @touchstart="touchStartHandler"
-             @touchmove="(event) => touchMoveHandler(event, node)"
-             @mousedown="touchStartHandler"
-             @mousemove="(event) => touchMoveHandler(event, node)"
-             :style="{ transform: `translateX(-${node.translateSize(screenWidth)}px)` }">
+        <div
+          class="log-item-container"
+          @touchstart="touchStartHandler"
+          @touchmove="(event) => touchMoveHandler(event, node)"
+          @mousedown="touchStartHandler"
+          @mousemove="(event) => touchMoveHandler(event, node)"
+          :style="{
+            transform: `translateX(-${node.translateSize(screenWidth)}px)`,
+          }"
+        >
           <div v-if="node.isLeft" class="log-item__left-box">
             <LogItem :data="node.leftData"></LogItem>
           </div>
@@ -352,7 +374,11 @@ const scrollToElement = () => {
     <h1 class="none">브랜치 정보 알림 하단 바</h1>
     <section class="log-list-bot-btn-container">
       <h1 class="none">리프 생성 버튼</h1>
-      <ButtonBtnShortAGreen :visibility="leafCreateBtn.canCreate" :link="`/leaf/${seedType}/${leafCreateBtn.id}/new`" :text="`리프 생성`"/>
+      <ButtonBtnShortAGreen
+        :visibility="leafCreateBtn.canCreate"
+        :link="`/leaf/${seedType}/${leafCreateBtn.id}/new`"
+        :text="`리프 생성`"
+      />
     </section>
 
     <section class="log-list-bot-bar-info-container">
@@ -363,7 +389,6 @@ const scrollToElement = () => {
 </template>
 
 <style scoped>
-
 main {
   width: 100%;
   height: 100%;

@@ -10,15 +10,17 @@ const filterTreeInfoList = ref([]);
 const seedList = ref([]);
 const seedId = ref(0);
 let observer = null;
+const memberDetail = useMemberStore();
+const { _nickname: username } = storeToRefs(memberDetail);
 
 //TODO: JWT토큰 있다면 전송하게끔 로직 수정 필요
 
-const { data: seedData, status: seedStatus } = await useFetch("seeds", {
+const { data: seedData, status: seedStatus } = await useAuthFetch("seeds", {
   baseURL: `${config.public.apiBase}`,
   method: "GET",
 });
 
-const { data: treeData, status: treeStatus } = await useAuthDataFetch(
+const { data: treeData, status: treeStatus } = await useAuthFetch(
   "trees/tree-home",
   {
     baseURL: `${config.public.apiBase}`,
@@ -28,7 +30,7 @@ const { data: treeData, status: treeStatus } = await useAuthDataFetch(
 
 const newTreeFetch = async (newSeedId) => {
   seedId.value = newSeedId;
-  const response = await $fetch("trees/tree-home-sort", {
+  const response = await useAuthDataFetch("trees/tree-home-sort", {
     baseURL: `${config.public.apiBase}`,
     method: "GET",
     params: {
@@ -115,7 +117,7 @@ const bookExRemoveNone = (selectedElement, index) => {
       <h2 class="none">나의 트리 정보</h2>
       <section class="my-tree-title-container">
         <h3>
-          <TextMainTitle :data="{ title: '나의 트리', size: 28 }" />
+          <TextMainTitle :data="{ title: `${username}님의 트리`, size: 28 }" />
         </h3>
       </section>
 

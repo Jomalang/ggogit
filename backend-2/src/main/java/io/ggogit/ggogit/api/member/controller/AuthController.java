@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.ggogit.ggogit.api.member.dto.AuthInfoResponse;
 import io.ggogit.ggogit.domain.member.api.dto.AuthResponseDto;
+import io.ggogit.ggogit.domain.member.api.dto.NaverOauthAccessDto;
 import io.ggogit.ggogit.domain.member.api.oauth2.GoogleOauthClient;
 import io.ggogit.ggogit.domain.member.api.oauth2.NaverOauthClient;
 import io.ggogit.ggogit.domain.member.entity.Member;
@@ -59,7 +60,8 @@ public class AuthController {
         ObjectMapper mapper = new ObjectMapper();
         try {
             ServingDto servingDto = mapper.readValue(accessToken, ServingDto.class);
-            AuthResponseDto authResponseDto = naverOauthClient.getAccessToken(servingDto.token, servingDto.state);
+            NaverOauthAccessDto naverOauthAccessDto = naverOauthClient.getAccessToken(servingDto.code, servingDto.state);
+            AuthResponseDto authResponseDto = naverOauthClient.findMemberInfo(naverOauthAccessDto);
 
         } catch (JsonMappingException e) {
             throw new RuntimeException(e);
@@ -74,8 +76,8 @@ public class AuthController {
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 class ServingDto{
-    @JsonProperty("token")
-    String token;
+    @JsonProperty("code")
+    String code;
     @JsonProperty("state")
     String state;
 }

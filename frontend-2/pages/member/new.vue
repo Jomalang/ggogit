@@ -1,7 +1,10 @@
 <script setup>
 const config = useRuntimeConfig();
 const route = useRoute();
+const router = useRouter();
 const key = ref(route.query.key);
+
+
 
 // ----------------------- Method ----------------------- //
 const joinInfo = ref({
@@ -32,8 +35,11 @@ const joinInfo = ref({
 
   isPolicyAgreement: false,
 });
+
+// ----------------------- Life Cycle ----------------------- //
+
 // ----------------------- API ----------------------- //
-const { data: emailInfo, error: emailInfoError } = await useAuthFetch(
+const { data: emailInfo, error: emailInfoError } = await useFetch(
   `members/join/check-email`,
   {
     method: "POST",
@@ -45,7 +51,7 @@ const { data: emailInfo, error: emailInfoError } = await useAuthFetch(
 
 const joinPostApi = async () => {
   try {
-    const response = await useAuthDataFetch(`members/join`, {
+    const response = await $fetch(`members/join`, {
       method: "POST",
       baseURL: `${config.public.apiBase}`,
       headers: { "Content-Type": "application/json" },
@@ -59,11 +65,12 @@ const joinPostApi = async () => {
       },
     });
 
-    if (response.status !== 201) {
-      alert("회원가입이 완료되었습니다.");
+    if (response.message !== '로그인 성공') {
+      alert('회원가입에 실패했습니다.');
       return;
     }
 
+    useMemberStore().setAuthWithToken(response.accessToken);
     alert("회원가입이 완료되었습니다.");
   } catch (error) {
     alert(error.data.message);
@@ -72,7 +79,23 @@ const joinPostApi = async () => {
 
 watchEffect(() => {
   if (emailInfo.value) {
+    console.log(emailInfo.value);
     joinInfo.value.email = emailInfo.value.email;
+  }
+
+  if (key.value) {
+    const response = $fetch(`members/join/check-token`, {
+      method: 'POST',
+      baseURL: `${config.public.apiBase}`,
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: {
+        key: key.value
+      }
+    });
+    console.log(response);
   }
 });
 
@@ -236,7 +259,7 @@ const submitJoin = () => {
 
   // 회원가입 API 호출
   joinPostApi();
-  route.push("/member/login");
+  router.push("/home");
 };
 </script>
 

@@ -142,6 +142,7 @@ onMounted(() => {
   viewer.setMarkdown(editor.value.text);
 });
 
+// ---------------------- Method ---------------------- //
 </script>
 
 <template>
@@ -209,7 +210,7 @@ onMounted(() => {
       </section>
       <section class="branch-tree-another-record-list-container">
         <h1 class="none">트리 리스트</h1>
-        <CardAnotherRecordsList :items="treeItems" />
+        <CardAnotherRecordsList :items="treeItems" :sideScrollType="`tree`"/>
       </section>
 
       <section
@@ -222,7 +223,7 @@ onMounted(() => {
       <section class="branch-tree-another-record-list-container">
         <h1 class="none">회고록 리스트</h1>
         <section class="book-detail-other-tree-card-container">
-          <CardAnotherRecordsList :items="memoirItems" />
+          <CardAnotherRecordsList :items="memoirItems" :sideScrollType="`memoir`"/>
         </section>
       </section>
 
@@ -235,7 +236,7 @@ onMounted(() => {
 
       <section class="branch-tree-another-record-list-container">
         <h1 class="none">리프 리스트</h1>
-        <CardAnotherRecordsList :items="leafItems" />
+        <CardAnotherRecordsList :items="leafItems" :sideScrollType="`leaf`"/>
       </section>
     </section>
 

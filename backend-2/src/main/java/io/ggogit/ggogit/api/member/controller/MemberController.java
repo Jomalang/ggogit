@@ -32,6 +32,7 @@ public class MemberController {
     public ResponseEntity<MemberSendEmailResponse> joinSendEmail(
             @RequestBody MemberSendEmailRequest dto
     ) throws MessagingException {
+
         // 기존 회원 확인
         if (memberService.existsEmail(dto.getEmail())) {
             MemberSendEmailResponse response = MemberSendEmailResponse.of(false, "이미 가입된 이메일입니다.");

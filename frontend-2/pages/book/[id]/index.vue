@@ -166,7 +166,11 @@ if (bookTreeCradsData.value) {
         <!-- 이 부분은 추후에 어플리케이션이 사용자 정보를 상태 유지 가능할때 기능 추가 할 예정 -->
         <h1 class="none">나의 트리 리스트</h1>
         <section class="book-detail-my-tree-card-container">
-          <CardTreeList v-if="myTreeCards.length >= 1" :data="myTreeCards" />
+          <CardTreeList
+              v-if="myTreeCards.length >= 1"
+              :data="myTreeCards"
+              :sideScrollType="`my-tree`"
+          />
           <TextMainTitle
             class="book-detail-my-tree-no-tree-container"
             v-else
@@ -191,7 +195,10 @@ if (bookTreeCradsData.value) {
       <section class="book-detail-other-tree-list-container">
         <h1 class="none">트리 리스트</h1>
         <section class="book-detail-other-tree-card-container">
-          <CardSnsCardTreeList :list="bookTreeCards" />
+          <CardSnsCardTreeList
+              :list="bookTreeCards"
+              :sideScrollType="`tree`"
+          />
         </section>
       </section>
 
@@ -202,7 +209,10 @@ if (bookTreeCradsData.value) {
       <section class="book-detail-other-tree-list-container">
         <h1 class="none">회고록 리스트</h1>
         <section class="book-detail-other-tree-card-container">
-          <CardSnsCardTreeList :list="bookMemoirCards" />
+          <CardSnsCardTreeList
+              :list="bookMemoirCards"
+              :sideScrollType="`memoir`"
+          />
         </section>
       </section>
 
@@ -213,7 +223,10 @@ if (bookTreeCradsData.value) {
       <section class="book-detail-other-tree-list-container">
         <h1 class="none">리프 리스트</h1>
         <section class="book-detail-other-tree-card-container">
-          <CardSnsCardTreeList :list="bookleafCards" />
+          <CardSnsCardTreeList
+              :list="bookleafCards"
+              :sideScrollType="`leaf`"
+          />
         </section>
       </section>
     </section>

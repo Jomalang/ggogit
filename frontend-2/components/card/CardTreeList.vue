@@ -6,13 +6,32 @@ const props = defineProps({
     type: Array,
     default: () => [],
   },
+  sideScrollType: {
+    type: String,
+    required: true,
+  },
 });
 
-// console.log(props.data);
+
+let scrollContainer;
+onMounted(() => {
+  scrollContainer = document.querySelector(`.card-another-records-list-box.${props.sideScrollType}`);
+});
+
+const scroll = (e) => {
+  e.preventDefault(); // 기본 스크롤 동작 방지
+  const scrollAmount = e.deltaY || -e.wheelDelta || 0;
+  const adjustedScrollAmount = scrollAmount * 1; // 스크롤 속도 조절
+  scrollContainer.scrollLeft += adjustedScrollAmount;
+};
+
 </script>
 
 <template>
-  <div class="card-tree-list-box">
+  <div class="card-tree-list-box"
+    @wheel="scroll"
+    :class="`card-another-records-list-box ${props.sideScrollType}`"
+  >
     <ul class="card-tree__list">
       <li
         class="card-tree__item"

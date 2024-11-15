@@ -39,7 +39,6 @@ const config = useRuntimeConfig();
 
 const isActive = ref(false);
 let totalCnt = 0;
-const isEtcTree = ref(true);
 
 const openPopup = () => {
   const filterBack1 = document.getElementById("filter-bg");
@@ -131,9 +130,6 @@ watchEffect(() => {
   if (infoData.value) {
     // console.log("infoData.value", infoData.value);
     info = infoData.value;
-    // bookTree인 경우 isEtcTree.value = false
-    if (info.bookId !== null && info.bookId !== undefined && info.bookId !== "")
-      isEtcTree.value = false;
   }
 
   if (branchData.value) {
@@ -209,7 +205,6 @@ watchEffect(() => {
             <CardBranchList
               :items="mergedBranch.items"
               :totalCnt="branch.totalCount"
-              :isEtcTree="isEtcTree"
               @loadMore="loadMore"
             ></CardBranchList>
           </div>
@@ -452,15 +447,19 @@ watchEffect(() => {
     </section>
   </main>
 
+  <footer>
+    <Footer :noticeText="`개발 중입니다.`" />
+  </footer>
+
   <section class="nav-back-container">
     <h2 class="none">네비바 뒤 공백</h2>
   </section>
+
   <aside>
     <section class="nav-container">
       <h2 class="none">네비게이션</h2>
-      <div>
-        <NavigationBar :active="'home'"></NavigationBar>
-      </div>
+      <!-- 트리 생성 언더바  -->
+      <NavNavigationBar :active="'home'" />
     </section>
   </aside>
 </template>

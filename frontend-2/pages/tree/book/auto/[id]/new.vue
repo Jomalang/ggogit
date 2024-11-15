@@ -159,13 +159,10 @@ const submitFormHandler = async (e) => {
           <TextBookInfo
             :data="{
               title: data.title,
-              authors: data.authors,
+              author: data.author,
               translators: data.translators,
               publisher: data.publisher,
-              category: {
-                name: data.bookCategoryName,
-                id: data.bookCategoryId,
-              },
+              category: data.category,
               page: data.page,
               seed: data.seed,
             }"

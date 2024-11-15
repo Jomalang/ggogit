@@ -1,14 +1,41 @@
-<script setup lang="ts">
-onMounted(() => {
+<script setup>
+import { ref, onMounted, watchEffect } from "vue";
+const startBtn = ref(null);
+const stickyBtn = ref(null);
+
+
+//---------------function----------------//
+const handleScroll = () => {
+  if(startBtn.value && stickyBtn.value) {
+    const startBtnBottom = startBtn.value.getBoundingClientRect().bottom;
+    if (startBtnBottom <= 0) {
+      stickyBtn.value.classList.remove("none");
+    } else {
+      stickyBtn.value.classList.add("none");
+    }
+  }
+
   // 화면이 900px 이하인 경우 스크롤 이벤트 적용 박스에 mobile-phone-side
-  if (window.innerWidth <= 900) {
-    window.addEventListener("scroll", () => {
+  if (document.body.innerWidth <= 900) {
+    document.body.addEventListener("scroll", () => {
       const sideBar = document.querySelectorAll(".mobile-phone-side");
     });
   }
+};
+//-----------------life cycle----------------//
+onMounted(() => {
+
+  startBtn.value = document.getElementById("start-btn");
+  stickyBtn.value = document.getElementById("sticky-btn");
+
+  if (startBtn.value)
+    document.body.addEventListener('scroll', handleScroll);
+});
+// 컴포넌트 언마운트 시 이벤트 리스너 제거
+onUnmounted(() => {
+  document.body.removeEventListener('scroll', handleScroll);
 });
 </script>
-
 <template>
   <header>
     <div class="landing-box">
@@ -23,7 +50,7 @@ onMounted(() => {
         <p>꼬깃과 함께</p>
         <p>메모의 여정을 떠나세요</p>
         <NuxtLink to="/home">
-          <div class="start-btn">GGogit 시작하기</div>
+          <div class="start-btn" id="start-btn">GGogit 시작하기</div>
         </NuxtLink>
       </div>
       <img src="/svg/home-down-arrow.svg" />
@@ -115,7 +142,7 @@ onMounted(() => {
       </div>
     </section>
 
-    <section class="rending-page__sticky-start-btn-section">
+    <section class="rending-page__sticky-start-btn-section none" id="sticky-btn">
       <div class="rending-page__sticky-start-btn-frame">
         <NuxtLink class="rending-page__sticky-start-btn" to="/home">시작하기</NuxtLink>
       </div>

@@ -114,6 +114,12 @@ onMounted(() => {
         </div>
       </div>
     </section>
+
+    <section class="rending-page__sticky-start-btn-section">
+      <div class="rending-page__sticky-start-btn-frame">
+        <NuxtLink class="rending-page__sticky-start-btn" to="/home">시작하기</NuxtLink>
+      </div>
+    </section>
   </main>
 </template>
 
@@ -594,5 +600,24 @@ onMounted(() => {
       margin: 20px;
     }
   }
+}
+.rending-page__sticky-start-btn-frame {
+  position: fixed;
+  bottom: 30px; /* 화면 하단에서 10px 위에 고정 */
+  right: 20px; /* 화면 오른쪽에서 20px 떨어진 위치에 고정 */
+  z-index: 1000; /* 다른 요소들 위로 올라오도록 설정 */
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.rending-page__sticky-start-btn {
+  height: 30px;
+  align-content: center;
+  padding: 10px 20px;
+  background-color: var(--main1);
+  color: var(--white);
+  border-radius: 20px;
+  font-weight: bold;
 }
 </style>

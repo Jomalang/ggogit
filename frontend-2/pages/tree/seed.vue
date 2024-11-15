@@ -1,31 +1,20 @@
-<script setup lang="ts">
-import { SeedFilterTabProps } from "@/types/types";
+<script setup>
 import { onMounted, reactive } from "vue";
-import axios from "axios";
-import FilterFullWidth from "~/components/button/FilterFullWidth.vue";
-import FilterTabGet from "~/components/tab-filter/FilterTabGet.vue";
-import NavigationBar from "~/components/nav/NavigationBar.vue";
 
 // -------------------------- Model -------------------------- //
 
-const seeds = reactive<SeedFilterTabProps>({});
-// -------------------------- Life Cycle -------------------------- //
-onMounted(() => {
-  fetchData();
-});
+const seeds = reactive({});
+const config = useRuntimeConfig();
 
 // -------------------------- API -------------------------- //
 
-const fetchData = async () => {
-  try {
-    const response = await axios.get("http://localhost:8080/api/v1/seeds");
-    // console.log(response.data);
-    seeds.filterName = "`씨앗 선택`";
-    seeds.filterItems = response.data.items;
-  } catch (error) {
-    console.error("Error fetching data:", error);
-  }
-};
+const { data } = await useAuthFetch("seeds", {
+  method: "GET",
+  baseURL: `${config.public.apiBase}`,
+});
+console.log(data);
+seeds.filterName = "씨앗 선택";
+seeds.filterItems = data.value.items;
 
 // -------------------------- Event Function -------------------------- //
 
@@ -58,18 +47,18 @@ const filterTabDownHandler = () => {
 
     <section class="btn-select-container">
       <h2 class="none">씨앗 선택 버튼</h2>
-      <FilterFullWidth
+      <ButtonFilterFullWidth
         :text="`씨앗 선택`"
         @click="filterTabUpHandler"
-      ></FilterFullWidth>
+      ></ButtonFilterFullWidth>
     </section>
 
     <section class="filter-tab-container none" @click="filterTabDownHandler">
       <h2 class="none">씨앗 선택</h2>
-      <FilterTabGet
+      <TabFilterTabGet
         :data="seeds"
         @backButtonClick="filterTabDownHandler"
-      ></FilterTabGet>
+      ></TabFilterTabGet>
     </section>
   </main>
 
@@ -80,7 +69,7 @@ const filterTabDownHandler = () => {
   <aside>
     <section class="nav-container">
       <h2 class="none">네비게이션 바</h2>
-      <NavigationBar active="home"></NavigationBar>
+      <NavNavigationBar active="home"></NavNavigationBar>
     </section>
   </aside>
 </template>

@@ -9,8 +9,8 @@ const props = defineProps({
   userUrl: "",
 });
 
-console.log("BackgroundUserInfoBackHeaderMemoirTitle");
-console.log(props);
+// console.log("BackgroundUserInfoBackHeaderMemoirTitle");
+// console.log(props);
 
 const config = useRuntimeConfig();
 //TODO: 배경 이미지과 프로필 이미지 구별해야 함.

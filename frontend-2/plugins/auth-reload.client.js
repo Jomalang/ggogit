@@ -5,6 +5,6 @@ export default defineNuxtPlugin((Nuxtapp) => {
   try {
     memberStore.loadUserFromStorage();
   } catch (e) {
-    console.log("loadUserFromStorage error = ", e);
+    // console.log("loadUserFromStorage error = ", e);
   }
 });

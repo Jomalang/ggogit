@@ -53,11 +53,11 @@ const handleScroll = () => {
 };
 
 const dropListHandler = () => {
-  console.log("dropListHandler");
+  // console.log("dropListHandler");
 };
 
 const searchLoadingPage = (isLoading) => {
-  console.log(`searchLoadingPage=${isLoading}`);
+  // console.log(`searchLoadingPage=${isLoading}`);
   searchLoading.value = isLoading;
 };
 
@@ -78,12 +78,14 @@ onMounted(() => {
 </script>
 
 <template>
-
   <section v-if="searchLoading" class="search-blur-container">
     <h2 class="none">검색 블러 컨테이너</h2>
     <div class="blur-bg">
       <div class="info-box">
-        <p>도서를 검색중입니다    <span class="dot">·</span><span class="dot">·</span><span class="dot">·</span></p>
+        <p>
+          도서를 검색중입니다 <span class="dot">·</span
+          ><span class="dot">·</span><span class="dot">·</span>
+        </p>
       </div>
     </div>
   </section>
@@ -144,26 +146,24 @@ onMounted(() => {
     </section>
   </main>
 
-  <section class="btn-select-container--right">
-    <h2 class="none">도서 직접 등록 버튼</h2>
-    <!-- TODO: href변경하기 -->
-    <ButtonBtnShortAGreen
-      :link="`/tree/book/new`"
-      :text="`도서 직접 등록하기`"
-    />
-  </section>
-
   <div class="nav-back-container">
     <h2 class="none">네비게이션 뒤 공백</h2>
   </div>
 
   <aside class="nav-container">
+    <section class="short-btn-container">
+      <h2 class="none">도서 직접 등록 버튼</h2>
+      <!-- TODO: href변경하기 -->
+      <ButtonBtnShortAGreen
+        :link="`/tree/book/new`"
+        :text="`도서 직접 등록하기`"
+      />
+    </section>
     <NavNavigationBar active="home" />
   </aside>
 </template>
 
 <style scoped>
-
 .scroll-container {
   display: flex;
   height: 100%;
@@ -201,8 +201,9 @@ onMounted(() => {
 .blur-bg {
   z-index: 100;
   position: absolute;
-  height: 100vh;
+  height: 200vw;
   width: 100vw;
+  left: 0;
   background-color: rgba(0, 0, 0, 0.6);
 
   .info-box {
@@ -223,9 +224,15 @@ onMounted(() => {
       font-weight: bold;
       text-align: center;
 
-      .dot:nth-child(1) { --i: 0; }
-      .dot:nth-child(2) { --i: 1; }
-      .dot:nth-child(3) { --i: 2; }
+      .dot:nth-child(1) {
+        --i: 0;
+      }
+      .dot:nth-child(2) {
+        --i: 1;
+      }
+      .dot:nth-child(3) {
+        --i: 2;
+      }
 
       .dot {
         display: inline-block;
@@ -237,11 +244,20 @@ onMounted(() => {
 }
 
 @keyframes dot-blink {
-  0% { transform: translateY(0); }
-  25% { transform: translateY(-10px); }
-  50% { transform: translateY(0); }
-  75% { transform: translateY(10px); }
-  100% { transform: translateY(0); }
+  0% {
+    transform: translateY(0);
+  }
+  25% {
+    transform: translateY(-10px);
+  }
+  50% {
+    transform: translateY(0);
+  }
+  75% {
+    transform: translateY(10px);
+  }
+  100% {
+    transform: translateY(0);
+  }
 }
-
 </style>

@@ -6,8 +6,8 @@ const props = defineProps<{
   items: CardItemProps[];
 }>();
 
-console.log("CardAnotherRecordsList");
-console.log(props.items);
+// console.log("CardAnotherRecordsList");
+// console.log(props.items);
 </script>
 
 <template>

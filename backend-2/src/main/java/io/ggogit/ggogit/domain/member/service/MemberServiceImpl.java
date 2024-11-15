@@ -93,6 +93,11 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    public boolean existsEmailJoinToken(String joinToken) {
+        return emailJoinTokenRepository.findByUuid(joinToken).isPresent();
+    }
+
+    @Override
     @Transactional
     public void passwordResetSendEmail(String email) throws MessagingException {
 
@@ -152,7 +157,7 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     @Transactional
-    public void join(Member member) {
+    public Member join(Member member) {
 
         // 비밀번호 암호화
         member.setPassword(passwordEncoder.encode(secretKey + member.getPassword()));
@@ -163,6 +168,8 @@ public class MemberServiceImpl implements MemberService {
 
         // 이메일 인증 정보 삭제
         emailJoinTokenRepository.deleteByEmail(member.getEmail());
+
+        return member;
     }
 
     @Override

@@ -23,7 +23,7 @@ const filter = ref("title");
 watch(page, () => {
   if (page.value > 0) {
     createReq(props.sort, page.value, filter.value, false); // props.sort 사용
-    console.log("new page");
+    // console.log("new page");
   }
 });
 
@@ -31,7 +31,7 @@ watch(page, () => {
 watch(
   () => props.sort,
   (newSort) => {
-    console.log(`sort changed to ${newSort}`);
+    // console.log(`sort changed to ${newSort}`);
 
     // 페이지를 초기화하고 새로운 정렬 기준으로 요청
     page.value = 0;
@@ -64,7 +64,7 @@ const createReq = async (sort, currentPage, filter, isChange) => {
         result.value = [];
       }
 
-      console.log(response.content);
+      // console.log(response.content);
 
       // 새로운 데이터를 추가
       result.value = [...result.value, ...response.content];
@@ -110,15 +110,21 @@ onUpdated(() => {
     page.value = props.page;
   }
 });
+
+const goBack = () => {
+  useBackNavigation().popPageFromStack();
+};
+const { getLastPage } = useBackNavigation();
+const lastPage = computed(() => getLastPage());
 </script>
 
 <template>
   <!-- input-back-search(placeholder, href, method, name) -->
   <div class="search__form">
     <div>
-      <a :href="props.href">
+      <NuxtLink :to="lastPage" @click="goBack()">
         <img src="/public/svg/back.svg" alt="back button" />
-      </a>
+      </NuxtLink>
     </div>
     <div class="search-bar">
       <label class="search-bar--label">

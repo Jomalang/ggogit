@@ -11,8 +11,13 @@ const props = defineProps({
 });
 
 const backgroundStyle = computed(() => {
+  if (props.backImgPath === '' || props.backImgPath === null || props.backImgPath === undefined) {
+    return {
+      backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('/png/background-image.png')`,
+    };
+  }
   return {
-    backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('/png/${props.backImgPath}')`,
+    backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('${props.backImgPath}')`,
   };
 });
 

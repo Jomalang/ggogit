@@ -3,7 +3,7 @@
 const props = defineProps({
   visibility: {
     type: Boolean,
-    required: true,
+    required: false,
   }
 });
 
@@ -23,7 +23,7 @@ const emit = defineEmits(['update:visibility']);
           type="radio"
           name="visibility"
           @change="$emit('update:visibility', true)"
-          :checked="visibility"
+          checked
           id="public"
         />
       </label>
@@ -35,7 +35,6 @@ const emit = defineEmits(['update:visibility']);
           name="visibility"
           id="private"
           @change="$emit('update:visibility', false)"
-          :checked="!visibility"
         />
       </label>
     </div>

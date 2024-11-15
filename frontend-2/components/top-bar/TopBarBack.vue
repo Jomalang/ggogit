@@ -1,19 +1,19 @@
 <script setup>
-
 import useBackNavigation from "~/composables/useBackNavigation.js";
 
 const props = defineProps({
   title: "",
   link: {
     type: String,
-    default: ''
-  }
+    default: "",
+  },
 });
 
-const goBack = () => { useBackNavigation().popPageFromStack(); };
+const goBack = () => {
+  useBackNavigation().popPageFromStack();
+};
 const { getLastPage } = useBackNavigation();
 const lastPage = computed(() => getLastPage());
-
 </script>
 
 <template>
@@ -21,11 +21,24 @@ const lastPage = computed(() => getLastPage());
   <div class="top-bar--green">
     <div class="top-bar__frame">
       <p class="top-bar__title">{{ props.title }}</p>
-      <NuxtLink v-if="link === ''" class="tob-bar__back-link" :to="lastPage" @click="goBack">
-        <img src="/public/svg/back-arrow-icon.svg" alt="top-bar--backarrow.svg"/>
+      <NuxtLink
+        v-if="
+          props.link === '' || props.link === undefined || props.link === null
+        "
+        class="tob-bar__back-link"
+        :to="lastPage"
+        @click="goBack"
+      >
+        <img
+          src="/public/svg/back-arrow-icon.svg"
+          alt="top-bar--backarrow.svg"
+        />
       </NuxtLink>
       <NuxtLink v-else class="tob-bar__back-link" :to="link">
-        <img src="/public/svg/back-arrow-icon.svg" alt="top-bar--backarrow.svg"/>
+        <img
+          src="/public/svg/back-arrow-icon.svg"
+          alt="top-bar--backarrow.svg"
+        />
       </NuxtLink>
       <div class="top-bar__text"></div>
     </div>

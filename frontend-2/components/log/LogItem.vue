@@ -13,7 +13,6 @@ import LogItemLeft from "@/components/log/logItem/LogItemLeft.vue";
 import LogItemEndRight from "@/components/log/logItem/LogItemEndRight.vue";
 import LogItemEndLeft from "@/components/log/logItem/LogItemEndLeft.vue";
 import LogItemEndUp from "@/components/log/logItem/LogItemEndUp.vue";
-import {LeafItemProps} from "@/types/types";
 
 // const leafData: Ref<LeafItemProps> = ref({
 //   id: 1,

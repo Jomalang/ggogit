@@ -128,7 +128,7 @@ const loadMore = () => {
 
 watchEffect(() => {
   if (infoData.value) {
-    console.log("infoData.value", infoData.value);
+    // console.log("infoData.value", infoData.value);
     info = infoData.value;
   }
 
@@ -161,10 +161,7 @@ watchEffect(() => {
       <h2 class="none">트리 검색</h2>
 
       <NuxtLink :to="`/tree/search`" class="back-btn">
-        <InputSearchWithBackBtn
-          placeholder="검색할 트리를 입력해주세요"
-          href="javascript:history.back()"
-          api=""
+        <InputSearchWithBackBtn placeholder="검색할 트리를 입력해주세요"
           >트리 검색 상단 바</InputSearchWithBackBtn
         >
       </NuxtLink>
@@ -450,15 +447,19 @@ watchEffect(() => {
     </section>
   </main>
 
+  <footer>
+    <Footer :noticeText="`개발 중입니다.`" />
+  </footer>
+
   <section class="nav-back-container">
     <h2 class="none">네비바 뒤 공백</h2>
   </section>
+
   <aside>
     <section class="nav-container">
       <h2 class="none">네비게이션</h2>
-      <div>
-        <NavigationBar :active="'home'"></NavigationBar>
-      </div>
+      <!-- 트리 생성 언더바  -->
+      <NavNavigationBar :active="'home'" />
     </section>
   </aside>
 </template>

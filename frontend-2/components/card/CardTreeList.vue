@@ -8,7 +8,7 @@ const props = defineProps({
   },
 });
 
-console.log(props.data);
+// console.log(props.data);
 </script>
 
 <template>

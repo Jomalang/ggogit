@@ -2,7 +2,6 @@
 import { onMounted, watch } from "vue";
 import axios, { HttpStatusCode } from "axios";
 import { useRouter } from "#vue-router";
-import { value } from "lodash/seq.js";
 
 // ----------------------- Model ----------------------- //
 const router = useRouter();

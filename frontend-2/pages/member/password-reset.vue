@@ -4,7 +4,7 @@ const router = useRouter();
 const route = useRoute();
 const key = ref(route.query.key);
 
-console.log(key.value);
+// console.log(key.value);
 
 // ----------------------- Model ----------------------- //
 
@@ -50,7 +50,7 @@ const passwordResetApi = async () => {
       alert("비밀번호 변경 오류");
     }
 
-    console.log("비밀번호 수정 완료");
+    // console.log("비밀번호 수정 완료");
     router.push("/member/login");
   } catch (error) {}
 };
@@ -58,7 +58,7 @@ const passwordResetApi = async () => {
 watchEffect(() => {
   if (emailInfo.value) {
     resetInfo.value.email = emailInfo.value.email;
-    console.log("");
+    // console.log("");
   }
 });
 

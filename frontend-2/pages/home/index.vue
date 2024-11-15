@@ -13,8 +13,6 @@ let observer = null;
 const memberDetail = useMemberStore();
 const { _nickname: username } = storeToRefs(memberDetail);
 
-//TODO: JWT토큰 있다면 전송하게끔 로직 수정 필요
-
 const { data: seedData, status: seedStatus } = await useAuthFetch("seeds", {
   baseURL: `${config.public.apiBase}`,
   method: "GET",
@@ -35,12 +33,11 @@ const newTreeFetch = async (newSeedId) => {
     method: "GET",
     params: {
       seedId: seedId.value,
-      mid: useRoute().query.mid,
     },
   });
   if (response) {
-    console.log("ok");
-    console.log(response);
+    // console.log(response);
+    // console.log(response.treeInfoResponseList);
     filterTreeInfoList.value = [...response.treeInfoResponseList];
   }
 };
@@ -74,12 +71,12 @@ const splideMoved = (splide, newIndex, prevIndex) => {
 
 const bookExRemoveNone = (selectedElement, index) => {
   document.querySelectorAll(".slide-item").forEach((item) => {
-    if (item === selectedElement) {
-      console.log("selectedElement", selectedElement);
-      item.setAttribute("class", "slide-item item__transform");
-    } else {
-      item.setAttribute("class", "slide-item");
-    }
+    // if (item === selectedElement) {
+    //   // console.log("selectedElement", selectedElement);
+    //   item.setAttribute("class", "slide-item item__transform");
+    // } else {
+    //   item.setAttribute("class", "slide-item");
+    // }
   });
 
   document
@@ -112,12 +109,38 @@ const bookExRemoveNone = (selectedElement, index) => {
     </section>
   </header>
 
-  <main>
+  <main v-if="treeInfoList.length === 0">
+    <section class="my-tree-container">
+      <h1 class="none">나의 트리 정보</h1>
+
+      <section class="my-tree-title-container">
+        <TextMainTitle
+          :data="{ title: `${username}님의 최근 트리`, size: 28 }"
+        />
+      </section>
+
+      <section class="book-img-container">
+        <h1 class="none">트리 이미지</h1>
+        <BackgroundBgNoTreeBook />
+      </section>
+    </section>
+
+    <section class="margin-bottom160">
+      <TextInfo
+        text="현재 기록중인 트리가 없습니다"
+        boldText="트리를 생성해주세요"
+      />
+    </section>
+  </main>
+
+  <main v-else>
     <section class="my-tree-container">
       <h2 class="none">나의 트리 정보</h2>
       <section class="my-tree-title-container">
         <h3>
-          <TextMainTitle :data="{ title: `${username}님의 트리`, size: 28 }" />
+          <TextMainTitle
+            :data="{ title: `${username}님의 최근 트리`, size: 28 }"
+          />
         </h3>
       </section>
 

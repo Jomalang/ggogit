@@ -99,17 +99,17 @@ const { data: memoirCardData, error: memoirCardError } = await useAuthFetch(
 );
 
 if (leafCardData.value) {
-  console.log(leafCardData.value);
+  // console.log(leafCardData.value);
   leafItems.value = [...leafCardData.value.items];
 }
 
 if (treeCardData.value) {
-  console.log(treeCardData.value);
+  // console.log(treeCardData.value);
   treeItems.value = [...treeCardData.value.treeBookCardResponse];
 }
 
 if (memoirCardData.value) {
-  console.log(memoirCardData.value);
+  // console.log(memoirCardData.value);
   memoirItems.value = [...memoirCardData.value.memoirBookCardDtoResponse];
 }
 
@@ -272,7 +272,9 @@ onMounted(() => {
     </section>
   </main>
 
-  <Footer :noticeText="`개발 중입니다.`" />
+  <footer>
+    <Footer :noticeText="`개발 중입니다.`" />
+  </footer>
 
   <section class="nav-back-container">
     <h2 class="none">네비바 뒤 공백</h2>

@@ -41,7 +41,7 @@ const leafPageInfo = reactive({
   endPage: 200
 });
 
-const member = ref({
+const member = reactive({
   id: 1,
   nickName: '닉네임',
   userName: '유저이름',
@@ -65,56 +65,56 @@ const { data: infoData, error: infoError }
 });
 
 const { data: leafDetailData, error: leafDetailDataError }
-    = await useFetch(() => `leaves/${leafId}`, {
+    = await useAuthFetch(() => `leaves/${leafId}`, {
     baseURL: config.public.apiBase,
 });
 
 const { data: leafMemberInfo, error: leafMemberInfoError }
-    = await useFetch(() => `leaves/${leafId}/member`, {
+    = await useAuthFetch(() => `leaves/${leafId}/member`, {
     baseURL: config.public.apiBase,
 });
 
 const { data: leafCardData, error: leafCardError }
-    = await useFetch(() => `/members/${member.value.id}/leaves/book/cards`, {
+    = await useAuthFetch(() => `/members/${member.id}/leaves/book/cards`, {
     method: "GET",
     baseURL: `${config.public.apiBase}`,
 });
 
 const { data: treeCardData, error: treeCardError }
-    = await useFetch(() => `trees/members/${member.value.id}/trees/book/cards`, {
+    = await useAuthFetch(() => `trees/members/${member.id}/trees/book/cards`, {
     method: "GET",
     baseURL: `${config.public.apiBase}`,
 });
 
 const { data: memoirCardData, error: memoirCardError }
-    = await useFetch(() => `memoirs/members/${member.value.id}/memoirs/book/cards`, {
+    = await useAuthFetch(() => `memoirs/members/${member.id}/memoirs/book/cards`, {
     method: "GET",
     baseURL: `${config.public.apiBase}`,
 });
 
 if (leafCardData.value) {
-  console.log(leafCardData.value);
+  // console.log(leafCardData.value);
   leafItems.value = [...leafCardData.value.items];
 }
 
 if (treeCardData.value) {
-  console.log(treeCardData.value);
+  // console.log(treeCardData.value);
   treeItems.value = [...treeCardData.value.treeBookCardResponse];
 }
 
 if (memoirCardData.value) {
-  console.log(memoirCardData.value);
+  // console.log(memoirCardData.value);
   memoirItems.value = [...memoirCardData.value.memoirBookCardDtoResponse];
 }
 
 watchEffect(() => {
   if (infoData.value) {
-    console.log('트리 디테일 데이터 확인', infoData.value);
+    // console.log('트리 디테일 데이터 확인', infoData.value);
     Object.assign(info, infoData.value);
   }
 
   if (leafDetailData.value) {
-    console.log('leafDetailData.value', leafDetailData.value);
+    // console.log('leafDetailData.value', leafDetailData.value);
     editor.value.title = leafDetailData.value.leafTitle;
     editor.value.text = leafDetailData.value.leafContent;
     leafPageInfo.startPage = leafDetailData.value.startPage;
@@ -122,6 +122,7 @@ watchEffect(() => {
   }
 
   if (leafMemberInfo.value) {
+    // console.log('leafMemberInfo.value', leafMemberInfo.value);
     member.id = leafMemberInfo.value.id;
     member.nickName = leafMemberInfo.value.nickName;
     member.userName = leafMemberInfo.value.userName;
@@ -150,7 +151,7 @@ onMounted(() => {
   <header>
     <BackgroundDetail
         :edit="`/leaf/book/${leafId}/edit`"
-        :backImgPath="coverImageName"
+        :backImgPath="member.backImgName"
         :username="member.nickName"
         :userid="member.email"
         :memoirTitle="leafDetailData.leafTitle"
@@ -166,7 +167,7 @@ onMounted(() => {
     </section>
     <section class="branch-tree-detail-container">
       <h2 class="none">트리 상세 설명</h2>
-      <CardEtcHiddenInfo :data ="info" >트리 상세 설명</CardEtcHiddenInfo>
+      <CardHiddenInfo :data ="info" >트리 상세 설명</CardHiddenInfo>
     </section>
 
     <section class="leaf-page-info-container">

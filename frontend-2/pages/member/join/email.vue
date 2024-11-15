@@ -36,7 +36,7 @@ const sendEmailApi = async () => {
       return;
     }
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
 };
 
@@ -56,7 +56,7 @@ const sendEmailHandler = () => {
     joinEmail.value.isEmailValid = true;
   }
 
-  console.log("이메일 전송");
+  // console.log("이메일 전송");
   sendEmailApi();
 };
 </script>

@@ -2,17 +2,23 @@
 const props = defineProps<{
   link: string;
 }>();
+
+const goBack = () => {
+  useBackNavigation().popPageFromStack();
+};
+const { getLastPage } = useBackNavigation();
+const lastPage = computed(() => getLastPage());
 </script>
 
 <template>
   <!-- clear-back-->
   <div id="top-bar-clear-back-id" class="top-bar-clear-back-box">
     <div class="top-bar-clear-back__left-box">
-      <a :href="link">
+      <NuxtLink :to="lastPage" @click="goBack()">
         <div class="top-bar-clear-back__icon-box">
           <img src="/public/svg/back--white.svg" alt="" />
         </div>
-      </a>
+      </NuxtLink>
       <a :href="link">
         <div class="top-bar-clear-back__icon-box">
           <img src="/public/svg/home--white.svg" alt="" />

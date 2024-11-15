@@ -11,10 +11,6 @@ const props = defineProps({
     type: Number,
     default: 0,
   },
-  isEtcTree: {
-    type: Boolean,
-    default: true,
-  },
 });
 
 const formatDate = (date) => {
@@ -91,14 +87,6 @@ watch(
     }
   }
 );
-
-//leaf Link
-const leafLink = (item) => {
-  if (props.isEtcTree) {
-    return `/leaf/etc/${item.id}`;
-  }
-  return `/leaf/book/${item.id}`;
-};
 </script>
 
 <template>
@@ -107,7 +95,7 @@ const leafLink = (item) => {
       class="card-branch__list-frame"
       v-for="(item, index) in props.items"
       :key="item.id"
-      :to="leafLink(item)"
+      :to="`/leaf?leafId=${item.id}`"
     >
       <div class="branch-info-frame" :ref="setItemRef(index)">
         <div class="branch-img-frame">

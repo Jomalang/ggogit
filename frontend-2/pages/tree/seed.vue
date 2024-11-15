@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 import { SeedFilterTabProps } from "@/types/types";
 import { onMounted, reactive } from "vue";
 import axios from "axios";
@@ -8,7 +8,7 @@ import NavigationBar from "~/components/nav/NavigationBar.vue";
 
 // -------------------------- Model -------------------------- //
 
-const seeds = reactive<SeedFilterTabProps>({});
+const seeds = reactive({});
 // -------------------------- Life Cycle -------------------------- //
 onMounted(() => {
   fetchData();
@@ -20,7 +20,7 @@ const fetchData = async () => {
   try {
     const response = await axios.get("http://localhost:8080/api/v1/seeds");
     // console.log(response.data);
-    seeds.filterName = "`씨앗 선택`";
+    seeds.filterName = "씨앗 선택";
     seeds.filterItems = response.data.items;
   } catch (error) {
     console.error("Error fetching data:", error);

@@ -11,10 +11,12 @@ const { data } = defineProps(["data"]);
         <p class="card-tree-info__title">쪽수</p>
         <p class="card-tree-info__title">ISBN</p>
       </div>
-      <div>
+      <div class="card-tree-info__content-box">
         <p class="card-tree-info__content">{{ data.date }}</p>
         <p class="card-tree-info__content">{{ data.pageCount }}</p>
-        <p v-if="data.isbn" class="card-tree-info__content">{{ data.isbn }}</p>
+        <p class="card-tree-info__content">
+          {{ data.isbn || "미표기" }}
+        </p>
       </div>
     </div>
   </div>

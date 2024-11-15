@@ -15,7 +15,9 @@ const { data } = defineProps(["data"]);
     </div>
     <div class="text-book-info__create-frame">
       <div class="text-book-info__create">
-        <span class="text-book-info-create-info">{{ data.author }}</span>
+        <span class="text-book-info-create-info">{{
+          data.author || `저자 미표기`
+        }}</span>
         <span class="text-book-info-create-info">·</span>
       </div>
       <div

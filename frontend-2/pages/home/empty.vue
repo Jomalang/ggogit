@@ -1,4 +1,7 @@
-<script setup></script>
+<script setup>
+const memberDetail = useMemberStore();
+const { _nickname: username } = storeToRefs(memberDetail);
+</script>
 
 <template>
   <header>
@@ -14,35 +17,39 @@
       <h1 class="none">나의 트리 정보</h1>
 
       <section class="my-tree-title-container">
-        <TextMainTitle :data="{ title: '나의 트리', size: 28 }" />
+        <TextMainTitle :data="{ title: `${username}님의 트리`, size: 28 }" />
       </section>
 
       <section class="book-img-container">
         <h1 class="none">트리 이미지</h1>
-        <BgNoTreeBook />
+        <BackgroundBgNoTreeBook />
       </section>
     </section>
 
-    <section>
+    <section class="margin-bottom160">
       <TextInfo
         text="현재 기록중인 트리가 없습니다"
         boldText="트리를 생성해주세요"
       />
     </section>
-
-    <section class="btn-full-width-link-container">
-      <LinkFullWidth :link="`/seed/index`" :text="`트리 생성`" />
-    </section>
   </main>
+
+  <footer>
+    <Footer :noticeText="`개발중입니다.`" />
+  </footer>
 
   <section class="nav-back-container">
     <h2 class="none">네비 뒤 공백</h2>
   </section>
 
   <aside class="nav-container">
+    <section class="short-btn-container">
+      <h4 class="none">트리 생성 버튼</h4>
+      <ButtonBtnShortAGreen :link="`/tree/seed`" :text="`트리 생성`" />
+    </section>
     <h1 class="none">네비게이션 하단</h1>
-    <NavigationBar :active="home" />
+    <NavNavigationBar :active="home" />
   </aside>
 </template>
 
-<style></style>
+<style scoped></style>

@@ -24,7 +24,10 @@ const props = defineProps({
 
 <template>
   <div class="card-tree-details">
-    <NuxtLink class="card-tree-detail" :to="`/tree/book/auto/${props.data.id}/new`">
+    <NuxtLink
+      class="card-tree-detail"
+      :to="`/tree/book/auto/${props.data.id}/new`"
+    >
       <img
         v-if="props.data.imageFile !== undefined"
         class="card-tree__book-cover"
@@ -52,7 +55,9 @@ const props = defineProps({
             props.data.publishDate
           }}</span>
           <span class="card-tree-detail__info"> / </span>
-          <span class="card-tree-detail__info">{{ props.data.author }}</span>
+          <span class="card-tree-detail__info">{{
+            props.data.author || "저자 미표기"
+          }}</span>
           <span class="card-tree-detail__info"> / </span>
           <span class="card-tree-detail__info">{{ props.data.publisher }}</span>
         </div>
@@ -152,11 +157,10 @@ const props = defineProps({
 }
 
 .ellipsis {
-  display: -webkit-box;       /* Flexbox를 사용하여 요소가 줄바꿈되도록 설정 */
-  -webkit-line-clamp: 2;      /* 표시할 줄 수 설정 (여기서는 3줄) */
+  display: -webkit-box; /* Flexbox를 사용하여 요소가 줄바꿈되도록 설정 */
+  -webkit-line-clamp: 2; /* 표시할 줄 수 설정 (여기서는 3줄) */
   -webkit-box-orient: vertical;
-  overflow: hidden;           /* 넘친 텍스트를 숨김 */
-  text-overflow: ellipsis;    /* 넘친 부분에 ... 추가 */
+  overflow: hidden; /* 넘친 텍스트를 숨김 */
+  text-overflow: ellipsis; /* 넘친 부분에 ... 추가 */
 }
-
 </style>

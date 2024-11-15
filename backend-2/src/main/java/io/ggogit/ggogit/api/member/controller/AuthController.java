@@ -47,7 +47,6 @@ public class AuthController {
                     AuthInfoResponse.of(member.getId(), member.getEmail(), member.getUsername(), member.getMemberProfileImage().getName(),member.getNickname(), member.getRole(), newAccessToken);
             return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (EntityNotFoundException e) {
-
             AuthInfoResponse response = AuthInfoResponse.of(authResponseDto.getEmail(), authResponseDto.getName(), authResponseDto.getPicture(),null);
             System.out.println(response);
             return new ResponseEntity<>(response,  HttpStatus.OK);
@@ -58,20 +57,30 @@ public class AuthController {
             @RequestBody String accessToken
     ){
         ObjectMapper mapper = new ObjectMapper();
+        AuthResponseDto authResponseDto;
+        NaverOauthAccessDto naverOauthAccessDto;
         try {
             ServingDto servingDto = mapper.readValue(accessToken, ServingDto.class);
-            NaverOauthAccessDto naverOauthAccessDto = naverOauthClient.getAccessToken(servingDto.code, servingDto.state);
-            AuthResponseDto authResponseDto = naverOauthClient.findMemberInfo(naverOauthAccessDto);
-
-        } catch (JsonMappingException e) {
-            throw new RuntimeException(e);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
+            naverOauthAccessDto = naverOauthClient.getAccessToken(servingDto.code, servingDto.state);
+        }catch (Exception e){
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
-
-        return null;
+        if(naverOauthAccessDto == null){
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+        authResponseDto = naverOauthClient.findMemberInfo(naverOauthAccessDto);
+        System.out.println(authResponseDto.getEmail());
+        try {
+            Member member = memberService.getByEmail(authResponseDto.getEmail());
+            String newAccessToken = memberService.generateAccessToken(member);
+            AuthInfoResponse response =
+                    AuthInfoResponse.of(member.getId(), member.getEmail(), member.getUsername(), member.getMemberProfileImage().getName(),member.getNickname(), member.getRole(), newAccessToken);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } catch (Exception e) {
+            AuthInfoResponse response = AuthInfoResponse.of(authResponseDto.getEmail(), authResponseDto.getName(), authResponseDto.getPicture(),null);
+            return new ResponseEntity<>(response,  HttpStatus.OK);
+        }
     }
-
 }
 
 @JsonInclude(JsonInclude.Include.NON_NULL)

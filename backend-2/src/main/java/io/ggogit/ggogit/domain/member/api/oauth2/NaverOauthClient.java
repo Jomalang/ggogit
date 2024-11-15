@@ -3,15 +3,12 @@ package io.ggogit.ggogit.domain.member.api.oauth2;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.ggogit.ggogit.domain.member.api.dto.AuthResponseDto;
-import io.ggogit.ggogit.domain.member.api.dto.NaverUserInfo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.http.*;
-import io.ggogit.ggogit.domain.member.api.dto.GoogleOauthDto;
 import io.ggogit.ggogit.domain.member.api.dto.NaverOauthAccessDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -87,9 +84,8 @@ public class NaverOauthClient {
             }
             ObjectMapper mapper = new ObjectMapper();
             NaverResponseDto authResponseDto = mapper.readValue(response.getBody(), NaverResponseDto.class);
-
-
-            return AuthResponseDto.of(authResponseDto.getResponse().getEmail(), authResponseDto.getResponse().getName(), authResponseDto.getResponse().getProfile_image(), authResponseDto.getResponse().getNickname());
+            NaverUserInfo naverUserInfo = authResponseDto.getResponse();
+            return AuthResponseDto.of(naverUserInfo.getEmail(), naverUserInfo.getName(), naverUserInfo.getProfile_image(), naverUserInfo.getNickname());
 
         } catch (RestClientException e) {
             throw new RuntimeException("네이버 프로필 정보 조회 중 오류 발생: " + e.getMessage(), e);
@@ -108,5 +104,21 @@ public class NaverOauthClient {
         String message;
         @JsonProperty("response")
         NaverUserInfo response;
+    }
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    static class NaverUserInfo {
+        @JsonProperty("id")
+        private String id;
+        @JsonProperty("email")
+        private String email;
+        @JsonProperty("name")
+        private String name;
+        @JsonProperty("nickname")
+        private String nickname;
+        @JsonProperty("profile_image")
+        private String profile_image;
     }
 }

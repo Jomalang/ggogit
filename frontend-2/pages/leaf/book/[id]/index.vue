@@ -143,55 +143,6 @@ onMounted(() => {
 });
 
 // ---------------------- Method ---------------------- //
-
-// 트리 스크롤
-const scrollTmpTime = 1000; // 템프 타임 1초
-const treeIsScrolling = ref(false) // 스크롤 중인지 여부
-const treeStartX = ref(0) // 스크롤 시작 x좌표
-const treeScrollLeft = ref(0) //
-const treeScrollMoveStartTime = ref(0) // 스크롤 이동 시작 시간
-let scrollTimeout = null; // 지연 타이머 변수
-
-// 리프 스크롤
-// 회고록 스크롤
-
-// 스크롤 시작
-const startTreeScrollEventHandler = (event) => {
-  treeIsScrolling.value = true; // 스크롤 활성화
-  treeStartX.value = event.pageX; // 클릭 시작 x좌표 저장
-  treeScrollLeft.value = event.target.scrollLeft; // 초기 스크롤 위치 저장
-  treeScrollMoveStartTime.value = Date.now(); // 스크롤 이동 시작 시간 저장
-
-  console.log('treeIsScrolling', treeIsScrolling.value);
-  console.log('treeStartX', treeStartX.value);
-  console.log('treeScrollLeft', treeScrollLeft.value);
-  console.log('treeScrollMoveStartTime', treeScrollMoveStartTime.value);
-};
-
-// 스크롤 시작
-const sideTreeScrollEventHandler = (event) => {
-
-  if (!treeIsScrolling.value) {
-    return; // 클릭 후 스크롤 중이 아니면 리턴
-  }
-
-  if (treeScrollMoveStartTime.value + scrollTmpTime < Date.now()) {
-    return; // 지연 타이머가 있으면 제거
-  }
-
-  // 새 지연 타이머 설정
-  const moveX = treeStartX.value - event.pageX;
-  console.log('sideScrollEventHandler', moveX);
-};
-
-// 스크롤 시작
-const endTreeScrollEventHandler = (event) => {
-  treeIsScrolling.value = false;
-  treeScrollMoveStartTime.value = Date.now();
-  console.log('endTreeScrollEventHandler', treeIsScrolling.value);
-  console.log('endTreeScrollEventHandler', treeScrollMoveStartTime.value);
-};
-
 </script>
 
 <template>
@@ -259,12 +210,7 @@ const endTreeScrollEventHandler = (event) => {
       </section>
       <section class="branch-tree-another-record-list-container">
         <h1 class="none">트리 리스트</h1>
-        <CardAnotherRecordsList
-            :items="treeItems"
-            @startScrollEvent="startTreeScrollEventHandler"
-            @sideScrollEvent="sideTreeScrollEventHandler"
-            @endScrollEvent="endTreeScrollEventHandler"
-        />
+        <CardAnotherRecordsList :items="treeItems" :sideScrollType="`tree`"/>
       </section>
 
       <section
@@ -277,9 +223,7 @@ const endTreeScrollEventHandler = (event) => {
       <section class="branch-tree-another-record-list-container">
         <h1 class="none">회고록 리스트</h1>
         <section class="book-detail-other-tree-card-container">
-          <CardAnotherRecordsList
-              :items="memoirItems"
-          />
+          <CardAnotherRecordsList :items="memoirItems" :sideScrollType="`memoir`"/>
         </section>
       </section>
 
@@ -292,7 +236,7 @@ const endTreeScrollEventHandler = (event) => {
 
       <section class="branch-tree-another-record-list-container">
         <h1 class="none">리프 리스트</h1>
-        <CardAnotherRecordsList :items="leafItems" />
+        <CardAnotherRecordsList :items="leafItems" :sideScrollType="`leaf`"/>
       </section>
     </section>
 

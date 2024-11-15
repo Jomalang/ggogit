@@ -4,31 +4,13 @@ import { type CardItemProps, CardType } from "@/types/types";
 
 const props = defineProps<{
   items: CardItemProps[];
+  sideScrollType: String;
 }>();
-
-const emit = defineEmits([
-  "startScrollEvent",
-  "sideScrollEvent",
-  "endScrollEvent",
-]);
-
-const startScrollEvent = (e: MouseEvent) => {
-  emit("startScrollEvent", e);
-};
-
-const sideScrollEvent = (e: MouseEvent) => {
-  emit("sideScrollEvent", e);
-};
-
-const endScrollEvent = (e: MouseEvent) => {
-  emit("endScrollEvent", e);
-};
-
 
 // 스크롤 이벤트 핸들러
 let scrollContainer: HTMLElement | null = null;
 onMounted(() => {
-  scrollContainer = document.querySelector('.card-another-records-list-box');
+  scrollContainer = document.querySelector(`.card-another-records-list-box.${props.sideScrollType}`);
 });
 
 const scroll = (e: MouseEvent) => {
@@ -37,17 +19,13 @@ const scroll = (e: MouseEvent) => {
   const adjustedScrollAmount = scrollAmount * 1; // 스크롤 속도 조절
   scrollContainer.scrollLeft += adjustedScrollAmount;
 };
-
 </script>
 
 <template>
-  <div class="card-another-records-list-box"  @wheel="scroll">
-    <ul class="card-another-records__list"
-        @mousedown="startScrollEvent"
-        @mousemove="sideScrollEvent"
-        @mouseup="endScrollEvent"
-        @mouseleave="endScrollEvent"
-    >
+  <div class="card-another-records-list-box"
+       :class="props.sideScrollType"
+       @wheel="scroll">
+    <ul class="card-another-records__list">
       <li
         class="card-another-records__item"
         v-for="(item, index) in props.items"

@@ -1,16 +1,18 @@
 <script setup>
 const props = defineProps({
-    link: String,
-    text: String,
-    visibility: {
-        type: Boolean,
-        default: true,
-    }
+  link: "",
+  text: "",
+  visibility: {
+    type: Boolean,
+    default: true,
+  },
 });
 </script>
 
 <template>
-  <RouterLink class="text__btn--green" v-if="visibility" :to="link">{{ text }}</RouterLink>
+  <NuxtLink class="text__btn--green" :to="props.link" v-if="props.visibility">{{
+    text
+  }}</NuxtLink>
 </template>
 
 <style>

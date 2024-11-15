@@ -272,7 +272,9 @@ onMounted(() => {
     </section>
   </main>
 
-  <Footer :noticeText="`개발 중입니다.`" />
+  <footer>
+    <Footer :noticeText="`개발 중입니다.`" />
+  </footer>
 
   <section class="nav-back-container">
     <h2 class="none">네비바 뒤 공백</h2>

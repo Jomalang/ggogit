@@ -1,37 +1,28 @@
-<script setup lang="ts">
-import { SeedFilterTabProps } from "@/types/types";
+<script setup>
 import { onMounted, reactive } from "vue";
-import axios from "axios";
-import FilterFullWidth from "~/components/button/FilterFullWidth.vue";
-import FilterTabGet from "~/components/tab-filter/FilterTabGet.vue";
-import NavigationBar from "~/components/nav/NavigationBar.vue";
 
 // -------------------------- Model -------------------------- //
 
-const seeds = reactive<SeedFilterTabProps>({});
-// -------------------------- Life Cycle -------------------------- //
-onMounted(() => {
-  fetchData();
-});
+const seeds = reactive({});
+const config = useRuntimeConfig();
 
 // -------------------------- API -------------------------- //
 
-const fetchData = async () => {
-  try {
-    const response = await axios.get("http://localhost:8080/api/v1/seeds");
-    // console.log(response.data);
-    seeds.filterName = "`씨앗 선택`";
-    seeds.filterItems = response.data.items;
-  } catch (error) {
-    console.error("Error fetching data:", error);
-  }
-};
+const { data } = await useAuthFetch("seeds", {
+  method: "GET",
+  baseURL: `${config.public.apiBase}`,
+});
+console.log(data);
+seeds.filterName = "씨앗 선택";
+seeds.filterItems = data.value.items;
 
 // -------------------------- Event Function -------------------------- //
 
 const filterTabUpHandler = () => {
   const filterTab = document.querySelector(".filter-tab-container");
+  const background = document.querySelector(".filter-bg");
   filterTab.classList.remove("none");
+  background.classList.remove("none");
   const filterTabBox = document.querySelector(".filter-tab__box");
   setTimeout(() => filterTabBox.classList.add("up"), 10);
 };
@@ -40,7 +31,11 @@ const filterTabDownHandler = () => {
   const filterTabBox = document.querySelector(".filter-tab__box");
   filterTabBox.classList.remove("up");
   const filterTab = document.querySelector(".filter-tab-container");
+  const background = document.querySelector(".filter-bg");
   setTimeout(() => filterTab.classList.add("none"), 300);
+  setTimeout(() => {
+    background.classList.add("none");
+  }, 300);
 };
 </script>
 
@@ -53,23 +48,24 @@ const filterTabDownHandler = () => {
   <main>
     <section class="text-info-container">
       <h2 class="none">트리 생성 안내</h2>
-      <TextInfo></TextInfo>
+      <TextInfo :boldText="`씨앗을 선택해주세요`"></TextInfo>
     </section>
 
     <section class="btn-select-container">
       <h2 class="none">씨앗 선택 버튼</h2>
-      <FilterFullWidth
+      <ButtonFilterFullWidth
         :text="`씨앗 선택`"
         @click="filterTabUpHandler"
-      ></FilterFullWidth>
+      ></ButtonFilterFullWidth>
     </section>
 
+    <div class="filter-bg none"></div>
     <section class="filter-tab-container none" @click="filterTabDownHandler">
       <h2 class="none">씨앗 선택</h2>
-      <FilterTabGet
+      <TabFilterTabGet
         :data="seeds"
         @backButtonClick="filterTabDownHandler"
-      ></FilterTabGet>
+      ></TabFilterTabGet>
     </section>
   </main>
 
@@ -80,9 +76,20 @@ const filterTabDownHandler = () => {
   <aside>
     <section class="nav-container">
       <h2 class="none">네비게이션 바</h2>
-      <NavigationBar active="home"></NavigationBar>
+      <NavNavigationBar active="home"></NavNavigationBar>
     </section>
   </aside>
 </template>
 
-<style scoped></style>
+<style scoped>
+.filter-bg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  width: 200%;
+  height: 200%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+</style>

@@ -51,6 +51,22 @@ export const useMemberStore = defineStore("memberStore", () => {
       }
     }
   }
+  function setLocal (id, name, email, picture, role, accessToken){
+    _id.value = id;
+    _username.value = name;
+    _nickname.value = name;
+    _email.value = email;
+    _roles.value = role;
+    _accessToken.value = accessToken;
+    if (!import.meta.env.SSR) {
+      localStorage.setItem("_ggogit_id", _id.value);
+      localStorage.setItem("_ggogit_username", _username.value);
+      localStorage.setItem("_ggogit_nickname", _nickname.value);
+      localStorage.setItem("_ggogit_email", _email.value);
+      localStorage.setItem("_ggogit_roles", JSON.stringify(_roles.value));
+      localStorage.setItem("_ggogit_accessToken", _accessToken.value);
+    }
+  }
 
   function loadUserFromStorage() {
     try {
@@ -120,6 +136,7 @@ export const useMemberStore = defineStore("memberStore", () => {
     setAuth,
     loadUserFromStorage,
     initAuth,
+    setLocal,
     setEmail,
   };
 });

@@ -143,7 +143,7 @@ if (bookTreeCradsData.value) {
       <h1 class="none">도서 기본 정보</h1>
     </section>
 
-    <section class="book-detail-comment-container">
+    <section class="book-detail-comment-container none">
       <h1 class="none">댓글</h1>
       <BarComment :commentCount="1" :profileImg="commentCount" />
       <section

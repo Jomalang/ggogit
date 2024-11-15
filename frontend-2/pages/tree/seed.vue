@@ -20,7 +20,9 @@ seeds.filterItems = data.value.items;
 
 const filterTabUpHandler = () => {
   const filterTab = document.querySelector(".filter-tab-container");
+  const background = document.querySelector(".filter-bg");
   filterTab.classList.remove("none");
+  background.classList.remove("none");
   const filterTabBox = document.querySelector(".filter-tab__box");
   setTimeout(() => filterTabBox.classList.add("up"), 10);
 };
@@ -29,7 +31,11 @@ const filterTabDownHandler = () => {
   const filterTabBox = document.querySelector(".filter-tab__box");
   filterTabBox.classList.remove("up");
   const filterTab = document.querySelector(".filter-tab-container");
+  const background = document.querySelector(".filter-bg");
   setTimeout(() => filterTab.classList.add("none"), 300);
+  setTimeout(() => {
+    background.classList.add("none");
+  }, 300);
 };
 </script>
 
@@ -42,7 +48,7 @@ const filterTabDownHandler = () => {
   <main>
     <section class="text-info-container">
       <h2 class="none">트리 생성 안내</h2>
-      <TextInfo></TextInfo>
+      <TextInfo :boldText="`씨앗을 선택해주세요`"></TextInfo>
     </section>
 
     <section class="btn-select-container">
@@ -53,6 +59,7 @@ const filterTabDownHandler = () => {
       ></ButtonFilterFullWidth>
     </section>
 
+    <div class="filter-bg none"></div>
     <section class="filter-tab-container none" @click="filterTabDownHandler">
       <h2 class="none">씨앗 선택</h2>
       <TabFilterTabGet
@@ -74,4 +81,15 @@ const filterTabDownHandler = () => {
   </aside>
 </template>
 
-<style scoped></style>
+<style scoped>
+.filter-bg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  width: 200%;
+  height: 200%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+</style>

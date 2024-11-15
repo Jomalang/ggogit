@@ -53,7 +53,7 @@ const tree = ref(props.tree);
           <span class="card-tree-detail__info">{{ tree.bookAuthor }}</span>
           <span class="card-tree-detail__info"> / </span>
           <span v-if="tree.bookTranslator" class="card-tree-detail__info">{{
-            data.bookTranslator
+            tree.bookTranslator
           }}</span>
           <span class="card-tree-detail__info" v-if="tree.bookTranslator"
             >/</span

@@ -4,6 +4,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       apiBase: "http://localhost:8080/api/v1",
+      naverClientId: "Y82lIjIMLGmIfTM3LzMr",
     },
   },
   //모바일 접속

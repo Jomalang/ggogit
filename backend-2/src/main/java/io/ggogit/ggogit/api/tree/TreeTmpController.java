@@ -4,11 +4,13 @@ import io.ggogit.ggogit.api.tree.dto.BookAutoTreeTmpRequest;
 import io.ggogit.ggogit.api.tree.dto.TreeTmpTotalPageResponse;
 import io.ggogit.ggogit.api.tree.dto.TreeTmpRequest;
 import io.ggogit.ggogit.api.tree.dto.TreeTmpResponse;
+import io.ggogit.ggogit.domain.member.security.CustomUserDetails;
 import io.ggogit.ggogit.domain.tree.entity.TreeTmp;
 import io.ggogit.ggogit.domain.tree.service.TreeTmpService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -23,11 +25,13 @@ public class TreeTmpController {
 
     @PostMapping
     public ResponseEntity<TreeTmpResponse> createBookTreeTmp(
+            @AuthenticationPrincipal CustomUserDetails userDetails,
             @ModelAttribute TreeTmpRequest dto,
             @RequestParam(required = false) MultipartFile image
     ) throws IOException {
+
         TreeTmp treeTmp = dto.toTreeTmp();
-        Long memberId = 1000L; // 테스트용 코드
+        Long memberId = userDetails.getId();
         Long seedId = dto.getSeedId();
         Long bookCategoryId = dto.getBookCategoryId();
 
@@ -41,13 +45,13 @@ public class TreeTmpController {
 
     @PostMapping("/auto")
     public ResponseEntity<TreeTmpResponse> createAutoTreeTmp(
+            @AuthenticationPrincipal CustomUserDetails userDetails,
             @RequestBody BookAutoTreeTmpRequest dto
     ) {
         TreeTmp treeTmp = dto.toTreeTmp();
         Long bookId = dto.getBookId();
-        Long memberId = 1000L; // 테스트용 코드
 
-        Long treeTmpId = treeTmpService.save(treeTmp, memberId, bookId);
+        Long treeTmpId = treeTmpService.save(treeTmp, userDetails.getId(), bookId);
 
         TreeTmpResponse resp = TreeTmpResponse.of(treeTmpId, "도서 선택 트리 임시 저장 성공");
 

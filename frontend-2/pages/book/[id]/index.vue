@@ -19,7 +19,7 @@ const {
   data: bookData,
   status: bookStatus,
   error: bookError,
-} = await useFetch(`books/${bookId}`, {
+} = await useAuthFetch(`books/${bookId}`, {
   method: "GET",
   baseURL: `${config.public.apiBase}`,
 });
@@ -34,10 +34,13 @@ const {
   data: treeCardsData,
   status: treeCardsStatus,
   error: treeCardsError,
-} = await useFetch(`trees/members/${memberId}/books/${bookId}/trees/cards`, {
-  method: "GET",
-  baseURL: `${config.public.apiBase}`,
-});
+} = await useAuthFetch(
+  `trees/members/${memberId}/books/${bookId}/trees/cards`,
+  {
+    method: "GET",
+    baseURL: `${config.public.apiBase}`,
+  }
+);
 
 if (treeCardsData.value) {
   myTreeCards.value = [...treeCardsData.value.treeBookCardResponse];
@@ -52,7 +55,7 @@ const {
   data: bookleafCradsData,
   error: bookleafCradsError,
   status: bookleafCradsStatus,
-} = await useFetch(`books/${bookId}/leaves/cards`, {
+} = await useAuthFetch(`books/${bookId}/leaves/cards`, {
   method: "GET",
   baseURL: `${config.public.apiBase}`,
 });
@@ -65,7 +68,7 @@ const {
   data: bookMemoirCradsData,
   error: bookMemoirCradsError,
   status: bookMemoirCradsStatus,
-} = await useFetch(`memoirs/books/${bookId}/memoirs/cards`, {
+} = await useAuthFetch(`memoirs/books/${bookId}/memoirs/cards`, {
   method: "GET",
   baseURL: `${config.public.apiBase}`,
 });
@@ -78,7 +81,7 @@ const {
   data: bookTreeCradsData,
   error: bookTreeCradsError,
   status: bookTreeCradsStatus,
-} = await useFetch(`trees/books/${bookId}/trees/cards`, {
+} = await useAuthFetch(`trees/books/${bookId}/trees/cards`, {
   method: "GET",
   baseURL: `${config.public.apiBase}`,
 });

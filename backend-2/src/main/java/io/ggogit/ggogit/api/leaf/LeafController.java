@@ -3,17 +3,16 @@ package io.ggogit.ggogit.api.leaf;
 import io.ggogit.ggogit.api.leaf.dto.LeafBookCardResponse;
 import io.ggogit.ggogit.api.leaf.dto.*;
 import io.ggogit.ggogit.api.member.dto.MemberInfoResponse;
-import io.ggogit.ggogit.api.tree.dto.TreeSearchResultResponse;
 import io.ggogit.ggogit.domain.leaf.entity.Leaf;
 import io.ggogit.ggogit.domain.leaf.service.LeafDtoService;
-import io.ggogit.ggogit.domain.member.service.MemberService;
-import io.ggogit.ggogit.domain.tree.entity.Tree;
+import io.ggogit.ggogit.domain.member.security.CustomUserDetails;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,17 +23,16 @@ import java.util.stream.Collectors;
 public class LeafController {
 
     private final LeafDtoService leafDtoService;
-    private final MemberService memberService;
-
 
     /**
      * 리프 검색
      */
     @GetMapping("/leaves/search")
     public Page<LeafSearchResultResponse> searchLeaves(
+            @AuthenticationPrincipal CustomUserDetails userDetails,
             @Valid @ModelAttribute LeafSearchQuery query
     ) {
-        Long memberId = 227L;
+        Long memberId = userDetails.getId();
 
         Page<Leaf> leaves = leafDtoService.findLeafByQueryAndMemberId(query, memberId);
 

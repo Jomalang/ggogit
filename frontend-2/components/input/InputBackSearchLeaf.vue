@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from "vue";
-import {value} from "lodash/seq.js";
+import { value } from "lodash/seq.js";
 //-----------------props-----------------
 const props = defineProps({
   placeholder: "",
@@ -21,7 +21,7 @@ const emit = defineEmits([
 //-----------------filter-----------------
 let filterQuery = 10;
 let sortQuery = 0;
-let searchQuery = 'title';
+let searchQuery = "title";
 
 //-----------------ref-----------------
 const result = ref([]);
@@ -32,43 +32,46 @@ const totalPage = ref(0);
 const filterName = ref("최근 수정 순");
 const searchFilterName = ref("제목 검색");
 const filter = ref(10);
-const searchFilter = ref('title');
+const searchFilter = ref("title");
 const sort = ref(0);
 //-----------------watcher-----------------
 // page 값이 변경될 때 요청
 watch(page, () => {
   if (page.value > 0) {
-    createReq(props.sort, page.value, searchFilter.value, filterQuery,false); // props.sort 사용
+    createReq(props.sort, page.value, searchFilter.value, filterQuery, false); // props.sort 사용
     console.log("new page");
   }
 });
 
 // sort 값이 변경될 때 요청
-watch(() => props.sort, (newSort) => {
-  console.log(`sort changed to ${newSort}`);
+watch(
+  () => props.sort,
+  (newSort) => {
+    console.log(`sort changed to ${newSort}`);
 
-  // 페이지를 초기화하고 새로운 정렬 기준으로 요청
-  page.value = 0;
+    // 페이지를 초기화하고 새로운 정렬 기준으로 요청
+    page.value = 0;
 
-  // 새로운 sort 값으로 fetch 요청
-  createReq(newSort, page.value, searchFilter.value, filterQuery, false);
-});
+    // 새로운 sort 값으로 fetch 요청
+    createReq(newSort, page.value, searchFilter.value, filterQuery, false);
+  }
+);
 
 //-----------------methods-----------------
 const createReq = async (sort, currentPage, searchFilter, filter, isChange) => {
   let queryContent = "";
-  if(isChange){
-    queryContent = query.value
+  if (isChange) {
+    queryContent = query.value;
   }
   try {
-    const response = await $fetch(props.api, {
+    const response = await useAuthDataFetch(props.api, {
       method: "GET",
       params: {
         query: queryContent,
         sort: sort,
         page: currentPage,
-        searchFilter : searchFilter,
-        filter : filter
+        searchFilter: searchFilter,
+        filter: filter,
       },
     });
 
@@ -84,8 +87,9 @@ const createReq = async (sort, currentPage, searchFilter, filter, isChange) => {
       result.value = [...result.value, ...response.content];
 
       // 중복 제거
-      result.value = [...new Set(result.value.map(value => value.leafId))].map((leafId) =>
-          result.value.find((value) => value.leafId === leafId));
+      result.value = [
+        ...new Set(result.value.map((value) => value.leafId)),
+      ].map((leafId) => result.value.find((value) => value.leafId === leafId));
 
       // 페이지 정보 업데이트
       page.value = currentPage;
@@ -105,7 +109,6 @@ const createReq = async (sort, currentPage, searchFilter, filter, isChange) => {
     emit("page", page.value);
     emit("totalCount", totalCount.value);
     emit("totalPage", totalPage.value);
-
   } catch (error) {
     if (error.response && error.response.status === 400) {
       alert("검색어를 두 글자 이상 입력해 주세요.");
@@ -120,46 +123,46 @@ const openPopup = () => {
   const filterBack2 = document.getElementById("filter-bg-blur");
   const filterTab = document.getElementById("filter-tab");
 
-  filterBack1.classList.remove('none');
-  filterBack2.classList.remove('none');
+  filterBack1.classList.remove("none");
+  filterBack2.classList.remove("none");
 
   setTimeout(() => {
-    filterTab.classList.add('up');
-  }, 30)
+    filterTab.classList.add("up");
+  }, 30);
 };
 
 const closePopup = () => {
   const filterBack1 = document.getElementById("filter-bg");
   const filterBack2 = document.getElementById("filter-bg-blur");
   const filterTab = document.getElementById("filter-tab");
-  filterTab.classList.remove('up');
-  filterBack1.classList.add('none');
-  filterBack2.classList.add('none');
+  filterTab.classList.remove("up");
+  filterBack1.classList.add("none");
+  filterBack2.classList.add("none");
 
   searchFilter.value = searchQuery;
   sort.value = sortQuery;
   page.value = 0;
 
-  if(query.value !== ""){
+  if (query.value !== "") {
     createReq(sort.value, page.value, searchFilter.value, filterQuery, false);
   }
   emit("filterName", filterName.value);
-}
+};
 
 const searchFilterHandler = (e) => {
   searchQuery = e;
   switch (e) {
-    case 'title':
+    case "title":
       searchFilterName.value = "제목 검색";
       break;
-    case 'content':
+    case "content":
       searchFilterName.value = "내용 검색";
       break;
-    case 'all':
+    case "all":
       searchFilterName.value = "제목 + 내용 검색";
       break;
   }
-}
+};
 
 const filterNameHandler = (e) => {
   filterQuery = e;
@@ -177,14 +180,14 @@ const filterNameHandler = (e) => {
       filterName.value = "좋아요 수 순";
       break;
   }
-}
+};
 const sortHandler = (e) => {
   sortQuery = e;
-}
+};
 
 const dropQueryHandler = () => {
   query.value = "";
-}
+};
 
 //-----------------lifeCycle-----------------
 onUpdated(() => {
@@ -192,15 +195,20 @@ onUpdated(() => {
     page.value = props.page;
   }
 });
+const goBack = () => {
+  useBackNavigation().popPageFromStack();
+};
+const { getLastPage } = useBackNavigation();
+const lastPage = computed(() => getLastPage());
 </script>
 
 <template>
   <!-- input-back-search(placeholder, href, method, name) -->
   <div class="search__form">
     <div>
-      <a :href="props.href">
+      <NuxtLink :to="lastPage" @click="goBack()">
         <img src="/public/svg/back.svg" alt="back button" />
-      </a>
+      </NuxtLink>
     </div>
     <div class="search-bar">
       <label class="search-bar--label">
@@ -212,7 +220,11 @@ onUpdated(() => {
           autocomplete="off"
           @keyup.enter="createReq(sort, 0, searchFilter, filter, true)"
         />
-        <button @click="dropQueryHandler" class="search-bar--close" type="reset">
+        <button
+          @click="dropQueryHandler"
+          class="search-bar--close"
+          type="reset"
+        >
           <img src="/public/svg/close-button.svg" alt="close-btn" />
         </button>
       </label>
@@ -224,11 +236,17 @@ onUpdated(() => {
 
   <div class="search-filter-frame">
     <div class="search-filter-frame-search">
-      <span @click.prevent="openPopup" class="search-filter-log__checkbox-input-img">
-          <img class="" src="/svg/sort-white.svg">
+      <span
+        @click.prevent="openPopup"
+        class="search-filter-log__checkbox-input-img"
+      >
+        <img class="" src="/svg/sort-white.svg" />
       </span>
-      <span @click.prevent="openPopup" class="search-filter-log__checkbox-input-text">
-        <p>{{searchFilterName}}</p>
+      <span
+        @click.prevent="openPopup"
+        class="search-filter-log__checkbox-input-text"
+      >
+        <p>{{ searchFilterName }}</p>
       </span>
     </div>
     <NuxtLink class="search-filter-log__nuxt-link" to="/tree/search">
@@ -237,16 +255,20 @@ onUpdated(() => {
   </div>
 
   <section>
-    <div  @click.prevent="closePopup" class="filter-tab-container none" id="filter-bg"></div>
+    <div
+      @click.prevent="closePopup"
+      class="filter-tab-container none"
+      id="filter-bg"
+    ></div>
     <div class="filter-tab-container--30 none" id="filter-bg-blur">
       <h2 class="none">정렬 선택</h2>
       <div id="filter-tab" class="filter-tab__box--30">
         <div class="filter-tab__header">
           <button
-              @click.prevent="closePopup"
-              id="filter-tab-close-btn"
-              class="filter-tab__btn--back"
-              type="button"
+            @click.prevent="closePopup"
+            id="filter-tab-close-btn"
+            class="filter-tab__btn--back"
+            type="button"
           >
             <img src="/public/svg/tab-back.svg" alt="뒤로가기 버튼" />
           </button>
@@ -257,39 +279,45 @@ onUpdated(() => {
           <div class="filter-attribute__bg">
             <h2 class="filter-attribute__title">검색 기준</h2>
             <ul id="filter-tab__list1" class="filter-tab__list1">
-              <li @click="searchFilterHandler('title')" class="filter-tab__item">
+              <li
+                @click="searchFilterHandler('title')"
+                class="filter-tab__item"
+              >
                 <label class="filter-tab__item-label">
                   <input
-                      class="filter-tab__item-radio"
-                      type="radio"
-                      name="searchFilter"
-                      value="10"
-                      checked
+                    class="filter-tab__item-radio"
+                    type="radio"
+                    name="searchFilter"
+                    value="10"
+                    checked
                   />
                   <span class="filter-tab__item--label-text">제목 검색</span>
                   <div class="filter-tab__icon-box">
                     <img
-                        class="filter-tab__icon-img"
-                        src="/svg/tab-check-btn.svg"
-                        alt="필터 버튼"
+                      class="filter-tab__icon-img"
+                      src="/svg/tab-check-btn.svg"
+                      alt="필터 버튼"
                     />
                   </div>
                 </label>
               </li>
-              <li @click="searchFilterHandler('content')" class="filter-tab__item">
+              <li
+                @click="searchFilterHandler('content')"
+                class="filter-tab__item"
+              >
                 <label class="filter-tab__item-label">
                   <input
-                      class="filter-tab__item-radio"
-                      type="radio"
-                      name="searchFilter"
-                      value="11"
+                    class="filter-tab__item-radio"
+                    type="radio"
+                    name="searchFilter"
+                    value="11"
                   />
                   <span class="filter-tab__item--label-text">내용 검색</span>
                   <div class="filter-tab__icon-box">
                     <img
-                        class="filter-tab__icon-img"
-                        src="/svg/tab-check-btn.svg"
-                        alt="필터 버튼"
+                      class="filter-tab__icon-img"
+                      src="/svg/tab-check-btn.svg"
+                      alt="필터 버튼"
                     />
                   </div>
                 </label>
@@ -297,17 +325,19 @@ onUpdated(() => {
               <li @click="searchFilterHandler('all')" class="filter-tab__item">
                 <label class="filter-tab__item-label">
                   <input
-                      class="filter-tab__item-radio"
-                      type="radio"
-                      name="searchFilter"
-                      value="12"
+                    class="filter-tab__item-radio"
+                    type="radio"
+                    name="searchFilter"
+                    value="12"
                   />
-                  <span class="filter-tab__item--label-text">제목 + 내용 검색</span>
+                  <span class="filter-tab__item--label-text"
+                    >제목 + 내용 검색</span
+                  >
                   <div class="filter-tab__icon-box">
                     <img
-                        class="filter-tab__icon-img"
-                        src="/svg/tab-check-btn.svg"
-                        alt="필터 버튼"
+                      class="filter-tab__icon-img"
+                      src="/svg/tab-check-btn.svg"
+                      alt="필터 버튼"
                     />
                   </div>
                 </label>
@@ -318,18 +348,18 @@ onUpdated(() => {
               <li @click="filterNameHandler(10)" class="filter-tab__item">
                 <label class="filter-tab__item-label">
                   <input
-                      class="filter-tab__item-radio"
-                      type="radio"
-                      name="filter"
-                      value="10"
-                      checked
+                    class="filter-tab__item-radio"
+                    type="radio"
+                    name="filter"
+                    value="10"
+                    checked
                   />
                   <span class="filter-tab__item--label-text"> 최근 수정 </span>
                   <div class="filter-tab__icon-box">
                     <img
-                        class="filter-tab__icon-img"
-                        src="/svg/tab-check-btn.svg"
-                        alt="필터 버튼"
+                      class="filter-tab__icon-img"
+                      src="/svg/tab-check-btn.svg"
+                      alt="필터 버튼"
                     />
                   </div>
                 </label>
@@ -337,17 +367,17 @@ onUpdated(() => {
               <li @click="filterNameHandler(11)" class="filter-tab__item">
                 <label class="filter-tab__item-label">
                   <input
-                      class="filter-tab__item-radio"
-                      type="radio"
-                      name="filter"
-                      value="11"
+                    class="filter-tab__item-radio"
+                    type="radio"
+                    name="filter"
+                    value="11"
                   />
                   <span class="filter-tab__item--label-text">제목</span>
                   <div class="filter-tab__icon-box">
                     <img
-                        class="filter-tab__icon-img"
-                        src="/svg/tab-check-btn.svg"
-                        alt="필터 버튼"
+                      class="filter-tab__icon-img"
+                      src="/svg/tab-check-btn.svg"
+                      alt="필터 버튼"
                     />
                   </div>
                 </label>
@@ -355,17 +385,17 @@ onUpdated(() => {
               <li @click="filterNameHandler(13)" class="filter-tab__item">
                 <label class="filter-tab__item-label">
                   <input
-                      class="filter-tab__item-radio"
-                      type="radio"
-                      name="filter"
-                      value="13"
+                    class="filter-tab__item-radio"
+                    type="radio"
+                    name="filter"
+                    value="13"
                   />
                   <span class="filter-tab__item--label-text">조회 수</span>
                   <div class="filter-tab__icon-box">
                     <img
-                        class="filter-tab__icon-img"
-                        src="/svg/tab-check-btn.svg"
-                        alt="필터 버튼"
+                      class="filter-tab__icon-img"
+                      src="/svg/tab-check-btn.svg"
+                      alt="필터 버튼"
                     />
                   </div>
                 </label>
@@ -373,17 +403,17 @@ onUpdated(() => {
               <li @click="filterNameHandler(14)" class="filter-tab__item">
                 <label class="filter-tab__item-label">
                   <input
-                      class="filter-tab__item-radio"
-                      type="radio"
-                      name="filter"
-                      value="13"
+                    class="filter-tab__item-radio"
+                    type="radio"
+                    name="filter"
+                    value="13"
                   />
                   <span class="filter-tab__item--label-text">좋아요 수</span>
                   <div class="filter-tab__icon-box">
                     <img
-                        class="filter-tab__icon-img"
-                        src="/svg/tab-check-btn.svg"
-                        alt="필터 버튼"
+                      class="filter-tab__icon-img"
+                      src="/svg/tab-check-btn.svg"
+                      alt="필터 버튼"
                     />
                   </div>
                 </label>
@@ -395,18 +425,18 @@ onUpdated(() => {
                 <li @click="sortHandler(1)" class="filter-tab__item">
                   <label class="filter-tab__item-label">
                     <input
-                        class="filter-tab__item-radio"
-                        type="radio"
-                        name="sort"
-                        value="1"
-                        checked
+                      class="filter-tab__item-radio"
+                      type="radio"
+                      name="sort"
+                      value="1"
+                      checked
                     />
                     <span class="filter-tab__item--label-text">내림차순</span>
                     <div class="filter-tab__icon-box">
                       <img
-                          class="filter-tab__icon-img"
-                          src="/svg/tab-check-btn.svg"
-                          alt="필터 버튼"
+                        class="filter-tab__icon-img"
+                        src="/svg/tab-check-btn.svg"
+                        alt="필터 버튼"
                       />
                     </div>
                   </label>
@@ -414,17 +444,17 @@ onUpdated(() => {
                 <li @click="sortHandler(0)" class="filter-tab__item">
                   <label class="filter-tab__item-label">
                     <input
-                        class="filter-tab__item-radio"
-                        type="radio"
-                        name="sort"
-                        value="0"
+                      class="filter-tab__item-radio"
+                      type="radio"
+                      name="sort"
+                      value="0"
                     />
                     <span class="filter-tab__item--label-text">오름차순</span>
                     <div class="filter-tab__icon-box">
                       <img
-                          class="filter-tab__icon-img"
-                          src="/svg/tab-check-btn.svg"
-                          alt="필터 버튼"
+                        class="filter-tab__icon-img"
+                        src="/svg/tab-check-btn.svg"
+                        alt="필터 버튼"
                       />
                     </div>
                   </label>
@@ -509,18 +539,17 @@ button {
   height: 18px;
 }
 
-
 /* 필터 */
-.search-filter-frame{
+.search-filter-frame {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-  .search-filter-frame-search{
-    display: flex;
-    gap: 10px;
-    align-items: center;
-  }
+.search-filter-frame-search {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
 
 .search-filter-log {
   display: flex;
@@ -601,7 +630,7 @@ button {
   margin: 0 24px;
   position: relative;
 }
-.filter-list-frame{
+.filter-list-frame {
   height: 100%;
   overflow: auto;
 }
@@ -673,7 +702,7 @@ button {
   height: 36px;
   width: 36px;
 }
-.filter-attribute__title{
+.filter-attribute__title {
   margin-left: 20px;
   margin-bottom: 8px;
   font-size: 16px;
@@ -689,16 +718,15 @@ button {
   display: block;
 }
 
-.filter-tab__list{
+.filter-tab__list {
   padding-right: 10px;
   padding-left: 10px;
   margin-bottom: 250px;
 }
-.filter-tab__list1{
+.filter-tab__list1 {
   padding-right: 10px;
   padding-left: 10px;
   border-bottom: solid 1px var(--main2--opacity40);
-margin-bottom: 20px;
+  margin-bottom: 20px;
 }
-
 </style>

@@ -1,8 +1,6 @@
 <script setup>
-import _ from "lodash";
 import { Splide, SplideSlide, SplideTrack } from "@splidejs/vue-splide";
 import "@splidejs/splide/dist/css/splide.min.css";
-import { onBeforeMount, onMounted, reactive } from "vue";
 
 //-------------------변수 선언--------------------
 
@@ -12,38 +10,34 @@ const filterTreeInfoList = ref([]);
 const seedList = ref([]);
 const seedId = ref(0);
 let observer = null;
+const memberDetail = useMemberStore();
+const { _nickname: username } = storeToRefs(memberDetail);
 
-//TODO: JWT토큰 있다면 전송하게끔 로직 수정 필요
-
-const { data: seedData, status: seedStatus } = await useFetch("seeds", {
+const { data: seedData, status: seedStatus } = await useAuthFetch("seeds", {
   baseURL: `${config.public.apiBase}`,
   method: "GET",
 });
 
-const { data: treeData, status: treeStatus } = await useFetch(
+const { data: treeData, status: treeStatus } = await useAuthFetch(
   "trees/tree-home",
   {
     baseURL: `${config.public.apiBase}`,
     method: "GET",
-    params: {
-      mid: useRoute().query.mid,
-    },
   }
 );
 
 const newTreeFetch = async (newSeedId) => {
   seedId.value = newSeedId;
-  const response = await $fetch("trees/tree-home-sort", {
+  const response = await useAuthDataFetch("trees/tree-home-sort", {
     baseURL: `${config.public.apiBase}`,
     method: "GET",
     params: {
       seedId: seedId.value,
-      mid: useRoute().query.mid,
     },
   });
   if (response) {
-    console.log("ok");
     console.log(response);
+    console.log(response.treeInfoResponseList);
     filterTreeInfoList.value = [...response.treeInfoResponseList];
   }
 };
@@ -120,7 +114,7 @@ const bookExRemoveNone = (selectedElement, index) => {
       <h2 class="none">나의 트리 정보</h2>
       <section class="my-tree-title-container">
         <h3>
-          <TextMainTitle :data="{ title: '나의 트리', size: 28 }" />
+          <TextMainTitle :data="{ title: `${username}님의 트리`, size: 28 }" />
         </h3>
       </section>
 
@@ -134,7 +128,6 @@ const bookExRemoveNone = (selectedElement, index) => {
               perPage: 3,
               width: '100%',
               focus: 'center',
-              gap: '20px',
               heightRatio: 0.5,
               speed: 800,
               easing: 'ease',
@@ -142,8 +135,15 @@ const bookExRemoveNone = (selectedElement, index) => {
                 mouse: 100,
                 touch: 30,
               },
-              arrow: false,
+              arrow: true,
               padding: 0,
+              pagination: true,
+              breakpoints: {
+                768: {
+                  perPage: 2,
+                  heightRatio: 0.8,
+                },
+              },
             }"
             aria-label="Tree-books"
             @splide:moved="splideMoved"
@@ -186,7 +186,7 @@ const bookExRemoveNone = (selectedElement, index) => {
           </Splide>
         </section>
 
-        <section>
+        <section class="textbox-recent-tree-info-container">
           <h3 class="none">트리 약식 정보</h3>
           <ul>
             <li
@@ -325,11 +325,23 @@ const bookExRemoveNone = (selectedElement, index) => {
 }
 
 .mid__img {
-  width: 100%;
+  width: 90%;
   height: auto;
   object-fit: cover;
 }
 
+@media screen and (max-width: 768px) {
+  .mid__img {
+    width: 100%;
+    height: auto;
+  }
+}
+@media screen and (max-width: 480px) {
+  .mid__img {
+    width: 120%;
+    height: auto;
+  }
+}
 .item__transform {
   transform: scale(1.2);
 }

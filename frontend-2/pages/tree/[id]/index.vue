@@ -1,5 +1,5 @@
-<script setup >
-import { ref,watchEffect } from "vue";
+<script setup>
+import { ref, watchEffect } from "vue";
 
 import axios from "axios";
 import { useRoute } from "vue-router";
@@ -16,9 +16,8 @@ import InputBackSearch from "~/components/input/InputBackSearch.vue";
 const treeId = Number(useRoute().params.id);
 let filterQuery = 10;
 let sortQuery = 1;
-let filterName = ref('최근 수정 순');
-let searchFilterName = ref('전체');
-
+let filterName = ref("최근 수정 순");
+let searchFilterName = ref("전체");
 
 const queryParam = reactive({
   filter: 10,
@@ -30,57 +29,64 @@ const queryParam = reactive({
 let info = reactive({});
 let branch = reactive({
   items: [],
-  totalCount: 0
+  totalCount: 0,
 });
 const mergedBranch = ref({
-  items: []
+  items: [],
 });
 
 const config = useRuntimeConfig();
 
 const isActive = ref(false);
 let totalCnt = 0;
+const isEtcTree = ref(true);
 
 const openPopup = () => {
   const filterBack1 = document.getElementById("filter-bg");
   const filterBack2 = document.getElementById("filter-bg-blur");
   const filterTab = document.getElementById("filter-tab");
 
-  filterBack1.classList.remove('none');
-  filterBack2.classList.remove('none');
+  filterBack1.classList.remove("none");
+  filterBack2.classList.remove("none");
 
   setTimeout(() => {
-    filterTab.classList.add('up');
-  }, 30)
+    filterTab.classList.add("up");
+  }, 30);
 };
 
 const closePopup = () => {
   const filterBack1 = document.getElementById("filter-bg");
   const filterBack2 = document.getElementById("filter-bg-blur");
   const filterTab = document.getElementById("filter-tab");
-  filterTab.classList.remove('up');
-  filterBack1.classList.add('none');
-  filterBack2.classList.add('none');
+  filterTab.classList.remove("up");
+  filterBack1.classList.add("none");
+  filterBack2.classList.add("none");
 
   queryParam.filter = filterQuery;
   queryParam.sort = sortQuery;
   queryParam.page = 0;
-}
+};
 
-const { data: infoData, error: infoError } = await useFetch(() => `trees/${treeId}/info`, {
-  baseURL: config.public.apiBase,
-});
+const { data: infoData, error: infoError } = await useAuthFetch(
+  () => `trees/${treeId}/info`,
+  {
+    baseURL: config.public.apiBase,
+  }
+);
 
-const { data: branchData, error: branchError, refresh } = await useFetch(() => `trees/${treeId}/branches`, {
+const {
+  data: branchData,
+  error: branchError,
+  refresh,
+} = await useAuthFetch(() => `trees/${treeId}/branches`, {
   baseURL: config.public.apiBase,
   params: queryParam,
 });
 
-
 const bookMarkHandler = (bookMark) => {
   queryParam.bookMark = bookMark;
   queryParam.page = 0;
-  switch (bookMark){
+  switch (bookMark) {
     case 1:
       searchFilterName.value = "북마크";
       break;
@@ -94,7 +100,7 @@ const bookMarkHandler = (bookMark) => {
 
 const sortHandler = (e) => {
   sortQuery = e;
-}
+};
 
 const filterNameHandler = (e) => {
   filterQuery = e;
@@ -115,7 +121,7 @@ const filterNameHandler = (e) => {
       filterName.value = "좋아요 수 순";
       break;
   }
-}
+};
 
 const loadMore = () => {
   queryParam.page += 1;
@@ -123,7 +129,10 @@ const loadMore = () => {
 
 watchEffect(() => {
   if (infoData.value) {
-    Object.assign(info, infoData.value);
+    info = infoData.value;
+    // bookTree인 경우 isEtcTree.value = false
+    if (info.bookId !== null && info.bookId !== undefined && info.bookId !== "")
+      isEtcTree.value = false;
   }
 
   if (branchData.value) {
@@ -139,14 +148,12 @@ watchEffect(() => {
     }
 
     // 중복 제거 (Set 사용)
-    mergedBranch.value.items = [...new Set(mergedBranch.value.items.map(item => item.id))].map(id =>
-        mergedBranch.value.items.find(item => item.id === id)
-    );
+    mergedBranch.value.items = [
+      ...new Set(mergedBranch.value.items.map((item) => item.id)),
+    ].map((id) => mergedBranch.value.items.find((item) => item.id === id));
   }
 });
-
 </script>
-
 
 <!------------------------------------View---------------------------------------->
 
@@ -156,68 +163,70 @@ watchEffect(() => {
     <section class="reg-book-search-container">
       <h2 class="none">트리 검색</h2>
 
-      <NuxtLink
-          :to="`/tree/search`"
-          class="back-btn">
-        <InputSearchWithBackBtn
-          placeholder="검색할 트리를 입력해주세요"
-          href="javascript:history.back()"
-          api=""
-          >트리 검색 상단 바</InputSearchWithBackBtn>
+      <NuxtLink :to="`/tree/search`" class="back-btn">
+        <InputSearchWithBackBtn placeholder="검색할 트리를 입력해주세요"
+          >트리 검색 상단 바</InputSearchWithBackBtn
+        >
       </NuxtLink>
     </section>
   </header>
   <main>
     <section class="user-tree-info__container">
       <h2 class="none">트리 정보</h2>
-        <CardTreeInfoCover :data="info">트리 정보</CardTreeInfoCover>
+      <CardTreeInfoCover :data="info">트리 정보</CardTreeInfoCover>
     </section>
     <section class="branch-tree-detail-container">
       <h2 class="none">트리 상세 설명</h2>
 
-      <CardHiddenInfo :data ="info" >트리 상세 설명</CardHiddenInfo>
+      <CardHiddenInfo :data="info">트리 상세 설명</CardHiddenInfo>
     </section>
 
     <section class="branch-list__container">
       <div>
-      <TextMainTitleListCount
-        :title="'브랜치 목록'"
-        :number='branch.totalCount'
-      >브랜치 목록</TextMainTitleListCount>
+        <TextMainTitleListCount
+          :title="'브랜치 목록'"
+          :number="branch.totalCount"
+          >브랜치 목록</TextMainTitleListCount
+        >
       </div>
       <section class="branch-filter-container">
         <h3 class="none">브랜치 필터</h3>
 
         <div>
-        <FilterTreeLeafCard
+          <FilterTreeLeafCard
             @popup="openPopup"
             @bookMark="bookMarkHandler"
             :filterName="filterName"
             :searchFilterName="searchFilterName"
-        ></FilterTreeLeafCard>
+          ></FilterTreeLeafCard>
         </div>
       </section>
       <section class="branch-filter-result-list__container">
         <h3 class="none">브랜치 리스트</h3>
         <div id="card-branch__list-frame">
           <div>
-          <CardBranchList
+            <CardBranchList
               :items="mergedBranch.items"
               :totalCnt="branch.totalCount"
+              :isEtcTree="isEtcTree"
               @loadMore="loadMore"
-          ></CardBranchList>
+            ></CardBranchList>
           </div>
         </div>
       </section>
     </section>
     <section>
-      <div  @click.prevent="closePopup" class="filter-tab-container none" id="filter-bg"></div>
+      <div
+        @click.prevent="closePopup"
+        class="filter-tab-container none"
+        id="filter-bg"
+      ></div>
       <div class="filter-tab-container--30 none" id="filter-bg-blur">
         <h2 class="none">정렬 선택</h2>
         <div id="filter-tab" class="filter-tab__box--30">
           <div class="filter-tab__header">
             <button
-                @click.prevent="closePopup"
+              @click.prevent="closePopup"
               id="filter-tab-close-btn"
               class="filter-tab__btn--back"
               type="button"
@@ -228,206 +237,216 @@ watchEffect(() => {
           </div>
 
           <div class="filter-list-frame">
-          <div class="filter-attribute__bg">
             <div class="filter-attribute__bg">
-              <h2 class="filter-attribute__title">브랜치 검색 기준</h2>
-              <ul id="filter-tab__list">
-                <li @click="bookMarkHandler( 1)" class="filter-tab__item">
-                  <label class="filter-tab__item-label">
-                    <input
+              <div class="filter-attribute__bg">
+                <h2 class="filter-attribute__title">브랜치 검색 기준</h2>
+                <ul id="filter-tab__list">
+                  <li @click="bookMarkHandler(1)" class="filter-tab__item">
+                    <label class="filter-tab__item-label">
+                      <input
                         class="filter-tab__item-radio"
                         type="radio"
                         name="searchFilter"
                         value="0"
                         checked
-                    />
-                    <span class="filter-tab__item--label-text">북마크</span>
-                    <div class="filter-tab__icon-box">
-                      <img
+                      />
+                      <span class="filter-tab__item--label-text">북마크</span>
+                      <div class="filter-tab__icon-box">
+                        <img
                           class="filter-tab__icon-img"
                           src="/svg/tab-check-btn.svg"
                           alt="필터 버튼"
-                      />
-                    </div>
-                  </label>
-                </li>
-                <li @click="bookMarkHandler(0)" class="filter-tab__item">
-                  <label class="filter-tab__item-label">
-                    <input
+                        />
+                      </div>
+                    </label>
+                  </li>
+                  <li @click="bookMarkHandler(0)" class="filter-tab__item">
+                    <label class="filter-tab__item-label">
+                      <input
                         class="filter-tab__item-radio"
                         type="radio"
                         name="searchFilter"
                         value="1"
-                    />
-                    <span class="filter-tab__item--label-text">마지막 리프</span>
-                    <div class="filter-tab__icon-box">
-                      <img
+                      />
+                      <span class="filter-tab__item--label-text"
+                        >마지막 리프</span
+                      >
+                      <div class="filter-tab__icon-box">
+                        <img
                           class="filter-tab__icon-img"
                           src="/svg/tab-check-btn.svg"
                           alt="필터 버튼"
-                      />
-                    </div>
-                  </label>
-                </li>
-                <li @click="bookMarkHandler('')" class="filter-tab__item">
-                  <label class="filter-tab__item-label">
-                    <input
+                        />
+                      </div>
+                    </label>
+                  </li>
+                  <li @click="bookMarkHandler('')" class="filter-tab__item">
+                    <label class="filter-tab__item-label">
+                      <input
                         class="filter-tab__item-radio"
                         type="radio"
                         name="searchFilter"
                         value=""
-                    />
-                    <span class="filter-tab__item--label-text">전체</span>
-                    <div class="filter-tab__icon-box">
-                      <img
+                      />
+                      <span class="filter-tab__item--label-text">전체</span>
+                      <div class="filter-tab__icon-box">
+                        <img
                           class="filter-tab__icon-img"
                           src="/svg/tab-check-btn.svg"
                           alt="필터 버튼"
+                        />
+                      </div>
+                    </label>
+                  </li>
+                </ul>
+                <h2 class="filter-attribute__title">정렬 기준</h2>
+                <ul id="filter-tab__list1">
+                  <li @click="filterNameHandler(10)" class="filter-tab__item">
+                    <label class="filter-tab__item-label">
+                      <input
+                        class="filter-tab__item-radio"
+                        type="radio"
+                        name="filter"
+                        value="10"
+                        checked
                       />
-                    </div>
-                  </label>
-                </li>
-              </ul>
-            <h2 class="filter-attribute__title">정렬 기준</h2>
-            <ul id="filter-tab__list1">
-              <li @click="filterNameHandler( 10)" class="filter-tab__item">
-                <label class="filter-tab__item-label">
-                  <input
-                      class="filter-tab__item-radio"
-                      type="radio"
-                      name="filter"
-                      value="10"
-                      checked
-                  />
-                  <span class="filter-tab__item--label-text">최근 수정</span>
-                  <div class="filter-tab__icon-box">
-                    <img
-                        class="filter-tab__icon-img"
-                        src="/svg/tab-check-btn.svg"
-                        alt="필터 버튼"
-                    />
-                  </div>
-                </label>
-              </li>
-              <li @click="filterNameHandler(11)" class="filter-tab__item">
-                <label class="filter-tab__item-label">
-                  <input
-                      class="filter-tab__item-radio"
-                      type="radio"
-                      name="filter"
-                      value="11"
-                  />
-                  <span class="filter-tab__item--label-text">제목</span>
-                  <div class="filter-tab__icon-box">
-                    <img
-                        class="filter-tab__icon-img"
-                        src="/svg/tab-check-btn.svg"
-                        alt="필터 버튼"
-                    />
-                  </div>
-                </label>
-              </li>
-              <li @click="filterNameHandler(12)" class="filter-tab__item">
-                <label class="filter-tab__item-label">
-                  <input
-                      class="filter-tab__item-radio"
-                      type="radio"
-                      name="filter"
-                      value="12"
-                  />
-                  <span class="filter-tab__item--label-text">리프 수</span>
-                  <div class="filter-tab__icon-box">
-                    <img
-                        class="filter-tab__icon-img"
-                        src="/svg/tab-check-btn.svg"
-                        alt="필터 버튼"
-                    />
-                  </div>
-                </label>
-              </li>
-              <li @click="filterNameHandler(13)" class="filter-tab__item">
-                <label class="filter-tab__item-label">
-                  <input
-                      class="filter-tab__item-radio"
-                      type="radio"
-                      name="filter"
-                      value="13"
-                  />
-                  <span class="filter-tab__item--label-text">조회 수</span>
-                  <div class="filter-tab__icon-box">
-                    <img
-                        class="filter-tab__icon-img"
-                        src="/svg/tab-check-btn.svg"
-                        alt="필터 버튼"
-                    />
-                  </div>
-                </label>
-              </li>
-              <li @click="filterNameHandler(14)" class="filter-tab__item">
-                <label class="filter-tab__item-label">
-                  <input
-                      class="filter-tab__item-radio"
-                      type="radio"
-                      name="filter"
-                      value="13"
-                  />
-                  <span class="filter-tab__item--label-text">좋아요 수</span>
-                  <div class="filter-tab__icon-box">
-                    <img
-                        class="filter-tab__icon-img"
-                        src="/svg/tab-check-btn.svg"
-                        alt="필터 버튼"
-                    />
-                  </div>
-                </label>
-              </li>
-            </ul>
-            <div class="filter-attribute__bg">
-            <h2 class="filter-attribute__title">정렬 순서</h2>
-            <ul class="filter-tab__list" id="filter-tab__list2">
-              <li @click="sortHandler(1)" class="filter-tab__item">
-                <label class="filter-tab__item-label">
-                  <input
-                    class="filter-tab__item-radio"
-                    type="radio"
-                    name="sort"
-                    value="1"
-                    checked
-                  />
-                  <span class="filter-tab__item--label-text">내림차순</span>
-                  <div class="filter-tab__icon-box">
-                    <img
-                      class="filter-tab__icon-img"
-                      src="/svg/tab-check-btn.svg"
-                      alt="필터 버튼"
-                    />
-                  </div>
-                </label>
-              </li>
-              <li @click="sortHandler(0)" class="filter-tab__item">
-                <label class="filter-tab__item-label">
-                  <input
-                    class="filter-tab__item-radio"
-                    type="radio"
-                    name="sort"
-                    value="0"
-                  />
-                  <span class="filter-tab__item--label-text">오름차순</span>
-                  <div class="filter-tab__icon-box">
-                    <img
-                      class="filter-tab__icon-img"
-                      src="/svg/tab-check-btn.svg"
-                      alt="필터 버튼"
-                    />
-                  </div>
-                </label>
-              </li>
-            </ul>
+                      <span class="filter-tab__item--label-text"
+                        >최근 수정</span
+                      >
+                      <div class="filter-tab__icon-box">
+                        <img
+                          class="filter-tab__icon-img"
+                          src="/svg/tab-check-btn.svg"
+                          alt="필터 버튼"
+                        />
+                      </div>
+                    </label>
+                  </li>
+                  <li @click="filterNameHandler(11)" class="filter-tab__item">
+                    <label class="filter-tab__item-label">
+                      <input
+                        class="filter-tab__item-radio"
+                        type="radio"
+                        name="filter"
+                        value="11"
+                      />
+                      <span class="filter-tab__item--label-text">제목</span>
+                      <div class="filter-tab__icon-box">
+                        <img
+                          class="filter-tab__icon-img"
+                          src="/svg/tab-check-btn.svg"
+                          alt="필터 버튼"
+                        />
+                      </div>
+                    </label>
+                  </li>
+                  <li @click="filterNameHandler(12)" class="filter-tab__item">
+                    <label class="filter-tab__item-label">
+                      <input
+                        class="filter-tab__item-radio"
+                        type="radio"
+                        name="filter"
+                        value="12"
+                      />
+                      <span class="filter-tab__item--label-text">리프 수</span>
+                      <div class="filter-tab__icon-box">
+                        <img
+                          class="filter-tab__icon-img"
+                          src="/svg/tab-check-btn.svg"
+                          alt="필터 버튼"
+                        />
+                      </div>
+                    </label>
+                  </li>
+                  <li @click="filterNameHandler(13)" class="filter-tab__item">
+                    <label class="filter-tab__item-label">
+                      <input
+                        class="filter-tab__item-radio"
+                        type="radio"
+                        name="filter"
+                        value="13"
+                      />
+                      <span class="filter-tab__item--label-text">조회 수</span>
+                      <div class="filter-tab__icon-box">
+                        <img
+                          class="filter-tab__icon-img"
+                          src="/svg/tab-check-btn.svg"
+                          alt="필터 버튼"
+                        />
+                      </div>
+                    </label>
+                  </li>
+                  <li @click="filterNameHandler(14)" class="filter-tab__item">
+                    <label class="filter-tab__item-label">
+                      <input
+                        class="filter-tab__item-radio"
+                        type="radio"
+                        name="filter"
+                        value="13"
+                      />
+                      <span class="filter-tab__item--label-text"
+                        >좋아요 수</span
+                      >
+                      <div class="filter-tab__icon-box">
+                        <img
+                          class="filter-tab__icon-img"
+                          src="/svg/tab-check-btn.svg"
+                          alt="필터 버튼"
+                        />
+                      </div>
+                    </label>
+                  </li>
+                </ul>
+                <div class="filter-attribute__bg">
+                  <h2 class="filter-attribute__title">정렬 순서</h2>
+                  <ul class="filter-tab__list" id="filter-tab__list2">
+                    <li @click="sortHandler(1)" class="filter-tab__item">
+                      <label class="filter-tab__item-label">
+                        <input
+                          class="filter-tab__item-radio"
+                          type="radio"
+                          name="sort"
+                          value="1"
+                          checked
+                        />
+                        <span class="filter-tab__item--label-text"
+                          >내림차순</span
+                        >
+                        <div class="filter-tab__icon-box">
+                          <img
+                            class="filter-tab__icon-img"
+                            src="/svg/tab-check-btn.svg"
+                            alt="필터 버튼"
+                          />
+                        </div>
+                      </label>
+                    </li>
+                    <li @click="sortHandler(0)" class="filter-tab__item">
+                      <label class="filter-tab__item-label">
+                        <input
+                          class="filter-tab__item-radio"
+                          type="radio"
+                          name="sort"
+                          value="0"
+                        />
+                        <span class="filter-tab__item--label-text"
+                          >오름차순</span
+                        >
+                        <div class="filter-tab__icon-box">
+                          <img
+                            class="filter-tab__icon-img"
+                            src="/svg/tab-check-btn.svg"
+                            alt="필터 버튼"
+                          />
+                        </div>
+                      </label>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-          </div>
-        </div>
-      </div>
       </div>
     </section>
   </main>
@@ -439,14 +458,13 @@ watchEffect(() => {
     <section class="nav-container">
       <h2 class="none">네비게이션</h2>
       <div>
-      <NavigationBar :active = "'home'" ></NavigationBar>
+        <NavigationBar :active="'home'"></NavigationBar>
       </div>
     </section>
   </aside>
 </template>
 
 <style scoped>
-
 .filter-tab-container--30 {
   top: 30%;
   right: 0;
@@ -479,7 +497,7 @@ watchEffect(() => {
   margin: 0 24px;
   position: relative;
 }
-.filter-list-frame{
+.filter-list-frame {
   height: 100%;
   overflow: auto;
 }
@@ -551,7 +569,7 @@ watchEffect(() => {
   height: 36px;
   width: 36px;
 }
-.filter-attribute__title{
+.filter-attribute__title {
   margin-left: 20px;
   margin-bottom: 8px;
   font-size: 16px;
@@ -567,8 +585,7 @@ watchEffect(() => {
   display: block;
 }
 
-.filter-tab__list{
+.filter-tab__list {
   margin-bottom: 250px;
 }
-
 </style>

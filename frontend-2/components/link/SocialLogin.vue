@@ -1,8 +1,8 @@
 <script setup>
-import {decodeCredential, googleTokenLogin} from "vue3-google-login";
-import {useMemberJoinTmp} from "~/composables/useMemberJoinTmp.js";
+import { decodeCredential, googleTokenLogin } from "vue3-google-login";
+import { useMemberJoinTmp } from "~/composables/useMemberJoinTmp.js";
 
-const memberDetail = useMemberDetail();
+const memberDetail = useMemberStore();
 const config = useRuntimeConfig();
 const joinInfo = useMemberJoinTmp();
 const router = useRouter();

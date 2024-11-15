@@ -4,6 +4,7 @@ const props = defineProps({
     type: Object,
     required: true,
     default: () => ({
+      treeId: 1,
       title: "나의 첫번째 트리",
       bookCategory: "시/에세이",
       bookTitle: "무정형의 삶",
@@ -25,7 +26,7 @@ const formatDate = (date) => {
 <template>
   <!-- recent-tree-info(tree) -->
   <div class="textbox-recent-tree-info">
-    <div class="textbox-recent-tree-info__a">
+    <NuxtLink class="textbox-recent-tree-info__a" :to="`tree/${tree.treeId}`">
       <h2 class="textbox-recent-tree-info__tree-title">
         {{ tree.title }}
       </h2>
@@ -44,7 +45,7 @@ const formatDate = (date) => {
       <p class="textbox-recent-tree-info__date">
         {{ formatDate(tree.createdAt) }}
       </p>
-    </div>
+    </NuxtLink>
   </div>
 </template>
 
@@ -52,6 +53,11 @@ const formatDate = (date) => {
 /*  ==========================================
     FRAGMENT: 최근 트리 정보
     ========================================== */
+
+.textbox-recent-tree-info {
+  padding: 24px;
+}
+
 .textbox-recent-tree-info__a {
   display: flex;
   flex-direction: column;
@@ -91,6 +97,8 @@ const formatDate = (date) => {
   font-size: 16px;
   line-height: var(--line-height-main);
   margin-bottom: 4px;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .textbox-recent-tree-info__items {

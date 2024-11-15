@@ -1,13 +1,19 @@
 <script setup>
+import useBackNavigation from "~/composables/useBackNavigation.js";
+
 const props = defineProps({
   edit: "",
   delete: "",
+  deleteBtnActive: {
+    type: Boolean,
+    default: true,
+  },
 });
 
 const deleteResource = () => {
   // console.log(props.delete);
   if (confirm("정말 삭제하시겠습니까?")) {
-    const { data } = $fetch(props.delete, {
+    const { data } = useAuthDataFetch(props.delete, {
       baseURL: useRuntimeConfig().public.apiBase,
       method: "DELETE",
     });
@@ -15,21 +21,25 @@ const deleteResource = () => {
   }
 };
 
-const goBack = () => {
-  useRouter().back();
-};
+const goBack = () => { useBackNavigation().popPageFromStack(); };
+const { getLastPage } = useBackNavigation();
+const lastPage = computed(() => getLastPage());
+
 </script>
 
 <template>
   <!--top-bar__transparent(edit)-->
   <div class="top-bar__transparent-frame">
-    <div class="top-bar__transparent-back-btn" @click="useGoBack"></div>
+    <NuxtLink class="top-bar__transparent-back-btn"
+              :to="lastPage"
+              @click="goBack">
+    </NuxtLink>
     <div class="top-bar__transparent-btns">
       <NuxtLink
         class="top-bar__transparent-setting-btn"
         :to="props.edit"
       ></NuxtLink>
-      <button
+      <button v-if="deleteActive"
         class="top-bar__transparent-delete-btn"
         @click="deleteResource"
       ></button>

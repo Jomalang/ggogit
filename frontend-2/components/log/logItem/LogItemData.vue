@@ -8,7 +8,7 @@ const props = defineProps<{
 </script>
 
 <template>
-  <a class="log-item__link" :href="itemData.link">
+  <NuxtLink class="log-item__link" :to="itemData.link">
     <div class="log-item__text-box">
       <p class="log-item__title">{{itemData.title}}</p>
       <p class="log-item__date">{{itemData.date}}</p>
@@ -18,7 +18,7 @@ const props = defineProps<{
         >{{tag.name}}</li>
       </ul>
     </div>
-  </a>
+  </NuxtLink>
 </template>
 
 <style scoped>

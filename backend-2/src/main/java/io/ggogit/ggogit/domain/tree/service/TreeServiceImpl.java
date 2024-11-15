@@ -172,11 +172,8 @@ public class TreeServiceImpl implements TreeService {
             if(lastestLeafTime == null || lastestLeafTime.isBefore(leaf.getUpdateTime()))
                 lastestLeafTime = leaf.getUpdateTime();
         }
-        System.out.println("============================================");
-        System.out.println("============================================");
+
         System.out.println(tree.getTreeBook());
-        System.out.println("============================================");
-        System.out.println("============================================");
 
         return TreeInfoResponse.of(tree, lastestLeafTime != null ? lastestLeafTime : LocalDateTime.now(), leafCount, likeCount, viewCount);
     }

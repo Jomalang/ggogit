@@ -24,7 +24,7 @@ const emit = defineEmits(['backButtonClick']);
         <div class="filter-tab__item-label">
 
           <RouterLink v-if="item.engName === 'book'" to="/tree/book/search" class="filter-tab__item--label-text">{{item.korName}}</RouterLink>
-          <RouterLink v-else class="filter-tab__item--label-text" :to="`/tree/etc/reg?type=${item.engName}`">{{item.korName}}</RouterLink>
+          <RouterLink v-else class="filter-tab__item--label-text" :to="`/tree/etc/seed/${item.id}/new?type=${item.engName}`">{{item.korName}}</RouterLink>
 
             <div class="filter-tab__icon-box">
               <img

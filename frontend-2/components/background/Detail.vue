@@ -7,6 +7,7 @@ const props = defineProps({
   userid: { type: Number, default: '' },
   memoirTitle: { type: String, default: '' },
   userUrl: { type: String, default: '' },
+  deleteBtnActive: { type: Boolean, default: true },
 });
 
 const backgroundStyle = computed(() => {

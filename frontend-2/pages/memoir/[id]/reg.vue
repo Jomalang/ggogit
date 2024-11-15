@@ -38,7 +38,7 @@ const savePost = async () => {
   memoir.value.text = editor.getHTML();
 
   //useFetch
-  const { data, error } = await useFetch("memoirs/" + treeId, {
+  const { data, error } = await useAuthFetch("memoirs/" + treeId, {
     method: "POST",
     baseURL: `${config.public.apiBase}`,
     headers: {
@@ -65,7 +65,7 @@ const savePost = async () => {
   }
 };
 
-const { data, error } = await useFetch(`books/tree/${treeId}`, {
+const { data, error } = await useAuthFetch(`books/tree/${treeId}`, {
   method: "GET",
   baseURL: `${config.public.apiBase}`,
 });

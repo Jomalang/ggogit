@@ -1,5 +1,5 @@
 <script setup>
-import {onMounted, ref, watch} from "vue";
+import { onMounted, ref, watch } from "vue";
 import axios, { HttpStatusCode } from "axios";
 import { useRouter } from "#vue-router";
 
@@ -33,7 +33,7 @@ const treeFormData = useState("treeFormData", () => ({
 }));
 
 // ----------------------- API ----------------------- //
-const { data } = await useFetch(`/books/${bookId}/info`, {
+const { data } = await useAuthFetch(`/books/${bookId}/info`, {
   method: "GET",
   baseURL: config.public.apiBase,
   headers: {
@@ -48,7 +48,6 @@ watchEffect(() => {
     treeFormData.value.bookId = data.value.id;
     book.value = data.value;
   }
-
 });
 
 // ----------------------- Life Cycle ----------------------- //

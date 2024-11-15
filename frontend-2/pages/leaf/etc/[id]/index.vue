@@ -40,7 +40,7 @@ const leafPageInfo = reactive({
   endPage: 200
 });
 
-const leafMember = reactive({
+const member = reactive({
   id: 1,
   nickName: '닉네임',
   userName: '유저이름',
@@ -50,6 +50,11 @@ const leafMember = reactive({
 });
 
 let info = reactive({});
+
+//카드 아이템
+const treeItems = ref([]);
+const memoirItems = ref([]);
+const leafItems = ref([]);
 
 // ----------------------  API ---------------------- //
 const { data: infoData, error: infoError } = await useFetch(() => `trees/leaves/${leafId}/info`, {
@@ -63,6 +68,39 @@ const { data: leafDetailData, error: leafDetailDataError } = await useFetch(() =
 const { data: leafMemberInfo, error: leafMemberInfoError } = await useFetch(() => `leaves/${leafId}/member`, {
   baseURL: config.public.apiBase,
 });
+
+const { data: leafCardData, error: leafCardError }
+    = await useFetch(() => `/members/${member.id}/leaves/book/cards`, {
+  method: "GET",
+  baseURL: `${config.public.apiBase}`,
+});
+
+const { data: treeCardData, error: treeCardError }
+    = await useFetch(() => `trees/members/${member.id}/trees/book/cards`, {
+  method: "GET",
+  baseURL: `${config.public.apiBase}`,
+});
+
+const { data: memoirCardData, error: memoirCardError }
+    = await useFetch(() => `memoirs/members/${member.id}/memoirs/book/cards`, {
+  method: "GET",
+  baseURL: `${config.public.apiBase}`,
+});
+
+if (leafCardData.value) {
+  console.log(leafCardData.value);
+  leafItems.value = [...leafCardData.value.items];
+}
+
+if (treeCardData.value) {
+  console.log(treeCardData.value);
+  treeItems.value = [...treeCardData.value.treeBookCardResponse];
+}
+
+if (memoirCardData.value) {
+  console.log(memoirCardData.value);
+  memoirItems.value = [...memoirCardData.value.memoirBookCardDtoResponse];
+}
 
 watchEffect(() => {
   if (infoData.value) {
@@ -79,12 +117,12 @@ watchEffect(() => {
   }
 
   if (leafMemberInfo.value) {
-    leafMember.id = leafMemberInfo.value.id;
-    leafMember.nickName = leafMemberInfo.value.nickName;
-    leafMember.userName = leafMemberInfo.value.userName;
-    leafMember.email = leafMemberInfo.value.email;
-    leafMember.backImgName = leafMemberInfo.value.backImgName;
-    leafMember.profileImgName = leafMemberInfo.value.profileImgName;
+    member.id = leafMemberInfo.value.id;
+    member.nickName = leafMemberInfo.value.nickName;
+    member.userName = leafMemberInfo.value.userName;
+    member.email = leafMemberInfo.value.email;
+    member.backImgName = leafMemberInfo.value.backImgName;
+    member.profileImgName = leafMemberInfo.value.profileImgName;
   }
 });
 // ---------------------- LifeCycle -------------------- //
@@ -108,10 +146,10 @@ onMounted(() => {
     <BackgroundDetail
         :edit="`/leaf/etc/${leafId}/edit`"
         :backImgPath="coverImageName"
-        :username="leafMember.nickName"
-        :userid="leafMember.email"
+        :username="member.nickName"
+        :userid="member.email"
         :memoirTitle="leafDetailData.leafTitle"
-        :userUrl="`/member/${leafMember.id}`"
+        :userUrl="`/member/${member.id}`"
     />
   </header>
 
@@ -131,10 +169,10 @@ onMounted(() => {
     <!-- 팔로우 -->
     <section class="follow-container">
       <BarUserInfoFollowBtn
-          :followId="leafMember.id"
-          :userImg="leafMember.profileImgName"
-          :username="leafMember.userName"
-          :userid="leafMember.email"
+          :followId="member.id"
+          :userImg="member.profileImgName"
+          :username="member.userName"
+          :userid="member.email"
       />
     </section>
 

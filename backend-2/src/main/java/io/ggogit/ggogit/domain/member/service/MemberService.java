@@ -17,9 +17,11 @@ public interface MemberService {
 
     void joinSendEmail(@Email String email) throws MessagingException;
 
-    boolean existsEmailJoinToken(@Email String email, @NotBlank String joinToken);
+    boolean existsEmailJoinToken(String joinToken);
 
-    void join(Member member);
+    boolean existsEmailJoinToken(String email, String joinToken);
+
+    Member join(Member member);
 
     boolean validateToken(String refreshToken);
 

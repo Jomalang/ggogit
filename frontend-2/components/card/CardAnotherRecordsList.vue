@@ -6,13 +6,48 @@ const props = defineProps<{
   items: CardItemProps[];
 }>();
 
-// console.log("CardAnotherRecordsList");
-// console.log(props.items);
+const emit = defineEmits([
+  "startScrollEvent",
+  "sideScrollEvent",
+  "endScrollEvent",
+]);
+
+const startScrollEvent = (e: MouseEvent) => {
+  emit("startScrollEvent", e);
+};
+
+const sideScrollEvent = (e: MouseEvent) => {
+  emit("sideScrollEvent", e);
+};
+
+const endScrollEvent = (e: MouseEvent) => {
+  emit("endScrollEvent", e);
+};
+
+
+// 스크롤 이벤트 핸들러
+let scrollContainer: HTMLElement | null = null;
+onMounted(() => {
+  scrollContainer = document.querySelector('.card-another-records-list-box');
+});
+
+const scroll = (e: MouseEvent) => {
+  e.preventDefault(); // 기본 스크롤 동작 방지
+  const scrollAmount = e.deltaY || -e.wheelDelta || 0;
+  const adjustedScrollAmount = scrollAmount * 1; // 스크롤 속도 조절
+  scrollContainer.scrollLeft += adjustedScrollAmount;
+};
+
 </script>
 
 <template>
-  <div class="card-another-records-list-box">
-    <ul class="card-another-records__list">
+  <div class="card-another-records-list-box"  @wheel="scroll">
+    <ul class="card-another-records__list"
+        @mousedown="startScrollEvent"
+        @mousemove="sideScrollEvent"
+        @mouseup="endScrollEvent"
+        @mouseleave="endScrollEvent"
+    >
       <li
         class="card-another-records__item"
         v-for="(item, index) in props.items"

@@ -15,6 +15,8 @@ INSERT INTO `EMAIL_JOIN_TOKEN`
 VALUES
     (TIMESTAMP '2024-11-12 15:48:16.894354', 1, TIMESTAMP '2024-11-12 15:48:16.894354', 0, 'test1@naver.com', 'e7e60e11-ea1b-4847-a801-383b70ba96d2');
 
+ALTER TABLE `EMAIL_JOIN_TOKEN` ALTER COLUMN `ID` RESTART WITH 2;
+
 -- ====================================================== --
 -- 비밀번호 찾기 TMP 데이터
 -- `PASSWORD_REST` 비밀번호 초기화 TMP
@@ -24,6 +26,8 @@ INSERT INTO `PASSWORD_REST`
     (`CREATE_TIME`, `ID`, `UPDATE_TIME`, `VERSION`, `EMAIL`, `UUID`)
 VALUES
     (TIMESTAMP '2024-11-12 15:48:16.894354', 1, TIMESTAMP '2024-11-12 15:48:16.894354', 0, 'test1@naver.com', 'fc12a01a-c29e-49b9-ba2c-2b10389daf6c');
+
+ALTER TABLE `PASSWORD_REST` ALTER COLUMN `ID` RESTART WITH 2;
 
 -- ====================================================== ---- ====================================================== --
 -- #########################################################
@@ -51,9 +55,10 @@ VALUES
     (FALSE, TIMESTAMP '2024-10-08 10:00:00', 8, TIMESTAMP '2024-10-08 10:00:00', 1, '$2a$10$cQ4tsAT3IoQkyKpoNH6Lf.DKE8dN9pSJGgRtY0SyxnbmjlJD.DWx6', '베스트셀러와 고전을 아우르는 독서광 사용자8은 그날의 책 이야기를 일기로 남깁니다.', 'user8@example.com', '이야기찾기', '장태민', 'USER'),
     (FALSE, TIMESTAMP '2024-10-09 10:00:00', 9, TIMESTAMP '2024-10-09 10:00:00', 1, '$2a$10$cQ4tsAT3IoQkyKpoNH6Lf.DKE8dN9pSJGgRtY0SyxnbmjlJD.DWx6', '짧은 이야기 쓰기를 좋아하는 사용자9는 책 속의 영감을 일상의 글로 엮어냅니다.', 'user9@example.com', '글꽃피우기', '홍지우', 'USER'),
     (FALSE, TIMESTAMP '2024-10-10 10:00:00', 10, TIMESTAMP '2024-10-10 10:00:00', 1, '$2a$10$cQ4tsAT3IoQkyKpoNH6Lf.DKE8dN9pSJGgRtY0SyxnbmjlJD.DWx6', '감성을 담은 글쓰기를 추구하는 사용자10은 책과 글을 통해 자신을 표현합니다.', 'dlgmlrnjs213@jr.naver.com', '책나들이', '윤해솔', 'USER'),
+    (FALSE, TIMESTAMP '2024-10-11 10:00:00', 998, TIMESTAMP '2024-10-11 10:00:00', 1, '$2a$10$cQ4tsAT3IoQkyKpoNH6Lf.DKE8dN9pSJGgRtY0SyxnbmjlJD.DWx6', '관리자 계정입니다.', 'gksxorb147@naver.com', '관리자', '관리자', 'USER'),
     (FALSE, TIMESTAMP '2024-10-11 10:00:00', 999, TIMESTAMP '2024-10-11 10:00:00', 1, '$2a$10$cQ4tsAT3IoQkyKpoNH6Lf.DKE8dN9pSJGgRtY0SyxnbmjlJD.DWx6', '관리자 계정입니다.', 'admin@example.com', '관리자', '관리자', 'ADMIN');
 
-ALTER TABLE `MEMBER` ALTER COLUMN `ID` RESTART WITH 11;
+ALTER TABLE `MEMBER` ALTER COLUMN `ID` RESTART WITH 1000;
 
 -- ====================================================== --
 -- 회원 배경 이미지

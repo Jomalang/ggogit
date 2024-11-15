@@ -18,7 +18,7 @@ const sendEmailApi = async () => {
 
   // API
   try {
-    const response = await useAuthDataFetch(
+    const response = await $fetch(
       `${config.public.apiBase}/members/join/send-email`,
       {
         method: "POST",

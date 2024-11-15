@@ -129,6 +129,7 @@ const loadMore = () => {
 
 watchEffect(() => {
   if (infoData.value) {
+    // console.log("infoData.value", infoData.value);
     info = infoData.value;
     // bookTree인 경우 isEtcTree.value = false
     if (info.bookId !== null && info.bookId !== undefined && info.bookId !== "")

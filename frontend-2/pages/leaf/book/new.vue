@@ -174,7 +174,7 @@ const submitHandler = async () => {
   }
 
   // console.log("leafFormData POST > : ", leafFormData.value);
-  console.log("POST : ", leafFormData.value);
+  // console.log("POST : ", leafFormData.value);
   const response = await axios.post(`${config.public.apiBase}/book/first/leaves`, leafFormData.value);
 
   if (response.status !== HttpStatusCode.Created) {

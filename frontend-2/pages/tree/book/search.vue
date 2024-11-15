@@ -53,11 +53,11 @@ const handleScroll = () => {
 };
 
 const dropListHandler = () => {
-  console.log("dropListHandler");
+  // console.log("dropListHandler");
 };
 
 const searchLoadingPage = (isLoading) => {
-  console.log(`searchLoadingPage=${isLoading}`);
+  // console.log(`searchLoadingPage=${isLoading}`);
   searchLoading.value = isLoading;
 };
 

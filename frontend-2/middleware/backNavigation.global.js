@@ -3,8 +3,8 @@ import useBackNavigation from "~/composables/useBackNavigation.js";
 export default defineNuxtRouteMiddleware((to, from) => {
     const { addPageToStack, popPageFromStack } = useBackNavigation();
 
-    console.log('to', to.fullPath);
-    console.log('from', from.fullPath);
+    // console.log('to', to.fullPath);
+    // console.log('from', from.fullPath);
 
     // 리프 리스트에서 리프 상세로 이동하는 경우
     if (from.fullPath.includes('/leaf?leafId=') && to.fullPath.includes('/leaf/')) {

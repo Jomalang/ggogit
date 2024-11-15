@@ -74,7 +74,7 @@ watchEffect(() => {
   }
 
   if (!leafFormData.value.isLoaded && leafStatus.value !== HttpStatusCode.Ok) {
-    console.log("leafData : ", leafData.value);
+    // console.log("leafData : ", leafData.value);
     leafFormData.value.title = leafData.value.title;
     leafFormData.value.content = leafData.value.content;
     leafFormData.value.visibility = leafData.value.visibility;

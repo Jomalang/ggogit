@@ -36,8 +36,8 @@ const newTreeFetch = async (newSeedId) => {
     },
   });
   if (response) {
-    console.log(response);
-    console.log(response.treeInfoResponseList);
+    // console.log(response);
+    // console.log(response.treeInfoResponseList);
     filterTreeInfoList.value = [...response.treeInfoResponseList];
   }
 };
@@ -72,7 +72,7 @@ const splideMoved = (splide, newIndex, prevIndex) => {
 const bookExRemoveNone = (selectedElement, index) => {
   document.querySelectorAll(".slide-item").forEach((item) => {
     if (item === selectedElement) {
-      console.log("selectedElement", selectedElement);
+      // console.log("selectedElement", selectedElement);
       item.setAttribute("class", "slide-item item__transform");
     } else {
       item.setAttribute("class", "slide-item");

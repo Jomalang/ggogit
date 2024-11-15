@@ -65,7 +65,7 @@ export const useMemberStore = defineStore("memberStore", () => {
         _accessToken.value = localStorage.getItem("_ggogit_accessToken");
       }
     } catch (e) {
-      console.log("loadUserFromStorage error = ", e);
+      // console.log("loadUserFromStorage error = ", e);
       initAuth();
     }
   }

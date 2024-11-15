@@ -40,7 +40,7 @@ const sendEmailApi = async () => {
     }
   } catch (error) {
     findUserInfo.value.disabled = false;
-    console.log(error);
+    // console.log(error);
   }
 };
 
@@ -74,7 +74,7 @@ const sendEmailHandler = () => {
     findUserInfo.value.isEmailValid = true;
   }
 
-  console.log("이메일 전송");
+  // console.log("이메일 전송");
   sendEmailApi();
 };
 </script>

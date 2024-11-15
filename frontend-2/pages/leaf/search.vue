@@ -19,31 +19,31 @@ let sort = ref(0);
 const handleTreeResult = (data) => {
   leaves.value = data || [];
 
-  console.log(data);
+  // console.log(data);
 };
 
 const handleKeyword = (words) => {
   query.value = words;
-  console.log(`query=${query.value}`);
+  // console.log(`query=${query.value}`);
 };
 
 const handlePage = (p) => {
   page.value = p;
-  console.log(`page=${page.value}`);
+  // console.log(`page=${page.value}`);
 };
 
 const handleTotalPage = (totalP) => {
   totalPage.value = totalP;
-  console.log(`totalPages=${totalPage.value}`);
+  // console.log(`totalPages=${totalPage.value}`);
 };
 
 const handleTotalCount = (totalC) => {
   totalCount.value = totalC;
-  console.log(`totalCount=${totalCount.value}`);
+  // console.log(`totalCount=${totalCount.value}`);
 };
 const handleFilterName = (filter) => {
   filterName.value = filter;
-  console.log(`filterName=${filterName.value}`);
+  // console.log(`filterName=${filterName.value}`);
 };
 
 const handleScroll = debounce(() => {
@@ -51,12 +51,12 @@ const handleScroll = debounce(() => {
   const { scrollTop, clientHeight, scrollHeight } = container;
 
   if (scrollTop + clientHeight >= scrollHeight) {
-    console.log("scroll end");
+    // console.log("scroll end");
 
     // 최대 페이지까지만 증가
     if (parseInt(page.value) < parseInt(totalPage.value)) {
       page.value = parseInt(page.value) + 1;
-      console.log(`page=${page.value}`);
+      // console.log(`page=${page.value}`);
     }
   }
 }, 300); // 디바운스 적용으로 스크롤 이벤트 과도한 호출 방지

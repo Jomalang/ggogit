@@ -110,7 +110,8 @@ onBeforeMount(() => {
 });
 
 onMounted(() => {
-  screenWidth.value = window.innerWidth;
+
+  screenWidth.value = 1024 <= window.innerWidth ? 1024 : window.innerWidth;
 
   // 화면 크기 변경에 대응하도록 리스너 추가
   window.addEventListener("resize", updateWidth);
@@ -127,7 +128,7 @@ onUnmounted(() => {
 // ----------------------- Function ----------------------- //
 
 const updateWidth = () => {
-  screenWidth.value = window.innerWidth;
+  screenWidth.value = 1024 <= window.innerWidth ? 1024 : window.innerWidth;
   // console.log("화면 크기 변경", screenWidth.value);
 };
 
@@ -392,13 +393,6 @@ const scrollToElement = () => {
 main {
   width: 100%;
   height: 100%;
-}
-
-.log-list-header-container {
-  width: 100%;
-  position: fixed;
-  top: 0;
-  z-index: 10;
 }
 
 .log-path-container {

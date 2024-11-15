@@ -305,6 +305,13 @@ home-tree__reg-4--search-book__input
   z-index: 10;
 }
 
+/* 1024px 이상 */
+@media (min-width: 1024px) {
+  .log-list-header-container {
+    width: 1024px;
+  }
+}
+
 .log-path-container {
   width: auto;
   padding: 0 24px 0 24px;
@@ -314,6 +321,7 @@ home-tree__reg-4--search-book__input
 .log-list-container {
   margin: 400px 0;
   width: 100%;
+  overflow-x: hidden;
 }
 
 .log-item-container {
@@ -353,6 +361,13 @@ home-tree__reg-4--search-book__input
 
 .log-list-bot-bar-info-container {
   z-index: 10;
+}
+
+/* 1024px 넓이에 적용 */
+@media (min-width: 1024px) {
+  .log-list-bot-bar-info-container {
+    width: 1024px;
+  }
 }
 
 /*================================

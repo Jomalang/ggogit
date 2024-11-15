@@ -46,11 +46,7 @@ const lastPage = computed(() => getLastPage());
   <!-- input-back-search(placeholder, href, method, name) -->
   <div class="search__form">
     <div>
-<<<<<<< HEAD
       <NuxtLink :to="lastPage" @click="goBack()">
-=======
-      <NuxtLink :href="href">
->>>>>>> 3ff660acb745981ca8606c21456bb9e683f65af0
         <img src="/public/svg/back.svg" alt="back button" />
       </NuxtLink>
     </div>

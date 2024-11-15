@@ -39,7 +39,7 @@ const config = useRuntimeConfig();
 
 const isActive = ref(false);
 let totalCnt = 0;
-const isEtcTree = ref(false);
+const isEtcTree = ref(true);
 
 const openPopup = () => {
   const filterBack1 = document.getElementById("filter-bg");
@@ -130,9 +130,9 @@ const loadMore = () => {
 watchEffect(() => {
   if (infoData.value) {
     info = infoData.value;
-    console.log(info);
+    // bookTree인 경우 isEtcTree.value = false
     if (info.bookId !== null && info.bookId !== undefined && info.bookId !== "")
-      isEtcTree.value = true;
+      isEtcTree.value = false;
   }
 
   if (branchData.value) {

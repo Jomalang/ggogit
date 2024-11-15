@@ -111,6 +111,7 @@ const lastPage = computed(() => getLastPage());
           :placeholder="props.placeholder"
           v-model="query"
           autocomplete="off"
+          @keyup.enter="createReq(query, filter, 1)"
         />
         <button @click="dropListHandler" class="search-bar--close" type="reset">
           <img src="/public/svg/close-button.svg" alt="close-btn" />

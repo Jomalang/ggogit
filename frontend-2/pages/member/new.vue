@@ -71,7 +71,7 @@ const joinPostApi = async () => {
     }
 
     useMemberStore().setAuthWithToken(response.accessToken);
-    alert("회원가입이 완료되었습니다.");
+    router.push('/home');
   } catch (error) {
     alert(error.data.message);
   }
@@ -81,21 +81,6 @@ watchEffect(() => {
   if (emailInfo.value) {
     console.log(emailInfo.value);
     joinInfo.value.email = emailInfo.value.email;
-  }
-
-  if (key.value) {
-    const response = $fetch(`members/join/check-token`, {
-      method: 'POST',
-      baseURL: `${config.public.apiBase}`,
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-      body: {
-        key: key.value
-      }
-    });
-    console.log(response);
   }
 });
 

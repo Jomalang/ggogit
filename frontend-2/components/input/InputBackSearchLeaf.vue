@@ -39,7 +39,7 @@ const sort = ref(0);
 watch(page, () => {
   if (page.value > 0) {
     createReq(props.sort, page.value, searchFilter.value, filterQuery, false); // props.sort 사용
-    console.log("new page");
+    // console.log("new page");
   }
 });
 
@@ -47,7 +47,7 @@ watch(page, () => {
 watch(
   () => props.sort,
   (newSort) => {
-    console.log(`sort changed to ${newSort}`);
+    // console.log(`sort changed to ${newSort}`);
 
     // 페이지를 초기화하고 새로운 정렬 기준으로 요청
     page.value = 0;
@@ -81,7 +81,7 @@ const createReq = async (sort, currentPage, searchFilter, filter, isChange) => {
         result.value = [];
       }
 
-      console.log(response.content);
+      // console.log(response.content);
 
       // 새로운 데이터를 추가
       result.value = [...result.value, ...response.content];
@@ -102,7 +102,7 @@ const createReq = async (sort, currentPage, searchFilter, filter, isChange) => {
       totalPage.value = 1;
     }
 
-    console.log(result.value);
+    // console.log(result.value);
     // 부모에게 결과 전달
     emit("result", result.value);
     emit("req", query);

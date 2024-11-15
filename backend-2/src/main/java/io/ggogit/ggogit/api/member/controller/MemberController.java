@@ -57,6 +57,16 @@ public class MemberController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    // 가입 절차 여부 증명
+    @PostMapping("/join/check-token")
+    public ResponseEntity<MemberCheckTokenResponse> checkToken(
+            @Valid @RequestBody MemberCheckTokenRequest dto
+    ) {
+        boolean result = memberService.existsEmailJoinToken(dto.getKey());
+        MemberCheckTokenResponse response = MemberCheckTokenResponse.of(result);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
     @PostMapping("/password/check-email")
     public ResponseEntity<MemberCheckEmailResponse> passwordCheckEmail(
             @Valid @RequestBody MemberCheckEmailRequest dto
@@ -68,20 +78,22 @@ public class MemberController {
 
     // 회원 가입
     @PostMapping("/join")
-    public ResponseEntity<MemberJoinResponse> join(
+    public ResponseEntity<MemberLoginResponse> join(
             @RequestBody MemberJoinRequest dto
     ) {
         // 이메일 인증 확인
         if (!memberService.existsEmailJoinToken(dto.getEmail(), dto.getJoinToken())) {
-            MemberJoinResponse response = MemberJoinResponse.of(false, "이메일 인증에 실패했습니다.");
+            MemberLoginResponse response = MemberLoginResponse.of("이메일 인증에 실패했습니다.");
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
 
         // 회원 가입
         Member member = dto.toMember();
-        memberService.join(member);
-        MemberJoinResponse response = MemberJoinResponse.of("회원 가입 완료");
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
+        Member savedMember = memberService.join(member);
+        String accessToken = memberService.generateAccessToken(savedMember);
+        HttpHeaders headers = new HttpHeaders();
+        MemberLoginResponse response = MemberLoginResponse.of(accessToken, accessExpirationTime, "로그인 성공");
+        return new ResponseEntity<>(response, headers, HttpStatus.CREATED);
     }
 
     // OAuth 회원 가입

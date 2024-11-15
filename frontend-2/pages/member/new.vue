@@ -1,7 +1,10 @@
 <script setup>
 const config = useRuntimeConfig();
 const route = useRoute();
+const router = useRouter();
 const key = ref(route.query.key);
+
+
 
 // ----------------------- Method ----------------------- //
 const joinInfo = ref({
@@ -32,8 +35,11 @@ const joinInfo = ref({
 
   isPolicyAgreement: false,
 });
+
+// ----------------------- Life Cycle ----------------------- //
+
 // ----------------------- API ----------------------- //
-const { data: emailInfo, error: emailInfoError } = await useAuthFetch(
+const { data: emailInfo, error: emailInfoError } = await useFetch(
   `members/join/check-email`,
   {
     method: "POST",
@@ -45,7 +51,7 @@ const { data: emailInfo, error: emailInfoError } = await useAuthFetch(
 
 const joinPostApi = async () => {
   try {
-    const response = await useAuthDataFetch(`members/join`, {
+    const response = await $fetch(`members/join`, {
       method: "POST",
       baseURL: `${config.public.apiBase}`,
       headers: { "Content-Type": "application/json" },
@@ -59,12 +65,13 @@ const joinPostApi = async () => {
       },
     });
 
-    if (response.status !== 201) {
-      alert("회원가입이 완료되었습니다.");
+    if (response.message !== '로그인 성공') {
+      alert('회원가입에 실패했습니다.');
       return;
     }
 
-    alert("회원가입이 완료되었습니다.");
+    useMemberStore().setAuthWithToken(response.accessToken);
+    router.push('/home');
   } catch (error) {
     alert(error.data.message);
   }
@@ -72,6 +79,7 @@ const joinPostApi = async () => {
 
 watchEffect(() => {
   if (emailInfo.value) {
+    console.log(emailInfo.value);
     joinInfo.value.email = emailInfo.value.email;
   }
 });
@@ -236,7 +244,7 @@ const submitJoin = () => {
 
   // 회원가입 API 호출
   joinPostApi();
-  route.push("/member/login");
+  router.push("/home");
 };
 </script>
 

@@ -10,6 +10,6 @@ export default defineNuxtRouteMiddleware((to, from) => {
     ) {
       return navigateTo("/member/login?returnUrl=" + to.fullPath);
     }
-    console.log("로그인 중입니다.");
+    // console.log("로그인 중입니다.");
   }
 });

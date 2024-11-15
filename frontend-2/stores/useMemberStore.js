@@ -81,7 +81,7 @@ export const useMemberStore = defineStore("memberStore", () => {
         _accessToken.value = localStorage.getItem("_ggogit_accessToken");
       }
     } catch (e) {
-      console.log("loadUserFromStorage error = ", e);
+      // console.log("loadUserFromStorage error = ", e);
       initAuth();
     }
   }
@@ -100,6 +100,9 @@ export const useMemberStore = defineStore("memberStore", () => {
       localStorage.setItem("_ggogit_email", _email.value);
       localStorage.setItem("_ggogit_roles", JSON.stringify(_roles.value));
       localStorage.setItem("_ggogit_accessToken", _accessToken.value);
+      localStorage.setItem("_email", "");
+      localStorage.setItem("_profile", "");
+      localStorage.setItem("_username", "");
       // CSR일때 쿠키 초기화
       document.cookie = `_ggogit_accessToken=${""}; path=/;`;
     }

@@ -60,3 +60,7 @@ naver: # 네이버 Oauth2 로그인
     api:
       client_id: Y82lIjIMLGmIfTM3LzMr
       client_secret: aaj9FW9L6D
+
+kakao: # 카카오 Oauth2 로그인
+  api:
+    client_id: 10914f073d67f4a9067f6bca8c6a75dc

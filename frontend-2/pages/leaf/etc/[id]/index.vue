@@ -3,6 +3,7 @@
 import { ref } from "vue";
 import "@toast-ui/editor/dist/toastui-editor.css";
 import Viewer from '@toast-ui/editor/dist/toastui-editor-viewer';
+import CardTreeInfoCover from "~/components/card/CardTreeInfoCover.vue";
 
 const coverImageName = ref("background-image.png");
 const myProfile = ref("/jpg/leaf-profile.jpg");
@@ -57,59 +58,59 @@ const memoirItems = ref([]);
 const leafItems = ref([]);
 
 // ----------------------  API ---------------------- //
-const { data: infoData, error: infoError } = await useFetch(() => `trees/leaves/${leafId}/info`, {
+const { data: infoData, error: infoError } = await useAuthFetch(() => `trees/leaves/${leafId}/info`, {
   baseURL: config.public.apiBase,
 });
 
-const { data: leafDetailData, error: leafDetailDataError } = await useFetch(() => `leaves/${leafId}`, {
+const { data: leafDetailData, error: leafDetailDataError } = await useAuthFetch(() => `leaves/${leafId}`, {
   baseURL: config.public.apiBase,
 });
 
-const { data: leafMemberInfo, error: leafMemberInfoError } = await useFetch(() => `leaves/${leafId}/member`, {
+const { data: leafMemberInfo, error: leafMemberInfoError } = await useAuthFetch(() => `leaves/${leafId}/member`, {
   baseURL: config.public.apiBase,
 });
 
 const { data: leafCardData, error: leafCardError }
-    = await useFetch(() => `/members/${member.id}/leaves/book/cards`, {
+    = await useAuthFetch(() => `/members/${member.id}/leaves/book/cards`, {
   method: "GET",
   baseURL: `${config.public.apiBase}`,
 });
 
 const { data: treeCardData, error: treeCardError }
-    = await useFetch(() => `trees/members/${member.id}/trees/book/cards`, {
+    = await useAuthFetch(() => `trees/members/${member.id}/trees/book/cards`, {
   method: "GET",
   baseURL: `${config.public.apiBase}`,
 });
 
 const { data: memoirCardData, error: memoirCardError }
-    = await useFetch(() => `memoirs/members/${member.id}/memoirs/book/cards`, {
+    = await useAuthFetch(() => `memoirs/members/${member.id}/memoirs/book/cards`, {
   method: "GET",
   baseURL: `${config.public.apiBase}`,
 });
 
 if (leafCardData.value) {
-  console.log(leafCardData.value);
+  // console.log(leafCardData.value);
   leafItems.value = [...leafCardData.value.items];
 }
 
 if (treeCardData.value) {
-  console.log(treeCardData.value);
+  // console.log(treeCardData.value);
   treeItems.value = [...treeCardData.value.treeBookCardResponse];
 }
 
 if (memoirCardData.value) {
-  console.log(memoirCardData.value);
+  // console.log(memoirCardData.value);
   memoirItems.value = [...memoirCardData.value.memoirBookCardDtoResponse];
 }
 
 watchEffect(() => {
   if (infoData.value) {
-    console.log('infoData.value', infoData.value);
+    // console.log('infoData.value 데이터 확인', infoData.value);
     Object.assign(info, infoData.value);
   }
 
   if (leafDetailData.value) {
-    console.log('leafDetailData.value', leafDetailData.value);
+    // console.log('leafDetailData.value', leafDetailData.value);
     editor.value.title = leafDetailData.value.leafTitle;
     editor.value.text = leafDetailData.value.leafContent;
     leafPageInfo.startPage = leafDetailData.value.startPage;
@@ -145,7 +146,7 @@ onMounted(() => {
   <header>
     <BackgroundDetail
         :edit="`/leaf/etc/${leafId}/edit`"
-        :backImgPath="coverImageName"
+        :backImgPath="member.backImgName"
         :username="member.nickName"
         :userid="member.email"
         :memoirTitle="leafDetailData.leafTitle"
@@ -154,6 +155,15 @@ onMounted(() => {
   </header>
 
   <main>
+
+    <section class="user-tree-info__container">
+      <h2 class="none">트리 정보</h2>
+      <CardTreeInfoCover :data="info">트리 정보</CardTreeInfoCover>
+    </section>
+    <section class="branch-tree-detail-container">
+      <h2 class="none">트리 상세 설명</h2>
+      <CardEtcHiddenInfo :data ="info" >트리 상세 설명</CardEtcHiddenInfo>
+    </section>
 
     <section class="leaf-page-info-container">
       <h2 class="none">제목</h2>

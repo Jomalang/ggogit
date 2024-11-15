@@ -7,6 +7,6 @@ export default defineNuxtRouteMiddleware((to, from) => {
     if (protectedPaths.includes(to.path) && !beingLogin) {
       return navigateTo("/member/login?returnUrl=" + to.fullPath);
     }
-    console.log("로그인 중입니다.");
+    // console.log("로그인 중입니다.");
   }
 });

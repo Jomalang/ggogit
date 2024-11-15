@@ -31,7 +31,7 @@ const touchValue = reactive({
   lastEventTime: new Date().getTime(),
   moveStartX: 0,
   moveLock: false,
-  threshold: window.innerWidth * 0.2, // 스와이프 인식 거리
+  threshold: window.innerWidth * 0.1, // 스와이프 인식 거리
 });
 
 const breadcrumb = reactive({

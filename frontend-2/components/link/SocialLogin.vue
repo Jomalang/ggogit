@@ -30,9 +30,9 @@ const googleLoginHandler = async () => {
 
     if (!isMember) {
       // 회원이 아닌 경우
-      console.log("userInfo", userInfo.email, userInfo.name, userInfo.picture);
+      // console.log("userInfo", userInfo.email, userInfo.name, userInfo.picture);
       joinInfo.setJoinInfo(userInfo);
-      console.log("joinInfo", joinInfo);
+      // console.log("joinInfo", joinInfo);
       await router.push("/member/oauth/new");
       return;
     }

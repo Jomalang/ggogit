@@ -99,17 +99,17 @@ const { data: memoirCardData, error: memoirCardError } = await useAuthFetch(
 );
 
 if (leafCardData.value) {
-  console.log(leafCardData.value);
+  // console.log(leafCardData.value);
   leafItems.value = [...leafCardData.value.items];
 }
 
 if (treeCardData.value) {
-  console.log(treeCardData.value);
+  // console.log(treeCardData.value);
   treeItems.value = [...treeCardData.value.treeBookCardResponse];
 }
 
 if (memoirCardData.value) {
-  console.log(memoirCardData.value);
+  // console.log(memoirCardData.value);
   memoirItems.value = [...memoirCardData.value.memoirBookCardDtoResponse];
 }
 

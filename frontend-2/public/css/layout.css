@@ -390,7 +390,8 @@ home-tree__reg-4--search-book__input
   background: var(--main2--opacity40);
 }
 .card-tree__description-title__container {
-  padding-top: 30px;
+  padding-top: 10px;
+  padding-bottom: 20px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;

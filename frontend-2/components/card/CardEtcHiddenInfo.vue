@@ -17,7 +17,7 @@ function translatorsConverter(translators) {
 let translators = translatorsConverter(data.bookTranslator ?? "");
 
 const textBookInfoProps = {
-  title: data.treeTitle,
+  title: data.title,
   authors: data.bookAuthor,
   translators: translators,
   publisher: data.bookPublisher,
@@ -57,7 +57,7 @@ onMounted(() => {});
 
         <section class="card-tree-info__detail-tree-container">
           <h4 class="none">트리 정보</h4>
-          <TextBookInfoNoTitle :data="textBookInfoProps" />
+          <TextEtcInfoNoTitle :data="textBookInfoProps" />
           <!-- <div th:replace="~{fragments/text :: text-book-info--no-title(${authors},${translators},${publisher},${page},${seed})}"></div> -->
         </section>
 

@@ -128,7 +128,7 @@ const loadMore = () => {
 
 watchEffect(() => {
   if (infoData.value) {
-    console.log("infoData.value", infoData.value);
+    // console.log("infoData.value", infoData.value);
     info = infoData.value;
   }
 

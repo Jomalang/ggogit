@@ -39,6 +39,7 @@ const config = useRuntimeConfig();
 
 const isActive = ref(false);
 let totalCnt = 0;
+const isEtcTree = ref(false);
 
 const openPopup = () => {
   const filterBack1 = document.getElementById("filter-bg");
@@ -128,8 +129,10 @@ const loadMore = () => {
 
 watchEffect(() => {
   if (infoData.value) {
-    console.log("infoData.value", infoData.value);
     info = infoData.value;
+    console.log(info);
+    if (info.bookId !== null && info.bookId !== undefined && info.bookId !== "")
+      isEtcTree.value = true;
   }
 
   if (branchData.value) {
@@ -161,10 +164,7 @@ watchEffect(() => {
       <h2 class="none">트리 검색</h2>
 
       <NuxtLink :to="`/tree/search`" class="back-btn">
-        <InputSearchWithBackBtn
-          placeholder="검색할 트리를 입력해주세요"
-          href="javascript:history.back()"
-          api=""
+        <InputSearchWithBackBtn placeholder="검색할 트리를 입력해주세요"
           >트리 검색 상단 바</InputSearchWithBackBtn
         >
       </NuxtLink>
@@ -208,6 +208,7 @@ watchEffect(() => {
             <CardBranchList
               :items="mergedBranch.items"
               :totalCnt="branch.totalCount"
+              :isEtcTree="isEtcTree"
               @loadMore="loadMore"
             ></CardBranchList>
           </div>

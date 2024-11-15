@@ -4,8 +4,6 @@ import { onUpdated, ref } from "vue";
 //-----------------props-----------------
 const props = defineProps({
   placeholder: "",
-  href: "",
-  api: "",
 });
 //-----------------emit-----------------
 const emit = defineEmits(["req", "bookResult"]);
@@ -35,6 +33,11 @@ const createReq = async (query, filter) => {
     }
   }
 };
+const goBack = () => {
+  useBackNavigation().popPageFromStack();
+};
+const { getLastPage } = useBackNavigation();
+const lastPage = computed(() => getLastPage());
 
 //-----------------lifeCycle-----------------
 </script>
@@ -43,9 +46,13 @@ const createReq = async (query, filter) => {
   <!-- input-back-search(placeholder, href, method, name) -->
   <div class="search__form">
     <div>
-      <a :href="href">
+<<<<<<< HEAD
+      <NuxtLink :to="lastPage" @click="goBack()">
+=======
+      <NuxtLink :href="href">
+>>>>>>> 3ff660acb745981ca8606c21456bb9e683f65af0
         <img src="/public/svg/back.svg" alt="back button" />
-      </a>
+      </NuxtLink>
     </div>
     <div class="search-bar">
       <label class="search-bar--label">

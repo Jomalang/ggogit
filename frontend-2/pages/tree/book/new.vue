@@ -5,6 +5,7 @@ import { useRouter } from "#vue-router";
 
 // ----------------------- Model ----------------------- //
 const router = useRouter();
+const config = useRuntimeConfig();
 
 const treeFormData = useState("treeFormData", () => ({
   // 트리 씨앗 정보
@@ -165,19 +166,18 @@ const submitFormHandler = async (e) => {
       treeFormDataToSend.append("image", blob, "image.jpg");
     }
 
-    const response = await axios.post(
-      "http://localhost:8080/api/v1/trees",
-      treeFormDataToSend,
-      {
-        headers: { "Content-Type": "multipart/form-data" },
-      }
-    );
+    const response = await useAuthDataFetch("/trees", {
+      method: "POST",
+      baseURL: `${config.public.apiBase}`,
+      body: treeFormDataToSend,
+    });
 
-    if (response.status !== HttpStatusCode.Created) {
+    console.log("response:", response);
+
+    if (response.message !== '도서 트리 임시 저장 성공') {
       throw new Error("Network response was not ok");
     }
 
-    // alert("트리가 생성되었습니다.");
     router.push("/leaf/book/new");
   } catch (error) {
     console.error("Error submitting form:", error);

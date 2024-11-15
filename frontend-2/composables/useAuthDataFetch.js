@@ -18,6 +18,7 @@ export default async function useAuthDataFetch(url, options = {}) {
   }
 
   // 2. 획득한 token을 헤더에 담기
+  console.log("...options.headers", options.headers);
   options.headers = {
     ...options.headers,
     Authorization: `Bearer ${_accessToken}`,

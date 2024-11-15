@@ -1,38 +1,55 @@
-<script setup lang="ts">
+<script setup>
+const props = defineProps({
+  data: {
+    type: Object,
+    default: () => ({}),
+  },
+});
 
-import {SeedFilterTabProps} from "@/types/types";
-
-const props = defineProps<{
-  data: SeedFilterTabProps
-}>();
-
-const emit = defineEmits(['backButtonClick']);
-
+const emit = defineEmits(["backButtonClick"]);
 </script>
 
 <template>
-  <div id='filter-tab-btn' class="filter-tab__box">
+  <div id="filter-tab-btn" class="filter-tab__box">
     <header class="filter-tab__header">
-      <button id="filter-tab-close-btn" class="filter-tab__btn--back" type="button" @click="emit('backButtonClick')">
+      <button
+        id="filter-tab-close-btn"
+        class="filter-tab__btn--back"
+        type="button"
+        @click="emit('backButtonClick')"
+      >
         <img src="/public/svg/tab-back.svg" alt="뒤로가기 버튼" />
       </button>
       <h1 class="filter-tab__header--title">{{ data.filterName }}</h1>
     </header>
 
     <ul class="filter-tab__list">
-      <li v-for="item in data.filterItems" :key="item.id" class="filter-tab__item">
+      <li
+        v-for="item in data.filterItems"
+        :key="item.id"
+        class="filter-tab__item"
+      >
         <div class="filter-tab__item-label">
+          <RouterLink
+            v-if="item.engName === 'book'"
+            to="/tree/book/search"
+            class="filter-tab__item--label-text"
+            >{{ item.korName }}</RouterLink
+          >
+          <RouterLink
+            v-else
+            class="filter-tab__item--label-text"
+            :to="`/tree/etc/seed/${item.id}/new?type=${item.engName}`"
+            >{{ item.korName }}</RouterLink
+          >
 
-          <RouterLink v-if="item.engName === 'book'" to="/tree/book/search" class="filter-tab__item--label-text">{{item.korName}}</RouterLink>
-          <RouterLink v-else class="filter-tab__item--label-text" :to="`/tree/etc/seed/${item.id}/new?type=${item.engName}`">{{item.korName}}</RouterLink>
-
-            <div class="filter-tab__icon-box">
-              <img
-                  class="filter-tab__icon-img"
-                  src="/public/svg/tab-check-btn.svg"
-                  alt="필터 버튼"
-              />
-            </div>
+          <div class="filter-tab__icon-box">
+            <img
+              class="filter-tab__icon-img"
+              src="/public/svg/tab-check-btn.svg"
+              alt="필터 버튼"
+            />
+          </div>
         </div>
       </li>
     </ul>
@@ -60,7 +77,8 @@ const emit = defineEmits(['backButtonClick']);
   transition: transform 0.3s ease-in-out;
 }
 
-.filter-tab__box.up, .filter-tab__box--30.up {
+.filter-tab__box.up,
+.filter-tab__box--30.up {
   transform: translateY(0); /* 리스트가 위로 슬라이드됨 */
 }
 

@@ -38,7 +38,7 @@ public class TreeTmpController {
         Long treeTmpId = treeTmpService
                 .save(treeTmp, memberId, seedId, bookCategoryId, image.getBytes(), image.getOriginalFilename());
 
-        TreeTmpResponse resp = TreeTmpResponse.of(treeTmpId, "도서 트리 임시 저장 성공");
+        TreeTmpResponse resp = TreeTmpResponse.of(treeTmpId, "도서 트리 임시 저장 성공", HttpStatus.CREATED.value());
 
         return new ResponseEntity<>(resp, HttpStatus.CREATED);
     }
@@ -53,7 +53,7 @@ public class TreeTmpController {
 
         Long treeTmpId = treeTmpService.save(treeTmp, userDetails.getId(), bookId);
 
-        TreeTmpResponse resp = TreeTmpResponse.of(treeTmpId, "도서 선택 트리 임시 저장 성공");
+        TreeTmpResponse resp = TreeTmpResponse.of(treeTmpId, "도서 선택 트리 임시 저장 성공", HttpStatus.CREATED.value());
 
         return new ResponseEntity<>(resp, HttpStatus.CREATED);
     }

@@ -21,6 +21,7 @@ public class BookInfoResponse {
     //TODO 차후 List<String>으로 진행할지, category 계층화 시킬것인지 고민해야함. 알라딘 카테고리는 계층화 되어있음.
     BookCategoryDto category;
     LocalDate publishDate;
+    String isbn;
     String author;
     String publisher;
     LocalDateTime createTime;
@@ -35,6 +36,7 @@ public class BookInfoResponse {
                 .category(BookCategoryDto.of(book.getBookCategory()))
                 .publishDate(book.getPublishDate())
                 .author(book.getAuthor())
+                .isbn(book.getIsbn())
                 .translator(book.getTranslator())
                 .publisher(book.getPublisher())
                 .createTime(book.getCreateTime())

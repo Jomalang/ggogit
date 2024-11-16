@@ -90,21 +90,26 @@ const submitFormHandler = async (e) => {
 
   e.preventDefault(); // 데이터 전송 로직
   try {
-    const response = await axios.post(
-      "http://localhost:8080/api/v1/trees/auto",
+
+    const response = await useAuthDataFetch(
+      `/trees/auto`,
       {
-        bookId: treeFormData.value.bookId,
-        treeTitle: treeFormData.value.treeTitle,
-        description: treeFormData.value.description,
-        visibility: treeFormData.value.visibility,
-      },
-      {
-        headers: { "Content-Type": "application/json" },
+        method: "POST",
+        baseURL: config.public.apiBase,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: {
+          bookId: treeFormData.value.bookId,
+          treeTitle: treeFormData.value.treeTitle,
+          description: treeFormData.value.description,
+          visibility: treeFormData.value.visibility,
+        },
       }
     );
 
-    if (response.status !== HttpStatusCode.Created) {
-      throw new Error("Network response was not ok");
+    if (response.statusCode !== HttpStatusCode.Created) {
+      console.error("Error submitting form:", response);
     }
 
     router.push("/leaf/book/new");

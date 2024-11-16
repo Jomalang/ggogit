@@ -3,6 +3,11 @@ const _isLeafFormActivated = ref(false);
 
 export default function useLeafFormData() {
 
+    function postInit() {
+        _isLeafFormActivated.value = false;
+        init();
+    }
+
     function init() {
         if (_isLeafFormActivated.value) {
             return; // 이미 초기화 되었으면 종료
@@ -53,6 +58,7 @@ export default function useLeafFormData() {
         getSelectedTags,
         getCreateUrl,
         setCreateUrl,
+        postInit,
         init
     }
 }

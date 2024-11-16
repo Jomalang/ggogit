@@ -190,7 +190,7 @@ const submitHandler = async () => {
   }
 
   // 데이터 초기화
-  useLeafFormData().init();
+  useLeafFormData().postInit();
   useLeafTagList().init();
 
   router.push(`/leaf/?leafId=${response.leafId}`);

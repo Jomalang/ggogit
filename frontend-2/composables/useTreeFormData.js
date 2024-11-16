@@ -3,6 +3,11 @@ const _isTreeFormActivated = ref(false);
 
 export default function useTreeFormData() {
 
+    function postInit() {
+        _isTreeFormActivated.value = false;
+        init();
+    }
+
     function init() {
 
         if (_isTreeFormActivated.value) {
@@ -66,9 +71,15 @@ export default function useTreeFormData() {
         _treeFormData.value.createUrl = url;
     }
 
+    function setSeedId(seedId) {
+        _treeFormData.value.seedId = seedId;
+    }
+
     return {
         treeFormData: _treeFormData,
+        postInit,
         init,
-        setCreateUrl
+        setCreateUrl,
+        setSeedId
     }
 }

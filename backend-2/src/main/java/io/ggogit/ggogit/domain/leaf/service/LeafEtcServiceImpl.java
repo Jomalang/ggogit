@@ -66,8 +66,8 @@ public class LeafEtcServiceImpl implements LeafEtcService {
         treeTmpRepository.delete(treeTmp);
 
         String treeImagePath = treeTmp.getImageFile();
-        treeImageRepository.save(TreeImage.of(tree, treeImagePath));
         if (treeImagePath != null) { // 트리 이미지가 있으면 이동
+            treeImageRepository.save(TreeImage.of(tree, treeImagePath));
             imageRepository.moveImage(treeImagePath, UploadFolderType.TMP, UploadFolderType.TREE);
         }
 

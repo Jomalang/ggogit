@@ -13,17 +13,21 @@ import lombok.NoArgsConstructor;
 public class TreeTmpResponse {
     private Long treeTmpId;
     private String message;
+    private Integer statusCode;
 
-    public static TreeTmpResponse of(Long id, String message) {
+    public static TreeTmpResponse of(Long id, String message, Integer statusCode) {
         return  TreeTmpResponse.builder()
                 .treeTmpId(id)
                 .message(message)
+                .statusCode(statusCode)
                 .build();
     }
-    public static TreeTmpResponse of(TreeTmp treeTmp, String message) {
+
+    public static TreeTmpResponse of(TreeTmp treeTmp, String message, Integer statusCode) {
         return  TreeTmpResponse.builder()
                 .treeTmpId(treeTmp.getId())
                 .message(message)
+                .statusCode(statusCode)
                 .build();
     }
 }

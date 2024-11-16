@@ -109,7 +109,7 @@ const submitFormHandler = async (e) => {
 
     // 이미지 파일이 있을 경우
     const imgTag = document.getElementById("input-book-img-box__img-id");
-    if (imgTag && imgTag.src) {
+    if (imgTag && imgTag.src.startsWith("data:image")) {
       const response = await fetch(imgTag.src);
       const blob = await response.blob();
       treeFormDataToSend.append("image", blob, "image.jpg");

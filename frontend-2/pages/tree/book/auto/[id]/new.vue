@@ -2,6 +2,7 @@
 import { onMounted, ref, watch } from "vue";
 import axios, { HttpStatusCode } from "axios";
 import { useRouter } from "#vue-router";
+import useTreeFormData from "~/composables/useTreeFormData.js";
 
 // ----------------------- Model ----------------------- //
 const router = useRouter();
@@ -10,27 +11,9 @@ const config = useRuntimeConfig();
 const bookId = route.params.id;
 const book = ref({});
 
-const treeFormData = useState("treeFormData", () => ({
-  bookId: null,
-
-  // 트리 총 페이지 정보
-  totalPage: null,
-
-  // 트리 정보
-  treeTitle: "",
-  treeTitleValid: true,
-
-  // 트리 설명 정보
-  description: "",
-  descriptionValid: true,
-
-  // 공개 여부 정보
-  visibility: false,
-  visibilityValid: true,
-
-  // 생성 경로
-  createUrl: `/tree/book/auto/${bookId}/new`,
-}));
+useTreeFormData().init();
+useTreeFormData().setCreateUrl(`/tree/book/auto/${bookId}/new`);
+const treeFormData = useTreeFormData().treeFormData;
 
 // ----------------------- API ----------------------- //
 const { data } = await useAuthFetch(`/books/${bookId}/info`, {
@@ -44,6 +27,7 @@ const { data } = await useAuthFetch(`/books/${bookId}/info`, {
 watchEffect(() => {
   // console.log("watchEffect data : ", data.value);
   if (data.value) {
+    console.log("data.value : ", data.value);
     treeFormData.value.totalPage = data.value.totalPage;
     treeFormData.value.bookId = data.value.id;
     book.value = data.value;
@@ -106,21 +90,26 @@ const submitFormHandler = async (e) => {
 
   e.preventDefault(); // 데이터 전송 로직
   try {
-    const response = await axios.post(
-      "http://localhost:8080/api/v1/trees/auto",
+
+    const response = await useAuthDataFetch(
+      `/trees/auto`,
       {
-        bookId: treeFormData.value.bookId,
-        treeTitle: treeFormData.value.treeTitle,
-        description: treeFormData.value.description,
-        visibility: treeFormData.value.visibility,
-      },
-      {
-        headers: { "Content-Type": "application/json" },
+        method: "POST",
+        baseURL: config.public.apiBase,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: {
+          bookId: treeFormData.value.bookId,
+          treeTitle: treeFormData.value.treeTitle,
+          description: treeFormData.value.description,
+          visibility: treeFormData.value.visibility,
+        },
       }
     );
 
-    if (response.status !== HttpStatusCode.Created) {
-      throw new Error("Network response was not ok");
+    if (response.statusCode !== HttpStatusCode.Created) {
+      console.error("Error submitting form:", response);
     }
 
     router.push("/leaf/book/new");
@@ -172,7 +161,11 @@ const submitFormHandler = async (e) => {
 
       <section class="tree-info-card__container">
         <CardTreeInfoCard
-          :data="{ date: data.publishDate, pageCount: data.totalPage }"
+          :data="{
+            date: data.publishDate,
+            pageCount: data.totalPage,
+            isbn: data.isbn,
+        }"
         />
       </section>
 

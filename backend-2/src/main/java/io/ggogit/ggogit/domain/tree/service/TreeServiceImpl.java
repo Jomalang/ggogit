@@ -200,7 +200,10 @@ public class TreeServiceImpl implements TreeService {
 
     @Override
     public List<TreeInfoResponse> findTreeInfoResponseList(Long memberId) {
-        List<Tree> trees = treeRepository.findTreeByMemberIdFetch(memberId);
+        Sort sort = Sort.by(Sort.Direction.DESC, "updateTime");
+        Pageable pageable = PageRequest.of(0, 10, sort);
+
+        List<Tree> trees = treeRepository.findTreeByMemberIdFetch(memberId, pageable).getContent();
 
         return trees.stream().map(tree -> {
             LocalDateTime lastestLeafTime = null;

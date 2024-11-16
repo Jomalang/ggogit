@@ -18,13 +18,14 @@ const { data: seedData, status: seedStatus } = await useAuthFetch("seeds", {
   method: "GET",
 });
 
-const { data: treeData, status: treeStatus } = await useAuthFetch(
-  "trees/tree-home",
-  {
-    baseURL: `${config.public.apiBase}`,
-    method: "GET",
-  }
-);
+const {
+  data: treeData,
+  status: treeStatus,
+  refresh: treeRefresh,
+} = await useAuthFetch("trees/tree-home", {
+  baseURL: `${config.public.apiBase}`,
+  method: "GET",
+});
 
 const newTreeFetch = async (newSeedId) => {
   seedId.value = newSeedId;
@@ -98,6 +99,12 @@ const bookExRemoveNone = (selectedElement, index) => {
 };
 
 //-------------------LifeCycle-------------------
+onMounted(() => {
+  if (treeInfoList.value.length === 0) {
+    console.log("트리 정보가 없습니다.");
+    treeRefresh();
+  }
+});
 </script>
 
 <template>

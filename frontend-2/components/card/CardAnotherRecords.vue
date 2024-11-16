@@ -38,7 +38,11 @@ function modifyCount(count: number) {
         <div v-else-if="item.cardType === CardType.LEAF">
           <img
             class="card-another-records__top-cover-box"
-            :src="useGetImageUrl(item.cardImage, 'leaf')"
+            :src="
+              item.cardImage
+                ? useGetImageUrl(item.cardImage, 'tree')
+                : useGetImageUrl(item.treeImage, 'tree')
+            "
             alt="리프 이미지"
           />
         </div>
@@ -72,7 +76,7 @@ function modifyCount(count: number) {
             {{ item.bookTitle }}
           </p>
 
-          <div class="card-another-records__info">
+          <div v-if="item.bookPublishedYear" class="card-another-records__info">
             <span class="card-another-records__info">{{
               item.bookPublishedYear
             }}</span>

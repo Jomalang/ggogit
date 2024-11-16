@@ -43,6 +43,18 @@ public class TreeBookCardResponse {
     }
 
     public static TreeBookCardResponse toEntity(Book book, boolean isCompletedBook, Tree tree, Seed Seed, Long memberId){
+        if(book == null){
+            return TreeBookCardResponse.builder()
+                    .cardType(0)
+                    .cardImage(tree.getTreeImage().getName())
+                    .seedKorName(Seed.getKorName())
+                    .leafCount((long) tree.getLeaf().size())
+                    .viewCount((long) tree.getLeaf().stream().mapToInt(Leaf::getViewCount).sum())
+                    .treeTitle(tree.getTitle())
+                    .visibility(tree.getVisibility())
+                    .updateTime(TreeBookCardResponse.changeUpdateTime(tree.getUpdateTime()))
+                    .build();
+        }
         LocalDate publishYear = book.getPublishDate();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy");
         return TreeBookCardResponse.builder()

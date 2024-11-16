@@ -126,6 +126,7 @@ public class MemoirController {
     //MemoirBookCard 조회 (회고록, 리프 디테일)
     @GetMapping("members/{memberId}/memoirs/book/cards")
     public ResponseEntity<MemoirBookCardDtoResponseList> getMemoirCards(@PathVariable(name="memberId") Long memberId) {
+
         MemoirBookCardDtoResponseList memoirBookCardDtoResponseList = memoirDtoService.getMemoirBookCardDtoResponseList(memberId);
         return new ResponseEntity<>(memoirBookCardDtoResponseList, HttpStatus.OK);
     }

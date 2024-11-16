@@ -1,23 +1,22 @@
 <script setup>
-const { data } = defineProps(['data']);
+const { data } = defineProps(["data"]);
 </script>
 
 <template>
   <div class="leaf-page-info-box">
-    <h1 class="text-main-title" :class="`text--title${ data.size }`">
+    <h1 class="text-main-title" :class="`text--title${data.size}`">
       {{ data.title }}
     </h1>
     <p class="leaf-page-info-box__text">
       <span class="leaf-page-info-box__start_page">{{ data.startPage }}</span>
-      ~
+      <span> ~ </span>
       <span class="leaf-page-info-box__end_page">{{ data.endPage }}</span>
-      p
+      쪽
     </p>
   </div>
 </template>
 
 <style scoped>
-
 .leaf-page-info-box {
   width: 100%;
   display: flex;

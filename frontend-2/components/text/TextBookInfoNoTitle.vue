@@ -24,7 +24,7 @@ let seed = seedConverter(data.seed);
   <!-- text-book-info--no-title(authors,translators, publisher, page,seed) -->
   <div class="text-book-info--no-title">
     <div class="text-book-info--no-title__creators">
-      <div class="text-book-info--no-title__creators">
+      <div v-if="data.authors" class="text-book-info--no-title__creators">
         <span class="text-book-info-create-info">{{ data.authors }} </span>
         <span class="text-book-info-create-info"> | </span>
       </div>
@@ -39,7 +39,9 @@ let seed = seedConverter(data.seed);
       <span class="text-book-info-create-info">{{ data.publisher }}</span>
     </div>
     <div>
-      <span class="text-book-info--no-title__page">총 페이지 수:</span>
+      <span v-if="data.page" class="text-book-info--no-title__page"
+        >총 페이지 수:</span
+      >
       <span class="text-book-info--no-title__page">{{ data.page }}</span>
     </div>
     <div>

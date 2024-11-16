@@ -32,7 +32,7 @@ public class MemoirBookCardDtoResponse {
     private String bookPublishedYear;
 
     //조회수, 리프
-    private Long views;
+    private Long viewCount;
     private Long leafCount;
 
     public static String changeBookPublishedYear(LocalDate bookPublishedYear) {

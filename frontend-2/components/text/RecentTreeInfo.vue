@@ -30,8 +30,8 @@ const formatDate = (date) => {
       <h2 class="textbox-recent-tree-info__tree-title">
         {{ tree.title }}
       </h2>
-      <div v-if="tree.bookCategory" class="textbox-recent-tree-info__tag tag">
-        {{ tree.bookCategory }}
+      <div class="textbox-recent-tree-info__tag tag">
+        {{ tree.bookCategory || tree.seedKorName }}
       </div>
       <p v-if="tree.bookTitle" class="textbox-recent-tree-info__book-title">
         {{ tree.bookTitle }}
@@ -67,7 +67,7 @@ const formatDate = (date) => {
 }
 
 .tag {
-  font-size: 10px;
+  font-size: 15px;
   color: var(--white);
   background-color: var(--main1);
   border-radius: 4px;

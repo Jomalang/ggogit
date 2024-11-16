@@ -28,6 +28,7 @@ public class TreeInfoResponse {
     private Long treeId;
     private Long memberId ;
     private Long seedId;
+    private String seedKorName;
     //trees
     private String title;
     private String description;
@@ -54,6 +55,7 @@ public class TreeInfoResponse {
                 .treeId(tree.getId())
                 .memberId(tree.getMember().getId())
                 .seedId(tree.getSeed().getId())
+                .seedKorName(tree.getSeed().getKorName())
                 .title(tree.getTitle())
                 .description(tree.getDescription())
                 .visibility(tree.getVisibility())

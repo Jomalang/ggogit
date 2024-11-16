@@ -1,14 +1,14 @@
 const _leafFormData = ref({});
-const _isActivated = ref(false);
+const _isLeafFormActivated = ref(false);
 
 export default function useLeafFormData() {
 
     function init() {
-        if (_isActivated.value) {
+        if (_isLeafFormActivated.value) {
             return; // 이미 초기화 되었으면 종료
         }
 
-        _isActivated.value = true;
+        _isLeafFormActivated.value = true;
         _leafFormData.value = {
             // 페이지 번호
             startPage: undefined,

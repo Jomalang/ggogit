@@ -14,18 +14,21 @@ public class BookLeafResponse {
 
     private Long leafId;
     private String message;
+    private Integer statusCode;
 
-    public static BookLeafResponse of(LeafBook saved, String message) {
+    public static BookLeafResponse of(LeafBook saved, String message, Integer statusCode) {
         return BookLeafResponse.builder()
                 .leafId(saved.getLeaf().getId())
                 .message(message)
+                .statusCode(statusCode)
                 .build();
     }
 
-    public static BookLeafResponse of(Long leafId, String message) {
+    public static BookLeafResponse of(Long leafId, String message, Integer statusCode) {
         return BookLeafResponse.builder()
                 .leafId(leafId)
                 .message(message)
+                .statusCode(statusCode)
                 .build();
     }
 }

@@ -1,8 +1,14 @@
+import {init} from "http-proxy-middleware/dist/_handlers.js";
 
 const _tags = ref([]);
 const _selectedTags = ref([]);
 
 export default function useLeafTagList() {
+
+    function init() {
+        _tags.value = [];
+        _selectedTags.value = [];
+    }
 
     // 태그 리스트 데이터 초기화
     function initTags(tags) {
@@ -84,6 +90,7 @@ export default function useLeafTagList() {
         deselectTag,
         getSelectedTags,
         addTag,
-        clearSelectedTags
+        clearSelectedTags,
+        init
     };
 }

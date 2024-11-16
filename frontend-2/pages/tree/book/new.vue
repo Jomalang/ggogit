@@ -6,6 +6,9 @@ import useTreeFormData from "~/composables/useTreeFormData.js";
 // ----------------------- Model ----------------------- //
 const router = useRouter();
 const config = useRuntimeConfig();
+
+useTreeFormData().init();
+useTreeFormData().setCreateUrl("/tree/book/new")
 const treeFormData = useTreeFormData().treeFormData;
 
 // ----------------------- Life Cycle ----------------------- //

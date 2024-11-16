@@ -4,8 +4,6 @@ import Editor from "@toast-ui/editor";
 import "@toast-ui/editor/dist/toastui-editor.css";
 import { onMounted, reactive, watch } from "vue";
 import axios, {HttpStatusCode} from "axios";
-import useTreeFormData from "~/composables/useTreeFormData.js";
-import useLeafFormData from "~/composables/useLeafFormData.js";
 
 // ----------------------- Model ----------------------- //
 const config = useRuntimeConfig();
@@ -13,21 +11,9 @@ const router = useRouter();
 
 useLeafFormData().init();
 useLeafFormData().setCreateUrl("/leaf/book/new");
-const leafCreateUrl = useLeafFormData().getCreateUrl();
-
 const treeFormData = useTreeFormData().treeFormData;
 const leafFormData = useLeafFormData().leafFormData;
 const selectedTags = useLeafTagList().getSelectedTags();
-
-watchEffect(() => {
-
-  if (selectedTags.items) { // 리프 태그 데이터 적용
-    leafFormData.value.tagIds = selectedTags.value.items.map((tag) => tag.id);
-  }
-
-  // console.log("leafFormData : ", leafFormData);
-  // console.log("selectedTags : ", selectedTags);
-});
 
 // ----------------------- Life Cycle ----------------------- //
 
@@ -138,11 +124,9 @@ const validate = () => {
 };
 
 const dataInit = () => {
-  treeFormData.value = {};
-  leafFormData.value = {};
-  selectedTags.value = {
-    items: [],
-  };
+  useTreeFormData().init();
+  useLeafFormData().init();
+  useLeafTagList().init();
 };
 
 const submitHandler = async () => {
@@ -151,17 +135,22 @@ const submitHandler = async () => {
     return;
   }
 
-  // console.log("leafFormData POST > : ", leafFormData.value);
-  // console.log("POST : ", leafFormData.value);
-  const response = await axios.post(`${config.public.apiBase}/book/first/leaves`, leafFormData.value);
+  leafFormData.value.tagIds = selectedTags.map((tag) => tag.id);
+  const response = await useAuthDataFetch("book/first/leaves", {
+    baseURL: `${config.public.apiBase}`,
+    method: "POST",
+    body: leafFormData.value,
+  });
 
-  if (response.status !== HttpStatusCode.Created) {
+  // const response = await axios.post(`${config.public.apiBase}/book/first/leaves`, leafFormData.value);
+
+  if (response.statusCode !== HttpStatusCode.Created) {
     throw new Error("Network response was not ok");
   }
 
   dataInit(); // 데이터 초기화
 
-  let leafId = response.data.leafId;
+  let leafId = response.leafId;
   router.push(`/leaf/?leafId=${leafId}`);
 };
 

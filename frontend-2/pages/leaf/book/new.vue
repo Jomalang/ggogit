@@ -123,12 +123,6 @@ const validate = () => {
   return true;
 };
 
-const dataInit = () => {
-  useTreeFormData().init();
-  useLeafFormData().init();
-  useLeafTagList().init();
-};
-
 const submitHandler = async () => {
 
   if (!validate()) {
@@ -148,7 +142,10 @@ const submitHandler = async () => {
     throw new Error("Network response was not ok");
   }
 
-  dataInit(); // 데이터 초기화
+  // 데이터 초기화
+  useTreeFormData().postInit()
+  useLeafFormData().postInit()
+  useLeafTagList().init();
 
   let leafId = response.leafId;
   router.push(`/leaf/?leafId=${leafId}`);

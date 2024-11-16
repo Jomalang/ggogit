@@ -3,46 +3,16 @@
 import Editor from "@toast-ui/editor";
 import "@toast-ui/editor/dist/toastui-editor.css";
 import { onMounted } from "vue";
-import axios, {HttpStatusCode} from "axios";
+import {HttpStatusCode} from "axios";
 
 // ----------------------- Model ----------------------- //
 const config = useRuntimeConfig();
 const router = useRouter();
 
-const leafFormData = useState('leafFormData', () => ({
-
-  // 태그 데이터
-  tagIds: [],
-  tagSelected: true,
-
-  // 제목
-  title: undefined,
-  titleValidation: true,
-
-  // 내용
-  content: undefined,
-
-  // 공개성
-  visibility: true,
-}));
-
-const selectedTags = useState('selectedTags', () => ({
-  items: [],
-}));
-
-const leafCreateUrl = useState('leafCreateUrl', () => {
-  return "/leaf/etc/new";
-});
-
-watchEffect(() => {
-  // console.log("leafFormData : ", leafFormData);
-  // console.log("selectedTags : ", selectedTags);
-
-  if (selectedTags.value.items.length !== 0) {
-    leafFormData.value.tagIds = selectedTags.value.items.map((tag) => tag.id);
-  }
-
-});
+useLeafFormData().init();
+useLeafFormData().setCreateUrl("/leaf/etc/new");
+const leafFormData = useLeafFormData().leafFormData;
+const selectedTags = useLeafTagList().getSelectedTags();
 
 // ----------------------- Life Cycle ----------------------- //
 
@@ -103,8 +73,8 @@ const inputTitle = (title) => {
 
 const tagDrop = (tag) => {
   // console.log("tagDrop : ", tag);
-  selectedTags.value.items = selectedTags.value.items.filter((item) => item.id !== tag.id);
-  leafFormData.value.tagIds = selectedTags.value.items.map((tag) => tag.id);
+  selectedTags.items = selectedTags.items.filter((item) => item.id !== tag.id);
+  leafFormData.value.tagIds = selectedTags.items.map((tag) => tag.id);
 };
 
 const validate = () => {
@@ -125,16 +95,24 @@ const submitHandler = async () => {
   }
 
   // console.log("leafFormData POST > : ", leafFormData.value);
-  const response = await axios.post(`${config.public.apiBase}/etc/first/leaves`, leafFormData.value);
+  leafFormData.value.tagIds = selectedTags.map((tag) => tag.id);
 
-  if (response.status !== HttpStatusCode.Created) {
-    throw new Error("Network response was not ok");
+  const response = await useAuthDataFetch("etc/first/leaves", {
+    baseURL: config.public.apiBase,
+    method: "POST",
+    body: leafFormData.value,
+  });
+
+  if (response.statusCode !== HttpStatusCode.Created) {
+    console.error("리프 생성 실패");
   }
 
   // 데이터 초기화
-  leafFormData.value = {};
+  useTreeFormData().postInit()
+  useLeafFormData().postInit()
+  useLeafTagList().init();
 
-  let leafId = response.data.leafId;
+  let leafId = response.leafId;
   router.push(`/leaf/?leafId=${leafId}`);
 };
 
@@ -186,7 +164,7 @@ const submitHandler = async () => {
 
         <section class="input-form__select-tag-input-container">
           <h1 class="none">리프 태그 입력</h1>
-          <InputTagSelect :selectedTag="selectedTags.items" @drop="tagDrop"></InputTagSelect>
+          <InputTagSelect :selectedTag="selectedTags" @drop="tagDrop"></InputTagSelect>
         </section>
 
         <section class="book-tree-input-form__large-input-container">
@@ -226,4 +204,9 @@ const submitHandler = async () => {
   font-weight: var(--semi-bold);
   margin-bottom: 8px;
 }
+
+.input-form {
+  height: 1200px;
+}
+
 </style>

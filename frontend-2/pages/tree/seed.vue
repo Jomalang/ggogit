@@ -48,7 +48,10 @@ const filterTabDownHandler = () => {
   <main>
     <section class="text-info-container">
       <h2 class="none">트리 생성 안내</h2>
-      <TextInfo :boldText="`씨앗을 선택해주세요`"></TextInfo>
+      <TextInfo
+        :text="`트리를 생성하기 위해`"
+        :boldText="`씨앗을 선택해주세요`"
+      ></TextInfo>
     </section>
 
     <section class="btn-select-container">

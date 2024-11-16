@@ -75,10 +75,11 @@ public class TreeQueryRepositoryImpl implements TreeQueryRepository {
                 .selectFrom(tree)
 //                .join(tree.leaf, leaf).fetchJoin()
 //                .join(tree.book.bookCategory, bookCategory).fetchJoin()
-                .join(tree.seed, seed).on(seedEq(seedId))
+                .join(tree.seed, seed).fetchJoin()
                 .join(tree.book, book).fetchJoin()
                 .join(tree.treeBook, treeBook).fetchJoin()
                 .join(tree.member, member).on(memberEq(memberId))
+                .where(seedEq(seedId))
                 .fetch();
     }
 

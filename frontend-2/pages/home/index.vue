@@ -112,7 +112,7 @@ onMounted(() => {
     <h1 class="none">나의 트리</h1>
     <section class="header-search-container">
       <h2 class="none">나의 트리 검색 링크</h2>
-      <HeaderSearchLink />
+      <HeaderSearchLink :link="`/tree/search`" />
     </section>
   </header>
 

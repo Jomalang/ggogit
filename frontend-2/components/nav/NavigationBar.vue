@@ -1,4 +1,18 @@
-<script setup lang="ts">
+<script setup>
+const navStore = useNavStore();
+
+const {
+  home: _home,
+  search: _search,
+  community: _community,
+  mypage: _mypage,
+  currentSpot: _currentSpot,
+} = storeToRefs(navStore);
+
+const setCur = (spotNum) => {
+  navStore.setCurrentSpot(spotNum);
+};
+
 const props = defineProps({
   active: {
     type: String,
@@ -15,10 +29,12 @@ const props = defineProps({
       <ul class="nav-box__list">
         <!-- 홈 -->
         <li class="nav-box__item">
-          <NuxtLink class="nav-box__link" :to="`/home`">
+          <NuxtLink class="nav-box__link" :to="_home" @click="setCur(1)">
             <div
               class="nav-box__img-box"
-              :class="{ 'nav-box__img-box--active': props.active === 'home' }"
+              :class="{
+                'nav-box__img-box--active': _currentSpot === '_home',
+              }"
             >
               <img
                 class="main-nav__icon"
@@ -32,7 +48,9 @@ const props = defineProps({
             </div>
             <p
               class="nav-box__text"
-              :class="{ 'nav-box__text--active': props.active === 'home' }"
+              :class="{
+                'nav-box__text--active': _currentSpot === '_home',
+              }"
             >
               홈
             </p>
@@ -41,10 +59,12 @@ const props = defineProps({
 
         <!-- 탐색 -->
         <li class="nav-box__item">
-          <NuxtLink class="nav-box__link" :to="`/tree/book/search`">
+          <NuxtLink class="nav-box__link" :to="_search" @click="setCur(2)">
             <div
               class="nav-box__img-box"
-              :class="{ 'nav-box__img-box--active': props.active === 'search' }"
+              :class="{
+                'nav-box__img-box--active': _currentSpot === '_search',
+              }"
             >
               <img
                 class="main-nav__icon"
@@ -58,7 +78,7 @@ const props = defineProps({
             </div>
             <p
               class="nav-box__text"
-              :class="{ 'nav-box__text--active': props.active === 'search' }"
+              :class="{ 'nav-box__text--active': _currentSpot === '_search' }"
             >
               탐색
             </p>
@@ -67,11 +87,11 @@ const props = defineProps({
 
         <!-- 커뮤니티 -->
         <li class="nav-box__item">
-          <a class="nav-box__link" href="#">
+          <NuxtLink class="nav-box__link" :to="_community" @click="setCur(3)">
             <div
               class="nav-box__img-box"
               :class="{
-                'nav-box__img-box--active': props.active === 'community',
+                'nav-box__img-box--active': _currentSpot === '_community',
               }"
             >
               <img
@@ -86,19 +106,23 @@ const props = defineProps({
             </div>
             <p
               class="nav-box__text"
-              :class="{ 'nav-box__text--active': props.active === 'community' }"
+              :class="{
+                'nav-box__text--active': _currentSpot === '_community',
+              }"
             >
               커뮤니티
             </p>
-          </a>
+          </NuxtLink>
         </li>
 
         <!-- 마이페이지 -->
         <li class="nav-box__item">
-          <a class="nav-box__link" href="#">
+          <NuxtLink class="nav-box__link" :to="_mypage" @click="setCur(4)">
             <div
               class="nav-box__img-box"
-              :class="{ 'nav-box__img-box--active': props.active === 'mypage' }"
+              :class="{
+                'nav-box__img-box--active': _currentSpot === '_mypage',
+              }"
             >
               <img
                 class="main-nav__icon"
@@ -112,11 +136,11 @@ const props = defineProps({
             </div>
             <p
               class="nav-box__text"
-              :class="{ 'nav-box__text--active': props.active === 'mypage' }"
+              :class="{ 'nav-box__text--active': _currentSpot === '_mypage' }"
             >
               나의 꼬깃
             </p>
-          </a>
+          </NuxtLink>
         </li>
       </ul>
     </div>

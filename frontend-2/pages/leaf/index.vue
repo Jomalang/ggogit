@@ -110,7 +110,6 @@ onBeforeMount(() => {
 });
 
 onMounted(() => {
-
   screenWidth.value = 1024 <= window.innerWidth ? 1024 : window.innerWidth;
 
   // 화면 크기 변경에 대응하도록 리스너 추가
@@ -366,9 +365,7 @@ const scrollToElement = () => {
         </div>
       </section>
     </section>
-    <section class="log-tmp-box">
-
-    </section>
+    <section class="log-tmp-box"></section>
   </main>
 
   <aside class="log-list-bot-bar-container">
@@ -386,6 +383,16 @@ const scrollToElement = () => {
       <h1 class="none">브랜치 정보 하단 바</h1>
       <BotBarBranchStateMain :branch="branch"></BotBarBranchStateMain>
     </section>
+    <section class="nav-back-container">
+      <h3 class="none">네비 바 뒤 공백</h3>
+    </section>
+  </aside>
+  <footer>
+    <Footer :noticeText="`개발중입니다.`" />
+  </footer>
+
+  <aside class="nav-container">
+    <NavNavigationBar active="home" />
   </aside>
 </template>
 
@@ -430,5 +437,4 @@ main {
   height: 1px;
   width: 100%;
 }
-
 </style>

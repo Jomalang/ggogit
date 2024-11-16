@@ -51,7 +51,7 @@ export const useMemberStore = defineStore("memberStore", () => {
       }
     }
   }
-  function setLocal (id, name, email, picture, role, accessToken){
+  function setLocal(id, name, email, picture, role, accessToken) {
     _id.value = id;
     _username.value = name;
     _nickname.value = name;
@@ -82,7 +82,7 @@ export const useMemberStore = defineStore("memberStore", () => {
       }
     } catch (e) {
       // console.log("loadUserFromStorage error = ", e);
-      initAuth();
+      useNavStore().initStore();
     }
   }
 
@@ -105,6 +105,8 @@ export const useMemberStore = defineStore("memberStore", () => {
       localStorage.setItem("_username", "");
       // CSR일때 쿠키 초기화
       document.cookie = `_ggogit_accessToken=${""}; path=/;`;
+      // localStroage의 nav경로 초기화
+      useNavStore().initStore();
     }
     // SSR일때 쿠키 초기화
     if (import.meta.env.SSR) {

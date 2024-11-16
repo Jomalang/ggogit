@@ -4,46 +4,24 @@ import Editor from "@toast-ui/editor";
 import "@toast-ui/editor/dist/toastui-editor.css";
 import { onMounted, reactive, watch } from "vue";
 import axios, {HttpStatusCode} from "axios";
+import useTreeFormData from "~/composables/useTreeFormData.js";
+import useLeafFormData from "~/composables/useLeafFormData.js";
 
 // ----------------------- Model ----------------------- //
 const config = useRuntimeConfig();
 const router = useRouter();
 
-const treeFormData = useState('treeFormData');
-const leafFormData = useState('leafFormData', () => ({
+useLeafFormData().init();
+useLeafFormData().setCreateUrl("/leaf/book/new");
+const leafCreateUrl = useLeafFormData().getCreateUrl();
 
-  // 페이지 번호
-  startPage: undefined,
-  startPageValidation: true,
-  endPage: undefined,
-  endPageValidation: true,
-
-  // 태그 데이터
-  tagIds: [],
-  tagSelected: true,
-
-  // 제목
-  title: undefined,
-  titleValidation: true,
-
-  // 내용
-  content: undefined,
-
-  // 공개성
-  visibility: true,
-}));
-
-const selectedTags = useState('selectedTags', () => ({
-  items: [],
-}));
-
-const leafCreateUrl = useState('leafCreateUrl', () => {
-  return "/leaf/book/new";
-});
+const treeFormData = useTreeFormData().treeFormData;
+const leafFormData = useLeafFormData().leafFormData;
+const selectedTags = useLeafTagList().getSelectedTags();
 
 watchEffect(() => {
 
-  if (selectedTags.value.items) { // 리프 태그 데이터 적용
+  if (selectedTags.items) { // 리프 태그 데이터 적용
     leafFormData.value.tagIds = selectedTags.value.items.map((tag) => tag.id);
   }
 
@@ -239,7 +217,7 @@ const submitHandler = async () => {
 
         <section class="input-form__select-tag-input-container">
           <h1 class="none">리프 태그 입력</h1>
-          <InputTagSelect :selectedTag="selectedTags.items" @drop="tagDrop"></InputTagSelect>
+          <InputTagSelect :selectedTag="selectedTags" @drop="tagDrop"></InputTagSelect>
         </section>
 
         <section class="input-form__input-container">

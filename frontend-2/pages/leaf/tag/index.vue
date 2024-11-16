@@ -1,10 +1,11 @@
 <script setup>
 import { onMounted, reactive, watch } from "vue";
+import useLeafFormData from "~/composables/useLeafFormData.js";
 
 // ----------------------- Model ----------------------- //
 
 const config = useRuntimeConfig();
-const backLink = useState("leafCreateUrl");
+const backLink = useLeafFormData().getCreateUrl();
 const tagData = useLeafTagList();
 
 const searchValue = reactive({

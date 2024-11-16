@@ -7,9 +7,14 @@ export default function useLeafTagList() {
     // 태그 리스트 데이터 초기화
     function initTags(tags) {
         console.log('태그 초기화');
-        const selectedTags = getSelectedTags();
-        // 선택된 태그는 제외
-        _tags.value = tags.filter(tag => !selectedTags.includes(tag));
+        for (let tag of tags) {
+            for (let selectedTag of _selectedTags.value) {
+                if (tag.id === selectedTag.id) {
+                    break;
+                }
+            }
+            _tags.value.push(tag);
+        }
     }
 
     // 태그 리스트 조회

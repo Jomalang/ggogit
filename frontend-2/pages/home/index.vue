@@ -187,7 +187,11 @@ const bookExRemoveNone = (selectedElement, index) => {
               >
                 <img
                   class="mid__img"
-                  :src="useGetImageUrl(tree.coverImageName)"
+                  :src="
+                    tree.coverImageName
+                      ? useGetImageUrl(tree.coverImageName)
+                      : useGetImageUrl(tree.treeImage, 'tree')
+                  "
                   alt="도서 예시 이미지"
                 />
               </NuxtLink>
@@ -355,6 +359,7 @@ const bookExRemoveNone = (selectedElement, index) => {
   width: 90%;
   height: auto;
   object-fit: cover;
+  border-radius: 10px;
 }
 
 @media screen and (max-width: 768px) {

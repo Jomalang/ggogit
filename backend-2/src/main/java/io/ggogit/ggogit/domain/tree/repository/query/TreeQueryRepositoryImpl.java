@@ -34,6 +34,7 @@ import static io.ggogit.ggogit.domain.memoir.entity.QMemoir.memoir;
 import static io.ggogit.ggogit.domain.tree.entity.QSeed.seed;
 import static io.ggogit.ggogit.domain.tree.entity.QTree.tree;
 import static io.ggogit.ggogit.domain.tree.entity.QTreeBook.treeBook;
+import static io.ggogit.ggogit.domain.tree.entity.QTreeImage.treeImage;
 
 @RequiredArgsConstructor
 @Repository
@@ -75,11 +76,11 @@ public class TreeQueryRepositoryImpl implements TreeQueryRepository {
                 .selectFrom(tree)
 //                .join(tree.leaf, leaf).fetchJoin()
 //                .join(tree.book.bookCategory, bookCategory).fetchJoin()
-                .join(tree.seed, seed).fetchJoin()
-                .join(tree.book, book).fetchJoin()
-                .join(tree.treeBook, treeBook).fetchJoin()
                 .join(tree.member, member).on(memberEq(memberId))
-                .where(seedEq(seedId))
+                .join(tree.seed, seed).on(seedEq(seedId))
+                .leftJoin(tree.book, book).fetchJoin()
+                .leftJoin(tree.treeBook, treeBook).fetchJoin()
+                .leftJoin(tree.treeImage, treeImage).fetchJoin()
                 .fetch();
     }
 
@@ -89,8 +90,9 @@ public class TreeQueryRepositoryImpl implements TreeQueryRepository {
                 .selectFrom(tree)
 //                .join(tree.leaf, leaf).fetchJoin()
 //                .join(tree.book.bookCategory, bookCategory).fetchJoin()
-                .join(tree.book, book).fetchJoin()
-                .join(tree.treeBook, treeBook).fetchJoin()
+                .leftJoin(tree.book, book).fetchJoin()
+                .leftJoin(tree.treeBook, treeBook).fetchJoin()
+                .leftJoin(tree.treeImage, treeImage).fetchJoin()
                 .join(tree.member, member).fetchJoin()
                 .where(memberEq(memberId))
                 .offset(pageable.getOffset())

@@ -32,8 +32,13 @@ public class TreeTmpController {
         Long seedId = dto.getSeedId();
         Long bookCategoryId = dto.getBookCategoryId();
 
-        Long treeTmpId = treeTmpService
-                .save(treeTmp, memberId, seedId, bookCategoryId, image.getBytes(), image.getOriginalFilename());
+        Long treeTmpId;
+        if (image == null) {
+            treeTmpId = treeTmpService.save(treeTmp, memberId, seedId, bookCategoryId, null, null);
+        } else {
+            treeTmpId = treeTmpService
+                    .save(treeTmp, memberId, seedId, bookCategoryId, image.getBytes(), image.getOriginalFilename());
+        }
 
         TreeTmpResponse resp = TreeTmpResponse.of(treeTmpId, "도서 트리 임시 저장 성공", HttpStatus.CREATED.value());
 
@@ -51,8 +56,12 @@ public class TreeTmpController {
         Long memberId = userDetails.getId();
         Long seedId = dto.getSeedId();
 
-        Long treeTmpId = treeTmpService
-                .save(treeTmp, memberId, seedId, image.getBytes(), image.getOriginalFilename());
+        Long treeTmpId;
+        if (image == null) {
+            treeTmpId = treeTmpService.save(treeTmp, memberId, seedId, null, null);
+        } else {
+            treeTmpId = treeTmpService.save(treeTmp, memberId, seedId, image.getBytes(), image.getOriginalFilename());
+        }
 
         TreeTmpResponse resp = TreeTmpResponse.of(treeTmpId, "기타 트리 임시 저장 성공", HttpStatus.CREATED.value());
 

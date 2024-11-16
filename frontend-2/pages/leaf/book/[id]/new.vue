@@ -232,7 +232,7 @@ const submitHandler = async () => {
   </header>
 
   <main>
-    <section class="first-log-img-container">
+    <section class="before-log-img-container">
       <h1 class="none">이전 리프 생성 이미지</h1>
       <LogBeforeLog :data="beforeLogData"></LogBeforeLog>
     </section>

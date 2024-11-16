@@ -22301,6 +22301,8 @@ VALUES
     (0, TIMESTAMP '2024-09-19 04:10:00', 19, 1, TIMESTAMP '2024-09-19 04:10:00', 1, 'TypeScript'),
     (0, TIMESTAMP '2024-09-20 05:00:00', 20, 1, TIMESTAMP '2024-09-20 05:00:00', 1, 'R');
 
+ALTER TABLE `LEAF_TAG` ALTER COLUMN `ID` RESTART WITH 21;
+
 -- ====================================================== --
 -- `LEAF_TAG_MAP` LEAF TAG 매핑
 -- `LEAF_TAG_MAP` 테이블은 `LEAF`와 `LEAF_TAG`를 매핑하는 테이블이다.

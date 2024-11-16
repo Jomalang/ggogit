@@ -32,7 +32,8 @@ public class LeafTagController {
     ) {
         Long memberId = userDetails.getId();
         LeafTag leafTag = leafTagService.register(memberId, dto.getName());
-        LeafTagResponse response = LeafTagResponse.of(leafTag, "태그 생성 성공");
+
+        LeafTagResponse response = LeafTagResponse.of(leafTag, "태그 생성 성공", HttpStatus.CREATED.value());
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
@@ -51,12 +52,12 @@ public class LeafTagController {
 
         // 기존에 존재하는지 확인
         if (leafTagService.isExist(memberId, dto.getName())) {
-            LeafTagResponse response = LeafTagResponse.of(tagId, "이미 존재하는 태그입니다.");
+            LeafTagResponse response = LeafTagResponse.of(tagId, "이미 존재하는 태그입니다.", HttpStatus.CONFLICT.value());
             return new ResponseEntity<>(response, HttpStatus.CONFLICT);
         }
 
         LeafTag leafTag = leafTagService.modify(memberId, tagId, dto.getName());
-        LeafTagResponse response = LeafTagResponse.of(leafTag, "태그 수정 성공");
+        LeafTagResponse response = LeafTagResponse.of(leafTag, "태그 수정 성공", HttpStatus.OK.value());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -73,7 +74,7 @@ public class LeafTagController {
         }
 
         leafTagService.remove(memberId, tagId);
-        LeafTagResponse response = LeafTagResponse.of(tagId, "태그 삭제 성공");
+        LeafTagResponse response = LeafTagResponse.of(tagId, "태그 삭제 성공", HttpStatus.NO_CONTENT.value());
         return new ResponseEntity<>(response, HttpStatus.NO_CONTENT);
     }
 

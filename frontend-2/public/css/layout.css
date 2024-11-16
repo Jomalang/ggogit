@@ -15,6 +15,7 @@ body
 .app-container{
   max-width: var(--max-width-1);
   margin: 0 auto;
+  height: 100%;
 }
 .app-container:has(.landing-box){
   max-width: 100%;

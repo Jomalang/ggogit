@@ -1,25 +1,35 @@
-import {init} from "http-proxy-middleware/dist/_handlers.js";
-
 const _tags = ref([]);
 const _selectedTags = ref([]);
+const _isLeafTagListActivated = ref(false);
 
 export default function useLeafTagList() {
 
+    function postInit() {
+        _isLeafTagListActivated.value = false;
+        init();
+    }
+
     function init() {
+        if (_isLeafTagListActivated.value) {
+            return; // 이미 초기화 되었으면 종
+        }
+
+        _isLeafTagListActivated.value = true;
         _tags.value = [];
         _selectedTags.value = [];
     }
 
     // 태그 리스트 데이터 초기화
     function initTags(tags) {
-        console.log('태그 초기화');
+        // console.log('태그 초기화');
+        // console.log(tags);
+        // console.log(_selectedTags.value);
+
         for (let tag of tags) {
-            for (let selectedTag of _selectedTags.value) {
-                if (tag.id === selectedTag.id) {
-                    break;
-                }
+            let isSelected = _selectedTags.value.some(selectedTag => tag.id === selectedTag.id);
+            if (!isSelected) {
+                _tags.value.push(tag);
             }
-            _tags.value.push(tag);
         }
     }
 
@@ -73,6 +83,12 @@ export default function useLeafTagList() {
         return _selectedTags.value;
     }
 
+    function setSelectedTags(tags) {
+        // console.log('setSelectedTags', tags);
+        _selectedTags.value = tags;
+        // console.log('setSelectedTags', _selectedTags.value);
+    }
+
     // 선택된 태그 리스트 초기화
     function clearSelectedTags() {
         _selectedTags.value = [];
@@ -89,8 +105,10 @@ export default function useLeafTagList() {
         selectTag,
         deselectTag,
         getSelectedTags,
+        setSelectedTags,
         addTag,
         clearSelectedTags,
-        init
+        init,
+        postInit
     };
 }

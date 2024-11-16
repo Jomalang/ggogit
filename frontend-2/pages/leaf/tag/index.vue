@@ -33,6 +33,7 @@ const tagListApi = async () => {
       console.log("태그 목록 조회 실패 : ");
     }
 
+    console.log('response', response);
     tagData.initTags(response.tags); // 태그 데이터 초기화
 
   } catch (error) {

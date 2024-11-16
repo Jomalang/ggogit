@@ -21,32 +21,11 @@ const beforeLogData = reactive({
   ],
 });
 
-const leafFormData = useState("leafFormData", () => ({
-  // 태그 데이터
-  tagIds: [],
-  tagSelected: true,
-
-  // 제목
-  title: undefined,
-  titleValidation: true,
-
-  // 내용
-  content: undefined,
-
-  // 공개성
-  visibility: true,
-
-  // 데이터 로드 여부
-  isLoaded: false,
-}));
-
-const selectedTags = useState("selectedTags", () => ({
-  items: [],
-}));
-
-const leafCreateUrl = useState("leafCreateUrl", () => {
-  return `/leaf/etc/${leafId}/edit`;
-});
+useLeafFormData().init()
+useLeafTagList().init();
+useLeafFormData().setCreateUrl(`/leaf/etc/${leafId}/edit`);
+const leafFormData = useLeafFormData().leafFormData;
+const selectedTags = useLeafTagList().getSelectedTags();
 
 const { data: beforeLeafData, status: beforeLeafStatus } = await useAuthFetch(
   `leaves/${leafId}/before`,
@@ -65,6 +44,7 @@ const { data: leafData, status: leafStatus } = await useAuthFetch(
 );
 
 watchEffect(() => {
+
   if (beforeLeafStatus.value !== HttpStatusCode.Ok) {
     // console.log("beforeLeafData : ", beforeLeafData.value);
     beforeLogData.id = beforeLeafData.value.id;
@@ -73,22 +53,14 @@ watchEffect(() => {
     beforeLogData.tags = beforeLeafData.value.tags;
   }
 
-  if (!leafFormData.value.isLoaded && leafStatus.value !== HttpStatusCode.Ok) {
-    // console.log("leafData : ", leafData.value);
+  if (leafData.value) {
     leafFormData.value.title = leafData.value.title;
     leafFormData.value.content = leafData.value.content;
     leafFormData.value.visibility = leafData.value.visibility;
-    selectedTags.value.items = leafData.value.tags;
+    useLeafTagList().setSelectedTags(leafData.value.tags);
     leafFormData.value.isLoaded = true;
   }
 
-  if (selectedTags.value.items) {
-    // 리프 태그 데이터 적용
-    leafFormData.value.tagIds = selectedTags.value.items.map((tag) => tag.id);
-  }
-
-  // console.log("leafFormData : ", leafFormData);
-  // console.log("selectedTags : ", selectedTags);
 });
 
 // ----------------------- Life Cycle ----------------------- //
@@ -155,10 +127,7 @@ const inputTitle = (title) => {
 };
 
 const tagDrop = (tag) => {
-  selectedTags.value.items = selectedTags.value.items.filter(
-    (item) => item.id !== tag.id
-  );
-  leafFormData.value.tagIds = selectedTags.value.items.map((tag) => tag.id);
+  useLeafTagList().deselectTag(tag);
 };
 
 const validate = () => {
@@ -176,23 +145,23 @@ const submitHandler = async () => {
     return;
   }
 
-  // console.log("leafFormData POST > : ", leafFormData.value);
-  const response = await axios.put(
-    `${config.public.apiBase}/etc/leaves/${leafId}`,
-    leafFormData.value
-  );
+  leafFormData.value.tagIds = selectedTags.map((tag) => tag.id);
+  console.log("leafFormData.value : ", leafFormData.value);
+  const response = await useAuthDataFetch(`etc/leaves/${leafId}`, {
+    baseURL: config.public.apiBase,
+    method: "PUT",
+    body: leafFormData.value,
+  });
 
-  if (response.status !== HttpStatusCode.Ok) {
-    throw new Error("Network response was not ok");
+  if (response.statusCode !== HttpStatusCode.Ok) {
+    console.error("리프 생성을 실패했습니다.");
   }
 
   // 데이터 초기화
-  leafFormData.value = {
-    titleValidation: true,
-    visibility: true,
-  };
-  selectedTags.value.items = [];
-  router.push(`/leaf/?leafId=${leafId}`);
+  useLeafFormData().postInit()
+  useLeafTagList().postInit();
+
+  router.push(`/leaf?leafId=${leafId}`);
 };
 </script>
 
@@ -209,7 +178,7 @@ const submitHandler = async () => {
   </header>
 
   <main>
-    <section class="first-log-img-container">
+    <section class="before-log-img-container">
       <h1 class="none">이전 리프 정보</h1>
       <LogCurrentLog :data="beforeLogData"></LogCurrentLog>
     </section>
@@ -246,7 +215,7 @@ const submitHandler = async () => {
         <section class="input-form__select-tag-input-container">
           <h1 class="none">리프 태그 입력</h1>
           <InputTagSelect
-            :selectedTag="selectedTags.items"
+            :selectedTag="useLeafTagList().getSelectedTags()"
             @drop="tagDrop"
           ></InputTagSelect>
         </section>
@@ -297,4 +266,9 @@ const submitHandler = async () => {
 .etc-input-title-container {
   margin: 40px 24px;
 }
+
+.input-form {
+  height: 1200px;
+}
+
 </style>

@@ -44,6 +44,8 @@ setTimeout(() => {
 
 <style scoped>
 .before-log-box {
+  position: relative;
+  z-index: -10;
   width: 100%;
   transform: translateY(-100%);
   transition: transform 0.5s ease;

@@ -13,7 +13,6 @@ export default async function useAuthFetch(url, options = {}) {
   }
 
   if (!import.meta.env.SSR) {
-    console.log("CSR");
     _accessToken = localStorage.getItem("_ggogit_accessToken");
   }
 

@@ -38,9 +38,6 @@ const { _nickname: username } = storeToRefs(memberDetail);
     <Footer :noticeText="`개발중입니다.`" />
   </footer>
 
-  <section class="nav-back-container">
-    <h2 class="none">네비 뒤 공백</h2>
-  </section>
 
   <aside class="nav-container">
     <section class="short-btn-container">

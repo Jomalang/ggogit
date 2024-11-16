@@ -47,6 +47,7 @@ public class LeafBookCardResponse {
         // 카드 타입
         @Builder.Default
         int cardType = 2;
+        Long leafId;
         // 도서 카테고리
         String bookCategory;
         // 도서 제목
@@ -82,6 +83,7 @@ public class LeafBookCardResponse {
 
             return ItemDto.builder()
                     .cardType(2)
+                    .leafId(leaf.getId())
                     .bookCategory(bookCategory.getName())
                     .bookTitle(book.getTitle())
                     .cardImage(book.getImageFile())
@@ -103,6 +105,8 @@ public class LeafBookCardResponse {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy-MM-dd HH:mm");
 
             return ItemDto.builder()
+                    .cardType(2)
+                    .leafId(leaf.getId())
                     .bookCategory(null)
                     .bookTitle(null)
                     .cardImage(null)

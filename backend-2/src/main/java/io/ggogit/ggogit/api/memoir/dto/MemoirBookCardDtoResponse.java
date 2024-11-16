@@ -17,6 +17,7 @@ public class MemoirBookCardDtoResponse {
     @Builder.Default
     private int cardType = 1;
     //회고록
+    private Long memoirId;
     private String memoirTitle;
     private String updateTime;
     private Boolean visibility;
@@ -48,6 +49,7 @@ public class MemoirBookCardDtoResponse {
     public static MemoirBookCardDtoResponse of(Memoir memoir, Tree tree) {
         return MemoirBookCardDtoResponse.builder()
                 .cardType(1)
+                .memoirId(memoir.getId())
                 .memoirTitle(memoir.getTitle())
                 .updateTime(MemoirBookCardDtoResponse.changeUpdateTime(memoir.getUpdateTime()))
                 .visibility(memoir.getVisibility())

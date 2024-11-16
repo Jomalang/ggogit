@@ -22,6 +22,7 @@ import java.time.format.DateTimeFormatter;
 public class TreeBookCardResponse {
     @Builder.Default
     private int cardType = 0;
+    private Long treeId;
     private String bookCategory;
     private String bookTitle;
     private String bookAuthor;
@@ -46,6 +47,7 @@ public class TreeBookCardResponse {
         if(book == null){
             return TreeBookCardResponse.builder()
                     .cardType(0)
+                    .treeId(tree.getId())
                     .cardImage(tree.getTreeImage().getName())
                     .seedKorName(Seed.getKorName())
                     .leafCount((long) tree.getLeaf().size())
@@ -59,6 +61,7 @@ public class TreeBookCardResponse {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy");
         return TreeBookCardResponse.builder()
                 .cardType(0)
+                .treeId(tree.getId())
                 .bookCategory(book.getBookCategory().getName())
                 .bookTitle(book.getTitle())
                 .bookAuthor(book.getAuthor())

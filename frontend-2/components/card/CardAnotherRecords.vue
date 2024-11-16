@@ -13,13 +13,27 @@ const item = props.item;
 function modifyCount(count: number) {
   return count > 999 ? "999+" : String(count);
 }
+
+const link = () => {
+  if (item.cardType === CardType.TREE) {
+    return `/tree/${item.treeId}`;
+  } else if (item.cardType === CardType.MEMOIR) {
+    return `/memoir/${item.memoirId}`;
+  } else if (item.cardType === CardType.LEAF) {
+    if (item.bookTitle) {
+      return `/leaf/book/${item.leafId}`;
+    } else {
+      return `/leaf/etc/${item.leafId}`;
+    }
+  }
+};
 </script>
 
 <template>
   <!-- (item, type) -->
   <div class="card-another-records-box">
     <div class="card-another-records__top-box">
-      <a class="card-another-records__top-anker" href="">
+      <NuxtLink class="card-another-records__top-anker" :to="link()">
         <!-- 표지 -->
         <div v-if="item.cardType === CardType.TREE">
           <img
@@ -90,7 +104,7 @@ function modifyCount(count: number) {
             }}</span>
           </div>
         </div>
-      </a>
+      </NuxtLink>
       <div class="card-another-records__icon-box">
         <div class="card-another-records__share-icon-box">
           <img src="/public/svg/comment.svg" alt="댓글 아이콘" />

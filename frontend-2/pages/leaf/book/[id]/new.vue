@@ -24,36 +24,10 @@ const beforeLogData = reactive({
 
 const totalPage = ref(null);
 
-const leafFormData = useState('leafFormData', () => ({
-
-  // 페이지 번호
-  startPage: undefined,
-  startPageValidation: true,
-  endPage: undefined,
-  endPageValidation: true,
-
-  // 태그 데이터
-  tagIds: [],
-  tagSelected: true,
-
-  // 제목
-  title: undefined,
-  titleValidation: true,
-
-  // 내용
-  content: undefined,
-
-  // 공개성
-  visibility: true,
-}));
-
-const selectedTags = useState('selectedTags', () => ({
-  items: [],
-}));
-
-const leafCreateUrl = useState('leafCreateUrl', () => {
-  return `/leaf/book/${parentLeafId}/new`;
-});
+useLeafFormData().init();
+useLeafFormData().setCreateUrl(`/leaf/book/${parentLeafId}/new`);
+const leafFormData = useLeafFormData().leafFormData;
+const selectedTags = useLeafTagList().getSelectedTags();
 
 const { data: totalPageData, status: totalPageStatus } = await useFetch(`leaves/${parentLeafId}/book/page`, {
   baseURL: `${config.public.apiBase}`,
@@ -80,8 +54,8 @@ watchEffect(() => {
     beforeLogData.tags = beforeLeafData.value.tags;
   }
 
-  if (selectedTags.value.items.length !== 0) {
-    leafFormData.value.tagIds = selectedTags.value.items.map((tag) => tag.id);
+  if (selectedTags.length !== 0) {
+    leafFormData.value.tagIds = selectedTags.map((tag) => tag.id);
   }
 
   // console.log("leafFormData : ", leafFormData);
@@ -172,8 +146,8 @@ const pageValidation = () => {
 
 const tagDrop = (tag) => {
   // console.log("tagDrop : ", tag);
-  selectedTags.value.items = selectedTags.value.items.filter((item) => item.id !== tag.id);
-  leafFormData.value.tagIds = selectedTags.value.items.map((tag) => tag.id);
+  selectedTags.items = selectedTags.items.filter((item) => item.id !== tag.id);
+  leafFormData.value.tagIds = selectedTags.items.map((tag) => tag.id);
 };
 
 const validate = () => {
@@ -205,19 +179,21 @@ const submitHandler = async () => {
     return;
   }
 
-  // console.log("leafFormData POST > : ", leafFormData.value);
-  const response = await axios.post(`${config.public.apiBase}/book/leaves/${parentLeafId}`, leafFormData.value);
+  const response = await useAuthDataFetch(`book/leaves/${parentLeafId}`, {
+    baseURL: `${config.public.apiBase}`,
+    method: "POST",
+    body: leafFormData.value,
+  });
 
-  if (response.status !== HttpStatusCode.Created) {
+  if (response.statusCode !== HttpStatusCode.Created) {
     throw new Error("Network response was not ok");
   }
 
-  let leafId = response.data.leafId;
-
   // 데이터 초기화
-  leafFormData.value = {};
+  useLeafFormData().init();
+  useLeafTagList().init();
 
-  router.push(`/leaf/?leafId=${leafId}`);
+  router.push(`/leaf/?leafId=${response.leafId}`);
 };
 
 </script>
@@ -232,7 +208,7 @@ const submitHandler = async () => {
   </header>
 
   <main>
-    <section class="first-log-img-container">
+    <section class="before-log-img-container">
       <h1 class="none">이전 리프 생성 이미지</h1>
       <LogBeforeLog :data="beforeLogData"></LogBeforeLog>
     </section>
@@ -267,7 +243,7 @@ const submitHandler = async () => {
 
         <section class="input-form__select-tag-input-container">
           <h1 class="none">리프 태그 입력</h1>
-          <InputTagSelect :selectedTag="selectedTags.items" @drop="tagDrop"></InputTagSelect>
+          <InputTagSelect :selectedTag="selectedTags" @drop="tagDrop"></InputTagSelect>
         </section>
 
         <section class="input-form__input-container">

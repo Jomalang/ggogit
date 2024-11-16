@@ -1,39 +1,16 @@
 <script setup>
 import { onMounted, reactive, watch } from "vue";
-import axios, { HttpStatusCode } from "axios";
-import {useRoute} from "vue-router";
+import useLeafFormData from "~/composables/useLeafFormData.js";
 
 // ----------------------- Model ----------------------- //
 
 const config = useRuntimeConfig();
-const backLink = useState("leafCreateUrl");
-const selectedTags = useState('selectedTags');
-
-const tags = reactive({
-  items: [],
-});
+const backLink = useLeafFormData().getCreateUrl();
+const tagData = useLeafTagList();
 
 const searchValue = reactive({
   name: "",
 });
-
-watch(
-    [tags, selectedTags.value, searchValue],
-    [
-      (newVal) => {},
-      (newVal) => {
-        if (selectedTags.value.items.length === 0) {
-          localStorage.setItem("selectedTags", JSON.stringify([]));
-        } else {
-          localStorage.setItem(
-              "selectedTags",
-              JSON.stringify(selectedTags.value.items)
-          );
-        }
-      },
-      (newVal) => {},
-    ]
-);
 
 // ----------------------- Life Cycle ----------------------- //
 onMounted(() => {
@@ -44,36 +21,44 @@ onMounted(() => {
 const tagListApi = async () => {
 
   try {
-    const response = await axios.get(`${config.public.apiBase}/tags?s=${searchValue.name}`);
+    const response = await useAuthDataFetch("tags", {
+      baseURL: `${config.public.apiBase}`,
+      method: "GET",
+      params: {
+        s: searchValue.name
+      }
+    })
 
-    if (response.status !== HttpStatusCode.Ok) {
-      // console.log("태그 리스트 조회 실패 : ", response);
+    if (!response !== '태그 목록 조회 성공') {
+      console.log("태그 목록 조회 실패 : ");
     }
 
-    // 선택 되어있는 태그 제외
-    tags.items = response.data.tags.filter((tag) => {
-      for (let i = 0; i < selectedTags.value.items.length; i++) {
-        if (tag.id === selectedTags.value.items[i].id) { return false; }
-      }
-      return true;
-    });
+    tagData.initTags(response.tags); // 태그 데이터 초기화
 
   } catch (error) {
-    // console.log("태그 리스트 조회 실패 : ", error);
+    console.log("태그 리스트 조회 실패 : ", error);
   }
 };
 
 const tagCreateApi = async (tagName) => {
-  try {
-    const response = await axios.post(`http://localhost:8080/api/v1/tags`, {
-      name: tagName,
-    });
 
-    if (response.status !== HttpStatusCode.Created) {
+  try {
+
+    // console.log(tagName);
+    const response = await useAuthDataFetch("tags", {
+      baseURL: `${config.public.apiBase}`,
+      method: "POST",
+      body: {
+        name: tagName
+      }
+    })
+
+    // console.log(response);
+    if (response.message !== '태그 생성 성공') {
       alert("태그 생성에 실패하였습니다.");
     }
 
-    return response.data;
+    return response.id;
   } catch (error) {
     throw new Error("태그 생성 실패 : " + error);
   }
@@ -81,28 +66,18 @@ const tagCreateApi = async (tagName) => {
 
 // ----------------------- Function ----------------------- //
 const tagSelectedHandler = (tag) => {
-  // 3개 이상 선택 불가
-  if (3 <= selectedTags.value.items.length) {
+
+  if (!tagData.canSelectTag(tag)) {
     alert("태그는 3개까지 선택 가능합니다.");
     return;
   }
 
-  // 선택된 태그 리스트에 추가
-  selectedTags.value.items.push(tag);
-
-  // 선택 하면 리스트에서 제거
-  tags.items = tags.items.filter((item) => item.id !== tag.id);
+  tagData.selectTag(tag)
 };
 
 const tagUnSelectedHandler = (tag) => {
   // 선택 해제된 태그 리스트에 추가
-  tags.items.push(tag);
-
-  // 선택 해제 하면 리스트에서 제거
-  selectedTags.value.items = selectedTags.value.items.filter((item) => item.id !== tag.id);
-
-  // 로컬 스토리지에서 제거
-  localStorage.setItem("selectedTags", JSON.stringify(selectedTags.value.items));
+  tagData.deselectTag(tag);
 };
 
 const handleTagSearch = (value) => {
@@ -111,27 +86,28 @@ const handleTagSearch = (value) => {
 };
 
 const tagCreateHandler = async (name) => {
-  const data = await tagCreateApi(name);
+  const id = await tagCreateApi(name);
 
   const newTag = {
-    id: data.id,
+    id: id,
     name: name,
   };
 
   // 생성한 태그 선택 리스트에 태그가 3개 미만이면 추가
-  if (selectedTags.value.items.length < 3) {
-    selectedTags.value.items.push(newTag);
+  if (tagData.canSelectTag(newTag)) {
+    tagData.selectTag(newTag);
     return;
   }
 
   // 3개 이상이면 리스트에 추가
-  tags.items.push(newTag);
+  tagData.addTag(newTag);
 };
 
 // ----------------------- Function ----------------------- //
 </script>
 
 <template>
+
   <header>
     <h1 class="none">태그 이름</h1>
     <TopBarBack title="태그 이름" :link="backLink"></TopBarBack>
@@ -148,7 +124,7 @@ const tagCreateHandler = async (name) => {
     <section>
       <h2 class="none">태그 선택 태그</h2>
       <TagSelectedList
-          :tags="selectedTags.items"
+          :tags="tagData.getSelectedTags()"
           @tagUnSelected="tagUnSelectedHandler"
       ></TagSelectedList>
     </section>
@@ -161,9 +137,9 @@ const tagCreateHandler = async (name) => {
     <section>
       <h2 class="none">태그 리스트</h2>
       <TagListBox
-          :tags="tags.items"
+          :tags="tagData.getTags()"
           :createTag="searchValue.name"
-          :selected-tag="selectedTags.items"
+          :selected-tag="tagData.getSelectedTags()"
           @tagSelected="tagSelectedHandler"
           @tagCreate="tagCreateHandler"
       >

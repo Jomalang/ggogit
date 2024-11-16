@@ -14,18 +14,21 @@ public class LeafTagResponse {
 
     private Long id;
     private String message;
+    private Integer statusCode;
 
-    public static LeafTagResponse of(LeafTag leafTag, String message) {
+    public static LeafTagResponse of(LeafTag leafTag, String message, Integer statusCode) {
         return LeafTagResponse.builder()
                 .id(leafTag.getId())
                 .message(message)
+                .statusCode(statusCode)
                 .build();
     }
 
-    public static LeafTagResponse of(Long leafTagId, String message) {
+    public static LeafTagResponse of(Long leafTagId, String message, Integer statusCode) {
         return LeafTagResponse.builder()
                 .id(leafTagId)
                 .message(message)
+                .statusCode(statusCode)
                 .build();
     }
 }

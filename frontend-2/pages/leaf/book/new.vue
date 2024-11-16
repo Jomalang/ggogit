@@ -9,47 +9,11 @@ import axios, {HttpStatusCode} from "axios";
 const config = useRuntimeConfig();
 const router = useRouter();
 
-const treeFormData = useState('treeFormData');
-const leafFormData = useState('leafFormData', () => ({
-
-  // 페이지 번호
-  startPage: undefined,
-  startPageValidation: true,
-  endPage: undefined,
-  endPageValidation: true,
-
-  // 태그 데이터
-  tagIds: [],
-  tagSelected: true,
-
-  // 제목
-  title: undefined,
-  titleValidation: true,
-
-  // 내용
-  content: undefined,
-
-  // 공개성
-  visibility: true,
-}));
-
-const selectedTags = useState('selectedTags', () => ({
-  items: [],
-}));
-
-const leafCreateUrl = useState('leafCreateUrl', () => {
-  return "/leaf/book/new";
-});
-
-watchEffect(() => {
-
-  if (selectedTags.value.items) { // 리프 태그 데이터 적용
-    leafFormData.value.tagIds = selectedTags.value.items.map((tag) => tag.id);
-  }
-
-  // console.log("leafFormData : ", leafFormData);
-  // console.log("selectedTags : ", selectedTags);
-});
+useLeafFormData().init();
+useLeafFormData().setCreateUrl("/leaf/book/new");
+const treeFormData = useTreeFormData().treeFormData;
+const leafFormData = useLeafFormData().leafFormData;
+const selectedTags = useLeafTagList().getSelectedTags();
 
 // ----------------------- Life Cycle ----------------------- //
 
@@ -160,11 +124,9 @@ const validate = () => {
 };
 
 const dataInit = () => {
-  treeFormData.value = {};
-  leafFormData.value = {};
-  selectedTags.value = {
-    items: [],
-  };
+  useTreeFormData().init();
+  useLeafFormData().init();
+  useLeafTagList().init();
 };
 
 const submitHandler = async () => {
@@ -173,17 +135,22 @@ const submitHandler = async () => {
     return;
   }
 
-  // console.log("leafFormData POST > : ", leafFormData.value);
-  // console.log("POST : ", leafFormData.value);
-  const response = await axios.post(`${config.public.apiBase}/book/first/leaves`, leafFormData.value);
+  leafFormData.value.tagIds = selectedTags.map((tag) => tag.id);
+  const response = await useAuthDataFetch("book/first/leaves", {
+    baseURL: `${config.public.apiBase}`,
+    method: "POST",
+    body: leafFormData.value,
+  });
 
-  if (response.status !== HttpStatusCode.Created) {
+  // const response = await axios.post(`${config.public.apiBase}/book/first/leaves`, leafFormData.value);
+
+  if (response.statusCode !== HttpStatusCode.Created) {
     throw new Error("Network response was not ok");
   }
 
   dataInit(); // 데이터 초기화
 
-  let leafId = response.data.leafId;
+  let leafId = response.leafId;
   router.push(`/leaf/?leafId=${leafId}`);
 };
 
@@ -239,7 +206,7 @@ const submitHandler = async () => {
 
         <section class="input-form__select-tag-input-container">
           <h1 class="none">리프 태그 입력</h1>
-          <InputTagSelect :selectedTag="selectedTags.items" @drop="tagDrop"></InputTagSelect>
+          <InputTagSelect :selectedTag="selectedTags" @drop="tagDrop"></InputTagSelect>
         </section>
 
         <section class="input-form__input-container">
@@ -294,4 +261,9 @@ const submitHandler = async () => {
   font-weight: var(--semi-bold);
   margin-bottom: 8px;
 }
+
+.input-form {
+  height: 1400px;
+}
+
 </style>

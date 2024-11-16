@@ -15,6 +15,7 @@ body
 .app-container{
   max-width: var(--max-width-1);
   margin: 0 auto;
+  height: 100%;
 }
 .app-container:has(.landing-box){
   max-width: 100%;
@@ -274,7 +275,6 @@ home-tree__reg-4--search-book__input
 .first-log-img-container {
   width: 100%;
   overflow: hidden;
-  margin: 0 16px;
 }
 
 .first-log_page-input-container {
@@ -639,4 +639,3 @@ toast 이미지 팝업 레이아웃 css
     transform: translateX(0%) !important;
   }
 }
-

@@ -261,4 +261,9 @@ const submitHandler = async () => {
   font-weight: var(--semi-bold);
   margin-bottom: 8px;
 }
+
+.input-form {
+  height: 1400px;
+}
+
 </style>

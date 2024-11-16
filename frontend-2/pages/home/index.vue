@@ -99,12 +99,6 @@ const bookExRemoveNone = (selectedElement, index) => {
 };
 
 //-------------------LifeCycle-------------------
-onMounted(() => {
-  if (treeInfoList.value.length === 0) {
-    console.log("트리 정보가 없습니다.");
-    treeRefresh();
-  }
-});
 </script>
 
 <template>

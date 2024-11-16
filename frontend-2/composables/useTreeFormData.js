@@ -71,10 +71,15 @@ export default function useTreeFormData() {
         _treeFormData.value.createUrl = url;
     }
 
+    function setSeedId(seedId) {
+        _treeFormData.value.seedId = seedId;
+    }
+
     return {
         treeFormData: _treeFormData,
         postInit,
         init,
-        setCreateUrl
+        setCreateUrl,
+        setSeedId
     }
 }

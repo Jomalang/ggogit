@@ -12,12 +12,9 @@ const config = useRuntimeConfig();
 const seedId = route.params.id;
 
 useTreeFormData().init();
+useTreeFormData().setSeedId(seedId);
 useTreeFormData().setCreateUrl(`/tree/etc/seed/${seedId}/new`);
 const treeFormData = useTreeFormData().treeFormData;
-
-watch(treeFormData.value, (newVal) => {
-  // console.log("treeFormData:", newVal);
-});
 
 // ----------------------- API ----------------------- //
 const { data: seedData, error: infoError } = await useAuthFetch(

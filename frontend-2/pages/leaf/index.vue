@@ -81,6 +81,7 @@ const { data: branchInfoData, error: branchInfoDataError } = await useAuthFetch(
 
 // ----------------------- Init ----------------------- //
 if (seedTypeData.value) {
+  console.log("seedTypeData", seedTypeData.value);
   seedType.value = seedTypeData.value.seedType;
 }
 

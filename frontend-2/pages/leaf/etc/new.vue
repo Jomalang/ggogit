@@ -96,7 +96,6 @@ const submitHandler = async () => {
 
   // console.log("leafFormData POST > : ", leafFormData.value);
   leafFormData.value.tagIds = selectedTags.map((tag) => tag.id);
-
   const response = await useAuthDataFetch("etc/first/leaves", {
     baseURL: config.public.apiBase,
     method: "POST",
@@ -112,8 +111,7 @@ const submitHandler = async () => {
   useLeafFormData().postInit()
   useLeafTagList().init();
 
-  let leafId = response.leafId;
-  router.push(`/leaf/?leafId=${leafId}`);
+  router.push(`/leaf/?leafId=${response.leafId}`);
 };
 
 </script>

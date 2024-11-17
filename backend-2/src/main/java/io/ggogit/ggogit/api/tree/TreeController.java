@@ -267,11 +267,11 @@ public class TreeController {
         Pageable pageable = PageRequest.of(offset, limit, sort);
 
         List<Tree> allByMemberId = treeService.findAllPages(memberId, pageable).getContent();
-        List<TreeBookCardResponse> treeBookCardRespons = allByMemberId.stream()
+        List<TreeBookCardResponse> treeBookCardResponse = allByMemberId.stream()
                 .map(tree -> TreeBookCardResponse.toEntity(tree.getBook(), true, tree, tree.getSeed(), memberId))
                 .toList();
 
-        return new ResponseEntity<>(TreeBookCardResponseList.of(treeBookCardRespons), HttpStatus.OK);
+        return new ResponseEntity<>(TreeBookCardResponseList.of(treeBookCardResponse), HttpStatus.OK);
     }
 
     @GetMapping("members/{memberId}/books/{bookId}/trees/cards")

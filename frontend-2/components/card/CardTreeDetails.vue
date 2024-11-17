@@ -14,58 +14,50 @@ const tree = ref(props.tree);
 <template>
   <!-- th:fragment="card-tree-details(tree)" -->
 
-  <div class="card-tree-details">
-    <NuxtLink class="card-tree-detail" :to="`tree/${tree.treeId}`">
-      <div class="card-tree__img-frame">
-        <img
-          v-if="tree.coverImageName"
-          class="card-tree__book-cover"
-          alt="treeCover"
-          :src="useGetImageUrl(tree.coverImageName)"
-        />
-        <img
-          v-else
-          class="card-tree__book-cover"
-          src="/public/png/tree-icon-white.png"
-          alt="treeCover"
-        />
-      </div>
+  <NuxtLink class="card-tree-detail" :to="`tree/${tree.treeId}`">
+    <div class="card-tree__img-frame">
+      <img
+        class="card-tree__book-cover"
+        alt="treeCover"
+        :src="
+          tree.coverImageName
+            ? useGetImageUrl(tree.coverImageName, 'book')
+            : useGetImageUrl(tree.treeImage, 'tree')
+        "
+      />
+    </div>
 
-      <div class="card-tree-detail__box">
-        <!--반복문으로 넣어야 할듯..-->
-        <div class="card-tree-detail__tags">
-          <span class="card-tree-detail__tag">{{ tree.bookCategory }}</span>
-        </div>
-        <!---->
-        <div class="card-tree-detail__slot">
-          <p class="card-tree-detail__name">{{ tree.bookTitle }}</p>
-          <div
-            v-if="tree.bookComplete"
-            class="card-tree-detail__complete-icon"
-          ></div>
-        </div>
-        <p class="card-tree-detail__explanation">{{ tree.treeTitle }}</p>
-        <div class="card-tree-detail__info">
-          <span class="card-tree-detail__info">{{
-            tree.bookPublishedYear
-          }}</span>
-          <span class="card-tree-detail__info"> / </span>
-          <span class="card-tree-detail__info">{{ tree.bookAuthor }}</span>
-          <span class="card-tree-detail__info"> / </span>
-          <span v-if="tree.bookTranslator" class="card-tree-detail__info">{{
-            tree.bookTranslator
-          }}</span>
-          <span class="card-tree-detail__info" v-if="tree.bookTranslator"
-            >/</span
-          >
-          <span class="card-tree-detail__info">{{ tree.bookPublisher }}</span>
-        </div>
-        <span class="card-tree-detail__info-created-date">{{
-          tree.leafCreatedAt
-        }}</span>
+    <div class="card-tree-detail__box">
+      <!--반복문으로 넣어야 할듯..-->
+      <div v-if="tree.bookCategory" class="card-tree-detail__tags">
+        <span class="card-tree-detail__tag">{{ tree.bookCategory }}</span>
       </div>
-    </NuxtLink>
-  </div>
+      <!---->
+      <p class="card-tree-detail__name">{{ tree.title }}</p>
+
+      <div v-if="tree.bookTitle" class="card-tree-detail__slot">
+        <p class="card-tree-detail__explanation">{{ tree.bookTitle }}</p>
+        <div
+          v-if="tree.bookComplete"
+          class="card-tree-detail__complete-icon"
+        ></div>
+      </div>
+      <div v-if="tree.bookPublishedYear" class="card-tree-detail__info">
+        <span class="card-tree-detail__info">{{ tree.bookPublishedYear }}</span>
+        <span class="card-tree-detail__info"> / </span>
+        <span class="card-tree-detail__info">{{ tree.bookAuthor }}</span>
+        <span class="card-tree-detail__info"> / </span>
+        <span v-if="tree.bookTranslator" class="card-tree-detail__info">{{
+          tree.bookTranslator
+        }}</span>
+        <span class="card-tree-detail__info" v-if="tree.bookTranslator">/</span>
+        <span class="card-tree-detail__info">{{ tree.bookPublisher }}</span>
+      </div>
+      <span class="card-tree-detail__info-created-date">{{
+        tree.leafCreatedAt
+      }}</span>
+    </div>
+  </NuxtLink>
 </template>
 
 <style scoped>

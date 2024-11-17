@@ -1,7 +1,7 @@
 <script setup>
 import { reactive, ref } from "vue";
 import InputBackSearchTree from "~/components/input/InputBackSearchTree.vue";
-import {debounce} from "lodash";
+import { debounce } from "lodash";
 
 //---------------variable----------------
 const query = ref("");
@@ -12,7 +12,7 @@ const totalCount = ref(0);
 const scrollContainer = ref(null);
 const config = useRuntimeConfig();
 const apiUrl = config.public.apiBase + "/trees/search";
-let filterName = "최근 수정한 순"
+let filterName = "최근 수정한 순";
 let sort = ref(0);
 //-------------handler----------------
 
@@ -56,28 +56,24 @@ const handleScroll = debounce(() => {
   }
 }, 300); // 디바운스 적용으로 스크롤 이벤트 과도한 호출 방지
 const sortHandler = debounce(() => {
-  if(trees.value.length === 0) return;
+  if (trees.value.length === 0) return;
   page.value = 0;
-  if(sort.value === 0)
-    sort.value = 1;
-  else
-    sort.value = 0;
-
+  if (sort.value === 0) sort.value = 1;
+  else sort.value = 0;
 });
-
 
 //-------------life cycle----------------
 onMounted(() => {
   watch(
-      [scrollContainer],
-      () => {
-        if (scrollContainer.value) {
-          scrollContainer.value.addEventListener("scroll", handleScroll, {
-            passive: false,
-          });
-        }
-      },
-      { immediate: true }
+    [scrollContainer],
+    () => {
+      if (scrollContainer.value) {
+        scrollContainer.value.addEventListener("scroll", handleScroll, {
+          passive: false,
+        });
+      }
+    },
+    { immediate: true }
   );
 });
 </script>
@@ -88,22 +84,26 @@ onMounted(() => {
     <section>
       <h2 class="none">트리 검색 창</h2>
       <InputBackSearchTree
-          :placeholder="`검색할 트리를 입력해주세요.`"
-          :href="`./seed/index`"
-          :api="apiUrl"
-          :page="page"
-          :sort="sort"
-          @result="handleTreeResult"
-          @req="handleKeyword"
-          @page="handlePage"
-          @totalCount="handleTotalCount"
-          @totalPage="handleTotalPage"
+        :placeholder="`검색할 트리를 입력해주세요.`"
+        :href="`./seed/index`"
+        :api="apiUrl"
+        :page="page"
+        :sort="sort"
+        @result="handleTreeResult"
+        @req="handleKeyword"
+        @page="handlePage"
+        @totalCount="handleTotalCount"
+        @totalPage="handleTotalPage"
       />
     </section>
 
     <section>
       <h2 class="none">검색 결과 개수 및 최근 수정한 순서</h2>
-      <TopBarSearchResultNumAndFilter :num="totalCount" :filterName="filterName" @sort="sortHandler"/>
+      <TopBarSearchResultNumAndFilter
+        :num="totalCount"
+        :filterName="filterName"
+        @sort="sortHandler"
+      />
     </section>
   </header>
 
@@ -112,8 +112,8 @@ onMounted(() => {
       <div class="text-info-container">
         <h2 class="none">검색 시작 안내</h2>
         <TextInfo
-            :text="'현재 검색중인 트리가 없습니다'"
-            :boldText="'트리를 검색하거나 직접 등록해주세요'"
+          :text="'현재 검색중인 트리가 없습니다'"
+          :boldText="'트리를 검색하거나 직접 등록해주세요'"
         />
       </div>
     </section>
@@ -131,22 +131,11 @@ onMounted(() => {
       <h3 class="none">검색 결과 없음</h3>
       <div class="text-info-container">
         <TextInfo
-            :text="'검색 결과가 없습니다.'"
-            :boldText="'다시 검색하거나 직접 등록해주세요'"
+          :text="'검색 결과가 없습니다.'"
+          :boldText="'다시 검색하거나 직접 등록해주세요'"
         />
       </div>
     </section>
-
-  <section class="btn-select-container--right">
-    <h2 class="none">트리 직접 등록 버튼</h2>
-    <!-- TODO: href변경하기 -->
-    <ButtonBtnShortAGreen
-        :link="`/tree/seed`"
-        :text="`트리 직접 등록하기`"
-    />
-  </section>
-
-
   </main>
   <aside class="nav-container">
     <NavNavigationBar active="home" />

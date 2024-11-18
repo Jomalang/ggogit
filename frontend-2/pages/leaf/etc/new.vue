@@ -12,7 +12,7 @@ const router = useRouter();
 useLeafFormData().init();
 useLeafFormData().setCreateUrl("/leaf/etc/new");
 const leafFormData = useLeafFormData().leafFormData;
-const selectedTags = useLeafTagList().getSelectedTags();
+const selectedTags = useLeafTagList().selectedTags;
 
 // ----------------------- Life Cycle ----------------------- //
 
@@ -73,8 +73,8 @@ const inputTitle = (title) => {
 
 const tagDrop = (tag) => {
   // console.log("tagDrop : ", tag);
-  selectedTags.items = selectedTags.items.filter((item) => item.id !== tag.id);
-  leafFormData.value.tagIds = selectedTags.items.map((tag) => tag.id);
+  selectedTags.value = selectedTags.value.filter((item) => item.id !== tag.id);
+  leafFormData.value.tagIds = selectedTags.value.map((tag) => tag.id);
 };
 
 const validate = () => {
@@ -95,7 +95,7 @@ const submitHandler = async () => {
   }
 
   // console.log("leafFormData POST > : ", leafFormData.value);
-  leafFormData.value.tagIds = selectedTags.map((tag) => tag.id);
+  leafFormData.value.tagIds = selectedTags.value.map((tag) => tag.id);
   const response = await useAuthDataFetch("etc/first/leaves", {
     baseURL: config.public.apiBase,
     method: "POST",
@@ -109,7 +109,7 @@ const submitHandler = async () => {
   // 데이터 초기화
   useTreeFormData().postInit()
   useLeafFormData().postInit()
-  useLeafTagList().init();
+  useLeafTagList().postInit();
 
   router.push(`/leaf/?leafId=${response.leafId}`);
 };
@@ -198,6 +198,7 @@ const submitHandler = async () => {
 </template>
 
 <style scoped>
+
 .toastui-editor-text {
   font-weight: var(--semi-bold);
   margin-bottom: 8px;

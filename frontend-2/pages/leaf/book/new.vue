@@ -13,7 +13,7 @@ useLeafFormData().init();
 useLeafFormData().setCreateUrl("/leaf/book/new");
 const treeFormData = useTreeFormData().treeFormData;
 const leafFormData = useLeafFormData().leafFormData;
-const selectedTags = useLeafTagList().getSelectedTags();
+const selectedTags = useLeafTagList().selectedTags;
 
 // ----------------------- Life Cycle ----------------------- //
 
@@ -96,8 +96,9 @@ const pageValidation = () => {
 
 const tagDrop = (tag) => {
   // console.log("tagDrop : ", tag);
-  selectedTags.value.items = selectedTags.value.items.filter((item) => item.id !== tag.id);
-  leafFormData.value.tagIds = selectedTags.value.items.map((tag) => tag.id);
+  console.log("selectedTags.value : ", selectedTags);
+  selectedTags.value = selectedTags.value.filter((item) => item.id !== tag.id);
+  leafFormData.value.tagIds = selectedTags.value.map((tag) => tag.id);
 };
 
 const validate = () => {
@@ -129,7 +130,7 @@ const submitHandler = async () => {
     return;
   }
 
-  leafFormData.value.tagIds = selectedTags.map((tag) => tag.id);
+  leafFormData.value.tagIds = selectedTags.value.map((tag) => tag.id);
   const response = await useAuthDataFetch("book/first/leaves", {
     baseURL: `${config.public.apiBase}`,
     method: "POST",

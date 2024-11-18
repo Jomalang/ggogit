@@ -104,7 +104,7 @@ public class LeafTagController {
     ) {
         Long memberId = userDetails.getId();
         Page<LeafTag> leafTags = leafTagService.list(memberId, search, page, size);
-        LeafTagListResponse response = LeafTagListResponse.of(leafTags, "태그 목록 조회 성공");
+        LeafTagListResponse response = LeafTagListResponse.of(leafTags, "태그 목록 조회 성공", HttpStatus.OK.value());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

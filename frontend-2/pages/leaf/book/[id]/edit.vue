@@ -2,7 +2,7 @@
 import Editor from "@toast-ui/editor";
 import "@toast-ui/editor/dist/toastui-editor.css";
 import { onMounted, reactive } from "vue";
-import axios, { HttpStatusCode } from "axios";
+import { HttpStatusCode } from "axios";
 
 // ----------------------- Model ----------------------- //
 const config = useRuntimeConfig();
@@ -10,51 +10,14 @@ const router = useRouter();
 const route = useRoute();
 const leafId = Number(route.params.id);
 
-const beforeLogData = reactive({
-  id: 1,
-  title: "트리 첫번째 기록",
-  date: "2021-10-10",
-  tags: [
-    { id: 1, name: "태그1" },
-    { id: 2, name: "태그2" },
-    { id: 3, name: "태그3" },
-  ],
-});
+const beforeLogData = reactive({});
 
 const totalPage = ref(null);
 
-const leafFormData = useState("leafFormData", () => ({
-  // 페이지 번호
-  startPage: undefined,
-  startPageValidation: true,
-  endPage: undefined,
-  endPageValidation: true,
-
-  // 태그 데이터
-  tagIds: [],
-  tagSelected: true,
-
-  // 제목
-  title: undefined,
-  titleValidation: true,
-
-  // 내용
-  content: undefined,
-
-  // 공개성
-  visibility: true,
-
-  // 데이터 로드 여부
-  isLoaded: false,
-}));
-
-const selectedTags = useState("selectedTags", () => ({
-  items: [],
-}));
-
-const leafCreateUrl = useState("leafCreateUrl", () => {
-  return `/leaf/book/${leafId}/edit`;
-});
+useLeafFormData().init();
+useLeafFormData().setCreateUrl(`/leaf/book/${leafId}/edit`);
+const leafFormData = useLeafFormData().leafFormData;
+const selectedTags = useLeafTagList().selectedTags;
 
 const { data: totalPageData, status: totalPageStatus } = await useAuthFetch(
   `leaves/${leafId}/book/page`,
@@ -72,7 +35,7 @@ const { data: beforeLeafData, status: beforeLeafStatus } = await useAuthFetch(
   }
 );
 
-const { data: leafEditData, status: leafEditStatus } = await useAuthFetch(
+const { data: leafEditDataApi, status: leafEditStatus } = await useAuthFetch(
   `/book/leaves/${leafId}/edit`,
   {
     baseURL: `${config.public.apiBase}`,
@@ -80,36 +43,31 @@ const { data: leafEditData, status: leafEditStatus } = await useAuthFetch(
   }
 );
 
+if (totalPageStatus.value) {
+  totalPage.value = totalPageData.value;
+}
+
+if (beforeLeafStatus.value) {
+  beforeLogData.id = beforeLeafData.value.id;
+  beforeLogData.title = beforeLeafData.value.title;
+  beforeLogData.date = beforeLeafData.value.createTime;
+  beforeLogData.tags = beforeLeafData.value.tags;
+}
+
+if (!leafFormData.value.isLoaded) {
+  leafFormData.value.startPage = leafEditDataApi.value.startPage;
+  leafFormData.value.endPage = leafEditDataApi.value.endPage;
+  leafFormData.value.title = leafEditDataApi.value.title;
+  leafFormData.value.content = leafEditDataApi.value.content;
+  leafFormData.value.visibility = leafEditDataApi.value.visibility;
+  selectedTags.value = leafEditDataApi.value.tags;
+  leafFormData.value.isLoaded = true;
+}
+
 watchEffect(() => {
-  if (totalPageStatus.value !== HttpStatusCode.Ok) {
-    // console.log("totalPageData : ", totalPageData.value);
-    totalPage.value = totalPageData.value;
-  }
 
-  if (beforeLeafStatus.value !== HttpStatusCode.Ok) {
-    // console.log("beforeLeafData : ", beforeLeafData.value);
-    beforeLogData.id = beforeLeafData.value.id;
-    beforeLogData.title = beforeLeafData.value.title;
-    beforeLogData.date = beforeLeafData.value.createTime;
-    beforeLogData.tags = beforeLeafData.value.tags;
-  }
-
-  if (
-    !leafFormData.value.isLoaded &&
-    leafEditStatus.value !== HttpStatusCode.Ok
-  ) {
-    // console.log("leafEditData : ", leafEditData.value);
-    leafFormData.value.startPage = leafEditData.value.startPage;
-    leafFormData.value.endPage = leafEditData.value.endPage;
-    leafFormData.value.title = leafEditData.value.title;
-    leafFormData.value.content = leafEditData.value.content;
-    leafFormData.value.visibility = leafEditData.value.visibility;
-    selectedTags.value.items = leafEditData.value.tags;
-    leafFormData.value.isLoaded = true;
-  }
-
-  if (selectedTags.value.items.length !== 0) {
-    leafFormData.value.tagIds = selectedTags.value.items.map((tag) => tag.id);
+  if (selectedTags.value.length !== 0) {
+    leafFormData.value.tagIds = selectedTags.value.map((tag) => tag.id);
   }
 });
 
@@ -200,10 +158,10 @@ const pageValidation = () => {
 
 const tagDrop = (tag) => {
   // console.log("tagDrop : ", tag);
-  selectedTags.value.items = selectedTags.value.items.filter(
+  selectedTags.value = selectedTags.value.filter(
     (item) => item.id !== tag.id
   );
-  leafFormData.value.tagIds = selectedTags.value.items.map((tag) => tag.id);
+  leafFormData.value.tagIds = selectedTags.value.map((tag) => tag.id);
 };
 
 const validate = () => {
@@ -237,45 +195,23 @@ const submitHandler = async () => {
   }
 
   // console.log("leafFormData POST > : ", leafFormData.value);
-  const response = await axios.put(
-    `${config.public.apiBase}/book/leaves/${leafId}`,
-    leafFormData.value
-  );
+  const response = await useAuthDataFetch(`book/leaves/${leafId}`, {
+    baseURL: `${config.public.apiBase}`,
+    method: "PUT",
+    body: leafFormData.value,
+  });
 
-  if (response.status !== HttpStatusCode.Ok) {
+  if (response.statusCode !== HttpStatusCode.Ok) {
     throw new Error("Network response was not ok");
   }
 
   // 데이터 초기화
-  leafFormData.value = {};
+  useLeafFormData().postInit();
+  useLeafTagList().postInit();
+
+  console.log("response : ", useLeafFormData().leafFormData);
+
   router.push(`/leaf/?leafId=${leafId}`);
-};
-
-const dataInit = () => {
-  leafFormData.value = {
-    // 페이지 번호
-    startPage: undefined,
-    startPageValidation: true,
-    endPage: undefined,
-    endPageValidation: true,
-
-    // 태그 데이터
-    tagIds: [],
-    tagSelected: true,
-
-    // 제목
-    title: undefined,
-    titleValidation: true,
-
-    // 내용
-    content: undefined,
-
-    // 공개성
-    visibility: true,
-
-    // 데이터 로드 여부
-    isLoaded: false,
-  };
 };
 </script>
 
@@ -292,7 +228,7 @@ const dataInit = () => {
   </header>
 
   <main>
-    <section class="first-log-img-container">
+    <section class="before-log-img-container">
       <h1 class="none">이전 리프 수정 이미지</h1>
       <LogCurrentLog :data="beforeLogData"></LogCurrentLog>
     </section>
@@ -328,7 +264,7 @@ const dataInit = () => {
         <section class="input-form__select-tag-input-container">
           <h1 class="none">리프 태그 입력</h1>
           <InputTagSelect
-            :selectedTag="selectedTags.items"
+            :selectedTag="selectedTags"
             @drop="tagDrop"
           ></InputTagSelect>
         </section>
@@ -390,4 +326,9 @@ const dataInit = () => {
   font-weight: var(--semi-bold);
   margin-bottom: 8px;
 }
+
+.input-form {
+  height: 1400px;
+}
+
 </style>

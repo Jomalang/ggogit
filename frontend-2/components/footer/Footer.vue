@@ -18,7 +18,7 @@ const handleLogout = async () => {
     useNavStore().initStore();
     useBackStore().initStackAndCookie();
     // 로그아웃 성공 후 처리
-    router.push("/member/login");
+    navigateTo("/member/login");
   } catch (error) {
     console.error("로그아웃 실패:", error);
   }
@@ -33,8 +33,8 @@ const handleLogout = async () => {
       <p class="tree-footer-header__added">{{ props.noticeText }}</p>
     </header>
     <div class="tree-footer__membership">
-      <form class="display__inline" @submit.prevent="handleLogout">
-        <button class="membership-login">로그아웃</button>
+      <form class="display__inline" @submit="handleLogout">
+        <button class="membership-login" type="submit">로그아웃</button>
       </form>
       <a href="#" class="membership-asking">문의하기</a>
     </div>

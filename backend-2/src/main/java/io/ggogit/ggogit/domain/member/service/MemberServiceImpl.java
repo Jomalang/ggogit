@@ -82,7 +82,7 @@ public class MemberServiceImpl implements MemberService {
         // 이메일 전송 로직
         MimeMessage message = emailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
-        helper.setTo("gksxorb147@naver.com");
+        helper.setTo(email);
         helper.setSubject("[GGogit] 회원가입 안내 이메일 - 회원가입을 환엽합니다~~!!");
         helper.setText(htmlContent, true);
         emailSender.send(message);

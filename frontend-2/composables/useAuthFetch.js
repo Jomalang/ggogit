@@ -16,6 +16,10 @@ export default async function useAuthFetch(url, options = {}) {
     _accessToken = localStorage.getItem("_ggogit_accessToken");
   }
 
+  if (!_accessToken) {
+    navigateTo("/member/login");
+  }
+
   // 2. 획득한 token을 헤더에 담기
   options.headers = {
     ...options.headers,

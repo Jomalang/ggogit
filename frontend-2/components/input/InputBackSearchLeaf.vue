@@ -195,20 +195,15 @@ onUpdated(() => {
     page.value = props.page;
   }
 });
-const goBack = () => {
-  useBackNavigation().popPageFromStack();
-};
-const { getLastPage } = useBackNavigation();
-const lastPage = computed(() => getLastPage());
 </script>
 
 <template>
   <!-- input-back-search(placeholder, href, method, name) -->
   <div class="search__form">
     <div>
-      <NuxtLink :to="lastPage" @click="goBack()">
+      <dive @click.prevent="useGoBack()">
         <img src="/public/svg/back.svg" alt="back button" />
-      </NuxtLink>
+      </dive>
     </div>
     <div class="search-bar">
       <label class="search-bar--label">

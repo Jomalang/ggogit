@@ -1,6 +1,4 @@
 <script setup>
-import useBackNavigation from "~/composables/useBackNavigation.js";
-
 const props = defineProps({
   title: "",
   link: {
@@ -8,12 +6,6 @@ const props = defineProps({
     default: "",
   },
 });
-
-const goBack = () => {
-  useBackNavigation().popPageFromStack();
-};
-const { getLastPage } = useBackNavigation();
-const lastPage = computed(() => getLastPage());
 </script>
 
 <template>
@@ -21,19 +13,18 @@ const lastPage = computed(() => getLastPage());
   <div class="top-bar--green">
     <div class="top-bar__frame">
       <p class="top-bar__title">{{ props.title }}</p>
-      <NuxtLink
+      <div
         v-if="
           props.link === '' || props.link === undefined || props.link === null
         "
         class="tob-bar__back-link"
-        :to="lastPage"
-        @click="goBack"
+        @click.prevent="useGoBack()"
       >
         <img
           src="/public/svg/back-arrow-icon.svg"
           alt="top-bar--backarrow.svg"
         />
-      </NuxtLink>
+      </div>
       <NuxtLink v-else class="tob-bar__back-link" :to="link">
         <img
           src="/public/svg/back-arrow-icon.svg"

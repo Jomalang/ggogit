@@ -90,23 +90,19 @@ const submitFormHandler = async (e) => {
 
   e.preventDefault(); // 데이터 전송 로직
   try {
-
-    const response = await useAuthDataFetch(
-      `/trees/auto`,
-      {
-        method: "POST",
-        baseURL: config.public.apiBase,
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: {
-          bookId: treeFormData.value.bookId,
-          treeTitle: treeFormData.value.treeTitle,
-          description: treeFormData.value.description,
-          visibility: treeFormData.value.visibility,
-        },
-      }
-    );
+    const response = await useAuthDataFetch(`/trees/auto`, {
+      method: "POST",
+      baseURL: config.public.apiBase,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: {
+        bookId: treeFormData.value.bookId,
+        treeTitle: treeFormData.value.treeTitle,
+        description: treeFormData.value.description,
+        visibility: treeFormData.value.visibility,
+      },
+    });
 
     if (response.statusCode !== HttpStatusCode.Created) {
       console.error("Error submitting form:", response);
@@ -165,7 +161,7 @@ const submitFormHandler = async (e) => {
             date: data.publishDate,
             pageCount: data.totalPage,
             isbn: data.isbn,
-        }"
+          }"
         />
       </section>
 

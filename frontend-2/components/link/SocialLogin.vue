@@ -25,7 +25,7 @@ function openNaverLoginPopup() {
   // 팝업 창 열기
   window.open(naverLoginUrl, "naverLoginPopup", "width=500,height=600");
 }
-function openKakaoLoginPopup(){
+function openKakaoLoginPopup() {
   const clientId = `${config.public.kakaoClientId}`;
   state.value = generateRandomString(); // CSRF 방지용 상태 값
   const kakaoLoginUrl = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}&state=${state.value}`;
@@ -34,84 +34,104 @@ function openKakaoLoginPopup(){
   window.open(kakaoLoginUrl, "kakaoLoginPopup", "width=500,height=600");
 }
 
-
 const naverLoginHandler = async (code) => {
-  try{
+  try {
     const authInfo = await $fetch(`${config.public.apiBase}/auth/oauthNaver`, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
+        "Content-Type": "application/json",
+        Accept: "application/json",
       },
-      body: JSON.stringify({code, state: state.value})
+      body: JSON.stringify({ code, state: state.value }),
     });
-    if (authInfo.accessToken === undefined) { // 엑세스 토큰이 없는 경우
+    if (authInfo.accessToken === undefined) {
+      // 엑세스 토큰이 없는 경우
       joinInfo.setJoinInfo(authInfo);
       await router.push("/member/oauth/new");
       return;
     }
     // 회원인 경우
     memberDetail.setAuthWithToken(authInfo.accessToken);
-    memberDetail.setLocal(authInfo.id, authInfo.name, authInfo.email, authInfo.picture, authInfo.role, authInfo.accessToken);
-    await router.push('/home');
+    memberDetail.setLocal(
+      authInfo.id,
+      authInfo.name,
+      authInfo.email,
+      authInfo.picture,
+      authInfo.role,
+      authInfo.accessToken
+    );
+    await router.push("/home");
   } catch (error) {
-    console.error('Naver 로그인 중 오류 발생:', error);
+    console.error("Naver 로그인 중 오류 발생:", error);
   }
-}
+};
 
 const kakoLoginHandler = async (code) => {
-  try{
+  try {
     const authInfo = await $fetch(`${config.public.apiBase}/auth/oauthKakao`, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
+        "Content-Type": "application/json",
+        Accept: "application/json",
       },
-      body: JSON.stringify({code, state: state.value})
+      body: JSON.stringify({ code, state: state.value }),
     });
-    if (authInfo.accessToken === undefined) { // 엑세스 토큰이 없는 경우
+    if (authInfo.accessToken === undefined) {
+      // 엑세스 토큰이 없는 경우
       joinInfo.setJoinInfo(authInfo);
       await router.push("/member/oauth/new");
       return;
     }
     // 회원인 경우
     memberDetail.setAuthWithToken(authInfo.accessToken);
-    memberDetail.setLocal(authInfo.id, authInfo.name, authInfo.email, authInfo.picture, authInfo.role, authInfo.accessToken);
-    await router.push('/home');
+    memberDetail.setLocal(
+      authInfo.id,
+      authInfo.name,
+      authInfo.email,
+      authInfo.picture,
+      authInfo.role,
+      authInfo.accessToken
+    );
+    await router.push("/home");
   } catch (error) {
-    console.error('Kako 로그인 중 오류 발생:', error);
+    console.error("Kako 로그인 중 오류 발생:", error);
   }
-}
+};
 
-  const googleLoginHandler = async () => {
-    try {
+const googleLoginHandler = async () => {
+  try {
+    const response = await googleTokenLogin();
+    const token = response.access_token;
 
-      const response = await googleTokenLogin();
-      const token = response.access_token;
-
-      const authInfo = await $fetch(`${config.public.apiBase}/auth/oauthGoogle`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify({token})
-      });
-      if (authInfo.accessToken === undefined) { // 엑세스 토큰이 없는 경우
-        joinInfo.setJoinInfo(authInfo);
-        await router.push("/member/oauth/new");
-        return;
-      }
-      // 회원인 경우
-      memberDetail.setAuthWithToken(authInfo.accessToken);
-      memberDetail.setLocal(authInfo.id, authInfo.name, authInfo.email, authInfo.picture, authInfo.role, authInfo.accessToken);
-      await router.push('/home');
-
-    } catch (error) {
-      console.error('Google 로그인 중 오류 발생:', error);
+    const authInfo = await $fetch(`${config.public.apiBase}/auth/oauthGoogle`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({ token }),
+    });
+    if (authInfo.accessToken === undefined) {
+      // 엑세스 토큰이 없는 경우
+      joinInfo.setJoinInfo(authInfo);
+      await router.push("/member/oauth/new");
+      return;
     }
-  };
-
+    // 회원인 경우
+    memberDetail.setAuthWithToken(authInfo.accessToken);
+    memberDetail.setLocal(
+      authInfo.id,
+      authInfo.name,
+      authInfo.email,
+      authInfo.picture,
+      authInfo.role,
+      authInfo.accessToken
+    );
+    await router.push("/home");
+  } catch (error) {
+    console.error("Google 로그인 중 오류 발생:", error);
+  }
+};
 
 //-----------------lifecycle-----------------//
 // watchEffect로 URL의 변화를 감지
@@ -119,12 +139,12 @@ watchEffect(() => {
   //현재 창이 팝업창인지 확인
   if (window.opener) {
     const urlObj = new URL(window.location.href);
-    const code = urlObj.searchParams.get('code');
-    const receivedState = urlObj.searchParams.get('state');
-      // 부모창에 code와 state 전달
-      window.opener.postMessage({ code, receivedState }, "*")
-      // 데이터 전달 후 팝업 닫기
-      window.close();
+    const code = urlObj.searchParams.get("code");
+    const receivedState = urlObj.searchParams.get("state");
+    // 부모창에 code와 state 전달
+    window.opener.postMessage({ code, receivedState }, "*");
+    // 데이터 전달 후 팝업 닫기
+    window.close();
   }
   // 팝업창이 아닌 경우
   window.addEventListener('message', (event) => {
@@ -132,7 +152,7 @@ watchEffect(() => {
     if(event.data.code) {
       if (event.source.name === 'naverLoginPopup') {
         naverLoginHandler(event.data.code);
-      } else if (event.source.name === 'kakaoLoginPopup') {
+      } else if (event.source.name === "kakaoLoginPopup") {
         kakoLoginHandler(event.data.code);
       }
     }
@@ -144,17 +164,21 @@ watchEffect(() => {
   <div class="social-login">
     <div class="social-login__icons">
       <a @click.prevent="googleLoginHandler">
-        <img src="/public/svg/google-circle.svg" alt="`구글 로그인`"/>
+        <img src="/public/svg/google-circle.svg" alt="`구글 로그인`" />
       </a>
 
       <div class="social-login__icons">
         <a @click.prevent="openNaverLoginPopup">
-          <img class="naverIcon" src="/public/svg/naver-circle.svg" alt="`네이버 로그인`"/>
+          <img
+            class="naverIcon"
+            src="/public/svg/naver-circle.svg"
+            alt="`네이버 로그인`"
+          />
         </a>
       </div>
       <div class="social-login__icons">
         <a @click.prevent="openKakaoLoginPopup">
-          <img src="/public/svg/kakao-circle.svg" alt="`카카오 로그인`"/>
+          <img src="/public/svg/kakao-circle.svg" alt="`카카오 로그인`" />
         </a>
       </div>
     </div>
@@ -165,7 +189,6 @@ watchEffect(() => {
 /*===============================================
     FRAGMENT: 소셜 로그인
 ===============================================*/
-
 
 .social-login {
   width: 100%;

@@ -90,6 +90,8 @@ const tree = ref(props.tree);
   width: 100%;
   line-height: var(--line-height-main);
   letter-spacing: var(--letter-spacing-main);
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .card-tree-detail__tags {

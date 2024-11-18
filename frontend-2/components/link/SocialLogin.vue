@@ -128,11 +128,8 @@ watchEffect(() => {
   }
   // 팝업창이 아닌 경우
   window.addEventListener('message', (event) => {
-    console.log('팝업')
     if(event.data.receivedState !== state.value) return;
     if(event.data.code) {
-      console.log(event.data.code);
-      console.log(event.source.name);
       if (event.source.name === 'naverLoginPopup') {
         naverLoginHandler(event.data.code);
       } else if (event.source.name === 'kakaoLoginPopup') {

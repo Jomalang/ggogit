@@ -124,7 +124,7 @@ const submitFormHandler = async (e) => {
     <h1 class="none">도서 트리 생성 페이지</h1>
     <section class="tob-bar-back-container">
       <h1 class="none">트리 생성 상단 바</h1>
-      <TopBarBack title="트리 생성" link="/tree/seed"></TopBarBack>
+      <TopBarBack title="트리 생성" link=""></TopBarBack>
     </section>
   </header>
 

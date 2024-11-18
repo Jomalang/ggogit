@@ -1,4 +1,11 @@
-<script setup lang="ts"></script>
+<script setup>
+
+import useBackNavigation from "~/composables/useBackNavigation.js";
+
+const goBack = () => { useBackNavigation().popPageFromStack(); };
+const { getLastPage } = useBackNavigation();
+const lastPage = computed(() => getLastPage());
+</script>
 
 <template>
   <!-- top-bar-comment-->
@@ -11,12 +18,12 @@
 
     <div class="top-bar-comment__back-box">
       <p class="top-bar-comment__back-text">댓글</p>
-      <div
+      <NuxtLink :to="lastPage" @click="goBack"
         id="top-bar-comment__back-icon-box-id"
         class="top-bar-comment__back-icon-box"
       >
         <img src="/public/svg/tab-back-icon.svg" alt="탭 뒤로가기 아이콘" />
-      </div>
+      </NuxtLink>
     </div>
 
     <div class="top-bar-comment__check-box">

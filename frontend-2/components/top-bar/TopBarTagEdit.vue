@@ -1,5 +1,11 @@
 <script setup>
 
+import useBackNavigation from "~/composables/useBackNavigation.js";
+
+const goBack = () => { useBackNavigation().popPageFromStack(); };
+const { getLastPage } = useBackNavigation();
+const lastPage = computed(() => getLastPage());
+
 const props = defineProps(
   { tag: String }
 );
@@ -12,12 +18,12 @@ const emit = defineEmits(['update']);
   <!--top-bar-tag-edit(tag,memberId)-->
   <div class="top-bar--green">
     <div class="top-bar__frame">
-      <RouterLink class="tob-bar__back-link" to="/leaf/tag">
+      <NuxtLink class="tob-bar__back-link" :to="lastPage" @click="goBack">
         <img
           src="/public/svg/back-arrow-icon.svg"
           alt="top-bar--backarrow.svg"
         />
-      </RouterLink>
+      </NuxtLink>
       <div class="tree-input-text--select__tag">
         {{ tag.name }}
       </div>

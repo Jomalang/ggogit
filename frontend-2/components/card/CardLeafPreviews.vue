@@ -51,6 +51,7 @@ onBeforeMount(() => {
 
 <template>
   <div class="leaf-list-frame">
+
     <NuxtLink :to="path">
       <div class="card-leaf-detail">
         <img
@@ -66,7 +67,7 @@ onBeforeMount(() => {
         <img
           v-else
           class="card-leaf__book-cover"
-          src="/svg/leaf-icon--white.svg"
+          src="~/assets/svg/leaf-icon--white.svg"
           alt="도서 기본 이미지"
         />
         <div class="card-leaf-detail__box">
@@ -78,7 +79,6 @@ onBeforeMount(() => {
               props.data.bookCategory
             }}</span>
           </div>
-
           <!---->
           <p class="card-leaf-detail__name">{{ props.data.treeTitle }}</p>
           <p class="card-leaf-detail__info">{{ props.data.bookTitle }}</p>

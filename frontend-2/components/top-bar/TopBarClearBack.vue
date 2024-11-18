@@ -10,21 +10,20 @@ const props = defineProps<{
     <div class="top-bar-clear-back__left-box">
       <div @click.prevent="useGoBack()">
         <div class="top-bar-clear-back__icon-box">
-          <img src="/public/svg/back--white.svg" alt="" />
+          <img src="~/assets/svg/back--white.svg" alt="" />
         </div>
-        <NuxtLink to="/home">
-          <div class="top-bar-clear-back__icon-box">
-            <img src="/public/svg/home--white.svg" alt="" />
-          </div>
-        </NuxtLink>
-      </div>
-      <div class="top-bar-clear-back__right-box">
-        <NuxtLink to="/tree/book/search">
-          <div class="top-bar-clear-back__icon-box">
-            <img src="/public/svg/search--white.svg" alt="" />
-          </div>
-        </NuxtLink>
-      </div>
+      <NuxtLink to="/home">
+        <div class="top-bar-clear-back__icon-box">
+          <img src="~/assets/svg/home--white.svg" alt="" />
+        </div>
+      </NuxtLink>
+    </div>
+    <div class="top-bar-clear-back__right-box">
+      <NuxtLink to="/tree/book/search">
+        <div class="top-bar-clear-back__icon-box">
+          <img src="~/assets/svg/search--white.svg" alt="" />
+        </div>
+      </NuxtLink>
     </div>
   </div>
 </template>

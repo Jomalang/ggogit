@@ -164,21 +164,21 @@ watchEffect(() => {
   <div class="social-login">
     <div class="social-login__icons">
       <a @click.prevent="googleLoginHandler">
-        <img src="/public/svg/google-circle.svg" alt="`구글 로그인`" />
+        <img src="~/assets/svg/google-circle.svg" alt="`구글 로그인`" />
       </a>
 
       <div class="social-login__icons">
         <a @click.prevent="openNaverLoginPopup">
           <img
             class="naverIcon"
-            src="/public/svg/naver-circle.svg"
+            src="~/assets/svg/naver-circle.svg"
             alt="`네이버 로그인`"
           />
         </a>
       </div>
       <div class="social-login__icons">
         <a @click.prevent="openKakaoLoginPopup">
-          <img src="/public/svg/kakao-circle.svg" alt="`카카오 로그인`" />
+          <img src="~/assets/svg/kakao-circle.svg" alt="`카카오 로그인`" />
         </a>
       </div>
     </div>

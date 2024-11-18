@@ -8,21 +8,21 @@
       <li class="bg-no-tree-book__item">
         <img
             class="bg-no-tree-book__image"
-            src="/public/png/no-tree-left-book.png"
+            src="~/assets/png/no-tree-left-book.png"
             alt="트리 없음 왼쪽 이미지"
         />
       </li>
       <li class="bg-no-tree-book__item">
         <img
             class="bg-no-tree-book__image"
-            src="/public/png/no-tree-mid-book.png"
+            src="~/assets/png/no-tree-mid-book.png"
             alt="트리 없음 중앙 이미지"
         />
       </li>
       <li class="bg-no-tree-book__item">
         <img
             class="bg-no-tree-book__image"
-            src="/public/png/no-tree-right-book.png"
+            src="~/assets/png/no-tree-right-book.png"
             alt="트리 없음 오른쪽 이미지"
         />
       </li>

@@ -22,7 +22,7 @@ const lastPage = computed(() => getLastPage());
         id="top-bar-comment__back-icon-box-id"
         class="top-bar-comment__back-icon-box"
       >
-        <img src="/public/svg/tab-back-icon.svg" alt="탭 뒤로가기 아이콘" />
+        <img src="~/assets/svg/tab-back-icon.svg" alt="탭 뒤로가기 아이콘" />
       </NuxtLink>
     </div>
 

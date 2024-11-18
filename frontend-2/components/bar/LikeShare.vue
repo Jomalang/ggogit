@@ -16,7 +16,7 @@ const props = defineProps<Props>();
       <div class="bar-like-share__like-link" :href="`${props.likeLink}`">
         <img
           class="bar-like-share__like-icon"
-          src="/public/svg/detail-like.svg"
+          src="~/assets/svg/detail-like.svg"
           alt="좋아요 아이콘"
         />
       </div>
@@ -25,7 +25,7 @@ const props = defineProps<Props>();
       <a class="bar-like-share__share-link" :href="`${props.shareLink}`">
         <img
           class="bar-like-share__share-icon"
-          src="/public/svg/detail-share.svg"
+          src="~/assets/svg/detail-share.svg"
           alt="공유 아이콘"
         />
       </a>

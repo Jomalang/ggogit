@@ -29,17 +29,17 @@ function modifyCount(count: number) {
         <div class="card-tree__top-tree-icon-box">
           <img
             class="card-tree__top-tree-img"
-            src="/public/svg/tree-icon--white.svg"
+            src="~/assets/svg/tree-icon--white.svg"
             alt="트리 아이콘"
           />
         </div>
-        <div class="card-tree__top-sns-icon-box">
-          <div class="card-tree__top-share-icon-box">
-            <img src="/public/svg/comment.svg" alt="댓글 아이콘" />
-          </div>
-          <div class="card-tree__top-like-icon-box">
-            <img src="/public/svg/like.svg" alt="좋아요 아이콘" />
-          </div>
+      </a>
+      <div class="card-tree__top-sns-icon-box">
+        <div class="card-tree__top-share-icon-box">
+          <img src="~/assets/svg/comment.svg" alt="댓글 아이콘" />
+        </div>
+        <div class="card-tree__top-like-icon-box">
+          <img src="~/assets/svg/like.svg" alt="좋아요 아이콘" />
         </div>
       </div>
       <div class="card-tree__bot-box">

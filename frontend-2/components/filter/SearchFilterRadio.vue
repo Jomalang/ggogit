@@ -3,7 +3,7 @@
 <template>
   <!-- (description, name, value, isChecked) -->
   <div class="search-filter-log">
-    <label class="search-filter-log__checkbox-labal">
+    <label>
       <input
         class="search-filter-log__checkbox-input"
         type="radio"

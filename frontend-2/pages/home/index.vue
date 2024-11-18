@@ -99,12 +99,6 @@ const bookExRemoveNone = (selectedElement, index) => {
 };
 
 //-------------------LifeCycle-------------------
-onMounted(() => {
-  if (treeInfoList.value.length === 0) {
-    console.log("트리 정보가 없습니다.");
-    treeRefresh();
-  }
-});
 </script>
 
 <template>
@@ -112,7 +106,7 @@ onMounted(() => {
     <h1 class="none">나의 트리</h1>
     <section class="header-search-container">
       <h2 class="none">나의 트리 검색 링크</h2>
-      <HeaderSearchLink />
+      <HeaderSearchLink :link="`/tree/search`" />
     </section>
   </header>
 
@@ -193,7 +187,11 @@ onMounted(() => {
               >
                 <img
                   class="mid__img"
-                  :src="useGetImageUrl(tree.coverImageName)"
+                  :src="
+                    tree.coverImageName
+                      ? useGetImageUrl(tree.coverImageName)
+                      : useGetImageUrl(tree.treeImage, 'tree')
+                  "
                   alt="도서 예시 이미지"
                 />
               </NuxtLink>
@@ -361,6 +359,7 @@ onMounted(() => {
   width: 90%;
   height: auto;
   object-fit: cover;
+  border-radius: 10px;
 }
 
 @media screen and (max-width: 768px) {

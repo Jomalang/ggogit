@@ -30,16 +30,18 @@ public class MemoirDtoServiceImpl implements MemoirDtoService {
         Pageable pageable = PageRequest.of(offset, limit, sort);
 
         List<Tree> trees = treeRepository.findTreeByMemberIdFetch(memberId, pageable).getContent();
-        List<MemoirBookCardDtoResponse> memoirBookCardDtoRespons = trees.stream().filter(tree -> tree.getMemoir() != null)
+        List<MemoirBookCardDtoResponse> memoirBookCardDtoResponse = trees.stream().filter(tree -> tree.getMemoir() != null)
                 .map(tree -> {
                     MemoirBookCardDtoResponse dto = MemoirBookCardDtoResponse.of(tree.getMemoir(), tree);
                     long leafNum = tree.getLeaf().stream().count();
                     dto.setLeafCount(leafNum);
+                    //TODO: 조회수 임시 하드코딩
+                    dto.setViewCount(10L);
                     return dto;
                 }
                 ).toList();
 
-        return MemoirBookCardDtoResponseList.of(memoirBookCardDtoRespons);
+        return MemoirBookCardDtoResponseList.of(memoirBookCardDtoResponse);
     }
 
     @Override

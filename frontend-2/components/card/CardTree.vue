@@ -23,9 +23,9 @@ function modifyCount(count: number) {
 </script>
 
 <template>
-  <div class="card-tree-box">
-    <div class="card-tree__top-box">
-      <a href="">
+  <NuxtLink :to="`/tree/${props.data.treeId}`">
+    <div class="card-tree-box">
+      <div class="card-tree__top-box">
         <div class="card-tree__top-tree-icon-box">
           <img
             class="card-tree__top-tree-img"
@@ -42,8 +42,6 @@ function modifyCount(count: number) {
           <img src="~/assets/svg/like.svg" alt="좋아요 아이콘" />
         </div>
       </div>
-    </div>
-    <a href="">
       <div class="card-tree__bot-box">
         <div class="card-tree__bot-info-box">
           <p class="card-tree__bot-title">{{ props.data.treeTitle }}</p>
@@ -64,8 +62,8 @@ function modifyCount(count: number) {
           </p>
         </div>
       </div>
-    </a>
-  </div>
+    </div>
+  </NuxtLink>
 </template>
 
 <style scoped>

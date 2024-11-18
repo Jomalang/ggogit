@@ -22,6 +22,10 @@ const props = defineProps({
     default: "home",
   },
 });
+
+const developing = () => {
+  alert("개발중입니다.");
+};
 </script>
 
 <template>
@@ -90,7 +94,7 @@ const props = defineProps({
 
         <!-- 커뮤니티 -->
         <li class="nav-box__item">
-          <NuxtLink class="nav-box__link" :to="_community" @click="setCur(3)">
+          <NuxtLink class="nav-box__link" :to="''" @click="developing">
             <div
               class="nav-box__img-box"
               :class="{
@@ -120,7 +124,7 @@ const props = defineProps({
 
         <!-- 마이페이지 -->
         <li class="nav-box__item">
-          <NuxtLink class="nav-box__link" :to="_mypage" @click="setCur(4)">
+          <NuxtLink class="nav-box__link" :to="''" @click="developing">
             <div
               class="nav-box__img-box"
               :class="{

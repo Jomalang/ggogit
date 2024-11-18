@@ -22,7 +22,7 @@ const emit = defineEmits(['drop']);
                   type="button"
                   @click="emit('drop')"
               >
-                <img src="/svg/x-button.svg" alt="next-button" />
+                <img src="~/assets/svg/x-button.svg" alt="next-button" />
               </button>
               <input class="none input-tag-select__input" name="bookCategoryId" :value="data.id" />
             </label>
@@ -33,7 +33,7 @@ const emit = defineEmits(['drop']);
             id="input-tag-select__button-id"
             to="/book/category"
         >
-          <img src="/public/svg/next.svg" alt="next-button" />
+          <img src="~/assets/svg/next.svg" alt="next-button" />
         </RouterLink>
       </div>
     </div>

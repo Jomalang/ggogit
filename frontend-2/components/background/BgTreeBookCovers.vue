@@ -31,7 +31,7 @@ watchEffect(() => {
         <NuxtLink :to="`/tree/seed`">
           <img
             class="mid__img"
-            src="/public/png/tree-book-blank.png"
+            src="~/assets/png/tree-book-blank.png"
             alt="도서 예시 이미지"
           />
         </NuxtLink>
@@ -40,7 +40,7 @@ watchEffect(() => {
         <NuxtLink :to="`/tree/seed`">
           <img
             class="mid__img"
-            src="/public/png/tree-book-blank.png"
+            src="~/assets/png/tree-book-blank.png"
             alt="도서 예시 이미지"
           />
         </NuxtLink>
@@ -62,7 +62,7 @@ watchEffect(() => {
         <NuxtLink :to="`/tree/seed`">
           <img
             class="mid__img"
-            src="/public/png/tree-book-blank.png"
+            src="~/assets/png/tree-book-blank.png"
             alt="도서 예시 이미지"
           />
         </NuxtLink>
@@ -71,7 +71,7 @@ watchEffect(() => {
         <NuxtLink :to="`/tree/seed`">
           <img
             class="mid__img"
-            src="/public/png/tree-book-blank.png"
+            src="~/assets/png/tree-book-blank.png"
             alt="도서 예시 이미지"
           />
         </NuxtLink>
@@ -93,7 +93,7 @@ watchEffect(() => {
         <NuxtLink :to="`/tree/seed`">
           <img
             class="mid__img"
-            src="/public/png/tree-book-blank.png"
+            src="~/assets/png/tree-book-blank.png"
             alt="도서 예시 이미지"
           />
         </NuxtLink>
@@ -102,7 +102,7 @@ watchEffect(() => {
         <NuxtLink :to="`/tree/seed`">
           <img
             class="mid__img"
-            src="/public/png/tree-book-blank.png"
+            src="~/assets/png/tree-book-blank.png"
             alt="도서 예시 이미지"
           />
         </NuxtLink>

@@ -93,7 +93,7 @@ const timeSince = (createTime: Date | string) => {
                 >
                   <img
                     class="card-log__like-icon"
-                    src="/svg/tumbsup-off.svg"
+                    src="~/assets/svg/tumbsup-off.svg"
                     alt="like"
                   />
                 </label>
@@ -103,7 +103,7 @@ const timeSince = (createTime: Date | string) => {
           </div>
           <a class="card-log__detail-frame-link" href="#">
             <div class="card-log__detail-frame">
-              <img src="/svg/card-detail.svg" alt="detail" />
+              <img src="~/assets/svg/card-detail.svg" alt="detail" />
             </div>
           </a>
         </li>

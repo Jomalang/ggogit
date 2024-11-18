@@ -13,7 +13,7 @@ const props = defineProps<{
       <div class="input-select--select__selected">
         <p class="input-select--select__selected-description">선택해주세요</p>
         <button class="input-next-button" :id="id" type="button">
-          <img src="/public/svg/next.svg" alt="next-button" />
+          <img src="~/assets/svg/next.svg" alt="next-button" />
         </button>
       </div>
     </label>

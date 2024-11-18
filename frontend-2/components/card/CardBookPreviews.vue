@@ -37,7 +37,7 @@ const props = defineProps({
       <img
         v-else
         class="card-tree__book-cover"
-        src="/png/tree-icon-white.png"
+        src="~/assets/png/tree-icon-white.png"
         alt="도서 기본 이미지"
       />
       <div class="card-tree-detail__box">

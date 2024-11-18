@@ -3,7 +3,7 @@
 <template>
   <div>
     <div @click.prevent="useGoBack()">
-      <img src="/svg/back.svg" alt="back-button" />
+      <img src="~/assets/svg/back.svg" alt="back-button" />
     </div>
   </div>
 </template>

@@ -12,7 +12,7 @@ const props = defineProps({
         <p class="header-search-link__placeholder">나의 트리 검색</p>
         <img
           class="header-search-link__icon"
-          src="/svg/lens.svg"
+          src="~/assets/svg/lens.svg"
           alt="lens.svg"
         />
       </div>

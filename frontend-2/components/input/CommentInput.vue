@@ -11,7 +11,7 @@ const props = defineProps<{
       <label class="input-comment-input__label">
         <img
           class="input-comment-input__profile-img"
-          src="/public/svg/comment-profile.svg"
+          src="~/assets/svg/comment-profile.svg"
           alt="프로필 이미지"
         />
         <textarea
@@ -27,7 +27,7 @@ const props = defineProps<{
         class="input-comment-input__submit"
         type="submit"
       >
-        <img src="/public/svg/comment-send.svg" alt="send-button" />
+        <img src="~/assets/svg/comment-send.svg" alt="send-button" />
       </button>
     </form>
   </div>

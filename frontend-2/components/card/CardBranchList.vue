@@ -101,12 +101,12 @@ watch(
         <div class="branch-img-frame">
           <img
             v-if="item.bookMark"
-            src="/public/svg/card-bookmark-icon.svg"
+            src="~/assets/svg/card-bookmark-icon.svg"
             alt="브랜치 이미지"
           />
           <img
             v-else
-            src="/public/svg/card-branch-represent-icon.svg"
+            src="~/assets/svg/card-branch-represent-icon.svg"
             alt="브랜치 이미지"
           />
         </div>

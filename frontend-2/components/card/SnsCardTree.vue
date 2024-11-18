@@ -32,7 +32,7 @@ function modifyCount(count: number) {
         >
           <img
             class="sns-card-tree__top-tree-img"
-            src="/public/svg/tree-icon--white.svg"
+            src="~/assets/svg/tree-icon--white.svg"
             alt="트리 아이콘"
           />
         </div>
@@ -42,24 +42,24 @@ function modifyCount(count: number) {
         >
           <img
             class="sns-card-tree__top-tree-img"
-            src="/public/svg/memoir-icon--white.svg"
+            src="~/assets/svg/memoir-icon--white.svg"
             alt="회고록 아이콘"
           />
         </div>
         <div v-else class="sns-card-tree__top-leaf-icon-box">
           <img
             class="sns-card-tree__top-tree-img"
-            src="/public/svg/leaf-icon--white.svg"
+            src="~/assets/svg/leaf-icon--white.svg"
             alt="리프 아이콘"
           />
         </div>
       </a>
       <div class="sns-card-tree__top-sns-icon-box">
         <div class="sns-card-tree__top-share-icon-box">
-          <img src="/public/svg/comment.svg" alt="댓글 아이콘" />
+          <img src="~/assets/svg/comment.svg" alt="댓글 아이콘" />
         </div>
         <div class="sns-card-tree__top-like-icon-box">
-          <img src="/public/svg/like.svg" alt="좋아요 아이콘" />
+          <img src="~/assets/svg/like.svg" alt="좋아요 아이콘" />
         </div>
       </div>
     </div>

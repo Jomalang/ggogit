@@ -54,15 +54,12 @@ if (beforeLeafStatus.value) {
   beforeLogData.tags = beforeLeafData.value.tags;
 }
 
-console.log("leafFormData.value.isLoaded", leafFormData.value.isLoaded);
 if (!leafFormData.value.isLoaded) {
-  console.log("leafEditData : ", leafEditDataApi.value);
   leafFormData.value.startPage = leafEditDataApi.value.startPage;
   leafFormData.value.endPage = leafEditDataApi.value.endPage;
   leafFormData.value.title = leafEditDataApi.value.title;
   leafFormData.value.content = leafEditDataApi.value.content;
   leafFormData.value.visibility = leafEditDataApi.value.visibility;
-  console.log("leafEditData.value.tags : ", leafEditDataApi.value.tags);
   selectedTags.value = leafEditDataApi.value.tags;
   leafFormData.value.isLoaded = true;
 }

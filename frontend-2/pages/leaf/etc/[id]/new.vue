@@ -24,7 +24,7 @@ const beforeLogData = reactive({
 useLeafFormData().init();
 useLeafFormData().setCreateUrl(`/leaf/etc/${parentLeafId}/new`);
 const leafFormData = useLeafFormData().leafFormData;
-const selectedTags = useLeafTagList().getSelectedTags();
+const selectedTags = useLeafTagList().selectedTags;
 
 const { data: beforeLeafData, status: beforeLeafStatus } = await useAuthFetch(
   `leaves/${parentLeafId}/before`,
@@ -34,15 +34,13 @@ const { data: beforeLeafData, status: beforeLeafStatus } = await useAuthFetch(
   }
 );
 
-watchEffect(() => {
-  if (beforeLeafStatus.value !== HttpStatusCode.Ok) {
-    // console.log("beforeLeafData : ", beforeLeafData.value);
-    beforeLogData.id = beforeLeafData.value.id;
-    beforeLogData.title = beforeLeafData.value.title;
-    beforeLogData.date = beforeLeafData.value.createTime;
-    beforeLogData.tags = beforeLeafData.value.tags;
-  }
-});
+if (beforeLeafStatus.value !== HttpStatusCode.Ok) {
+  // console.log("beforeLeafData : ", beforeLeafData.value);
+  beforeLogData.id = beforeLeafData.value.id;
+  beforeLogData.title = beforeLeafData.value.title;
+  beforeLogData.date = beforeLeafData.value.createTime;
+  beforeLogData.tags = beforeLeafData.value.tags;
+}
 
 // ----------------------- Life Cycle ----------------------- //
 
@@ -95,8 +93,6 @@ onMounted(() => {
 
   editor.on("change", () => {
     document.querySelector("#editor-text").textContent = editor.getMarkdown();
-    // console.log("editor.getMarkdown() : ", editor.getMarkdown());
-    // console.log("leafFormData.value : ", leafFormData.value);
     leafFormData.value.content = editor.getMarkdown();
   });
 });

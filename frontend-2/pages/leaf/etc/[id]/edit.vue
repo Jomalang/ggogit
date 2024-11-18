@@ -2,7 +2,7 @@
 import Editor from "@toast-ui/editor";
 import "@toast-ui/editor/dist/toastui-editor.css";
 import { onMounted, reactive } from "vue";
-import {HttpStatusCode} from "axios";
+import { HttpStatusCode } from "axios";
 
 // ----------------------- Model ----------------------- //
 const config = useRuntimeConfig();
@@ -43,25 +43,22 @@ const { data: leafData, status: leafStatus } = await useAuthFetch(
   }
 );
 
-watchEffect(() => {
+if (beforeLeafStatus.value !== HttpStatusCode.Ok) {
+  // console.log("beforeLeafData : ", beforeLeafData.value);
+  beforeLogData.id = beforeLeafData.value.id;
+  beforeLogData.title = beforeLeafData.value.title;
+  beforeLogData.date = beforeLeafData.value.createTime;
+  beforeLogData.tags = beforeLeafData.value.tags;
+}
 
-  if (beforeLeafStatus.value !== HttpStatusCode.Ok) {
-    // console.log("beforeLeafData : ", beforeLeafData.value);
-    beforeLogData.id = beforeLeafData.value.id;
-    beforeLogData.title = beforeLeafData.value.title;
-    beforeLogData.date = beforeLeafData.value.createTime;
-    beforeLogData.tags = beforeLeafData.value.tags;
-  }
+if (!leafFormData.value.isLoaded) {
+  leafFormData.value.title = leafData.value.title;
+  leafFormData.value.content = leafData.value.content;
+  leafFormData.value.visibility = leafData.value.visibility;
+  selectedTags.value = leafData.value.tags;
+  leafFormData.value.isLoaded = true;
+}
 
-  if (leafData.value) {
-    leafFormData.value.title = leafData.value.title;
-    leafFormData.value.content = leafData.value.content;
-    leafFormData.value.visibility = leafData.value.visibility;
-    selectedTags.value = leafData.value.tags;
-    leafFormData.value.isLoaded = true;
-  }
-
-});
 
 // ----------------------- Life Cycle ----------------------- //
 
@@ -127,13 +124,11 @@ const inputTitle = (title) => {
 };
 
 const tagDrop = (tag) => {
-  const tagDrop = (tag) => {
-    // console.log("tagDrop : ", tag);
-    selectedTags.items = selectedTags.items.filter(
-        (item) => item.id !== tag.id
-    );
-    leafFormData.value.tagIds = selectedTags.items.map((tag) => tag.id);
-  };
+  // console.log("tagDrop : ", tag);
+  selectedTags.value = selectedTags.value.filter(
+      (item) => item.id !== tag.id
+  );
+  leafFormData.value.tagIds = selectedTags.value.map((tag) => tag.id);
 };
 
 const validate = () => {
@@ -265,6 +260,7 @@ const submitHandler = async () => {
 </template>
 
 <style scoped>
+
 .toastui-editor-text {
   font-weight: var(--semi-bold);
   margin-bottom: 8px;

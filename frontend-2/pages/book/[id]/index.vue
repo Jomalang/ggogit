@@ -1,8 +1,8 @@
 <script setup>
 import { ref } from "vue";
 
-const coverImageName = ref("/png/book-example.png");
-const commentCount = ref("/jpg/leaf-profile.jpg");
+const coverImageName = ref("~/assets/png/book-example.png");
+const commentCount = ref("~/assets/jpg/leaf-profile.jpg");
 const config = useRuntimeConfig();
 const bookId = useRoute().params.id;
 

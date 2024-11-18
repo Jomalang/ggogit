@@ -6,7 +6,7 @@ import Viewer from '@toast-ui/editor/dist/toastui-editor-viewer';
 import CardTreeInfoCover from "~/components/card/CardTreeInfoCover.vue";
 
 const coverImageName = ref("background-image.png");
-const myProfile = ref("/jpg/leaf-profile.jpg");
+const myProfile = ref("~/assets/jpg/leaf-profile.jpg");
 const config = useRuntimeConfig();
 const route = useRoute();
 const leafId = route.params.id;

@@ -234,7 +234,7 @@ watchEffect(() => {
             <div class="filter-attribute__bg">
               <div class="filter-attribute__bg">
                 <h2 class="filter-attribute__title">브랜치 검색 기준</h2>
-                <ul id="filter-tab__list">
+                <ul class="filter-tab__ul1" id="filter-tab__list">
                   <li @click="bookMarkHandler(1)" class="filter-tab__item">
                     <label class="filter-tab__item-label">
                       <input
@@ -294,7 +294,7 @@ watchEffect(() => {
                   </li>
                 </ul>
                 <h2 class="filter-attribute__title">정렬 기준</h2>
-                <ul id="filter-tab__list1">
+                <ul class="filter-tab__ul1"  id="filter-tab__list1">
                   <li @click="filterNameHandler(10)" class="filter-tab__item">
                     <label class="filter-tab__item-label">
                       <input
@@ -464,13 +464,11 @@ watchEffect(() => {
 
 <style scoped>
 .filter-tab-container--30 {
-  top: 30%;
-  right: 0;
-  bottom: 0;
-  left: 0;
+  max-width: var(--max-width-1);
+  margin: 0 auto;
+  position: fixed; /* 화면에 고정 */
+  top: 30%;        /* 화면 상단에서 30% 아래 */
   z-index: 10;
-  position: fixed;
-  aspect-ratio: 5 / 8;
 }
 
 .filter-tab__box--30 {
@@ -585,5 +583,9 @@ watchEffect(() => {
 
 .filter-tab__list {
   margin-bottom: 250px;
+}
+.filter-tab__ul1{
+  margin-bottom: 30px;
+  border-bottom: 1px solid var(--main2--opacity40);
 }
 </style>

@@ -230,7 +230,7 @@ onUpdated(() => {
   </div>
 
   <div class="search-filter-frame">
-    <div class="search-filter-frame-search">
+    <div class="search-filter-log">
       <span
         @click.prevent="openPopup"
         class="search-filter-log__checkbox-input-img"
@@ -244,11 +244,25 @@ onUpdated(() => {
         <p>{{ searchFilterName }}</p>
       </span>
     </div>
-    <NuxtLink class="search-filter-log__nuxt-link" to="/tree/search">
-      트리 검색 이등
-    </NuxtLink>
-  </div>
 
+    <div class="search-filter-log">
+      <label>
+        <NuxtLink class="search-filter-log__nuxt-link" to="/tree/book/search">
+          도서 검색
+        </NuxtLink>
+      </label>
+      <label>
+        <NuxtLink class="search-filter-log__nuxt-link" to="/tree/search">
+          트리 검색
+        </NuxtLink>
+      </label>
+      <label>
+        <NuxtLink class="search-filter-log__nuxt-link--check" to="/leaf/search">
+          리프 검색
+        </NuxtLink>
+      </label>
+    </div>
+  </div>
   <section>
     <div
       @click.prevent="closePopup"
@@ -536,6 +550,7 @@ button {
 
 /* 필터 */
 .search-filter-frame {
+  margin-top: 9px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -553,6 +568,28 @@ button {
   gap: 10px;
 }
 
+.search-filter-log__checkbox-input-img {
+  border-radius: 8px;
+  background-color: var(--main1, #323a27);
+  padding: 9px 9px;
+  cursor: pointer;
+  user-select: none;
+  flex-shrink: 0;
+  align-items: center;
+}
+.search-filter-log__checkbox-input-text {
+  font-family: "Pretendard", serif;
+  font-size: 12px;
+  font-weight: var(--medium, 500);
+  color: var(--text-sub, #767676);
+  border-radius: 8px;
+  background-color: #f7f7f7;
+  padding: 12px 20px;
+  cursor: pointer;
+  user-select: none;
+  flex-shrink: 0;
+}
+
 .search-filter-log__nuxt-link {
   margin-top: 18px;
   font-family: "Pretendard", serif;
@@ -567,26 +604,14 @@ button {
   flex-shrink: 0;
 }
 
-.search-filter-log__checkbox-input-img {
+.search-filter-log__nuxt-link--check{
   margin-top: 18px;
-  border-radius: 8px;
   font-family: "Pretendard", serif;
   font-size: 12px;
   font-weight: var(--medium, 500);
+  color: var(--main3, #f7f7f7);
+  border-radius: 8px;
   background-color: var(--main1, #323a27);
-  padding: 9px 9px;
-  cursor: pointer;
-  user-select: none;
-  flex-shrink: 0;
-}
-.search-filter-log__checkbox-input-text {
-  margin-top: 18px;
-  border-radius: 8px;
-  font-family: "Pretendard", serif;
-  font-size: 12px;
-  font-weight: var(--medium, 500);
-  color: var(--text-sub, #767676);
-  background-color: #f7f7f7;
   padding: 12px 20px;
   cursor: pointer;
   user-select: none;
@@ -594,6 +619,8 @@ button {
 }
 
 .filter-tab-container--30 {
+  max-width: var(--max-width-1);
+  margin: 0 auto;
   top: 30%;
   right: 0;
   bottom: 0;

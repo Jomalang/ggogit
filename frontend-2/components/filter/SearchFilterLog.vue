@@ -5,7 +5,7 @@
 <template>
   <!-- (text) -->
   <div class="search-filter-log">
-    <label class="search-filter-log__checkbox-labal" for="search-log-filter"
+    <label for="search-log-filter"
     ><input
         class="search-filter-log__checkbox-input"
         type="checkbox"

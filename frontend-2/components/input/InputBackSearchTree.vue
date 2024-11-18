@@ -146,7 +146,7 @@ onUpdated(() => {
 
   <div class="search-filter-frame">
     <div class="search-filter-log">
-      <label class="search-filter-log__checkbox-labal">
+      <label>
         <input
           class="search-filter-log__checkbox-input"
           type="radio"
@@ -157,7 +157,7 @@ onUpdated(() => {
         />
         <span class="search-filter-log__checkbox-input-text">제목</span>
       </label>
-      <label class="search-filter-log__checkbox-labal">
+      <label>
         <input
           class="search-filter-log__checkbox-input"
           type="radio"
@@ -167,7 +167,7 @@ onUpdated(() => {
         />
         <span class="search-filter-log__checkbox-input-text">저자</span>
       </label>
-      <label class="search-filter-log__checkbox-labal">
+      <label>
         <input
           class="search-filter-log__checkbox-input"
           type="radio"
@@ -178,9 +178,23 @@ onUpdated(() => {
         <span class="search-filter-log__checkbox-input-text">출판사</span>
       </label>
     </div>
-    <NuxtLink class="search-filter-log__nuxt-link" to="/leaf/search">
-      리프 검색 이동
-    </NuxtLink>
+    <div class="search-filter-log">
+      <label>
+        <NuxtLink class="search-filter-log__nuxt-link" to="/tree/book/search">
+          도서 검색
+        </NuxtLink>
+      </label>
+      <label>
+        <NuxtLink class="search-filter-log__nuxt-link--check" to="/tree/search">
+          트리 검색
+        </NuxtLink>
+      </label>
+      <label>
+        <NuxtLink class="search-filter-log__nuxt-link" to="/leaf/search">
+          리프 검색
+        </NuxtLink>
+      </label>
+    </div>
   </div>
 </template>
 
@@ -215,7 +229,7 @@ button {
   flex-grow: 1;
 }
 
-.search-bar--label {
+.search-bar--label{
   display: flex;
   flex-grow: 1;
   font-size: 14px;
@@ -294,6 +308,19 @@ button {
   color: var(--text-sub, #767676);
   border-radius: 8px;
   background-color: #f7f7f7;
+  padding: 12px 20px;
+  cursor: pointer;
+  user-select: none;
+  flex-shrink: 0;
+}
+.search-filter-log__nuxt-link--check{
+  margin-top: 18px;
+  font-family: "Pretendard", serif;
+  font-size: 12px;
+  font-weight: var(--medium, 500);
+  color: var(--main3, #f7f7f7);
+  border-radius: 8px;
+  background-color: var(--main1, #323a27);
   padding: 12px 20px;
   cursor: pointer;
   user-select: none;

@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from "vue";
 import { value } from "lodash/seq.js";
+import {useRouter} from "#vue-router";
 //-----------------props-----------------
 const props = defineProps({
   placeholder: "",
@@ -34,6 +35,8 @@ const searchFilterName = ref("제목 검색");
 const filter = ref(10);
 const searchFilter = ref("title");
 const sort = ref(0);
+const selectedPage = ref("/leaf/search");
+const router = useRouter();
 //-----------------watcher-----------------
 // page 값이 변경될 때 요청
 watch(page, () => {
@@ -116,6 +119,10 @@ const createReq = async (sort, currentPage, searchFilter, filter, isChange) => {
       alert("오류가 발생했습니다. 다시 시도해 주세요.");
     }
   }
+};
+const navigateToPage = () => {
+  console.log(selectedPage.value);
+  router.push(selectedPage.value);
 };
 
 const openPopup = () => {
@@ -245,22 +252,13 @@ onUpdated(() => {
       </span>
     </div>
 
+
     <div class="search-filter-log">
-      <label>
-        <NuxtLink class="search-filter-log__nuxt-link" to="/tree/book/search">
-          도서 검색
-        </NuxtLink>
-      </label>
-      <label>
-        <NuxtLink class="search-filter-log__nuxt-link" to="/tree/search">
-          트리 검색
-        </NuxtLink>
-      </label>
-      <label>
-        <NuxtLink class="search-filter-log__nuxt-link--check" to="/leaf/search">
-          리프 검색
-        </NuxtLink>
-      </label>
+      <select class="search-filter-log__checkbox-input-select" v-model="selectedPage" @change="navigateToPage">
+        <option class="search-filter-log__checkbox-input-text" value="/tree/book/search">도서</option>
+        <option class="search-filter-log__checkbox-input-text" value="/tree/search">트리</option>
+        <option class="search-filter-log__checkbox-input-select" value="/leaf/search">리프</option>
+      </select>
     </div>
   </div>
   <section>
@@ -550,7 +548,8 @@ button {
 
 /* 필터 */
 .search-filter-frame {
-  margin-top: 9px;
+  margin-top: 18px;
+  margin-bottom: 14px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -589,35 +588,6 @@ button {
   user-select: none;
   flex-shrink: 0;
 }
-
-.search-filter-log__nuxt-link {
-  margin-top: 18px;
-  font-family: "Pretendard", serif;
-  font-size: 12px;
-  font-weight: var(--medium, 500);
-  color: var(--text-sub, #767676);
-  border-radius: 8px;
-  background-color: #f7f7f7;
-  padding: 12px 20px;
-  cursor: pointer;
-  user-select: none;
-  flex-shrink: 0;
-}
-
-.search-filter-log__nuxt-link--check{
-  margin-top: 18px;
-  font-family: "Pretendard", serif;
-  font-size: 12px;
-  font-weight: var(--medium, 500);
-  color: var(--main3, #f7f7f7);
-  border-radius: 8px;
-  background-color: var(--main1, #323a27);
-  padding: 12px 20px;
-  cursor: pointer;
-  user-select: none;
-  flex-shrink: 0;
-}
-
 .filter-tab-container--30 {
   max-width: var(--max-width-1);
   margin: 0 auto;
@@ -750,5 +720,31 @@ button {
   padding-left: 10px;
   border-bottom: solid 1px var(--main2--opacity40);
   margin-bottom: 20px;
+}
+
+.search-filter-log__checkbox-input-select {
+  font-family: "Pretendard", serif;
+  font-size: 12px;
+  font-weight: var(--medium, 500);
+  border-radius: 8px;
+  border: none;
+  background-color: var(--main1, #323a27);
+  color: var(--white, #ffffff);
+  padding: 12px 12px;
+  cursor: pointer;
+  user-select: none;
+  flex-shrink: 0;
+}
+.search-filter-log__checkbox-input-text {
+  font-family: "Pretendard", serif;
+  font-size: 12px;
+  font-weight: var(--medium, 500);
+  color: var(--text-sub, #767676);
+  border-radius: 8px;
+  background-color: #f7f7f7;
+  padding: 12px 20px;
+  cursor: pointer;
+  user-select: none;
+  flex-shrink: 0;
 }
 </style>

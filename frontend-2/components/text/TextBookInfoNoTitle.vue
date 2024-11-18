@@ -52,6 +52,7 @@ let seed = seedConverter(data.seed);
 
 <style scoped>
 .text-book-info--no-title {
+  margin-top: 10px;
   width: 100%;
   display: flex;
   flex-direction: column;

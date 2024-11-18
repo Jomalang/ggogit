@@ -10,6 +10,7 @@ import TextMainTitle from "~/components/text/TextMainTitle.vue";
 import FilterTreeLeafCard from "~/components/filter/FilterTreeLeafCard.vue";
 import NavigationBar from "~/components/nav/NavigationBar.vue";
 import InputBackSearch from "~/components/input/InputBackSearch.vue";
+import CardHiddenInfoTree from "~/components/card/CardHiddenInfoTree.vue";
 
 // -----------DOM 객체---------------------------------------
 
@@ -173,7 +174,7 @@ watchEffect(() => {
     <section class="branch-tree-detail-container">
       <h2 class="none">트리 상세 설명</h2>
 
-      <CardHiddenInfo :data="info">트리 상세 설명</CardHiddenInfo>
+      <CardHiddenInfoTree :data="info">트리 상세 설명</CardHiddenInfoTree>
     </section>
 
     <section class="branch-list__container">

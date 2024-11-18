@@ -41,13 +41,6 @@ const handleLogout = async () => {
       <span class="app-sep"> | </span>
       <a href="#" class="app-membership-policy">개인정보처리방침</a>
     </div>
-    <div class="tree-footer__logo">
-      <img
-        src="/public/logo/logo-sample.png"
-        style="width: 80px; height: 80px"
-        alt="app-logo"
-      />
-    </div>
   </footer>
 </template>
 
@@ -60,15 +53,6 @@ button {
   border: none;
   background-color: transparent;
   cursor: pointer;
-}
-.tree-footer::after {
-  content: "by RECODERS";
-  text-align: center;
-  align-self: center;
-  width: 100%;
-  height: 89px;
-  display: block;
-  bottom: 0;
 }
 
 .tree-footer-header {

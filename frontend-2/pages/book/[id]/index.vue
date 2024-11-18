@@ -107,7 +107,8 @@ if (bookTreeCradsData.value) {
           backImgPath: bookData.imageFile,
         }"
       />
-      <section class="book-detail-like-bar-container">
+<!--     TODO: 추후에 좋아요 기능 추가시 주석 해제-->
+      <section class="book-detail-like-bar-container none">
         <h1 class="none">좋아요 및 공유</h1>
         <BarLikeShare
           :likeLink="`javascript:history.back()`"

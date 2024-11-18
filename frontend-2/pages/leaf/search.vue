@@ -145,6 +145,12 @@ onMounted(() => {
 </template>
 
 <style scoped>
+.reg-book-search-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 30px 26px 24px 24px;
+}
 .scroll-container {
   display: flex;
   margin-bottom: 10px;

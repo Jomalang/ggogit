@@ -12,6 +12,7 @@ const props = defineProps<{
         <div class="top-bar-clear-back__icon-box">
           <img src="~/assets/svg/back--white.svg" alt="" />
         </div>
+      </div>
       <NuxtLink to="/home">
         <div class="top-bar-clear-back__icon-box">
           <img src="~/assets/svg/home--white.svg" alt="" />

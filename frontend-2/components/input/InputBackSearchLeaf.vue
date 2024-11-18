@@ -235,7 +235,7 @@ onUpdated(() => {
         @click.prevent="openPopup"
         class="search-filter-log__checkbox-input-img"
       >
-        <img class="" src="/svg/sort-white.svg" />
+        <img class="" src="~/assets/svg/sort-white.svg" />
       </span>
       <span
         @click.prevent="openPopup"
@@ -304,7 +304,7 @@ onUpdated(() => {
                   <div class="filter-tab__icon-box">
                     <img
                       class="filter-tab__icon-img"
-                      src="/svg/tab-check-btn.svg"
+                      src="~/assets/svg/tab-check-btn.svg"
                       alt="필터 버튼"
                     />
                   </div>
@@ -325,7 +325,7 @@ onUpdated(() => {
                   <div class="filter-tab__icon-box">
                     <img
                       class="filter-tab__icon-img"
-                      src="/svg/tab-check-btn.svg"
+                      src="~/assets/svg/tab-check-btn.svg"
                       alt="필터 버튼"
                     />
                   </div>
@@ -345,7 +345,7 @@ onUpdated(() => {
                   <div class="filter-tab__icon-box">
                     <img
                       class="filter-tab__icon-img"
-                      src="/svg/tab-check-btn.svg"
+                      src="~/assets/svg/tab-check-btn.svg"
                       alt="필터 버튼"
                     />
                   </div>
@@ -367,7 +367,7 @@ onUpdated(() => {
                   <div class="filter-tab__icon-box">
                     <img
                       class="filter-tab__icon-img"
-                      src="/svg/tab-check-btn.svg"
+                      src="~/assets/svg/tab-check-btn.svg"
                       alt="필터 버튼"
                     />
                   </div>
@@ -385,7 +385,7 @@ onUpdated(() => {
                   <div class="filter-tab__icon-box">
                     <img
                       class="filter-tab__icon-img"
-                      src="/svg/tab-check-btn.svg"
+                      src="~/assets/svg/tab-check-btn.svg"
                       alt="필터 버튼"
                     />
                   </div>
@@ -403,7 +403,7 @@ onUpdated(() => {
                   <div class="filter-tab__icon-box">
                     <img
                       class="filter-tab__icon-img"
-                      src="/svg/tab-check-btn.svg"
+                      src="~/assets/svg/tab-check-btn.svg"
                       alt="필터 버튼"
                     />
                   </div>
@@ -421,7 +421,7 @@ onUpdated(() => {
                   <div class="filter-tab__icon-box">
                     <img
                       class="filter-tab__icon-img"
-                      src="/svg/tab-check-btn.svg"
+                      src="~/assets/svg/tab-check-btn.svg"
                       alt="필터 버튼"
                     />
                   </div>
@@ -444,7 +444,7 @@ onUpdated(() => {
                     <div class="filter-tab__icon-box">
                       <img
                         class="filter-tab__icon-img"
-                        src="/svg/tab-check-btn.svg"
+                        src="~/assets/svg/tab-check-btn.svg"
                         alt="필터 버튼"
                       />
                     </div>
@@ -462,7 +462,7 @@ onUpdated(() => {
                     <div class="filter-tab__icon-box">
                       <img
                         class="filter-tab__icon-img"
-                        src="/svg/tab-check-btn.svg"
+                        src="~/assets/svg/tab-check-btn.svg"
                         alt="필터 버튼"
                       />
                     </div>

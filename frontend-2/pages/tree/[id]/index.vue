@@ -248,7 +248,7 @@ watchEffect(() => {
                       <div class="filter-tab__icon-box">
                         <img
                           class="filter-tab__icon-img"
-                          src="/svg/tab-check-btn.svg"
+                          src="~/assets/svg/tab-check-btn.svg"
                           alt="필터 버튼"
                         />
                       </div>
@@ -268,7 +268,7 @@ watchEffect(() => {
                       <div class="filter-tab__icon-box">
                         <img
                           class="filter-tab__icon-img"
-                          src="/svg/tab-check-btn.svg"
+                          src="~/assets/svg/tab-check-btn.svg"
                           alt="필터 버튼"
                         />
                       </div>
@@ -286,7 +286,7 @@ watchEffect(() => {
                       <div class="filter-tab__icon-box">
                         <img
                           class="filter-tab__icon-img"
-                          src="/svg/tab-check-btn.svg"
+                          src="~/assets/svg/tab-check-btn.svg"
                           alt="필터 버튼"
                         />
                       </div>
@@ -310,7 +310,7 @@ watchEffect(() => {
                       <div class="filter-tab__icon-box">
                         <img
                           class="filter-tab__icon-img"
-                          src="/svg/tab-check-btn.svg"
+                          src="~/assets/svg/tab-check-btn.svg"
                           alt="필터 버튼"
                         />
                       </div>
@@ -328,7 +328,7 @@ watchEffect(() => {
                       <div class="filter-tab__icon-box">
                         <img
                           class="filter-tab__icon-img"
-                          src="/svg/tab-check-btn.svg"
+                          src="~/assets/svg/tab-check-btn.svg"
                           alt="필터 버튼"
                         />
                       </div>
@@ -346,7 +346,7 @@ watchEffect(() => {
                       <div class="filter-tab__icon-box">
                         <img
                           class="filter-tab__icon-img"
-                          src="/svg/tab-check-btn.svg"
+                          src="~/assets/svg/tab-check-btn.svg"
                           alt="필터 버튼"
                         />
                       </div>
@@ -364,7 +364,7 @@ watchEffect(() => {
                       <div class="filter-tab__icon-box">
                         <img
                           class="filter-tab__icon-img"
-                          src="/svg/tab-check-btn.svg"
+                          src="~/assets/svg/tab-check-btn.svg"
                           alt="필터 버튼"
                         />
                       </div>
@@ -384,7 +384,7 @@ watchEffect(() => {
                       <div class="filter-tab__icon-box">
                         <img
                           class="filter-tab__icon-img"
-                          src="/svg/tab-check-btn.svg"
+                          src="~/assets/svg/tab-check-btn.svg"
                           alt="필터 버튼"
                         />
                       </div>
@@ -409,7 +409,7 @@ watchEffect(() => {
                         <div class="filter-tab__icon-box">
                           <img
                             class="filter-tab__icon-img"
-                            src="/svg/tab-check-btn.svg"
+                            src="~/assets/svg/tab-check-btn.svg"
                             alt="필터 버튼"
                           />
                         </div>
@@ -429,7 +429,7 @@ watchEffect(() => {
                         <div class="filter-tab__icon-box">
                           <img
                             class="filter-tab__icon-img"
-                            src="/svg/tab-check-btn.svg"
+                            src="~/assets/svg/tab-check-btn.svg"
                             alt="필터 버튼"
                           />
                         </div>

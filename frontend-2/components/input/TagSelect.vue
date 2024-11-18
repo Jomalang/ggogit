@@ -21,7 +21,7 @@ const emit = defineEmits( ["drop"]);
                 <span class="input-tag-select__tag-text">{{ tag.name }}</span>
                 <button class="input-tag-select__tag-delete-btn" type="button"
                         @click="emit('drop', tag)">
-                  <img src="/svg/x-button.svg" alt="next-button" />
+                  <img src="~/assets/svg/x-button.svg" alt="next-button" />
                 </button>
                 <input class="none input-tag-select__input" name="tagIds" :value="tag.id" />
               </label>

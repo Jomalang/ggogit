@@ -62,7 +62,7 @@ onBeforeMount(() => {
       <img
         v-else
         class="card-leaf__book-cover"
-        src="/svg/leaf-icon--white.svg"
+        src="~/assets/svg/leaf-icon--white.svg"
         alt="도서 기본 이미지"
       />
       <div class="card-leaf-detail__box">

@@ -22,7 +22,7 @@ const emit = defineEmits(['drop']);
                   type="button"
                   @click="emit('drop')"
               >
-                <img src="/svg/x-button.svg" alt="next-button" />
+                <img src="~/assets/svg/x-button.svg" alt="next-button" />
               </button>
               <input class="none input-tag-select__input" name="bookCategoryId" :value="data.id" />
             </label>

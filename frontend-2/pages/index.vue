@@ -53,7 +53,7 @@ onUnmounted(() => {
           <div class="start-btn" id="start-btn">GGogit 시작하기</div>
         </NuxtLink>
       </div>
-      <img src="/svg/home-down-arrow.svg" />
+      <img src="~/assets/svg/home-down-arrow.svg" />
     </section>
 
     <section class="section-2">

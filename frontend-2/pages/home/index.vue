@@ -287,7 +287,7 @@ const bookExRemoveNone = (selectedElement, index) => {
             <div class="card-tree__img-frame-no-tree">
               <img
                 class="card-tree__book-cover"
-                src="/png/no-tree-mid-book.png"
+                src="~/assets/png/no-tree-mid-book.png"
                 alt="treeCover"
               />
             </div>

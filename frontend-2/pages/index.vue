@@ -72,9 +72,9 @@ onUnmounted(() => {
           <p>트리로 만들어 보세요!</p>
         </div>
 
-        <img class="img-1 phone" src="/png/1.png" alt="1" />
-        <img class="img-2 phone" src="/png/2.png" alt="2" />
-        <img class="img-3 phone" src="/png/3.png" alt="3" />
+        <img class="img-1 phone" src="~/assets/png/1.png" alt="1" />
+        <img class="img-2 phone" src="~/assets/png/2.png" alt="2" />
+        <img class="img-3 phone" src="~/assets/png/3.png" alt="3" />
 
         <div class="small-title">
           <p>떠오른 생각과 영감을 트리 형태로</p>
@@ -92,8 +92,8 @@ onUnmounted(() => {
           <p>트리로 표현해 보세요!</p>
         </div>
 
-        <img class="img-3 phone" src="/png/4.png" alt="3" />
-        <img class="img-4 phone" src="/png/5.png" alt="4" />
+        <img class="img-3 phone" src="~/assets/png/4.png" alt="3" />
+        <img class="img-4 phone" src="~/assets/png/5.png" alt="4" />
 
         <div class="small-title">
           <p>떠오른 생각과 영감을 트리 형태로</p>
@@ -111,8 +111,8 @@ onUnmounted(() => {
           <p>트리로 만들어 보세요!</p>
         </div>
 
-        <img class="img-1 phone" src="/png/6.png" alt="1" />
-        <img class="img-2 phone" src="/png/7_1.png" alt="7" />
+        <img class="img-1 phone" src="~/assets/png/6.png" alt="1" />
+        <img class="img-2 phone" src="~/assets/png/7_1.png" alt="7" />
 
         <div class="small-title-2">
           <p>떠오른 생각과 영감을 트리 형태로</p>
@@ -131,8 +131,8 @@ onUnmounted(() => {
           <p>작성해보세요!</p>
         </div>
 
-        <img class="img-3 phone" src="/png/8.png" alt="8" />
-        <img class="img-4 phone" src="/png/9.png" alt="9" />
+        <img class="img-3 phone" src="~/assets/png/8.png" alt="8" />
+        <img class="img-4 phone" src="~/assets/png/9.png" alt="9" />
 
         <div class="small-title">
           <p>떠오른 생각과 영감을 트리 형태로</p>

@@ -18,7 +18,7 @@ const props = defineProps({
     bookAuthor: "",
     bookTranslator: "",
     bookPublisher: "",
-    bookPublishedYear: ""
+    bookPublishedYear: "",
   },
 });
 const formatDate = (date) => {
@@ -27,21 +27,21 @@ const formatDate = (date) => {
     month: "2-digit", // '10' 형식으로 출력
     day: "2-digit", // '01' 형식으로 출력
     hour: "2-digit",
-    hour12: false,// 시간 출력 (24시간제)
+    hour12: false, // 시간 출력 (24시간제)
     minute: "2-digit", // 분 출력
-    timeZone: "Asia/Seoul" // 한국 시간대
+    timeZone: "Asia/Seoul", // 한국 시간대
   };
-  return new Date(date).toLocaleString('ko-KR', options);
+  return new Date(date).toLocaleString("ko-KR", options);
 };
 const formatYear = (date) => {
   return new Date(date).getFullYear();
 };
 function modifyCount(count) {
   return count > 999 ? "999+" : String(count);
-};
+}
 
 onBeforeMount(() => {
-  if(props.data.seedKorName === "도서") {
+  if (props.data.seedKorName === "도서") {
     path.value = `/leaf/book/${props.data.leafId}`;
   } else {
     path.value = `/leaf/etx/${props.data.leafId}`;
@@ -51,52 +51,70 @@ onBeforeMount(() => {
 
 <template>
   <div class="leaf-list-frame">
-    <NuxtLink :to=path>
-      <div  class="card-leaf-detail">
-      <img
-        v-if="props.data.coverImageName !== undefined"
-        class="card-leaf__book-cover"
-        :src="`/png/${props.data.coverImageName}`"
-        alt="도서 이미지"
-      />
-      <img
-        v-else
-        class="card-leaf__book-cover"
-        src="/svg/leaf-icon--white.svg"
-        alt="도서 기본 이미지"
-      />
-      <div class="card-leaf-detail__box">
-        <div class="card-leaf-detail__tags">
-          <span class="card-leaf-detail__tag">{{ props.data.seedKorName }}</span>
-          <span class="card-leaf-detail__tag">{{ props.data.bookCategory }}</span>
-        </div>
+    <NuxtLink :to="path">
+      <div class="card-leaf-detail">
+        <img
+          v-if="props.data.coverImageName !== undefined"
+          class="card-leaf__book-cover"
+          :src="
+            props.data.coverImageName
+              ? useGetImageUrl(props.data.coverImageName)
+              : useGetImageUrl(props.data.treeImage, 'tree')
+          "
+          alt="도서 이미지"
+        />
+        <img
+          v-else
+          class="card-leaf__book-cover"
+          src="/svg/leaf-icon--white.svg"
+          alt="도서 기본 이미지"
+        />
+        <div class="card-leaf-detail__box">
+          <div class="card-leaf-detail__tags">
+            <span class="card-leaf-detail__tag">{{
+              props.data.seedKorName
+            }}</span>
+            <span class="card-leaf-detail__tag">{{
+              props.data.bookCategory
+            }}</span>
+          </div>
 
-        <!---->
-        <p class="card-leaf-detail__name">{{ props.data.treeTitle }}</p>
-        <p class="card-leaf-detail__info">{{ props.data.bookTitle }}</p>
-        <div class="card-leaf-detail__info">
-          <span class="card-leaf-detail__info">{{formatYear(props.data.bookPublishedYear)}}</span>
-          <span class="card-leaf-detail__info"> &nbsp; </span>
-          <span class="card-leaf-detail__info">{{ props.data.bookAuthor }}</span>
-          <span class="card-leaf-detail__info"> &nbsp; </span>
-          <span class="card-leaf-detail__info">{{ props.data.bookPublisher }}</span>
+          <!---->
+          <p class="card-leaf-detail__name">{{ props.data.treeTitle }}</p>
+          <p class="card-leaf-detail__info">{{ props.data.bookTitle }}</p>
+          <div class="card-leaf-detail__info">
+            <span class="card-leaf-detail__info">{{
+              formatYear(props.data.bookPublishedYear)
+            }}</span>
+            <span class="card-leaf-detail__info"> &nbsp; </span>
+            <span class="card-leaf-detail__info">{{
+              props.data.bookAuthor
+            }}</span>
+            <span class="card-leaf-detail__info"> &nbsp; </span>
+            <span class="card-leaf-detail__info">{{
+              props.data.bookPublisher
+            }}</span>
+          </div>
         </div>
-      </div>
       </div>
       <div class="card-leaf-detail__box">
         <div class="card-leaf-detail-content">
-            <span class="card-leaf-detail__name">
-              {{ props.data.leafTitle }}
-            </span>
+          <span class="card-leaf-detail__name">
+            {{ props.data.leafTitle }}
+          </span>
           <span class="card-leaf-detail__info-created-date">
-              {{ formatDate(props.data.leafUpdatedAt) }}
-            </span>
+            {{ formatDate(props.data.leafUpdatedAt) }}
+          </span>
         </div>
-        <p>{{props.data.leafContent}}</p>
+        <p>{{ props.data.leafContent }}</p>
         <div class="card-leaf-detail__count">
-          <span class="card-leaf-detail__info-bold">{{modifyCount(props.data.likeCount)}}</span>
+          <span class="card-leaf-detail__info-bold">{{
+            modifyCount(props.data.likeCount)
+          }}</span>
           <span class="card-leaf-detail__info">좋아요 수</span>
-          <span class="card-leaf-detail__info-bold">{{modifyCount(props.data.viewCount)}}</span>
+          <span class="card-leaf-detail__info-bold">{{
+            modifyCount(props.data.viewCount)
+          }}</span>
           <span class="card-leaf-detail__info">조회 수</span>
         </div>
       </div>
@@ -156,7 +174,7 @@ onBeforeMount(() => {
   font-size: 10px;
   margin-right: 2px;
 }
-.card-leaf-detail__count{
+.card-leaf-detail__count {
   margin-right: 8px;
   display: flex;
   justify-content: end;

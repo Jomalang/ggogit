@@ -65,9 +65,17 @@ const sendEmailHandler = () => {
   <div class="login-member__join-page-container">
     <ButtonLoginJoinPageBackBtn :data="{ link: '/member/login' }" />
     <TextLoginPageInfo
+      v-if="!joinEmail.disabled"
       :data="{
         label: '회원가입',
         infoText: '이메일로 회원가입을 진행합니다',
+      }"
+    />
+    <TextLoginPageInfo
+      v-else
+      :data="{
+        label: '회원가입',
+        infoText: '작성하신 이메일로 회원가입 링크가 전송되었습니다.',
       }"
     />
     <form @submit.prevent="sendEmailHandler">

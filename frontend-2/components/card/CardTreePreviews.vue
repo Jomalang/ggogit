@@ -43,7 +43,11 @@ const formatYear = (date) => {
       <img
         v-if="props.data.coverImageName !== ''"
         class="card-tree__book-cover"
-        :src="useGetImageUrl(props.data.coverImageName)"
+        :src="
+          props.data.coverImageName
+            ? useGetImageUrl(props.data.coverImageName)
+            : useGetImageUrl(props.data.treeImage, 'tree')
+        "
         alt="도서 이미지"
       />
       <img

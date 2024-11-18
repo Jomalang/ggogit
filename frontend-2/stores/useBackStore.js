@@ -15,18 +15,22 @@ export const useBackStore = defineStore("backStore", () => {
   const backCookieHome = useCookie("_ggogit_backStack_home", {
     path: "/",
     sameSite: "strict",
+    httpOnly: true,
   });
   const backCookieSearch = useCookie("_ggogit_backStack_search", {
     path: "/",
     sameSite: "strict",
+    httpOnly: true,
   });
   const backCookieCommunity = useCookie("_ggogit_backStack_community", {
     path: "/",
     sameSite: "strict",
+    httpOnly: true,
   });
   const backCookieMyPage = useCookie("_ggogit_backStack_mypage", {
     paht: "/",
     sameSite: "strict",
+    httpOnly: true,
   });
 
   //각 영역을 조건문으로 다룰 반응형 객체입니다.
@@ -107,10 +111,10 @@ export const useBackStore = defineStore("backStore", () => {
   //쿠키에서 백스택을 불러옵니다.
   //플러그인
   function getStackFromCookie() {
-    backStackForHome = backCookieHome.value.split(",");
-    backStackForSearch = backCookieSearch.value.split(",");
-    backStackForCommunity = backCookieCommunity.value.split(",");
-    backStackForMyPage = backCookieMyPage.value.split(",");
+    backStackForHome.value = backCookieHome.value.split(",");
+    backStackForSearch.value = backCookieSearch.value.split(",");
+    backStackForCommunity.value = backCookieCommunity.value.split(",");
+    backStackForMyPage.value = backCookieMyPage.value.split(",");
   }
 
   return {

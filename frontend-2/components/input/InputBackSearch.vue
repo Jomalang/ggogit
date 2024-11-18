@@ -69,7 +69,6 @@ const createReq = async (query, filter, currentPage) => {
       alert("검색어를 두 글자 이상 입력해 주세요.");
     } else {
       alert("오류가 발생했습니다. 다시 시도해 주세요.");
-      q;
     }
   } finally {
     emit("loading", false); // Emit loading event
@@ -117,42 +116,45 @@ onUpdated(() => {
   </div>
 
   <div class="search-filter-frame">
-  <div class="search-filter-log">
-    <label>
-      <input
-        class="search-filter-log__checkbox-input"
-        type="radio"
-        name="filterType"
-        value="title"
-        checked
-        v-model="filter"
-      />
-      <span class="search-filter-log__checkbox-input-text">제목</span>
-    </label>
-    <label>
-      <input
-        class="search-filter-log__checkbox-input"
-        type="radio"
-        name="filterType"
-        value="author"
-        v-model="filter"
-      />
-      <span class="search-filter-log__checkbox-input-text">저자</span>
-    </label>
-    <label>
-      <input
-        class="search-filter-log__checkbox-input"
-        type="radio"
-        name="filterType"
-        value="publisher"
-        v-model="filter"
-      />
-      <span class="search-filter-log__checkbox-input-text">출판사</span>
-    </label>
-  </div>
     <div class="search-filter-log">
       <label>
-        <NuxtLink class="search-filter-log__nuxt-link--check" to="/tree/book/search">
+        <input
+          class="search-filter-log__checkbox-input"
+          type="radio"
+          name="filterType"
+          value="title"
+          checked
+          v-model="filter"
+        />
+        <span class="search-filter-log__checkbox-input-text">제목</span>
+      </label>
+      <label>
+        <input
+          class="search-filter-log__checkbox-input"
+          type="radio"
+          name="filterType"
+          value="author"
+          v-model="filter"
+        />
+        <span class="search-filter-log__checkbox-input-text">저자</span>
+      </label>
+      <label>
+        <input
+          class="search-filter-log__checkbox-input"
+          type="radio"
+          name="filterType"
+          value="publisher"
+          v-model="filter"
+        />
+        <span class="search-filter-log__checkbox-input-text">출판사</span>
+      </label>
+    </div>
+    <div class="search-filter-log">
+      <label>
+        <NuxtLink
+          class="search-filter-log__nuxt-link--check"
+          to="/tree/book/search"
+        >
           도서 검색
         </NuxtLink>
       </label>
@@ -296,7 +298,7 @@ button {
   flex-shrink: 0;
 }
 
-.search-filter-log__nuxt-link--check{
+.search-filter-log__nuxt-link--check {
   margin-top: 18px;
   font-family: "Pretendard", serif;
   font-size: 12px;
@@ -309,5 +311,4 @@ button {
   user-select: none;
   flex-shrink: 0;
 }
-
 </style>

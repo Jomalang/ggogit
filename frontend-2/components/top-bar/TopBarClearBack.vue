@@ -12,18 +12,19 @@ const props = defineProps<{
         <div class="top-bar-clear-back__icon-box">
           <img src="/public/svg/back--white.svg" alt="" />
         </div>
-      <NuxtLink to="/home">
-        <div class="top-bar-clear-back__icon-box">
-          <img src="/public/svg/home--white.svg" alt="" />
-        </div>
-      </NuxtLink>
-    </div>
-    <div class="top-bar-clear-back__right-box">
-      <NuxtLink to="/tree/book/search">
-        <div class="top-bar-clear-back__icon-box">
-          <img src="/public/svg/search--white.svg" alt="" />
-        </div>
-      </NuxtLink>
+        <NuxtLink to="/home">
+          <div class="top-bar-clear-back__icon-box">
+            <img src="/public/svg/home--white.svg" alt="" />
+          </div>
+        </NuxtLink>
+      </div>
+      <div class="top-bar-clear-back__right-box">
+        <NuxtLink to="/tree/book/search">
+          <div class="top-bar-clear-back__icon-box">
+            <img src="/public/svg/search--white.svg" alt="" />
+          </div>
+        </NuxtLink>
+      </div>
     </div>
   </div>
 </template>

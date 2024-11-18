@@ -36,15 +36,15 @@ const joinInfo = ref({
 });
 
 // ----------------------- API ----------------------- //
-const { data: emailInfo, error: emailInfoError } = await useAuthFetch(
-  `members/join/check-email`,
-  {
-    method: "POST",
-    baseURL: `${config.public.apiBase}`,
-    headers: { "Content-Type": "application/json" },
-    body: { key: key.value },
-  }
-);
+// const { data: emailInfo, error: emailInfoError } = await useAuthFetch(
+//   `members/join/check-email`,
+//   {
+//     method: "POST",
+//     baseURL: `${config.public.apiBase}`,
+//     headers: { "Content-Type": "application/json" },
+//     body: { key: key.value },
+//   }
+// );
 
 const joinPostApi = async () => {
   try {

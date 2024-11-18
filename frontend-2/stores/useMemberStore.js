@@ -39,6 +39,7 @@ export const useMemberStore = defineStore("memberStore", () => {
       localStorage.setItem("_ggogit_accessToken", _accessToken.value);
       // CSR일때 _accessToken을 쿠키에 저장
       document.cookie = `_ggogit_accessToken=${_accessToken.value}; path=/;`;
+      document.cookie = `refreshToken=${_accessToken.value}; path=/;`;
     }
     // SSR일때 _accessToken을 쿠키에 저장
     if (import.meta.env.SSR) {
@@ -46,7 +47,8 @@ export const useMemberStore = defineStore("memberStore", () => {
       if (event) {
         event.node.res.setHeader(
           "Set-Cookie",
-          `_ggogit_accessToken=${_accessToken.value}; Path=/; HttpOnly; Secure; SameSite=Strict`
+          `_ggogit_accessToken=${_accessToken.value}; Path=/;`,
+          `refreshToken=${_accessToken.value}; Path=/;`
         );
       }
     }

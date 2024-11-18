@@ -21,8 +21,9 @@ public class LeafTagListResponse {
     private int size;
     private long totalElements;
     private String message;
+    private int statusCode;
 
-    public static LeafTagListResponse of(Page<LeafTag> leafTagsPage, String message) {
+    public static LeafTagListResponse of(Page<LeafTag> leafTagsPage, String message, int statusCode) {
 
         List<LeafTagDto> tags = leafTagsPage.stream()
                 .map(LeafTagDto::of)
@@ -35,6 +36,7 @@ public class LeafTagListResponse {
                 .currentPage(leafTagsPage.getNumber() + 1)
                 .size(leafTagsPage.getSize())
                 .message(message)
+                .statusCode(statusCode)
                 .build();
     }
 

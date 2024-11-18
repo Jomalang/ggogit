@@ -109,9 +109,7 @@ export default function useLeafTagList() {
         selectTag,
         deselectTag,
         getSelectedTags,
-        setSelectedTags,
         addTag,
-        clearSelectedTags,
         init,
         postInit
     };

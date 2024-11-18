@@ -2,7 +2,7 @@
 import Editor from "@toast-ui/editor";
 import "@toast-ui/editor/dist/toastui-editor.css";
 import { onMounted, reactive } from "vue";
-import axios, { HttpStatusCode } from "axios";
+import {HttpStatusCode} from "axios";
 
 // ----------------------- Model ----------------------- //
 const config = useRuntimeConfig();
@@ -25,7 +25,7 @@ useLeafFormData().init()
 useLeafTagList().init();
 useLeafFormData().setCreateUrl(`/leaf/etc/${leafId}/edit`);
 const leafFormData = useLeafFormData().leafFormData;
-const selectedTags = useLeafTagList().getSelectedTags();
+const selectedTags = useLeafTagList().selectedTags;
 
 const { data: beforeLeafData, status: beforeLeafStatus } = await useAuthFetch(
   `leaves/${leafId}/before`,
@@ -57,7 +57,7 @@ watchEffect(() => {
     leafFormData.value.title = leafData.value.title;
     leafFormData.value.content = leafData.value.content;
     leafFormData.value.visibility = leafData.value.visibility;
-    useLeafTagList().setSelectedTags(leafData.value.tags);
+    selectedTags.value = leafData.value.tags;
     leafFormData.value.isLoaded = true;
   }
 
@@ -127,7 +127,13 @@ const inputTitle = (title) => {
 };
 
 const tagDrop = (tag) => {
-  useLeafTagList().deselectTag(tag);
+  const tagDrop = (tag) => {
+    // console.log("tagDrop : ", tag);
+    selectedTags.items = selectedTags.items.filter(
+        (item) => item.id !== tag.id
+    );
+    leafFormData.value.tagIds = selectedTags.items.map((tag) => tag.id);
+  };
 };
 
 const validate = () => {
@@ -145,7 +151,7 @@ const submitHandler = async () => {
     return;
   }
 
-  leafFormData.value.tagIds = selectedTags.map((tag) => tag.id);
+  leafFormData.value.tagIds = selectedTags.value.map((tag) => tag.id);
   console.log("leafFormData.value : ", leafFormData.value);
   const response = await useAuthDataFetch(`etc/leaves/${leafId}`, {
     baseURL: config.public.apiBase,
@@ -163,6 +169,7 @@ const submitHandler = async () => {
 
   router.push(`/leaf?leafId=${leafId}`);
 };
+
 </script>
 
 <template>
@@ -215,7 +222,7 @@ const submitHandler = async () => {
         <section class="input-form__select-tag-input-container">
           <h1 class="none">리프 태그 입력</h1>
           <InputTagSelect
-            :selectedTag="useLeafTagList().getSelectedTags()"
+            :selectedTag="selectedTags"
             @drop="tagDrop"
           ></InputTagSelect>
         </section>

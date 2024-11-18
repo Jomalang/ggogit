@@ -295,7 +295,7 @@ watchEffect(() => {
                   </li>
                 </ul>
                 <h2 class="filter-attribute__title">정렬 기준</h2>
-                <ul class="filter-tab__ul1"  id="filter-tab__list1">
+                <ul class="filter-tab__ul1" id="filter-tab__list1">
                   <li @click="filterNameHandler(10)" class="filter-tab__item">
                     <label class="filter-tab__item-label">
                       <input
@@ -457,7 +457,6 @@ watchEffect(() => {
   <aside>
     <section class="nav-container">
       <h2 class="none">네비게이션</h2>
-      <!-- 트리 생성 언더바  -->
       <NavNavigationBar :active="'home'" />
     </section>
   </aside>
@@ -468,7 +467,7 @@ watchEffect(() => {
   max-width: var(--max-width-1);
   margin: 0 auto;
   position: fixed; /* 화면에 고정 */
-  top: 30%;        /* 화면 상단에서 30% 아래 */
+  top: 30%; /* 화면 상단에서 30% 아래 */
   z-index: 10;
 }
 
@@ -585,7 +584,7 @@ watchEffect(() => {
 .filter-tab__list {
   margin-bottom: 250px;
 }
-.filter-tab__ul1{
+.filter-tab__ul1 {
   margin-bottom: 30px;
   border-bottom: 1px solid var(--main2--opacity40);
 }

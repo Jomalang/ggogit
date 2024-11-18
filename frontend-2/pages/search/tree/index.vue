@@ -5,21 +5,20 @@ import { debounce } from "lodash";
 
 //---------------variable----------------
 const query = ref("");
-const leaves = ref([]);
+const trees = ref([]);
 const page = ref(0);
 const totalPage = ref(0);
 const totalCount = ref(0);
 const scrollContainer = ref(null);
 const config = useRuntimeConfig();
-const apiUrl = config.public.apiBase + "/leaves/search";
-let filterName = ref("최근 수정한 순");
+const apiUrl = config.public.apiBase + "/trees/search";
+let filterName = "최근 수정한 순";
 let sort = ref(0);
 //-------------handler----------------
 
 const handleTreeResult = (data) => {
-  leaves.value = data || [];
-
-  // console.log(data);
+  trees.value = data || [];
+  // console.log(`length=${trees.value.length}`);
 };
 
 const handleKeyword = (words) => {
@@ -41,10 +40,6 @@ const handleTotalCount = (totalC) => {
   totalCount.value = totalC;
   // console.log(`totalCount=${totalCount.value}`);
 };
-const handleFilterName = (filter) => {
-  filterName.value = filter;
-  // console.log(`filterName=${filterName.value}`);
-};
 
 const handleScroll = debounce(() => {
   const container = scrollContainer.value;
@@ -61,7 +56,7 @@ const handleScroll = debounce(() => {
   }
 }, 300); // 디바운스 적용으로 스크롤 이벤트 과도한 호출 방지
 const sortHandler = debounce(() => {
-  if(leaves.value.length === 0) return;
+  if (trees.value.length === 0) return;
   page.value = 0;
   if (sort.value === 0) sort.value = 1;
   else sort.value = 0;
@@ -85,11 +80,11 @@ onMounted(() => {
 
 <template>
   <header class="reg-book-search-container">
-    <h1 class="none">리프 검색</h1>
+    <h1 class="none">트리 검색</h1>
     <section>
-      <h2 class="none">리프 검색 창</h2>
-      <InputBackSearchLeaf
-        :placeholder="`검색할 리프를 입력해주세요.`"
+      <h2 class="none">트리 검색 창</h2>
+      <InputBackSearchNavTree
+        :placeholder="`검색할 트리를 입력해주세요.`"
         :href="`./seed/index`"
         :api="apiUrl"
         :page="page"
@@ -99,13 +94,16 @@ onMounted(() => {
         @page="handlePage"
         @totalCount="handleTotalCount"
         @totalPage="handleTotalPage"
-        @filterName="handleFilterName"
       />
     </section>
 
     <section>
       <h2 class="none">검색 결과 개수 및 최근 수정한 순서</h2>
-      <TopBarSearchResultNumAndFilter :num="totalCount" :filterName="filterName"/>
+      <TopBarSearchResultNumAndFilter
+        :num="totalCount"
+        :filterName="filterName"
+        @sort="sortHandler"
+      />
     </section>
   </header>
 
@@ -115,16 +113,16 @@ onMounted(() => {
         <h2 class="none">검색 시작 안내</h2>
         <TextInfo
             :text="''"
-            :boldText="'현재 검색중인 리프가 없습니다 :)'"
+            :boldText="'현재 검색중인 트리가 없습니다 :)'"
         />
       </div>
     </section>
 
     <section class="tree-card-list" v-else-if="totalCount >= 1">
-      <h3 class="none">리프 검색 결과</h3>
+      <h3 class="none">트리 검색 결과</h3>
       <div class="scroll-container" ref="scrollContainer">
-        <div v-for="leaf in leaves" :key="leaf.treeId">
-          <CardLeafPreviews :data="leaf" />
+        <div v-for="tree in trees" :key="tree.treeId">
+          <CardTreePreviews :data="tree" />
         </div>
       </div>
     </section>
@@ -145,12 +143,6 @@ onMounted(() => {
 </template>
 
 <style scoped>
-.reg-book-search-container {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  padding: 30px 26px 24px 24px;
-}
 .scroll-container {
   display: flex;
   margin-bottom: 10px;
@@ -160,29 +152,5 @@ onMounted(() => {
   gap: 20px;
   overflow-y: auto;
   height: 630px;
-}
-.tree-card-list {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  margin-left: 24px;
-  margin-right: 24px;
-}
-
-.tree-card-list__main {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  margin-top: 24px;
-  margin-left: 24px;
-  margin-right: 24px;
-  align-items: center;
-}
-
-.tree-card-list::after {
-  content: " ";
-  display: block;
-  width: 100%;
-  height: 50px;
 }
 </style>

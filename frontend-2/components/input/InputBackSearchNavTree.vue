@@ -1,68 +1,95 @@
 <script setup>
 import { ref } from "vue";
-import { useRouter} from "vue-router"
-
+import { value } from "lodash/seq.js";
+import {useRouter} from "#vue-router";
 //-----------------props-----------------
 const props = defineProps({
   placeholder: "",
   href: "",
   api: "",
+  sort: 0,
   page: 1,
 });
 //-----------------emit-----------------
-const emit = defineEmits([
-  "req",
-  "bookResult",
-  "page",
-  "totalCount",
-  "totalPage",
-  "dropListEvent",
-  "loading",
-]);
-
+const emit = defineEmits(["req", "result", "page", "totalCount", "totalPage"]);
 //-----------------ref-----------------
-const bookResult = ref([]);
+const result = ref([]);
 const query = ref("");
-const filter = ref("title");
 const page = ref(1);
 const totalCount = ref(0);
 const totalPage = ref(0);
-const selectedPage = ref("/tree/book/search");
+const filter = ref("title");
+const selectedPage = ref("/search/tree");
 const router = useRouter();
-
+//-----------------watcher-----------------
+// page 값이 변경될 때 요청
 watch(page, () => {
-  if (page.value > 1) {
-    createReq(query.value, filter.value, page.value);
+  if (page.value > 0) {
+    createReq(props.sort, page.value, filter.value, false); // props.sort 사용
     // console.log("new page");
   }
 });
 
-const createReq = async (query, filter, currentPage) => {
+// sort 값이 변경될 때 요청
+watch(
+  () => props.sort,
+  (newSort) => {
+    // console.log(`sort changed to ${newSort}`);
+
+    // 페이지를 초기화하고 새로운 정렬 기준으로 요청
+    page.value = 0;
+
+    // 새로운 sort 값으로 fetch 요청
+    createReq(newSort, page.value, filter.value, false);
+  }
+);
+
+//-----------------methods-----------------
+const createReq = async (sort, currentPage, filter, isChange) => {
+  let queryContent = "";
+  if (isChange) {
+    queryContent = query.value;
+  }
   try {
-    emit("loading", true); // Emit loading event
     const response = await useAuthDataFetch(props.api, {
       method: "GET",
       params: {
-        q: query,
-        f: filter,
-        p: currentPage,
+        query: queryContent,
+        sort: sort,
+        page: currentPage,
+        filter: filter,
       },
     });
+
     if (response !== undefined) {
-      if (currentPage === 1) {
-        bookResult.value = response.books;
-      } else {
-        bookResult.value = [...bookResult.value, ...response.books];
+      // 페이지가 0이면 항상 result를 빈 배열로 초기화
+      if (currentPage === 0) {
+        result.value = [];
       }
+
+      // console.log(response.content);
+
+      // 새로운 데이터를 추가
+      result.value = [...result.value, ...response.content];
+
+      // 중복 제거
+      result.value = [
+        ...new Set(result.value.map((value) => value.treeId)),
+      ].map((treeId) => result.value.find((value) => value.treeId === treeId));
+
+      // 페이지 정보 업데이트
       page.value = currentPage;
-      totalCount.value = response.totalCount;
-      totalPage.value = response.totalPage;
+      totalCount.value = response.totalElements;
+      totalPage.value = response.totalPages;
     } else {
-      bookResult.value = [];
+      // 응답이 없을 경우 빈 배열로 초기화
+      result.value = [];
       totalCount.value = 0;
       totalPage.value = 1;
     }
-    emit("bookResult", bookResult.value);
+
+    // 부모에게 결과 전달
+    emit("result", result.value);
     emit("req", query);
     emit("page", page.value);
     emit("totalCount", totalCount.value);
@@ -73,19 +100,17 @@ const createReq = async (query, filter, currentPage) => {
     } else {
       alert("오류가 발생했습니다. 다시 시도해 주세요.");
     }
-  } finally {
-    emit("loading", false); // Emit loading event
   }
-};
-
-const dropListHandler = () => {
-  query.value = "";
-  emit("dropListEvent");
 };
 
 const navigateToPage = () => {
   console.log(selectedPage.value);
   router.push(selectedPage.value);
+};
+
+
+const dropQueryHandler = () => {
+  query.value = "";
 };
 
 //-----------------lifeCycle-----------------
@@ -97,6 +122,7 @@ onUpdated(() => {
 </script>
 
 <template>
+  <!-- input-back-search(placeholder, href, method, name) -->
   <div class="search__form">
     <div>
       <div @click.prevent="useGoBack()">
@@ -111,13 +137,17 @@ onUpdated(() => {
           :placeholder="props.placeholder"
           v-model="query"
           autocomplete="off"
-          @keyup.enter="createReq(query, filter, 1)"
+          @keyup.enter="createReq(sort, 0, filter, true)"
         />
-        <button @click="dropListHandler" class="search-bar--close" type="reset">
+        <button
+          @click="dropQueryHandler"
+          class="search-bar--close"
+          type="reset"
+        >
           <img src="~/assets/svg/close-button.svg" alt="close-btn" />
         </button>
       </label>
-      <button @click="createReq(query, filter, 1)">
+      <button @click="createReq(sort, 0, filter, true)">
         <img src="~/assets/svg/lens.svg" alt="lens" />
       </button>
     </div>
@@ -157,19 +187,21 @@ onUpdated(() => {
         <span class="search-filter-log__checkbox-input-text">출판사</span>
       </label>
     </div>
-    <div class="search-filter-log">
-      <select class="search-filter-log__checkbox-input-select" v-model="selectedPage" @change="navigateToPage">
-        <option class="search-filter-log__checkbox-input-select" value="/tree/book/search">도서</option>
-        <option class="search-filter-log__checkbox-input-text" value="/tree/search">트리</option>
-        <option class="search-filter-log__checkbox-input-text" value="/leaf/search">리프</option>
-      </select>
-    </div>
+
+  <div class="search-filter-log">
+    <select class="search-filter-log__checkbox-input-select" v-model="selectedPage" @change="navigateToPage">
+      <option class="search-filter-log__checkbox-input-text" value="/search/book">도서</option>
+      <option class="search-filter-log__checkbox-input-select" value="/search/tree">트리</option>
+      <option class="search-filter-log__checkbox-input-text" value="/search/leaf">리프</option>
+    </select>
   </div>
+  </div>
+
 </template>
 
 <style scoped>
 /* =================================
-      input-back-search, input-search 
+      input-back-search, input-search
       검색버튼 뒤로가기버튼 있음. 없음.
    ===================================
  */
@@ -198,7 +230,7 @@ button {
   flex-grow: 1;
 }
 
-.search-bar--label {
+.search-bar--label{
   display: flex;
   flex-grow: 1;
   font-size: 14px;
@@ -237,17 +269,19 @@ button {
 .search-bar-img {
   height: 18px;
 }
+
 /* 필터 */
+.search-filter-frame {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .search-filter-log {
   margin-top: 18px;
   display: flex;
   white-space: nowrap;
   scrollbar-width: none;
-  gap: 10px;
-}
-.search-filter {
-  display: flex;
-  justify-content: flex-start;
   gap: 10px;
 }
 
@@ -280,16 +314,21 @@ button {
   user-select: none;
   flex-shrink: 0;
 }
-.search-filter-frame {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.search-filter-log__checkbox-input-text {
+  font-family: "Pretendard", serif;
+  font-size: 12px;
+  font-weight: var(--medium, 500);
+  color: var(--text-sub, #767676);
+  border-radius: 8px;
+  background-color: #f7f7f7;
+  padding: 12px 20px;
+  cursor: pointer;
+  user-select: none;
+  flex-shrink: 0;
 }
-
 .search-filter-log__checkbox-input:checked
   + .search-filter-log__checkbox-input-text {
   background-color: var(--main1, #323a27);
   color: var(--white, #ffffff);
 }
-
 </style>

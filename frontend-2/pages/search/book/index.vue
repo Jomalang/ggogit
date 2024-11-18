@@ -94,7 +94,7 @@ onMounted(() => {
     <h1 class="none">도서 검색</h1>
     <section>
       <h2 class="none">도서 검색 창</h2>
-      <InputBackSearch
+      <InputBackSearchNavBook
         :placeholder="`검색할 도서를 입력해주세요.`"
         :href="`/tree/seed`"
         :api="apiUrl"

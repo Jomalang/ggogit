@@ -27,7 +27,7 @@ const filter = ref("title");
 const page = ref(1);
 const totalCount = ref(0);
 const totalPage = ref(0);
-const selectedPage = ref("/tree/book/search");
+const selectedPage = ref("/search/book");
 const router = useRouter();
 
 watch(page, () => {
@@ -159,9 +159,9 @@ onUpdated(() => {
     </div>
     <div class="search-filter-log">
       <select class="search-filter-log__checkbox-input-select" v-model="selectedPage" @change="navigateToPage">
-        <option class="search-filter-log__checkbox-input-select" value="/tree/book/search">도서</option>
-        <option class="search-filter-log__checkbox-input-text" value="/tree/search">트리</option>
-        <option class="search-filter-log__checkbox-input-text" value="/leaf/search">리프</option>
+        <option class="search-filter-log__checkbox-input-select" value="/search/book">도서</option>
+        <option class="search-filter-log__checkbox-input-text" value="/search/tree">트리</option>
+        <option class="search-filter-log__checkbox-input-text" value="/search/leaf">리프</option>
       </select>
     </div>
   </div>

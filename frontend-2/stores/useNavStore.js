@@ -4,7 +4,7 @@ export const useNavStore = defineStore("navStore", () => {
   const currentSpot = ref("_home"); //_home, _search, _community, _mypage로 현재 위치 표현
 
   const home = ref("/home");
-  const search = ref("/tree/book/search");
+  const search = ref("/search/book");
   const community = ref("/community");
   const mypage = ref("/member/[id]");
 
@@ -13,7 +13,7 @@ export const useNavStore = defineStore("navStore", () => {
     currentSpot.value = "_home";
 
     home.value = "/home";
-    search.value = "/tree/book/search";
+    search.value = "/search/book";
     community.value = "/community";
     mypage.value = "/member/[id]";
 
@@ -28,7 +28,7 @@ export const useNavStore = defineStore("navStore", () => {
     if (!import.meta.env.SSR) {
       home.value = localStorage.getItem("_ggogit_path_home") || "/home";
       search.value =
-        localStorage.getItem("_ggogit_path_search") || "/tree/book/search";
+        localStorage.getItem("_ggogit_path_search") || "/search/book";
       community.value =
         localStorage.getItem("_ggogit_path_community") || "/community";
       mypage.value =

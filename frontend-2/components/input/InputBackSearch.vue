@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from "vue";
+import { useRouter} from "vue-router"
 
 //-----------------props-----------------
 const props = defineProps({
@@ -26,6 +27,8 @@ const filter = ref("title");
 const page = ref(1);
 const totalCount = ref(0);
 const totalPage = ref(0);
+const selectedPage = ref("/tree/book/search");
+const router = useRouter();
 
 watch(page, () => {
   if (page.value > 1) {
@@ -78,6 +81,11 @@ const createReq = async (query, filter, currentPage) => {
 const dropListHandler = () => {
   query.value = "";
   emit("dropListEvent");
+};
+
+const navigateToPage = () => {
+  console.log(selectedPage.value);
+  router.push(selectedPage.value);
 };
 
 //-----------------lifeCycle-----------------
@@ -150,24 +158,11 @@ onUpdated(() => {
       </label>
     </div>
     <div class="search-filter-log">
-      <label>
-        <NuxtLink
-          class="search-filter-log__nuxt-link--check"
-          to="/tree/book/search"
-        >
-          도서 검색
-        </NuxtLink>
-      </label>
-      <label>
-        <NuxtLink class="search-filter-log__nuxt-link" to="/tree/search">
-          트리 검색
-        </NuxtLink>
-      </label>
-      <label>
-        <NuxtLink class="search-filter-log__nuxt-link" to="/leaf/search">
-          리프 검색
-        </NuxtLink>
-      </label>
+      <select class="search-filter-log__checkbox-input-select" v-model="selectedPage" @change="navigateToPage">
+        <option class="search-filter-log__checkbox-input-select" value="/tree/book/search">도서</option>
+        <option class="search-filter-log__checkbox-input-text" value="/tree/search">트리</option>
+        <option class="search-filter-log__checkbox-input-text" value="/leaf/search">리프</option>
+      </select>
     </div>
   </div>
 </template>
@@ -272,6 +267,19 @@ button {
   user-select: none;
   flex-shrink: 0;
 }
+.search-filter-log__checkbox-input-select {
+  font-family: "Pretendard", serif;
+  font-size: 12px;
+  font-weight: var(--medium, 500);
+  border-radius: 8px;
+  border: none;
+  background-color: var(--main1, #323a27);
+  color: var(--white, #ffffff);
+  padding: 12px 12px;
+  cursor: pointer;
+  user-select: none;
+  flex-shrink: 0;
+}
 .search-filter-frame {
   display: flex;
   justify-content: space-between;
@@ -284,31 +292,4 @@ button {
   color: var(--white, #ffffff);
 }
 
-.search-filter-log__nuxt-link {
-  margin-top: 18px;
-  font-family: "Pretendard", serif;
-  font-size: 12px;
-  font-weight: var(--medium, 500);
-  color: var(--text-sub, #767676);
-  border-radius: 8px;
-  background-color: #f7f7f7;
-  padding: 12px 20px;
-  cursor: pointer;
-  user-select: none;
-  flex-shrink: 0;
-}
-
-.search-filter-log__nuxt-link--check {
-  margin-top: 18px;
-  font-family: "Pretendard", serif;
-  font-size: 12px;
-  font-weight: var(--medium, 500);
-  color: var(--main3, #f7f7f7);
-  border-radius: 8px;
-  background-color: var(--main1, #323a27);
-  padding: 12px 20px;
-  cursor: pointer;
-  user-select: none;
-  flex-shrink: 0;
-}
 </style>

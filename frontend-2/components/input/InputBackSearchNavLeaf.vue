@@ -35,7 +35,7 @@ const searchFilterName = ref("제목 검색");
 const filter = ref(10);
 const searchFilter = ref("title");
 const sort = ref(0);
-const selectedPage = ref("/leaf/search");
+const selectedPage = ref("/search/leaf");
 const router = useRouter();
 //-----------------watcher-----------------
 // page 값이 변경될 때 요청
@@ -255,9 +255,9 @@ onUpdated(() => {
 
     <div class="search-filter-log">
       <select class="search-filter-log__checkbox-input-select" v-model="selectedPage" @change="navigateToPage">
-        <option class="search-filter-log__checkbox-input-text" value="/tree/book/search">도서</option>
-        <option class="search-filter-log__checkbox-input-text" value="/tree/search">트리</option>
-        <option class="search-filter-log__checkbox-input-select" value="/leaf/search">리프</option>
+        <option class="search-filter-log__checkbox-input-text" value="/search/book">도서</option>
+        <option class="search-filter-log__checkbox-input-text" value="/search/tree">트리</option>
+        <option class="search-filter-log__checkbox-input-select" value="/search/leaf">리프</option>
       </select>
     </div>
   </div>
@@ -588,16 +588,18 @@ button {
   user-select: none;
   flex-shrink: 0;
 }
+/*TODO: 가운데 정렬 방법 찾아봐야함*/
+.filter-tab-container{
+  left: 11%;
+  max-width: var(--max-width-1);
+  background-color: var(--main1--opacity10);
+}
 .filter-tab-container--30 {
   max-width: var(--max-width-1);
   margin: 0 auto;
   top: 30%;
-  right: 0;
-  bottom: 0;
-  left: 0;
   z-index: 10;
   position: fixed;
-  aspect-ratio: 5 / 8;
 }
 
 .filter-tab__box--30 {

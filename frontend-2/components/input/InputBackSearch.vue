@@ -1,6 +1,5 @@
 <script setup>
 import { ref } from "vue";
-import useBackNavigation from "~/composables/useBackNavigation.js";
 
 //-----------------props-----------------
 const props = defineProps({
@@ -88,20 +87,14 @@ onUpdated(() => {
     page.value = props.page;
   }
 });
-
-// ------------------- goBack -------------------
-const goBack = () => { useBackNavigation().popPageFromStack(); };
-const { getLastPage } = useBackNavigation();
-const lastPage = computed(() => getLastPage());
-
 </script>
 
 <template>
   <div class="search__form">
     <div>
-      <NuxtLink :to="lastPage" @click="goBack()">
+      <div @click.prevent="useGoBack()">
         <img src="/public/svg/back.svg" alt="back button" />
-      </NuxtLink>
+      </div>
     </div>
     <div class="search-bar">
       <label class="search-bar--label">

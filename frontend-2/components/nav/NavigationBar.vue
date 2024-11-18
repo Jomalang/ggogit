@@ -1,5 +1,6 @@
 <script setup>
 const navStore = useNavStore();
+const backStore = useBackStore();
 
 const {
   home: _home,
@@ -10,6 +11,8 @@ const {
 } = storeToRefs(navStore);
 
 const setCur = (spotNum) => {
+  //nav를 통해 이동하는 경우에는 스택을 쌓지 않는다.
+  backStore.IsBackToTrue();
   navStore.setCurrentSpot(spotNum);
 };
 

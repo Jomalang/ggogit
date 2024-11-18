@@ -15,6 +15,8 @@ const handleLogout = async () => {
   try {
     // 로그아웃 API 호출
     useMemberStore().initAuth();
+    useNavStore().initStore();
+    useBackStore().initStackAndCookie();
     // 로그아웃 성공 후 처리
     router.push("/member/login");
   } catch (error) {

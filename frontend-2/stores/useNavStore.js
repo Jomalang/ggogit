@@ -16,6 +16,11 @@ export const useNavStore = defineStore("navStore", () => {
     search.value = "/tree/book/search";
     community.value = "/community";
     mypage.value = "/member/[id]";
+
+    localStorage.setItem("_ggogit_path_home", home.value);
+    localStorage.setItem("_ggogit_path_search", search.value);
+    localStorage.setItem("_ggogit_path_community", community.value);
+    localStorage.setItem("_ggogit_path_mypage", mypage.value);
   }
 
   //새로고침 마다 사용

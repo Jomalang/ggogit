@@ -33,11 +33,6 @@ const createReq = async (query, filter) => {
     }
   }
 };
-const goBack = () => {
-  useBackNavigation().popPageFromStack();
-};
-const { getLastPage } = useBackNavigation();
-const lastPage = computed(() => getLastPage());
 
 //-----------------lifeCycle-----------------
 </script>
@@ -46,9 +41,9 @@ const lastPage = computed(() => getLastPage());
   <!-- input-back-search(placeholder, href, method, name) -->
   <div class="search__form">
     <div>
-      <NuxtLink :to="lastPage" @click="goBack()">
+      <div @click.prevent="useGoBack()">
         <img src="/public/svg/back.svg" alt="back button" />
-      </NuxtLink>
+      </div>
     </div>
     <div class="search-bar">
       <label class="search-bar--label">

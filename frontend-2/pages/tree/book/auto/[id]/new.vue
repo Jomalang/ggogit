@@ -90,23 +90,19 @@ const submitFormHandler = async (e) => {
 
   e.preventDefault(); // 데이터 전송 로직
   try {
-
-    const response = await useAuthDataFetch(
-      `/trees/auto`,
-      {
-        method: "POST",
-        baseURL: config.public.apiBase,
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: {
-          bookId: treeFormData.value.bookId,
-          treeTitle: treeFormData.value.treeTitle,
-          description: treeFormData.value.description,
-          visibility: treeFormData.value.visibility,
-        },
-      }
-    );
+    const response = await useAuthDataFetch(`/trees/auto`, {
+      method: "POST",
+      baseURL: config.public.apiBase,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: {
+        bookId: treeFormData.value.bookId,
+        treeTitle: treeFormData.value.treeTitle,
+        description: treeFormData.value.description,
+        visibility: treeFormData.value.visibility,
+      },
+    });
 
     if (response.statusCode !== HttpStatusCode.Created) {
       console.error("Error submitting form:", response);
@@ -124,7 +120,7 @@ const submitFormHandler = async (e) => {
     <h1 class="none">도서 트리 생성 페이지</h1>
     <section class="tob-bar-back-container">
       <h1 class="none">트리 생성 상단 바</h1>
-      <TopBarBack title="트리 생성" link="/tree/seed"></TopBarBack>
+      <TopBarBack title="트리 생성" link=""></TopBarBack>
     </section>
   </header>
 
@@ -165,7 +161,7 @@ const submitFormHandler = async (e) => {
             date: data.publishDate,
             pageCount: data.totalPage,
             isbn: data.isbn,
-        }"
+          }"
         />
       </section>
 

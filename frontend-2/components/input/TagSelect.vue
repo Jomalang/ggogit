@@ -34,7 +34,7 @@ const emit = defineEmits( ["drop"]);
           class="input-tag-select__button"
           id="input-tag-select__button-id"
           to="/leaf/tag">
-          <img src="/public/svg/next.svg" alt="next-button" />
+          <img src="~/assets/svg/next.svg" alt="next-button" />
         </RouterLink>
       </div>
     </div>

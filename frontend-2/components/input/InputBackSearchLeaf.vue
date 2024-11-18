@@ -202,7 +202,7 @@ onUpdated(() => {
   <div class="search__form">
     <div>
       <dive @click.prevent="useGoBack()">
-        <img src="/public/svg/back.svg" alt="back button" />
+        <img src="~/assets/svg/back.svg" alt="back button" />
       </dive>
     </div>
     <div class="search-bar">
@@ -220,11 +220,11 @@ onUpdated(() => {
           class="search-bar--close"
           type="reset"
         >
-          <img src="/public/svg/close-button.svg" alt="close-btn" />
+          <img src="~/assets/svg/close-button.svg" alt="close-btn" />
         </button>
       </label>
       <button @click="createReq(sort, 0, searchFilter, filter, true)">
-        <img src="/public/svg/lens.svg" alt="lens" />
+        <img src="~/assets/svg/lens.svg" alt="lens" />
       </button>
     </div>
   </div>
@@ -279,7 +279,7 @@ onUpdated(() => {
             class="filter-tab__btn--back"
             type="button"
           >
-            <img src="/public/svg/tab-back.svg" alt="뒤로가기 버튼" />
+            <img src="~/assets/svg/tab-back.svg" alt="뒤로가기 버튼" />
           </button>
           <h1 class="filter-tab__header--title">필터 선택</h1>
         </div>

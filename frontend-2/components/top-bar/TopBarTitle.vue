@@ -16,7 +16,7 @@ const props = defineProps<{
     <div class="top-bar__frame">
       <NuxtLink class="tob-bar__back-link" :to="lastPage" @click="goBack">
         <img
-          src="/public/svg/back-arrow-icon.svg"
+          src="~/assets/svg/back-arrow-icon.svg"
           alt="top-bar--backarrow.svg"
         />
       </NuxtLink>

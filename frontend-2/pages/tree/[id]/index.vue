@@ -225,7 +225,7 @@ watchEffect(() => {
               class="filter-tab__btn--back"
               type="button"
             >
-              <img src="/public/svg/tab-back.svg" alt="뒤로가기 버튼" />
+              <img src="~/assets/svg/tab-back.svg" alt="뒤로가기 버튼" />
             </button>
             <h1 class="filter-tab__header--title">정렬 선택</h1>
           </div>

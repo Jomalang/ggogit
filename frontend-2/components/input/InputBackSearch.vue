@@ -93,7 +93,7 @@ onUpdated(() => {
   <div class="search__form">
     <div>
       <div @click.prevent="useGoBack()">
-        <img src="/public/svg/back.svg" alt="back button" />
+        <img src="~/assets/svg/back.svg" alt="back button" />
       </div>
     </div>
     <div class="search-bar">
@@ -107,11 +107,11 @@ onUpdated(() => {
           @keyup.enter="createReq(query, filter, 1)"
         />
         <button @click="dropListHandler" class="search-bar--close" type="reset">
-          <img src="/public/svg/close-button.svg" alt="close-btn" />
+          <img src="~/assets/svg/close-button.svg" alt="close-btn" />
         </button>
       </label>
       <button @click="createReq(query, filter, 1)">
-        <img src="/public/svg/lens.svg" alt="lens" />
+        <img src="~/assets/svg/lens.svg" alt="lens" />
       </button>
     </div>
   </div>

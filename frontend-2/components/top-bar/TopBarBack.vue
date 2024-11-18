@@ -21,13 +21,13 @@ const props = defineProps({
         @click.prevent="useGoBack()"
       >
         <img
-          src="/public/svg/back-arrow-icon.svg"
+          src="~/assets/svg/back-arrow-icon.svg"
           alt="top-bar--backarrow.svg"
         />
       </div>
       <NuxtLink v-else class="tob-bar__back-link" :to="link">
         <img
-          src="/public/svg/back-arrow-icon.svg"
+          src="~/assets/svg/back-arrow-icon.svg"
           alt="top-bar--backarrow.svg"
         />
       </NuxtLink>

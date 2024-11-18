@@ -33,7 +33,7 @@ const emit = defineEmits(['drop']);
             id="input-tag-select__button-id"
             to="/book/category"
         >
-          <img src="/public/svg/next.svg" alt="next-button" />
+          <img src="~/assets/svg/next.svg" alt="next-button" />
         </RouterLink>
       </div>
     </div>

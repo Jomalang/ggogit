@@ -200,7 +200,7 @@ const bookExRemoveNone = (selectedElement, index) => {
               <NuxtLink class="slide-item" :to="`/tree/seed`" id="slide-1">
                 <img
                   class="mid__img"
-                  src="/public/png/tree-book-blank.png"
+                  src="~/assets/png/tree-book-blank.png"
                   alt="도서 예시 이미지"
                 />
               </NuxtLink>
@@ -209,7 +209,7 @@ const bookExRemoveNone = (selectedElement, index) => {
               <NuxtLink class="slide-item" :to="`/tree/seed`" id="slide-2">
                 <img
                   class="mid__img"
-                  src="/public/png/tree-book-blank.png"
+                  src="~/assets/png/tree-book-blank.png"
                   alt="도서 예시 이미지"
                 />
               </NuxtLink>

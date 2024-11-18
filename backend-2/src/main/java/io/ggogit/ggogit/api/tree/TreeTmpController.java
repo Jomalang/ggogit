@@ -1,9 +1,6 @@
 package io.ggogit.ggogit.api.tree;
 
-import io.ggogit.ggogit.api.tree.dto.BookAutoTreeTmpRequest;
-import io.ggogit.ggogit.api.tree.dto.TreeTmpTotalPageResponse;
-import io.ggogit.ggogit.api.tree.dto.TreeTmpRequest;
-import io.ggogit.ggogit.api.tree.dto.TreeTmpResponse;
+import io.ggogit.ggogit.api.tree.dto.*;
 import io.ggogit.ggogit.domain.member.security.CustomUserDetails;
 import io.ggogit.ggogit.domain.tree.entity.TreeTmp;
 import io.ggogit.ggogit.domain.tree.service.TreeTmpService;
@@ -35,10 +32,38 @@ public class TreeTmpController {
         Long seedId = dto.getSeedId();
         Long bookCategoryId = dto.getBookCategoryId();
 
-        Long treeTmpId = treeTmpService
-                .save(treeTmp, memberId, seedId, bookCategoryId, image.getBytes(), image.getOriginalFilename());
+        Long treeTmpId;
+        if (image == null) {
+            treeTmpId = treeTmpService.save(treeTmp, memberId, seedId, bookCategoryId, null, null);
+        } else {
+            treeTmpId = treeTmpService
+                    .save(treeTmp, memberId, seedId, bookCategoryId, image.getBytes(), image.getOriginalFilename());
+        }
 
-        TreeTmpResponse resp = TreeTmpResponse.of(treeTmpId, "도서 트리 임시 저장 성공");
+        TreeTmpResponse resp = TreeTmpResponse.of(treeTmpId, "도서 트리 임시 저장 성공", HttpStatus.CREATED.value());
+
+        return new ResponseEntity<>(resp, HttpStatus.CREATED);
+    }
+
+    @PostMapping("/etc")
+    public ResponseEntity<TreeTmpResponse> createEtcTreeTmp(
+            @AuthenticationPrincipal CustomUserDetails userDetails,
+            @ModelAttribute TreeEtcTmpRequest dto,
+            @RequestParam(required = false) MultipartFile image
+    ) throws IOException {
+
+        TreeTmp treeTmp = dto.toTreeTmp();
+        Long memberId = userDetails.getId();
+        Long seedId = dto.getSeedId();
+
+        Long treeTmpId;
+        if (image == null) {
+            treeTmpId = treeTmpService.save(treeTmp, memberId, seedId, null, null);
+        } else {
+            treeTmpId = treeTmpService.save(treeTmp, memberId, seedId, image.getBytes(), image.getOriginalFilename());
+        }
+
+        TreeTmpResponse resp = TreeTmpResponse.of(treeTmpId, "기타 트리 임시 저장 성공", HttpStatus.CREATED.value());
 
         return new ResponseEntity<>(resp, HttpStatus.CREATED);
     }
@@ -53,7 +78,7 @@ public class TreeTmpController {
 
         Long treeTmpId = treeTmpService.save(treeTmp, userDetails.getId(), bookId);
 
-        TreeTmpResponse resp = TreeTmpResponse.of(treeTmpId, "도서 선택 트리 임시 저장 성공");
+        TreeTmpResponse resp = TreeTmpResponse.of(treeTmpId, "도서 선택 트리 임시 저장 성공", HttpStatus.CREATED.value());
 
         return new ResponseEntity<>(resp, HttpStatus.CREATED);
     }

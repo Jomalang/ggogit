@@ -1,65 +1,15 @@
 <script setup>
 import { onMounted, watch } from "vue";
-import axios, { HttpStatusCode } from "axios";
 import { useRouter } from "#vue-router";
+import useTreeFormData from "~/composables/useTreeFormData.js";
 
 // ----------------------- Model ----------------------- //
 const router = useRouter();
+const config = useRuntimeConfig();
 
-const treeFormData = useState("treeFormData", () => ({
-  // 트리 씨앗 정보
-  seedId: 1,
-
-  // 도서 정보
-  bookTitle: "",
-  bookTitleValid: true,
-
-  // 지은이 정보
-  author: "",
-  authorValid: true,
-
-  // 출판일 정보
-  publishDate: "",
-  publishDateValid: true,
-
-  // 출판사 정보
-  publisher: "",
-  publisherValid: true,
-
-  // 총 페이지 정보
-  totalPage: "",
-  totalPageValid: true,
-
-  // 도서 카테고리 정보
-  bookCategoryId: null,
-  bookCategoryIdValid: true,
-
-  // 도서 카테고리 이름 정보
-  bookCategoryName: null,
-  bookCategorySelected: true,
-
-  // 트리 정보
-  treeTitle: "",
-  treeTitleValid: true,
-
-  // 트리 설명 정보
-  description: "",
-  descriptionValid: true,
-
-  // 공개 여부 정보
-  visibility: false,
-  visibilityValid: true,
-
-  // 이미지 정보
-  imageData: "",
-
-  // 트리 생성 경로
-  createUrl: `/tree/book/new`,
-}));
-
-watch(treeFormData.value, (newVal) => {
-  // console.log("treeFormData:", newVal);
-});
+useTreeFormData().init();
+useTreeFormData().setCreateUrl("/tree/book/new")
+const treeFormData = useTreeFormData().treeFormData;
 
 // ----------------------- Life Cycle ----------------------- //
 onMounted(() => {
@@ -159,25 +109,24 @@ const submitFormHandler = async (e) => {
 
     // 이미지 파일이 있을 경우
     const imgTag = document.getElementById("input-book-img-box__img-id");
-    if (imgTag && imgTag.src) {
+    if (imgTag && imgTag.src.startsWith("data:image")) {
       const response = await fetch(imgTag.src);
       const blob = await response.blob();
       treeFormDataToSend.append("image", blob, "image.jpg");
     }
 
-    const response = await axios.post(
-      "http://localhost:8080/api/v1/trees",
-      treeFormDataToSend,
-      {
-        headers: { "Content-Type": "multipart/form-data" },
-      }
-    );
+    const response = await useAuthDataFetch("/trees", {
+      method: "POST",
+      baseURL: `${config.public.apiBase}`,
+      body: treeFormDataToSend,
+    });
 
-    if (response.status !== HttpStatusCode.Created) {
+    console.log("response:", response);
+
+    if (response.message !== '도서 트리 임시 저장 성공') {
       throw new Error("Network response was not ok");
     }
 
-    // alert("트리가 생성되었습니다.");
     router.push("/leaf/book/new");
   } catch (error) {
     console.error("Error submitting form:", error);

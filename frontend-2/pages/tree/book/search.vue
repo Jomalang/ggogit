@@ -198,11 +198,16 @@ onMounted(() => {
   height: 50px;
 }
 
+.search-blur-container {
+  width: 100%;
+  height: 100%;
+}
+
 .blur-bg {
   z-index: 100;
   position: absolute;
-  height: 200vw;
-  width: 100vw;
+  width: 100%;
+  height: 100%;
   left: 0;
   background-color: rgba(0, 0, 0, 0.6);
 

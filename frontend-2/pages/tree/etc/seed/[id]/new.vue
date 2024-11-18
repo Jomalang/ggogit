@@ -3,6 +3,7 @@ import { onMounted, watch } from "vue";
 import axios, { HttpStatusCode } from "axios";
 import { useRouter } from "#vue-router";
 import { value } from "lodash/seq.js";
+import useTreeFormData from "~/composables/useTreeFormData.js";
 
 // ----------------------- Model ----------------------- //
 const route = useRoute();
@@ -10,29 +11,10 @@ const router = useRouter();
 const config = useRuntimeConfig();
 const seedId = route.params.id;
 
-const treeFormData = useState("treeFormData", () => ({
-  // 트리 씨앗 정보
-  seedId: Number(seedId),
-
-  // 트리 제목
-  treeTitle: "",
-  treeTitleValid: true,
-
-  // 트리 설명 정보
-  description: "",
-  descriptionValid: true,
-
-  // 공개 여부 정보
-  visibility: false,
-  visibilityValid: true,
-
-  // 이미지 정보
-  imageData: "",
-}));
-
-watch(treeFormData.value, (newVal) => {
-  // console.log("treeFormData:", newVal);
-});
+useTreeFormData().init();
+useTreeFormData().setSeedId(seedId);
+useTreeFormData().setCreateUrl(`/tree/etc/seed/${seedId}/new`);
+const treeFormData = useTreeFormData().treeFormData;
 
 // ----------------------- API ----------------------- //
 const { data: seedData, error: infoError } = await useAuthFetch(
@@ -50,6 +32,7 @@ watchEffect(() => {
 onMounted(() => {
   if (treeFormData.value.imageData) {
     const imgTag = document.getElementById("input-book-img-box__img-id");
+    console.log("imgTag:", imgTag);
     imgTag.src = treeFormData.value.imageData;
   }
 });
@@ -100,27 +83,23 @@ const submitFormHandler = async (e) => {
 
     // 이미지 파일이 있을 경우
     const imgTag = document.getElementById("input-book-img-box__img-id");
-    if (imgTag && imgTag.src) {
+    if (imgTag && imgTag.src.startsWith("data:image")) {
       const response = await fetch(imgTag.src);
       const blob = await response.blob();
       treeFormDataToSend.append("image", blob, "image.jpg");
     }
 
-    const response = await axios.post(
-      "http://localhost:8080/api/v1/trees",
-      treeFormDataToSend,
-      {
-        headers: { "Content-Type": "multipart/form-data" },
-      }
-    );
+    const response = await useAuthDataFetch('trees/etc', {
+      baseURL: config.public.apiBase,
+      method: 'POST',
+      body: treeFormDataToSend,
+    });
 
-    if (response.status !== HttpStatusCode.Created) {
-      throw new Error("Network response was not ok");
+    if (response.statusCode !== HttpStatusCode.Created) {
+      console.error("트리 생성에 실패했습니다.");
     }
 
     // 데이터 초기화
-    treeFormData.value = {};
-
     router.push("/leaf/etc/new");
   } catch (error) {
     console.error("Error submitting form:", error);

@@ -23,10 +23,12 @@ public class TreeInfoResponse {
     private String bookPublisher;
     private String bookPublishedYear;
     private Integer bookTotalPage;
+    private String coverImageName;
     //relationship identifiers
     private Long treeId;
     private Long memberId ;
     private Long seedId;
+    private String seedKorName;
     //trees
     private String title;
     private String description;
@@ -34,7 +36,7 @@ public class TreeInfoResponse {
     private String  leafCreatedAt;
     private String  createdAt;
     private Integer readingPage ;
-    private String coverImageName;
+    private String treeImage;
     //computed
     private Long treeLeafCnt;
     private Long treeLikeCnt;
@@ -53,12 +55,14 @@ public class TreeInfoResponse {
                 .treeId(tree.getId())
                 .memberId(tree.getMember().getId())
                 .seedId(tree.getSeed().getId())
+                .seedKorName(tree.getSeed().getKorName())
                 .title(tree.getTitle())
                 .description(tree.getDescription())
                 .visibility(tree.getVisibility())
                 .createdAt(tree.getCreateTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
                 .leafCreatedAt(latestLeafDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
                 .readingPage(tree.getTreeBook() == null ? null : tree.getTreeBook().getReadingPage())//tree.getTreeBook().getReadingPage())
+                .treeImage(tree.getTreeImage() == null ? null : tree.getTreeImage().getName())
                 .coverImageName(tree.getBook() == null ? null : tree.getBook().getImageFile())
                 .treeLeafCnt(leafCnt)
                 .treeLikeCnt(likeCnt)

@@ -1,9 +1,13 @@
-<script setup></script>
+<script setup>
+const props = defineProps({
+  link: "/tree/book/search",
+});
+</script>
 
 <template>
   <!-- header-search-link -->
   <div class="header-search-link">
-    <router-link class="header-search-link__link" to="/tree/book/search">
+    <NuxtLink class="header-search-link__link" :to="props.link">
       <div class="header-search-link__input-box">
         <p class="header-search-link__placeholder">나의 트리 검색</p>
         <img
@@ -12,7 +16,7 @@
           alt="lens.svg"
         />
       </div>
-    </router-link>
+    </NuxtLink>
   </div>
 </template>
 

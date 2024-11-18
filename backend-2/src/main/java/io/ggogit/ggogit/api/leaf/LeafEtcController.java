@@ -35,7 +35,7 @@ public class LeafEtcController {
 
         Leaf saved = leafEtcService.createFirstLeafEtc(memberId, leaf, leafTagIds);
 
-        EtcLeafResponse response = EtcLeafResponse.of(saved, "첫번째 기타 리프 생성 성공");
+        EtcLeafResponse response = EtcLeafResponse.of(saved, "첫번째 기타 리프 생성 성공", HttpStatus.CREATED.value());
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
@@ -57,7 +57,7 @@ public class LeafEtcController {
 
         Leaf saved = leafEtcService.createLeafEtc(memberId, parentLeafId, leaf, leafTagIds);
 
-        EtcLeafResponse response = EtcLeafResponse.of(saved, "기타 리프 생성 성공");
+        EtcLeafResponse response = EtcLeafResponse.of(saved, "기타 리프 생성 성공", HttpStatus.CREATED.value());
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
@@ -79,7 +79,7 @@ public class LeafEtcController {
 
         Leaf saved = leafEtcService.updateLeafEtc(memberId, leafId, leaf, leafTagIds);
 
-        EtcLeafResponse response = EtcLeafResponse.of(saved, "기타 리프 수정 성공");
+        EtcLeafResponse response = EtcLeafResponse.of(saved, "기타 리프 수정 성공", HttpStatus.OK.value());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -93,10 +93,10 @@ public class LeafEtcController {
         if (!leafEtcService.isOwner(memberId, leafId)) {
             throw new IllegalArgumentException("해당 리프에 대한 권한이 없습니다.");
         }
-
+        
         leafEtcService.deleteLeafEtc(leafId);
-        EtcLeafResponse response = EtcLeafResponse.of(leafId, "기타 리프 삭제 성공");
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        EtcLeafResponse response = EtcLeafResponse.of(leafId, "기타 리프 삭제 성공", HttpStatus.NO_CONTENT.value());
+        return new ResponseEntity<>(response, HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("/etc/leaves/{leafId}/edit")

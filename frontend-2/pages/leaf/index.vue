@@ -81,6 +81,7 @@ const { data: branchInfoData, error: branchInfoDataError } = await useAuthFetch(
 
 // ----------------------- Init ----------------------- //
 if (seedTypeData.value) {
+  console.log("seedTypeData", seedTypeData.value);
   seedType.value = seedTypeData.value.seedType;
 }
 
@@ -110,7 +111,6 @@ onBeforeMount(() => {
 });
 
 onMounted(() => {
-
   screenWidth.value = 1024 <= window.innerWidth ? 1024 : window.innerWidth;
 
   // 화면 크기 변경에 대응하도록 리스너 추가
@@ -319,7 +319,7 @@ const scrollToElement = () => {
       <section class="log-path-container">
         <h1 class="none">리프 경로</h1>
         <BarLogPath
-          :data="{
+            :data="{
             tree: breadcrumb.treeName,
             branch: breadcrumb.branchName,
             leaf: breadcrumb.leafName,
@@ -330,8 +330,8 @@ const scrollToElement = () => {
       <section class="log-list-date-title-container">
         <h1 class="none">리프 날짜</h1>
         <TextMainTitleRight
-          :title="focusNodeDate.title"
-          :size="focusNodeDate.size"
+            :title="focusNodeDate.title"
+            :size="focusNodeDate.size"
         ></TextMainTitleRight>
       </section>
     </section>
@@ -341,16 +341,16 @@ const scrollToElement = () => {
     <section class="log-list-container">
       <h1 class="none">리프 리스트</h1>
       <section
-        v-for="node in nodes"
-        :ref="node.id === leafId ? 'targetNode' : ''"
+          v-for="node in nodes"
+          :ref="node.id === leafId ? 'targetNode' : ''"
       >
         <div
-          class="log-item-container"
-          @touchstart="touchStartHandler"
-          @touchmove="(event) => touchMoveHandler(event, node)"
-          @mousedown="touchStartHandler"
-          @mousemove="(event) => touchMoveHandler(event, node)"
-          :style="{
+            class="log-item-container"
+            @touchstart="touchStartHandler"
+            @touchmove="(event) => touchMoveHandler(event, node)"
+            @mousedown="touchStartHandler"
+            @mousemove="(event) => touchMoveHandler(event, node)"
+            :style="{
             transform: `translateX(-${node.translateSize(screenWidth)}px)`,
           }"
         >
@@ -366,9 +366,7 @@ const scrollToElement = () => {
         </div>
       </section>
     </section>
-    <section class="log-tmp-box">
-
-    </section>
+    <section class="log-tmp-box"></section>
   </main>
 
   <aside class="log-list-bot-bar-container">
@@ -376,9 +374,9 @@ const scrollToElement = () => {
     <section class="log-list-bot-btn-container">
       <h1 class="none">리프 생성 버튼</h1>
       <ButtonBtnShortAGreen
-        :visibility="leafCreateBtn.canCreate"
-        :link="`/leaf/${seedType}/${leafCreateBtn.id}/new`"
-        :text="`리프 생성`"
+          :visibility="leafCreateBtn.canCreate"
+          :link="`/leaf/${seedType}/${leafCreateBtn.id}/new`"
+          :text="`리프 생성`"
       />
     </section>
 
@@ -386,6 +384,16 @@ const scrollToElement = () => {
       <h1 class="none">브랜치 정보 하단 바</h1>
       <BotBarBranchStateMain :branch="branch"></BotBarBranchStateMain>
     </section>
+    <section class="nav-back-container">
+      <h3 class="none">네비 바 뒤 공백</h3>
+    </section>
+  </aside>
+  <footer>
+    <Footer :noticeText="`개발중입니다.`" />
+  </footer>
+
+  <aside class="nav-container">
+    <NavNavigationBar active="home" />
   </aside>
 </template>
 
@@ -430,5 +438,4 @@ main {
   height: 1px;
   width: 100%;
 }
-
 </style>

@@ -1,38 +1,25 @@
 <script setup>
 const { data } = defineProps(["data"]);
-
-const img = ref(false);
-
-onMounted(async () => {
-  if (data.coverImageName) {
-    img.value = true;
-  }
-});
 </script>
 
 <template>
-  <client-only>
-    <div class="card-tree-info-cover-frame">
-      <div class="card-tree-info-cover">
-        <img
-          v-if="img"
-          class="card-tree-info-cover"
-          :src="useGetImageUrl(data.coverImageName)"
-          alt="cover"
-        />
-        <img
-          v-else
-          class="card-tree-info-cover"
-          :src="`/png/tree-icon-white.png`"
-          alt="cover"
-        />
-      </div>
-      <div class="card-tree-title-frame">
-        <p class="card-tree-title">{{ data.title }}</p>
-        <p class="card-book-title">{{ data.bookTitle }}</p>
-      </div>
+  <div class="card-tree-info-cover-frame">
+    <div class="card-tree-info-cover">
+      <img
+        class="card-tree-info-cover"
+        :src="
+          data.coverImageName
+            ? useGetImageUrl(data.coverImageName, 'book')
+            : useGetImageUrl(data.treeImage, 'tree')
+        "
+        alt="cover"
+      />
     </div>
-  </client-only>
+    <div class="card-tree-title-frame">
+      <p v-if="data.bookTitle" class="card-book-title">{{ data.bookTitle }}</p>
+      <p v-if="data.title" class="card-tree-title">{{ data.title }}</p>
+    </div>
+  </div>
 </template>
 
 <style scoped>
@@ -59,6 +46,7 @@ onMounted(async () => {
   font-weight: var(--bold);
   line-height: var(--line-height-main);
   letter-spacing: var(--letter-spacing-main);
+  padding-bottom: 10px;
 }
 .card-tree-title-frame {
   padding-left: 5px;

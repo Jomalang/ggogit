@@ -36,7 +36,7 @@ public class LeafBookController {
 
         LeafBook saved = leafBookService.createFirstLeafBook(memberId, leaf, LeafBook, leafTagIds);
 
-        BookLeafResponse response = BookLeafResponse.of(saved, "첫번째 도서 리프 생성 성공");
+        BookLeafResponse response = BookLeafResponse.of(saved, "첫번째 도서 리프 생성 성공", HttpStatus.CREATED.value());
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
@@ -59,7 +59,7 @@ public class LeafBookController {
 
         LeafBook saved = leafBookService.createLeafBook(memberId, parentLeafId, leaf, LeafBook, leafTagIds);
 
-        BookLeafResponse response = BookLeafResponse.of(saved, "도서 리프 생성 성공");
+        BookLeafResponse response = BookLeafResponse.of(saved, "도서 리프 생성 성공", HttpStatus.CREATED.value());
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
@@ -82,7 +82,7 @@ public class LeafBookController {
 
         LeafBook saved = leafBookService.updateLeafBook(memberId, leafId, leaf, LeafBook, leafTagIds);
 
-        BookLeafResponse response = BookLeafResponse.of(saved, "도서 리프 수정 성공");
+        BookLeafResponse response = BookLeafResponse.of(saved, "도서 리프 수정 성공", HttpStatus.OK.value());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -98,8 +98,8 @@ public class LeafBookController {
         }
 
         leafBookService.deleteLeafBook(leafId);
-        BookLeafResponse response = BookLeafResponse.of(leafId, "도서 리프 삭제 성공");
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        BookLeafResponse response = BookLeafResponse.of(leafId, "도서 리프 삭제 성공", HttpStatus.NO_CONTENT.value());
+        return new ResponseEntity<>(response, HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("/book/leaves/{leafId}/edit")

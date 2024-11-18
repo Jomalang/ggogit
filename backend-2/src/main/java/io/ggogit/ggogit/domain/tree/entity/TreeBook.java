@@ -52,12 +52,13 @@ public class TreeBook {
     private LocalDateTime updateTime;
 
     @Version
+    @Builder.Default
     @Column(name = "VERSION", nullable = false)
-    private Long version;
+    private Long version = 0L;
 
     public static TreeBook of(Tree tree) {
         return TreeBook.builder()
-                .tree(tree)
+                .id(tree.getId())
                 .readingPage(0)
                 .build();
     }

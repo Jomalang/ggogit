@@ -4,11 +4,30 @@ import { CardType, type SnsCardTreeProps } from "@/types/types";
 
 const props = defineProps<{
   list: SnsCardTreeProps[];
+  sideScrollType: string;
 }>();
+
+let scrollContainer;
+onMounted(() => {
+  scrollContainer = document.querySelector(`.sns-card-tree-list-box.${props.sideScrollType}`);
+});
+
+const scroll = (e) => {
+  e.preventDefault(); // 기본 스크롤 동작 방지
+  const scrollAmount = e.deltaY || -e.wheelDelta || 0;
+  const adjustedScrollAmount = scrollAmount * 1; // 스크롤 속도 조절
+  scrollContainer.scrollLeft += adjustedScrollAmount;
+};
+
 </script>
 
 <template>
-  <div v-if="props.list.length >= 1" class="sns-card-tree-list-box">
+  <div
+      v-if="props.list.length >= 1"
+      class="sns-card-tree-list-box"
+      :class="props.sideScrollType"
+      @wheel="scroll"
+  >
     <ul class="sns-card-tree__list">
       <li
         class="sns-card-tree__item"

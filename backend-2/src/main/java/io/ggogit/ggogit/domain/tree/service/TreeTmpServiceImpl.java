@@ -97,6 +97,11 @@ public class TreeTmpServiceImpl implements TreeTmpService {
         return treeTmp.getId();
     }
 
+    @Override
+    public Long save(TreeTmp treeTmp, Long memberId, Long seedId, byte[] bytes, String originalFilename) {
+        return save(treeTmp, memberId, seedId, null, bytes, originalFilename);
+    }
+
     private void removeExistingTreeTmp(Long memberId) {
         TreeTmp savedTreeTmp = treeTmpRepository.findByMemberId(memberId).orElse(null);
         if (savedTreeTmp != null) {

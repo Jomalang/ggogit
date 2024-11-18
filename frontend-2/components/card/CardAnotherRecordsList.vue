@@ -4,14 +4,27 @@ import { type CardItemProps, CardType } from "@/types/types";
 
 const props = defineProps<{
   items: CardItemProps[];
+  sideScrollType: String;
 }>();
 
-// console.log("CardAnotherRecordsList");
-// console.log(props.items);
+// 스크롤 이벤트 핸들러
+let scrollContainer: HTMLElement | null = null;
+onMounted(() => {
+  scrollContainer = document.querySelector(`.card-another-records-list-box.${props.sideScrollType}`);
+});
+
+const scroll = (e: MouseEvent) => {
+  e.preventDefault(); // 기본 스크롤 동작 방지
+  const scrollAmount = e.deltaY || -e.wheelDelta || 0;
+  const adjustedScrollAmount = scrollAmount * 1; // 스크롤 속도 조절
+  scrollContainer.scrollLeft += adjustedScrollAmount;
+};
 </script>
 
 <template>
-  <div class="card-another-records-list-box">
+  <div class="card-another-records-list-box"
+       :class="props.sideScrollType"
+       @wheel="scroll">
     <ul class="card-another-records__list">
       <li
         class="card-another-records__item"

@@ -22,6 +22,10 @@ export interface CardItemProps {
   cardType: CardType;
   cardImage: string;
   bookCategory: string;
+  treeImage?: string;
+  treeId?: number;
+  memoirId?: number;
+  leafId?: number;
 
   /* 도서 정보 경우 경우  */
   bookTitle?: string;

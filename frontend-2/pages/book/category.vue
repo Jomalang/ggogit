@@ -2,11 +2,11 @@
 import axios from "axios";
 import { useRouter } from 'vue-router';
 import {onMounted, reactive, watch} from "vue";
-import useBackNavigation from "~/composables/useBackNavigation.js";
+import useTreeFormData from "~/composables/useTreeFormData.js";
 
 // -------------------------- Model -------------------------- //
-const treeFormData = useState('treeFormData');
-
+const treeFormData = useTreeFormData().treeFormData;
+const config = useRuntimeConfig();
 const queryParam = reactive({
   name: ''
 });
@@ -32,9 +32,22 @@ onMounted(() => {
 // -------------------------- API -------------------------- //
 
 const fetchData = async () => {
+
   try {
-    const response = await axios.get(`http://localhost:8080/api/v1/book-categories?query=${queryParam.name}`);
-    bookCategories.items = response.data.bookCategories;
+
+    const response = await $fetch(`book-categories`, {
+      method: 'GET',
+      baseURL: `${config.public.apiBase}`,
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      params: {
+        query: queryParam.name
+      }
+    });
+
+    bookCategories.items = response.bookCategories;
 
   } catch (error) {
     console.error('Error fetching data:', error);

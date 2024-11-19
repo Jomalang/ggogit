@@ -3,6 +3,7 @@ package io.ggogit.ggogit.domain.tree.repository.query;
 import io.ggogit.ggogit.domain.tree.entity.Tree;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.parameters.P;
 
 import java.util.List;
 
@@ -16,6 +17,8 @@ public interface TreeQueryRepository {
      */
     public List<Tree> findTreeByMemberIdFetch(Long memberId);
     public List<Tree> findTreeByMemberIdFetch(Long memberId, Long seedId);
+    public Page<Tree> findTreeByMemberIdFetch(Long memberId, Long seedId, Pageable pageable);
+    public Page<Tree>findTreeByMemberIdNonseedIdFetch(Long memberId, Pageable pageable);
     public Page<Tree> findTreeByMemberIdFetch(Long memberId, Pageable pageable);
     public Page<Tree> findAllByMemberIdAndBookId(Long memberId, Long bookId, Pageable pageable);
     public Page<Tree> findTreeByBookIdFetch(Long bookId, Pageable pageable);

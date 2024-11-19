@@ -57,7 +57,13 @@ function hiddenText() {
   <client-only>
     <div class="card-tree-info__detail-frame">
       <div class="card-tree-info__detail-visibility">
-        <NuxtLink :to="`/tree/${data.treeId}/edit`" class="top-bar__transparent-setting-btn"></NuxtLink>
+
+        <div v-if="data.seedId === 1">
+          <NuxtLink :to="`/tree/${data.treeId}/book/edit`" class="top-bar__transparent-setting-btn"></NuxtLink>
+        </div>
+        <div v-else>
+          <NuxtLink :to="`/tree/${data.treeId}/etc/edit`" class="top-bar__transparent-setting-btn"></NuxtLink>
+        </div>
         <input
             class="card-tree-info__detail-input"
             type="checkbox"

@@ -2,7 +2,7 @@
 const props = defineProps({
     num: {
         type: Number,
-        default: 14
+        default: 0
     }
 })
 </script>

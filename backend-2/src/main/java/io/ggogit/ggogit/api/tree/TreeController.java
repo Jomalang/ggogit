@@ -247,14 +247,15 @@ public class TreeController {
     }
 
     @GetMapping("tree-home-sort")
-    public ResponseEntity<TreeInfoResponseHome> getTreeInfoResponsesSort(
+    public ResponseEntity<TreeListHome> getTreeInfoResponsesSort(
             @RequestParam(value = "seedId", required = false) Long seedId,
+            @RequestParam(value = "page", defaultValue = "0") int page,
             @AuthenticationPrincipal CustomUserDetails userDetails
     ) {
         Long memberId = userDetails.getId();
-        List<TreeInfoResponse> treeInfoResponseList = treeService.findTreeInfoResponseList(memberId, seedId);
+        TreeListHome treeInfoResponseList = treeService.findTreeInfoResponseList(memberId, seedId, page);
 
-        return new ResponseEntity<>(TreeInfoResponseHome.of(treeInfoResponseList), HttpStatus.OK);
+        return new ResponseEntity<>(treeInfoResponseList, HttpStatus.OK);
     }
 
     @GetMapping("/members/{memberId}/trees/book/cards")

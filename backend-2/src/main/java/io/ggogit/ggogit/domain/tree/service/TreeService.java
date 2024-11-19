@@ -1,6 +1,7 @@
 package io.ggogit.ggogit.domain.tree.service;
 
 import io.ggogit.ggogit.api.tree.dto.TreeInfoResponse;
+import io.ggogit.ggogit.api.tree.dto.TreeListHome;
 import io.ggogit.ggogit.api.tree.dto.TreeSearchQuery;
 import io.ggogit.ggogit.domain.tree.entity.Seed;
 import io.ggogit.ggogit.domain.tree.entity.Tree;
@@ -34,7 +35,7 @@ public interface TreeService  {
     Page<TreeInfoResponse> findTreeInfoResponseList(Long memberId, Pageable pageable);
 
     List<TreeInfoResponse> findTreeInfoResponseList(Long memberId);
-    List<TreeInfoResponse> findTreeInfoResponseList(Long memberId, Long seedId);
+    TreeListHome findTreeInfoResponseList(Long memberId, Long seedId, int page);
 
     Page<Tree> findAllByBookId(Long memberId, Long bookId);
     Page<Tree> findAllCardByBookId(Long BookId, int page, int size);

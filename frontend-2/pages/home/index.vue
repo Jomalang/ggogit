@@ -1,15 +1,26 @@
 <script setup>
 import { Splide, SplideSlide, SplideTrack } from "@splidejs/vue-splide";
 import "@splidejs/splide/dist/css/splide.min.css";
+import {onMounted, onUnmounted} from "vue";
+import {debounce} from "lodash";
 
 //-------------------변수 선언--------------------
 
 const config = useRuntimeConfig();
 const treeInfoList = ref([]);
 const filterTreeInfoList = ref([]);
+const totalCnt = ref(0);
 const seedList = ref([]);
 const seedId = ref(0);
+const page = ref(0);
 let observer = null;
+
+// 스크롤 관련 변수
+const scrollContainer = ref(null);
+const itemRefs = ref([]);
+let scrollIndex = 5; // 초기 스크롤 인덱스
+
+
 const memberDetail = useMemberStore();
 const { _nickname: username } = storeToRefs(memberDetail);
 
@@ -27,6 +38,15 @@ const {
   method: "GET",
 });
 
+const {data:filterData} = await useAuthFetch("trees/tree-home-sort", {
+  baseURL: `${config.public.apiBase}`,
+  method: "GET",
+  params: {
+    seedId: 0,
+    page: 0,
+  },
+});
+
 const newTreeFetch = async (newSeedId) => {
   seedId.value = newSeedId;
   const response = await useAuthDataFetch("trees/tree-home-sort", {
@@ -34,22 +54,45 @@ const newTreeFetch = async (newSeedId) => {
     method: "GET",
     params: {
       seedId: seedId.value,
+      page: 0,
     },
   });
   if (response) {
-    // console.log(response);
+    console.log(response);
     // console.log(response.treeInfoResponseList);
     filterTreeInfoList.value = [...response.treeInfoResponseList];
+    totalCnt.value = response.totalCnt;
+    scrollIndex = 5;
+    page.value = 0;
+    console.log(totalCnt.value);
   }
 };
+
+const scrollTreeFetch = async () =>{
+  page.value += 1;
+  const response = await useAuthDataFetch("trees/tree-home-sort", {
+    baseURL: `${config.public.apiBase}`,
+    method: "GET",
+    params: {
+      seedId: seedId.value,
+      page: page.value,
+    },
+  });
+  if(response){
+    filterTreeInfoList.value = [...filterTreeInfoList.value, ...response.treeInfoResponseList];
+  }
+}
 
 watchEffect(() => {
   if (treeStatus.value === "success" && treeData.value) {
     treeInfoList.value = [...treeData.value.treeInfoResponseList];
-    filterTreeInfoList.value = [...treeData.value.treeInfoResponseList];
+    filterTreeInfoList.value = [...filterData.value.treeInfoResponseList];
+    totalCnt.value = filterData.value.totalCnt;
+    treeStatus.value = 'init';
   } else {
     // console.log("treeData.value is null");
   }
+
 
   if (seedStatus.value === "success" && seedData.value) {
     seedList.value = [...seedData.value.items];
@@ -57,6 +100,8 @@ watchEffect(() => {
     // console.log("seedData.value is null");
   }
 });
+
+
 
 const splideMounted = (splide) => {
   const selectedElement = document.getElementById("slide-0");
@@ -98,7 +143,51 @@ const bookExRemoveNone = (selectedElement, index) => {
   });
 };
 
+
+//무한 스크롤 관련 함수
+const handleScroll = debounce(() => {
+  const container = scrollContainer.value;
+  if (!container) return;
+
+  const nextItem = itemRefs.value[scrollIndex];
+  if (nextItem) {
+    const nextItemRect = nextItem.getBoundingClientRect();
+    const containerRect = container.getBoundingClientRect();
+
+    if (
+        nextItemRect.bottom <= containerRect.bottom &&
+        scrollIndex < totalCnt.value - 1
+    ) {
+      scrollIndex += 10;
+      scrollTreeFetch();
+    }
+  }
+}, 200); // 디바운스 적용
+
+// 각 리스트 항목에 대한 ref 설정
+const setItemRef = (index) => (el) => {
+  if (el) {
+    itemRefs.value[index] = el;
+  }
+};
 //-------------------LifeCycle-------------------
+
+// 마운트 시 스크롤 이벤트 등록 (passive: true)
+onMounted(() => {
+    console.log("scrollContainer.value", scrollContainer.value);
+    scrollContainer.value.addEventListener("scroll", handleScroll, {
+      passive: true,
+    });
+});
+
+// 언마운트 시 스크롤 이벤트 제거
+onUnmounted(() => {
+  console.log("scrollContainer.value", scrollContainer.value);
+  if (scrollContainer.value) {
+    scrollContainer.value.removeEventListener("scroll", handleScroll);
+  }
+});
+
 </script>
 
 <template>
@@ -269,7 +358,7 @@ const bookExRemoveNone = (selectedElement, index) => {
 
     <section class="my-tree-list">
       <h2 class="none">나의 트리 목록</h2>
-      <TextTreeCount :num="treeInfoList.length" />
+      <TextTreeCount :num="totalCnt" />
       <section id="seed-filter">
         <h2 class="none">트리 정렬 필터 버튼</h2>
         <div>
@@ -295,11 +384,17 @@ const bookExRemoveNone = (selectedElement, index) => {
           </div>
         </div>
         <div
-          class="card-tree-details"
-          v-for="tree in filterTreeInfoList"
-          :key="tree.treeId"
+            v-else
+            ref="scrollContainer"
+            class="scroll-container"
         >
+          <div
+              v-for="(tree, index) in filterTreeInfoList"
+              :key="tree.treeId">
+            <div :ref="setItemRef(index)">
           <CardTreeDetails :tree="tree" />
+            </div>
+          </div>
         </div>
       </section>
     </section>
@@ -376,5 +471,15 @@ const bookExRemoveNone = (selectedElement, index) => {
 }
 .item__transform {
   transform: scale(1.2);
+}
+
+/*무한 스크롤*/
+
+.scroll-container {
+  overflow-y: auto;
+  height: 480px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 </style>

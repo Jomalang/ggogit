@@ -2,6 +2,7 @@ package io.ggogit.ggogit.domain.tree.service;
 
 import io.ggogit.ggogit.api.tree.dto.TreeBookCardResponse;
 import io.ggogit.ggogit.api.tree.dto.TreeInfoResponse;
+import io.ggogit.ggogit.api.tree.dto.TreeListHome;
 import io.ggogit.ggogit.api.tree.dto.TreeSearchQuery;
 import io.ggogit.ggogit.domain.book.entity.Book;
 import io.ggogit.ggogit.domain.book.repository.BookRepository;
@@ -223,10 +224,16 @@ public class TreeServiceImpl implements TreeService {
         }).toList();
     }
     @Override
-    public List<TreeInfoResponse> findTreeInfoResponseList(Long memberId, Long seedId) {
-        List<Tree> trees = treeRepository.findTreeByMemberIdFetch(memberId, seedId);
+    public TreeListHome findTreeInfoResponseList(Long memberId, Long seedId, int page) {
 
-        return trees.stream().map(tree -> {
+        Pageable pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "updateTime"));
+        Page<Tree> trees;
+
+
+        if(seedId == 0) trees = treeRepository.findTreeByMemberIdNonseedIdFetch(memberId, pageable);
+        else trees = treeRepository.findTreeByMemberIdFetch(memberId, seedId, pageable);
+
+        List<TreeInfoResponse> treeInfoResponse = trees.map(tree -> {
             LocalDateTime lastestLeafTime = null;
             Long viewCount = 0L;
             Long likeCount = 0L;
@@ -240,8 +247,9 @@ public class TreeServiceImpl implements TreeService {
                     lastestLeafTime = leaf.getUpdateTime();
             }
             return TreeInfoResponse.of(tree, lastestLeafTime != null ? lastestLeafTime : LocalDateTime.now(), leafCount, likeCount, viewCount);
-
         }).toList();
+
+        return new TreeListHome().of(treeInfoResponse, trees.getTotalElements());
     }
 
     @Override

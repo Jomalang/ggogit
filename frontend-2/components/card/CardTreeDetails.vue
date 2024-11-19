@@ -8,6 +8,20 @@ const props = defineProps({
   },
 });
 
+const formatDate = (date) => {
+  const options = {
+    year: "2-digit", // '24' 형식으로 출력
+    month: "2-digit", // '10' 형식으로 출력
+    day: "2-digit", // '01' 형식으로 출력
+    hour: "2-digit",
+    hour12: false, // 시간 출력 (24시간제)
+    minute: "2-digit", // 분 출력
+    timeZone: "Asia/Seoul", // 한국 시간대
+  };
+  return new Date(date).toLocaleString("ko-KR", options);
+};
+
+
 const tree = ref(props.tree);
 </script>
 
@@ -54,7 +68,7 @@ const tree = ref(props.tree);
         <span class="card-tree-detail__info">{{ tree.bookPublisher }}</span>
       </div>
       <span class="card-tree-detail__info-created-date">{{
-        tree.leafCreatedAt
+        formatDate(tree.leafCreatedAt)
       }}</span>
     </div>
   </NuxtLink>

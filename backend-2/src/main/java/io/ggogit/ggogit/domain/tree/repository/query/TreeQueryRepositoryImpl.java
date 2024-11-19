@@ -85,6 +85,51 @@ public class TreeQueryRepositoryImpl implements TreeQueryRepository {
     }
 
     @Override
+    public Page<Tree> findTreeByMemberIdFetch(Long memberId, Long seedId, Pageable pageable) {
+        List<Tree> result = queryFactory
+                .selectFrom(tree)
+                .join(tree.member, member).on(memberEq(memberId))
+                .join(tree.seed, seed).on(seedEq(seedId))
+                .leftJoin(tree.book, book).fetchJoin()
+                .leftJoin(tree.treeBook, treeBook).fetchJoin()
+                .leftJoin(tree.treeImage, treeImage).fetchJoin()
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+
+
+        Long total = queryFactory
+                .select(tree.count())
+                .from(tree)
+                .join(tree.member, member).on(memberEq(memberId))
+                .join(tree.seed, seed).on(seedEq(seedId))
+                .fetchOne();
+
+        return new PageImpl<>(result, pageable, total == null ? 0 : total);
+    }
+
+    @Override
+    public Page<Tree> findTreeByMemberIdNonseedIdFetch(Long memberId, Pageable pageable) {
+        List<Tree> result = queryFactory
+                .selectFrom(tree)
+                .join(tree.member, member).on(memberEq(memberId))
+                .leftJoin(tree.book, book).fetchJoin()
+                .leftJoin(tree.treeBook, treeBook).fetchJoin()
+                .leftJoin(tree.treeImage, treeImage).fetchJoin()
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+
+        Long total = queryFactory
+                .select(tree.count())
+                .from(tree)
+                .join(tree.member, member).on(memberEq(memberId))
+                .fetchOne();
+
+        return new PageImpl<>(result, pageable, total == null ? 0 : total);
+    }
+
+    @Override
     public Page<Tree> findTreeByMemberIdFetch(Long memberId, Pageable pageable) {
         List<Tree> result = queryFactory
                 .selectFrom(tree)

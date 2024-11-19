@@ -24,6 +24,7 @@ watchEffect(() => {
         name="seedList"
         key="0"
         checked
+        @click="$emit('seedFilter', 0)"
       />
     </label>
     <label v-for="(seed, index) in seedList">

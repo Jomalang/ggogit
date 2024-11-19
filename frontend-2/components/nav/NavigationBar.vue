@@ -26,6 +26,16 @@ const props = defineProps({
 const developing = () => {
   alert("개발중입니다.");
 };
+
+const handleDbAction = (event, type, path) => {
+  if (type === "dbclick" || type === "doubletap") {
+    if (path === 1) {
+      navigateTo("/home");
+    } else if (path === 2) {
+      navigateTo("/search/book");
+    }
+  }
+};
 </script>
 
 <template>
@@ -35,7 +45,10 @@ const developing = () => {
     <div class="nav-frame">
       <ul class="nav-box__list">
         <!-- 홈 -->
-        <li class="nav-box__item">
+        <li
+          class="nav-box__item"
+          v-double-action="(event, type) => handleDbAction(event, type, 1)"
+        >
           <NuxtLink class="nav-box__link" :to="_home" @click="setCur(1)">
             <div
               class="nav-box__img-box"
@@ -65,7 +78,10 @@ const developing = () => {
         </li>
 
         <!-- 탐색 -->
-        <li class="nav-box__item">
+        <li
+          class="nav-box__item"
+          v-double-action="(event, type) => handleDbAction(event, type, 2)"
+        >
           <NuxtLink class="nav-box__link" :to="_search" @click="setCur(2)">
             <div
               class="nav-box__img-box"

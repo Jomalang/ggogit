@@ -1,89 +1,85 @@
 <script setup>
+const { data } = defineProps(["data"]);
 
-const { data } = defineProps(['data']);
-
-const emit = defineEmits(['startPage', 'endPage']);
+const emit = defineEmits(["startPage", "endPage"]);
 
 const isValidate = ref(true);
 const message = ref("");
 
 const inputStartPage = (number) => {
-
   // 마지막 페이지보다 큰 페이지를 입력했는지 확인
   if (number > data.endPage) {
     isValidate.value = false;
-    message.value = '시작 페이지가 마지막 페이지보다 큽니다.';
-    emit('startPage', { number, isValidate: isValidate.value });
+    message.value = "시작 페이지가 마지막 페이지보다 큽니다.";
+    emit("startPage", { number, isValidate: isValidate.value });
     return;
   }
 
   // 최대 페이지 수를 넘어가는지 확인
   if (number > data.maxPage) {
     isValidate.value = false;
-    message.value = '최대 페이지 수를 넘어갑니다.';
-    emit('startPage', { number, isValidate: isValidate.value });
+    message.value = "최대 페이지 수를 넘어갑니다.";
+    emit("startPage", { number, isValidate: isValidate.value });
     return;
   }
 
   isValidate.value = true;
-  emit('startPage', { number, isValidate: isValidate.value });
+  emit("startPage", { number, isValidate: isValidate.value });
 };
 
 const inputEndPage = (number) => {
-
   // 시작 페이지보다 작은 페이지를 입력했는지 확인
   if (number < data.startPage) {
     isValidate.value = false;
-    message.value = '마지막 페이지가 시작 페이지보다 작습니다.';
-    emit('endPage', { number, isValidate: isValidate.value });
+    message.value = "마지막 페이지가 시작 페이지보다 작습니다.";
+    emit("endPage", { number, isValidate: isValidate.value });
     return;
   }
 
   // 최대 페이지 수를 넘어가는지 확인
   if (number > data.maxPage) {
     isValidate.value = false;
-    message.value = '최대 페이지 수를 넘어갑니다.';
-    emit('endPage', { number, isValidate: isValidate.value });
+    message.value = "최대 페이지 수를 넘어갑니다.";
+    emit("endPage", { number, isValidate: isValidate.value });
     return;
   }
 
   isValidate.value = true;
-  emit('endPage', { number, isValidate: isValidate.value });
+  emit("endPage", { number, isValidate: isValidate.value });
 };
-
 </script>
 
 <template>
   <div class="input-page-number-box">
     <div class="input-page-number-text-box">
       <p class="input-page-number__title">*페이지</p>
-      <p class="input-page-number__max-page">{{ data.maxPage }} Max</p>
+      <p class="input-page-number__max-page">전체 {{ data.maxPage }} 페이지</p>
     </div>
     <div class="input-page-number__frame">
       <label class="input-page-number__label">
         <input
-            class="input-page-number__input input-page-number__input--start"
-            :class="{'.input-text__input--warning': !isValidate}"
-            id="input-page-number__input--start-id"
-            :value="data.startPage"
-            name="startPage"
-            type="number"
-            placeholder="시작 페이지"
-            min="0"
-            @input="(event) => inputStartPage(Number(event.target.value))"
+          class="input-page-number__input input-page-number__input--start"
+          :class="{ '.input-text__input--warning': !isValidate }"
+          id="input-page-number__input--start-id"
+          :value="data.startPage"
+          name="startPage"
+          type="number"
+          placeholder="시작 페이지"
+          min="0"
+          @input="(event) => inputStartPage(Number(event.target.value))"
         />
       </label>
       <label class="input-page-number__label">
         <input
-            class="input-page-number__input input-page-number__input--end"
-            :class="{'.input-text__input--warning': !isValidate}"
-            id="input-page-number__input--end-id"
-            :value="data.endPage"
-            name="endPage"
-            type="number"
-            placeholder="마지막 페이지"
-            min="0"
-            @input="(event) => inputEndPage(Number(event.target.value))"
+          class="input-page-number__input input-page-number__input--end"
+          :class="{ '.input-text__input--warning': !isValidate }"
+          id="input-page-number__input--end-id"
+          :value="data.endPage"
+          name="endPage"
+          type="number"
+          placeholder="마지막 페이지"
+          min="0"
+          @input="(event) => inputEndPage(Number(event.target.value))"
         />
       </label>
     </div>
@@ -106,7 +102,8 @@ const inputEndPage = (number) => {
   align-items: flex-start;
 }
 
-.input-page-number__title, input-page-number__max-page {
+.input-page-number__title,
+input-page-number__max-page {
   display: block;
   margin-bottom: 4px;
   color: var(--main1);

@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from "vue";
 import { value } from "lodash/seq.js";
-import {useRouter} from "#vue-router";
+import { useRouter } from "#vue-router";
 //-----------------props-----------------
 const props = defineProps({
   placeholder: "",
@@ -252,12 +252,30 @@ onUpdated(() => {
       </span>
     </div>
 
-
     <div class="search-filter-log">
-      <select class="search-filter-log__checkbox-input-select" v-model="selectedPage" @change="navigateToPage">
-        <option class="search-filter-log__checkbox-input-text" value="/search/book">도서</option>
-        <option class="search-filter-log__checkbox-input-text" value="/search/tree">트리</option>
-        <option class="search-filter-log__checkbox-input-select" value="/search/leaf">리프</option>
+      <select
+        class="search-filter-log__checkbox-input-select"
+        v-model="selectedPage"
+        @change="navigateToPage"
+      >
+        <option
+          class="search-filter-log__checkbox-input-text"
+          value="/search/book"
+        >
+          도서
+        </option>
+        <option
+          class="search-filter-log__checkbox-input-text"
+          value="/search/tree"
+        >
+          트리
+        </option>
+        <option
+          class="search-filter-log__checkbox-input-select"
+          value="/search/leaf"
+        >
+          리프
+        </option>
       </select>
     </div>
   </div>
@@ -588,10 +606,12 @@ button {
   user-select: none;
   flex-shrink: 0;
 }
-/*TODO: 가운데 정렬 방법 찾아봐야함*/
-.filter-tab-container{
-  left: 11%;
-  max-width: var(--max-width-1);
+.filter-tab-container {
+  max-width: none;
+  width: 300%;
+  margin: 0 auto;
+  top: 0;
+  left: 0;
   background-color: var(--main1--opacity10);
 }
 .filter-tab-container--30 {

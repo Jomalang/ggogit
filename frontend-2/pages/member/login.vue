@@ -43,7 +43,7 @@ const loginApi = async () => {
     // 로그인 성공시 returnUrl로 이동
     router.push(returnUrl);
   } catch (error) {
-    alert(error);
+    alert(error.data.message);
   }
 };
 

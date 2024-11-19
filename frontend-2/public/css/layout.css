@@ -429,9 +429,11 @@ home-tree__reg-4--search-book__input
   padding-bottom: 10px;
 }
 .short-btn-container {
-  display: flex;
-  flex-direction: row-reverse;
-  margin: 24px;
+  display: inline-flex;
+  position:absolute;
+  right: 24px;
+  bottom : 104px;
+
 }
 .register__input-container {
   padding-top: 30px;

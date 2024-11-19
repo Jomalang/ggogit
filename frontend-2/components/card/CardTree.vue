@@ -33,33 +33,33 @@ function modifyCount(count: number) {
             alt="트리 아이콘"
           />
         </div>
-      </a>
-      <div class="card-tree__top-sns-icon-box">
-        <div class="card-tree__top-share-icon-box">
-          <img src="~/assets/svg/comment.svg" alt="댓글 아이콘" />
+        <div class="card-tree__top-sns-icon-box">
+          <div class="card-tree__top-share-icon-box">
+            <img src="~/assets/svg/comment.svg" alt="댓글 아이콘" />
+          </div>
+          <div class="card-tree__top-like-icon-box">
+            <img src="~/assets/svg/like.svg" alt="좋아요 아이콘" />
+          </div>
         </div>
-        <div class="card-tree__top-like-icon-box">
-          <img src="~/assets/svg/like.svg" alt="좋아요 아이콘" />
-        </div>
-      </div>
-      <div class="card-tree__bot-box">
-        <div class="card-tree__bot-info-box">
-          <p class="card-tree__bot-title">{{ props.data.treeTitle }}</p>
-          <p class="card-tree__bot-date">{{ props.data.updateTime }}</p>
-        </div>
-        <div class="card-tree__bot-statistics-box">
-          <p class="card-tree__bot-leaf-text">
-            <span class="card-tree__bot-leaf-count">{{
-              modifyCount(props.data.leafCount)
-            }}</span>
-            리프
-          </p>
-          <p class="card-tree__bot-view-text">
-            <span class="card-tree__bot-view-count">{{
-              modifyCount(props.data.viewCount)
-            }}</span>
-            조회수
-          </p>
+        <div class="card-tree__bot-box">
+          <div class="card-tree__bot-info-box">
+            <p class="card-tree__bot-title">{{ props.data.treeTitle }}</p>
+            <p class="card-tree__bot-date">{{ props.data.updateTime }}</p>
+          </div>
+          <div class="card-tree__bot-statistics-box">
+            <p class="card-tree__bot-leaf-text">
+              <span class="card-tree__bot-leaf-count">{{
+                modifyCount(props.data.leafCount)
+              }}</span>
+              리프
+            </p>
+            <p class="card-tree__bot-view-text">
+              <span class="card-tree__bot-view-count">{{
+                modifyCount(props.data.viewCount)
+              }}</span>
+              조회수
+            </p>
+          </div>
         </div>
       </div>
     </div>

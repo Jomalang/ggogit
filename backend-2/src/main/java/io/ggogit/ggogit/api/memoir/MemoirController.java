@@ -7,6 +7,7 @@ import io.ggogit.ggogit.api.memoir.dto.*;
 import io.ggogit.ggogit.api.tree.dto.TreeLightInfoResponse;
 import io.ggogit.ggogit.domain.book.service.BookService;
 import io.ggogit.ggogit.domain.member.entity.Member;
+import io.ggogit.ggogit.domain.member.security.CustomUserDetails;
 import io.ggogit.ggogit.domain.memoir.entity.Memoir;
 import io.ggogit.ggogit.domain.memoir.service.MemoirDtoService;
 import io.ggogit.ggogit.domain.memoir.service.MemoirService;
@@ -15,6 +16,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -33,8 +36,9 @@ public class MemoirController {
     //memoir 조회 - 소유권 할당
     @GetMapping("{id}")
     public ResponseEntity<MemoirResponse> getMemoir(@PathVariable(name="id") long memoirId,
-                                                    @SessionAttribute(name= SessionConst.LOGIN_MEMBER, required = false) Member member) {
+                                                    @AuthenticationPrincipal CustomUserDetails userDetails) {
 
+        Long memberId = userDetails.getId();
         Memoir memoir = memoirService.getMemoir(memoirId);
         MemoirDto memoirDto = MemoirDto.of(memoir, "");
         Tree tree = memoir.getTree();
@@ -44,7 +48,7 @@ public class MemoirController {
 
         MemoirResponse memoirResponse = MemoirResponse.of(memoirDto, BookDto, treeDto, memberDto);
             //소유권 할당
-            if (member != null && memoirService.isOwner(memoirId, member.getId())) {
+            if (memoirService.isOwner(memoirId, memberId)) {
                 memoirResponse.ChangeOwnership(true);
             } else{
                 memoirResponse.ChangeOwnership(false);

@@ -181,6 +181,7 @@ onMounted(() => {
     <BackgroundUserInfoBackHeaderMemoirTitle
       :edit="`/memoir/${memoir.id}/edit`"
       :delete="`/memoirs/${memoir.id}`"
+      :isOnwer="isOnwer"
       :backImgPath="member.backImgName"
       :userName="member.nickName"
       :userId="member.email"
@@ -241,7 +242,7 @@ onMounted(() => {
       </section>
       <section class="branch-tree-another-record-list-container">
         <h1 class="none">트리 리스트</h1>
-        <CardAnotherRecordsList :items="treeItems" :sideScrollType="`tree`"  />
+        <CardAnotherRecordsList :items="treeItems" :sideScrollType="`tree`" />
       </section>
 
       <section
@@ -254,7 +255,10 @@ onMounted(() => {
       <section class="branch-tree-another-record-list-container">
         <h1 class="none">회고록 리스트</h1>
         <section class="book-detail-other-tree-card-container">
-          <CardAnotherRecordsList :items="memoirItems" :sideScrollType="`memoir`" />
+          <CardAnotherRecordsList
+            :items="memoirItems"
+            :sideScrollType="`memoir`"
+          />
         </section>
       </section>
 

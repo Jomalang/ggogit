@@ -319,7 +319,7 @@ const scrollToElement = () => {
       <section class="log-path-container">
         <h1 class="none">리프 경로</h1>
         <BarLogPath
-            :data="{
+          :data="{
             tree: breadcrumb.treeName,
             branch: breadcrumb.branchName,
             leaf: breadcrumb.leafName,
@@ -330,8 +330,8 @@ const scrollToElement = () => {
       <section class="log-list-date-title-container">
         <h1 class="none">리프 날짜</h1>
         <TextMainTitleRight
-            :title="focusNodeDate.title"
-            :size="focusNodeDate.size"
+          :title="focusNodeDate.title"
+          :size="focusNodeDate.size"
         ></TextMainTitleRight>
       </section>
     </section>
@@ -341,16 +341,16 @@ const scrollToElement = () => {
     <section class="log-list-container">
       <h1 class="none">리프 리스트</h1>
       <section
-          v-for="node in nodes"
-          :ref="node.id === leafId ? 'targetNode' : ''"
+        v-for="node in nodes"
+        :ref="node.id === leafId ? 'targetNode' : ''"
       >
         <div
-            class="log-item-container"
-            @touchstart="touchStartHandler"
-            @touchmove="(event) => touchMoveHandler(event, node)"
-            @mousedown="touchStartHandler"
-            @mousemove="(event) => touchMoveHandler(event, node)"
-            :style="{
+          class="log-item-container"
+          @touchstart="touchStartHandler"
+          @touchmove="(event) => touchMoveHandler(event, node)"
+          @mousedown="touchStartHandler"
+          @mousemove="(event) => touchMoveHandler(event, node)"
+          :style="{
             transform: `translateX(-${node.translateSize(screenWidth)}px)`,
           }"
         >
@@ -374,9 +374,9 @@ const scrollToElement = () => {
     <section class="log-list-bot-btn-container">
       <h1 class="none">리프 생성 버튼</h1>
       <ButtonBtnShortAGreen
-          :visibility="leafCreateBtn.canCreate"
-          :link="`/leaf/${seedType}/${leafCreateBtn.id}/new`"
-          :text="`리프 생성`"
+        :visibility="leafCreateBtn.canCreate"
+        :link="`/leaf/${seedType}/${leafCreateBtn.id}/new`"
+        :text="`리프 생성`"
       />
     </section>
 
@@ -418,6 +418,7 @@ main {
 
 .log-list-bot-bar-container {
   width: 100%;
+  max-width: 1024px;
   position: fixed;
   bottom: 0;
   z-index: 10;
@@ -428,7 +429,7 @@ main {
 }
 
 .log-list-bot-btn-container {
-  margin: 0 24px 16px 24px;
+  margin: 0 0px 16px 24px;
   display: flex;
   justify-content: flex-end;
   align-items: center;

@@ -72,6 +72,7 @@ export default defineNuxtConfig({
     },
   },
   modules: ["@pinia/nuxt"],
+  plugins: ["~/plugins/doubleTap.js"],
   router: {
     middleware: ["checkTreeFormData"],
   },

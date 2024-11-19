@@ -4,21 +4,27 @@ const { data } = defineProps(["data"]);
 
 <template>
   <div class="card-tree-info-cover-frame">
-    <div class="card-tree-info-cover">
-      <img
-        class="card-tree-info-cover"
-        :src="
-          data.coverImageName
-            ? useGetImageUrl(data.coverImageName, 'book')
-            : useGetImageUrl(data.treeImage, 'tree')
-        "
-        alt="cover"
-      />
-    </div>
-    <div class="card-tree-title-frame">
-      <p v-if="data.bookTitle" class="card-book-title">{{ data.bookTitle }}</p>
-      <p v-if="data.title" class="card-tree-title">{{ data.title }}</p>
-    </div>
+    <NuxtLink :to="`/book/${data.bookId}`">
+      <div class="card-tree-info-cover">
+        <img
+          class="card-tree-info-cover"
+          :src="
+            data.coverImageName
+              ? useGetImageUrl(data.coverImageName, 'book')
+              : useGetImageUrl(data.treeImage, 'tree')
+          "
+          alt="cover"
+        />
+      </div>
+    </NuxtLink>
+    <NuxtLink :to="`/tree/${data.treeId}`">
+      <div class="card-tree-title-frame">
+        <p v-if="data.bookTitle" class="card-book-title">
+          {{ data.bookTitle }}
+        </p>
+        <p v-if="data.title" class="card-tree-title">{{ data.title }}</p>
+      </div>
+    </NuxtLink>
   </div>
 </template>
 

@@ -13,15 +13,15 @@ export default defineNuxtRouteMiddleware((to, from) => {
   useStore.IsBackToFalse();
 
   // 리프 리스트에서 리프 상세로 이동하는 경우
-  if (
-    from.fullPath.includes("/leaf?leafId=") &&
-    to.fullPath.includes("/leaf/")
-  ) {
-    const leafId = to.fullPath.split("/").pop();
-    if (Number.isInteger(Number(leafId))) {
-      // 정수 검사
-      useStore.popPageFromStack();
-      useStore.addPageToStack(`/leaf?leafId=${leafId}`);
-    }
-  }
+  // if (
+  //   from.fullPath.includes("/leaf?leafId=") &&
+  //   to.fullPath.includes("/leaf/")
+  // ) {
+  //   const leafId = to.fullPath.split("/").pop();
+  //   if (Number.isInteger(Number(leafId))) {
+  //     // 정수 검사
+  //     useStore.popPageFromStack();
+  //     useStore.addPageToStack(`/leaf?leafId=${leafId}`);
+  //   }
+  // }
 });

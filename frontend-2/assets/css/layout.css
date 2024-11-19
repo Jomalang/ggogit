@@ -346,14 +346,16 @@ home-tree__reg-4--search-book__input
 
 .log-list-bot-bar-container {
   width: 100%;
+  max-width: 1024px;
   position: fixed;
   bottom: 0;
   z-index: 10;
 }
 
 .log-list-bot-btn-container {
-  margin: 0 24px 16px 24px;
+  margin: 0 24px 24px 24px;
   display: flex;
+  max-width: 1024px;
   justify-content: flex-end;
   align-items: center;
 }

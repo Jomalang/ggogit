@@ -34,6 +34,20 @@ const fileNames = ref([]);
 const editPost = async () => {
   //에디터에서 작성한 내용을 획득
   memoir.value.text = editor.getHTML();
+  if (memoir.value.title === "") {
+    alert("회고록 제목을 입력해주세요.");
+    return;
+  }
+
+  if (memoir.value.text === "") {
+    alert("회고록 내용을 입력해주세요.");
+    return;
+  }
+
+  if (memoir.value.visibility === "") {
+    alert("공개 여부를 선택해주세요.");
+    return;
+  }
 
   //fetch
   const response = await useAuthDataFetch("memoirs/" + memoirId.value, {

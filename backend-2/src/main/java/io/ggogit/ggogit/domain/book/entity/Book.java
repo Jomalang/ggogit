@@ -116,7 +116,7 @@ public class Book {
                 .title(treeTmp.getBookTitle())
                 .imageFile(treeTmp.getImageFile())
                 .author(treeTmp.getAuthor())
-                .publishDate(null)
+                .publishDate(treeTmp.getPublishDate())
                 .publisher(treeTmp.getPublisher())
                 .totalPage(treeTmp.getTotalPage())
                 .build();

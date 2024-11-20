@@ -27,6 +27,7 @@ public class TreeInfoResponse {
     //relationship identifiers
     private Long treeId;
     private Long memberId ;
+    private Long memoirId;
     private Long seedId;
     private String seedKorName;
     //trees
@@ -55,6 +56,7 @@ public class TreeInfoResponse {
                 .treeId(tree.getId())
                 .memberId(tree.getMember().getId())
                 .seedId(tree.getSeed().getId())
+                .memoirId(tree.getMemoir() == null ? null : tree.getMemoir().getId())
                 .seedKorName(tree.getSeed().getKorName())
                 .title(tree.getTitle())
                 .description(tree.getDescription())

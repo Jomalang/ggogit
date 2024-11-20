@@ -1,11 +1,11 @@
 spring:
   profiles:
-    active: test
+    active: dev
 
   mail:
     host: smtp.gmail.com #SMTP 서버 호스트
     port: 587 # SMTP 서버 포트
-    username:  # SMTP 서버 로그인 아이디
+    username: # SMTP 서버 로그인 아이디
     password:  #SMTP 서버 비밀번호
     protocol: smtp
     properties:

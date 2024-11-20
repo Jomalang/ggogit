@@ -23,14 +23,16 @@ const deleteResource = () => {
 <template>
   <!--top-bar__transparent(edit)-->
   <div class="top-bar__transparent-frame">
-    <div class="top-bar__transparent-back-btn" @click="useGoBack()"></div>
-    <div class="top-bar__transparent-btns">
+    <div
+      class="top-bar__transparent-back-btn"
+      @click.prevent="useGoBack()"
+    ></div>
+    <div class="top-bar__transparent-btns" v-if="deleteBtnActive">
       <NuxtLink
         class="top-bar__transparent-setting-btn"
         :to="props.edit"
       ></NuxtLink>
       <button
-        v-if="deleteActive"
         class="top-bar__transparent-delete-btn"
         @click="deleteResource"
       ></button>

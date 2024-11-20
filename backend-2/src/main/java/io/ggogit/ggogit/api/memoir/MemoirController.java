@@ -7,6 +7,7 @@ import io.ggogit.ggogit.api.memoir.dto.*;
 import io.ggogit.ggogit.api.tree.dto.TreeLightInfoResponse;
 import io.ggogit.ggogit.domain.book.service.BookService;
 import io.ggogit.ggogit.domain.member.entity.Member;
+import io.ggogit.ggogit.domain.member.security.CustomUserDetails;
 import io.ggogit.ggogit.domain.memoir.entity.Memoir;
 import io.ggogit.ggogit.domain.memoir.service.MemoirDtoService;
 import io.ggogit.ggogit.domain.memoir.service.MemoirService;
@@ -15,6 +16,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -32,10 +35,13 @@ public class MemoirController {
 
     //memoir 조회 - 소유권 할당
     @GetMapping("{id}")
-    public ResponseEntity<MemoirResponse> getMemoir(@PathVariable(name="id") long memoirId,
-                                                    @SessionAttribute(name= SessionConst.LOGIN_MEMBER, required = false) Member member) {
+    public ResponseEntity<MemoirResponse> getMemoir(@PathVariable(name="id") Long memoirId,
+                                                    @AuthenticationPrincipal CustomUserDetails userDetails) {
 
+        //TODO:FetchJoin으로 수정하기
+        Long memberId = userDetails.getId();
         Memoir memoir = memoirService.getMemoir(memoirId);
+        log.info("memoir = {}", memoir);
         MemoirDto memoirDto = MemoirDto.of(memoir, "");
         Tree tree = memoir.getTree();
         TreeLightInfoResponse treeDto = TreeLightInfoResponse.of(tree);
@@ -44,7 +50,7 @@ public class MemoirController {
 
         MemoirResponse memoirResponse = MemoirResponse.of(memoirDto, BookDto, treeDto, memberDto);
             //소유권 할당
-            if (member != null && memoirService.isOwner(memoirId, member.getId())) {
+            if (memoirService.isOwner(memberId, memoirId)) {
                 memoirResponse.ChangeOwnership(true);
             } else{
                 memoirResponse.ChangeOwnership(false);

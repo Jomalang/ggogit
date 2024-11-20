@@ -77,7 +77,6 @@ const submitHandler = () => {
   if (!(loginInfo.value.isEmailValid && loginInfo.value.isPasswordValid)) {
     return; // 유효성 검사 실패
   }
-
   loginApi();
 };
 </script>

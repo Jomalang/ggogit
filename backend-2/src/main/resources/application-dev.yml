@@ -34,7 +34,6 @@ spring:
       hibernate:
         format_sql: true
         use_sql_comments: true
-        dialect: org.hibernate.dialect.MariaDBDialect
         default_batch_fetch_size: 100 #batch size 글로벌 설정
     defer-datasource-initialization: true
 

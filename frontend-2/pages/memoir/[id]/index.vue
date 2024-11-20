@@ -64,8 +64,9 @@ if (data.value) {
   isOnwer.value = data.value.owner;
 } else {
   console.error("회고록 조회 실패 : ");
+  console.log(data.value);
   //이전페이지로 이동
-  useRouter().push("/home");
+  // useRouter().push("/home");
 }
 
 //카드 아이템

@@ -53,7 +53,7 @@ const savePost = async () => {
   }
 
   //useFetch
-  const { data, error } = await useAuthFetch("memoirs/" + treeId, {
+  const response = await useAuthDataFetch("memoirs/" + treeId, {
     method: "POST",
     baseURL: `${config.public.apiBase}`,
     headers: {
@@ -70,11 +70,14 @@ const savePost = async () => {
   if (error.value) {
     console.error("회고록 등록 실패 : ", error.value);
     //TODO : 에러 출력
+    console.log(response);
     alert(error.value.data.message);
     return;
   } else {
     alert("회고록이 등록되었습니다.");
-    memoirId.value = data.value.id;
+    console.log(response);
+    memoirId.value = response.id;
+    console.log("회고록 등록 성공 : ", response.value);
     //리다이렉션
     await navigateTo(`/memoir/${memoirId.value}`);
   }

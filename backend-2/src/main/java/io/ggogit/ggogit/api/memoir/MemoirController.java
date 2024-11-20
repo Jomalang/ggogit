@@ -35,11 +35,13 @@ public class MemoirController {
 
     //memoir 조회 - 소유권 할당
     @GetMapping("{id}")
-    public ResponseEntity<MemoirResponse> getMemoir(@PathVariable(name="id") long memoirId,
+    public ResponseEntity<MemoirResponse> getMemoir(@PathVariable(name="id") Long memoirId,
                                                     @AuthenticationPrincipal CustomUserDetails userDetails) {
 
+        //TODO:FetchJoin으로 수정하기
         Long memberId = userDetails.getId();
         Memoir memoir = memoirService.getMemoir(memoirId);
+        log.info("memoir = {}", memoir);
         MemoirDto memoirDto = MemoirDto.of(memoir, "");
         Tree tree = memoir.getTree();
         TreeLightInfoResponse treeDto = TreeLightInfoResponse.of(tree);
@@ -48,7 +50,7 @@ public class MemoirController {
 
         MemoirResponse memoirResponse = MemoirResponse.of(memoirDto, BookDto, treeDto, memberDto);
             //소유권 할당
-            if (memoirService.isOwner(memoirId, memberId)) {
+            if (memoirService.isOwner(memberId, memoirId)) {
                 memoirResponse.ChangeOwnership(true);
             } else{
                 memoirResponse.ChangeOwnership(false);

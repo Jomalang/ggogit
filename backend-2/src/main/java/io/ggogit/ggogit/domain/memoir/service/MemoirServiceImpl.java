@@ -46,12 +46,14 @@ public class MemoirServiceImpl implements MemoirService {
         //이미지 삭제
         String memoirText = memoir.getText();
         List<String> imageNames = new ArrayList<>();
-        //memoirText에서 <img>태그의 src속성값을 추출
+        ///memoirText에서 <img>태그의 src속성값 중 filePath= 이하의 이미지 이름을 추출
         Pattern pattern = Pattern.compile("<img[^>]+src\\s*=\\s*['\"]([^'\"]+)['\"][^>]*>");
         Matcher matcher = pattern.matcher(memoirText);
         while (matcher.find()) {
-            log.info("fileName = {}", matcher.group(1));
-            imageNames.add(matcher.group(1));
+            String src = matcher.group(1);
+            String imageName = src.substring(src.indexOf("filePath=") + 9);
+            log.info("imageName = {}", imageName);
+            imageNames.add(imageName);
         }
 
         while (!imageNames.isEmpty()) {

@@ -1,11 +1,14 @@
 <script setup>
-import { defineProps } from "vue";
+import {defineEmits, defineProps} from "vue";
 import CardProgressBar from "~/components/card/CardProgressBar.vue";
 import CardReactNumbers from "~/components/card/CardReactNumbers.vue";
 import LinkFullWidth from "~/components/button/LinkFullWidth.vue";
 const hidden = ref(false);
 const { data } = defineProps(["data"]);
 const progress = ((data.readingPage * 100) / data.bookTotalPage).toFixed(2);
+
+// 이벤트 정의
+const emit = defineEmits(["isDelete"]);
 
 function translatorsConverter(translators) {
   if (!translators) {
@@ -58,11 +61,14 @@ function hiddenText() {
     <div class="card-tree-info__detail-frame">
       <div class="card-tree-info__detail-visibility">
 
-        <div v-if="data.seedId === 1">
-          <NuxtLink :to="`/tree/${data.treeId}/book/edit`" class="top-bar__transparent-setting-btn"></NuxtLink>
-        </div>
-        <div v-else>
-          <NuxtLink :to="`/tree/${data.treeId}/etc/edit`" class="top-bar__transparent-setting-btn"></NuxtLink>
+        <div class="transparent-btn-frame">
+          <div v-if="data.seedId === 1">
+            <NuxtLink :to="`/tree/${data.treeId}/book/edit`" class="top-bar__transparent-setting-btn"></NuxtLink>
+          </div>
+          <div v-else>
+            <NuxtLink :to="`/tree/${data.treeId}/etc/edit`" class="top-bar__transparent-setting-btn"></NuxtLink>
+          </div>
+          <div @click="emit('isDelete')" class="top-bar__transparent-delete-btn"></div>
         </div>
         <input
           class="card-tree-info__detail-input"
@@ -253,6 +259,11 @@ function hiddenText() {
   border-radius: 4px;
   background: var(--main1);
 }
+.transparent-btn-frame{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
 .top-bar__transparent-setting-btn {
   margin-left: 70px;
   width: 20px;
@@ -261,6 +272,16 @@ function hiddenText() {
   background: transparent url("/svg/edit-dark.svg") no-repeat center;
   background-size: contain;
   align-items: center;
+}
+.top-bar__transparent-delete-btn {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  background: transparent url("/svg/delete--gray.svg") no-repeat center;
+  background-size: contain;
+  padding: 0;
+  border: none;
+  cursor: pointer;
 }
 .card-tree__description-content {
   font-size: 14px;

@@ -47,21 +47,18 @@ onMounted(() => {
     imgTag.src = treeFormData.value.imageData;
   }
   if (treeData.value){
-    console.log("treeData:", treeData.value);
     treeInfo.image = treeData.value.coverImageName;
     treeInfo.title = treeData.value.bookTitle;
     treeInfo.author = treeData.value.bookAuthor;
     treeInfo.publisher = treeData.value.bookPublisher;
     treeInfo.publishDate = treeData.value.bookPublishedYear;
     treeInfo.totalPage = treeData.value.bookTotalPage;
-    treeInfo.bookCategoryId = treeData.value.bookCategoryId;
-    treeInfo.bookCategoryName = treeData.value.bookCategory;
+    treeFormData.value.bookCategoryId = treeData.value.bookCategoryId;
+    treeFormData.value.bookCategoryName = treeData.value.bookCategoryName;
     treeInfo.treeTitle = treeData.value.title;
     treeInfo.description = treeData.value.description;
     treeInfo.visibility = treeData.value.visibility;
     imgData.imageData = treeData.value.coverImageName;
-    console.log("treeInfo:", treeInfo);
-
     if (treeInfo.image.startsWith("https://image.aladin.co.kr/product/")) {
       isAuto.value = true;
       imgData.isAuto = true;
@@ -166,7 +163,7 @@ const submitFormHandler = async (e) => {
     }
 
     const response = await useAuthDataFetch("/trees", {
-      method: "POST",
+      method: "PUT",
       baseURL: `${config.public.apiBase}`,
       body: treeFormDataToSend,
     });
@@ -177,7 +174,7 @@ const submitFormHandler = async (e) => {
       throw new Error("Network response was not ok");
     }
 
-    router.push("/leaf/book/new");
+    router.push(`/tree/${useRoute().params.id}`);
   } catch (error) {
     console.error("Error submitting form:", error);
   }
@@ -186,7 +183,7 @@ const submitFormHandler = async (e) => {
 const dropBookCategory = () => {
   treeFormData.value.bookCategoryId = null;
   treeFormData.value.bookCategoryName = null;
-  treeFormData.value.bookCategorySelected = false;
+  treeFormData.value.bookCategorySelected = true;
 };
 
 const inputBookTitle = (value) => {
@@ -235,9 +232,9 @@ const { data: treeData, error: infoError } = await useAuthFetch(
 
 <template>
   <header>
-    <h1 class="none">도서 트리 생성 페이지</h1>
+    <h1 class="none">도서 트리 수정 페이지</h1>
     <section class="tob-bar-back-container">
-      <h1 class="none">트리 생성 상단 바</h1>
+      <h1 class="none">트리 수정 상단 바</h1>
       <TopBarBack title="트리 수정"  ></TopBarBack>
     </section>
   </header>
@@ -298,7 +295,7 @@ const { data: treeData, error: infoError } = await useAuthFetch(
               label: '*도서 이름',
               name: 'bookTitle',
               placeholder: '도서 이름을 입력해주세요',
-              value: treeFormData.bookTitle,
+              value: treeInfo.title,
               validate: treeFormData.bookTitleValid,
               validateMessage: '도서 이름을 입력해주세요.',
             }"
@@ -327,7 +324,7 @@ const { data: treeData, error: infoError } = await useAuthFetch(
               label: '*지은이 이름',
               name: 'author',
               placeholder: treeInfo.author,
-              value: treeFormData.author,
+              value: treeInfo.author,
               validate: treeFormData.authorValid,
               validateMessage: '지은이 이름을 입력해주세요.',
             }"
@@ -357,7 +354,7 @@ const { data: treeData, error: infoError } = await useAuthFetch(
               label: '*출판사',
               name: 'publisher',
               placeholder: treeInfo.publisher,
-              value: treeFormData.publisher,
+              value: treeInfo.publisher,
               validate: treeFormData.publisherValid,
               validateMessage: '출판사를 입력해주세요.',
             }"
@@ -387,7 +384,7 @@ const { data: treeData, error: infoError } = await useAuthFetch(
               label: '*출판일',
               name: 'publishDate',
               placeholder: 'treeInfo.publishDate',
-              value: treeFormData.publishDate,
+              value: treeInfo.publishDate,
               validate: treeFormData.publishDateValid,
               validateMessage: '출판일을 입력해주세요. (2024-11-01 형식)',
             }"
@@ -419,7 +416,7 @@ const { data: treeData, error: infoError } = await useAuthFetch(
               name: 'totalPage',
               placeholder: 'treeInfo.totalPage',
               min: 0,
-              value: treeFormData.totalPage,
+              value: treeInfo.totalPage,
               validate: treeFormData.totalPageValid,
               validateMessage: '양수의 숫자만 입력해주세요.',
             }"
@@ -482,9 +479,9 @@ const { data: treeData, error: infoError } = await useAuthFetch(
         </section>
 
         <section class="book-tree-submit-container">
-          <h1 class="none">트리 생성 버튼</h1>
+          <h1 class="none">트리 수정 버튼</h1>
           <ButtonSubmitBtnFullBar
-            text="트리 생성"
+            text="트리 수정"
             @click.prevent="submitFormHandler"
           ></ButtonSubmitBtnFullBar>
         </section>

@@ -13,4 +13,5 @@ public interface SeedService {
 
     Seed get(Long id);
 
+    Seed getSeedByTreeId(Long treeId);
 }

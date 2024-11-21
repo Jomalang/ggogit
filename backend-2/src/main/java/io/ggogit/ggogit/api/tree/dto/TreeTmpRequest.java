@@ -8,6 +8,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Data
@@ -57,12 +58,18 @@ public class TreeTmpRequest {
                 .bookTitle(bookTitle)
                 .author(author)
                 .publisher(publisher)
+                .publishDate(parseDate(publishDate))
                 .totalPage(totalPage)
                 .treeTitle(treeTitle)
                 .description(description)
                 .imageFile(imageFile)
                 .visibility(visibility)
                 .build();
+    }
+
+    private LocalDate parseDate(String date) {
+        // 0000-00-00 형태 변환
+        return LocalDate.parse(date);
     }
 }
 

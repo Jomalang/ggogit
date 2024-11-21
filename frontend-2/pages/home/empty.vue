@@ -38,7 +38,6 @@ const { _nickname: username } = storeToRefs(memberDetail);
     <Footer :noticeText="`개발중입니다.`" />
   </footer>
 
-
   <aside class="nav-container">
     <section class="short-btn-container">
       <h4 class="none">트리 생성 버튼</h4>

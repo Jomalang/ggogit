@@ -12,9 +12,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -38,6 +41,25 @@ public class MemoirServiceImpl implements MemoirService {
     public void removeMemoir(Long memoirId) {
         Optional<Memoir> opMemoir = memoirRepository.findById(memoirId);
         Memoir memoir = opMemoir.orElseThrow(() -> new IllegalArgumentException("회고록이 없습니다."));
+
+        //TODO: 이미지 테이블 따로 뺄것.
+        //이미지 삭제
+        String memoirText = memoir.getText();
+        List<String> imageNames = new ArrayList<>();
+        ///memoirText에서 <img>태그의 src속성값 중 filePath= 이하의 이미지 이름을 추출
+        Pattern pattern = Pattern.compile("<img[^>]+src\\s*=\\s*['\"]([^'\"]+)['\"][^>]*>");
+        Matcher matcher = pattern.matcher(memoirText);
+        while (matcher.find()) {
+            String src = matcher.group(1);
+            String imageName = src.substring(src.indexOf("filePath=") + 9);
+            log.info("imageName = {}", imageName);
+            imageNames.add(imageName);
+        }
+
+        while (!imageNames.isEmpty()) {
+            String imageName = imageNames.removeFirst();
+            imageRepository.deleteImage(imageName, UploadFolderType.MEMOIR);
+        }
 
         //트리 연결 해제
         memoir.getTree().setMemoir(null);

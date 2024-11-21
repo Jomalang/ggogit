@@ -57,13 +57,16 @@ function hiddenText() {
   <client-only>
     <div class="card-tree-info__detail-frame">
       <div class="card-tree-info__detail-visibility">
-        <NuxtLink :to="`/tree/${data.treeId}/edit`" class="top-bar__transparent-setting-btn"></NuxtLink>
+        <NuxtLink
+          :to="`/tree/${data.treeId}/edit`"
+          class="top-bar__transparent-setting-btn"
+        ></NuxtLink>
         <input
-            class="card-tree-info__detail-input"
-            type="checkbox"
-            id="card-tree-info__detail"
+          class="card-tree-info__detail-input"
+          type="checkbox"
+          id="card-tree-info__detail"
         />
-        <div @click.prevent="hiddenText" >
+        <div @click.prevent="hiddenText">
           <label class="card-tree-info__detail" for="card-tree-info__detail">
             자세히
           </label>
@@ -100,12 +103,23 @@ function hiddenText() {
         </section>
 
         <section
-          v-if="progress >= 80"
+          v-if="
+            progress >= 80 && data.treeLeafCnt >= 1 && data.memoirId === null
+          "
           class="card-tree-memoir-create-btn-container"
         >
           <LinkFullWidth
             :link="'/memoir/' + data.treeId + '/reg'"
             text="회고록 작성"
+          />
+        </section>
+        <section
+          v-if="data.memoirId"
+          class="card-tree-memoir-create-btn-container"
+        >
+          <LinkFullWidth
+            :link="'/memoir/' + data.memoirId"
+            text="회고록 보기"
           />
         </section>
       </section>
@@ -156,7 +170,7 @@ function hiddenText() {
   justify-content: space-between;
   align-items: center;
 }
-.card-tree-info__detail-visibility{
+.card-tree-info__detail-visibility {
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -188,7 +202,6 @@ function hiddenText() {
   background-position: center;
   background-size: contain;
 }
-
 
 .card-tree-info__detail-input:checked + .card-tree-info__detail::after {
   width: 7px;

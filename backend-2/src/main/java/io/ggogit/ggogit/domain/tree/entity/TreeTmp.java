@@ -12,6 +12,7 @@ import org.hibernate.annotations.ColumnDefault;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
@@ -49,6 +50,9 @@ public class TreeTmp {
     @Size(max = 255)
     @Column(name = "PUBLISHER")
     private String publisher;
+
+    @Column(name = "PUBLISH_DATE")
+    private LocalDate publishDate;
 
     @Column(name = "TOTAL_PAGE")
     private Integer totalPage;

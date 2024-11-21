@@ -275,22 +275,22 @@ public class TreeController {
         return new ResponseEntity<>(TreeBookCardResponseList.of(treeBookCardResponse), HttpStatus.OK);
     }
 
-    @GetMapping("members/{memberId}/books/{bookId}/trees/cards")
+    @GetMapping("members/books/{bookId}/trees/cards")
     public ResponseEntity<TreeBookCardResponseList> getBookTreeResponse(
-            @PathVariable(name="memberId", required = true) Long memberId,
+            @AuthenticationPrincipal CustomUserDetails userDetails,
             @PathVariable(name="bookId", required = true) Long bookId){
 
+        Long memberId = userDetails.getId();
         List<Tree> allByBookId = treeService.findAllByBookId(memberId, bookId).getContent();
-        System.out.println("size = " + String.valueOf(allByBookId.size()));
         //해당 책에 멤버가 소유한 트리가 없을 경우
         if(allByBookId.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        List<TreeBookCardResponse> treeBookCardRespons = allByBookId.stream()
+        List<TreeBookCardResponse> treeBookCardResponse = allByBookId.stream()
                 .map(tree -> TreeBookCardResponse.toEntity(tree.getBook(), true, tree, tree.getSeed(), memberId))
                 .toList();
 
-        return new ResponseEntity<>(TreeBookCardResponseList.of(treeBookCardRespons), HttpStatus.OK);
+        return new ResponseEntity<>(TreeBookCardResponseList.of(treeBookCardResponse), HttpStatus.OK);
     }
 
     @GetMapping("books/{bookId}/trees/cards")

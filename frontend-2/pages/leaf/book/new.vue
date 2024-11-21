@@ -28,6 +28,7 @@ onMounted(() => {
     placeholder: "무엇을 느끼셨나요?",
     usageStatistics: false,
     initialValue: leafFormData.value.content || "",
+    autofocus: false,
     hooks: {
       async addImageBlobHook(blob, callback) {
         try {

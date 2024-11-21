@@ -60,6 +60,7 @@ public class TreeCardDtoResponse {
         @Builder.Default
         private int cardType = 0;
 
+        private Long id;
         private String title;
         private String content;
         private String updateDate;
@@ -73,6 +74,7 @@ public class TreeCardDtoResponse {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
             return TreeCardDtoResponse.itemDto.builder()
+                    .id(tree.getId())
                     .title(tree.getTitle())
                     .content(tree.getDescription())
                     .updateDate(tree.getUpdateTime().format(formatter))

@@ -28,19 +28,14 @@ if (bookData.value) {
   book.value = bookData.value;
 }
 
-//TODO: MembmerId는 상태관리 추가되면 가져와야 함 (현재는 임시로 1로 설정)
-const memberId = 1;
 const {
   data: treeCardsData,
   status: treeCardsStatus,
   error: treeCardsError,
-} = await useAuthFetch(
-  `trees/members/${memberId}/books/${bookId}/trees/cards`,
-  {
-    method: "GET",
-    baseURL: `${config.public.apiBase}`,
-  }
-);
+} = await useAuthFetch(`trees/members/books/${bookId}/trees/cards`, {
+  method: "GET",
+  baseURL: `${config.public.apiBase}`,
+});
 
 if (treeCardsData.value) {
   myTreeCards.value = [...treeCardsData.value.treeBookCardResponse];
@@ -61,6 +56,7 @@ const {
 });
 
 if (bookleafCradsData.value) {
+  console.log(bookleafCradsData.value);
   bookleafCards.value = [...bookleafCradsData.value.items];
 }
 
@@ -87,6 +83,7 @@ const {
 });
 
 if (bookTreeCradsData.value) {
+  console.log(bookTreeCradsData.value);
   bookTreeCards.value = [...bookTreeCradsData.value.items];
 }
 </script>
@@ -107,7 +104,7 @@ if (bookTreeCradsData.value) {
           backImgPath: bookData.imageFile,
         }"
       />
-<!--     TODO: 추후에 좋아요 기능 추가시 주석 해제-->
+      <!--     TODO: 추후에 좋아요 기능 추가시 주석 해제-->
       <section class="book-detail-like-bar-container none">
         <h1 class="none">좋아요 및 공유</h1>
         <BarLikeShare
@@ -144,18 +141,18 @@ if (bookTreeCradsData.value) {
       <h1 class="none">도서 기본 정보</h1>
     </section>
 
-    <section class="book-detail-comment-container none">
+    <!-- <section class="book-detail-comment-container none">
       <h1 class="none">댓글</h1>
       <BarComment :commentCount="1" :profileImg="commentCount" />
       <section
         id="comment-filter-tab-id"
         class="book-detail-comment-tab-container book-detail-comment-tab-container--active none"
-      >
-        <h1 class="none">댓글 탭</h1>
-        <!-- TODO: 추후에 데이터 바인딩하면 주석 풀 것 -->
-        <!-- <TabComment /> -->
-      </section>
-    </section>
+      > -->
+    <!-- <h1 class="none">댓글 탭</h1> -->
+    <!-- TODO: 추후에 데이터 바인딩하면 주석 풀 것 -->
+    <!-- <TabComment /> -->
+    <!-- </section>
+    </section> -->
 
     <section class="book-detail-my-tree-container">
       <h1 class="none">도서의 나의 트리 정보</h1>
@@ -164,13 +161,12 @@ if (bookTreeCradsData.value) {
       </section>
 
       <section class="book-detail-my-tree-list-container">
-        <!-- 이 부분은 추후에 어플리케이션이 사용자 정보를 상태 유지 가능할때 기능 추가 할 예정 -->
         <h1 class="none">나의 트리 리스트</h1>
         <section class="book-detail-my-tree-card-container">
           <CardTreeList
-              v-if="myTreeCards.length >= 1"
-              :data="myTreeCards"
-              :sideScrollType="`my-tree`"
+            v-if="myTreeCards.length >= 1"
+            :data="myTreeCards"
+            :sideScrollType="`my-tree`"
           />
           <TextMainTitle
             class="book-detail-my-tree-no-tree-container"
@@ -196,10 +192,7 @@ if (bookTreeCradsData.value) {
       <section class="book-detail-other-tree-list-container">
         <h1 class="none">트리 리스트</h1>
         <section class="book-detail-other-tree-card-container">
-          <CardSnsCardTreeList
-              :list="bookTreeCards"
-              :sideScrollType="`tree`"
-          />
+          <CardSnsCardTreeList :list="bookTreeCards" :sideScrollType="`tree`" />
         </section>
       </section>
 
@@ -211,8 +204,8 @@ if (bookTreeCradsData.value) {
         <h1 class="none">회고록 리스트</h1>
         <section class="book-detail-other-tree-card-container">
           <CardSnsCardTreeList
-              :list="bookMemoirCards"
-              :sideScrollType="`memoir`"
+            :list="bookMemoirCards"
+            :sideScrollType="`memoir`"
           />
         </section>
       </section>
@@ -224,10 +217,7 @@ if (bookTreeCradsData.value) {
       <section class="book-detail-other-tree-list-container">
         <h1 class="none">리프 리스트</h1>
         <section class="book-detail-other-tree-card-container">
-          <CardSnsCardTreeList
-              :list="bookleafCards"
-              :sideScrollType="`leaf`"
-          />
+          <CardSnsCardTreeList :list="bookleafCards" :sideScrollType="`leaf`" />
         </section>
       </section>
     </section>

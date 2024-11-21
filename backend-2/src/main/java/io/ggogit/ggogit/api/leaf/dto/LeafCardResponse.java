@@ -42,6 +42,8 @@ public class LeafCardResponse {
         @Builder.Default
         int cardType = 2;
 
+        Long id;
+        Long bookId;
         String title;
         String content;
         String updateDate;
@@ -53,6 +55,8 @@ public class LeafCardResponse {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
             return ItemDto.builder()
+                    .id(leaf.getId())
+                    .bookId(tree.getBook().getId())
                     .title(leaf.getTitle())
                     .content(leaf.getContent())
                     .updateDate(leaf.getUpdateTime().format(formatter))

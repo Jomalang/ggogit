@@ -8,10 +8,10 @@ const props = defineProps({
 <template>
   <!--link__one-imgae-detail(src,href)-->
   <div>
-    <NuxtLink class="link-cover-img-anker" :to="href">
+    <div class="link-cover-img-anker" @click.prevent="useGoBack()">
       <img class="link-cover-img" :src="useGetImageUrl(src)" alt="표지" />
       <p class="link-cover-img-p">자세히 보기</p>
-    </NuxtLink>
+    </div>
   </div>
 </template>
 

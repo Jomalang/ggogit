@@ -7,6 +7,7 @@ const props = defineProps({
   userId: "",
   bookTitle: "",
   userUrl: "",
+  isOwner: false,
 });
 
 // console.log("BackgroundUserInfoBackHeaderMemoirTitle");
@@ -25,7 +26,11 @@ const backgroundStyle = computed(() => ({
 <template>
   <div class="user-tree-user-info-container" :style="backgroundStyle">
     <section class="user-info__top-bar-container">
-      <TopBarTransparent :edit="props.edit" :delete="props.delete" />
+      <TopBarTransparent
+        :edit="props.edit"
+        :delete="props.delete"
+        :deleteBtnActive="props.isOwner"
+      />
     </section>
     <section class="user-info__user-info-bar-container">
       <BarUserInfoNoProfileBtn

@@ -64,8 +64,9 @@ if (data.value) {
   isOnwer.value = data.value.owner;
 } else {
   console.error("회고록 조회 실패 : ");
+  console.log(data.value);
   //이전페이지로 이동
-  useRouter().push("/home");
+  // useRouter().push("/home");
 }
 
 //카드 아이템
@@ -181,6 +182,7 @@ onMounted(() => {
     <BackgroundUserInfoBackHeaderMemoirTitle
       :edit="`/memoir/${memoir.id}/edit`"
       :delete="`/memoirs/${memoir.id}`"
+      :isOnwer="isOnwer"
       :backImgPath="member.backImgName"
       :userName="member.nickName"
       :userId="member.email"
@@ -241,7 +243,7 @@ onMounted(() => {
       </section>
       <section class="branch-tree-another-record-list-container">
         <h1 class="none">트리 리스트</h1>
-        <CardAnotherRecordsList :items="treeItems" :sideScrollType="`tree`"  />
+        <CardAnotherRecordsList :items="treeItems" :sideScrollType="`tree`" />
       </section>
 
       <section
@@ -254,7 +256,10 @@ onMounted(() => {
       <section class="branch-tree-another-record-list-container">
         <h1 class="none">회고록 리스트</h1>
         <section class="book-detail-other-tree-card-container">
-          <CardAnotherRecordsList :items="memoirItems" :sideScrollType="`memoir`" />
+          <CardAnotherRecordsList
+            :items="memoirItems"
+            :sideScrollType="`memoir`"
+          />
         </section>
       </section>
 

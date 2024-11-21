@@ -9,16 +9,22 @@ import useTreeFormData from "~/composables/useTreeFormData.js";
 const route = useRoute();
 const router = useRouter();
 const config = useRuntimeConfig();
-const seedId = route.params.id;
+const treeId = route.params.id;
 
 useTreeFormData().init();
-useTreeFormData().setSeedId(seedId);
-useTreeFormData().setCreateUrl(`/tree/etc/seed/${seedId}/new`);
+// useTreeFormData().setSeedId(treeId);
+// useTreeFormData().setCreateUrl(`/tree/etc/seed/${treeId}/new`);
 const treeFormData = useTreeFormData().treeFormData;
 
 // ----------------------- API ----------------------- //
 const { data: seedData, error: infoError } = await useAuthFetch(
-  () => `seeds/${seedId}`,
+  () => `seeds/trees/${treeId}`,
+  {
+    baseURL: config.public.apiBase,
+  }
+);
+const { data: treeData, error: treeError } = await useAuthFetch(
+  () => `trees/${treeId}/info`,
   {
     baseURL: config.public.apiBase,
   }
@@ -30,6 +36,7 @@ watchEffect(() => {
 
 // ----------------------- Life Cycle ----------------------- //
 onMounted(() => {
+  treeFormData.visibility = treeData.value.visibility;
   if (treeFormData.value.imageData) {
     const imgTag = document.getElementById("input-book-img-box__img-id");
     console.log("imgTag:", imgTag);
@@ -96,7 +103,7 @@ const submitFormHandler = async (e) => {
     });
 
     if (response.statusCode !== HttpStatusCode.Created) {
-      console.error("트리 생성에 실패했습니다.");
+      console.error("트리 수정에 실패했습니다.");
     }
 
     // 데이터 초기화
@@ -119,10 +126,10 @@ const inputDescription = (value) => {
 
 <template>
   <header>
-    <h1 class="none">도서 트리 생성 페이지</h1>
+    <h1 class="none">도서 트리 수정 페이지</h1>
     <section class="tob-bar-back-container">
-      <h1 class="none">트리 생성 상단 바</h1>
-      <TopBarBack title="트리 생성" link=""></TopBarBack>
+      <h1 class="none">트리 수정 상단 바</h1>
+      <TopBarBack title="트리 수정" link=""></TopBarBack>
     </section>
   </header>
 
@@ -142,7 +149,7 @@ const inputDescription = (value) => {
           <input
             type="number"
             name="seedCategoryId"
-            v-model="treeFormData.seedId"
+            v-model="treeFormData.treeId"
           />
         </section>
 
@@ -160,7 +167,7 @@ const inputDescription = (value) => {
               label: '*트리 이름',
               name: 'treeTitle',
               placeholder: '트리 이름을 입력해주세요',
-              value: treeFormData.treeTitle,
+              value: treeData.title,
               validate: treeFormData.treeTitleValid,
               validateMessage: '트리 이름을 입력해주세요.',
             }"
@@ -176,7 +183,7 @@ const inputDescription = (value) => {
               label: '*설명글 or URL',
               name: 'description',
               placeholder: '트리에 대한 설명을 입력해주세요',
-              value: treeFormData.description,
+              value: treeData.description,
               validate: treeFormData.descriptionValid,
               validateMessage: '트리에 대한 설명을 입력해주세요.',
             }"
@@ -194,9 +201,9 @@ const inputDescription = (value) => {
         </section>
 
         <section class="book-tree-submit-container">
-          <h1 class="none">트리 생성 버튼</h1>
+          <h1 class="none">트리 수정 버튼</h1>
           <ButtonSubmitBtnFullBar
-            text="트리 생성"
+            text="트리 수정"
             @click.prevent="submitFormHandler"
           ></ButtonSubmitBtnFullBar>
         </section>

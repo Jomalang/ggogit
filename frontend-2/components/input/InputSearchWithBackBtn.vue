@@ -46,6 +46,7 @@ const createReq = async (query, filter) => {
       </div>
     </div>
     <div class="search-bar">
+      <NuxtLink class="search-bar-link" to="/tree/search">
       <label class="search-bar--label">
         <input
           class="search-bar--input"
@@ -61,6 +62,7 @@ const createReq = async (query, filter) => {
       <button @click="createReq(query, filter)">
         <img src="~/assets/svg/lens.svg" alt="lens" />
       </button>
+      </NuxtLink>
     </div>
   </div>
 </template>
@@ -87,15 +89,19 @@ button {
 }
 
 .search-bar {
+  display: flex;
   background: var(--main2);
   border-radius: 20px;
   padding: 8px 16px 8px 16px;
+  flex-grow: 1;
+}
+.search-bar-link{
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-grow: 1;
-}
 
+}
 .search-bar--label {
   display: flex;
   flex-grow: 1;

@@ -41,6 +41,11 @@ const config = useRuntimeConfig();
 const isActive = ref(false);
 let totalCnt = 0;
 
+const deleteModal = () => {
+  console.log("deleteModal");
+};
+
+
 const openPopup = () => {
   const filterBack1 = document.getElementById("filter-bg");
   const filterBack2 = document.getElementById("filter-bg-blur");
@@ -174,7 +179,7 @@ watchEffect(() => {
     <section class="branch-tree-detail-container">
       <h2 class="none">트리 상세 설명</h2>
 
-      <CardHiddenInfoTree :data="info">트리 상세 설명</CardHiddenInfoTree>
+      <CardHiddenInfoTree :data="info" @isDelete="deleteModal">트리 상세 설명</CardHiddenInfoTree>
     </section>
 
     <section class="branch-list__container">
@@ -444,6 +449,20 @@ watchEffect(() => {
         </div>
       </div>
     </section>
+
+    <section>
+      <div>
+        <div>
+          <h1>정말 삭제하시겠습니까?</h1>
+          <P>트리에 속한 회고록, 리프, 도서 정보 등을 모두 삭제합니다.</P>
+          <div>
+            <button @click="deleteModal">삭제</button>
+            <button @click="deleteModal">취소</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
   </main>
 
   <footer>

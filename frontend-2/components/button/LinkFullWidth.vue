@@ -45,7 +45,7 @@ const props = defineProps<{
   color: var(--white, #ffffff);
   text-align: center;
   font-family: "Pretendard-Bold", sans-serif;
-  font-size: 16px;
+  font-size: 20px;
   line-height: var(--line-height-main, 140%);
   letter-spacing: var(--letter-spacing-main, -0.025em);
   font-weight: var(--bold, 700);

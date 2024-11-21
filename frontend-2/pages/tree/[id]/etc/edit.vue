@@ -13,8 +13,6 @@ const config = useRuntimeConfig();
 const treeId = route.params.id;
 
 useTreeFormData().init();
-// useTreeFormData().setSeedId(treeId);
-// useTreeFormData().setCreateUrl(`/tree/etc/seed/${treeId}/new`);
 const treeFormData = useTreeFormData().treeFormData;
 
 // ----------------------- API ----------------------- //
@@ -105,7 +103,7 @@ const submitFormHandler = async (e) => {
       treeFormDataToSend.append("image", blob, "image.jpg");
     }
 
-    const response = await useAuthDataFetch('trees/edit', {
+    const response = await useAuthDataFetch('trees/etc/edit', {
       baseURL: config.public.apiBase,
       method: 'PUT',
       body: treeFormDataToSend,
@@ -115,8 +113,7 @@ const submitFormHandler = async (e) => {
       console.error("트리 수정에 실패했습니다.");
     }
 
-    // 데이터 초기화
-    router.push("#");
+    router.push(`/tree/${treeId}`);
   } catch (error) {
     console.error("Error submitting form:", error);
   }

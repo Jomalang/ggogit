@@ -262,25 +262,62 @@ public class TreeController {
         return new ResponseEntity<>(TreeCardDtoResponse.of(trees), HttpStatus.OK);
     }
 
-    @PutMapping("edit")
+    @PutMapping("etc/edit")
     public ResponseEntity<EditResponse> editEtcTree(
             @AuthenticationPrincipal CustomUserDetails userDetails,
             @ModelAttribute TreeEtcEdiitRequest dto,
             @RequestParam(required = false) MultipartFile image
     ) throws IOException {
-
-        Long memberId = userDetails.getId();
-        Long seedId = dto.getSeedId();
-
-        if(image == null) {
-            System.out.println("image is null");
-        } else {
-            String filename = image.getOriginalFilename(); //원본 이미지명
-            byte[] imageBytes = image.getBytes(); //이미지 byte[]
-            treeImageService.upload(filename, imageBytes);
-            treeImageService.delete(filename, UploadFolderType.TREE);
+        Long treeId = dto.getTreeId();
+        if(!treeService.isOwner(treeId, userDetails.getId())) {
+            throw new IllegalArgumentException("해당 트리에 대한 권한이 없습니다.");
         }
-        return null;
+        if (!treeService.findTreeByTreeId(treeId)) {
+            throw new IllegalArgumentException("트리를 찾을 수 없습니다.");
+        }
+
+        if (image != null) {
+            String afterFilename = image.getOriginalFilename(); //원본 이미지명
+            String beforeImageName = treeService.findTreeImageName(treeId);
+
+            byte[] imageBytes = image.getBytes(); //이미지 byte[]
+            if (beforeImageName.equals(afterFilename)) {
+                treeImageService.upload(afterFilename, imageBytes);
+                treeImageService.delete(beforeImageName, UploadFolderType.TREE);
+            }
+        }
+        treeService.editEtcTree(dto, treeId);
+        return new ResponseEntity<>(EditResponse.of("수정 성공",200), HttpStatus.OK);
     }
 
+    @PutMapping("book/edit")
+    public ResponseEntity<EditResponse> editEtcTree(
+            @AuthenticationPrincipal CustomUserDetails userDetails,
+            @ModelAttribute TreeBookEdiitRequest dto,
+            @RequestParam(required = false) MultipartFile image
+    ) throws IOException {
+        Long treeId = dto.getTreeId();
+        if(!treeService.isOwner(treeId, userDetails.getId())) {
+            throw new IllegalArgumentException("해당 트리에 대한 권한이 없습니다.");
+        }
+        if (!treeService.findTreeByTreeId(treeId)) {
+            throw new IllegalArgumentException("트리를 찾을 수 없습니다.");
+        }
+
+        if (image != null && !dto.getIsAuto()) {
+            String afterFilename = image.getOriginalFilename(); //원본 이미지명
+            String beforeImageName = treeService.findTreeImageName(treeId);
+            byte[] imageBytes = image.getBytes(); //이미지 byte[]
+            if (beforeImageName.equals(afterFilename)) {
+                treeImageService.upload(afterFilename, imageBytes);
+                treeImageService.delete(beforeImageName, UploadFolderType.BOOK);
+            }
+        }
+        if(dto.getIsAuto()){
+            treeService.updateAutoTreeBook(dto, treeId);
+        }
+        treeService.updateManualTreeBook(dto, treeId);
+
+        return new ResponseEntity<>(EditResponse.of("수정 성공",200), HttpStatus.OK);
+    }
 }

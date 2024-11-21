@@ -8,11 +8,15 @@ import io.ggogit.ggogit.domain.leaf.service.LeafDtoService;
 import io.ggogit.ggogit.domain.member.security.CustomUserDetails;
 import io.ggogit.ggogit.domain.member.service.MemberService;
 import io.ggogit.ggogit.domain.tree.entity.Tree;
+import io.ggogit.ggogit.domain.tree.entity.TreeTmp;
 import io.ggogit.ggogit.domain.tree.service.SeedService;
+import io.ggogit.ggogit.domain.tree.service.TreeImageService;
 import io.ggogit.ggogit.domain.tree.service.TreeService;
 import io.ggogit.ggogit.domain.tree.service.TreeTmpService;
 import io.ggogit.ggogit.type.FilterType;
+import io.ggogit.ggogit.type.UploadFolderType;
 import io.ggogit.ggogit.util.JwtTokenProvider;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
@@ -22,8 +26,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.IOException;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -39,6 +45,7 @@ public class TreeController {
     private final SeedService seedService;
     private final JwtTokenProvider jwtTokenProvider;
     private final MemberService memberService;
+    private final TreeImageService treeImageService;
 
 
     @GetMapping("/search")
@@ -106,43 +113,6 @@ public class TreeController {
         TreeInfoResponse treeInfoResponse = treeService.findTreeInfoResponse(memberId, tree.getId());
         return new ResponseEntity<> (treeInfoResponse, HttpStatus.OK);
     }
-
-
-//    @GetMapping("{id}/info")
-//    public Page<TreeInfoResponse> getTreeInfoResponseList(
-//            @RequestParam(value = "s", required = false) Long seedId,
-//            @RequestParam(value = "p", defaultValue = "0") int page,
-//            @RequestParam(value = "mid",defaultValue = "1") Long mid
-////            @SessionAttribute Member member
-//    ) {
-////        Long memberId = member.getId();
-//        Long memberId = mid;
-//        System.out.println("memberId = " + memberId);
-//        System.out.println("seedId = " + seedId);
-//
-//        int size = 10;
-//        Sort s = Sort.by(Sort.Order.desc("updateTime"));
-//        Pageable pageable = PageRequest.of(page, size, s);
-//        Page<TreeInfoResponse> list = treeService.findTreeInfoResponseList(memberId, pageable);
-//        return list;
-//    }
-//    @GetMapping
-//    public Page<TreeCardRequest> getTreeList(
-//            @RequestParam(value = "s", required = false) Long seedId,
-//            @RequestParam(value = "p", defaultValue = "0") int page,
-//            @RequestParam(value = "mid",defaultValue = "1") Long mid
-//    ) {
-//        Long memberId = member.getId();
-//        Long memberId = mid;
-//        System.out.println("memberId = " + memberId);
-//        System.out.println("seedId = " + seedId);
-//
-//        int size = 10;
-//        Sort s = Sort.by(Sort.Order.desc("updateTime"));
-//        Pageable pageable = PageRequest.of(page, size, s);
-//        Page<TreeCardRequest> list = treeService.findTreeCardRequestList(seedId,memberId, pageable);
-//        return list;
-//    }
 
     @GetMapping("/{treeId}/branches")
     public ResponseEntity<TreeDetailResponse> getBranchList(
@@ -226,16 +196,6 @@ public class TreeController {
         return leafList.stream().sorted(comparator).collect(Collectors.toList());
     }
 
-    //Access Token을 받아서 TreeInfoResponseHome을 반환하는 API
-//    @GetMapping("tree-home")
-//    public ResponseEntity<TreeInfoResponseHome> getTreeInfoResponses(
-//       @RequestHeader(value="Authorization") String accessToken) {
-//
-//        Long memberId = jwtTokenProvider.getMemberIdFromToken(accessToken);
-//        List<TreeInfoResponse> treeInfoResponseList = treeService.findTreeInfoResponseList(memberId);
-//
-//        return new ResponseEntity<>(TreeInfoResponseHome.of(treeInfoResponseList), HttpStatus.OK);
-//    }
     @GetMapping("tree-home")
     public ResponseEntity<TreeInfoResponseHome> getTreeInfoResponses(
             @AuthenticationPrincipal CustomUserDetails userDetails) {
@@ -300,6 +260,27 @@ public class TreeController {
             @RequestParam(value = "size", defaultValue = "10") int size) {
         Page<Tree> trees = treeService.findAllCardByBookId(bookId, page, size);
         return new ResponseEntity<>(TreeCardDtoResponse.of(trees), HttpStatus.OK);
+    }
+
+    @PutMapping("edit")
+    public ResponseEntity<EditResponse> editEtcTree(
+            @AuthenticationPrincipal CustomUserDetails userDetails,
+            @ModelAttribute TreeEtcEdiitRequest dto,
+            @RequestParam(required = false) MultipartFile image
+    ) throws IOException {
+
+        Long memberId = userDetails.getId();
+        Long seedId = dto.getSeedId();
+
+        if(image == null) {
+            System.out.println("image is null");
+        } else {
+            String filename = image.getOriginalFilename(); //원본 이미지명
+            byte[] imageBytes = image.getBytes(); //이미지 byte[]
+            treeImageService.upload(filename, imageBytes);
+            treeImageService.delete(filename, UploadFolderType.TREE);
+        }
+        return null;
     }
 
 }

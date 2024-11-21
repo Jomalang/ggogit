@@ -11,6 +11,7 @@ import FilterTreeLeafCard from "~/components/filter/FilterTreeLeafCard.vue";
 import NavigationBar from "~/components/nav/NavigationBar.vue";
 import InputBackSearch from "~/components/input/InputBackSearch.vue";
 import CardHiddenInfoTree from "~/components/card/CardHiddenInfoTree.vue";
+import CardTreeInfoCoverBtns from "~/components/card/CardTreeInfoCoverBtns.vue";
 
 // -----------DOM 객체---------------------------------------
 
@@ -174,7 +175,7 @@ watchEffect(() => {
   <main>
     <section class="user-tree-info__container">
       <h2 class="none">트리 정보</h2>
-      <CardTreeInfoCover :data="info">트리 정보</CardTreeInfoCover>
+      <CardTreeInfoCoverBtns :data="info">트리 정보</CardTreeInfoCoverBtns>
     </section>
     <section class="branch-tree-detail-container">
       <h2 class="none">트리 상세 설명</h2>
@@ -606,5 +607,8 @@ watchEffect(() => {
 .filter-tab__ul1 {
   margin-bottom: 30px;
   border-bottom: 1px solid var(--main2--opacity40);
+}
+.user-tree-info__container{
+
 }
 </style>

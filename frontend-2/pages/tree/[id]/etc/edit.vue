@@ -4,6 +4,7 @@ import axios, { HttpStatusCode } from "axios";
 import { useRouter } from "#vue-router";
 import { value } from "lodash/seq.js";
 import useTreeFormData from "~/composables/useTreeFormData.js";
+import BookInputImgEtcTree from "~/components/input/BookInputImgEtcTree.vue";
 
 // ----------------------- Model ----------------------- //
 const route = useRoute();
@@ -31,12 +32,20 @@ const { data: treeData, error: treeError } = await useAuthFetch(
 );
 
 watchEffect(() => {
-  // console.log("seedData:", seedData.value);
+  console.log("seedData:", seedData.value);
 });
 
 // ----------------------- Life Cycle ----------------------- //
 onMounted(() => {
-  treeFormData.visibility = treeData.value.visibility;
+
+  treeFormData.value.seedId = seedData.value.id;
+  treeFormData.value.imageData = treeData.value.treeImage;
+  treeFormData.value.treeId = treeId;
+  treeFormData.value.treeTitle = treeData.value.title;
+  treeFormData.value.description = treeData.value.description;
+  treeFormData.value.visibility = treeData.value.visibility;
+
+  console.log("treeData:", treeData.value);
   if (treeFormData.value.imageData) {
     const imgTag = document.getElementById("input-book-img-box__img-id");
     console.log("imgTag:", imgTag);
@@ -96,9 +105,9 @@ const submitFormHandler = async (e) => {
       treeFormDataToSend.append("image", blob, "image.jpg");
     }
 
-    const response = await useAuthDataFetch('trees/etc', {
+    const response = await useAuthDataFetch('trees/edit', {
       baseURL: config.public.apiBase,
-      method: 'POST',
+      method: 'PUT',
       body: treeFormDataToSend,
     });
 
@@ -107,7 +116,7 @@ const submitFormHandler = async (e) => {
     }
 
     // 데이터 초기화
-    router.push("/leaf/etc/new");
+    router.push("#");
   } catch (error) {
     console.error("Error submitting form:", error);
   }
@@ -155,9 +164,10 @@ const inputDescription = (value) => {
 
         <section class="book-tree-input-form__photo-container">
           <h1 class="none">트리 이미지 입력</h1>
-          <InputBookInputImg
+          <BookInputImgEtcTree
+              :imageData = treeFormData.imageData
             @image-selected="handleImageSelected"
-          ></InputBookInputImg>
+          ></BookInputImgEtcTree>
         </section>
 
         <section class="input-form__input-container">

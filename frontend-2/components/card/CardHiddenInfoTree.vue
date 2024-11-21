@@ -60,26 +60,14 @@ function hiddenText() {
   <client-only>
     <div class="card-tree-info__detail-frame">
       <div class="card-tree-info__detail-visibility">
-
-        <div class="transparent-btn-frame">
-          <div v-if="data.seedId === 1">
-            <NuxtLink :to="`/tree/${data.treeId}/book/edit`" class="top-bar__transparent-setting-btn"></NuxtLink>
-          </div>
-          <div v-else>
-            <NuxtLink :to="`/tree/${data.treeId}/etc/edit`" class="top-bar__transparent-setting-btn"></NuxtLink>
-          </div>
-          <div @click="emit('isDelete')" class="top-bar__transparent-delete-btn"></div>
-        </div>
         <input
-          class="card-tree-info__detail-input"
-          type="checkbox"
-          id="card-tree-info__detail"
+            class="card-tree-info__detail-input"
+            type="checkbox"
+            id="card-tree-info__detail"
         />
-        <div @click.prevent="hiddenText">
-          <label class="card-tree-info__detail" for="card-tree-info__detail">
-            자세히
-          </label>
-        </div>
+        <label  @click="hiddenText" class="card-tree-info__detail" for="card-tree-info__detail">
+          자세히
+        </label>
       </div>
       <section id="detail-hidden" class="none">
         <h3 class="none">트리 상세 설명 보기</h3>
@@ -137,41 +125,6 @@ function hiddenText() {
 </template>
 
 <style scoped>
-.card-tree-info-cover-frame {
-  display: flex;
-  padding-left: 64px;
-  height: 70px;
-  align-items: flex-end;
-  position: relative;
-}
-
-.card-tree-info-cover {
-  width: 60px;
-  height: 90px;
-  background-color: var(--main1);
-  border-radius: 8px;
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
-.card-tree-title {
-  font-size: 16px;
-  font-weight: var(--bold);
-  line-height: var(--line-height-main);
-  letter-spacing: var(--letter-spacing-main);
-}
-.card-tree-title-frame {
-  padding-left: 5px;
-}
-
-.card-book-title {
-  font-size: 14px;
-  font-weight: var(--medium);
-  line-height: var(--line-height-main);
-  letter-spacing: var(--letter-spacing-main);
-}
-
 .card-tree-info__detail-frame {
   width: 100%;
   display: flex;
@@ -181,8 +134,9 @@ function hiddenText() {
 }
 .card-tree-info__detail-visibility {
   width: 100%;
+  height: 35px;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
 }
 
@@ -196,13 +150,14 @@ function hiddenText() {
   padding-bottom: 10px;
   margin-left: auto;
   content: "자세히";
-  font-size: 12px;
+  font-size: 14px;
+  font-weight: var(--medium);
   cursor: pointer;
 }
 
 .card-tree-info__detail::after {
-  width: 7px;
-  height: 7px;
+  width: 10px;
+  height: 10px;
   content: "";
   display: inline-block;
   align-items: center;
@@ -213,8 +168,8 @@ function hiddenText() {
 }
 
 .card-tree-info__detail-input:checked + .card-tree-info__detail::after {
-  width: 7px;
-  height: 7px;
+  width: 10px;
+  height: 10px;
   content: "";
   align-items: center;
   display: inline-block;
@@ -227,61 +182,6 @@ function hiddenText() {
   width: 100%;
   display: flex;
   flex-direction: column;
-}
-
-.text-book-info--no-title {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.text-book-info--no-title__creaters {
-  display: flex;
-}
-
-.text-book-info--no-title__page {
-  font-size: 14px;
-  font-weight: var(--regular);
-  color: var(--text-sub);
-  line-height: var(--line-height-main);
-  letter-spacing: var(--letter-spacing-main);
-}
-
-.text-book-info--no-title__seed {
-  display: inline-block;
-  padding: 2px 8px;
-  font-size: 10px;
-  font-weight: var(--medium);
-  color: var(--white);
-  line-height: var(--line-height-main);
-  letter-spacing: var(--letter-spacing-main);
-  border-radius: 4px;
-  background: var(--main1);
-}
-.transparent-btn-frame{
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.top-bar__transparent-setting-btn {
-  margin-left: 70px;
-  width: 20px;
-  height: 20px;
-  display: flex;
-  background: transparent url("/svg/edit-dark.svg") no-repeat center;
-  background-size: contain;
-  align-items: center;
-}
-.top-bar__transparent-delete-btn {
-  width: 20px;
-  height: 20px;
-  display: flex;
-  background: transparent url("/svg/delete--gray.svg") no-repeat center;
-  background-size: contain;
-  padding: 0;
-  border: none;
-  cursor: pointer;
 }
 .card-tree__description-content {
   font-size: 14px;

@@ -2,9 +2,10 @@
 import { onMounted, ref } from "vue";
 
 //----------------variable----------------
-let isOnwer = ref(false);
-const memberId = useMemberStore._id;
+const memberId = useMemberStore()._id;
 const config = useRuntimeConfig();
+//데이터 fetch후 비교해 본인의 개인 페이지인지 판단
+const isOwner = ref(false);
 
 //----------------Model----------------
 let tree = ref({
@@ -24,8 +25,9 @@ let member = ref({
   nickName: "nickname1",
   userName: "user1",
   email: "user1@example.com",
-  backImgName: "background-image.png",
-  profileImgName: "",
+  memberBackgroundImage: "background-image.png",
+  memberProfileImage: "",
+  introduction: "안녕하세요",
 });
 
 let memoir = ref({
@@ -49,7 +51,23 @@ let book = ref({
   updateTime: "24-10-01",
 });
 
-//fetch
+//-------fetch----------------
+
+//member정보
+const { data: memberData, error: memberError } = await useAuthFetch(
+  `/members/${memberId}`,
+  {
+    method: "GET",
+    baseURL: `${config.public.apiBase}`,
+  }
+);
+
+if (memberData.value) {
+  member.value = memberData.value;
+  console.log(member.value);
+  isOwner.value = member.value.id === memberId;
+}
+
 // const { data, error } = await useAuthFetch(`/memoirs/${useRoute().params.id}`, {
 //   method: "GET",
 //   baseURL: `${config.public.apiBase}`,
@@ -124,18 +142,18 @@ let book = ref({
     <BackgroundUserInfoHeader
       :edit="`/member/${member.id}/edit`"
       :isOnwer="isOnwer"
-      :backImgPath="member.backImgName"
-      :userProfileImg="member.profileImgName"
-      :userName="member.nickName"
-      :userId="member.email"
-      :userUrl="member.email"
+      :backImgPath="member.memberBackgroundImage"
+      :userProfileImg="member.memberProfileImage"
+      :userName="member.nickname"
+      :userEmail="member.email"
+      :userUrl="member.id"
     />
   </header>
 
   <main>
     <div class="mypage-user-description__frame">
       <p class="mypage-user-description">
-        {{ member.description || "안녕하세요" }}
+        {{ member.introduction || "안녕하세요" }}
       </p>
     </div>
   </main>

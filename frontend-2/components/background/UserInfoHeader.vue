@@ -4,7 +4,7 @@ const props = defineProps({
   backImgPath: "background-image.png",
   userProfileImg: "",
   userName: "",
-  userId: "",
+  userEmail: "",
   userUrl: "",
   isOwner: false,
 });
@@ -35,7 +35,7 @@ const backgroundStyle = computed(() => {
         <BarUserInfoMyPage
           :userImg="props.userProfileImg"
           :username="props.userName"
-          :userid="props.userId"
+          :userEmail="props.userEmail"
           :userUrl="props.userUrl"
         />
       </section>

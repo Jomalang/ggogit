@@ -2,7 +2,7 @@
 const props = defineProps({
   userImg: "",
   username: "",
-  userid: "",
+  userEmail: "",
   userUrl: "",
 });
 /*
@@ -31,7 +31,7 @@ userUrl: string;
       </div>
       <div class="bar-user-info__user-frame">
         <div class="bar-user-info__user-name">{{ props.username }}</div>
-        <div class="bar-user-info__user-id">{{ props.userid }}</div>
+        <div class="bar-user-info__user-id">{{ props.userEmail }}</div>
       </div>
     </div>
     <div class="bar-user-info__right-btns">

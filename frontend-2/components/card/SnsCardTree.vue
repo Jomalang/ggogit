@@ -19,13 +19,28 @@ const props = defineProps<{
 function modifyCount(count: number) {
   return 999 < count ? "999+" : String(count);
 }
+const link = ref("");
+const getLink = () => {
+  if (props.data.cardType === CardType.TREE) {
+    link.value = `/tree/${props.data.id}`;
+  } else if (props.data.cardType === CardType.MEMOIR) {
+    link.value = `/memoir/${props.data.id}`;
+  } else {
+    if (props.data.bookId) {
+      link.value = `/leaf/book/${props.data.id}`;
+    } else {
+      link.value = `/leaf/etc/${props.data.id}`;
+    }
+  }
+};
+getLink();
 </script>
 
 <template>
   <!-- th:fragment="sns-card-tree(type) -->
   <div class="sns-card-tree-box">
-    <div class="sns-card-tree__top-box">
-      <a href="">
+    <NuxtLink :to="link">
+      <div class="sns-card-tree__top-box">
         <div
           v-if="data.cardType === CardType.TREE"
           class="sns-card-tree__top-tree-icon-box"
@@ -53,17 +68,15 @@ function modifyCount(count: number) {
             alt="리프 아이콘"
           />
         </div>
-      </a>
-      <div class="sns-card-tree__top-sns-icon-box">
-        <div class="sns-card-tree__top-share-icon-box">
-          <img src="~/assets/svg/comment.svg" alt="댓글 아이콘" />
-        </div>
-        <div class="sns-card-tree__top-like-icon-box">
-          <img src="~/assets/svg/like.svg" alt="좋아요 아이콘" />
+        <div class="sns-card-tree__top-sns-icon-box">
+          <div class="sns-card-tree__top-share-icon-box">
+            <img src="~/assets/svg/comment.svg" alt="댓글 아이콘" />
+          </div>
+          <div class="sns-card-tree__top-like-icon-box">
+            <img src="~/assets/svg/like.svg" alt="좋아요 아이콘" />
+          </div>
         </div>
       </div>
-    </div>
-    <a href="">
       <div class="sns-card-tree__mid-box">
         <p class="sns-card-tree__mid-title">{{ data.title }}</p>
         <p class="sns-card-tree__mid-date">{{ data.updateDate }}</p>
@@ -72,43 +85,43 @@ function modifyCount(count: number) {
       <div class="sns-card-tree__memoir-text-box">
         <q class="sns-card-tree-memoir-text">{{ data.content }}</q>
       </div>
-    </a>
-    <div class="sns-card-tree__bot-box">
-      <div class="sns-card-tree__bot-nickname-box">
+      <div class="sns-card-tree__bot-box">
+        <div class="sns-card-tree__bot-nickname-box">
+          <a href="">
+            <p class="sns-card-tree__bot-nickname">
+              <span class="sns-card-tree__bot-nickname-text">{{
+                data.nickname
+              }}</span>
+              <span class="sns-card-tree__bot-nickname-id">{{
+                data.emailId
+              }}</span>
+            </p>
+          </a>
+        </div>
         <a href="">
-          <p class="sns-card-tree__bot-nickname">
-            <span class="sns-card-tree__bot-nickname-text">{{
-              data.nickname
-            }}</span>
-            <span class="sns-card-tree__bot-nickname-id">{{
-              data.emailId
-            }}</span>
-          </p>
+          <div class="sns-card-tree__bot-statistics-box">
+            <p
+              v-if="
+                data.cardType === CardType.MEMOIR ||
+                data.cardType === CardType.TREE
+              "
+              class="sns-card-tree__bot-leaf-text"
+            >
+              <span class="sns-card-tree__bot-leaf-count">{{
+                modifyCount(data.leafCount)
+              }}</span>
+              리프
+            </p>
+            <p class="sns-card-tree__bot-view-text">
+              <span class="sns-card-tree__bot-view-count">{{
+                modifyCount(data.viewCount)
+              }}</span>
+              조회수
+            </p>
+          </div>
         </a>
       </div>
-      <a href="">
-        <div class="sns-card-tree__bot-statistics-box">
-          <p
-            v-if="
-              data.cardType === CardType.MEMOIR ||
-              data.cardType === CardType.TREE
-            "
-            class="sns-card-tree__bot-leaf-text"
-          >
-            <span class="sns-card-tree__bot-leaf-count">{{
-              modifyCount(data.leafCount)
-            }}</span>
-            리프
-          </p>
-          <p class="sns-card-tree__bot-view-text">
-            <span class="sns-card-tree__bot-view-count">{{
-              modifyCount(data.viewCount)
-            }}</span>
-            조회수
-          </p>
-        </div>
-      </a>
-    </div>
+    </NuxtLink>
   </div>
 </template>
 

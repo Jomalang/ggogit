@@ -111,10 +111,18 @@ export const useBackStore = defineStore("backStore", () => {
   //쿠키에서 백스택을 불러옵니다.
   //플러그인
   function getStackFromCookie() {
-    backStackForHome.value = backCookieHome.value.split(",");
-    backStackForSearch.value = backCookieSearch.value.split(",");
-    backStackForCommunity.value = backCookieCommunity.value.split(",");
-    backStackForMyPage.value = backCookieMyPage.value.split(",");
+    if (backCookieHome.value !== undefined) {
+      backStackForHome.value = backCookieHome.value.split(",");
+    }
+    if (backCookieSearch.value !== undefined) {
+      backStackForSearch.value = backCookieSearch.value.split(",");
+    }
+    if (backCookieCommunity.value !== undefined) {
+      backStackForCommunity.value = backCookieCommunity.value.split(",");
+    }
+    if (backCookieMyPage.value !== undefined) {
+      backStackForMyPage.value = backCookieMyPage.value.split(",");
+    }
   }
 
   return {

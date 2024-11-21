@@ -438,7 +438,7 @@ main {
 }
 
 .log-list-bot-btn-container {
-  margin: 0 0px 16px 24px;
+  margin: 0 24px 16px 24px;
   display: flex;
   justify-content: flex-end;
   align-items: center;

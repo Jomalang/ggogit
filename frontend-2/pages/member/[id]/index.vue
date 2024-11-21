@@ -50,68 +50,68 @@ let book = ref({
 });
 
 //fetch
-const { data, error } = await useAuthFetch(`/memoirs/${useRoute().params.id}`, {
-  method: "GET",
-  baseURL: `${config.public.apiBase}`,
-});
+// const { data, error } = await useAuthFetch(`/memoirs/${useRoute().params.id}`, {
+//   method: "GET",
+//   baseURL: `${config.public.apiBase}`,
+// });
 
-if (data.value) {
-  memoir.value = data.value.memoirDto;
-  book.value = data.value.bookDto;
-  member.value = data.value.memberDto;
-  tree.value = data.value.treeDto;
-  isOnwer.value = data.value.owner;
-} else {
-  console.error("회고록 조회 실패 : ");
-  console.log(data.value);
-  //이전페이지로 이동
-  // useRouter().push("/home");
-}
+// if (data.value) {
+//   memoir.value = data.value.memoirDto;
+//   book.value = data.value.bookDto;
+//   member.value = data.value.memberDto;
+//   tree.value = data.value.treeDto;
+//   isOnwer.value = data.value.owner;
+// } else {
+//   console.error("회고록 조회 실패 : ");
+//   console.log(data.value);
+//   //이전페이지로 이동
+//   // useRouter().push("/home");
+// }
 
-//카드 아이템
-const treeItems = ref([]);
-const memoirItems = ref([]);
-const leafItems = ref([]);
+// //카드 아이템
+// const treeItems = ref([]);
+// const memoirItems = ref([]);
+// const leafItems = ref([]);
 
-//fetch
-const { data: leafCardData, error: leafCardError } = await useAuthFetch(
-  `/members/${member.value.id}/leaves/book/cards`,
-  {
-    method: "GET",
-    baseURL: `${config.public.apiBase}`,
-  }
-);
+// //fetch
+// const { data: leafCardData, error: leafCardError } = await useAuthFetch(
+//   `/members/${member.value.id}/leaves/book/cards`,
+//   {
+//     method: "GET",
+//     baseURL: `${config.public.apiBase}`,
+//   }
+// );
 
-const { data: treeCardData, error: treeCardError } = await useAuthFetch(
-  `trees/members/${member.value.id}/trees/book/cards`,
-  {
-    method: "GET",
-    baseURL: `${config.public.apiBase}`,
-  }
-);
+// const { data: treeCardData, error: treeCardError } = await useAuthFetch(
+//   `trees/members/${member.value.id}/trees/book/cards`,
+//   {
+//     method: "GET",
+//     baseURL: `${config.public.apiBase}`,
+//   }
+// );
 
-const { data: memoirCardData, error: memoirCardError } = await useAuthFetch(
-  `memoirs/members/${member.value.id}/memoirs/book/cards`,
-  {
-    method: "GET",
-    baseURL: `${config.public.apiBase}`,
-  }
-);
+// const { data: memoirCardData, error: memoirCardError } = await useAuthFetch(
+//   `memoirs/members/${member.value.id}/memoirs/book/cards`,
+//   {
+//     method: "GET",
+//     baseURL: `${config.public.apiBase}`,
+//   }
+// );
 
-if (leafCardData.value) {
-  // console.log(leafCardData.value);
-  leafItems.value = [...leafCardData.value.items];
-}
+// if (leafCardData.value) {
+//   // console.log(leafCardData.value);
+//   leafItems.value = [...leafCardData.value.items];
+// }
 
-if (treeCardData.value) {
-  // console.log(treeCardData.value);
-  treeItems.value = [...treeCardData.value.treeBookCardResponse];
-}
+// if (treeCardData.value) {
+//   // console.log(treeCardData.value);
+//   treeItems.value = [...treeCardData.value.treeBookCardResponse];
+// }
 
-if (memoirCardData.value) {
-  // console.log(memoirCardData.value);
-  memoirItems.value = [...memoirCardData.value.memoirBookCardDtoResponse];
-}
+// if (memoirCardData.value) {
+//   // console.log(memoirCardData.value);
+//   memoirItems.value = [...memoirCardData.value.memoirBookCardDtoResponse];
+// }
 
 //-----------function----------------
 

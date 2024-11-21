@@ -83,14 +83,14 @@ userUrl: string;
 }
 
 .bar-user-info__user-name {
-  color: var(--main);
+  color: var(--white);
   font-size: 24px;
   font-weight: var(--medium);
   line-height: var(--line-height-main);
   letter-spacing: var(--letter-spacing-main);
 }
 .bar-user-info__user-id {
-  color: var(--main);
+  color: var(--white);
   font-size: 14px;
   font-weight: var(--regular);
   line-height: var(--line-height-main);

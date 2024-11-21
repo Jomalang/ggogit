@@ -14,13 +14,12 @@ const props = defineProps({
 
 const config = useRuntimeConfig();
 //TODO: 배경 이미지과 프로필 이미지 구별해야 함.
-const backgroundStyle = computed(() => ({
-  backgroundImage: useGetImageUrl(props.backImgPath, "memberBackground"),
-  backgroundSize: "cover", // 이미지를 화면에 맞게 조절
-  backgroundPosition: "center", // 이미지를 중앙 정렬
-  width: "100%",
-  height: "100%",
-}));
+const backgroundStyle = computed(() => {
+  const imageUrl = useGetImageUrl(props.backImgPath, "memberBackground");
+  return {
+    backgroundImage: `url(${imageUrl})`,
+  };
+});
 </script>
 
 <template>
@@ -49,21 +48,27 @@ const backgroundStyle = computed(() => ({
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 250px;
+}
+.user-info__background-frame {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: rgba(0, 0, 0, 0.4);
   background-repeat: no-repeat;
   background-size: cover;
   background-position-y: center;
   background-position-x: center;
-}
-.user-info__background-frame {
-  display: flex;
-  flex-direction: column;
-  background-color: rgba(0, 0, 0, 0.4);
+  width: 100%;
+  height: 250px;
+  max-width: var(--max-width);
+  padding: 24px;
 }
 
 .user-info__top-bar-container {
   display: flex;
 }
 .user-info__bot-bar-container {
+  transform: translateY(60%);
 }
 </style>

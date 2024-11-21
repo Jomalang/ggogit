@@ -81,7 +81,7 @@ public class LeafBookServiceImpl implements LeafBookService {
         tree.setTreeBook(treeBook);
         treeRepository.save(tree); // TreeBook 맵핑
 
-        LeafBook savedLeafBook = createLogic(memberId, leaf, leafBook, leafTagIds);
+        LeafBook savedLeafBook = createLogic(memberId, treeBook, leaf, leafBook, leafTagIds);
 
         // `System`은 `TreeTmp` 데이터를 삭제한다.
         treeTmpRepository.delete(treeTmp);
@@ -111,8 +111,12 @@ public class LeafBookServiceImpl implements LeafBookService {
         leaf.setParentLeaf(parentLeaf);
         leaf.setTree(parentLeaf.getTree());
 
+        // `System`은 `TreeBook` 의 읽은 페이지를 업데이트한다.
+        TreeBook treeBook = treeBookRepository.findById(leaf.getTree().getId())
+                .orElseThrow(() -> new IllegalArgumentException("TreeBook 데이터가 없습니다."));
+
         // `System`은 `Leaf` 데이터를 저장한다.
-        LeafBook savedLeafBook = createLogic(memberId, leaf, leafBook, leafTagIds);
+        LeafBook savedLeafBook = createLogic(memberId, treeBook, leaf, leafBook, leafTagIds);
 
         // `System`은 부모 `Leaf`의 자식 개수를 업데이트한다.
         parentLeaf.setChildLeafCount(parentLeaf.getChildLeafCount() + 1);
@@ -121,7 +125,7 @@ public class LeafBookServiceImpl implements LeafBookService {
         return savedLeafBook;
     }
 
-    private LeafBook createLogic(Long memberId, Leaf leaf, LeafBook leafBook, List<Long> leafTagIds) {
+    private LeafBook createLogic(Long memberId, TreeBook treeBook,  Leaf leaf, LeafBook leafBook, List<Long> leafTagIds) {
 
         // 입력 받은 태그의 아이디가 자신의 것인지 확인
         List<LeafTag> leafTags = leafTagRepository.findAllById(leafTagIds).stream().filter(leafTag -> {
@@ -147,10 +151,6 @@ public class LeafBookServiceImpl implements LeafBookService {
             LeafTagMap leafTagMap = LeafTagMap.of(leaf, leafTag);
             leafTagMapRepository.save(leafTagMap);
         }
-
-        // `System`은 `TreeBook` 의 읽은 페이지를 업데이트한다.
-        TreeBook treeBook = treeBookRepository.findById(leaf.getTree().getId())
-                .orElseThrow(() -> new IllegalArgumentException("TreeBook 데이터가 없습니다."));
 
         Tree tree = leaf.getTree();
         List<LeafBook> leafBooks = new ArrayList<>();

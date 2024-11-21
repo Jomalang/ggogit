@@ -306,7 +306,7 @@ const scrollToElement = () => {
 };
 </script>
 
-<template @scroll="scrollHandler">
+<template>
   <header class="log-list-header-container">
     <h1 class="none">리프 목록</h1>
     <section>
@@ -338,7 +338,7 @@ const scrollToElement = () => {
   </header>
 
   <main @mouseup="mouseUpHandler">
-    <section class="log-list-container">
+    <section class="log-list-container" @scroll="scrollHandler">
       <h1 class="none">리프 리스트</h1>
       <section
         v-for="node in nodes"
@@ -397,7 +397,16 @@ const scrollToElement = () => {
   </aside>
 </template>
 
-<style scoped>
+<style>
+html,
+body
+{
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+}
+
+
 main {
   width: 100%;
   height: 100%;

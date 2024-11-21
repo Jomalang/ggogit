@@ -83,7 +83,13 @@ getLink();
       </div>
 
       <div class="sns-card-tree__memoir-text-box">
-        <q class="sns-card-tree-memoir-text">{{ data.content }}</q>
+        <p
+          v-if="data.cardType === CardType.MEMOIR"
+          class="sns-card-tree-memoir-text"
+        >
+          {{ useDomParser(data.content) }}
+        </p>
+        <p v-else class="sns-card-tree-memoir-text">{{ data.content }}</p>
       </div>
       <div class="sns-card-tree__bot-box">
         <div class="sns-card-tree__bot-nickname-box">

@@ -33,6 +33,7 @@ const handleDbAction = (event, type, path) => {
       navigateTo("/home");
     } else if (path === 2) {
       navigateTo("/search/book");
+    } else if (path === 3) {
     }
   }
 };
@@ -139,8 +140,11 @@ const handleDbAction = (event, type, path) => {
         </li>
 
         <!-- 마이페이지 -->
-        <li class="nav-box__item">
-          <NuxtLink class="nav-box__link" :to="''" @click="developing">
+        <li
+          class="nav-box__item"
+          v-double-action="(event, type) => handleDbAction(event, type, 4)"
+        >
+          <NuxtLink class="nav-box__link" :to="_mypage" @click="setCur(4)">
             <div
               class="nav-box__img-box"
               :class="{

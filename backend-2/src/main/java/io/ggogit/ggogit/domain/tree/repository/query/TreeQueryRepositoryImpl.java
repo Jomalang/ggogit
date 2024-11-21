@@ -93,6 +93,7 @@ public class TreeQueryRepositoryImpl implements TreeQueryRepository {
                 .leftJoin(tree.book, book).fetchJoin()
                 .leftJoin(tree.treeBook, treeBook).fetchJoin()
                 .leftJoin(tree.treeImage, treeImage).fetchJoin()
+                .orderBy(tree.updateTime.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
@@ -116,6 +117,7 @@ public class TreeQueryRepositoryImpl implements TreeQueryRepository {
                 .leftJoin(tree.book, book).fetchJoin()
                 .leftJoin(tree.treeBook, treeBook).fetchJoin()
                 .leftJoin(tree.treeImage, treeImage).fetchJoin()
+                .orderBy(tree.updateTime.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
@@ -140,6 +142,7 @@ public class TreeQueryRepositoryImpl implements TreeQueryRepository {
                 .leftJoin(tree.treeImage, treeImage).fetchJoin()
                 .join(tree.member, member).fetchJoin()
                 .where(memberEq(memberId))
+                .orderBy(tree.updateTime.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
@@ -158,6 +161,7 @@ public class TreeQueryRepositoryImpl implements TreeQueryRepository {
                 .join(tree.member, member).on(tree.member.id.eq(member.id))
                 .join(tree.book, book).on(tree.book.id.eq(book.id))
                 .where(memberEq(memberId), bookEq(bookId))
+                .orderBy(tree.updateTime.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
@@ -221,11 +225,12 @@ public class TreeQueryRepositoryImpl implements TreeQueryRepository {
 
         List<Tree> result = queryFactory
                 .selectFrom(tree)
-                .join(tree.book, book).fetchJoin()
                 .join(tree.member, member).fetchJoin()
-                .join(tree.treeBook, treeBook).fetchJoin()
-                .join(tree.memoir, memoir).fetchJoin()
+                .leftJoin(tree.book, book).fetchJoin()
+                .leftJoin(tree.treeBook, treeBook).fetchJoin()
+                .leftJoin(tree.memoir, memoir).fetchJoin()
                 .where(bookEq(bookId))
+                .orderBy(tree.updateTime.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();

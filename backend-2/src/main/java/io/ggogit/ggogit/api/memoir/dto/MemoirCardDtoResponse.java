@@ -58,6 +58,7 @@ public class MemoirCardDtoResponse {
         @Builder.Default
         private int cardType = 1;
 
+        private Long id;
         private String title;
         private String content;
         private String updateDate;
@@ -71,6 +72,7 @@ public class MemoirCardDtoResponse {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
             return itemDto.builder()
+                    .id(memoir.getId())
                     .title(memoir.getTitle())
                     .content(memoir.getText())
                     .updateDate(memoir.getUpdateTime().format(formatter))

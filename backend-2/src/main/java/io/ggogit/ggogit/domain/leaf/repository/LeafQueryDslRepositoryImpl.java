@@ -21,7 +21,10 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
+import static io.ggogit.ggogit.domain.book.entity.QBook.book;
 import static io.ggogit.ggogit.domain.leaf.entity.QLeaf.*;
+import static io.ggogit.ggogit.domain.member.entity.QMember.member;
+import static io.ggogit.ggogit.domain.tree.entity.QTree.tree;
 
 @Repository
 @RequiredArgsConstructor
@@ -90,40 +93,14 @@ public class LeafQueryDslRepositoryImpl implements LeafQueryDslRepository {
     public Page<Leaf> getLeafCards(Long bookId, int page, int size) {
 
         QLeaf leaf = QLeaf.leaf;
-        QTree tree = QTree.tree;
-
-        long count = queryFactory
-                .selectFrom(leaf)
-                .where(
-                        leaf.tree.id.in(
-                                JPAExpressions
-                                        .select(tree.id)
-                                        .from(tree)
-                                        .where(
-                                                tree.book.id.eq(bookId),
-                                                tree.isDeleted.eq(false),
-                                                tree.visibility.eq(true)
-                                        )
-                        ),
-                        leaf.isDeleted.eq(false),
-                        leaf.visibility.eq(true)
-                )
-                .fetchCount();
 
         List<Leaf> leaves = queryFactory
                 .selectFrom(leaf)
+                .join(leaf.tree, tree).fetchJoin()
+                .join(tree.member, member).fetchJoin()
+                .join(tree.book, book).fetchJoin()
                 .where(
-                        leaf.tree.id.in(
-                                JPAExpressions
-                                        .select(tree.id)
-                                        .from(tree)
-                                        .where(
-                                                tree.book.id.eq(bookId),
-                                                tree.isDeleted.eq(false),
-                                                tree.visibility.eq(true)
-                                        )
-                        ),
-                        leaf.isDeleted.eq(false),
+                        leaf.tree.book.id.eq(bookId),
                         leaf.visibility.eq(true)
                 )
                 .orderBy(leaf.updateTime.desc())
@@ -131,7 +108,7 @@ public class LeafQueryDslRepositoryImpl implements LeafQueryDslRepository {
                 .limit(size)
                 .fetch();
 
-        return new PageImpl<>(leaves, PageRequest.of(page, size), count);
+        return new PageImpl<>(leaves, PageRequest.of(page, size), leaves.size());
     }
 
     @Override

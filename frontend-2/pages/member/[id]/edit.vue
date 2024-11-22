@@ -6,6 +6,7 @@ const memberId = useMemberStore()._id;
 const config = useRuntimeConfig();
 //데이터 fetch후 비교해 본인의 개인 페이지인지 판단
 const isOwner = ref(false);
+const memberFormData = ref(new FormData());
 
 //----------------Model----------------
 let tree = ref({
@@ -64,7 +65,6 @@ const { data: memberData, error: memberError } = await useAuthFetch(
 
 if (memberData.value) {
   member.value = memberData.value;
-  console.log("member.value=" + member.value);
   isOwner.value = member.value.id === memberId;
 }
 
@@ -78,11 +78,63 @@ const backgroundStyle = computed(() => {
   };
 });
 
-const changeProfileHandler = () => {};
+// 사용자가 입력한 profile 이미지를 임시로 화면에 보여주고 서버 전송을 위한 FormData에도 담아둠
+const changeProfileHandler = async () => {
+  // 서버에 이미지를 전송할 그릇인 FormData 생성
+  const fileInput = document.createElement("input");
+  fileInput.type = "file";
+  fileInput.accept = "image/*";
+  fileInput.onchange = (event) => {
+    const file = event.target.files[0];
+    memberFormData.value.append("memberProfileImage", file, file.name);
 
-const changeBackgroundHandler = () => {};
+    // 이미지 파일을 읽고, 화면에 출력
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      member.value.memberProfileImage = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  };
+  fileInput.click();
+};
 
-const memberEditHandler = () => {};
+//사용자가 입력한 backGround이미지를 리소스 서버에 formData로 전송 후 이미지 url을 받아옴
+const changeBackgroundHandler = async () => {
+  // 서버에 이미지를 전송할 그릇인 FormData 생성
+  const fileInput = document.createElement("input");
+  fileInput.type = "file";
+  fileInput.accept = "image/*";
+  fileInput.onchange = (event) => {
+    const file = event.target.files[0];
+    memberFormData.value.append("memberBackgroundImage", file, file.name);
+
+    // 이미지 파일을 읽고,
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      member.value.memberBackgroundImage = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  };
+  fileInput.click();
+};
+
+const memberEditHandler = async () => {
+  //memberImageFormaData에 이미지와 바뀐 문자열을 담아서 서버로 전송
+  //member정보 수정
+  memberFormData.value.append("nickname", member.value.nickname);
+  memberFormData.value.append("introduction", member.value.introduction);
+
+  console.log(memberFormData);
+
+  const response = await useAuthDataFetch(`/members/${memberId}/edit`, {
+    method: "POST",
+    baseURL: `${config.public.apiBase}`,
+    body: memberFormData.value,
+  });
+  console.log(response);
+
+  navigateTo(`/member/${memberId}`);
+};
 //----------------Life Cycle----------------
 </script>
 
@@ -90,12 +142,7 @@ const memberEditHandler = () => {};
   <Title>나의 꼬깃</Title>
   <header>
     <div class="user-info-container">
-      <div class="user-info__background-frame" :style="backgroundStyle">
-        <img
-          class="user-info__background-plus"
-          src="/assets/png/plus-btn.png"
-          @click.prevent="changeBackgroundHandler"
-        />
+      <div class="user-info__background-frame">
         <section class="user-info__top-bar-container">
           <div class="top-bar__transparent-frame">
             <div @click.prevent="useGoBack()">
@@ -109,6 +156,20 @@ const memberEditHandler = () => {};
             </div>
           </div>
         </section>
+        <img
+          class="user-info__background-image"
+          :src="
+            useGetImageUrl(member.memberBackgroundImage, 'memberBackground')
+          "
+          alt="user-Background"
+        />
+        <div class="user-info__background-plus-box">
+          <img
+            class="user-info__background-plus"
+            src="/assets/png/plus-btn.png"
+            @click.prevent="changeBackgroundHandler"
+          />
+        </div>
         <section class="user-info__bot-bar-container">
           <div class="bar-user-info-frame">
             <div class="bar-user-info__left-content">
@@ -150,6 +211,10 @@ const memberEditHandler = () => {};
 
   <main>
     <div class="mypage-user-instroduction__frame">
+      <img
+        class="mypage-user-instroduction__quote"
+        src="/assets/png/quote.png"
+      />
       <label for="introduction" class="mypage-user-instroduction"></label>
       <textarea
         class="mypage-user-instroduction_form"
@@ -197,14 +262,46 @@ const memberEditHandler = () => {};
   padding: 24px;
 }
 
-.user-info__background-plus {
+.user-info__background-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   position: absolute;
-  top: 35%;
-  right: 38%;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+.mypage-user-instroduction__quote {
+  position: relative;
+  top: 20px;
+  right: 10px;
+  margin-top: 10px;
+  width: 40px;
+  height: auto;
+}
+
+.user-info__background-plus-box {
+  position: relative;
+  display: flex;
+  margin: 0 auto;
+  z-index: 2;
+}
+
+/* .user-info__background-input {
+  position: absolute;
+  content-visibility: hidden;
+  padding: 10px;
+  width: 70px;
+  height: 70px;
+  z-index: 1;
+} */
+
+.user-info__background-plus {
   width: 40px;
   height: 40px;
-  padding: 10px;
   background-size: contain;
+  cursor: pointer;
 }
 .user-info__background-frame::before {
   display: flex;
@@ -233,15 +330,16 @@ const memberEditHandler = () => {};
   box-sizing: border-box;
   width: 100%;
   max-width: var(--max-width-1);
-  padding: 40px 24px 40px 24px;
+  padding: 0 0 40px 24px;
 }
 
 .mypage-user-instroduction_form {
+  box-sizing: border-box;
   border: none;
   width: 100%;
+  height: fit-content;
   max-width: var(--max-width-1);
   padding: 16px;
-  border-radius: 15px;
   background-color: var(--main3);
   font-size: 16px;
   font-weight: var(--medium, 500);
@@ -295,8 +393,8 @@ const memberEditHandler = () => {};
   padding: 0 4px 0 4px;
   background-color: var(--main2--opacity40);
   border: none;
-  border-radius: 10px;
   color: var(--white);
+  border-radius: 5px;
   font-size: 24px;
   font-weight: var(--medium);
   line-height: var(--line-height-main);
@@ -374,5 +472,6 @@ const memberEditHandler = () => {};
   display: flex;
   background: url("/assets/png/save-btn.png") no-repeat center;
   background-size: contain;
+  cursor: pointer;
 }
 </style>

@@ -8,6 +8,11 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Optional;
+
+import static java.util.Optional.*;
+import static org.eclipse.jdt.internal.compiler.problem.ProblemSeverities.Optional;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,9 +23,14 @@ public class MemberResponse {
     private String email;
     private String nickname;
     private String username;
-    private String introduction;
-    private MemberProfileImage memberProfileImage;
-    private MemberBackgroundImage memberBackgroundImage;
+    @Builder.Default
+    private String introduction = "";
+
+    @Builder.Default
+    private String memberProfileImage = "";
+
+    @Builder.Default
+    private String memberBackgroundImage = "";
 
     public static MemberResponse of(Long id,
                                     String email,
@@ -34,9 +44,9 @@ public class MemberResponse {
                 .email(email)
                 .nickname(nickname)
                 .username(username)
-                .introduction(introduction)
-                .memberProfileImage(memberProfileImage)
-                .memberBackgroundImage(memberBackgroundImage)
+                .introduction(ofNullable(introduction).orElse(""))
+                .memberProfileImage(ofNullable(memberProfileImage).map(MemberProfileImage::getName).orElse(""))
+                .memberBackgroundImage(ofNullable(memberBackgroundImage).map(MemberBackgroundImage::getName).orElse(""))
                 .build();
     }
 
@@ -46,9 +56,9 @@ public class MemberResponse {
                 .email(member.getEmail())
                 .nickname(member.getNickname())
                 .username(member.getUsername())
-                .introduction(member.getIntroduction())
-                .memberProfileImage(member.getMemberProfileImage())
-                .memberBackgroundImage(member.getMemberBackgroundImage())
+                .introduction(ofNullable(member.getIntroduction()).orElse(""))
+                .memberProfileImage(ofNullable(member.getMemberProfileImage()).map(MemberProfileImage::getName).orElse(""))
+                .memberBackgroundImage(ofNullable(member.getMemberBackgroundImage()).map(MemberBackgroundImage::getName).orElse(""))
                 .build();
     }
 }

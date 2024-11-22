@@ -1,5 +1,6 @@
 package io.ggogit.ggogit.domain.member.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -19,7 +20,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@SQLDelete(sql = "update member_profile_image set is_deleted = true where id = ? and version = ?")
+@SQLDelete(sql = "update member_profile_image set is_deleted = true where member_id = ? and version = ?")
 @SQLRestriction("is_deleted = false")
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "MEMBER_PROFILE_IMAGE")
@@ -32,6 +33,7 @@ public class MemberProfileImage {
     @MapsId
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "MEMBER_ID", nullable = false)
+    @JsonIgnore
     private Member member;
 
     @Size(max = 255)
@@ -47,13 +49,14 @@ public class MemberProfileImage {
 
     @NotNull
     @CreatedDate
-    @Column(name = "CREATE_TIME", nullable = false)
+    @Column(name = "CREATE_TIME", nullable = false, updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime createTime;
 
     @NotNull
     @LastModifiedDate
-    @Column(name = "UPDATE_TIME", nullable = false)
+    @Column(name = "UPDATE_TIME", nullable = false,  columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime updateTime;
+
 
     @Version
     @Column(name = "VERSION", nullable = false)

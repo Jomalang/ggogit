@@ -60,8 +60,8 @@ const handleDbAction = (event, type, path) => {
                 class="main-nav__icon"
                 :src="
                   props.active === 'home'
-                    ? '/svg/nav-home--active.svg'
-                    : '/svg/nav-home.svg'
+                    ? '/png/nav-home--active.png'
+                    : '/png/nav-home.png'
                 "
                 alt="홈 네비게이션 이미지"
               />
@@ -93,8 +93,8 @@ const handleDbAction = (event, type, path) => {
                 class="main-nav__icon"
                 :src="
                   props.active === 'search'
-                    ? '/svg/nav-search--active.svg'
-                    : '/svg/nav-search.svg'
+                    ? '/png/nav-search--active.png'
+                    : '/png/nav-search.png'
                 "
                 alt="탐색 네비게이션 이미지"
               />
@@ -121,8 +121,8 @@ const handleDbAction = (event, type, path) => {
                 class="main-nav__icon"
                 :src="
                   props.active === 'community'
-                    ? '/svg/nav-community--active.svg'
-                    : '/svg/nav-community.svg'
+                    ? '/png/nav-community--active.png'
+                    : '/png/nav-community.png'
                 "
                 alt="커뮤니티 네비게이션 이미지"
               />
@@ -151,8 +151,8 @@ const handleDbAction = (event, type, path) => {
                 class="main-nav__icon"
                 :src="
                   props.active === 'mypage'
-                    ? '/svg/nav-mypage--active.svg'
-                    : '/svg/nav-mypage.svg'
+                    ? '/png/nav-mypage--active.png'
+                    : '/png/nav-mypage.png'
                 "
                 alt="마이페이지 네비게이션 이미지"
               />

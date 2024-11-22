@@ -160,7 +160,7 @@ onMounted(() => {});
   content: "";
   display: inline-block;
   align-items: center;
-  background-image: url("/svg/hidden-on.svg");
+  background-image: url("/png/hidden-on.png");
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
@@ -177,7 +177,7 @@ onMounted(() => {});
   content: "";
   align-items: center;
   display: inline-block;
-  background-image: url("/svg/hidden-off.svg");
+  background-image: url("/png/hidden-off.png");
   background-position: center;
   background-size: contain;
 }

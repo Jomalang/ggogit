@@ -25,7 +25,7 @@ const tagUnSelected = (tag: LeafTagProps) => {
         <div class="tag-info__tag-box">
           <q class="tag-info__name">{{ tag.name }}</q>
           <button class="tag-info__btn tag-info__btn--selected" type="button" @click="tagUnSelected(tag)">
-            <img class="tag-info__btn" src="~/assets/svg/x-button.svg" alt="" />
+            <img class="tag-info__btn" src="~/assets/png/x-button.png" alt="" />
           </button>
         </div>
       </li>

@@ -107,7 +107,7 @@ const link = () => {
       </NuxtLink>
       <div class="card-another-records__icon-box">
         <div class="card-another-records__share-icon-box">
-          <img src="~/assets/svg/comment.svg" alt="댓글 아이콘" />
+          <img src="~/assets/png/comment.png" alt="댓글 아이콘" />
         </div>
         <div class="card-another-records__like-icon-box">
           <input
@@ -298,7 +298,7 @@ const link = () => {
   content: "";
   display: flex;
   align-items: center;
-  background-image: url("/svg/like.svg");
+  background-image: url("/png/like.png");
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
@@ -316,7 +316,7 @@ const link = () => {
   content: "";
   display: flex;
   align-items: center;
-  background-image: url("/svg/like-fill.svg");
+  background-image: url("/png/like-fill.png");
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;

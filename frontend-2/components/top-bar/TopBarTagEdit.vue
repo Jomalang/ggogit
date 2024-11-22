@@ -20,8 +20,8 @@ const emit = defineEmits(['update']);
     <div class="top-bar__frame">
       <NuxtLink class="tob-bar__back-link" :to="lastPage" @click="goBack">
         <img
-          src="~/assets/svg/back-arrow-icon.svg"
-          alt="top-bar--backarrow.svg"
+          src="~/assets/png/back-arrow-icon.png"
+          alt="top-bar--backarrow.png"
         />
       </NuxtLink>
       <div class="tree-input-text--select__tag">

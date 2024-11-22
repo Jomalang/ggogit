@@ -42,7 +42,7 @@ const createReq = async (query, filter) => {
   <div class="search__form">
     <div>
       <div @click.prevent="useGoBack()">
-        <img src="~/assets/svg/back.svg" alt="back button" />
+        <img src="~/assets/png/back.png" alt="back button" />
       </div>
     </div>
     <div class="search-bar">
@@ -55,11 +55,11 @@ const createReq = async (query, filter) => {
           autocomplete="off"
         />
         <button class="search-bar--close" type="reset">
-          <img src="~/assets/svg/close-button.svg" alt="close-btn" />
+          <img src="~/assets/png/close-button.png" alt="close-btn" />
         </button>
       </label>
       <button @click="createReq(query, filter)">
-        <img src="~/assets/svg/lens.svg" alt="lens" />
+        <img src="~/assets/png/lens.png" alt="lens" />
       </button>
     </div>
   </div>

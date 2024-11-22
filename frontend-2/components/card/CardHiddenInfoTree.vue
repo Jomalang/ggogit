@@ -197,7 +197,7 @@ function hiddenText() {
   content: "";
   display: inline-block;
   align-items: center;
-  background-image: url("/svg/hidden-on.svg");
+  background-image: url("/png/hidden-on.png");
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
@@ -209,7 +209,7 @@ function hiddenText() {
   content: "";
   align-items: center;
   display: inline-block;
-  background-image: url("/svg/hidden-off.svg");
+  background-image: url("/png/hidden-off.png");
   background-position: center;
   background-size: contain;
 }
@@ -255,7 +255,7 @@ function hiddenText() {
   width: 20px;
   height: 20px;
   display: flex;
-  background: transparent url("/svg/edit-dark.svg") no-repeat center;
+  background: transparent url("/png/edit-dark.png") no-repeat center;
   background-size: contain;
   align-items: center;
 }

@@ -12,7 +12,7 @@
       :comments="[
         {
           memberId: 1,
-          memberImage: '/svg/comment-profile.svg',
+          memberImage: '/png/comment-profile.png',
           memberNickname: '닉네임',
           createTime: '2021-10-10',
           commentContent: '댓글내용',
@@ -255,11 +255,11 @@
 }
 
 .card-log__like:disabled + .card-log__like-frame {
-  background-image: url("/src/main/resources/static/svg/tumbsup-on.svg");
+  background-image: url("/src/main/resources/static/png/tumbsup-on.png");
 }
 
 .card-log__like:checked + .card-log__like-frame {
-  background-image: url("/src/main/resources/static/svg/tumbsup-on.svg");
+  background-image: url("/src/main/resources/static/png/tumbsup-on.png");
 }
 
 .card-log__like-frame {

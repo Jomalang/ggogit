@@ -209,7 +209,7 @@ onUpdated(() => {
   <div class="search__form">
     <div>
       <dive @click.prevent="useGoBack()">
-        <img src="~/assets/svg/back.svg" alt="back button" />
+        <img src="~/assets/png/back.png" alt="back button" />
       </dive>
     </div>
     <div class="search-bar">
@@ -227,11 +227,11 @@ onUpdated(() => {
           class="search-bar--close"
           type="reset"
         >
-          <img src="~/assets/svg/close-button.svg" alt="close-btn" />
+          <img src="~/assets/png/close-button.png" alt="close-btn" />
         </button>
       </label>
       <button @click="createReq(sort, 0, searchFilter, filter, true)">
-        <img src="~/assets/svg/lens.svg" alt="lens" />
+        <img src="~/assets/png/lens.png" alt="lens" />
       </button>
     </div>
   </div>
@@ -242,7 +242,7 @@ onUpdated(() => {
         @click.prevent="openPopup"
         class="search-filter-log__checkbox-input-img"
       >
-        <img class="" src="~/assets/svg/sort-white.svg" />
+        <img class="" src="~/assets/png/sort-white.png" />
       </span>
       <span
         @click.prevent="openPopup"
@@ -295,7 +295,7 @@ onUpdated(() => {
             class="filter-tab__btn--back"
             type="button"
           >
-            <img src="~/assets/svg/tab-back.svg" alt="뒤로가기 버튼" />
+            <img src="~/assets/png/tab-back.png" alt="뒤로가기 버튼" />
           </button>
           <h1 class="filter-tab__header--title">필터 선택</h1>
         </div>
@@ -320,7 +320,7 @@ onUpdated(() => {
                   <div class="filter-tab__icon-box">
                     <img
                       class="filter-tab__icon-img"
-                      src="~/assets/svg/tab-check-btn.svg"
+                      src="~/assets/png/tab-check-btn.png"
                       alt="필터 버튼"
                     />
                   </div>
@@ -341,7 +341,7 @@ onUpdated(() => {
                   <div class="filter-tab__icon-box">
                     <img
                       class="filter-tab__icon-img"
-                      src="~/assets/svg/tab-check-btn.svg"
+                      src="~/assets/png/tab-check-btn.png"
                       alt="필터 버튼"
                     />
                   </div>
@@ -361,7 +361,7 @@ onUpdated(() => {
                   <div class="filter-tab__icon-box">
                     <img
                       class="filter-tab__icon-img"
-                      src="~/assets/svg/tab-check-btn.svg"
+                      src="~/assets/png/tab-check-btn.png"
                       alt="필터 버튼"
                     />
                   </div>
@@ -383,7 +383,7 @@ onUpdated(() => {
                   <div class="filter-tab__icon-box">
                     <img
                       class="filter-tab__icon-img"
-                      src="~/assets/svg/tab-check-btn.svg"
+                      src="~/assets/png/tab-check-btn.png"
                       alt="필터 버튼"
                     />
                   </div>
@@ -401,7 +401,7 @@ onUpdated(() => {
                   <div class="filter-tab__icon-box">
                     <img
                       class="filter-tab__icon-img"
-                      src="~/assets/svg/tab-check-btn.svg"
+                      src="~/assets/png/tab-check-btn.png"
                       alt="필터 버튼"
                     />
                   </div>
@@ -419,7 +419,7 @@ onUpdated(() => {
                   <div class="filter-tab__icon-box">
                     <img
                       class="filter-tab__icon-img"
-                      src="~/assets/svg/tab-check-btn.svg"
+                      src="~/assets/png/tab-check-btn.png"
                       alt="필터 버튼"
                     />
                   </div>
@@ -437,7 +437,7 @@ onUpdated(() => {
                   <div class="filter-tab__icon-box">
                     <img
                       class="filter-tab__icon-img"
-                      src="~/assets/svg/tab-check-btn.svg"
+                      src="~/assets/png/tab-check-btn.png"
                       alt="필터 버튼"
                     />
                   </div>
@@ -460,7 +460,7 @@ onUpdated(() => {
                     <div class="filter-tab__icon-box">
                       <img
                         class="filter-tab__icon-img"
-                        src="~/assets/svg/tab-check-btn.svg"
+                        src="~/assets/png/tab-check-btn.png"
                         alt="필터 버튼"
                       />
                     </div>
@@ -478,7 +478,7 @@ onUpdated(() => {
                     <div class="filter-tab__icon-box">
                       <img
                         class="filter-tab__icon-img"
-                        src="~/assets/svg/tab-check-btn.svg"
+                        src="~/assets/png/tab-check-btn.png"
                         alt="필터 버튼"
                       />
                     </div>

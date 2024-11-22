@@ -48,7 +48,7 @@ watchEffect(() => {
   flex-direction: row;
 }
 .filter-tree-list-img {
-  background-image: url("/svg/sort.svg");
+  background-image: url("/png/sort.png");
   background-size: 50%;
   background-position: center;
   background-repeat: no-repeat;
@@ -74,7 +74,7 @@ watchEffect(() => {
 }
 .filter-tree-list-img:checked {
   background-color: var(--btn-active);
-  background-image: url("/svg/sort-white.svg");
+  background-image: url("/png/sort-white.png");
   color: var(--white);
 }
 .filter-tree-list-btn {
@@ -143,7 +143,7 @@ watchEffect(() => {
   content: "";
   display: flex;
   align-items: center;
-  background-image: url("/svg/like.svg");
+  background-image: url("/png/like.png");
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
@@ -160,7 +160,7 @@ watchEffect(() => {
   content: "";
   display: flex;
   align-items: center;
-  background-image: url("/svg/like-fill.svg");
+  background-image: url("/png/like-fill.png");
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;

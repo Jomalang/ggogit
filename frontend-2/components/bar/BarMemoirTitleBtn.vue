@@ -70,7 +70,7 @@ const props = defineProps<Props>();
   content: "";
   display: flex;
   align-items: center;
-  background-image: url("/public/svg/like-bold.svg");
+  background-image: url("/public/png/like-bold.png");
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
@@ -82,7 +82,7 @@ const props = defineProps<Props>();
   content: "";
   display: flex;
   align-items: center;
-  background-image: url("/public/svg/like-fill.svg");
+  background-image: url("/public/png/like-fill.png");
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
@@ -97,7 +97,7 @@ const props = defineProps<Props>();
   width: 25px;
   height: 25px;
   display: flex;
-  background: transparent url("/svg/share.svg") no-repeat center;
+  background: transparent url("/png/share.png") no-repeat center;
   background-size: contain;
 }
 </style>

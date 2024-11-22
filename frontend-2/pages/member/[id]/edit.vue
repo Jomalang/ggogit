@@ -86,7 +86,7 @@ const changeProfileHandler = async () => {
   fileInput.accept = "image/*";
   fileInput.onchange = (event) => {
     const file = event.target.files[0];
-    memberFormData.value.append("memberProfileImage", file);
+    memberFormData.value.append("memberProfileImage", file, file.name);
 
     // 이미지 파일을 읽고, 화면에 출력
     const reader = new FileReader();
@@ -106,7 +106,7 @@ const changeBackgroundHandler = async () => {
   fileInput.accept = "image/*";
   fileInput.onchange = (event) => {
     const file = event.target.files[0];
-    memberFormData.value.append("memberBackgroundImage", file);
+    memberFormData.value.append("memberBackgroundImage", file, file.name);
 
     // 이미지 파일을 읽고,
     const reader = new FileReader();

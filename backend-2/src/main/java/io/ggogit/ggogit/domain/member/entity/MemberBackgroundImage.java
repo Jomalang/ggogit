@@ -44,19 +44,18 @@ public class MemberBackgroundImage {
 
     @NotNull
     @ColumnDefault("0")
+    @Builder.Default
     @Column(name = "IS_DELETED", nullable = false)
     private Boolean isDeleted = false;
 
     @NotNull
-    //생성 날짜 자동 주입
     @CreatedDate
-    @Column(name = "CREATE_TIME", nullable = false, updatable = false)
+    @Column(name = "CREATE_TIME", nullable = false, updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime createTime;
 
     @NotNull
-    //마지막 수정 날짜 자동 주입
     @LastModifiedDate
-    @Column(name = "UPDATE_TIME", nullable = false)
+    @Column(name = "UPDATE_TIME", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime updateTime;
 
     @Version

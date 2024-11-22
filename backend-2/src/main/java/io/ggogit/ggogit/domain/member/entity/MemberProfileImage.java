@@ -49,12 +49,12 @@ public class MemberProfileImage {
 
     @NotNull
     @CreatedDate
-    @Column(name = "CREATE_TIME", nullable = false, updatable = false)
+    @Column(name = "CREATE_TIME", nullable = false, updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime createTime;
 
     @NotNull
     @LastModifiedDate
-    @Column(name = "UPDATE_TIME", nullable = false)
+    @Column(name = "UPDATE_TIME", nullable = false,  columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime updateTime;
 
 

@@ -64,7 +64,7 @@ const { data: memberData, error: memberError } = await useAuthFetch(
 
 if (memberData.value) {
   member.value = memberData.value;
-  console.log("member.value=" + member.value);
+  console.log(member.value);
   isOwner.value = member.value.id === memberId;
 }
 

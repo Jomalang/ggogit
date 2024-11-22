@@ -163,13 +163,15 @@ public class MemberController {
     }
 
     // 회원 정보 수정
+    //TODO: 서비스간의 트랜잭션 전파 처리 필요
     @PostMapping("/{memberId}/edit")
     public ResponseEntity<MemberEditResponse> edit(
             @PathVariable Long memberId,
             @ModelAttribute MemberEditRequest dto,
-            @RequestParam("memberProfileImage") MultipartFile memberProfileImage,
-            @RequestParam("memberBackgroundImage") MultipartFile memberBackgroundImage
+            @RequestParam(value = "memberProfileImage", required = false) MultipartFile memberProfileImage,
+            @RequestParam(value = "memberBackgroundImage", required = false) MultipartFile memberBackgroundImage
             ) {
+
         // 회원 정보 수정
         Member memberDto = dto.toMember();
         memberService.edit(memberId, memberDto);

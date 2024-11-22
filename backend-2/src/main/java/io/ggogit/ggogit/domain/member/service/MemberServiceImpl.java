@@ -218,7 +218,11 @@ public class MemberServiceImpl implements MemberService {
                 .orElseThrow(() -> new IllegalArgumentException("가입되지 않은 이메일입니다."));
 
         //변경 감지 이용
+        //닉네임은 없앨 수 없다.
+        if(!toMember.getNickname().isEmpty())
         fromMember.setNickname(toMember.getNickname());
+
+        //소개는 없앨 수 있다.
         fromMember.setIntroduction(toMember.getIntroduction());
 
         memberRepository.save(fromMember);

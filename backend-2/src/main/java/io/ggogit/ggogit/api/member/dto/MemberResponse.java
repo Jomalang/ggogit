@@ -19,8 +19,8 @@ public class MemberResponse {
     private String nickname;
     private String username;
     private String introduction;
-    private MemberProfileImage memberProfileImage;
-    private MemberBackgroundImage memberBackgroundImage;
+    private String memberProfileImage;
+    private String memberBackgroundImage;
 
     public static MemberResponse of(Long id,
                                     String email,
@@ -35,8 +35,8 @@ public class MemberResponse {
                 .nickname(nickname)
                 .username(username)
                 .introduction(introduction)
-                .memberProfileImage(memberProfileImage)
-                .memberBackgroundImage(memberBackgroundImage)
+                .memberProfileImage(memberProfileImage.getName())
+                .memberBackgroundImage(memberBackgroundImage.getName())
                 .build();
     }
 
@@ -47,8 +47,8 @@ public class MemberResponse {
                 .nickname(member.getNickname())
                 .username(member.getUsername())
                 .introduction(member.getIntroduction())
-                .memberProfileImage(member.getMemberProfileImage())
-                .memberBackgroundImage(member.getMemberBackgroundImage())
+                .memberProfileImage(member.getMemberProfileImage().getName())
+                .memberBackgroundImage(member.getMemberBackgroundImage().getName())
                 .build();
     }
 }

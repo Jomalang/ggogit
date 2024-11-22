@@ -1,6 +1,8 @@
 export default function useGetImageUrl(imageFile = "", imageType = "member") {
   const config = useRuntimeConfig();
 
+  console.log(imageFile);
+
   //이미지 파일 이름이 없으면 기본 이미지 반환
   if (imageFile === null || imageFile === "" || imageFile === undefined) {
     return `/png/default-profile.png`;

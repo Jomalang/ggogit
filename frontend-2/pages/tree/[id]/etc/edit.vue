@@ -11,7 +11,7 @@ const route = useRoute();
 const router = useRouter();
 const config = useRuntimeConfig();
 const treeId = route.params.id;
-
+let originTreeImage = '';
 useTreeFormData().init();
 const treeFormData = useTreeFormData().treeFormData;
 
@@ -42,8 +42,7 @@ onMounted(() => {
   treeFormData.value.treeTitle = treeData.value.title;
   treeFormData.value.description = treeData.value.description;
   treeFormData.value.visibility = treeData.value.visibility;
-
-  console.log("treeData:", treeData.value);
+  originTreeImage = treeData.value.treeImage;
   if (treeFormData.value.imageData) {
     const imgTag = document.getElementById("input-book-img-box__img-id");
     console.log("imgTag:", imgTag);
@@ -98,9 +97,13 @@ const submitFormHandler = async (e) => {
     // 이미지 파일이 있을 경우
     const imgTag = document.getElementById("input-book-img-box__img-id");
     if (imgTag && imgTag.src.startsWith("data:image")) {
-      const response = await fetch(imgTag.src);
-      const blob = await response.blob();
-      treeFormDataToSend.append("image", blob, "image.jpg");
+
+      if(originTreeImage !== treeFormData.value.imageData) {
+        console.log("imgTag.src:", imgTag);
+        const response = await fetch(imgTag.src);
+        const blob = await response.blob();
+        treeFormDataToSend.append("image", blob, "image.jpg");
+      }
     }
 
     const response = await useAuthDataFetch('trees/etc/edit', {

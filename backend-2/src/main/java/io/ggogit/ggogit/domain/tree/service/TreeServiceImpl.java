@@ -321,6 +321,7 @@ public class TreeServiceImpl implements TreeService {
         book.setPublisher(dto.getPublisher());
         book.setPublishDate(dto.getPublishDate());
         book.setTotalPage(dto.getTotalPage());
+        book.setImageFile(dto.getImageData());
         bookRepository.save(book);
 
 

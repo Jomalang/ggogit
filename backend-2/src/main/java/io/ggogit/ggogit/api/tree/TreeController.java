@@ -319,4 +319,20 @@ public class TreeController {
 
         return new ResponseEntity<>(EditResponse.of("수정 성공",200), HttpStatus.OK);
     }
+
+    @DeleteMapping("/{treeId}")
+    public ResponseEntity<EditResponse> deleteTree(
+            @AuthenticationPrincipal CustomUserDetails userDetails,
+            @PathVariable Long treeId
+    ) {
+        if (!treeService.findTreeByTreeId(treeId)) {
+            throw new IllegalArgumentException("트리를 찾을 수 없습니다.");
+        }
+
+        if(!treeService.isOwner(treeId, userDetails.getId())) {
+            throw new IllegalArgumentException("해당 트리에 대한 권한이 없습니다.");
+        }
+        treeService.delete(treeId);
+        return new ResponseEntity<>(EditResponse.of("삭제 성공",200), HttpStatus.OK);
+    }
 }

@@ -325,6 +325,7 @@ public class TreeController {
             @AuthenticationPrincipal CustomUserDetails userDetails,
             @PathVariable Long treeId
     ) {
+        System.out.println("userDetails.getId() = " + userDetails.getId());
         if (!treeService.findTreeByTreeId(treeId)) {
             throw new IllegalArgumentException("트리를 찾을 수 없습니다.");
         }

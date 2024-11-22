@@ -154,7 +154,6 @@ const submitFormHandler = async (e) => {
       if (originTreeImage !== treeFormData.value.imageData) {
         const response = await fetch(imgTag.src);
         const blob = await response.blob();
-        console.log("blob:", blob);
         treeFormDataToSend.append("image", blob, "image.jpg");
       }
     }
@@ -164,9 +163,6 @@ const submitFormHandler = async (e) => {
       baseURL: `${config.public.apiBase}`,
       body: treeFormDataToSend,
     });
-
-    console.log("response:", response);
-
 
     router.push(`/tree/${treeId}`);
   } catch (error) {

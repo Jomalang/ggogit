@@ -31,10 +31,23 @@ public class MemberImageServiceImpl implements MemberImageService {
         //이미지 파일명 생성
         String saveName = imageRepository.changeFileNameToUUID(profile.getOriginalFilename());
         try{
-            //member폴더에 이미지 저장
+
+            //기존 이미지가 있다면
+            if(memberProfileImageRepository.existsById(memberId)) {
+                MemberProfileImage memberProfileImage = memberProfileImageRepository.findById(memberId).get();
+                //실제 데이터 삭제
+                imageRepository.deleteImage(memberProfileImage.getName(), UploadFolderType.MEMBER);
+                //DB 데이터 교체
+                memberProfileImageRepository.findById(memberId).ifPresent(memberProfileImage1 -> {
+                    memberProfileImage1.setName(saveName);
+                    memberProfileImageRepository.save(memberProfileImage1);
+                });
+            } else{
+                //기존 이미지가 없다면 바로 저장
+                memberProfileImageRepository.save(MemberProfileImage.of(member, saveName));
+            }
+            //member폴더에 실제 이미지 저장
             imageRepository.saveImage(saveName, profile.getBytes(), UploadFolderType.MEMBER);
-            //이미지 파일명 저장
-            memberProfileImageRepository.save(MemberProfileImage.of(member, saveName));
         } catch (IOException e) {
             //TODO 예외처리
             throw new RuntimeException(e);
@@ -50,10 +63,22 @@ public class MemberImageServiceImpl implements MemberImageService {
         //이미지 파일명 생성
         String saveName = imageRepository.changeFileNameToUUID(background.getOriginalFilename());
         try{
-            //member폴더에 이미지 저장
+            //기존 이미지 삭제
+            if(memberBackgroundImageRepository.existsById(memberId)) {
+                MemberBackgroundImage memberBackgroundImage = memberBackgroundImageRepository.findById(memberId).get();
+                //실제 데이터 삭제
+                imageRepository.deleteImage(memberBackgroundImage.getName(), UploadFolderType.MEMBER_BACKGROUND);
+                //DB 데이터 교체
+                memberBackgroundImageRepository.findById(memberId).ifPresent(memberBackgroundImage1 -> {
+                    memberBackgroundImage1.setName(saveName);
+                    memberBackgroundImageRepository.save(memberBackgroundImage1);
+                });
+            } else{
+                //기존 이미지가 없다면 바로 저장
+                memberBackgroundImageRepository.save(MemberBackgroundImage.of(member, saveName));
+            }
+            //memberBackground 폴더에 실제이미지 저장
             imageRepository.saveImage(saveName, background.getBytes(), UploadFolderType.MEMBER_BACKGROUND);
-            //이미지 파일명 저장
-            memberBackgroundImageRepository.save(MemberBackgroundImage.of(member, saveName));
         } catch (IOException e) {
             //TODO 예외처리
             throw new RuntimeException(e);

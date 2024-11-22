@@ -21,7 +21,7 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@SQLDelete(sql = "update member_background_image set is_deleted = true where id = ? and version = ?")
+@SQLDelete(sql = "update member_background_image set is_deleted = true where member_id = ? and version = ?")
 @SQLRestriction("is_deleted = false")
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "MEMBER_BACKGROUND_IMAGE")

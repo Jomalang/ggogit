@@ -19,7 +19,7 @@ const memberBackImageUrl = `${config.public.apiBase}/images/member/${props.backI
 
 const backgroundStyle = computed(() => ({
   //TODO: 배경 뒤 이미지 API제작
-  backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('${memberBackImageUrl}')`,
+  backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('${props.backImgPath}')`,
 }));
 </script>
 

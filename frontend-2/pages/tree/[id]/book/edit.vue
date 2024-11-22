@@ -2,13 +2,28 @@
 import { onMounted, watch } from "vue";
 import { useRouter } from "#vue-router";
 import useTreeFormData from "~/composables/useTreeFormData.js";
+import BookInputImgTreeEdit from "~/components/input/BookInputImgTreeEdit.vue";
+import TextBox from "~/components/input/TextBox.vue";
+import TextBoxReadOnly from "~/components/input/TextBoxReadOnly.vue";
+import TextDateBoxReadOnly from "~/components/input/TextDateBoxReadOnly.vue";
+import TextNumberBoxReadOnly from "~/components/input/TextNumberBoxReadOnly.vue";
+import BookCategorySelectReadOnly from "~/components/input/BookCategorySelectReadOnly.vue";
 
 // ----------------------- Model ----------------------- //
 const router = useRouter();
 const config = useRuntimeConfig();
 
+const isAuto = ref(false);
+const imgData = reactive([
+  {
+    isAuto: false,
+    imageData: ""
+  }
+])
+
+const treeId = Number(useRoute().params.id);
+
 useTreeFormData().init();
-useTreeFormData().setCreateUrl("/tree/book/new")
 const treeFormData = useTreeFormData().treeFormData;
 
 // ----------------------- Life Cycle ----------------------- //
@@ -16,6 +31,28 @@ onMounted(() => {
   if (treeFormData.value.imageData) {
     const imgTag = document.getElementById("input-book-img-box__img-id");
     imgTag.src = treeFormData.value.imageData;
+  }
+  if (treeData.value){
+    treeFormData.value.image = treeData.value.coverImageName;
+    treeFormData.value.title = treeData.value.bookTitle;
+    treeFormData.value.bookTitle = treeData.value.bookTitle;
+    treeFormData.value.author = treeData.value.bookAuthor;
+    treeFormData.value.publisher = treeData.value.bookPublisher;
+    treeFormData.value.publishDate = treeData.value.bookPublishedYear;
+    treeFormData.value.totalPage = treeData.value.bookTotalPage;
+    treeFormData.value.treeId = treeId;
+    treeFormData.value.bookCategoryId = treeData.value.bookCategoryId;
+    treeFormData.value.bookCategoryName = treeData.value.bookCategoryName;
+    treeFormData.value.isAuto = false;
+    treeFormData.value.treeTitle = treeData.value.title;
+    treeFormData.value.description = treeData.value.description;
+    treeFormData.value.visibility = treeData.value.visibility;
+    imgData.imageData = treeData.value.coverImageName;
+    if (treeFormData.value.image.startsWith("https://image.aladin.co.kr/product/")) {
+      isAuto.value = true;
+      imgData.isAuto = true;
+      treeFormData.value.isAuto = true;
+    }
   }
 });
 
@@ -28,46 +65,49 @@ const handleImageSelected = (imageData) => {
 const validateCheck = () => {
   let isValid = true;
 
-  // 도서 이름 확인
-  if (!treeFormData.value.bookTitle) {
-    treeFormData.value.bookTitleValid = false;
-    alert("도서 이름을 입력해주세요.");
-    return false;
-  }
+  // API 저장 도서 확인
+  if(!treeFormData.value.isAuto){
+    // 도서 이름 확인
+    if (!treeFormData.value.bookTitle) {
+      treeFormData.value.bookTitleValid = false;
+      alert("도서 이름을 입력해주세요.");
+      return false;
+    }
 
-  // 지은이 확인
-  if (!treeFormData.value.author) {
-    treeFormData.value.authorValid = false;
-    alert("지은이 이름을 입력해주세요.");
-    return false;
-  }
+    // 지은이 확인
+    if (!treeFormData.value.author) {
+      treeFormData.value.authorValid = false;
+      alert("지은이 이름을 입력해주세요.");
+      return false;
+    }
 
-  // 출판사 확인
-  if (!treeFormData.value.publisher) {
-    treeFormData.value.publisherValid = false;
-    alert("출판사를 입력해주세요.");
-    return false;
-  }
+    // 출판사 확인
+    if (!treeFormData.value.publisher) {
+      treeFormData.value.publisherValid = false;
+      alert("출판사를 입력해주세요.");
+      return false;
+    }
 
-  // 출판일 확인
-  if (!treeFormData.value.publishDate) {
-    treeFormData.value.publishDateValid = false;
-    alert("출판일을 입력해주세요.");
-    return false;
-  }
+    // 출판일 확인
+    if (!treeFormData.value.publishDate) {
+      treeFormData.value.publishDateValid = false;
+      alert("출판일을 입력해주세요.");
+      return false;
+    }
 
-  // 총페이지 확인
-  if (!treeFormData.value.totalPage) {
-    treeFormData.value.totalPageValid = false;
-    alert("총페이지를 입력해주세요.");
-    return false;
-  }
+    // 총페이지 확인
+    if (!treeFormData.value.totalPage) {
+      treeFormData.value.totalPageValid = false;
+      alert("총페이지를 입력해주세요.");
+      return false;
+    }
 
-  // 카테고리 확인
-  if (!treeFormData.value.bookCategoryId) {
-    treeFormData.value.bookCategoryIdValid = false;
-    alert("카테고리를 선택해주세요.");
-    return false;
+    // 카테고리 확인
+    if (!treeFormData.value.bookCategoryId) {
+      treeFormData.value.bookCategoryIdValid = false;
+      alert("카테고리를 선택해주세요.");
+      return false;
+    }
   }
 
   // 트리 이름 확인
@@ -110,24 +150,22 @@ const submitFormHandler = async (e) => {
     // 이미지 파일이 있을 경우
     const imgTag = document.getElementById("input-book-img-box__img-id");
     if (imgTag && imgTag.src.startsWith("data:image")) {
+      console.log("imgTag.src:", imgTag.src);
       const response = await fetch(imgTag.src);
       const blob = await response.blob();
       treeFormDataToSend.append("image", blob, "image.jpg");
     }
 
-    const response = await useAuthDataFetch("/trees", {
-      method: "POST",
+    const response = await useAuthDataFetch("/trees/book/edit", {
+      method: "PUT",
       baseURL: `${config.public.apiBase}`,
       body: treeFormDataToSend,
     });
 
     console.log("response:", response);
 
-    if (response.message !== '도서 트리 임시 저장 성공') {
-      throw new Error("Network response was not ok");
-    }
 
-    router.push("/leaf/book/new");
+    router.push(`/tree/${treeId}`);
   } catch (error) {
     console.error("Error submitting form:", error);
   }
@@ -136,7 +174,7 @@ const submitFormHandler = async (e) => {
 const dropBookCategory = () => {
   treeFormData.value.bookCategoryId = null;
   treeFormData.value.bookCategoryName = null;
-  treeFormData.value.bookCategorySelected = false;
+  treeFormData.value.bookCategorySelected = true;
 };
 
 const inputBookTitle = (value) => {
@@ -173,14 +211,22 @@ const inputDescription = (value) => {
   treeFormData.value.description = value;
   treeFormData.value.descriptionValid = true;
 };
+
+// path에서 data를 가져올 수 있도록 설정
+const { data: treeData, error: infoError } = await useAuthFetch(
+    () => `trees/${treeId}/info`,
+    {
+      baseURL: config.public.apiBase,
+    }
+);
 </script>
 
 <template>
   <header>
-    <h1 class="none">도서 트리 생성 페이지</h1>
+    <h1 class="none">도서 트리 수정 페이지</h1>
     <section class="tob-bar-back-container">
-      <h1 class="none">트리 생성 상단 바</h1>
-      <TopBarBack title="트리 생성" :link="''"></TopBarBack>
+      <h1 class="none">트리 수정 상단 바</h1>
+      <TopBarBack title="트리 수정"  ></TopBarBack>
     </section>
   </header>
 
@@ -190,7 +236,7 @@ const inputDescription = (value) => {
 
       <section class="select-title-container">
         <TextMainTitle
-          :data="{ title: '도서 직접 입력', size: 28 }"
+          :data="{ title: '도서 트리', size: 28 }"
         ></TextMainTitle>
       </section>
 
@@ -212,63 +258,107 @@ const inputDescription = (value) => {
 
         <section class="book-tree-input-form__photo-container">
           <h1 class="none">도서 이미지 입력</h1>
-          <InputBookInputImg
-            @image-selected="handleImageSelected"
-          ></InputBookInputImg>
+          <BookInputImgTreeEdit
+              :data = imgData
+              @image-selected="handleImageSelected"
+          ></BookInputImgTreeEdit>
         </section>
 
         <section class="input-form__input-container">
           <h1 class="none">도서 이름 입력</h1>
-          <InputTextBox
+
+          <TextBoxReadOnly
+              v-if="isAuto"
             :data="{
               label: '*도서 이름',
               name: 'bookTitle',
-              placeholder: '도서 이름을 입력해주세요',
-              value: treeFormData.bookTitle,
+              placeholder: '',
+              value: treeFormData.title,
               validate: treeFormData.bookTitleValid,
               validateMessage: '도서 이름을 입력해주세요.',
             }"
             @inputData="inputBookTitle"
           >
-          </InputTextBox>
+          </TextBoxReadOnly>
+          <TextBox
+              v-else
+            :data="{
+              label: '*도서 이름',
+              name: 'bookTitle',
+              placeholder: '도서 이름을 입력해주세요',
+              value: treeFormData.title,
+              validate: treeFormData.bookTitleValid,
+              validateMessage: '도서 이름을 입력해주세요.',
+            }"
+            @inputData="inputBookTitle"
+              ></TextBox>
         </section>
 
         <section class="input-form__input-container">
           <h1 class="none">지은이 입력</h1>
-          <InputTextBox
-            :data="{
+          <TextBoxReadOnly
+              v-if="isAuto"
+              :data="{
               label: '*지은이 이름',
               name: 'author',
-              placeholder: '지은이 이름을 입력해주세요',
+              placeholder: '',
               value: treeFormData.author,
               validate: treeFormData.authorValid,
               validateMessage: '지은이 이름을 입력해주세요.',
             }"
-            @inputData="inputAuthor"
+              @inputData="inputAuthor"
+          >
+          </TextBoxReadOnly>
+          <InputTextBox
+              v-else
+              :data="{
+              label: '*지은이 이름',
+              name: 'author',
+              placeholder: treeFormData.author,
+              value: treeFormData.author,
+              validate: treeFormData.authorValid,
+              validateMessage: '지은이 이름을 입력해주세요.',
+            }"
+              @inputData="inputAuthor"
           >
           </InputTextBox>
         </section>
 
         <section class="input-form__input-container">
           <h1 class="none">출판사 입력</h1>
-          <InputTextBox
-            :data="{
+          <TextBoxReadOnly
+              v-if="isAuto"
+              :data="{
               label: '*출판사',
               name: 'publisher',
-              placeholder: '출판사를 입력해주세요',
+              placeholder: '',
               value: treeFormData.publisher,
               validate: treeFormData.publisherValid,
               validateMessage: '출판사를 입력해주세요.',
             }"
-            @inputData="inputPublisher"
+              @inputData="inputPublisher"
+          >
+          </TextBoxReadOnly>
+          <InputTextBox
+              v-else
+              :data="{
+              label: '*출판사',
+              name: 'publisher',
+              placeholder: treeFormData.publisher,
+              value: treeFormData.publisher,
+              validate: treeFormData.publisherValid,
+              validateMessage: '출판사를 입력해주세요.',
+            }"
+              @inputData="inputPublisher"
           >
           </InputTextBox>
         </section>
 
         <section class="input-form__input-container">
           <h1 class="none">출판일 입력</h1>
-          <InputTextDateBox
-            :data="{
+          <TextDateBoxReadOnly
+              v-if="isAuto"
+              :data="{
               label: '*출판일',
               name: 'publishDate',
               placeholder: '출판일을 입력해주세요',
@@ -276,15 +366,29 @@ const inputDescription = (value) => {
               validate: treeFormData.publishDateValid,
               validateMessage: '출판일을 입력해주세요. (2024-11-01 형식)',
             }"
-            @inputData="inputPublishDate"
+              @inputData="inputPublishDate"
+          >
+          </TextDateBoxReadOnly>
+          <InputTextDateBox
+              v-else
+              :data="{
+              label: '*출판일',
+              name: 'publishDate',
+              placeholder: 'treeFormData.publishDate',
+              value: treeFormData.publishDate,
+              validate: treeFormData.publishDateValid,
+              validateMessage: '출판일을 입력해주세요. (2024-11-01 형식)',
+            }"
+              @inputData="inputPublishDate"
           >
           </InputTextDateBox>
         </section>
 
         <section class="input-form__input-container">
           <h1 class="none">총페이지 입력</h1>
-          <InputTextNumberBox
-            :data="{
+          <TextNumberBoxReadOnly
+              v-if="isAuto"
+              :data="{
               label: '*총페이지',
               name: 'totalPage',
               placeholder: '총페이지를 입력해주세요',
@@ -293,20 +397,45 @@ const inputDescription = (value) => {
               validate: treeFormData.totalPageValid,
               validateMessage: '양수의 숫자만 입력해주세요.',
             }"
-            @inputData="inputTotalPage"
+              @inputData="inputTotalPage"
+          >
+          </TextNumberBoxReadOnly>
+          <InputTextNumberBox
+              v-else
+              :data="{
+              label: '*총페이지',
+              name: 'totalPage',
+              placeholder: 'treeFormData.totalPage',
+              min: 0,
+              value: treeFormData.totalPage,
+              validate: treeFormData.totalPageValid,
+              validateMessage: '양수의 숫자만 입력해주세요.',
+            }"
+              @inputData="inputTotalPage"
           >
           </InputTextNumberBox>
         </section>
 
         <section class="input-form__input-container">
           <h1 class="none">카테고리 선택</h1>
-          <InputBookCategorySelect
-            :data="{
+          <BookCategorySelectReadOnly
+              v-if="isAuto"
+              :data="{
               id: treeFormData.bookCategoryId,
               name: treeFormData.bookCategoryName,
               isSelected: treeFormData.bookCategorySelected,
             }"
-            @drop="dropBookCategory"
+          >
+          </BookCategorySelectReadOnly>
+
+          <InputBookCategorySelect
+              v-else
+              :data="{
+              id: treeFormData.bookCategoryId,
+              name: treeFormData.bookCategoryName,
+              isSelected: treeFormData.bookCategorySelected,
+            }"
+              @drop="dropBookCategory"
           >
           </InputBookCategorySelect>
         </section>
@@ -352,9 +481,9 @@ const inputDescription = (value) => {
         </section>
 
         <section class="book-tree-submit-container">
-          <h1 class="none">트리 생성 버튼</h1>
+          <h1 class="none">트리 수정 버튼</h1>
           <ButtonSubmitBtnFullBar
-            text="트리 생성"
+            text="트리 수정"
             @click.prevent="submitFormHandler"
           ></ButtonSubmitBtnFullBar>
         </section>

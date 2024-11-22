@@ -6,8 +6,6 @@ import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
@@ -42,12 +40,10 @@ public class TreeBook {
     private Boolean isDeleted = false;
 
     @NotNull
-    @CreatedDate
     @Column(name = "CREATE_TIME", nullable = false)
     private LocalDateTime createTime;
 
     @NotNull
-    @LastModifiedDate
     @Column(name = "UPDATE_TIME", nullable = false)
     private LocalDateTime updateTime;
 
@@ -56,10 +52,23 @@ public class TreeBook {
     @Column(name = "VERSION", nullable = false)
     private Long version = 0L;
 
+    @PrePersist
+    public void prePersist() {
+        this.createTime = LocalDateTime.now();
+        this.updateTime = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        this.updateTime = LocalDateTime.now();
+    }
+
     public static TreeBook of(Tree tree) {
         return TreeBook.builder()
                 .id(tree.getId())
                 .readingPage(0)
+                .createTime(LocalDateTime.now())
+                .updateTime(LocalDateTime.now())
                 .build();
     }
 }

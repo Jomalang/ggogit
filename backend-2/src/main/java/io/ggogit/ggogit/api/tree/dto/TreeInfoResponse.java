@@ -11,12 +11,13 @@ import java.time.format.DateTimeFormatter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ToString(of = {"bookId", "bookCategory", "bookTitle", "bookAuthor", "bookTranslator", "bookPublisher", "bookPublishedYear", "bookTotalPage", "treeId", "memberId", "seedId", "title", "description", "visibility", "leafCreatedAt", "createdAt", "readingPage", "coverImageName", "treeLeafCnt", "treeLikeCnt", "treeViewCnt"})
+@ToString(of = {"bookId", "bookCategoryId","bookcategoryName", "bookTitle", "bookAuthor", "bookTranslator", "bookPublisher", "bookPublishedYear", "bookTotalPage", "treeId", "memberId", "seedId", "title", "description", "visibility", "leafCreatedAt", "createdAt", "readingPage", "coverImageName", "treeLeafCnt", "treeLikeCnt", "treeViewCnt"})
 public class TreeInfoResponse {
 
     //books
     private Long bookId;
-    private String bookCategory;
+    private Long bookCategoryId;
+    private String bookCategoryName;
     private String bookTitle;
     private String bookAuthor;
     private String bookTranslator;
@@ -46,7 +47,8 @@ public class TreeInfoResponse {
     public static TreeInfoResponse of(Tree tree, LocalDateTime latestLeafDate, Long leafCnt, Long likeCnt, Long viewCnt) {
         return TreeInfoResponse.builder()
                 .bookId(tree.getBook() == null ? null : tree.getBook().getId())
-                .bookCategory(tree.getBook() == null ? null : tree.getBook().getBookCategory().getName())
+                .bookCategoryId(tree.getBook() == null ? null : tree.getBook().getBookCategory().getId())
+                .bookCategoryName(tree.getBook() == null ? null : tree.getBook().getBookCategory().getName())
                 .bookTitle(tree.getBook() == null ? null : tree.getBook().getTitle())
                 .bookAuthor(tree.getBook() == null ? null : tree.getBook().getAuthor())
                 .bookTranslator(tree.getBook() == null ? null : tree.getBook().getTranslator())

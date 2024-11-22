@@ -46,7 +46,7 @@ public class LeafBookController {
             @PathVariable Long parentLeafId,
             @Valid @RequestBody BookLeafRequest dto
     ) {
-        dto.isValidate(); // 논리 오류 확인
+        dto.isValidate(); // 논리 오류 확인v
         Long memberId = userDetails.getId();
 
         if (!leafBookService.isOwner(memberId, parentLeafId)) {

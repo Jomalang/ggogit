@@ -45,7 +45,7 @@ ALTER TABLE `PASSWORD_REST` ALTER COLUMN `ID` RESTART WITH 2;
 INSERT INTO `MEMBER`
     (`IS_DELETED`, `CREATE_TIME`, `ID`, `UPDATE_TIME`, `VERSION`, `PASSWORD`, `INTRODUCTION`, `EMAIL`, `NICKNAME`, `USERNAME`, `ROLE`)
 VALUES
-    (FALSE, TIMESTAMP '2024-10-01 10:00:00', 1, TIMESTAMP '2024-10-01 10:00:00', 1, '$2a$10$cQ4tsAT3IoQkyKpoNH6Lf.DKE8dN9pSJGgRtY0SyxnbmjlJD.DWx6', '책과 글 속에서 영감을 찾는 사용자1은 매일 작은 일상 이야기를 글로 남깁니다.', 'gksxorb147@gmail.com', '책속여행자', '한태규', 'USER'),
+    (FALSE, TIMESTAMP '2024-10-01 10:00:00', 1, TIMESTAMP '2024-10-01 10:00:00', 1, '$2a$10$cQ4tsAT3IoQkyKpoNH6Lf.DKE8dN9pSJGgRtY0SyxnbmjlJD.DWx6', '책과 글 속에서 영감을 찾는 사용자1은 매일 작은 일상 이야기를 글로 남깁니다.', 'user1@example.com', '책속여행자', '한태규', 'USER'),
     (FALSE, TIMESTAMP '2024-10-02 10:00:00', 2, TIMESTAMP '2024-10-02 10:00:00', 1, '$2a$10$cQ4tsAT3IoQkyKpoNH6Lf.DKE8dN9pSJGgRtY0SyxnbmjlJD.DWx6', '문학을 사랑하는 사용자2는 독서 후 깊은 감상을 공유하며, 글쓰기로 자신의 생각을 표현합니다.', 'user2@example.com', '잉크향기', '박민준', 'USER'),
     (FALSE, TIMESTAMP '2024-10-03 10:00:00', 3, TIMESTAMP '2024-10-03 10:00:00', 1, '$2a$10$cQ4tsAT3IoQkyKpoNH6Lf.DKE8dN9pSJGgRtY0SyxnbmjlJD.DWx6', '다양한 장르의 책을 탐독하는 사용자3은 읽은 책마다 짧은 서평을 작성합니다.', 'user3@example.com', '페이지넘김', '이지안', 'USER'),
     (FALSE, TIMESTAMP '2024-10-04 10:00:00', 4, TIMESTAMP '2024-10-04 10:00:00', 1, '$2a$10$cQ4tsAT3IoQkyKpoNH6Lf.DKE8dN9pSJGgRtY0SyxnbmjlJD.DWx6', '책과 일기를 통해 하루를 정리하는 사용자4는 소소한 글을 기록하며 마음을 다잡습니다.', 'user4@example.com', '글담이', '정하린', 'USER'),

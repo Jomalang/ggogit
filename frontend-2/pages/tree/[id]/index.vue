@@ -11,6 +11,7 @@ import FilterTreeLeafCard from "~/components/filter/FilterTreeLeafCard.vue";
 import NavigationBar from "~/components/nav/NavigationBar.vue";
 import InputBackSearch from "~/components/input/InputBackSearch.vue";
 import CardHiddenInfoTree from "~/components/card/CardHiddenInfoTree.vue";
+import CardTreeInfoCoverBtns from "~/components/card/CardTreeInfoCoverBtns.vue";
 
 // -----------DOM 객체---------------------------------------
 
@@ -40,6 +41,11 @@ const config = useRuntimeConfig();
 
 const isActive = ref(false);
 let totalCnt = 0;
+
+const deleteModal = () => {
+  console.log("deleteModal");
+};
+
 
 const openPopup = () => {
   const filterBack1 = document.getElementById("filter-bg");
@@ -169,12 +175,12 @@ watchEffect(() => {
   <main>
     <section class="user-tree-info__container">
       <h2 class="none">트리 정보</h2>
-      <CardTreeInfoCover :data="info">트리 정보</CardTreeInfoCover>
+      <CardTreeInfoCoverBtns :data="info">트리 정보</CardTreeInfoCoverBtns>
     </section>
     <section class="branch-tree-detail-container">
       <h2 class="none">트리 상세 설명</h2>
 
-      <CardHiddenInfoTree :data="info">트리 상세 설명</CardHiddenInfoTree>
+      <CardHiddenInfoTree :data="info" @isDelete="deleteModal">트리 상세 설명</CardHiddenInfoTree>
     </section>
 
     <section class="branch-list__container">
@@ -444,6 +450,20 @@ watchEffect(() => {
         </div>
       </div>
     </section>
+
+    <section>
+      <div>
+        <div>
+          <h1>정말 삭제하시겠습니까?</h1>
+          <P>트리에 속한 회고록, 리프, 도서 정보 등을 모두 삭제합니다.</P>
+          <div>
+            <button @click="deleteModal">삭제</button>
+            <button @click="deleteModal">취소</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
   </main>
 
   <footer>
@@ -587,5 +607,8 @@ watchEffect(() => {
 .filter-tab__ul1 {
   margin-bottom: 30px;
   border-bottom: 1px solid var(--main2--opacity40);
+}
+.user-tree-info__container{
+
 }
 </style>

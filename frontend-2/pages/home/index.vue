@@ -175,15 +175,17 @@ const setItemRef = (index) => (el) => {
 // 마운트 시 스크롤 이벤트 등록 (passive: true)
 onMounted(() => {
     console.log("scrollContainer.value", scrollContainer.value);
+  if (treeInfoList.length === 0 && scrollContainer.value) {
     scrollContainer.value.addEventListener("scroll", handleScroll, {
       passive: true,
     });
+  }
 });
 
 // 언마운트 시 스크롤 이벤트 제거
 onUnmounted(() => {
   console.log("scrollContainer.value", scrollContainer.value);
-  if (scrollContainer.value) {
+  if (treeInfoList.length === 0 && scrollContainer.value) {
     scrollContainer.value.removeEventListener("scroll", handleScroll);
   }
 });
@@ -482,4 +484,20 @@ onUnmounted(() => {
   flex-direction: column;
   gap: 10px;
 }
+
+/* 크롬, 사파리, 오페라 */
+.scroll-container::-webkit-scrollbar {
+  display: none; /* 스크롤 바 숨기기 */
+}
+
+/* 파이어폭스 */
+.scroll-container {
+  scrollbar-width: none; /* 스크롤 바 너비를 없앰 */
+}
+
+/* 인터넷 익스플로러 및 엣지 */
+.scroll-container {
+  -ms-overflow-style: none; /* 스크롤 바 스타일을 없앰 */
+}
+
 </style>

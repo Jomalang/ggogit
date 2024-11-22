@@ -151,9 +151,14 @@ if (memberData.value) {
   </header>
 
   <main>
-    <div class="mypage-user-description__frame">
-      <p class="mypage-user-description">
-        {{ member.introduction || "안녕하세요" }}
+    <div class="mypage-user-instroduction__frame">
+      <img
+        class="mypage-user-instroduction__quote"
+        src="/assets/png/quote.png"
+      />
+      <label for="introduction" class="mypage-user-instroduction"></label>
+      <p class="mypage-user-instroduction_form" name="introduction">
+        {{ member.introduction }}
       </p>
     </div>
   </main>
@@ -175,17 +180,52 @@ if (memberData.value) {
 </template>
 
 <style scoped>
-.mypage-user-description__frame {
+.mypage-user-instroduction__frame {
+  box-sizing: border-box;
   width: 100%;
-  height: 100px;
-  padding-top: 40px;
-  padding-left: 25px;
+  max-width: var(--max-width-1);
+  padding: 0 0 40px 24px;
 }
-.mypage-user-description {
-  font-size: 18px;
+
+.mypage-user-instroduction_form {
+  box-sizing: border-box;
+  border: none;
+  width: 100%;
+  height: fit-content;
+  max-width: var(--max-width-1);
+  padding: 16px;
+  background-color: var(--main3);
+  font-size: 16px;
+  font-weight: var(--medium, 500);
+  color: var(--main1);
   line-height: var(--line-height-main);
   letter-spacing: var(--letter-spacing-main);
-  font-weight: var(--bold);
+  font-weight: var(--medium);
+}
+.bar-user-info-frame {
+  display: flex;
+  justify-content: space-between;
+}
+.mypage-user-description__frame {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100px;
+  max-width: 1024px;
+  padding-left: 25px;
+}
+.mypage-user-instroduction__quote {
+  position: relative;
+  top: 20px;
+  right: 10px;
+  margin-top: 10px;
+  width: 40px;
+  height: auto;
+}
+.mypage-user-description {
+  font-size: 16px;
+  line-height: var(--line-height-main);
+  letter-spacing: var(--letter-spacing-main);
+  font-weight: var(--medium);
   color: var(--main);
 }
 </style>

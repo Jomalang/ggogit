@@ -91,11 +91,6 @@ const memberEditHandler = () => {};
   <header>
     <div class="user-info-container">
       <div class="user-info__background-frame" :style="backgroundStyle">
-        <img
-          class="user-info__background-plus"
-          src="/assets/png/plus-btn.png"
-          @click.prevent="changeBackgroundHandler"
-        />
         <section class="user-info__top-bar-container">
           <div class="top-bar__transparent-frame">
             <div @click.prevent="useGoBack()">
@@ -109,6 +104,11 @@ const memberEditHandler = () => {};
             </div>
           </div>
         </section>
+        <img
+          class="user-info__background-plus"
+          src="/assets/png/plus-btn.png"
+          @click.prevent="changeBackgroundHandler"
+        />
         <section class="user-info__bot-bar-container">
           <div class="bar-user-info-frame">
             <div class="bar-user-info__left-content">
@@ -150,6 +150,10 @@ const memberEditHandler = () => {};
 
   <main>
     <div class="mypage-user-instroduction__frame">
+      <img
+        class="mypage-user-instroduction__quote"
+        src="/assets/png/quote.png"
+      />
       <label for="introduction" class="mypage-user-instroduction"></label>
       <textarea
         class="mypage-user-instroduction_form"
@@ -197,14 +201,22 @@ const memberEditHandler = () => {};
   padding: 24px;
 }
 
+.mypage-user-instroduction__quote {
+  position: relative;
+  top: 20px;
+  right: 10px;
+  margin-top: 10px;
+  width: 40px;
+  height: auto;
+}
+
 .user-info__background-plus {
-  position: absolute;
-  top: 35%;
-  right: 38%;
+  margin: 0 auto;
   width: 40px;
   height: 40px;
   padding: 10px;
   background-size: contain;
+  z-index: 1;
 }
 .user-info__background-frame::before {
   display: flex;
@@ -233,15 +245,16 @@ const memberEditHandler = () => {};
   box-sizing: border-box;
   width: 100%;
   max-width: var(--max-width-1);
-  padding: 40px 24px 40px 24px;
+  padding: 0 0 40px 24px;
 }
 
 .mypage-user-instroduction_form {
+  box-sizing: border-box;
   border: none;
   width: 100%;
+  height: fit-content;
   max-width: var(--max-width-1);
   padding: 16px;
-  border-radius: 15px;
   background-color: var(--main3);
   font-size: 16px;
   font-weight: var(--medium, 500);
@@ -295,8 +308,8 @@ const memberEditHandler = () => {};
   padding: 0 4px 0 4px;
   background-color: var(--main2--opacity40);
   border: none;
-  border-radius: 10px;
   color: var(--white);
+  border-radius: 5px;
   font-size: 24px;
   font-weight: var(--medium);
   line-height: var(--line-height-main);

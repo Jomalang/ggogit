@@ -1,5 +1,6 @@
 package io.ggogit.ggogit.domain.member.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -32,6 +33,7 @@ public class MemberProfileImage {
     @MapsId
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "MEMBER_ID", nullable = false)
+    @JsonIgnore
     private Member member;
 
     @Size(max = 255)
@@ -47,13 +49,14 @@ public class MemberProfileImage {
 
     @NotNull
     @CreatedDate
-    @Column(name = "CREATE_TIME", nullable = false)
+    @Column(name = "CREATE_TIME", nullable = false, updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime createTime;
 
     @NotNull
     @LastModifiedDate
-    @Column(name = "UPDATE_TIME", nullable = false)
+    @Column(name = "UPDATE_TIME", nullable = false,  columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime updateTime;
+
 
     @Version
     @Column(name = "VERSION", nullable = false)

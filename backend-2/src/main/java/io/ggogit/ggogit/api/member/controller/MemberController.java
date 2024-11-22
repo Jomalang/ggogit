@@ -1,10 +1,12 @@
 package io.ggogit.ggogit.api.member.controller;
 
 import io.ggogit.ggogit.api.member.dto.*;
+import io.ggogit.ggogit.domain.image.service.ImageService;
 import io.ggogit.ggogit.domain.member.entity.EmailJoinToken;
 import io.ggogit.ggogit.domain.member.entity.Member;
 import io.ggogit.ggogit.domain.member.entity.PassWordRest;
 import io.ggogit.ggogit.domain.member.security.CustomUserDetails;
+import io.ggogit.ggogit.domain.member.service.MemberImageService;
 import io.ggogit.ggogit.domain.member.service.MemberService;
 import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
@@ -16,6 +18,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.awt.*;
 
 
 @Slf4j
@@ -28,6 +33,7 @@ public class MemberController {
     private long accessExpirationTime;
 
     private final MemberService memberService;
+    private final MemberImageService memberImageService;
 
     // 회원가입 이메일 전송
     @PostMapping("/join/send-email")
@@ -157,16 +163,30 @@ public class MemberController {
     }
 
     // 회원 정보 수정
+    //TODO: 서비스간의 트랜잭션 전파 처리 필요
     @PostMapping("/{memberId}/edit")
     public ResponseEntity<MemberEditResponse> edit(
             @PathVariable Long memberId,
-            @RequestHeader("Authorization") String accessToken, // AOP로 처리
-            @RequestBody MemberEditRequest dto
-    ) {
+            @ModelAttribute MemberEditRequest dto,
+            @RequestParam(value = "memberProfileImage", required = false) MultipartFile memberProfileImage,
+            @RequestParam(value = "memberBackgroundImage", required = false) MultipartFile memberBackgroundImage
+            ) {
+
         // 회원 정보 수정
-        Member member = dto.toMember();
-        memberService.edit(memberId, member);
+        Member memberDto = dto.toMember();
+        memberService.edit(memberId, memberDto);
         MemberEditResponse response = MemberEditResponse.of("회원 정보 수정 완료");
+
+        // 회원 프로필 이미지 수정
+        if (memberProfileImage != null) {
+            memberImageService.uploadProfile(memberId, memberProfileImage);
+        }
+
+        // 회원 배경 이미지 수정
+        if (memberBackgroundImage != null) {
+            memberImageService.uploadBackground(memberId, memberBackgroundImage);
+        }
+
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

@@ -19,7 +19,7 @@ const config = useRuntimeConfig();
 <template>
   <div class="user-tree-user-info-container">
     <section class="user-info__top-bar-container">
-      <TopBarTransparent
+      <TopBarTransparentWithoutDelete
         :edit="props.edit"
         :delete="props.delete"
         :deleteBtnActive="props.isOwner"

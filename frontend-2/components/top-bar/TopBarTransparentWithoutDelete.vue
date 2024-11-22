@@ -7,17 +7,6 @@ const props = defineProps({
     default: true,
   },
 });
-
-const deleteResource = () => {
-  // console.log(props.delete);
-  if (confirm("정말 삭제하시겠습니까?")) {
-    const { data } = useAuthDataFetch(props.delete, {
-      baseURL: useRuntimeConfig().public.apiBase,
-      method: "DELETE",
-    });
-    navigateTo("/home");
-  }
-};
 </script>
 
 <template>
@@ -32,10 +21,6 @@ const deleteResource = () => {
         class="top-bar__transparent-setting-btn"
         :to="props.edit"
       ></NuxtLink>
-      <button
-        class="top-bar__transparent-delete-btn"
-        @click="deleteResource"
-      ></button>
     </div>
   </div>
 </template>

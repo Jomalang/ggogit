@@ -257,7 +257,7 @@ const memberEditHandler = async () => {
   background-position-y: center;
   background-position-x: center;
   width: 100%;
-  height: 250px;
+  height: 300px;
   max-width: var(--max-width-1);
   padding: 24px;
 }
@@ -316,7 +316,7 @@ const memberEditHandler = async () => {
   background-position-y: center;
   background-position-x: center;
   width: 100%;
-  height: 250px;
+  height: 300px;
   max-width: var(--max-width-1);
 }
 

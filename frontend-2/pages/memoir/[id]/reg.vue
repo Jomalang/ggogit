@@ -105,6 +105,7 @@ onMounted(() => {
     previewStyle: "vertical",
     placeholder: "무엇을 느끼셨나요?",
     usageStatistics: false,
+    autofocus: false,
     hooks: {
       async addImageBlobHook(blob, callback) {
         try {

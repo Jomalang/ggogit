@@ -284,4 +284,10 @@ public class MemberServiceImpl implements MemberService {
 
         return member;
     }
+
+    @Override
+    public Member findById(Long memberId) {
+        return memberRepository.findById(memberId)
+                .orElseThrow(() -> new EntityNotFoundException(memberId + "은 존재하지 않은 회원입니다."));
+    }
 }

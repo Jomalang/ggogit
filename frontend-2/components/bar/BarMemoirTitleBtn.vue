@@ -23,8 +23,9 @@ const props = defineProps<Props>();
         type="checkbox"
         id="bar-user-info__like"
       />
-      <label class="__like-bold" for="bar-user-info__like"></label>
-      <a class="bar-user-info__share-btn" :href="`${props.userUrl}`"></a>
+      <!-- TODO: 커뮤니티 나오면 활성화  -->
+<!--      <label class="__like-bold" for="bar-user-info__like"></label>-->
+<!--      <a class="bar-user-info__share-btn" :href="`${props.userUrl}`"></a>-->
     </div>
   </div>
 </template>

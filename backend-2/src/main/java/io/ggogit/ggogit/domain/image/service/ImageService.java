@@ -38,6 +38,9 @@ public class ImageService {
         if(folderType == UploadFolderType.MEMBER) {
             return imageRepository.getImageBytes(imageName, folderType);
         }
+        if(folderType == UploadFolderType.MEMBER_BACKGROUND) {
+            return imageRepository.getImageBytes(imageName, folderType);
+        }
 
         else{
             throw new IllegalArgumentException("이미지 폴더 타입이 잘못되었습니다.");

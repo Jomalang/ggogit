@@ -45,7 +45,7 @@ ALTER TABLE `PASSWORD_REST` ALTER COLUMN `ID` RESTART WITH 2;
 INSERT INTO `MEMBER`
     (`IS_DELETED`, `CREATE_TIME`, `ID`, `UPDATE_TIME`, `VERSION`, `PASSWORD`, `INTRODUCTION`, `EMAIL`, `NICKNAME`, `USERNAME`, `ROLE`)
 VALUES
-    (FALSE, TIMESTAMP '2024-10-01 10:00:00', 1, TIMESTAMP '2024-10-01 10:00:00', 1, '$2a$10$cQ4tsAT3IoQkyKpoNH6Lf.DKE8dN9pSJGgRtY0SyxnbmjlJD.DWx6', '책과 글 속에서 영감을 찾는 사용자1은 매일 작은 일상 이야기를 글로 남깁니다.', 'gksxorb147@gmail.com', '책속여행자', '한태규', 'USER'),
+    (FALSE, TIMESTAMP '2024-10-01 10:00:00', 1, TIMESTAMP '2024-10-01 10:00:00', 1, '$2a$10$cQ4tsAT3IoQkyKpoNH6Lf.DKE8dN9pSJGgRtY0SyxnbmjlJD.DWx6', '책과 글 속에서 영감을 찾는 사용자1은 매일 작은 일상 이야기를 글로 남깁니다.', 'user1@example.com', '책속여행자', '한태규', 'USER'),
     (FALSE, TIMESTAMP '2024-10-02 10:00:00', 2, TIMESTAMP '2024-10-02 10:00:00', 1, '$2a$10$cQ4tsAT3IoQkyKpoNH6Lf.DKE8dN9pSJGgRtY0SyxnbmjlJD.DWx6', '문학을 사랑하는 사용자2는 독서 후 깊은 감상을 공유하며, 글쓰기로 자신의 생각을 표현합니다.', 'user2@example.com', '잉크향기', '박민준', 'USER'),
     (FALSE, TIMESTAMP '2024-10-03 10:00:00', 3, TIMESTAMP '2024-10-03 10:00:00', 1, '$2a$10$cQ4tsAT3IoQkyKpoNH6Lf.DKE8dN9pSJGgRtY0SyxnbmjlJD.DWx6', '다양한 장르의 책을 탐독하는 사용자3은 읽은 책마다 짧은 서평을 작성합니다.', 'user3@example.com', '페이지넘김', '이지안', 'USER'),
     (FALSE, TIMESTAMP '2024-10-04 10:00:00', 4, TIMESTAMP '2024-10-04 10:00:00', 1, '$2a$10$cQ4tsAT3IoQkyKpoNH6Lf.DKE8dN9pSJGgRtY0SyxnbmjlJD.DWx6', '책과 일기를 통해 하루를 정리하는 사용자4는 소소한 글을 기록하며 마음을 다잡습니다.', 'user4@example.com', '글담이', '정하린', 'USER'),
@@ -20103,7 +20103,7 @@ INSERT INTO `TREE`
     (`BOOK_MARK_COUNT`, `IS_DELETED`, `VISIBILITY`, `BOOK_ID`, `CREATE_TIME`, `ID`, `MEMBER_ID`, `SEED_ID`, `UPDATE_TIME`, `VERSION`, `DESCRIPTION`, `TITLE`)
 VALUES
     -- 도서 트리 35개
-    (5, 0, 1,    1, TIMESTAMP '2024-12-25 12:05:42',  1, 1,    1, TIMESTAMP '2024-12-25 12:05:42', 0, '클래스와 객체 지향 프로그래밍(OOP)의 개념을 설명하며, 캡슐화, 상속, 다형성의 원칙에 대해 다룬다. 프로젝트에서 코드를 모듈화하고 재사용성을 높이기 위해 OOP를 어떻게 활용할지 고민해본다.', '클래스와 객체 지향 프로그래밍 학습'),
+    (5, 0, 1,    1, TIMESTAMP '2024-12-25 12:05:42',  1, 1,    1, TIMESTAMP '2024-12-31 12:05:42', 0, '클래스와 객체 지향 프로그래밍(OOP)의 개념을 설명하며, 캡슐화, 상속, 다형성의 원칙에 대해 다룬다. 프로젝트에서 코드를 모듈화하고 재사용성을 높이기 위해 OOP를 어떻게 활용할지 고민해본다.', '클래스와 객체 지향 프로그래밍 학습'),
     (0, 0, 1,    2, TIMESTAMP '2024-12-05 12:05:42',  2, 1,    1, TIMESTAMP '2024-12-21 12:05:42', 0, '파이썬의 내장 함수와 자주 사용하는 표준 라이브러리에 대해 설명한다. 특히 map(), filter(), zip() 함수와 datetime, collections 모듈을 중심으로 사용 사례를 제시한다. 프로젝트의 데이터 처리에 내장 함수를 효과적으로 적용해 성능을 개선할 수 있는 방법을 탐구해본다.', '파이썬 내장 함수와 표준 라이브러리 정리'),
     (0, 0, 1,    3, TIMESTAMP '2024-08-24 12:05:42',  3, 1,    1, TIMESTAMP '2024-12-27 12:05:42', 0, '파이썬에서 리스트, 튜플, 딕셔너리, 집합과 같은 자료 구조를 어떻게 활용하는지 설명하고, 각 자료 구조의 시간 복잡도를 분석한다. 프로젝트의 트리 구조 구현 시 각 자료 구조의 장단점을 고려하여 효율적인 데이터 저장 방식을 찾는다.', '데이터 구조와 알고리즘 이해'),
     (0, 0, 1,    4, TIMESTAMP '2024-09-30 12:05:42',  4, 1,    1, TIMESTAMP '2024-10-04 12:05:42', 0, '예외 처리의 중요성을 강조하며, try, except, finally 구문과 함께 효과적인 디버깅 방법을 소개한다. 예외 처리와 디버깅 기술을 프로젝트에서 오류를 줄이고 안정성을 높이는 데 어떻게 활용할지 고민해본다.', '예외 처리 및 디버깅 방법 학습'),

@@ -141,6 +141,21 @@ watch(
   overflow-y: auto;
   height: 480px;
 }
+/* 크롬, 사파리, 오페라 */
+.scroll-container::-webkit-scrollbar {
+  display: none; /* 스크롤 바 숨기기 */
+}
+
+/* 파이어폭스 */
+.scroll-container {
+  scrollbar-width: none; /* 스크롤 바 너비를 없앰 */
+}
+
+/* 인터넷 익스플로러 및 엣지 */
+.scroll-container {
+  -ms-overflow-style: none; /* 스크롤 바 스타일을 없앰 */
+}
+
 .card-branch__list-frame {
   padding: 14px 16px;
   display: flex;

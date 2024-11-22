@@ -35,4 +35,12 @@ public class SeedController {
         SeedDetailResponse response = SeedDetailResponse.of(seed);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+    @GetMapping("/trees/{treeId}")
+    public ResponseEntity<SeedDetailResponse> getSeedByTreeId(
+            @PathVariable Long treeId
+    ) {
+        Seed seed = seedService.getSeedByTreeId(treeId);
+        SeedDetailResponse response = SeedDetailResponse.of(seed);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 }

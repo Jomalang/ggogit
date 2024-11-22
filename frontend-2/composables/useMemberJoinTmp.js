@@ -25,7 +25,7 @@ export const useMemberJoinTmp = defineStore("ggogitMemberJoinTmp", () => {
                 _email.value = localStorage.getItem("_email");
                 _profile.value = localStorage.getItem("_profile");
             } catch (e) {
-                // console.log(e);
+                console.log(e);
                 return;
             }
         }

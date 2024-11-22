@@ -1,8 +1,6 @@
 package io.ggogit.ggogit.domain.tree.service;
 
-import io.ggogit.ggogit.api.tree.dto.TreeInfoResponse;
-import io.ggogit.ggogit.api.tree.dto.TreeListHome;
-import io.ggogit.ggogit.api.tree.dto.TreeSearchQuery;
+import io.ggogit.ggogit.api.tree.dto.*;
 import io.ggogit.ggogit.domain.tree.entity.Seed;
 import io.ggogit.ggogit.domain.tree.entity.Tree;
 import jakarta.validation.Valid;
@@ -24,6 +22,8 @@ public interface TreeService  {
 
     Boolean getComplate(Long treeId);
     Boolean isOwner(Long treeId, Long memberId);
+    Boolean findTreeByTreeId(Long treeId);
+
     Integer getTreeCount(Long id);
     Integer getLeafCount(Long treeId);
     Long getMemberId(Long treeId);
@@ -40,6 +40,14 @@ public interface TreeService  {
     Page<Tree> findAllByBookId(Long memberId, Long bookId);
     Page<Tree> findAllCardByBookId(Long BookId, int page, int size);
     Page<Tree> findTreeByQueryAndMemberId(@Valid TreeSearchQuery query, Long memberId);
+
+    String findTreeImageName(Long treeId);
+
+    void editEtcTree(TreeEtcEdiitRequest dto, Long treeId);
+
+    void updateAutoTreeBook(TreeBookEdiitRequest dto, Long treeId);
+
+    void updateManualTreeBook(TreeBookEdiitRequest dto, Long treeId);
 
     //TreeInfoDto 생성
 //    List<TreeInfoResponse> findTreeInfoResponse(Long memberId);

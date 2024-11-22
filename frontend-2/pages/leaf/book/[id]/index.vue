@@ -259,6 +259,11 @@ onMounted(() => {
 </template>
 
 <style scoped>
+main {
+  width: 100%;
+  height: auto;
+}
+
 .editor-show-container {
   margin: 10px 16px 100px 16px;
 }

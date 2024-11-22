@@ -398,16 +398,14 @@ const scrollToElement = () => {
 </template>
 
 <style>
-html,
-body
-{
+html:has(.log-list-container),
+body:has(.log-list-container) {
   width: 100%;
   height: 100%;
   overflow-x: hidden;
 }
 
-
-main {
+main:has(.log-list-container) {
   width: 100%;
   height: 100%;
 }

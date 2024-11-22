@@ -54,4 +54,6 @@ public interface MemberService {
     Member getByEmail(String email);
 
     Member join(Member member, String profileImage);
+
+    Member findById(Long memberId);
 }

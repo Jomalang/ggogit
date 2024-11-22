@@ -2,6 +2,7 @@ package io.ggogit.ggogit.domain.tree.service;
 
 import io.ggogit.ggogit.domain.tree.entity.Seed;
 import io.ggogit.ggogit.domain.tree.repository.SeedRepository;
+import io.ggogit.ggogit.domain.tree.repository.TreeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,7 @@ import java.util.Optional;
 public class SeedServiceImpl implements SeedService {
 
     private final SeedRepository seedRepository;
+    private final TreeRepository treeRepository;
 
     @Override
     public List<Seed> list() { return seedRepository.findAll(); }
@@ -27,5 +29,12 @@ public class SeedServiceImpl implements SeedService {
     public Seed get(Long id) {
         return seedRepository.findById(id).
                 orElseThrow(() -> new IllegalArgumentException("해당하는 Seed가 없습니다."));
+    }
+
+    @Override
+    public Seed getSeedByTreeId(Long treeId) {
+        return treeRepository.findById(treeId)
+                .orElseThrow(() -> new IllegalArgumentException("해당하는 Tree가 없습니다."))
+                .getSeed();
     }
 }

@@ -13,7 +13,7 @@ export default function useLeafTagList() {
         if (_isLeafTagListActivated.value) {
             return; // 이미 초기화 되었으면 종
         }
-        console.log('리프 초기화');
+        // console.log('리프 초기화');
 
         _isLeafTagListActivated.value = true;
         _tags.value = [];
@@ -26,6 +26,7 @@ export default function useLeafTagList() {
         // console.log(tags);
         // console.log(_selectedTags.value);
 
+        _tags.value = [];
         for (let tag of tags) {
             let isSelected =
                 _selectedTags.value.some(selectedTag => tag.id === selectedTag.id);
@@ -58,9 +59,9 @@ export default function useLeafTagList() {
             console.error("선택 테그는 3개까지만 가능합니다.");
         }
 
-        console.log('태그 추가', tag);
+        // console.log('태그 추가', tag);
         _selectedTags.value.push(tag); // 선택하면 선택된 태그 리스트에 추가
-        console.log('태그 추가', _selectedTags.value);
+        // console.log('태그 추가', _selectedTags.value);
         const index = _tags.value.indexOf(tag);
         if (index === -1) { // 선택하면 태그 리스트에서 제거
             console.error("제거할 태그가 없습니다.");

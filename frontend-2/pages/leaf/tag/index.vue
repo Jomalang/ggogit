@@ -84,6 +84,7 @@ const tagUnSelectedHandler = (tag) => {
 };
 
 const handleTagSearch = (value) => {
+  console.log('value', value);
   searchValue.name = value;
   tagListApi();
 };

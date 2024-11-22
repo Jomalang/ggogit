@@ -1,9 +1,6 @@
 package io.ggogit.ggogit.domain.tree.service;
 
-import io.ggogit.ggogit.api.tree.dto.TreeBookCardResponse;
-import io.ggogit.ggogit.api.tree.dto.TreeInfoResponse;
-import io.ggogit.ggogit.api.tree.dto.TreeListHome;
-import io.ggogit.ggogit.api.tree.dto.TreeSearchQuery;
+import io.ggogit.ggogit.api.tree.dto.*;
 import io.ggogit.ggogit.domain.book.entity.Book;
 import io.ggogit.ggogit.domain.book.repository.BookRepository;
 import io.ggogit.ggogit.domain.leaf.entity.Leaf;
@@ -77,7 +74,7 @@ public class TreeServiceImpl implements TreeService {
 
     @Override
     public Boolean getComplate(Long treeId) {
-        Tree tree = treeRepository.findById(treeId).orElse(null);
+        Tree tree = treeRepository.findById(treeId).orElseThrow(() -> new IllegalArgumentException("해당 트리를 찾을 수 없습니다."));
         Book book = tree.getBook();
 
         if (book == null) return false;
@@ -95,8 +92,13 @@ public class TreeServiceImpl implements TreeService {
     @Override
 
     public Boolean isOwner(Long treeId, Long memberId) {
-        Tree tree = treeRepository.findById(treeId).orElseThrow(()-> new IllegalArgumentException("tree not found"));
+        Tree tree = treeRepository.findById(treeId).orElseThrow(()-> new IllegalArgumentException("해당 트리를 찾을 수 없습니다."));
         return memberId.equals(tree.getMember().getId());
+    }
+
+    @Override
+    public Boolean findTreeByTreeId(Long treeId) {
+        return treeRepository.findById(treeId).isPresent();
     }
 
     @Override
@@ -280,5 +282,54 @@ public class TreeServiceImpl implements TreeService {
         Pageable pageable = PageRequest.of(query.getPage(), size, sort);
 
         return treeRepository.findByQueryAndMemberId(query.getQuery(), query.getFilter(), memberId, pageable);
+    }
+
+    @Override
+    public String findTreeImageName(Long treeId) {
+        Tree tree = treeRepository.findById(treeId).orElseThrow(() -> new IllegalArgumentException("해당하는 Tree가 없습니다."));
+        return tree.getBook().getImageFile();
+        }
+
+    @Override
+    public void editEtcTree(TreeEtcEdiitRequest dto, Long treeId) {
+        Tree tree = treeRepository.findById(treeId).orElseThrow(() -> new IllegalArgumentException("해당하는 Tree가 없습니다."));
+        tree.setTitle(dto.getTreeTitle());
+        tree.setDescription(dto.getDescription());
+        tree.setVisibility(dto.getVisibility());
+        tree.setUpdateTime(LocalDateTime.now());
+        treeRepository.save(tree);
+    }
+
+    @Override
+    public void updateAutoTreeBook(TreeBookEdiitRequest dto, Long treeId) {
+        Tree tree = treeRepository.findById(treeId).orElseThrow(() -> new IllegalArgumentException("해당하는 Tree가 없습니다."));
+        tree.setTitle(dto.getTreeTitle());
+        tree.setDescription(dto.getDescription());
+        tree.setUpdateTime(LocalDateTime.now());
+        tree.setVisibility(dto.getVisibility());
+        treeRepository.save(tree);
+    }
+
+    @Override
+    public void updateManualTreeBook(TreeBookEdiitRequest dto, Long treeId) {
+        Tree tree = treeRepository.findById(treeId).orElseThrow(() -> new IllegalArgumentException("해당하는 Tree가 없습니다."));
+        Book book = tree.getBook();
+        book.setAuthor(dto.getAuthor());
+        book.setTitle(dto.getTitle());
+        book.getBookCategory().setId(dto.getBookCategoryId());
+        book.getBookCategory().setName(dto.getBookCategoryName());
+        book.setPublisher(dto.getPublisher());
+        book.setPublishDate(dto.getPublishDate());
+        book.setTotalPage(dto.getTotalPage());
+        bookRepository.save(book);
+
+
+        tree.setTitle(dto.getTreeTitle());
+        tree.setDescription(dto.getDescription());
+        tree.setUpdateTime(LocalDateTime.now());
+        tree.setVisibility(dto.getVisibility());
+        treeRepository.save(tree);
+
+
     }
 }

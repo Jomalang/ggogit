@@ -35,6 +35,9 @@ public class ImageController {
         if(domain.equals("member")) {
             return imageService.getImageByte(fileName, UploadFolderType.MEMBER);
         }
+        if(domain.equals("memberBackground")) {
+            return imageService.getImageByte(fileName, UploadFolderType.MEMBER_BACKGROUND);
+        }
         else{
             throw new IllegalArgumentException("이미지 폴더 타입이 잘못되었습니다.");
         }

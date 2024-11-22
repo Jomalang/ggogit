@@ -287,7 +287,7 @@ public class TreeServiceImpl implements TreeService {
     @Override
     public String findTreeImageName(Long treeId) {
         Tree tree = treeRepository.findById(treeId).orElseThrow(() -> new IllegalArgumentException("해당하는 Tree가 없습니다."));
-        return tree.getTreeImage().getName();
+        return tree.getBook().getImageFile();
         }
 
     @Override

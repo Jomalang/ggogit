@@ -24,7 +24,6 @@ const imgData = reactive([
 const treeId = Number(useRoute().params.id);
 
 useTreeFormData().init();
-useTreeFormData().setCreateUrl("/tree/book/new")
 const treeFormData = useTreeFormData().treeFormData;
 
 // ----------------------- Life Cycle ----------------------- //
@@ -36,6 +35,7 @@ onMounted(() => {
   if (treeData.value){
     treeFormData.value.image = treeData.value.coverImageName;
     treeFormData.value.title = treeData.value.bookTitle;
+    treeFormData.value.bookTitle = treeData.value.bookTitle;
     treeFormData.value.author = treeData.value.bookAuthor;
     treeFormData.value.publisher = treeData.value.bookPublisher;
     treeFormData.value.publishDate = treeData.value.bookPublishedYear;
@@ -54,7 +54,6 @@ onMounted(() => {
       treeFormData.value.isAuto = true;
     }
   }
-  console.log("treeFormData:", treeFormData.value);
 });
 
 // ----------------------- Function ----------------------- //
@@ -66,6 +65,7 @@ const handleImageSelected = (imageData) => {
 const validateCheck = () => {
   let isValid = true;
 
+  // API 저장 도서 확인
   if(!treeFormData.value.isAuto){
     // 도서 이름 확인
     if (!treeFormData.value.bookTitle) {
@@ -108,9 +108,7 @@ const validateCheck = () => {
       alert("카테고리를 선택해주세요.");
       return false;
     }
-
   }
-
 
   // 트리 이름 확인
   if (!treeFormData.value.treeTitle) {
@@ -152,6 +150,7 @@ const submitFormHandler = async (e) => {
     // 이미지 파일이 있을 경우
     const imgTag = document.getElementById("input-book-img-box__img-id");
     if (imgTag && imgTag.src.startsWith("data:image")) {
+      console.log("imgTag.src:", imgTag.src);
       const response = await fetch(imgTag.src);
       const blob = await response.blob();
       treeFormDataToSend.append("image", blob, "image.jpg");

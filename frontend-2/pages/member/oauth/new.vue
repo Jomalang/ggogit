@@ -12,8 +12,8 @@ const oauthInfo = ref({
   email: "",
   picture: "",
 });
-
-oauthInfo.value = useMemberJoinTmp().getJoinInfo();
+const oauthData = useMemberJoinTmp().getJoinInfo();
+oauthInfo.value = oauthData || { name: "", email: "", picture: "" }; // 기본값 설정
 
 const joinInfo = ref({
   name: oauthInfo.value.name,
@@ -36,15 +36,6 @@ const joinInfo = ref({
 });
 
 // ----------------------- API ----------------------- //
-// const { data: emailInfo, error: emailInfoError } = await useAuthFetch(
-//   `members/join/check-email`,
-//   {
-//     method: "POST",
-//     baseURL: `${config.public.apiBase}`,
-//     headers: { "Content-Type": "application/json" },
-//     body: { key: key.value },
-//   }
-// );
 
 const joinPostApi = async () => {
   try {
@@ -77,11 +68,6 @@ const joinPostApi = async () => {
   }
 };
 
-watchEffect(() => {
-  if (emailInfo.value) {
-    joinInfo.value.email = emailInfo.value.email;
-  }
-});
 
 // ----------------------- Method ----------------------- //
 
@@ -123,7 +109,7 @@ const submitJoin = () => {
 
   // 회원가입 API 호출
   joinPostApi();
-  router.push("/member/home");
+  router.push("/home");
 };
 </script>
 

@@ -12,6 +12,8 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Builder
 public class TreeBookEdiitRequest {
+
+
     private Boolean isAuto;
     private String author;
     private Long bookCategoryId;
@@ -20,10 +22,21 @@ public class TreeBookEdiitRequest {
     private LocalDate publishDate;
     private String publisher;
     private Integer totalPage;
-    private Long seedId;
-    private String image;
+    private String imageData;
     private String treeTitle;
     private String description;
     private Long treeId;
     private Boolean visibility;
 }
+
+
+
+
+
+
+
+
+
+
+
+

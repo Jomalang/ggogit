@@ -76,6 +76,12 @@ public class ImageRepositoryImpl {
             }
         }
 
+        System.out.println("===========================================================================");
+        System.out.println(targetPath);
+        System.out.println(sourcePath);
+        System.out.println(sourcePath.toFile().exists());
+        System.out.println("===========================================================================");
+
         if (sourcePath.toFile().exists()) {
             //sourceFile에서 targetFile로 파일 옮기기
             try {

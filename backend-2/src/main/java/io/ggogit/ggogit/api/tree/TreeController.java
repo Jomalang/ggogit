@@ -305,8 +305,11 @@ public class TreeController {
         }
 
         if (image != null && !dto.getIsAuto()) {
+            System.out.println("------------------------------------------------------------------------------------");
             String afterFilename = image.getOriginalFilename(); //원본 이미지명
             String beforeImageName = treeService.findTreeImageName(treeId);
+            System.out.println("beforeImageName = " + beforeImageName);
+            System.out.println("afterFilename = " + afterFilename);
             byte[] imageBytes = image.getBytes(); //이미지 byte[]
             if (beforeImageName.equals(afterFilename)) {
                 treeImageService.upload(afterFilename, imageBytes);

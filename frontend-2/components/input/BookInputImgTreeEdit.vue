@@ -70,7 +70,7 @@ onMounted(() => {
       />
       <img v-else
           id="input-book-img-box__img-id"
-          src="~/assets/svg/book-photo-form.svg"
+           :src="useGetImageUrl(data.imageData, 'book')"
           alt="Upload Image"
           class="input-book-img-box__img"
       />

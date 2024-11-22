@@ -175,15 +175,17 @@ const setItemRef = (index) => (el) => {
 // 마운트 시 스크롤 이벤트 등록 (passive: true)
 onMounted(() => {
     console.log("scrollContainer.value", scrollContainer.value);
+  if (treeInfoList.length === 0 && scrollContainer.value) {
     scrollContainer.value.addEventListener("scroll", handleScroll, {
       passive: true,
     });
+  }
 });
 
 // 언마운트 시 스크롤 이벤트 제거
 onUnmounted(() => {
   console.log("scrollContainer.value", scrollContainer.value);
-  if (scrollContainer.value) {
+  if (treeInfoList.length === 0 && scrollContainer.value) {
     scrollContainer.value.removeEventListener("scroll", handleScroll);
   }
 });

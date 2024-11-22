@@ -63,5 +63,10 @@ const { data } = defineProps(["data"]);
   font-weight: var(--medium);
   line-height: var(--line-height-main);
   letter-spacing: var(--letter-spacing-main);
+  display: -webkit-box; /* Flexbox 기반 레이아웃 */
+  -webkit-line-clamp: 2; /* 최대 줄 수 설정 (여기서는 2줄) */
+  -webkit-box-orient: vertical; /* 박스 방향을 세로로 설정 */
+  overflow: hidden; /* 넘치는 텍스트 숨김 */
+  text-overflow: ellipsis; /* 잘린 부분에 '...' 표시 */
 }
 </style>

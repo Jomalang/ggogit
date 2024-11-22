@@ -99,7 +99,7 @@ const memberEditHandler = () => {};
         <section class="user-info__top-bar-container">
           <div class="top-bar__transparent-frame">
             <div @click.prevent="useGoBack()">
-              <img src="/assets/svg/back-icon--white.svg" />
+              <img src="/assets/png/back-icon--white.png" />
             </div>
             <div class="top-bar__transparent-btns" v-if="isOwner">
               <div
@@ -330,7 +330,7 @@ const memberEditHandler = () => {};
   content: "";
   display: flex;
   align-items: center;
-  background-image: url("/svg/like-fill.svg");
+  background-image: url("/png/like-fill.png");
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
@@ -347,7 +347,7 @@ const memberEditHandler = () => {};
   content: "";
   display: flex;
   align-items: center;
-  background-image: url("/svg/like-bold.svg");
+  background-image: url("/png/like-bold.png");
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;

@@ -40,7 +40,7 @@ const props = defineProps({
   width: 25px;
   height: 25px;
   display: flex;
-  background: transparent url("/svg/edit.svg") no-repeat center;
+  background: transparent url("/png/edit.png") no-repeat center;
   background-size: contain;
 }
 </style>

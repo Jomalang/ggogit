@@ -85,7 +85,7 @@ const { data } = defineProps(["data"]);
   width: 25px;
   height: 25px;
   display: flex;
-  background: transparent url("~/assets/svg/edit_document.svg") no-repeat center;
+  background: transparent url("~/assets/png/edit_document.png") no-repeat center;
   background-size: contain;
   align-items: center;
 }
@@ -93,7 +93,7 @@ const { data } = defineProps(["data"]);
   width: 25px;
   height: 25px;
   display: flex;
-  background: transparent url("~/assets/svg/delete--gray.svg") no-repeat center;
+  background: transparent url("~/assets/png/delete--gray.png") no-repeat center;
   background-size: contain;
   padding: 0;
   border: none;

@@ -2,7 +2,7 @@
 const props = defineProps({
   userImg: "",
   username: "",
-  userid: "",
+  userEmail: "",
   userUrl: "",
 });
 /*
@@ -23,14 +23,18 @@ userUrl: string;
   <div class="bar-user-info-frame">
     <div class="bar-user-info__left-content">
       <div class="bar-user-info__img-wrapper">
-        <img :src="`/img/card/${props.userImg}`" alt="user-profile" />
+        <img
+          class="bar-user-info__profile"
+          :src="useMemberProfileImg(props.userImg, 'member')"
+          alt="user-profile"
+        />
       </div>
-      <div>
+      <div class="bar-user-info__user-frame">
         <div class="bar-user-info__user-name">{{ props.username }}</div>
-        <div class="bar-user-info__user-id">{{ props.userid }}</div>
+        <div class="bar-user-info__user-id">{{ props.userEmail }}</div>
       </div>
     </div>
-    <div class="bar-user-info__right-btns">
+    <!-- <div class="bar-user-info__right-btns">
       <input
         class="__like-bold-input"
         type="checkbox"
@@ -38,7 +42,7 @@ userUrl: string;
       />
       <label class="__like-bold" for="bar-user-info__like"></label>
       <a class="bar-user-info__set-btn" :href="`${props.userUrl}`"></a>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -57,28 +61,37 @@ userUrl: string;
   gap: 8px;
 }
 .bar-user-info__img-wrapper {
-  width: 40px;
-  height: 40px;
+  width: 60px;
+  height: 60px;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
 }
 .bar-user-info__img-wrapper img {
-  width: 40px;
-  height: 40px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
 }
+
+.bar-user-info__user-frame {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: baseline;
+  transform: translateY(10%);
+}
+
 .bar-user-info__user-name {
   color: var(--white);
-  font-size: 14px;
+  font-size: 24px;
   font-weight: var(--medium);
   line-height: var(--line-height-main);
   letter-spacing: var(--letter-spacing-main);
 }
 .bar-user-info__user-id {
   color: var(--white);
-  font-size: 10px;
+  font-size: 14px;
   font-weight: var(--regular);
   line-height: var(--line-height-main);
   letter-spacing: var(--letter-spacing-main);

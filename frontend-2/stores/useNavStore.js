@@ -1,12 +1,13 @@
 import { defineStore } from "pinia";
 
 export const useNavStore = defineStore("navStore", () => {
+  const myId = useMemberStore()._id;
   const currentSpot = ref("_home"); //_home, _search, _community, _mypage로 현재 위치 표현
 
   const home = ref("/home");
   const search = ref("/search/book");
   const community = ref("/community");
-  const mypage = ref("/member/[id]");
+  const mypage = ref(`/member/${myId}`);
 
   //logout시 사용
   function initStore() {
@@ -15,7 +16,7 @@ export const useNavStore = defineStore("navStore", () => {
     home.value = "/home";
     search.value = "/search/book";
     community.value = "/community";
-    mypage.value = "/member/[id]";
+    mypage.value = `/member/${myId}`;
 
     localStorage.setItem("_ggogit_path_home", home.value);
     localStorage.setItem("_ggogit_path_search", search.value);
@@ -32,7 +33,7 @@ export const useNavStore = defineStore("navStore", () => {
       community.value =
         localStorage.getItem("_ggogit_path_community") || "/community";
       mypage.value =
-        localStorage.getItem("_ggogit_path_mypage") || "/member/[id]";
+        localStorage.getItem("_ggogit_path_mypage") || `/member/${myId}`;
     }
   }
 

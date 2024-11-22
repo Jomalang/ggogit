@@ -5,6 +5,7 @@ public enum UploadFolderType {
     TREE("tree"),
     BOOK("book"),
     MEMBER("member"),
+    MEMBER_BACKGROUND("memberBackground"),
     MEMOIR("memoir"),
     LEAF("leaf");
 

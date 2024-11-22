@@ -8,6 +8,10 @@ export default function useGetImageUrl(imageFile = "", imageType = "book") {
 
   if (imageFile.substring(0, 4) === "http") {
     return imageFile;
+  }
+  //이미지가 Base64면 Base64 반환
+  else if (imageFile.substring(0, 5) === "data:") {
+    return imageFile;
   } else {
     return `${config.public.apiBase}/images/${imageType}/${imageFile}`;
   }

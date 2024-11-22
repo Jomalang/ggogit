@@ -217,7 +217,7 @@ public class MemberServiceImpl implements MemberService {
         Member fromMember = memberRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("가입되지 않은 이메일입니다."));
 
-        fromMember.setUsername(toMember.getUsername());
+        //변경 감지 이용
         fromMember.setNickname(toMember.getNickname());
         fromMember.setIntroduction(toMember.getIntroduction());
 

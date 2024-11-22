@@ -18,7 +18,7 @@ const emit = defineEmits(["backButtonClick"]);
         type="button"
         @click="emit('backButtonClick')"
       >
-        <img src="~/assets/svg/tab-back.svg" alt="뒤로가기 버튼" />
+        <img src="~/assets/png/tab-back.png" alt="뒤로가기 버튼" />
       </button>
       <h1 class="filter-tab__header--title">{{ data.filterName }}</h1>
     </header>
@@ -46,7 +46,7 @@ const emit = defineEmits(["backButtonClick"]);
           <div class="filter-tab__icon-box">
             <img
               class="filter-tab__icon-img"
-              src="~/assets/svg/tab-check-btn.svg"
+              src="~/assets/png/tab-check-btn.png"
               alt="필터 버튼"
             />
           </div>

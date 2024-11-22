@@ -93,7 +93,7 @@ const timeSince = (createTime: Date | string) => {
                 >
                   <img
                     class="card-log__like-icon"
-                    src="~/assets/svg/tumbsup-off.svg"
+                    src="~/assets/png/tumbsup-off.png"
                     alt="like"
                   />
                 </label>
@@ -103,7 +103,7 @@ const timeSince = (createTime: Date | string) => {
           </div>
           <a class="card-log__detail-frame-link" href="#">
             <div class="card-log__detail-frame">
-              <img src="~/assets/svg/card-detail.svg" alt="detail" />
+              <img src="~/assets/png/card-detail.png" alt="detail" />
             </div>
           </a>
         </li>
@@ -279,11 +279,11 @@ const timeSince = (createTime: Date | string) => {
 }
 
 .card-log__like:disabled + .card-log__like-frame {
-  background-image: url("/public/svg/tumbsup-off.svg");
+  background-image: url("/public/png/tumbsup-off.png");
 }
 
 .card-log__like:checked + .card-log__like-frame {
-  background-image: url("/public/svg/tumbsup-on.svg");
+  background-image: url("/public/png/tumbsup-on.png");
 }
 
 .card-log__detail-frame-link {

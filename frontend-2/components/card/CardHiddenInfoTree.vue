@@ -125,6 +125,41 @@ function hiddenText() {
 </template>
 
 <style scoped>
+.card-tree-info-cover-frame {
+  display: flex;
+  padding-left: 64px;
+  height: 70px;
+  align-items: flex-end;
+  position: relative;
+}
+
+.card-tree-info-cover {
+  width: 60px;
+  height: 90px;
+  background-color: var(--main1);
+  border-radius: 8px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.card-tree-title {
+  font-size: 16px;
+  font-weight: var(--bold);
+  line-height: var(--line-height-main);
+  letter-spacing: var(--letter-spacing-main);
+}
+.card-tree-title-frame {
+  padding-left: 5px;
+}
+
+.card-book-title {
+  font-size: 14px;
+  font-weight: var(--medium);
+  line-height: var(--line-height-main);
+  letter-spacing: var(--letter-spacing-main);
+}
+
 .card-tree-info__detail-frame {
   width: 100%;
   display: flex;
@@ -161,7 +196,7 @@ function hiddenText() {
   content: "";
   display: inline-block;
   align-items: center;
-  background-image: url("/svg/hidden-on.svg");
+  background-image: url("/png/hidden-on.png");
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
@@ -173,7 +208,7 @@ function hiddenText() {
   content: "";
   align-items: center;
   display: inline-block;
-  background-image: url("/svg/hidden-off.svg");
+  background-image: url("/png/hidden-off.png");
   background-position: center;
   background-size: contain;
 }

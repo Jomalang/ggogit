@@ -12,7 +12,7 @@ const props = defineProps<{
     <div class="branch-state__header">
       <div class="branch-state__icon-box">
         <div>
-          <img class="branch-state__box-image" src='/svg/branch-box--icon.svg' alt="브랜치 아이콘"/>
+          <img class="branch-state__box-image" src='/png/branch-box--icon.png' alt="브랜치 아이콘"/>
         </div>
       </div>
       <p class="branch-state__name">{{ branch.branchName }}</p>

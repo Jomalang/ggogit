@@ -47,7 +47,7 @@ const bookMark = ref();
 }
 
 .filter-tree-list-img {
-  background-image: url("/svg/sort.svg");
+  background-image: url("/png/sort.png");
   background-size: 50%;
   background-position: center;
   background-repeat: no-repeat;
@@ -75,7 +75,7 @@ const bookMark = ref();
 
 .filter-tree-list-img {
   background-color: var(--btn-active);
-  background-image: url("/svg/sort-white.svg");
+  background-image: url("/png/sort-white.png");
   color: var(--white);
 }
 
@@ -133,7 +133,7 @@ const bookMark = ref();
   content: "";
   display: inline-block;
   align-items: center;
-  background-image: url("/svg/hidden-on.svg");
+  background-image: url("/png/hidden-on.png");
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
@@ -150,7 +150,7 @@ const bookMark = ref();
   content: "";
   align-items: center;
   display: inline-block;
-  background-image: url("/svg/hidden-off.svg");
+  background-image: url("/png/hidden-off.png");
   background-position: center;
   background-size: contain;
 }

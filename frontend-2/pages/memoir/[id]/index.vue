@@ -215,7 +215,7 @@ onMounted(() => {
     <!-- <section class="tree-index-comment-container">
       <h1 class="none">댓글</h1>
       <BarComment
-        :profileImg="`/svg/comment-profile.svg`"
+        :profileImg="`/png/comment-profile.png`"
         :commentCount="199"
       />
       <section

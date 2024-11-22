@@ -4,6 +4,7 @@ import io.ggogit.ggogit.api.member.dto.*;
 import io.ggogit.ggogit.domain.member.entity.EmailJoinToken;
 import io.ggogit.ggogit.domain.member.entity.Member;
 import io.ggogit.ggogit.domain.member.entity.PassWordRest;
+import io.ggogit.ggogit.domain.member.security.CustomUserDetails;
 import io.ggogit.ggogit.domain.member.service.MemberService;
 import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -202,24 +204,32 @@ public class MemberController {
     }
 
     // 닉네임으로 회원 조회
-    @PostMapping("/nickname")
+    @GetMapping("/nickname")
     public ResponseEntity<MemberResponse> findByNickname(@RequestBody MemberRequest memberRequest) {
         MemberResponse memberResponse = memberService.findByNickname(memberRequest.getNickname());
         return new ResponseEntity<>(memberResponse, HttpStatus.OK);
     }
 
     // 사용자 이름으로 회원 조회
-    @PostMapping("/username")
+    @GetMapping("/username")
     public ResponseEntity<MemberResponse> findByUsername(@RequestBody MemberRequest memberRequest) {
         MemberResponse memberResponse = memberService.findByUsername(memberRequest.getUsername());
         return new ResponseEntity<>(memberResponse, HttpStatus.OK);
     }
 
     // 이메일로 회원 조회
-    @PostMapping("/email")
+    @GetMapping("/email")
     public ResponseEntity<MemberResponse> findByEmail(@RequestBody MemberRequest memberRequest) {
         MemberResponse memberResponse = memberService.findByEmail(memberRequest.getEmail());
         return new ResponseEntity<>(memberResponse, HttpStatus.OK);
     }
 
+    // Id로 회원 조회
+    @GetMapping("/{id}")
+    public ResponseEntity<MemberResponse> findById(
+            @PathVariable(name="id") Long memberId) {
+        Member member = memberService.findById(memberId);
+        MemberResponse memberResponse = MemberResponse.of(member);
+        return new ResponseEntity<>(memberResponse, HttpStatus.OK);
+    }
 }

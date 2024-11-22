@@ -125,7 +125,7 @@ const props = defineProps({
   width: 20px;
   height: 20px;
   background-color: var(--main1);
-  mask-image: url("/svg/card-tree-details-complete.svg");
+  mask-image: url("/png/card-tree-details-complete.png");
   mask-size: contain;
   mask-repeat: no-repeat;
   mask-position: center;

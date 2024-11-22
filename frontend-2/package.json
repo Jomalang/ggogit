@@ -15,6 +15,7 @@
     "@toast-ui/editor": "^3.2.2",
     "@toast-ui/editor-plugin-code-syntax-highlight": "^3.1.0",
     "axios": "^1.7.7",
+    "chart.js": "^4.4.6",
     "frontend": "file:",
     "http-proxy-middleware": "^2.0.7",
     "jquery": "^3.7.1",

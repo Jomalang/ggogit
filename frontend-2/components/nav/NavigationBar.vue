@@ -1,6 +1,7 @@
 <script setup>
 const navStore = useNavStore();
 const backStore = useBackStore();
+const { _id } = useMemberStore();
 
 const {
   home: _home,
@@ -13,6 +14,7 @@ const {
 const setCur = (spotNum) => {
   //nav를 통해 이동하는 경우에는 스택을 쌓지 않는다.
   backStore.IsBackToTrue();
+  //어떤 nav를 클릭했는지 알기 위해 spotNum을 넘겨준다.
   navStore.setCurrentSpot(spotNum);
 };
 
@@ -33,6 +35,8 @@ const handleDbAction = (event, type, path) => {
       navigateTo("/home");
     } else if (path === 2) {
       navigateTo("/search/book");
+    } else if (path === 4) {
+      navigateTo(`/member/${_id}`);
     }
   }
 };
@@ -60,8 +64,8 @@ const handleDbAction = (event, type, path) => {
                 class="main-nav__icon"
                 :src="
                   props.active === 'home'
-                    ? '/svg/nav-home--active.svg'
-                    : '/svg/nav-home.svg'
+                    ? '/png/nav-home--active.png'
+                    : '/png/nav-home.png'
                 "
                 alt="홈 네비게이션 이미지"
               />
@@ -93,8 +97,8 @@ const handleDbAction = (event, type, path) => {
                 class="main-nav__icon"
                 :src="
                   props.active === 'search'
-                    ? '/svg/nav-search--active.svg'
-                    : '/svg/nav-search.svg'
+                    ? '/png/nav-search--active.png'
+                    : '/png/nav-search.png'
                 "
                 alt="탐색 네비게이션 이미지"
               />
@@ -121,8 +125,8 @@ const handleDbAction = (event, type, path) => {
                 class="main-nav__icon"
                 :src="
                   props.active === 'community'
-                    ? '/svg/nav-community--active.svg'
-                    : '/svg/nav-community.svg'
+                    ? '/png/nav-community--active.png'
+                    : '/png/nav-community.png'
                 "
                 alt="커뮤니티 네비게이션 이미지"
               />
@@ -139,8 +143,11 @@ const handleDbAction = (event, type, path) => {
         </li>
 
         <!-- 마이페이지 -->
-        <li class="nav-box__item">
-          <NuxtLink class="nav-box__link" :to="''" @click="developing">
+        <li
+          class="nav-box__item"
+          v-double-action="(event, type) => handleDbAction(event, type, 4)"
+        >
+          <NuxtLink class="nav-box__link" :to="_mypage" @click="setCur(4)">
             <div
               class="nav-box__img-box"
               :class="{
@@ -151,8 +158,8 @@ const handleDbAction = (event, type, path) => {
                 class="main-nav__icon"
                 :src="
                   props.active === 'mypage'
-                    ? '/svg/nav-mypage--active.svg'
-                    : '/svg/nav-mypage.svg'
+                    ? '/png/nav-mypage--active.png'
+                    : '/png/nav-mypage.png'
                 "
                 alt="마이페이지 네비게이션 이미지"
               />
@@ -178,6 +185,7 @@ const handleDbAction = (event, type, path) => {
 
 .nav-box__list {
   display: flex;
+  flex-shrink: 1;
   width: 100%;
 }
 

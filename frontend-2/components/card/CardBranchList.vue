@@ -102,12 +102,12 @@ watch(
         <div class="branch-img-frame">
           <img
             v-if="item.bookMark"
-            src="~/assets/svg/card-bookmark-icon.svg"
+            src="~/assets/png/card-bookmark-icon.png"
             alt="브랜치 이미지"
           />
           <img
             v-else
-            src="~/assets/svg/card-branch-represent-icon.svg"
+            src="~/assets/png/card-branch-represent-icon.png"
             alt="브랜치 이미지"
           />
         </div>
@@ -259,7 +259,7 @@ watch(
   content: "";
   display: flex;
   align-items: center;
-  background-image: url("/svg/like.svg");
+  background-image: url("/png/like.png");
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
@@ -276,7 +276,7 @@ watch(
   content: "";
   display: flex;
   align-items: center;
-  background-image: url("/svg/like-fill.svg");
+  background-image: url("/png/like-fill.png");
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;

@@ -10,7 +10,7 @@ const emit = defineEmits(['tagDelete']);
             type="button"
             @click.prevent="emit('tagDelete')"
     >
-      <img src="~/assets/svg/delete--gray.svg" alt="delete" />
+      <img src="~/assets/png/delete--gray.png" alt="delete" />
       <p class="delete-seed__btn-msg">삭제</p>
     </button>
   </div>

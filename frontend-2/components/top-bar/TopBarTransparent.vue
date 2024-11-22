@@ -58,7 +58,7 @@ const deleteResource = () => {
   width: 11px;
   height: 23px;
   display: flex;
-  background: transparent url("/svg/back-icon--white.svg") no-repeat center;
+  background: transparent url("/png/back-icon--white.png") no-repeat center;
   background-size: contain;
 }
 
@@ -66,14 +66,14 @@ const deleteResource = () => {
   width: 25px;
   height: 25px;
   display: flex;
-  background: transparent url("/svg/edit.svg") no-repeat center;
+  background: transparent url("/png/edit.png") no-repeat center;
   background-size: contain;
 }
 .top-bar__transparent-delete-btn {
   width: 25px;
   height: 25px;
   display: flex;
-  background: transparent url("/svg/delete.svg") no-repeat center;
+  background: transparent url("/png/delete.png") no-repeat center;
   background-size: contain;
   padding: 0;
   border: none;

@@ -40,7 +40,7 @@ const props = defineProps<{
           class="filter-tab__btn--back"
           type="button"
       >
-        <img src="~/assets/svg/tab-back.svg" alt="뒤로가기 버튼" />
+        <img src="~/assets/png/tab-back.png" alt="뒤로가기 버튼" />
       </button>
     </header>
 
@@ -61,7 +61,7 @@ const props = defineProps<{
           <div class="filter-tab__icon-box">
             <img
                 class="filter-tab__icon-img"
-                src="~/assets/svg/tab-check-btn.svg"
+                src="~/assets/png/tab-check-btn.png"
                 alt="필터 버튼"
             />
           </div>

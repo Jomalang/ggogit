@@ -12,8 +12,8 @@ const props = defineProps({
         <p class="header-search-link__placeholder">나의 트리 검색</p>
         <img
           class="header-search-link__icon"
-          src="~/assets/svg/lens.svg"
-          alt="lens.svg"
+          src="~/assets/png/lens.png"
+          alt="lens.png"
         />
       </div>
     </NuxtLink>

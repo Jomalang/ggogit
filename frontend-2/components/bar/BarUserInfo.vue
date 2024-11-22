@@ -1,6 +1,10 @@
-<script setup lang="ts">
-
-const { data } = defineProps(['data']);
+<script setup>
+const props = defineProps({
+  userImg: "",
+  username: "",
+  userid: "",
+  userUrl: "",
+});
 /*
 userImg: string;
 username: string;
@@ -19,11 +23,11 @@ userUrl: string;
   <div class="bar-user-info-frame">
     <div class="bar-user-info__left-content">
       <div class="bar-user-info__img-wrapper">
-        <img :src="`/img/card/${data.userImg}`" alt="user-profile" />
+        <img :src="`/img/card/${props.userImg}`" alt="user-profile" />
       </div>
       <div>
-        <div class="bar-user-info__user-name">{{ data.username }}</div>
-        <div class="bar-user-info__user-id">{{ data.userid }}</div>
+        <div class="bar-user-info__user-name">{{ props.username }}</div>
+        <div class="bar-user-info__user-id">{{ props.userid }}</div>
       </div>
     </div>
     <div class="bar-user-info__right-btns">
@@ -33,7 +37,7 @@ userUrl: string;
         id="bar-user-info__like"
       />
       <label class="__like-bold" for="bar-user-info__like"></label>
-      <a class="bar-user-info__set-btn" :href="`${data.userUrl}`"></a>
+      <a class="bar-user-info__set-btn" :href="`${props.userUrl}`"></a>
     </div>
   </div>
 </template>
@@ -100,7 +104,7 @@ userUrl: string;
   content: "";
   display: flex;
   align-items: center;
-  background-image: url("/svg/like-fill.svg");
+  background-image: url("/png/like-fill.png");
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
@@ -117,7 +121,7 @@ userUrl: string;
   content: "";
   display: flex;
   align-items: center;
-  background-image: url("/svg/like-bold.svg");
+  background-image: url("/png/like-bold.png");
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;

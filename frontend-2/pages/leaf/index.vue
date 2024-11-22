@@ -405,7 +405,7 @@ body:has(.log-list-container) {
   overflow-x: hidden;
 }
 
-main {
+main:has(.log-list-container) {
   width: 100%;
   height: 100%;
 }

@@ -1,7 +1,7 @@
 <script setup>
 const props = defineProps({
   edit: "",
-  backImgPath: "background-image.png",
+  backImgPath: "",
   userProfileImg: "",
   userName: "",
   userEmail: "",
@@ -61,7 +61,7 @@ const backgroundStyle = computed(() => {
   background-position-x: center;
   width: 100%;
   height: 250px;
-  max-width: var(--max-width);
+  max-width: var(--max-width-1);
   padding: 24px;
 }
 

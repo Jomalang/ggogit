@@ -2,7 +2,7 @@ export default function useGetImageUrl(imageFile = "", imageType = "book") {
   const config = useRuntimeConfig();
 
   if (imageFile === null || imageFile === "" || imageFile === undefined) {
-    if (imageType === "memberBackground") return `background-image.png`;
+    if (imageType === "memberBackground") return `/png/background-image.png`;
     return `/png/tree-icon-white.png`; // TODO 디폴트 이미지 처리를 해줘야 함
   }
 

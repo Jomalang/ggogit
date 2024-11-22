@@ -34,7 +34,7 @@ userUrl: string;
         <div class="bar-user-info__user-id">{{ props.userEmail }}</div>
       </div>
     </div>
-    <div class="bar-user-info__right-btns">
+    <!-- <div class="bar-user-info__right-btns">
       <input
         class="__like-bold-input"
         type="checkbox"
@@ -42,7 +42,7 @@ userUrl: string;
       />
       <label class="__like-bold" for="bar-user-info__like"></label>
       <a class="bar-user-info__set-btn" :href="`${props.userUrl}`"></a>
-    </div>
+    </div> -->
   </div>
 </template>
 

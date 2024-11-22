@@ -185,6 +185,7 @@ const handleDbAction = (event, type, path) => {
 
 .nav-box__list {
   display: flex;
+  flex-shrink: 1;
   width: 100%;
 }
 

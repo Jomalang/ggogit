@@ -25,7 +25,7 @@ let member = ref({
   nickName: "nickname1",
   userName: "user1",
   email: "user1@example.com",
-  memberBackgroundImage: "background-image.png",
+  memberBackgroundImage: "",
   memberProfileImage: "",
   introduction: "안녕하세요",
 });
@@ -64,7 +64,7 @@ const { data: memberData, error: memberError } = await useAuthFetch(
 
 if (memberData.value) {
   member.value = memberData.value;
-  console.log(member.value);
+  console.log("member.value=" + member.value);
   isOwner.value = member.value.id === memberId;
 }
 
@@ -169,7 +169,6 @@ if (memberData.value) {
   <aside>
     <section class="nav-container">
       <h2 class="none">네비게이션</h2>
-      <!-- 트리 생성 언더바  -->
       <NavNavigationBar :active="'home'" />
     </section>
   </aside>

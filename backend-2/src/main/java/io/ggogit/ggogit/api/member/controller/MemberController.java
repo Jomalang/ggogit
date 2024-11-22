@@ -225,13 +225,11 @@ public class MemberController {
     }
 
     // Id로 회원 조회
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<MemberResponse> findById(
             @PathVariable(name="id") Long memberId) {
         Member member = memberService.findById(memberId);
         MemberResponse memberResponse = MemberResponse.of(member);
         return new ResponseEntity<>(memberResponse, HttpStatus.OK);
     }
-
-
 }

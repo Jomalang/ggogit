@@ -219,7 +219,6 @@ const yBarChartOptions = ref({
 });
 
 //---------calendar----------------
-
 const calendarData = ref({
   values: [
     { date: "2024-11-23", count: 1 },
@@ -227,8 +226,8 @@ const calendarData = ref({
     { date: "2024-01-03", count: 3 },
     // Add more data as needed
   ],
-  endDate: "2024-12-31",
-  round: 5,
+  endDate: new Date(Date.now() + 86400000).toISOString().split("T")[0],
+  round: 3,
   darkMode: false,
   noDataText: "꼬깃이 없어요...😢",
   rangeColor: ["#ebedf0", "#c6e48b", "#7bc96f", "#239a3b", "#196127"],
@@ -266,7 +265,6 @@ const calendarData = ref({
         class="mypage-user-instroduction__quote"
         src="/assets/png/quote.png"
       />
-      <label for="introduction" class="mypage-user-instroduction"></label>
       <p class="mypage-user-instroduction_form" name="introduction">
         {{ member.introduction }}
       </p>
@@ -274,10 +272,11 @@ const calendarData = ref({
 
     <section class="mypage-statistics">
       <h2 class="none">나의 꼬깃 통계</h2>
-      <section>
+      <section class="mypage-calendar__box">
         <h2 class="none">캘린더 히트맵</h2>
-        <CalendarHeatmap v-bind="calendarData" />
+        <p><span>100</span>일째 꼬깃 중!🌿</p>
       </section>
+      <CalendarHeatmap v-bind="calendarData" />
       <div class="mypage__chart-frame">
         <ChartDougnut
           :chartData="DougnutChartData"
@@ -340,7 +339,6 @@ const calendarData = ref({
   position: relative;
   top: 20px;
   right: 10px;
-  margin-top: 10px;
   width: 40px;
   height: auto;
 }
@@ -356,7 +354,6 @@ const calendarData = ref({
   display: flex;
   flex-direction: column;
   gap: 20px;
-  box-sizing: border-box;
   width: 100%;
   max-width: var(--max-width-1);
   padding: 0 24px 40px 24px;
@@ -380,11 +377,31 @@ const calendarData = ref({
   display: flex;
   flex-direction: row;
   gap: 20px;
-  padding: 40px 0;
+  padding-top: 40px;
+  padding-bottom: 10px;
   color: var(--text-sub);
   font-size: 20px;
+  flex-wrap: nowrap;
   span {
     font-weight: var(--bold);
+    font-size: 22px;
+  }
+}
+
+.mypage-calendar__box {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  padding: 0 24px 40px 24px;
+  p {
+    align-self: flex-end;
+    font-size: 24px;
+    font-weight: var(--semi-bold);
+    color: var(--text-sub);
+    span {
+      font-weight: var(--bold);
+      font-size: 28px;
+    }
   }
 }
 </style>

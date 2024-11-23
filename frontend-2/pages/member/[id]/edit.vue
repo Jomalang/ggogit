@@ -341,7 +341,7 @@ const memberEditHandler = async () => {
   max-width: var(--max-width-1);
   padding: 16px;
   background-color: var(--main3);
-  font-size: 16px;
+  font-size: 20px;
   font-weight: var(--medium, 500);
   color: var(--main1);
   line-height: var(--line-height-main);
@@ -357,23 +357,23 @@ const memberEditHandler = async () => {
   gap: 8px;
 }
 .bar-user-info__img-wrapper {
-  width: 60px;
-  height: 60px;
+  width: 80px;
+  height: 80px;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
 }
 .bar-user-info__profile {
-  width: 60px;
-  height: 60px;
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
 }
 .bar-user-info__img-wrapper::after {
   position: absolute;
   border-radius: 50%;
-  width: 60px;
-  height: 60px;
+  width: 80px;
+  height: 80px;
   content: " ";
   background-color: rgba(0, 0, 0, 0.5);
 }
@@ -395,7 +395,7 @@ const memberEditHandler = async () => {
   border: none;
   color: var(--white);
   border-radius: 5px;
-  font-size: 24px;
+  font-size: 28px;
   font-weight: var(--medium);
   line-height: var(--line-height-main);
   letter-spacing: var(--letter-spacing-main);

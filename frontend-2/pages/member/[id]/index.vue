@@ -1,5 +1,6 @@
 <script setup>
 import { onMounted, ref } from "vue";
+import { CalendarHeatmap } from "vue3-calendar-heatmap";
 
 //----------------variable----------------
 const memberId = useMemberStore()._id;
@@ -51,6 +52,8 @@ let book = ref({
   updateTime: "24-10-01",
 });
 
+const seeds = ref({});
+
 //-------fetch----------------
 
 //member정보
@@ -67,6 +70,26 @@ if (memberData.value) {
   console.log(member.value);
   isOwner.value = member.value.id === memberId;
 }
+
+//차트에 표시할 씨앗 정보
+const { data: seedData, status: seedStatus } = await useAuthFetch("seeds", {
+  baseURL: `${config.public.apiBase}`,
+  method: "GET",
+});
+
+if (seedData.value) {
+  seeds.value = seedData.value;
+  console.log(seeds.value);
+}
+
+//차트에 표시할 트리 개수 정보
+const { data: treCountData, status: treeCountStatus } = await useAuthFetch(
+  `/members/${memberId}/trees`,
+  {
+    baseURL: `${config.public.apiBase}`,
+    method: "GET",
+  }
+);
 
 // const { data, error } = await useAuthFetch(`/memoirs/${useRoute().params.id}`, {
 //   method: "GET",
@@ -134,6 +157,87 @@ if (memberData.value) {
 //-----------function----------------
 
 //----------------Life Cycle----------------
+
+//---------chart----------------
+const DougnutChartData = ref({
+  labels: seeds.value.items.map((seed) => seed.korName),
+  datasets: [
+    {
+      label: "트리 통계",
+      backgroundColor: ["#323a27", "#e5eddb", "#323a271a", "#f5f8f1"],
+      data: [300, 50, 100, 40],
+    },
+  ],
+});
+
+const DougnutChartOptions = ref({
+  responsive: true,
+  maintainAspectRatio: false,
+  plugins: {
+    legend: {
+      display: true,
+      position: "bottom",
+    },
+  },
+});
+
+const yBarChartData = ref({
+  labels: ["🌲 트리", "🌿 리프", "📖 회고록", "📗직접 등록한 도서"],
+  datasets: [
+    {
+      data: [100, 100, 100, 100],
+      backbroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#323a27"],
+      borderWidht: 1,
+    },
+  ],
+});
+
+const yBarChartOptions = ref({
+  responsive: true,
+  maintainAspectRatio: false,
+  indexAxis: "y",
+  scales: {
+    x: {
+      beginAtZero: true, //x축 0부터 시작
+    },
+    y: {
+      ticks: {
+        autoSkip: false, //y축 레이블 잘리지 않도록 설정
+      },
+    },
+  },
+  plugins: {
+    // legend: {
+    //   //범례
+    //   display: true,
+    //   position: "bottom",
+    // },
+    tooltip: {
+      enabled: true,
+    },
+  },
+});
+
+//---------calendar----------------
+
+const calendarData = ref({
+  values: [
+    { date: "2024-11-23", count: 1 },
+    { date: "2024-01-02", count: 2 },
+    { date: "2024-01-03", count: 3 },
+    // Add more data as needed
+  ],
+  endDate: "2024-12-31",
+  round: 5,
+  darkMode: false,
+  noDataText: "꼬깃이 없어요...😢",
+  rangeColor: ["#ebedf0", "#c6e48b", "#7bc96f", "#239a3b", "#196127"],
+  max: 4,
+  tooltip: true,
+  tooltipUnit: "꼬깃",
+  tooltipFormatter: (count) => `${count}개의 꼬깃을 남겼어요!`,
+  vertical: false,
+});
 </script>
 
 <template>
@@ -152,6 +256,12 @@ if (memberData.value) {
 
   <main>
     <div class="mypage-user-instroduction__frame">
+      <div class="mypage-user__cnt-info">
+        <p><span>1</span>개의 트리</p>
+        <p><span>1</span>개의 리프</p>
+        <p><span>1</span>개의 회고록</p>
+        <p><span>1</span>개의 직접 등록한 도서</p>
+      </div>
       <img
         class="mypage-user-instroduction__quote"
         src="/assets/png/quote.png"
@@ -161,6 +271,20 @@ if (memberData.value) {
         {{ member.introduction }}
       </p>
     </div>
+
+    <section class="mypage-statistics">
+      <h2 class="none">나의 꼬깃 통계</h2>
+      <section>
+        <h2 class="none">캘린더 히트맵</h2>
+        <CalendarHeatmap v-bind="calendarData" />
+      </section>
+      <div class="mypage__chart-frame">
+        <ChartDougnut
+          :chartData="DougnutChartData"
+          :chartOptions="DougnutChartOptions"
+        />
+      </div>
+    </section>
   </main>
 
   <footer>
@@ -182,7 +306,6 @@ if (memberData.value) {
 <style scoped>
 .mypage-user-instroduction__frame {
   box-sizing: border-box;
-  width: 100%;
   max-width: var(--max-width-1);
   padding: 0 0 40px 24px;
 }
@@ -195,7 +318,7 @@ if (memberData.value) {
   max-width: var(--max-width-1);
   padding: 16px;
   background-color: var(--main3);
-  font-size: 16px;
+  font-size: 20px;
   font-weight: var(--medium, 500);
   color: var(--main1);
   line-height: var(--line-height-main);
@@ -227,5 +350,41 @@ if (memberData.value) {
   letter-spacing: var(--letter-spacing-main);
   font-weight: var(--medium);
   color: var(--main);
+}
+
+.mypage-statistics {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: var(--max-width-1);
+  padding: 0 24px 40px 24px;
+}
+
+.mypage-domain-cnt {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-weight: var(--semi-bold);
+}
+
+.mypage__chart-frame {
+  width: 100%;
+  height: 100%;
+  max-width: var(--max-width-1);
+  padding: 0 24px 40px 24px;
+}
+
+.mypage-user__cnt-info {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  padding: 40px 0;
+  color: var(--text-sub);
+  font-size: 20px;
+  span {
+    font-weight: var(--bold);
+  }
 }
 </style>

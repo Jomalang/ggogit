@@ -24,8 +24,9 @@
     "nuxt": "^3.13.2",
     "nuxt-app": "file:",
     "vue": "latest",
-    "vue-carousel-3d": "^1.0.1",
+    "vue-chartjs": "^5.3.2",
     "vue-router": "latest",
+    "vue3-calendar-heatmap": "^2.0.5",
     "vue3-google-login": "^2.0.33"
   },
   "overrides": {

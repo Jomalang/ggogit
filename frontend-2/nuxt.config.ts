@@ -8,6 +8,11 @@ export default defineNuxtConfig({
       kakaoClientId: "abafc6aa7f933101c7a24f0d63557024",
     },
   },
+
+  build: { // CommonJS 모듈을 ES6 모듈로 변환
+    transpile: ['lodash'],
+  },
+
   //모바일 접속
   devServer: {
     host: "0.0.0.0",
@@ -16,6 +21,11 @@ export default defineNuxtConfig({
   compatibilityDate: "2024-04-03",
   devtools: { enabled: true },
   nitro: {
+
+    prerender: { // prerender 설정
+      failOnError: false, // 에러 발생시 빌드 중단 여부
+    },
+
     routeRules: {
       // toast-ui editor 가 SSR 을 지원하지 않아 reload시 에러가 나는것을 방지
       "book/category": {

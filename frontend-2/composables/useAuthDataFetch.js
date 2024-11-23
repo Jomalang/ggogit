@@ -3,7 +3,7 @@ export default async function useAuthDataFetch(url, options = {}) {
   const cookies = useRequestHeaders(["cookie"]);
   let _accessToken = null;
   if (import.meta.env.SSR) {
-    console.log("SSR");
+    // console.log("SSR");
     _accessToken = cookies.cookie
       ? cookies.cookie
           .split("; ")

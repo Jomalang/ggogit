@@ -1,6 +1,6 @@
 <script setup>
 import { defineProps, defineEmits, onMounted, onUnmounted } from "vue";
-import { debounce } from "lodash";
+import debounce from "lodash-es/debounce";
 
 const props = defineProps({
   items: {

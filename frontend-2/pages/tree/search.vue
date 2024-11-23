@@ -1,7 +1,7 @@
 <script setup>
-import { reactive, ref } from "vue";
+import { ref } from "vue";
 import InputBackSearchTree from "~/components/input/InputBackSearchTree.vue";
-import { debounce } from "lodash";
+import debounce from "lodash-es/debounce";
 
 //---------------variable----------------
 const query = ref("");

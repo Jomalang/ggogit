@@ -1,6 +1,5 @@
 <script setup>
 import { ref } from "vue";
-import { value } from "lodash/seq.js";
 import {useRouter} from "#vue-router";
 //-----------------props-----------------
 const props = defineProps({

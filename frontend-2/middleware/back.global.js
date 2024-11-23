@@ -3,7 +3,7 @@ export default defineNuxtRouteMiddleware((to, from) => {
   const { isBack } = storeToRefs(useStore);
   //페이지 이동시마다 스택 선택
   useStore.changeStack();
-  console.log("backNavStack", useStore.backNavigationStack);
+  // console.log("backNavStack", useStore.backNavigationStack);
   //뒤로가기 제외 확인 후 페이지 이동시마다 스택에 페이지 추가
   if (!isBack.value) useStore.addPageToStack(from.fullPath);
 

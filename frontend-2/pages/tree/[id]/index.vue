@@ -8,10 +8,9 @@ import CardTreeInfoCover from "~/components/card/CardTreeInfoCover.vue";
 import CardBranchList from "~/components/card/CardBranchList.vue";
 import TextMainTitle from "~/components/text/TextMainTitle.vue";
 import FilterTreeLeafCard from "~/components/filter/FilterTreeLeafCard.vue";
-import NavigationBar from "~/components/nav/NavigationBar.vue";
-import InputBackSearch from "~/components/input/InputBackSearch.vue";
 import CardHiddenInfoTree from "~/components/card/CardHiddenInfoTree.vue";
 import CardTreeInfoCoverBtns from "~/components/card/CardTreeInfoCoverBtns.vue";
+import { useRouter } from "vue-router";
 
 // -----------DOM 객체---------------------------------------
 
@@ -20,6 +19,8 @@ let filterQuery = 10;
 let sortQuery = 1;
 let filterName = ref("최근 수정 순");
 let searchFilterName = ref("전체");
+const isModalOpen = ref(false);
+const router = useRouter();
 
 const queryParam = reactive({
   filter: 10,
@@ -42,8 +43,9 @@ const config = useRuntimeConfig();
 const isActive = ref(false);
 let totalCnt = 0;
 
-const deleteModal = () => {
-  console.log("deleteModal");
+const deleteHandler = () => {
+  deleteFetch();
+  router.push("/home");
 };
 
 
@@ -71,6 +73,19 @@ const closePopup = () => {
   queryParam.filter = filterQuery;
   queryParam.sort = sortQuery;
   queryParam.page = 0;
+};
+
+const deleteFetch = async () => {
+  try {
+    const response = await useAuthFetch(`trees/${treeId}`, {
+      method: "DELETE",
+      baseURL: `${config.public.apiBase}`,
+    });
+
+    console.log("response", response);
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
 };
 
 const { data: infoData, error: infoError } = await useAuthFetch(
@@ -129,6 +144,10 @@ const filterNameHandler = (e) => {
   }
 };
 
+const deleteModalHandler = () => {
+  isModalOpen.value = !isModalOpen.value;
+};
+
 const loadMore = () => {
   queryParam.page += 1;
 };
@@ -175,12 +194,12 @@ watchEffect(() => {
   <main>
     <section class="user-tree-info__container">
       <h2 class="none">트리 정보</h2>
-      <CardTreeInfoCoverBtns :data="info">트리 정보</CardTreeInfoCoverBtns>
+      <CardTreeInfoCoverBtns :data="info" @isDelete="deleteModalHandler">트리 정보</CardTreeInfoCoverBtns>
     </section>
     <section class="branch-tree-detail-container">
       <h2 class="none">트리 상세 설명</h2>
 
-      <CardHiddenInfoTree :data="info" @isDelete="deleteModal">트리 상세 설명</CardHiddenInfoTree>
+      <CardHiddenInfoTree :data="info">트리 상세 설명</CardHiddenInfoTree>
     </section>
 
     <section class="branch-list__container">
@@ -453,14 +472,16 @@ watchEffect(() => {
 
     <section>
       <div>
-        <div>
-          <h1>정말 삭제하시겠습니까?</h1>
-          <P>트리에 속한 회고록, 리프, 도서 정보 등을 모두 삭제합니다.</P>
-          <div>
-            <button @click="deleteModal">삭제</button>
-            <button @click="deleteModal">취소</button>
-          </div>
-        </div>
+        <ModalDeleteModal
+          :data="{
+            title: '트리 삭제',
+            message: '트리에 포함된 모든 데이터를 삭제합니다',
+            isOpen: isModalOpen,
+            confirmText: '확인',
+            cancelText: '취소',
+          }"
+          @close="deleteModalHandler"
+          @submit="deleteHandler"></ModalDeleteModal>
       </div>
     </section>
 
@@ -474,7 +495,7 @@ watchEffect(() => {
     <h2 class="none">네비바 뒤 공백</h2>
   </section>
 
-  <aside>
+  <aside v-if="!isModalOpen">
     <section class="nav-container">
       <h2 class="none">네비게이션</h2>
       <NavNavigationBar :active="'home'" />

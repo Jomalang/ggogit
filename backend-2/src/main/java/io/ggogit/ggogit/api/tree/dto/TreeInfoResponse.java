@@ -23,6 +23,7 @@ public class TreeInfoResponse {
     private String bookTranslator;
     private String bookPublisher;
     private String bookPublishedYear;
+    private String bookPublishedDate;
     private Integer bookTotalPage;
     private String coverImageName;
     //relationship identifiers
@@ -54,6 +55,7 @@ public class TreeInfoResponse {
                 .bookTranslator(tree.getBook() == null ? null : tree.getBook().getTranslator())
                 .bookPublisher(tree.getBook() == null ? null : tree.getBook().getPublisher())
                 .bookPublishedYear(tree.getBook() == null ? null : tree.getBook().getPublishDate().format(DateTimeFormatter.ofPattern("yyyy")))
+                .bookPublishedDate(tree.getBook() == null ? null : tree.getBook().getPublishDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
                 .bookTotalPage(tree.getBook() == null ? null : tree.getBook().getTotalPage())
                 .treeId(tree.getId())
                 .memberId(tree.getMember().getId())

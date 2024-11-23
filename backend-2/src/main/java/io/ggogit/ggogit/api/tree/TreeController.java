@@ -282,7 +282,7 @@ public class TreeController {
 
             byte[] imageBytes = image.getBytes(); //이미지 byte[]
             if (beforeImageName.equals(afterFilename)) {
-                treeImageService.upload(afterFilename, imageBytes);
+                treeImageService.uploadTree(afterFilename, imageBytes);
                 treeImageService.delete(beforeImageName, UploadFolderType.TREE);
             }
         }
@@ -297,6 +297,7 @@ public class TreeController {
             @RequestParam(required = false) MultipartFile image
     ) throws IOException {
         Long treeId = dto.getTreeId();
+        String afterFilename;
         if(!treeService.isOwner(treeId, userDetails.getId())) {
             throw new IllegalArgumentException("해당 트리에 대한 권한이 없습니다.");
         }
@@ -305,22 +306,34 @@ public class TreeController {
         }
 
         if (image != null && !dto.getIsAuto()) {
-            System.out.println("------------------------------------------------------------------------------------");
-            String afterFilename = image.getOriginalFilename(); //원본 이미지명
             String beforeImageName = treeService.findTreeImageName(treeId);
-            System.out.println("beforeImageName = " + beforeImageName);
-            System.out.println("afterFilename = " + afterFilename);
-            byte[] imageBytes = image.getBytes(); //이미지 byte[]
-            if (beforeImageName.equals(afterFilename)) {
-                treeImageService.upload(afterFilename, imageBytes);
-                treeImageService.delete(beforeImageName, UploadFolderType.BOOK);
-            }
+            afterFilename = treeImageService.editBookImage(image, beforeImageName, UploadFolderType.BOOK);
+            dto.setImageData(afterFilename);
+            System.out.println("----------------------------------------------------");
+            System.out.println(dto.getImageData());
         }
-        if(dto.getIsAuto()){
+        if(dto.getIsAuto())
             treeService.updateAutoTreeBook(dto, treeId);
-        }
+        else
         treeService.updateManualTreeBook(dto, treeId);
 
         return new ResponseEntity<>(EditResponse.of("수정 성공",200), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{treeId}")
+    public ResponseEntity<EditResponse> deleteTree(
+            @AuthenticationPrincipal CustomUserDetails userDetails,
+            @PathVariable Long treeId
+    ) {
+        System.out.println("userDetails.getId() = " + userDetails.getId());
+        if (!treeService.findTreeByTreeId(treeId)) {
+            throw new IllegalArgumentException("트리를 찾을 수 없습니다.");
+        }
+
+        if(!treeService.isOwner(treeId, userDetails.getId())) {
+            throw new IllegalArgumentException("해당 트리에 대한 권한이 없습니다.");
+        }
+        treeService.delete(treeId);
+        return new ResponseEntity<>(EditResponse.of("삭제 성공",200), HttpStatus.OK);
     }
 }

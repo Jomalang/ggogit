@@ -22,7 +22,7 @@ const imgData = reactive([
 ])
 
 const treeId = Number(useRoute().params.id);
-
+let originTreeImage = '';
 useTreeFormData().init();
 const treeFormData = useTreeFormData().treeFormData;
 
@@ -38,7 +38,7 @@ onMounted(() => {
     treeFormData.value.bookTitle = treeData.value.bookTitle;
     treeFormData.value.author = treeData.value.bookAuthor;
     treeFormData.value.publisher = treeData.value.bookPublisher;
-    treeFormData.value.publishDate = treeData.value.bookPublishedYear;
+    treeFormData.value.publishDate = treeData.value.bookPublishedDate;
     treeFormData.value.totalPage = treeData.value.bookTotalPage;
     treeFormData.value.treeId = treeId;
     treeFormData.value.bookCategoryId = treeData.value.bookCategoryId;
@@ -48,6 +48,7 @@ onMounted(() => {
     treeFormData.value.description = treeData.value.description;
     treeFormData.value.visibility = treeData.value.visibility;
     imgData.imageData = treeData.value.coverImageName;
+    originTreeImage = treeData.value.coverImageName;
     if (treeFormData.value.image.startsWith("https://image.aladin.co.kr/product/")) {
       isAuto.value = true;
       imgData.isAuto = true;
@@ -150,10 +151,11 @@ const submitFormHandler = async (e) => {
     // 이미지 파일이 있을 경우
     const imgTag = document.getElementById("input-book-img-box__img-id");
     if (imgTag && imgTag.src.startsWith("data:image")) {
-      console.log("imgTag.src:", imgTag.src);
-      const response = await fetch(imgTag.src);
-      const blob = await response.blob();
-      treeFormDataToSend.append("image", blob, "image.jpg");
+      if (originTreeImage !== treeFormData.value.imageData) {
+        const response = await fetch(imgTag.src);
+        const blob = await response.blob();
+        treeFormDataToSend.append("image", blob, "image.jpg");
+      }
     }
 
     const response = await useAuthDataFetch("/trees/book/edit", {
@@ -161,9 +163,6 @@ const submitFormHandler = async (e) => {
       baseURL: `${config.public.apiBase}`,
       body: treeFormDataToSend,
     });
-
-    console.log("response:", response);
-
 
     router.push(`/tree/${treeId}`);
   } catch (error) {

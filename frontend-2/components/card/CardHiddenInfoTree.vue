@@ -7,9 +7,6 @@ const hidden = ref(false);
 const { data } = defineProps(["data"]);
 const progress = ((data.readingPage * 100) / data.bookTotalPage).toFixed(2);
 
-// 이벤트 정의
-const emit = defineEmits(["isDelete"]);
-
 function translatorsConverter(translators) {
   if (!translators) {
     return [];

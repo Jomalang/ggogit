@@ -59,7 +59,7 @@ onMounted(() => {
       />
       <img
         id="input-book-img-box__img-id"
-        src="~/assets/png/book-photo-form.png"
+        src="~/assets/png/tree-book-blank.png"
         alt="Upload Image"
         class="input-book-img-box__img"
       />

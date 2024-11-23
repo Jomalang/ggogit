@@ -1,5 +1,6 @@
 <script setup>
 const { data } = defineProps(["data"]);
+const emit = defineEmits(["isDelete"]);
 </script>
 
 <template>

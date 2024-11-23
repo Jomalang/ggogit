@@ -3,10 +3,13 @@ package io.ggogit.ggogit.domain.tree.service;
 import io.ggogit.ggogit.api.tree.dto.*;
 import io.ggogit.ggogit.domain.book.entity.Book;
 import io.ggogit.ggogit.domain.book.repository.BookRepository;
+import io.ggogit.ggogit.domain.image.repository.ImageRepositoryImpl;
 import io.ggogit.ggogit.domain.leaf.entity.Leaf;
 import io.ggogit.ggogit.domain.leaf.repository.LeafRepository;
 import io.ggogit.ggogit.domain.member.entity.Member;
 import io.ggogit.ggogit.domain.member.repository.MemberRepository;
+import io.ggogit.ggogit.domain.memoir.entity.Memoir;
+import io.ggogit.ggogit.domain.memoir.repository.MemoirRepository;
 import io.ggogit.ggogit.domain.tree.entity.Seed;
 import io.ggogit.ggogit.domain.tree.entity.Tree;
 import io.ggogit.ggogit.domain.tree.entity.TreeBook;
@@ -15,6 +18,7 @@ import io.ggogit.ggogit.domain.tree.repository.SeedRepository;
 import io.ggogit.ggogit.domain.tree.repository.TreeBookRepository;
 import io.ggogit.ggogit.domain.tree.repository.TreeImageRepository;
 import io.ggogit.ggogit.domain.tree.repository.TreeRepository;
+import io.ggogit.ggogit.type.UploadFolderType;
 import jakarta.transaction.Transactional;
 import io.ggogit.ggogit.type.FilterType;
 import lombok.RequiredArgsConstructor;
@@ -42,6 +46,8 @@ public class TreeServiceImpl implements TreeService {
     private final MemberRepository memberRepository;
     private final LeafRepository leafRepository;
     private final ModelMapper modelMapper;
+    private final MemoirRepository memoirRepository;
+    private final ImageRepositoryImpl imageRepository;
 
     @Override
     public void register(Tree tree) {
@@ -55,10 +61,38 @@ public class TreeServiceImpl implements TreeService {
     }
     @Override
     public void delete(Long treeId) {
-        Tree tree = treeRepository.findById(treeId).orElse(null);
-        if (tree != null) {
-            tree.setIsDeleted(true);
-            treeRepository.save(tree);
+
+        Tree tree = treeRepository.findById(treeId).orElseThrow(() -> new IllegalArgumentException("해당 트리를 찾을 수 없습니다."));
+        tree.setIsDeleted(true);
+        treeRepository.save(tree);
+
+        List<Leaf> leafList = tree.getLeaf();
+        for (Leaf leaf : leafList) {
+            leaf.setIsDeleted(true);
+            leafRepository.save(leaf);
+        }
+
+        if(tree.getSeed().getId() == 1) {
+            Book book = tree.getBook();
+            String bookImage = book.getImageFile();
+            if (bookImage != null && !bookImage.startsWith("https")) {
+                book.setIsDeleted(true);
+                imageRepository.deleteImage(bookImage, UploadFolderType.BOOK);
+                bookRepository.save(book);
+            }
+            if (tree.getMemoir() != null) {
+                Memoir memoir = tree.getMemoir();
+                memoir.setIsDeleted(true);
+                memoirRepository.save(memoir);
+            }
+            TreeBook treeBook = treeBookRepository.findById(treeId).orElseThrow(() -> new IllegalArgumentException("해당 TreeBook을 찾을 수 없습니다."));
+            treeBook.setIsDeleted(true);
+            treeBookRepository.save(treeBook);
+        } else {
+            TreeImage treeImage = treeImageRepository.findById(treeId).orElseThrow(() -> new IllegalArgumentException("해당 TreeImage를 찾을 수 없습니다."));
+            treeImage.setIsDeleted(true);
+            imageRepository.deleteImage(treeImage.getName(), UploadFolderType.TREE);
+            treeImageRepository.save(treeImage);
         }
     }
     @Override
@@ -321,6 +355,7 @@ public class TreeServiceImpl implements TreeService {
         book.setPublisher(dto.getPublisher());
         book.setPublishDate(dto.getPublishDate());
         book.setTotalPage(dto.getTotalPage());
+        book.setImageFile(dto.getImageData());
         bookRepository.save(book);
 
 

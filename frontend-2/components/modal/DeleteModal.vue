@@ -113,7 +113,6 @@ const submitModal = () => {
       font-weight: var(--bold);
       color: var(--main1, #323a27);
       padding-left: 16px;
-      //background-color: var(--main3, #e5eddb);
       background-color: var(--main2, #f5f8f1);
     }
 

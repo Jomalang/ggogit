@@ -1,11 +1,5 @@
 <script setup>
 
-import useBackNavigation from "~/composables/useBackNavigation.js";
-
-const goBack = () => { useBackNavigation().popPageFromStack(); };
-const { getLastPage } = useBackNavigation();
-const lastPage = computed(() => getLastPage());
-
 const props = defineProps(
   { tag: String }
 );
@@ -18,7 +12,7 @@ const emit = defineEmits(['update']);
   <!--top-bar-tag-edit(tag,memberId)-->
   <div class="top-bar--green">
     <div class="top-bar__frame">
-      <NuxtLink class="tob-bar__back-link" :to="lastPage" @click="goBack">
+      <NuxtLink class="tob-bar__back-link" @click="useGoBack()">
         <img
           src="~/assets/png/back-arrow-icon.png"
           alt="top-bar--backarrow.png"

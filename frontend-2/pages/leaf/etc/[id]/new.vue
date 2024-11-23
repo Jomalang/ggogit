@@ -105,10 +105,10 @@ const inputTitle = (title) => {
 
 const tagDrop = (tag) => {
   // console.log("tagDrop : ", tag);
-  selectedTags.items = selectedTags.items.filter(
+  selectedTags.value = selectedTags.value.filter(
     (item) => item.id !== tag.id
   );
-  leafFormData.value.tagIds = selectedTags.items.map((tag) => tag.id);
+  leafFormData.value.tagIds = selectedTags.value.map((tag) => tag.id);
 };
 
 const validate = () => {
@@ -126,7 +126,7 @@ const submitHandler = async () => {
     return;
   }
 
-  leafFormData.value.tagIds = selectedTags.map((tag) => tag.id);
+  leafFormData.value.tagIds = selectedTags.value.map((tag) => tag.id);
   const response = await useAuthDataFetch(`etc/leaves/${parentLeafId}`, {
     baseURL: config.public.apiBase,
     method: "POST",

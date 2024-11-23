@@ -146,8 +146,8 @@ const pageValidation = () => {
 
 const tagDrop = (tag) => {
   // console.log("tagDrop : ", tag);
-  selectedTags.items = selectedTags.items.filter((item) => item.id !== tag.id);
-  leafFormData.value.tagIds = selectedTags.items.map((tag) => tag.id);
+  selectedTags.value = selectedTags.value.filter((item) => item.id !== tag.id);
+  leafFormData.value.tagIds = selectedTags.value.map((tag) => tag.id);
 };
 
 const validate = () => {

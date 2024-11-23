@@ -9,22 +9,17 @@ const props = defineProps({
   isOwner: false,
 });
 
-// console.log("BackgroundUserInfoBackHeaderMemoirTitle");
-// console.log(props);
-
 const config = useRuntimeConfig();
-//TODO: 배경 이미지과 프로필 이미지 구별해야 함.
-const backgroundStyle = computed(() => {
-  const imageUrl = useGetImageUrl(props.backImgPath, "memberBackground");
-  return {
-    backgroundImage: `url(${imageUrl})`,
-  };
-});
 </script>
 
 <template>
   <div class="user-info-container">
-    <div class="user-info__background-frame" :style="backgroundStyle">
+    <div class="user-info__background-frame">
+      <img
+        class="user-info__background-image"
+        :src="useGetImageUrl(props.backImgPath, 'memberBackground')"
+        alt="user-Background"
+      />
       <section class="user-info__top-bar-container">
         <TopBarTransparentOnlyEdit
           :edit="props.edit"
@@ -51,16 +46,17 @@ const backgroundStyle = computed(() => {
 }
 .user-info__background-frame {
   box-sizing: border-box;
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(0, 0, 0, 0.3);
   background-repeat: no-repeat;
   background-size: cover;
   background-position-y: center;
   background-position-x: center;
   width: 100%;
-  height: 250px;
+  height: 300px;
   max-width: var(--max-width-1);
   padding: 24px;
 }
@@ -70,5 +66,14 @@ const backgroundStyle = computed(() => {
 }
 .user-info__bot-bar-container {
   transform: translateY(60%);
+}
+.user-info__background-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
 }
 </style>

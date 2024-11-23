@@ -1,8 +1,7 @@
 <script setup>
-
 import { ref } from "vue";
 import "@toast-ui/editor/dist/toastui-editor.css";
-import Viewer from '@toast-ui/editor/dist/toastui-editor-viewer';
+import Viewer from "@toast-ui/editor/dist/toastui-editor-viewer";
 import CardTreeInfoCover from "~/components/card/CardTreeInfoCover.vue";
 
 const coverImageName = ref("background-image.png");
@@ -13,19 +12,19 @@ const leafId = route.params.id;
 
 // ---------------------- Model ---------------------- //
 let cardHiddenInfo = reactive({
-  hiddenText: '자세히',
-  authors: '작가 이름',
-  translators: '번역가 이름',
-  publisher: '출판사 이름',
+  hiddenText: "자세히",
+  authors: "작가 이름",
+  translators: "번역가 이름",
+  publisher: "출판사 이름",
   page: 100, // 총 페이지 수
   seed: 1,
-  treeDescription: '트리 설명글',
+  treeDescription: "트리 설명글",
   readPage: 50, // 읽은 페이지 수
   progress: 50, // 읽은 페이지 수 / 총 페이지 수
   fullPage: 100, // 총 페이지 수
   leaf: 100, // 리프 수
   like: 100, // 리프 수
-  view: 100 // 리프 수
+  view: 100, // 리프 수
 });
 
 const editor = ref({
@@ -35,19 +34,19 @@ const editor = ref({
 });
 
 const leafPageInfo = reactive({
-  title: '내용',
+  title: "내용",
   size: 28,
   startPage: 100,
-  endPage: 200
+  endPage: 200,
 });
 
 const member = reactive({
   id: 1,
-  nickName: '닉네임',
-  userName: '유저이름',
-  email: '이메일',
-  backImgName: '배경이미지',
-  profileImgName: '프로필이미지',
+  nickName: "닉네임",
+  userName: "유저이름",
+  email: "이메일",
+  backImgName: "배경이미지",
+  profileImgName: "프로필이미지",
 });
 
 const info = reactive({});
@@ -57,40 +56,51 @@ const treeItems = ref([]);
 const memoirItems = ref([]);
 const leafItems = ref([]);
 
-
 // ----------------------  API ---------------------- //
-const { data: infoData, error: infoError }
-    = await useAuthFetch(() => `trees/leaves/${leafId}/info`, {
+const { data: infoData, error: infoError } = await useAuthFetch(
+  () => `trees/leaves/${leafId}/info`,
+  {
     baseURL: config.public.apiBase,
-});
+  }
+);
 
-const { data: leafDetailData, error: leafDetailDataError }
-    = await useAuthFetch(() => `leaves/${leafId}`, {
+const { data: leafDetailData, error: leafDetailDataError } = await useAuthFetch(
+  () => `leaves/${leafId}`,
+  {
     baseURL: config.public.apiBase,
-});
+  }
+);
 
-const { data: leafMemberInfo, error: leafMemberInfoError }
-    = await useAuthFetch(() => `leaves/${leafId}/member`, {
+const { data: leafMemberInfo, error: leafMemberInfoError } = await useAuthFetch(
+  () => `leaves/${leafId}/member`,
+  {
     baseURL: config.public.apiBase,
-});
+  }
+);
 
-const { data: leafCardData, error: leafCardError }
-    = await useAuthFetch(() => `/members/${member.id}/leaves/book/cards`, {
+const { data: leafCardData, error: leafCardError } = await useAuthFetch(
+  () => `/members/${member.id}/leaves/book/cards`,
+  {
     method: "GET",
     baseURL: `${config.public.apiBase}`,
-});
+  }
+);
 
-const { data: treeCardData, error: treeCardError }
-    = await useAuthFetch(() => `trees/members/${member.id}/trees/book/cards`, {
+const { data: treeCardData, error: treeCardError } = await useAuthFetch(
+  () => `trees/members/${member.id}/trees/book/cards`,
+  {
     method: "GET",
     baseURL: `${config.public.apiBase}`,
-});
+  }
+);
 
-const { data: memoirCardData, error: memoirCardError }
-    = await useAuthFetch(() => `memoirs/members/${member.id}/memoirs/book/cards`, {
+const { data: memoirCardData, error: memoirCardError } = await useAuthFetch(
+  () => `memoirs/members/${member.id}/memoirs/book/cards`,
+  {
     method: "GET",
     baseURL: `${config.public.apiBase}`,
-});
+  }
+);
 
 if (leafCardData.value) {
   // console.log(leafCardData.value);
@@ -137,7 +147,7 @@ onMounted(() => {
   const viewer = new Viewer({
     el: document.querySelector("#viewer"),
     height: "500px",
-    initialValue: "hello"
+    initialValue: "hello",
   });
   viewer.setMarkdown(editor.value.text);
 });
@@ -146,18 +156,17 @@ onMounted(() => {
 </script>
 
 <template>
-
   <Title>리프 정보</Title>
 
   <header>
-    <BackgroundDetail
-        :edit="`/leaf/book/${leafId}/edit`"
-        :backImgPath="member.backImgName"
-        :username="member.nickName"
-        :userid="member.email"
-        :memoirTitle="leafDetailData.leafTitle"
-        :userUrl="`/member/${member.id}`"
-        :deleteBtnActive="false"
+    <BackgroundUserInfoBackHeaderLeafTitle
+      :edit="`/leaf/book/${leafId}/edit`"
+      :backImgPath="member.backImgName"
+      :userName="member.nickName"
+      :userId="member.email"
+      :bookTitle="leafDetailData.leafTitle"
+      :userUrl="`/member/${member.id}`"
+      :deleteBtnActive="false"
     />
   </header>
 
@@ -168,12 +177,12 @@ onMounted(() => {
     </section>
     <section class="branch-tree-detail-container">
       <h2 class="none">트리 상세 설명</h2>
-      <CardHiddenInfo :data ="info" >트리 상세 설명</CardHiddenInfo>
+      <CardHiddenInfo :data="info">트리 상세 설명</CardHiddenInfo>
     </section>
 
     <section class="leaf-page-info-container">
       <h2 class="none">도서 읽은 정보</h2>
-      <BarLeafReadingPageInfo :data="leafPageInfo" ></BarLeafReadingPageInfo>
+      <BarLeafReadingPageInfo :data="leafPageInfo"></BarLeafReadingPageInfo>
     </section>
 
     <!-- 에디터 뷰어 -->
@@ -185,10 +194,10 @@ onMounted(() => {
     <!-- 팔로우 -->
     <section class="follow-container">
       <BarUserInfoFollowBtn
-          :followId="member.id"
-          :userImg="member.profileImgName"
-          :username="member.userName"
-          :userid="member.email"
+        :followId="member.id"
+        :userImg="member.profileImgName"
+        :username="member.userName"
+        :userid="member.email"
       />
     </section>
 
@@ -199,23 +208,23 @@ onMounted(() => {
       <!-- 컴포넌트 -->
       <section class="user-another-records-title-container">
         <TextMainTitle
-            :data="{ title: `${member.nickName}의 다른 최근 기록들`, size: 28 }"
+          :data="{ title: `${member.nickName}의 다른 최근 기록들`, size: 28 }"
         />
       </section>
       <section
-          v-if="treeItems.length > 0"
-          class="branch-tree-other-recode-sub-title-container"
+        v-if="treeItems.length > 0"
+        class="branch-tree-other-recode-sub-title-container"
       >
         <TextMainTitle :data="{ title: `🌲 트리`, size: 24 }" />
       </section>
       <section class="branch-tree-another-record-list-container">
         <h1 class="none">트리 리스트</h1>
-        <CardAnotherRecordsList :items="treeItems" :sideScrollType="`tree`"/>
+        <CardAnotherRecordsList :items="treeItems" :sideScrollType="`tree`" />
       </section>
 
       <section
-          v-if="memoirItems.length > 0"
-          class="branch-tree-other-recode-sub-title-container"
+        v-if="memoirItems.length > 0"
+        class="branch-tree-other-recode-sub-title-container"
       >
         <TextMainTitle :data="{ title: `📖 회고록`, size: 24 }" />
       </section>
@@ -223,23 +232,25 @@ onMounted(() => {
       <section class="branch-tree-another-record-list-container">
         <h1 class="none">회고록 리스트</h1>
         <section class="book-detail-other-tree-card-container">
-          <CardAnotherRecordsList :items="memoirItems" :sideScrollType="`memoir`"/>
+          <CardAnotherRecordsList
+            :items="memoirItems"
+            :sideScrollType="`memoir`"
+          />
         </section>
       </section>
 
       <section
-          v-if="leafItems.length > 0"
-          class="branch-tree-other-recode-sub-title-container"
+        v-if="leafItems.length > 0"
+        class="branch-tree-other-recode-sub-title-container"
       >
         <TextMainTitle :data="{ title: `🌿 리프`, size: 24 }" />
       </section>
 
       <section class="branch-tree-another-record-list-container">
         <h1 class="none">리프 리스트</h1>
-        <CardAnotherRecordsList :items="leafItems" :sideScrollType="`leaf`"/>
+        <CardAnotherRecordsList :items="leafItems" :sideScrollType="`leaf`" />
       </section>
     </section>
-
   </main>
 
   <Footer :noticeText="`개발 중입니다.`" />
@@ -255,7 +266,6 @@ onMounted(() => {
       <NavNavigationBar :active="'home'" />
     </section>
   </aside>
-
 </template>
 
 <style scoped>

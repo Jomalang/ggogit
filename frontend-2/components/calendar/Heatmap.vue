@@ -72,7 +72,7 @@ const props = defineProps({
 </script>
 
 <template>
-  <div>
+  <div class="calendar-heatmap">
     <CalendarHeatmap
       :values="values"
       :endDate="endDate"
@@ -88,4 +88,12 @@ const props = defineProps({
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+html,
+body {
+  font-size: 10px;
+}
+.calendar-heatmap {
+  font-size: 12px !important;
+}
+</style>

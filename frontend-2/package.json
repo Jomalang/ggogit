@@ -26,6 +26,7 @@
     "vue": "latest",
     "vue-chartjs": "^5.3.2",
     "vue-router": "latest",
+    "vue-tsc": "^2.1.10",
     "vue3-calendar-heatmap": "^2.0.5",
     "vue3-google-login": "^2.0.33"
   },

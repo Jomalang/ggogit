@@ -5,11 +5,11 @@
     <Title>꼬깃-GGogit</Title>
   </Head>
   <div class="app-container" id="ggogit_app">
-      <NuxtPage />
+    <NuxtPage />
   </div>
 </template>
 
 <style>
-@import url("/public/css/layout.css");
-@import url("/public/css/common/variables.css");
+@import url("/assets/css/layout.css");
+@import url("/assets/css/common/variables.css");
 </style>

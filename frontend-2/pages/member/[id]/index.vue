@@ -226,15 +226,16 @@ const calendarData = ref({
     { date: "2024-01-03", count: 3 },
     // Add more data as needed
   ],
-  endDate: new Date(Date.now() + 86400000).toISOString().split("T")[0],
-  round: 3,
+  // endDate: new Date(Date.now() + 86400000).toISOString().split("T")[0],
+  endDate: "2024-05-23",
+  round: 4,
   darkMode: false,
   noDataText: "꼬깃이 없어요...😢",
   rangeColor: ["#ebedf0", "#c6e48b", "#7bc96f", "#239a3b", "#196127"],
   max: 4,
   tooltip: true,
   tooltipUnit: "꼬깃",
-  tooltipFormatter: (count) => `${count}개의 꼬깃을 남겼어요!`,
+  tooltipFormatter: (v) => `${v.count}개의 꼬깃을 남겼어요!`,
   vertical: false,
 });
 </script>

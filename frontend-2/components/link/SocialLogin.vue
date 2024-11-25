@@ -7,7 +7,7 @@ const memberDetail = useMemberStore();
 const config = useRuntimeConfig();
 const joinInfo = useMemberJoinTmp();
 const router = useRouter();
-const redirectUri = encodeURIComponent("http://localhost:3000/member/login");
+const redirectUri = encodeURIComponent("http://presnt.ggogit.io:3006/member/login");
 
 const state = ref(null);
 

@@ -32,7 +32,7 @@ public class EmailService {
                 "<br/>" +
                 "<p>아래 링크를 클릭하여 회원가입을 완료해주세요.</p>" +
                 "<br/>" +
-                "<a href='http://localhost:8080/member/join-input'>회원가입 완료하기</a>" +
+                "<a href='http://presnt.ggogit.io:8086/member/join-input'>회원가입 완료하기</a>" +
                 "<br/>" +
                 "<p>감사합니다.</p>" +
                 "<br/>" +

@@ -14,8 +14,8 @@ public class CorsConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("http://localhost:3000", "http://localhost:8080")
-                        // .allowedOrigins("http://localhost:3000")
+                        .allowedOrigins("http://presnt.ggogit.io:3006", "http://presnt.ggogit.io:8086")
+                        // .allowedOrigins("http://presnt.ggogit.io:3006")
                         .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
                         .allowedHeaders("*");
             }

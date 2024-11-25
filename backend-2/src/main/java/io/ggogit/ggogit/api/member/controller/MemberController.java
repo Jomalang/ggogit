@@ -148,7 +148,7 @@ public class MemberController {
 
     // JWT 토큰 재발급
     @PostMapping("/refresh")
-    @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
+    @CrossOrigin(origins = "http://presnt.ggogit.io:3006", allowCredentials = "true")
     public ResponseEntity<MemberRefreshResponse> refresh(
             @CookieValue("refreshToken") String refreshToken
     ) {

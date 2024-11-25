@@ -14,7 +14,7 @@ class EmailTemplateTest {
         // given
 
         // when
-        String email = EmailTemplate.joinEmail("http://localhost:");
+        String email = EmailTemplate.joinEmail("http://presnt.ggogit.io:");
 
         // then
         System.out.println(email);

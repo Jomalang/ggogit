@@ -65,7 +65,7 @@ content-type: application/json
 }
 
 ### 이메일 조회
-POST http://localhost:8080/api/v1/auth/isMember
+POST http://presnt.ggogit.io:8086/api/v1/auth/isMember
 Content-Type: application/json
 
 {

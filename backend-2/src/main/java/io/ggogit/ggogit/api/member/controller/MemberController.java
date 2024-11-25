@@ -252,4 +252,13 @@ public class MemberController {
         MemberResponse memberResponse = MemberResponse.of(member);
         return new ResponseEntity<>(memberResponse, HttpStatus.OK);
     }
+
+    // Id로 도메인 개수 조회
+    @GetMapping("/{id}/domain-count")
+    public ResponseEntity<MemberDomainCntResponse> countDomainId(
+            @PathVariable(name="id") Long memberId) {
+
+        MemberDomainCntResponse memberDomainCntResponse = memberService.countDomainById(memberId);
+        return new ResponseEntity<>(memberDomainCntResponse, HttpStatus.OK);
+    }
 }

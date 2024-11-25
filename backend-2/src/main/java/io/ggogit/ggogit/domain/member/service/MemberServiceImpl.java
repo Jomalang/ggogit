@@ -1,6 +1,7 @@
 package io.ggogit.ggogit.domain.member.service;
 
 
+import io.ggogit.ggogit.api.member.dto.MemberDomainCntResponse;
 import io.ggogit.ggogit.api.member.dto.MemberRefreshResponse;
 import io.ggogit.ggogit.api.member.dto.MemberResponse;
 import io.ggogit.ggogit.domain.member.entity.*;
@@ -8,6 +9,9 @@ import io.ggogit.ggogit.domain.member.repository.EmailJoinTokenRepository;
 import io.ggogit.ggogit.domain.member.repository.MemberProfileImageRepository;
 import io.ggogit.ggogit.domain.member.repository.MemberRepository;
 import io.ggogit.ggogit.domain.member.repository.PassWordRestRepository;
+import io.ggogit.ggogit.domain.member.repository.query.MemberQueryRepository;
+import io.ggogit.ggogit.domain.tree.entity.Tree;
+import io.ggogit.ggogit.domain.tree.repository.TreeRepository;
 import io.ggogit.ggogit.util.JwtTokenProvider;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
@@ -22,6 +26,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
+import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -34,6 +40,8 @@ public class MemberServiceImpl implements MemberService {
     private final PassWordRestRepository passWordRestRepository;
     private final MemberRepository memberRepository;
     private final MemberProfileImageRepository memberProfileImageRepository;
+    private final MemberQueryRepository memberQueryRepository;
+    private final TreeRepository treeRepository;
 
     private final JavaMailSender emailSender;
     private final PasswordEncoder passwordEncoder;
@@ -293,5 +301,29 @@ public class MemberServiceImpl implements MemberService {
     public Member findById(Long memberId) {
         return memberRepository.findById(memberId)
                 .orElseThrow(() -> new EntityNotFoundException(memberId + "은 존재하지 않은 회원입니다."));
+    }
+
+    @Override
+    public MemberDomainCntResponse countDomainById(Long memberId) {
+        Long treeCnt = 0L;
+        Long leafCnt = 0L;
+        Long memoirCnt = 0L;
+        Long bookCnt = memberQueryRepository.findBookCntById(memberId);
+
+        List<Tree> trees = treeRepository.findTreeByMemberIdFetch(memberId);
+        treeCnt = (long) trees.size();
+        leafCnt = trees.stream().mapToLong(tree -> tree.getLeaf().size()).sum();
+        memoirCnt = trees.stream().mapToLong(tree -> {
+            if(Optional.ofNullable(tree.getMemoir()).isPresent()) return 1L;
+            return 0L;
+        }).sum();
+
+        return MemberDomainCntResponse.builder()
+                .memberId(memberId)
+                .treeCnt(treeCnt)
+                .leafCnt(leafCnt)
+                .memoirCnt(memoirCnt)
+                .bookCnt(bookCnt)
+                .build();
     }
 }

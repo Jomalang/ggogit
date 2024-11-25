@@ -51,8 +51,27 @@ let book = ref({
   createTime: "24-10-01",
   updateTime: "24-10-01",
 });
+const domainCount = ref({
+  treeCnt: 0,
+  leafCnt: 0,
+  memoirCnt: 0,
+  bookCnt: 0,
+});
 
 //-------fetch----------------
+//차트에 표시할 도메인 개수 정보
+const { data: domainCntData, status: domainCntStatus } = await useAuthFetch(
+  `/members/${memberId}/domain-count`,
+  {
+    baseURL: `${config.public.apiBase}`,
+    method: "GET",
+  }
+);
+
+if (domainCntData.value) {
+  Object.assign(domainCount.value, domainCntData.value);
+  console.log(domainCount.value);
+}
 
 //member정보
 const { data: memberData, error: memberError } = await useAuthFetch(
@@ -211,11 +230,28 @@ const memberEditHandler = async () => {
 
   <main>
     <div class="mypage-user-instroduction__frame">
+      <div class="mypage-user__cnt-info">
+        <p>
+          <span>{{ domainCount.treeCnt }}</span
+          >개의 트리
+        </p>
+        <p>
+          <span>{{ domainCount.leafCnt }}</span
+          >개의 리프
+        </p>
+        <p>
+          <span>{{ domainCount.memoirCnt }}</span
+          >개의 회고록
+        </p>
+        <p>
+          <span>{{ domainCount.bookCnt }}</span
+          >개의 직접 등록한 도서
+        </p>
+      </div>
       <img
         class="mypage-user-instroduction__quote"
         src="/assets/png/quote.png"
       />
-      <label for="introduction" class="mypage-user-instroduction"></label>
       <textarea
         class="mypage-user-instroduction_form"
         name="introduction"
@@ -341,7 +377,7 @@ const memberEditHandler = async () => {
   max-width: var(--max-width-1);
   padding: 16px;
   background-color: var(--main3);
-  font-size: 16px;
+  font-size: 20px;
   font-weight: var(--medium, 500);
   color: var(--main1);
   line-height: var(--line-height-main);
@@ -357,23 +393,23 @@ const memberEditHandler = async () => {
   gap: 8px;
 }
 .bar-user-info__img-wrapper {
-  width: 60px;
-  height: 60px;
+  width: 80px;
+  height: 80px;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
 }
 .bar-user-info__profile {
-  width: 60px;
-  height: 60px;
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
 }
 .bar-user-info__img-wrapper::after {
   position: absolute;
   border-radius: 50%;
-  width: 60px;
-  height: 60px;
+  width: 80px;
+  height: 80px;
   content: " ";
   background-color: rgba(0, 0, 0, 0.5);
 }
@@ -395,7 +431,7 @@ const memberEditHandler = async () => {
   border: none;
   color: var(--white);
   border-radius: 5px;
-  font-size: 24px;
+  font-size: 28px;
   font-weight: var(--medium);
   line-height: var(--line-height-main);
   letter-spacing: var(--letter-spacing-main);
@@ -473,5 +509,19 @@ const memberEditHandler = async () => {
   background: url("/assets/png/save-btn.png") no-repeat center;
   background-size: contain;
   cursor: pointer;
+}
+.mypage-user__cnt-info {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  padding-top: 40px;
+  padding-bottom: 10px;
+  color: var(--text-sub);
+  font-size: 20px;
+  flex-wrap: nowrap;
+  span {
+    font-weight: var(--bold);
+    font-size: 22px;
+  }
 }
 </style>

@@ -1,5 +1,6 @@
 package io.ggogit.ggogit.domain.member.service;
 
+import io.ggogit.ggogit.api.member.dto.MemberDomainCntResponse;
 import io.ggogit.ggogit.api.member.dto.MemberRefreshResponse;
 import io.ggogit.ggogit.api.member.dto.MemberResponse;
 import io.ggogit.ggogit.domain.member.entity.EmailJoinToken;
@@ -56,4 +57,6 @@ public interface MemberService {
     Member join(Member member, String profileImage);
 
     Member findById(Long memberId);
+
+    MemberDomainCntResponse countDomainById(Long memberId);
 }

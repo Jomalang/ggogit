@@ -46,6 +46,7 @@ const config = useRuntimeConfig();
   justify-content: space-between;
 }
 .user-info__background-frame {
+  box-sizing: border-box;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -55,7 +56,7 @@ const config = useRuntimeConfig();
   background-size: cover;
   background-position-y: center;
   background-position-x: center;
-  height: 252px;
+  height: 300px;
   width: 100%;
   max-width: var(--max-width-1);
   padding: 24px;

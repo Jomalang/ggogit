@@ -54,6 +54,13 @@ let book = ref({
 
 const seeds = ref({});
 
+const domainCount = ref({
+  treeCnt: 0,
+  leafCnt: 0,
+  memoirCnt: 0,
+  bookCnt: 0,
+});
+
 //-------fetch----------------
 
 //member정보
@@ -82,14 +89,19 @@ if (seedData.value) {
   console.log(seeds.value);
 }
 
-//차트에 표시할 트리 개수 정보
-const { data: treCountData, status: treeCountStatus } = await useAuthFetch(
-  `/members/${memberId}/trees`,
+//차트에 표시할 도메인 개수 정보
+const { data: domainCntData, status: domainCntStatus } = await useAuthFetch(
+  `/members/${memberId}/domain-count`,
   {
     baseURL: `${config.public.apiBase}`,
     method: "GET",
   }
 );
+
+if (domainCntData.value) {
+  Object.assign(domainCount.value, domainCntData.value);
+  console.log(domainCount.value);
+}
 
 // const { data, error } = await useAuthFetch(`/memoirs/${useRoute().params.id}`, {
 //   method: "GET",
@@ -257,10 +269,22 @@ const calendarData = ref({
   <main>
     <div class="mypage-user-instroduction__frame">
       <div class="mypage-user__cnt-info">
-        <p><span>1</span>개의 트리</p>
-        <p><span>1</span>개의 리프</p>
-        <p><span>1</span>개의 회고록</p>
-        <p><span>1</span>개의 직접 등록한 도서</p>
+        <p>
+          <span>{{ domainCount.treeCnt }}</span
+          >개의 트리
+        </p>
+        <p>
+          <span>{{ domainCount.leafCnt }}</span
+          >개의 리프
+        </p>
+        <p>
+          <span>{{ domainCount.memoirCnt }}</span
+          >개의 회고록
+        </p>
+        <p>
+          <span>{{ domainCount.bookCnt }}</span
+          >개의 직접 등록한 도서
+        </p>
       </div>
       <img
         class="mypage-user-instroduction__quote"

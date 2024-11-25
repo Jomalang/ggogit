@@ -208,9 +208,9 @@ onUpdated(() => {
   <!-- input-back-search(placeholder, href, method, name) -->
   <div class="search__form">
     <div>
-      <dive @click.prevent="useGoBack()">
+      <div @click.prevent="useGoBack()">
         <img src="~/assets/png/back.png" alt="back button" />
-      </dive>
+      </div>
     </div>
     <div class="search-bar">
       <label class="search-bar--label">

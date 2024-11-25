@@ -135,13 +135,13 @@ body
   height: 110px;
 }
 
-.filter-tab-container {
-  max-width: var(--max-width-1);
-  width: 100%;
+.filter-tab-container{
+  max-width: none;
+  width: 300%;
+  margin: 0 auto;
   top: 0;
-  bottom: 0;
-  z-index: 10;
-  position: fixed;
+  left: 0;
+  background-color: var(--main1--opacity10);
 }
 .filter-tab-container--30 {
   top: 30%;
@@ -431,11 +431,9 @@ home-tree__reg-4--search-book__input
   padding-bottom: 10px;
 }
 .short-btn-container {
-  display: inline-flex;
-  position:absolute;
-  right: 24px;
-  bottom : 104px;
-
+  display: flex;
+  flex-direction: row-reverse;
+  margin: 24px;
 }
 .register__input-container {
   padding-top: 30px;

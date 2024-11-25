@@ -61,16 +61,16 @@ userUrl: string;
   gap: 8px;
 }
 .bar-user-info__img-wrapper {
-  width: 60px;
-  height: 60px;
+  width: 80px;
+  height: 80px;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
 }
 .bar-user-info__img-wrapper img {
-  width: 60px;
-  height: 60px;
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
 }
 
@@ -84,7 +84,7 @@ userUrl: string;
 
 .bar-user-info__user-name {
   color: var(--white);
-  font-size: 24px;
+  font-size: 28px;
   font-weight: var(--medium);
   line-height: var(--line-height-main);
   letter-spacing: var(--letter-spacing-main);

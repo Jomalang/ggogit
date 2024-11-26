@@ -1,5 +1,6 @@
 <script setup>
 import { onMounted, ref } from "vue";
+import { CalendarHeatmap } from "vue3-calendar-heatmap";
 
 //----------------variable----------------
 const memberId = useMemberStore()._id;
@@ -51,6 +52,15 @@ let book = ref({
   updateTime: "24-10-01",
 });
 
+const seeds = ref({});
+
+const domainCount = ref({
+  treeCnt: 0,
+  leafCnt: 0,
+  memoirCnt: 0,
+  bookCnt: 0,
+});
+
 //-------fetch----------------
 
 //member정보
@@ -66,6 +76,31 @@ if (memberData.value) {
   member.value = memberData.value;
   console.log(member.value);
   isOwner.value = member.value.id === memberId;
+}
+
+//차트에 표시할 씨앗 정보
+const { data: seedData, status: seedStatus } = await useAuthFetch("seeds", {
+  baseURL: `${config.public.apiBase}`,
+  method: "GET",
+});
+
+if (seedData.value) {
+  seeds.value = seedData.value;
+  console.log(seeds.value);
+}
+
+//차트에 표시할 도메인 개수 정보
+const { data: domainCntData, status: domainCntStatus } = await useAuthFetch(
+  `/members/${memberId}/domain-count`,
+  {
+    baseURL: `${config.public.apiBase}`,
+    method: "GET",
+  }
+);
+
+if (domainCntData.value) {
+  Object.assign(domainCount.value, domainCntData.value);
+  console.log(domainCount.value);
 }
 
 // const { data, error } = await useAuthFetch(`/memoirs/${useRoute().params.id}`, {
@@ -134,6 +169,87 @@ if (memberData.value) {
 //-----------function----------------
 
 //----------------Life Cycle----------------
+
+//---------chart----------------
+const DougnutChartData = ref({
+  labels: seeds.value.items.map((seed) => seed.korName),
+  datasets: [
+    {
+      label: "트리 통계",
+      backgroundColor: ["#323a27", "#e5eddb", "#323a271a", "#f5f8f1"],
+      data: [300, 50, 100, 40],
+    },
+  ],
+});
+
+const DougnutChartOptions = ref({
+  responsive: true,
+  maintainAspectRatio: false,
+  plugins: {
+    legend: {
+      display: true,
+      position: "bottom",
+    },
+  },
+});
+
+const yBarChartData = ref({
+  labels: ["🌲 트리", "🌿 리프", "📖 회고록", "📗직접 등록한 도서"],
+  datasets: [
+    {
+      data: [100, 100, 100, 100],
+      backbroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#323a27"],
+      borderWidht: 1,
+    },
+  ],
+});
+
+const yBarChartOptions = ref({
+  responsive: true,
+  maintainAspectRatio: false,
+  indexAxis: "y",
+  scales: {
+    x: {
+      beginAtZero: true, //x축 0부터 시작
+    },
+    y: {
+      ticks: {
+        autoSkip: false, //y축 레이블 잘리지 않도록 설정
+      },
+    },
+  },
+  plugins: {
+    // legend: {
+    //   //범례
+    //   display: true,
+    //   position: "bottom",
+    // },
+    tooltip: {
+      enabled: true,
+    },
+  },
+});
+
+//---------calendar----------------
+const calendarData = ref({
+  values: [
+    { date: "2024-11-23", count: 1 },
+    { date: "2024-01-02", count: 2 },
+    { date: "2024-01-03", count: 3 },
+    // Add more data as needed
+  ],
+  // endDate: new Date(Date.now() + 86400000).toISOString().split("T")[0],
+  endDate: "2024-05-23",
+  round: 4,
+  darkMode: false,
+  noDataText: "꼬깃이 없어요...😢",
+  rangeColor: ["#ebedf0", "#c6e48b", "#7bc96f", "#239a3b", "#196127"],
+  max: 4,
+  tooltip: true,
+  tooltipUnit: "꼬깃",
+  tooltipFormatter: (v) => `${v.count}개의 꼬깃을 남겼어요!`,
+  vertical: false,
+});
 </script>
 
 <template>
@@ -152,15 +268,47 @@ if (memberData.value) {
 
   <main>
     <div class="mypage-user-instroduction__frame">
+      <div class="mypage-user__cnt-info">
+        <p>
+          <span>{{ domainCount.treeCnt }}</span
+          >개의 트리
+        </p>
+        <p>
+          <span>{{ domainCount.leafCnt }}</span
+          >개의 리프
+        </p>
+        <p>
+          <span>{{ domainCount.memoirCnt }}</span
+          >개의 회고록
+        </p>
+        <p>
+          <span>{{ domainCount.bookCnt }}</span
+          >개의 직접 등록한 도서
+        </p>
+      </div>
       <img
         class="mypage-user-instroduction__quote"
         src="/assets/png/quote.png"
       />
-      <label for="introduction" class="mypage-user-instroduction"></label>
       <p class="mypage-user-instroduction_form" name="introduction">
         {{ member.introduction }}
       </p>
     </div>
+
+    <section class="mypage-statistics">
+      <h2 class="none">나의 꼬깃 통계</h2>
+      <section class="mypage-calendar__box">
+        <h2 class="none">캘린더 히트맵</h2>
+        <p><span>100</span>일째 꼬깃 중!🌿</p>
+      </section>
+      <CalendarHeatmap v-bind="calendarData" />
+      <div class="mypage__chart-frame">
+        <ChartDougnut
+          :chartData="DougnutChartData"
+          :chartOptions="DougnutChartOptions"
+        />
+      </div>
+    </section>
   </main>
 
   <footer>
@@ -182,7 +330,6 @@ if (memberData.value) {
 <style scoped>
 .mypage-user-instroduction__frame {
   box-sizing: border-box;
-  width: 100%;
   max-width: var(--max-width-1);
   padding: 0 0 40px 24px;
 }
@@ -195,7 +342,7 @@ if (memberData.value) {
   max-width: var(--max-width-1);
   padding: 16px;
   background-color: var(--main3);
-  font-size: 16px;
+  font-size: 20px;
   font-weight: var(--medium, 500);
   color: var(--main1);
   line-height: var(--line-height-main);
@@ -217,7 +364,6 @@ if (memberData.value) {
   position: relative;
   top: 20px;
   right: 10px;
-  margin-top: 10px;
   width: 40px;
   height: auto;
 }
@@ -227,5 +373,60 @@ if (memberData.value) {
   letter-spacing: var(--letter-spacing-main);
   font-weight: var(--medium);
   color: var(--main);
+}
+
+.mypage-statistics {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  max-width: var(--max-width-1);
+  padding: 0 24px 40px 24px;
+}
+
+.mypage-domain-cnt {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-weight: var(--semi-bold);
+}
+
+.mypage__chart-frame {
+  width: 100%;
+  height: 100%;
+  max-width: var(--max-width-1);
+  padding: 0 24px 40px 24px;
+}
+
+.mypage-user__cnt-info {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  padding-top: 40px;
+  padding-bottom: 10px;
+  color: var(--text-sub);
+  font-size: 20px;
+  flex-wrap: nowrap;
+  span {
+    font-weight: var(--bold);
+    font-size: 22px;
+  }
+}
+
+.mypage-calendar__box {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  padding: 0 24px 40px 24px;
+  p {
+    align-self: flex-end;
+    font-size: 24px;
+    font-weight: var(--semi-bold);
+    color: var(--text-sub);
+    span {
+      font-weight: var(--bold);
+      font-size: 28px;
+    }
+  }
 }
 </style>

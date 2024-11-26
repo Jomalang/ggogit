@@ -1,33 +1,29 @@
 <script setup>
+const props = defineProps({ tag: String });
 
-import useBackNavigation from "~/composables/useBackNavigation.js";
-
-const goBack = () => { useBackNavigation().popPageFromStack(); };
-const { getLastPage } = useBackNavigation();
-const lastPage = computed(() => getLastPage());
-
-const props = defineProps(
-  { tag: String }
-);
-
-const emit = defineEmits(['update']);
-
+const emit = defineEmits(["update"]);
 </script>
 
 <template>
   <!--top-bar-tag-edit(tag,memberId)-->
   <div class="top-bar--green">
     <div class="top-bar__frame">
-      <NuxtLink class="tob-bar__back-link" :to="lastPage" @click="goBack">
+      <div class="tob-bar__back-link" @click.prevent="useGoBack()">
         <img
           src="~/assets/png/back-arrow-icon.png"
           alt="top-bar--backarrow.png"
         />
-      </NuxtLink>
+      </div>
       <div class="tree-input-text--select__tag">
         {{ tag.name }}
       </div>
-      <button class="top-bar__text" type="submit" @click.prevent="emit('update')">완료</button>
+      <button
+        class="top-bar__text"
+        type="submit"
+        @click.prevent="emit('update')"
+      >
+        완료
+      </button>
     </div>
   </div>
 </template>

@@ -1,9 +1,4 @@
 <script setup>
-import useBackNavigation from "~/composables/useBackNavigation.js";
-
-const goBack = () => { useBackNavigation().popPageFromStack(); };
-const { getLastPage } = useBackNavigation();
-const lastPage = computed(() => getLastPage());
 
 const props = defineProps<{
   title: string;
@@ -14,12 +9,12 @@ const props = defineProps<{
   <!--top-bar-title(title)-->
   <div class="top-bar--green">
     <div class="top-bar__frame">
-      <NuxtLink class="tob-bar__back-link" :to="lastPage" @click="goBack">
+      <div class="tob-bar__back-link" @click.prevent="useGoBack()">
         <img
           src="~/assets/png/back-arrow-icon.png"
           alt="top-bar--backarrow.png"
         />
-      </NuxtLink>
+      </div>
       <p class="tob-bar__title">{{ title }}</p>
       <a class="top-bar__success-link" href="prevPage">
         <div class="top-bar__text" type="submit">완료</div>

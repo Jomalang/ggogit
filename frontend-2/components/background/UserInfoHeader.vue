@@ -40,6 +40,7 @@ const config = useRuntimeConfig();
 
 <style scoped>
 .user-info-container {
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -55,8 +56,8 @@ const config = useRuntimeConfig();
   background-size: cover;
   background-position-y: center;
   background-position-x: center;
-  width: 100%;
   height: 300px;
+  width: 100%;
   max-width: var(--max-width-1);
   padding: 24px;
 }

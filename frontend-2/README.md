@@ -22,7 +22,7 @@ bun install
 
 ## Development Server
 
-Start the development server on `http://presnt.ggogit.io:3006`:
+Start the development server on `http://ggogit.taecobug.io:3006`:
 
 ```bash
 # npm

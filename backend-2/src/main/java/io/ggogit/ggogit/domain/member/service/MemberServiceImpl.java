@@ -71,7 +71,7 @@ public class MemberServiceImpl implements MemberService {
         String token = generateToken();
 
         StringBuilder emailContent = new StringBuilder();
-        emailContent.append("http://presnt.ggogit.io:3006/member/new?key=");
+        emailContent.append("http://ggogit.taecobug.io:3006/member/new?key=");
         emailContent.append(token);
 
         // Thymeleaf Context 객체 생성
@@ -108,7 +108,7 @@ public class MemberServiceImpl implements MemberService {
 
         // 이메일 전송 로직
         StringBuilder emailContent = new StringBuilder();
-        emailContent.append("http://presnt.ggogit.io:3006/member/password-reset?key=");
+        emailContent.append("http://ggogit.taecobug.io:3006/member/password-reset?key=");
         emailContent.append(token);
 
         Context context = new Context();

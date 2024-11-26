@@ -3,7 +3,7 @@
 export default defineNuxtConfig({
   runtimeConfig: {
     public: {
-      apiBase: "http://presnt.ggogit.io:8086/api/v1",
+      apiBase: "http://ggogit.taecobug.io:8086/api/v1",
       naverClientId: "Y82lIjIMLGmIfTM3LzMr",
       kakaoClientId: "abafc6aa7f933101c7a24f0d63557024",
     },
@@ -11,7 +11,7 @@ export default defineNuxtConfig({
   //모바일 접속
   devServer: {
     host: "0.0.0.0",
-    port: :3006,
+    port: 3006,
   },
   compatibilityDate: "2024-04-03",
   devtools: { enabled: true },

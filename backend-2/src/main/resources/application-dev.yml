@@ -40,7 +40,7 @@ spring:
 server:
   servlet:
     context-path: /api/v1
-
+  port: 8086
 jwt:
   secret: secret_ggogit_a15sf1asdf1a5s64df2a3s4df5as1df
   access-expiration: 1800000 # 30분

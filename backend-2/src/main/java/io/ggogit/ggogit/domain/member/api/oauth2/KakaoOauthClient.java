@@ -37,7 +37,7 @@ public class KakaoOauthClient {
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
         body.add("grant_type", "authorization_code");
         body.add("client_id", clientId);
-        body.add("redirect_uri", "http://ggogit.taecobug.io:3006/member/login");
+        body.add("redirect_uri", "https://ggogit.taecobug.io:3000/member/login");
         body.add("code", code);
 
         HttpEntity<?> request = new HttpEntity<>(body, httpHeaders);

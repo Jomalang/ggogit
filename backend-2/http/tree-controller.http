@@ -9,7 +9,7 @@
 # ================================================== #
 # 도서 리프
 ### 선택 도서 트리 생성
-POST http://ggogit.taecobug.io:8086/api/v1/trees/auto
+POST https://ggogit.taecobug.io:8080/api/v1/trees/auto
 Content-Type: application/json
 Authorization: Bearer {{accessToken}}
 

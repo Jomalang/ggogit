@@ -14,8 +14,8 @@ public class CorsConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("http://ggogit.taecobug.io:3006", "http://ggogit.taecobug.io:8086")
-                        // .allowedOrigins("http://ggogit.taecobug.io:3006")
+                        .allowedOrigins("https://ggogit.taecobug.io:3000", "https://ggogit.taecobug.io:8080")
+                        // .allowedOrigins("https://ggogit.taecobug.io:3000")
                         .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
                         .allowedHeaders("*");
             }

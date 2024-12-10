@@ -3,7 +3,7 @@
 export default defineNuxtConfig({
   runtimeConfig: {
     public: {
-      apiBase: "http://localhost:8080/api/v1",
+      apiBase: "https://ggogit.taecobug.io/api/v1",
       naverClientId: "Y82lIjIMLGmIfTM3LzMr",
       kakaoClientId: "abafc6aa7f933101c7a24f0d63557024",
     },

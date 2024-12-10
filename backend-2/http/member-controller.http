@@ -1,6 +1,30 @@
 # ================================================== #
 # Member API
 
+###
+OPTIONS https://ggogit.taecobug.io/api/v1/test
+# Origin: https://ggogit.taecobug.io
+Access-Control-Request-Method: GET
+Access-Control-Request-Headers: Content-Type, Authorization
+
+
+###
+GET https://ggogit.taecobug.io/api/v1/test
+Accept-Encoding: gzip, deflate, br, zstd
+Accept-Language: ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7
+Connection: keep-alive
+Content-Length: 49
+Cookie: _ggogit_accessToken=
+Host: ggogit.taecobug.io
+Origin: https://ggogit.taecobug.io
+Referer: https://ggogit.taecobug.io/member/login/?returnUrl=/home
+Sec-Fetch-Dest: empty
+Sec-Fetch-Mode: cors
+Sec-Fetch-Site: same-origin
+User-Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1
+accept: application/json
+content-type: application/json
+
 ### 회원가입 이메일 전송
 POST {{host}}{{apiPath}}/members/join/send-email
 Content-Type: application/json
@@ -23,11 +47,33 @@ Content-Type: application/json
 }
 
 ### 로그인 JWT 토큰 발급
-POST {{host}}{{apiPath}}/members/login
+POST https://ggogit.taecobug.io/api/v1/members/login
 Content-Type: application/json
 
 {
-  "email": "user1@example.com",
+  "email": "gksxorb147@naver.com",
+  "password": "111"
+}
+
+### 브라우저에서 JWT 토큰 발급
+POST https://ggogit.taecobug.io/api/v1/members/login HTTP/1.1
+Accept-Encoding: gzip, deflate, br, zstd
+Accept-Language: ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7
+Connection: keep-alive
+Content-Length: 49
+# Cookie: _ggogit_accessToken=
+Host: ggogit.taecobug.io
+Origin: https://ggogit.taecobug.io
+Referer: https://ggogit.taecobug.io/member/login/?returnUrl=/home
+Sec-Fetch-Dest: empty
+Sec-Fetch-Mode: cors
+Sec-Fetch-Site: same-origin
+User-Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1
+accept: application/json
+content-type: application/json
+
+{
+  "email": "gksxorb147@naver.com",
   "password": "111"
 }
 

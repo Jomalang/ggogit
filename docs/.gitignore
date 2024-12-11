@@ -1,1 +1,5 @@
 .idea
+
+# 시스템 아키텍처 파일
+*.drawio
+*.drawio.bkp

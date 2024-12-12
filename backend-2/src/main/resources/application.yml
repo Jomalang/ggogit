@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: dev
+    active: test
 
   mail:
     host: smtp.gmail.com #SMTP 서버 호스트

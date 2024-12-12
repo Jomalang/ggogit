@@ -1,0 +1,16 @@
+{
+  "pageNumber": 1,
+  "pageSize": 10,
+  "totalPages": 1,
+  "totalElements": 1,
+  "content": [
+    {
+      "id": 1,
+      "name": "string"
+    },
+    {
+      "id": 2,
+      "name": "string"
+    }
+  ]
+}

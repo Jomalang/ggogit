@@ -1,0 +1,15 @@
+{
+  "bookId": 1,
+  "bookTitle": "string",
+  "author": "string",
+  "publisher": "string",
+  "publishDate": "string",
+  "totalPage": 1,
+  "bookCategoryId": 1,
+  "seedId": 1,
+  "treeTitle": "string",
+  "description": "string",
+  "visibility": true,
+  "createTime": "string",
+  "imageFile": "string"
+}

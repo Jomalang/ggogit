@@ -114,6 +114,10 @@
     * [메소드: `public ResponseEntity<EditResponse> editEtcTree()`](#메소드-public-responseentityeditresponse-editetctree-1)
     * [메소드: `public ResponseEntity<EditResponse> deleteTree()`](#메소드-public-responseentityeditresponse-deletetree)
   * [`TreeTmpController.java`](#treetmpcontrollerjava)
+    * [메소드: `public ResponseEntity<TreeTmpResponse> createBookTreeTmp()`](#메소드-public-responseentitytreetmpresponse-createbooktreetmp)
+    * [메소드: `public ResponseEntity<TreeTmpResponse> createEtcTreeTmp()`](#메소드-public-responseentitytreetmpresponse-createetctreetmp)
+    * [메소드: `public ResponseEntity<TreeTmpResponse> createAutoTreeTmp()`](#메소드-public-responseentitytreetmpresponse-createautotreetmp)
+    * [메소드: `public ResponseEntity<TreeTmpTotalPageResponse> getTotalPage()`](#메소드-public-responseentitytreetmptotalpageresponse-gettotalpage)
 <!-- TOC -->
 
 ---
@@ -1171,3 +1175,55 @@
   - After 응답 DTO: DeleteTreeResponse
 
 ## `TreeTmpController.java`
+
+### 메소드: `public ResponseEntity<TreeTmpResponse> createBookTreeTmp()`
+
+- 변동 사항: 있음
+- 메소드 명
+  - Before 메소드명: `createBookTreeTmp()`
+  - After 메소드명: `create()`
+- 요청
+  - Before 요청 DTO: @RequestBody TreeTmpRequest
+  - After 요청 DTO: @RequestBody CreateTreeTmpCommand
+- 응답
+  - Before 응답 DTO: TreeTmpResponse
+  - After 응답 DTO: CreateTreeTmpResponse
+
+### 메소드: `public ResponseEntity<TreeTmpResponse> createEtcTreeTmp()`
+
+- 변동 사항: 있음
+- 메소드 명
+  - Before 메소드명: `createEtcTreeTmp()`
+  - After 메소드명: `create()`
+- 요청
+  - Before 요청 DTO: @RequestBody TreeEtcTmpRequest
+  - After 요청 DTO: @RequestBody CreateTreeEtcTmpCommand
+- 응답
+  - Before 응답 DTO: TreeTmpResponse
+  - After 응답 DTO: CreateTreeEtcTmpResponse
+
+### 메소드: `public ResponseEntity<TreeTmpResponse> createAutoTreeTmp()`
+
+- 변동 사항: 있음
+- 메소드 명
+  - Before 메소드명: `createAutoTreeTmp()`
+  - After 메소드명: `createAuto()`
+- 요청
+  - Before 요청 DTO: @RequestBody TreeAutoTmpRequest
+  - After 요청 DTO: @RequestBody CreateTreeAutoTmpCommand
+- 응답
+  - Before 응답 DTO: TreeTmpResponse
+  - After 응답 DTO: CreateTreeAutoTmpResponse
+
+### 메소드: `public ResponseEntity<TreeTmpTotalPageResponse> getTotalPage()`
+
+- 변동 사항: 있음
+- 메소드 명
+  - Before 메소드명: `getTotalPage()`
+  - After 메소드명: `getTotalPage()`
+- 요청
+  - Before 요청 DTO: memberId
+  - After 요청 DTO: memberId
+- 응답
+  - Before 응답 DTO: TreeTmpTotalPageResponse
+  - After 응답 DTO: GetTotalPageResponse

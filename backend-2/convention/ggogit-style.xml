@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE module PUBLIC
+  "-//Checkstyle//DTD Checkstyle Configuration 1.3//EN"
+  "https://checkstyle.org/dtds/configuration_1_3.dtd">
+
+<module name="Checker">
+
+  <!-- 최대 라인 길이 제한 -->
+  <module name="LineLength">
+    <property name="max" value="100"/>
+  </module>
+
+  <module name="RegexpOnFilename">
+    <!--
+        DTO 패턴 파일명 규칙
+        생성:
+          - 요청: Create*Command.java
+          - 응답: Create*Response.java
+        수정:
+          - 요청: Update*Command.java
+          - 응답: Update*Response.java
+        삭제:
+          - 요청: Delete*Command.java
+          - 응답: Delete*Response.java
+        조회:
+          - 요청: Get*Command.java, List*FilterCommand.java
+          - 응답: Get*Response.java, List*FilterResponse.java
+    -->
+    <property name="folderPattern" value=".*dto.*"/>
+    <property name="fileNamePattern" value="(Create|Update|Delete|Get).*(Command|FilterCommand|Response|FilterResponse)\.java"/>
+    <property name="fileExtensions" value="java"/>
+    <property name="match" value="false"/>
+    <message key="regexp.filename.mismatch" value="파일명이 규칙을 따르지 않습니다: 요청-응답 DTO 규칙을 확인하세요."/>
+  </module>
+
+</module>

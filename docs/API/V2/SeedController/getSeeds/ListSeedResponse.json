@@ -1,0 +1,14 @@
+{
+  "content": [
+    {
+      "id": 1,
+      "korName": "string",
+      "engName": "string"
+    },
+    {
+      "id": 1,
+      "korName": "string",
+      "engName": "string"
+    }
+  ]
+}

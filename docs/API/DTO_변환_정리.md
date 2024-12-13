@@ -890,6 +890,58 @@
 
 ## `MemoirImageController.java`
 
+### 메소드: `public String uploadImageToTemp()`
+
+- 변동 사항: 있음
+- 메소드 명
+  - Before 메소드명: `uploadImageToTemp()`
+  - After 메소드명: `upload()`
+- 요청
+  - Before 요청 DTO: @RequestParam MultipartFile file
+  - After 요청 DTO: @RequestParam MultipartFile image
+- 응답
+  - Before 응답 DTO: String
+  - After 응답 DTO: CreateMemoirImageResponse
+
+### 메소드: `public byte[] printEditorImage()`
+
+- 변동 사항: 있음
+- 메소드 명
+  - Before 메소드명: `printEditorImage()`
+  - After 메소드명: `print()`
+- 요청
+  - Before 요청 DTO: @RequestParam final String filePath
+  - After 요청 DTO: @RequestParam final String filePath
+- 응답
+  - Before 응답 DTO: byte[]
+  - After 응답 DTO: GetMemoirImageResponse
+
+### 메소드: `public ResponseEntity<String> getImageFullPath()`
+
+- 변동 사항: 있음
+- 메소드 명
+  - Before 메소드명: `getImageFullPath()`
+  - After 메소드명: `getImageFullPath()`
+- 요청
+  - Before 요청 DTO: @PathVariable String fileName
+  - After 요청 DTO: @PathVariable String fileName
+- 응답
+  - Before 응답 DTO: String
+  - After 응답 DTO: GetMemoirImageFullPathResponse
+
+### 메소드: `public void moveImage()`
+
+- 변동 사항: 있음
+- 메소드 명
+  - Before 메소드명: `moveImage()`
+  - After 메소드명: `move()`
+- 요청
+  - Before 요청 DTO: @PathVariable String fileName
+  - After 요청 DTO: @PathVariable String fileName
+- 응답
+  - Before 응답 DTO: void
+  - After 응답 DTO: void
+
 ## `SeedController.java`
 
 ## `TreeController.java`

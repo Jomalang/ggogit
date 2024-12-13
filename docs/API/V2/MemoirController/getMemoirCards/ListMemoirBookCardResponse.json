@@ -1,0 +1,40 @@
+{
+  "pageNumber": 1,
+  "pageSize": 10,
+  "totalPages": 1,
+  "totalElements": 1,
+  "content": [
+    {
+      "cardType": 1,
+      "memoirId":  2,
+      "memoirTitle": "string",
+      "updateTime": "string",
+      "visibility": true,
+      "cardImage": "string",
+      "bookCategory": "string",
+      "bookTitle": "string",
+      "bookAuthor": "string",
+      "bookTranslator": "string",
+      "bookPublisher": "string",
+      "bookPublishedYear": "string",
+      "viewCount": 1,
+      "leafCount": 1
+    },
+    {
+      "cardType": 1,
+      "memoirId":  2,
+      "memoirTitle": "string",
+      "updateTime": "string",
+      "visibility": true,
+      "cardImage": "string",
+      "bookCategory": "string",
+      "bookTitle": "string",
+      "bookAuthor": "string",
+      "bookTranslator": "string",
+      "bookPublisher": "string",
+      "bookPublishedYear": "string",
+      "viewCount": 1,
+      "leafCount": 1
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "memoir": {
+    "id": 1,
+    "title": "string",
+    "text": "string",
+    "visibility": "string",
+    "message": "string"
+  },
+  "book": {
+    "id":  1,
+    "imageFile": "sting",
+    "title": "string",
+    "totalPage": 1,
+    "translator": "string",
+    "category": {
+      "id":  1,
+      "name": "string"
+    },
+    "publishDate": "string",
+    "isbn": "string",
+    "author": "string",
+    "publisher": "string",
+    "createTime": "string"
+  },
+  "tree": {
+    "id": 1,
+    "memberId": 1,
+    "seedId": 1,
+    "bookId": 1,
+    "title": "string",
+    "description": "string",
+    "visibility": true,
+    "createdAt": "string",
+    "updatedAt": "string"
+  },
+  "member": {
+    "id": 1,
+    "nickName": "string",
+    "userName": "string",
+    "email": "string",
+    "backImgName": "string",
+    "profileImgName": "string"
+  },
+  "message": "string",
+  "isOwner": true
+}

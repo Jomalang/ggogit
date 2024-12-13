@@ -810,6 +810,84 @@
 
 ## `MemoirController.java`
 
+### 메소드: `public ResponseEntity<MemoirResponse> getMemoir()`
+
+- 변동 사항: 있음
+- 메소드 명
+  - Before 메소드명: `getMemoir()`
+  - After 메소드명: `getMemoir()`
+- 요청
+  - Before 요청 DTO: @PathVariable Long memoirId
+  - After 요청 DTO: @PathVariable Long memoirId
+- 응답
+  - Before 응답 DTO: MemoirResponse
+  - After 응답 DTO: GetMemoirResponse
+
+### 메소드: `public ResponseEntity<MemoirDto> createMemoirResponse()`
+
+- 변동 사항: 있음
+- 메소드 명
+  - Before 메소드명: `createMemoirResponse()`
+  - After 메소드명: `create()`
+- 요청
+  - Before 요청 DTO: @RequestBody MemoirRequest
+  - After 요청 DTO: @RequestBody CreateMemoirCommand
+- 응답
+  - Before 응답 DTO: MemoirDto
+  - After 응답 DTO: CreateMemoirResponse
+
+### 메소드: `public ResponseEntity<MemoirDto> updateMemoirResponse()`
+
+- 변동 사항: 있음
+- 메소드 명
+  - Before 메소드명: `updateMemoirResponse()`
+  - After 메소드명: `update()`
+- 요청
+  - Before 요청 DTO: @RequestBody MemoirRequest, @PathVariable Long memoirId
+  - After 요청 DTO: @RequestBody UpdateMemoirCommand, @PathVariable Long memoirId
+- 응답
+  - Before 응답 DTO: MemoirDto
+  - After 응답 DTO: UpdateMemoirResponse
+
+### 메소드: `public ResponseEntity<MemoirDto> deleteMemoirResponse()`
+
+- 변동 사항: 있음
+- 메소드 명
+  - Before 메소드명: `deleteMemoirResponse()`
+  - After 메소드명: `delete()`
+- 요청
+  - Before 요청 DTO: @PathVariable Long memoirId
+  - After 요청 DTO: @PathVariable Long memoirId
+- 응답
+  - Before 응답 DTO: MemoirDto
+  - After 응답 DTO: DeleteMemoirResponse
+
+### 메소드: `public ResponseEntity<MemoirBookCardDtoResponseList> getMemoirCards()`
+
+- 변동 사항: 있음
+- 메소드 명
+  - Before 메소드명: `getMemoirCards()`
+  - After 메소드명: `listMemoirCards()`
+- 요청
+  - Before 요청 DTO: @PathVariable Long memoirId, @RequestParam int page, @RequestParam int size
+  - After 요청 DTO: @PathVariable Long memoirId, @ModelAttribute ListMemoirCardFilterCommand
+- 응답
+  - Before 응답 DTO: MemoirBookCardDtoResponseList
+  - After 응답 DTO: ListMemoirBookCardResponse
+
+### 메소드: `public ResponseEntity<MemoirCardDtoResponse> getMemoirCards()`
+
+- 변동 사항: 있음
+- 메소드 명
+  - Before 메소드명: `getMemoirCards()`
+  - After 메소드명: `listMemoirCards()`
+- 요청
+  - Before 요청 DTO: @PathVariable Long bookId, @RequestParam int page, @RequestParam int size
+  - After 요청 DTO: @PathVariable Long bookId, @ModelAttribute ListMemoirCardFilterCommand
+- 응답
+  - Before 응답 DTO: MemoirCardDtoResponse
+  - After 응답 DTO: ListMemoirCardResponse
+
 ## `MemoirImageController.java`
 
 ## `SeedController.java`

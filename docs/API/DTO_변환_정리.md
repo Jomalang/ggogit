@@ -585,9 +585,48 @@
   - Before 응답 DTO: LeafTagListResponse
   - After 응답 DTO: ListLeafTagResponse
 
-## `MainController.java`
-
 ## `AuthController.java`
+
+### 메소드: `public ResponseEntity<AuthInfoResponse> oauthGoogle()`
+
+- 변동 사항: 있음
+- 메소드 명
+    - Before 메소드명: `oauthGoogle()`
+    - After 메소드명: `google()`
+- 요청
+  - Before 요청 DTO: String accessToken
+  - After 요청 DTO: @RequestBody GoogleAuthCommand
+- 응답
+  - Before 응답 DTO: AuthInfoResponse
+  - After 응답 DTO: AuthInfoResponse
+
+### 메소드: `public ResponseEntity<AuthInfoResponse> oauthNaver()`
+
+- 변동 사항: 있음
+- 메소드 명
+    - Before 메소드명: `oauthNaver()`
+    - After 메소드명: `naver()`
+- 요청
+  - Before 요청 DTO: String accessToken
+  - After 요청 DTO: @RequestBody NaverAuthCommand
+- 응답
+  - Before 응답 DTO: AuthInfoResponse
+  - After 응답 DTO: AuthInfoResponse
+
+### 메소드: `public ResponseEntity<AuthInfoResponse> oauthKakao()`
+
+- 변동 사항: 있음
+- 메소드 명
+    - Before 메소드명: `oauthKakao()`
+    - After 메소드명: `kakao()`
+- 요청
+  - Before 요청 DTO: String accessToken
+  - After 요청 DTO: @RequestBody KakaoAuthCommand
+- 응답
+  - Before 응답 DTO: AuthInfoResponse
+  - After 응답 DTO: AuthInfoResponse
+
+### 메소드: ``
 
 ## `MemberController.java`
 

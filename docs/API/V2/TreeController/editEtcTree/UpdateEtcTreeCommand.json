@@ -1,0 +1,9 @@
+{
+  "memberId": 1,
+  "treeId": 1,
+  "seedId": 1,
+  "treeTitle": "string",
+  "description": "string",
+  "imageFile": "string",
+  "visibility": true
+}

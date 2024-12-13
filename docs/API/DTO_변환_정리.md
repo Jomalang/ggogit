@@ -84,9 +84,35 @@
     * [메소드: `public ResponseEntity<MemberResponse> findById()`](#메소드-public-responseentitymemberresponse-findbyid)
     * [메소드: `public ResponseEntity<MemberDomainCntResponse> countDomainId()`](#메소드-public-responseentitymemberdomaincntresponse-countdomainid)
   * [`MemoirController.java`](#memoircontrollerjava)
+    * [메소드: `public ResponseEntity<MemoirResponse> getMemoir()`](#메소드-public-responseentitymemoirresponse-getmemoir)
+    * [메소드: `public ResponseEntity<MemoirDto> createMemoirResponse()`](#메소드-public-responseentitymemoirdto-creatememoirresponse)
+    * [메소드: `public ResponseEntity<MemoirDto> updateMemoirResponse()`](#메소드-public-responseentitymemoirdto-updatememoirresponse)
+    * [메소드: `public ResponseEntity<MemoirDto> deleteMemoirResponse()`](#메소드-public-responseentitymemoirdto-deletememoirresponse)
+    * [메소드: `public ResponseEntity<MemoirBookCardDtoResponseList> getMemoirCards()`](#메소드-public-responseentitymemoirbookcarddtoresponselist-getmemoircards)
+    * [메소드: `public ResponseEntity<MemoirCardDtoResponse> getMemoirCards()`](#메소드-public-responseentitymemoircarddtoresponse-getmemoircards)
   * [`MemoirImageController.java`](#memoirimagecontrollerjava)
+    * [메소드: `public String uploadImageToTemp()`](#메소드-public-string-uploadimagetotemp)
+    * [메소드: `public byte[] printEditorImage()`](#메소드-public-byte-printeditorimage)
+    * [메소드: `public ResponseEntity<String> getImageFullPath()`](#메소드-public-responseentitystring-getimagefullpath)
+    * [메소드: `public void moveImage()`](#메소드-public-void-moveimage)
   * [`SeedController.java`](#seedcontrollerjava)
+    * [메소드: `public ResponseEntity<SeedResponse> getSeeds()`](#메소드-public-responseentityseedresponse-getseeds)
+    * [메소드: `public ResponseEntity<SeedDetailResponse> getSeed()`](#메소드-public-responseentityseeddetailresponse-getseed)
+    * [메소드: `public ResponseEntity<SeedDetailResponse> getSeedByTreeId()`](#메소드-public-responseentityseeddetailresponse-getseedbytreeid)
   * [`TreeController.java`](#treecontrollerjava)
+    * [메소드: `public Page<TreeSearchResultResponse> treeSearch()`](#메소드-public-pagetreesearchresultresponse-treesearch)
+    * [메소드: `public ResponseEntity<TreeInfoResponse> getTreeInfoResponse()`](#메소드-public-responseentitytreeinforesponse-gettreeinforesponse)
+    * [메소드: `public ResponseEntity<TreeInfoResponse> getTreeInfoResponseByLeafId()`](#메소드-public-responseentitytreeinforesponse-gettreeinforesponsebyleafid)
+    * [메소드: `public ResponseEntity<TreeDetailResponse> getBranchList()`](#메소드-public-responseentitytreedetailresponse-getbranchlist)
+    * [메소드: `public Page<Leaf> getLeafList()`](#메소드-public-pageleaf-getleaflist)
+    * [메소드: `public ResponseEntity<TreeInfoResponseHome> getTreeInfoResponses()`](#메소드-public-responseentitytreeinforesponsehome-gettreeinforesponses)
+    * [메소드: `public ResponseEntity<TreeListHome> getTreeInfoResponsesSort()`](#메소드-public-responseentitytreelisthome-gettreeinforesponsessort)
+    * [메소드: `public ResponseEntity<TreeBookCardResponseList> getTreeBookCardResponse()`](#메소드-public-responseentitytreebookcardresponselist-gettreebookcardresponse)
+    * [메소드: `public ResponseEntity<TreeBookCardResponseList> getBookTreeResponse()`](#메소드-public-responseentitytreebookcardresponselist-getbooktreeresponse)
+    * [메소드: `public ResponseEntity<TreeCardDtoResponse> getTreeCardDtoResponse()`](#메소드-public-responseentitytreecarddtoresponse-gettreecarddtoresponse)
+    * [메소드: `public ResponseEntity<EditResponse> editEtcTree()`](#메소드-public-responseentityeditresponse-editetctree)
+    * [메소드: `public ResponseEntity<EditResponse> editEtcTree()`](#메소드-public-responseentityeditresponse-editetctree-1)
+    * [메소드: `public ResponseEntity<EditResponse> deleteTree()`](#메소드-public-responseentityeditresponse-deletetree)
   * [`TreeTmpController.java`](#treetmpcontrollerjava)
 <!-- TOC -->
 
@@ -984,5 +1010,164 @@
   - After 응답 DTO: GetSeedByTreeIdResponse
 
 ## `TreeController.java`
+
+### 메소드: `public Page<TreeSearchResultResponse> treeSearch()`
+
+- 변동 사항: 있음
+- 메소드 명
+  - Before 메소드명: `treeSearch()`
+  - After 메소드명: `listTrees()`
+- 요청
+  - Before 요청 DTO: @ModelAttribute TreeSearchQuery
+  - After 요청 DTO: ListTreeFilterCommand
+- 응답
+  - Before 응답 DTO: Page<TreeSearchResultResponse>
+  - After 응답 DTO: ListTreeResponse
+
+### 메소드: `public ResponseEntity<TreeInfoResponse> getTreeInfoResponse()`
+
+- 변동 사항: 있음
+- 메소드 명
+  - Before 메소드명: `getTreeInfoResponse()`
+  - After 메소드명: `getTreeInfo()`
+- 요청
+  - Before 요청 DTO: @PathVariable Long treeId
+  - After 요청 DTO: @PathVariable Long treeId
+- 응답
+  - Before 응답 DTO: TreeInfoResponse
+  - After 응답 DTO: GetTreeInfoResponse
+
+### 메소드: `public ResponseEntity<TreeInfoResponse> getTreeInfoResponseByLeafId()`
+
+- 변동 사항: 있음
+- 메소드 명
+  - Before 메소드명: `getTreeInfoResponseByLeafId()`
+  - After 메소드명: `getTreeInfoByLeafId()`
+- 요청
+  - Before 요청 DTO: @PathVariable Long leafId
+  - After 요청 DTO: @PathVariable Long leafId
+- 응답
+  - Before 응답 DTO: TreeInfoResponse
+  - After 응답 DTO: GetTreeInfoByLeafIdResponse
+
+### 메소드: `public ResponseEntity<TreeDetailResponse> getBranchList()`
+
+- 변동 사항: 있음
+- 메소드 명
+  - Before 메소드명: `getBranchList()`
+  - After 메소드명: `listBranches()`
+- 요청
+  - Before 요청 DTO: @PathVariable Long treeId
+  - After 요청 DTO: @PathVariable Long treeId
+- 응답
+  - Before 응답 DTO: TreeDetailResponse
+  - After 응답 DTO: ListBranchResponse
+
+### 메소드: `public Page<Leaf> getLeafList()`
+- 제거 (비효율적인 API)
+
+### 메소드: `public ResponseEntity<TreeInfoResponseHome> getTreeInfoResponses()`
+
+- 변동 사항: 있음
+- 메소드 명
+  - Before 메소드명: `getTreeInfoResponses()`
+  - After 메소드명: `getTreeInfoHome()`
+- 요청
+  - Before 요청 DTO: @PathVariable Long treeId
+  - After 요청 DTO: @PathVariable Long memberId
+- 응답
+  - Before 응답 DTO: TreeInfoResponseHome
+  - After 응답 DTO: GetTreeInfoHomeResponse
+
+### 메소드: `public ResponseEntity<TreeListHome> getTreeInfoResponsesSort()`
+
+- 변동 사항: 있음
+- 메소드 명
+  - Before 메소드명: `getTreeInfoResponsesSort()`
+  - After 메소드명: `listTreeInfoHomeSort()`
+- 요청
+  - Before 요청 DTO: @PathVariable Long memberId
+  - After 요청 DTO: @PathVariable Long memberId
+- 응답
+  - Before 응답 DTO: TreeListHome
+  - After 응답 DTO: ListTreeInfoHomeSortResponse
+
+### 메소드: `public ResponseEntity<TreeBookCardResponseList> getTreeBookCardResponse()`
+
+- 변동 사항: 있음
+- 메소드 명
+  - Before 메소드명: `getTreeBookCardResponse()`
+  - After 메소드명: `listTreeBookCards()`
+- 요청
+  - Before 요청 DTO: @PathVariable Long memberId
+  - After 요청 DTO: @PathVariable Long memberId
+- 응답
+  - Before 응답 DTO: TreeBookCardResponseList
+  - After 응답 DTO: ListTreeBookCardResponse
+
+### 메소드: `public ResponseEntity<TreeBookCardResponseList> getBookTreeResponse()`
+
+- 변동 사항: 있음
+- 메소드 명
+  - Before 메소드명: `getBookTreeResponse()`
+  - After 메소드명: `listBookTrees()`
+- 요청
+  - Before 요청 DTO: @PathVariable Long bookId
+  - After 요청 DTO: @PathVariable Long bookId
+- 응답
+  - Before 응답 DTO: TreeBookCardResponseList
+  - After 응답 DTO: ListTreeBookCardResponse
+
+### 메소드: `public ResponseEntity<TreeCardDtoResponse> getTreeCardDtoResponse()`
+
+- 변동 사항: 있음
+- 메소드 명
+  - Before 메소드명: `getTreeCardDtoResponse()`
+  - After 메소드명: `listTreeCards()`
+- 요청
+  - Before 요청 DTO: @PathVariable Long bookId
+  - After 요청 DTO: @PathVariable Long bookId, ListTreeCardFilterCommand
+- 응답
+  - Before 응답 DTO: TreeCardDtoResponse
+  - After 응답 DTO: ListTreeCardResponse
+
+### 메소드: `public ResponseEntity<EditResponse> editEtcTree()`
+
+- 변동 사항: 있음
+- 메소드 명
+  - Before 메소드명: `editEtcTree()`
+  - After 메소드명: `updateEtcTree()`
+- 요청
+  - Before 요청 DTO: @RequestBody EditRequest, @PathVariable Long treeId
+  - After 요청 DTO: @RequestBody UpdateEtcTreeCommand, @PathVariable Long treeId
+- 응답
+  - Before 응답 DTO: EditResponse
+  - After 응답 DTO: UpdateEtcTreeResponse
+
+### 메소드: `public ResponseEntity<EditResponse> editEtcTree()`
+
+- 변동 사항: 있음
+- 메소드 명
+  - Before 메소드명: `editEtcTree()`
+  - After 메소드명: `updateBootTree()`
+- 요청
+  - Before 요청 DTO: @RequestBody TreeBookEdiitRequest, @PathVariable Long treeId
+  - After 요청 DTO: @RequestBody UpdateBootTreeCommand, @PathVariable Long treeId
+- 응답
+  - Before 응답 DTO: EditResponse
+  - After 응답 DTO: UpdateBootTreeResponse
+
+### 메소드: `public ResponseEntity<EditResponse> deleteTree()`
+
+- 변동 사항: 있음
+- 메소드 명
+  - Before 메소드명: `deleteTree()`
+  - After 메소드명: `delete()`
+- 요청
+  - Before 요청 DTO: @PathVariable Long treeId
+  - After 요청 DTO: @PathVariable Long treeId
+- 응답
+  - Before 응답 DTO: EditResponse
+  - After 응답 DTO: DeleteTreeResponse
 
 ## `TreeTmpController.java`

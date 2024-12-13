@@ -1,0 +1,15 @@
+{
+  "isAuto": true,
+  "author": "string",
+  "bookCategoryId": 1,
+  "bookCategoryName": "string",
+  "title": "string",
+  "publishDate": "string",
+  "publisher": "string",
+  "totalPage": 1,
+  "imageData": "string",
+  "treeTitle": "string",
+  "description": "string",
+  "treeId": 1,
+  "visibility": true
+}

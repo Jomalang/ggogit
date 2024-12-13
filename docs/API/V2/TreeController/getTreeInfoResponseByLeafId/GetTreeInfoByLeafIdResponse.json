@@ -1,0 +1,31 @@
+{
+  "bookId": 1,
+  "bookCategoryId": 1,
+  "bookCategoryName": "string",
+  "bookTitle": "string",
+  "bookAuthor": "string",
+  "bookTranslator": "string",
+  "bookPublisher": "string",
+  "bookPublishedYear": "string",
+  "bookPublishedDate": "string",
+  "bookTotalPage": 1,
+  "coverImageName": "string",
+
+  "treeId": 1,
+  "memberId": 1,
+  "memoirId": 1,
+  "seedId": 1,
+  "seedKorName": "string",
+
+  "title": "string",
+  "description": "string",
+  "visibility": true,
+  "leafCreatedAt": "string",
+  "createdAt": "string",
+  "readingPage": 1,
+
+  "treeImage": "string",
+  "treeLeafCnt": 1,
+  "treeLikeCnt": 1,
+  "treeViewCnt": 1
+}

@@ -1,0 +1,30 @@
+{
+  "pageNumber": 1,
+  "pageSize": 10,
+  "totalPages": 1,
+  "totalElements": 1,
+  "content": [
+    {
+      "id": 1,
+      "parentLeafId": 1,
+      "title": "string",
+      "leafCount": 1,
+      "viewCount": 1,
+      "likeCount": 1,
+      "bookMark": true,
+      "visibility": true,
+      "updateTime": "string"
+    },
+    {
+      "id": 1,
+      "parentLeafId": 1,
+      "title": "string",
+      "leafCount": 1,
+      "viewCount": 1,
+      "likeCount": 1,
+      "bookMark": true,
+      "visibility": true,
+      "updateTime": "string"
+    }
+  ]
+}

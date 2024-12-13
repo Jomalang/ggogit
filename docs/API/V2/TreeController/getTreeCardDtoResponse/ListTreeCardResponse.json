@@ -1,0 +1,30 @@
+{
+  "pageNumber": 1,
+  "pageSize": 10,
+  "totalPages": 1,
+  "totalElements": 1,
+  "content": [
+    {
+      "cardType": 1,
+      "id": 1,
+      "title": "string",
+      "content": "string",
+      "updateDate": "string",
+      "leafCount": 1,
+      "viewCount": 1,
+      "nickname": "string",
+      "emailId": "string"
+    },
+    {
+      "cardType": 1,
+      "id": 1,
+      "title": "string",
+      "content": "string",
+      "updateDate": "string",
+      "leafCount": 1,
+      "viewCount": 1,
+      "nickname": "string",
+      "emailId": "string"
+    }
+  ]
+}

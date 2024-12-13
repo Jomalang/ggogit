@@ -1,0 +1,8 @@
+{
+  "username": "string",
+  "joinToken":"string",
+  "email": "string",
+  "nickname":"string",
+  "password": "string",
+  "introduction":"string"
+}

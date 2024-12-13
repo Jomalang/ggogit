@@ -63,9 +63,26 @@
     * [메소드: `public ResponseEntity<LeafTagResponse> remove()`](#메소드-public-responseentityleaftagresponse-remove)
     * [메소드: `public ResponseEntity<LeafTagDetailResponse> get()`](#메소드-public-responseentityleaftagdetailresponse-get)
     * [메소드: `public ResponseEntity<LeafTagListResponse> list()`](#메소드-public-responseentityleaftaglistresponse-list)
-  * [`MainController.java`](#maincontrollerjava)
   * [`AuthController.java`](#authcontrollerjava)
+    * [메소드: `public ResponseEntity<AuthInfoResponse> oauthGoogle()`](#메소드-public-responseentityauthinforesponse-oauthgoogle)
+    * [메소드: `public ResponseEntity<AuthInfoResponse> oauthNaver()`](#메소드-public-responseentityauthinforesponse-oauthnaver)
+    * [메소드: `public ResponseEntity<AuthInfoResponse> oauthKakao()`](#메소드-public-responseentityauthinforesponse-oauthkakao)
   * [`MemberController.java`](#membercontrollerjava)
+    * [메소드: `public ResponseEntity<MemberSendEmailResponse> joinSendEmail()`](#메소드-public-responseentitymembersendemailresponse-joinsendemail)
+    * [메소드: `public ResponseEntity<MemberCheckEmailResponse> checkEmail()`](#메소드-public-responseentitymembercheckemailresponse-checkemail)
+    * [메소드: `public ResponseEntity<MemberCheckTokenResponse> checkToken()`](#메소드-public-responseentitymemberchecktokenresponse-checktoken)
+    * [메소드: `public ResponseEntity<MemberCheckEmailResponse> passwordCheckEmail(_`](#메소드-public-responseentitymembercheckemailresponse-passwordcheckemail_)
+    * [메소드: `public ResponseEntity<MemberLoginResponse> join()`](#메소드-public-responseentitymemberloginresponse-join)
+    * [메소드: `public ResponseEntity<MemberLoginResponse> oauthJoin()`](#메소드-public-responseentitymemberloginresponse-oauthjoin)
+    * [메소드: `public ResponseEntity<MemberLoginResponse> login()`](#메소드-public-responseentitymemberloginresponse-login)
+    * [메소드: `public ResponseEntity<MemberRefreshResponse> refresh()`](#메소드-public-responseentitymemberrefreshresponse-refresh)
+    * [메소드: `public ResponseEntity<MemberEditResponse> edit()`](#메소드-public-responseentitymembereditresponse-edit)
+    * [메소드: `public ResponseEntity<MemberPasswordResetSendEmailResponse> findSendEmail()`](#메소드-public-responseentitymemberpasswordresetsendemailresponse-findsendemail)
+    * [메소드: `public ResponseEntity<MemberResponse> findByNickname()`](#메소드-public-responseentitymemberresponse-findbynickname)
+    * [메소드: `public ResponseEntity<MemberResponse> findByUsername()`](#메소드-public-responseentitymemberresponse-findbyusername-)
+    * [메소드: `public ResponseEntity<MemberResponse> findByEmail()`](#메소드-public-responseentitymemberresponse-findbyemail)
+    * [메소드: `public ResponseEntity<MemberResponse> findById()`](#메소드-public-responseentitymemberresponse-findbyid)
+    * [메소드: `public ResponseEntity<MemberDomainCntResponse> countDomainId()`](#메소드-public-responseentitymemberdomaincntresponse-countdomainid)
   * [`MemoirController.java`](#memoircontrollerjava)
   * [`MemoirImageController.java`](#memoirimagecontrollerjava)
   * [`SeedController.java`](#seedcontrollerjava)
@@ -591,8 +608,8 @@
 
 - 변동 사항: 있음
 - 메소드 명
-    - Before 메소드명: `oauthGoogle()`
-    - After 메소드명: `google()`
+  - Before 메소드명: `oauthGoogle()`
+  - After 메소드명: `google()`
 - 요청
   - Before 요청 DTO: String accessToken
   - After 요청 DTO: @RequestBody GoogleAuthCommand
@@ -604,8 +621,8 @@
 
 - 변동 사항: 있음
 - 메소드 명
-    - Before 메소드명: `oauthNaver()`
-    - After 메소드명: `naver()`
+  - Before 메소드명: `oauthNaver()`
+  - After 메소드명: `naver()`
 - 요청
   - Before 요청 DTO: String accessToken
   - After 요청 DTO: @RequestBody NaverAuthCommand
@@ -617,8 +634,8 @@
 
 - 변동 사항: 있음
 - 메소드 명
-    - Before 메소드명: `oauthKakao()`
-    - After 메소드명: `kakao()`
+  - Before 메소드명: `oauthKakao()`
+  - After 메소드명: `kakao()`
 - 요청
   - Before 요청 DTO: String accessToken
   - After 요청 DTO: @RequestBody KakaoAuthCommand
@@ -626,9 +643,170 @@
   - Before 응답 DTO: AuthInfoResponse
   - After 응답 DTO: AuthInfoResponse
 
-### 메소드: ``
-
 ## `MemberController.java`
+
+### 메소드: `public ResponseEntity<MemberSendEmailResponse> joinSendEmail()`
+
+- 변동 사항: 있음
+- 메소드 명
+    - Before 메소드명: `joinSendEmail()`
+    - After 메소드명: `joinSendEmail()`
+- 요청
+  - Before 요청 DTO: @RequestBody MemberSendEmailRequest
+  - After 요청 DTO: @RequestBody SendEmailForJoinCommand
+- 응답
+  - Before 응답 DTO: MemberSendEmailResponse
+  - After 응답 DTO: SendEmailForJoinResponse
+
+### 메소드: `public ResponseEntity<MemberCheckEmailResponse> checkEmail()`
+
+- 변동 사항: 있음
+- 메소드 명
+    - Before 메소드명: `checkEmail()`
+    - After 메소드명: `checkEmail()`
+- 요청
+  - Before 요청 DTO: @RequestBody MemberCheckEmailRequest
+  - After 요청 DTO: @RequestBody CheckEmailMemberCommand
+- 응답
+  - Before 응답 DTO: MemberCheckEmailResponse
+  - After 응답 DTO: CheckEmailMemberResponse
+
+### 메소드: `public ResponseEntity<MemberCheckTokenResponse> checkToken()`
+
+- 변동 사항: 있음
+- 메소드 명
+    - Before 메소드명: `checkToken()`
+    - After 메소드명: `checkToken()`
+- 요청
+  - Before 요청 DTO: @RequestBody MemberCheckTokenRequest
+  - After 요청 DTO: @RequestBody CheckTokenMemberCommand
+- 응답
+  - Before 응답 DTO: MemberCheckTokenResponse
+  - After 응답 DTO: CheckTokenMemberResponse
+
+### 메소드: `public ResponseEntity<MemberCheckEmailResponse> passwordCheckEmail(_`
+
+- 변동 사항: 있음
+- 메소드 명
+    - Before 메소드명: `passwordCheckEmail()`
+    - After 메소드명: `passwordCheckEmail()`
+- 요청
+  - Before 요청 DTO: @RequestBody MemberCheckEmailRequest
+  - After 요청 DTO: @RequestBody CheckEmailPasswordCommand
+- 응답
+  - Before 응답 DTO: MemberCheckEmailResponse
+  - After 응답 DTO: CheckEmailPasswordResponse
+
+### 메소드: `public ResponseEntity<MemberLoginResponse> join()`
+
+- 변동 사항: 있음
+- 메소드 명
+  - Before 메소드명: `join()`
+  - After 메소드명: `join()`
+- 요청
+  - Before 요청 DTO: @RequestBody MemberJoinRequest
+  - After 요청 DTO: @RequestBody CreateMemberCommand
+- 응답
+  - Before 응답 DTO: MemberLoginResponse
+  - After 응답 DTO: CreateMemberResponse
+
+### 메소드: `public ResponseEntity<MemberLoginResponse> oauthJoin()`
+
+- 변동 사항: 있음
+- 메소드 명
+  - Before 메소드명: `oauthJoin()`
+  - After 메소드명: `oauthJoin()`
+- 요청
+  - Before 요청 DTO: @RequestBody MemberOauthJoinRequest
+  - After 요청 DTO: @RequestBody CreateOauthMemberCommand
+- 응답
+  - Before 응답 DTO: MemberLoginResponse
+  - After 응답 DTO: CreateOauthMemberResponse
+
+### 메소드: `public ResponseEntity<MemberLoginResponse> login()`
+
+- 변동 사항: 있음
+- 메소드 명
+  - Before 메소드명: `login()`
+  - After 메소드명: `login()`
+- 요청
+  - Before 요청 DTO: @RequestBody MemberLoginRequest
+  - After 요청 DTO: @RequestBody LoginMemberCommand
+- 응답
+  - Before 응답 DTO: MemberLoginResponse
+  - After 응답 DTO: LoginMemberResponse
+
+### 메소드: `public ResponseEntity<MemberRefreshResponse> refresh()`
+
+- 변동 사항: 있음
+- 메소드 명
+  - Before 메소드명: `refresh()`
+  - After 메소드명: `refresh()`
+- 요청
+  - Before 요청 DTO: @CookieValue("refreshToken") String refreshToken
+  - After 요청 DTO: @CookieValue("refreshToken") String refreshToken
+- 응답
+  - Before 응답 DTO: MemberRefreshResponse
+  - After 응답 DTO: RefreshMemberResponse
+
+### 메소드: `public ResponseEntity<MemberEditResponse> edit()`
+
+- 변동 사항: 있음
+- 메소드 명
+  - Before 메소드명: `edit()`
+  - After 메소드명: `update()`
+- 요청
+  - Before 요청 DTO: @PathVariable Long memberId, @RequestBody MemberEditRequest
+  - After 요청 DTO: @PathVariable Long memberId, @RequestBody UpdateMemberCommand
+- 응답
+  - Before 응답 DTO: MemberEditResponse
+  - After 응답 DTO: UpdateMemberResponse
+
+### 메소드: `public ResponseEntity<MemberPasswordResetSendEmailResponse> findSendEmail()`
+
+- 변동 사항: 있음
+- 메소드 명
+  - Before 메소드명: `findSendEmail()`
+  - After 메소드명: `sendEmailForIdRecovery()`
+- 요청
+  - Before 요청 DTO: @RequestBody MemberPasswordResetSendEmailRequest
+  - After 요청 DTO: @RequestBody SendEmailForIdRecoveryCommand
+- 응답
+  - Before 응답 DTO: MemberPasswordResetSendEmailResponse
+  - After 응답 DTO: SendEmailForIdRecoveryResponse
+
+### 메소드: `public ResponseEntity<MemberResponse> findByNickname()`
+- 제거 (비효율적인 API)
+### 메소드: `public ResponseEntity<MemberResponse> findByUsername()`  
+- 제거 (비효율적인 API)`
+### 메소드: `public ResponseEntity<MemberResponse> findByEmail()`
+- 제거 (비효율적인 API)
+
+### 메소드: `public ResponseEntity<MemberResponse> findById()`
+
+- 변동 사항: 있음
+- 메소드 명
+  - Before 메소드명: `findById()`
+  - After 메소드명: `getMemberInfo()`
+- 요청
+  - Before 요청 DTO: @PathVariable Long memberId
+  - After 요청 DTO: @PathVariable Long memberId
+- 응답
+  - Before 응답 DTO: MemberResponse
+  - After 응답 DTO: GetMemberInfoResponse
+
+### 메소드: `public ResponseEntity<MemberDomainCntResponse> countDomainId()`
+
+- 변동 사항: 있음
+- 메소드 명
+  - Before 메소드명: `countDomainId()`
+  - After 메소드명: `countDomain()`
+- 요청
+  - Before 요청 DTO: @PathVariable Long memberId
+  - After 요청 DTO: @PathVariable Long memberId
+- 응답
+  - Before 응답 DTO: MemberDomainCntResponse
+  - After 응답 DTO: GetMemberDomainCntResponse
 
 ## `MemoirController.java`
 

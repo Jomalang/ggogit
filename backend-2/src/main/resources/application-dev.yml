@@ -1,7 +1,7 @@
 spring:
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://221.148.97.239:3306/ggogitdb
+    url: jdbc:mariadb://hi.newlecture.com:3306/ggogitdb
     username: ggogit
     password: 111
 

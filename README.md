@@ -3,30 +3,30 @@
 ### 🎨 Designers
 <a href="https://github.com/TaegyuHan" style="display: block; margin-left: 30px; margin-bottom: 5px; font-family: 'Pretendard', sans-serif; font-weight: bold; font-size: 20px; color: #e5eddb;">
 <img src="docs/이미지/팀원깃헙프로필/김은서.png" style="width: 70px; margin-right:10px;  border-radius: 20px;" alt="김은서" width="50">
-김은서
+eunseoKim
 </a>
 
 ### 💻 Developers
 
 <a href="https://github.com/Jomalang" style="display: block; margin-left: 30px; margin-bottom: 5px; font-family: 'Pretendard', sans-serif; font-weight: bold; font-size: 20px; color: #e5eddb;">
-  <img src="docs/이미지/팀원깃헙프로필/조현진.png" style="width: 70px; margin-right:10px;  border-radius: 20px;" alt="조현진">
-  조현진
+  <img src="docs/이미지/팀원깃헙프로필/Jomalang.png" style="width: 70px; margin-right:10px;  border-radius: 20px;" alt="조현진">
+  Jomalang
 </a>
 <a href="https://github.com/TaegyuHan" style="display: block; margin-left: 30px; margin-bottom: 5px; font-family: 'Pretendard', sans-serif; font-weight: bold; font-size: 20px; color: #e5eddb;">
-  <img src="docs/이미지/팀원깃헙프로필/한태규.png" style="width: 70px; margin-right:10px;  border-radius: 20px;" alt="한태규">
-  한태규
+  <img src="docs/이미지/팀원깃헙프로필/TaegyuHan.png" style="width: 70px; margin-right:10px;  border-radius: 20px;" alt="한태규">
+  TaegyuHan
 </a>
 <a href="https://github.com/Gun-code" style="display: block; margin-left: 30px; margin-bottom: 5px; font-family: 'Pretendard', sans-serif; font-weight: bold; font-size: 20px; color: #e5eddb;">
-  <img src="docs/이미지/팀원깃헙프로필/이희권.png" style="width: 70px; margin-right:10px;  border-radius: 20px;" alt="이희권">
-  이희권
+  <img src="docs/이미지/팀원깃헙프로필/Gun-code.png" style="width: 70px; margin-right:10px;  border-radius: 20px;" alt="이희권">
+  Gun-code
 </a>
 <a href="https://github.com/jjustcodding" style="display: block; margin-left: 30px; margin-bottom: 5px; font-family: 'Pretendard', sans-serif; font-weight: bold; font-size: 20px; color: #e5eddb;">
-  <img src="docs/이미지/팀원깃헙프로필/장재영.png" style="width: 70px; margin-right:10px;  border-radius: 20px;" alt="장재영">
-  장재영
+  <img src="docs/이미지/팀원깃헙프로필/jjustcodding.png" style="width: 70px; margin-right:10px;  border-radius: 20px;" alt="장재영">
+  jjustcodding
 </a>
 <a href="https://github.com/pilpearl" style="display: block; margin-left: 30px; margin-bottom: 5px; font-family: 'Pretendard', sans-serif; font-weight: bold; font-size: 20px; color: #e5eddb;">
-  <img src="docs/이미지/팀원깃헙프로필/주진필.png" style="width: 70px; margin-right:10px;  border-radius: 20px;" alt="주진필">
-  주진필
+  <img src="docs/이미지/팀원깃헙프로필/pilpearl.png" style="width: 70px; margin-right:10px;  border-radius: 20px;" alt="주진필">
+  pilpearl
 </a>
 
 ---
@@ -68,25 +68,53 @@
 ### 프로젝트 주요 기능 및 기대효과
 - **기록 방식(트리 구조)**
 
-<img src="docs/이미지/메인리드미/기록%20방식%20예제.png" style="width: 300px;" alt="기록 방식">
-  
 꼬깃의 기록은 3단계를 거쳐 작성됩니다.
-1. 씨앗 생성(기록의 주제)\
-  씨앗은 기록의 대주제를 의미하며, '독서', '생각', '문장', '공부' 등의 주제로 구성됩니다.
+1. 씨앗 생성(기록의 주제)
 
 <img src="docs/이미지/메인리드미/기록방식_씨앗생성.png" style="width: 300px;" alt="기록 방식">
 
-2. 트리 생성(기록의 방향성)\
+씨앗은 기록의 대주제를 의미하며, '도서', '영감', '영상', '기타' 등의 주제로 구성됩니다.
+
+2. 트리 생성(기록의 방향성)
+
+<img src="docs/이미지/메인리드미/기록방식_트리생성.png" style="width: 300px; " alt="기록 방식">
+
   트리는 씨앗을 기준으로 세부적인 주제를 나누어 기록의 방향성을 설정하며,\
   '독서' 씨앗의 경우 알라딘 API 연동을 통해 도서 정보를 검색하며, 직접 도서를 등록하여 기록할 수 있습니다.\
-  그 외 '생각', '문장', '공부' 등의 씨앗의 경우 직접 주제를 생성하여 기록할 수 있습니다.\
-
-<img src="docs/이미지/메인리드미/기록방식_독서트리생성.png" style="width: 300px; " alt="기록 방식">
-
-<img src="docs/이미지/메인리드미/기록방식_etc트리생성.png" style="width: 400px; " alt="기록 방식">
+  그 외 '생각', '문장', '공부' 등의 씨앗의 경우 직접 주제를 생성하여 기록할 수 있습니다.
 
 3. 리프 생성(기록의 내용)
 
-- **기능 2**
+<img src="docs/이미지/메인리드미/기록방식_리프생성.png" style="width: 300px;" alt="기록 방식">
+
+ 리프는 트리를 기준으로 세부적인 내용을 작성하는 단계로, 씨앗의 종류에 맞는 기록의 내용을 작성하며, 이미지, 링크, 텍스트 등의 다양한 형식으로 기록할 수 있습니다.\
+ 또한, 리프의 경우 3진 트리 구조로 관리되어, 기록의 내용을 효율적으로 관리할 수 있습니다.
+
+4. 리프 조회 화면(기록의 확인)
+
+<img src="docs/이미지/메인리드미/기록%20방식%20예제.png" style="width: 300px;" alt="기록 방식">
+
+리프 조회 화면은 트리를 기준으로 작성된 리프의 내용을 확인할 수 있으며, 트리 구조를 직관적으로 확인할 수 있습니다.\
+또한, 활성화 된 리프(빨간점 표시)의 상세 정보를 확인 할 수 있으며, 해당 리프의 자식 리프를 기록할 수 있습니다.
+
+- **회고록 작성**
+
+<img src="docs/이미지/메인리드미/기록방식_회고록작성.png" style="width: 300px;" >
+
+꼬깃에서는 씨앗이 '도서'인 트리의 경우 독서 진행률이 80% 이상인 경우, 해당 도서에 대한 회고록을 작성할 수 있습니다.\
+독서 진행률은 총 페이지에서 중복되는 부분은 계산은 되지 않습니다.(ex. 100페이지 중 1 ~ 10페이지를 2번 읽은 경우 10페이지만 진행률에 포함)
+
 ### 프로젝트 환경 및 개발 언어
+
+<img src="docs/이미지/메인리드미/사용%20언어.png">
+ 
+- FrontEnd: HTML, CSS., JavaScript, Vue.js(3.5.13), Nuxt.js(3.13.2)
+- BackEnd: Java(21.0.3), Spring Boot(3.3.4), JPA, Spring Data JPA, QueryDSL(5.0.0)\
+Spring Security, JWT(0.11.2), OAuth2.0, Lombok
+- DataBase: H2, MariaDB
+- Operation System: Linux(Ubuntu 20.04), Docker
+- Tools: IntelliJ IDEA, WebStorm, Visual Studio Code, Git, GitHub, Figma, Notion, Draw.io, ERD Cloud
+
 ## 버전 및 업데이트 정보
+
+- 서비스 버전: 1.0.0

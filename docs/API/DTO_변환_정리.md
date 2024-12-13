@@ -145,6 +145,19 @@
 
 ## `ImageController.java`
 
+### 메소드: `public byte[] getImage()`
+
+- 변동 사항: 없음
+- 메소드 명
+    - Before 메소드명: `getImage()`
+    - After 메소드명: `getImage()`
+- 요청
+    - Before 요청 DTO: @PathVariable String domain, @PathVariable String fileName
+    - After 요청 DTO: @PathVariable String domain, @PathVariable String fileName
+- 응답
+    - Before 응답 DTO: byte[]
+    - After 응답 DTO: byte[]
+
 ## `LeafBookController.java`
 
 ## `LeafController.java`

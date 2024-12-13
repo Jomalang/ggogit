@@ -58,6 +58,11 @@
     * [메소드: `public String upload()`](#메소드-public-string-upload)
     * [메소드: `public byte[] print()`](#메소드-public-byte-print)
   * [`LeafTagController.java`](#leaftagcontrollerjava)
+    * [메소드: `public ResponseEntity<LeafTagResponse> register()`](#메소드-public-responseentityleaftagresponse-register)
+    * [메소드: `public ResponseEntity<LeafTagResponse> modify()`](#메소드-public-responseentityleaftagresponse-modify)
+    * [메소드: `public ResponseEntity<LeafTagResponse> remove()`](#메소드-public-responseentityleaftagresponse-remove)
+    * [메소드: `public ResponseEntity<LeafTagDetailResponse> get()`](#메소드-public-responseentityleaftagdetailresponse-get)
+    * [메소드: `public ResponseEntity<LeafTagListResponse> list()`](#메소드-public-responseentityleaftaglistresponse-list)
   * [`MainController.java`](#maincontrollerjava)
   * [`AuthController.java`](#authcontrollerjava)
   * [`MemberController.java`](#membercontrollerjava)
@@ -197,7 +202,7 @@
 - 변동 사항: 있음
 - 메소드 명
     - Before 메소드명: `createFirstBookLeaf()`
-    - After 메소드명: `createBookLeafFirst()`
+    - After 메소드명: `createFirst()`
 - 요청
     - Before 요청 DTO: @RequestBody BookLeafRequest
     - After 요청 DTO: @RequestBody CreateBookLeafCommand
@@ -210,7 +215,7 @@
 - 변동 사항: 있음
 - 메소드 명
     - Before 메소드명: `createBookLeaf()`
-    - After 메소드명: `createBookLeaf()`
+    - After 메소드명: `create()`
 - 요청
     - Before 요청 DTO: @RequestBody BookLeafRequest, @PathVariable Long parentId
     - After 요청 DTO: @RequestBody CreateBookLeafCommand
@@ -223,7 +228,7 @@
 - 변동 사항: 있음
 - 메소드 명
     - Before 메소드명: `updateBookLeaf()`
-    - After 메소드명: `updateBookLeaf()`
+    - After 메소드명: `update()`
 - 요청
     - Before 요청 DTO: @RequestBody BookLeafRequest, @PathVariable Long leafId
     - After 요청 DTO: @RequestBody UpdateBookLeafCommand
@@ -252,7 +257,7 @@
     - After 요청 DTO: ListLeafFilterCommand
 - 응답
     - Before 응답 DTO: Page<LeafSearchResultResponse>
-    - After 응답 DTO: ListLeafFilterResponse
+    - After 응답 DTO: ListLeafResponse
 
 ### 메소드: `public ResponseEntity<LeafBranchInfoResponse> getLeafBranch()`
 
@@ -443,7 +448,7 @@
 - 변동 사항: 있음
 - 메소드 명
     - Before 메소드명: `createFirstEtcLeaf()`
-    - After 메소드명: `createEtcLeafFirst()`
+    - After 메소드명: `createFirst()`
 - 요청
     - Before 요청 DTO: @RequestBody EtcLeafRequest
     - After 요청 DTO: @RequestBody CreateEtcLeafCommand
@@ -456,7 +461,7 @@
 - 변동 사항: 있음
 - 메소드 명
     - Before 메소드명: `createEtcLeaf()`
-    - After 메소드명: `createEtcLeaf()`
+    - After 메소드명: `create()`
 - 요청
     - Before 요청 DTO: @RequestBody EtcLeafRequest, @PathVariable Long parentId
     - After 요청 DTO: @RequestBody CreateEtcLeafCommand, @PathVariable Long parentId
@@ -469,7 +474,7 @@
 - 변동 사항: 있음
 - 메소드 명
     - Before 메소드명: `updateEtcLeaf()`
-    - After 메소드명: `updateEtcLeaf()`
+    - After 메소드명: `update()`
 - 요청
     - Before 요청 DTO: @RequestBody EtcLeafRequest, @PathVariable Long leafId
     - After 요청 DTO: @RequestBody UpdateEtcLeafCommand, @PathVariable Long leafId
@@ -514,6 +519,71 @@
     - After 응답 DTO: GetLeafImageResponse
 
 ## `LeafTagController.java`
+
+### 메소드: `public ResponseEntity<LeafTagResponse> register()`
+
+- 변동 사항: 있음
+- 메소드 명
+    - Before 메소드명: `register()`
+    - After 메소드명: `create()`
+- 요청
+    - Before 요청 DTO: @RequestBody LeafTagRequest
+    - After 요청 DTO: @RequestBody CreateLeafTagCommand
+- 응답
+    - Before 응답 DTO: LeafTagResponse
+    - After 응답 DTO: CreateLeafTagResponse
+
+### 메소드: `public ResponseEntity<LeafTagResponse> modify()`
+
+- 변동 사항: 있음
+- 메소드 명 
+  - Before 메소드명: `modify()`
+  - After 메소드명: `update()`
+- 요청
+  - Before 요청 DTO: @RequestBody LeafTagRequest, @PathVariable Long tagId
+  - After 요청 DTO: @RequestBody UpdateLeafTagCommand, @PathVariable Long tagId
+- 응답
+  - Before 응답 DTO: LeafTagResponse
+  - After 응답 DTO: UpdateLeafTagResponse
+
+### 메소드: `public ResponseEntity<LeafTagResponse> remove()`
+
+- 변동 사항: 있음
+- 메소드 명
+  - Before 메소드명: `remove()`
+  - After 메소드명: `delete()`
+- 요청
+  - Before 요청 DTO: @PathVariable Long tagId
+  - After 요청 DTO: @PathVariable Long tagId
+- 응답
+  - Before 응답 DTO: LeafTagResponse
+  - After 응답 DTO: DeleteLeafTagResponse
+
+### 메소드: `public ResponseEntity<LeafTagDetailResponse> get()`
+
+- 변동 사항: 있음
+- 메소드 명
+  - Before 메소드명: `get()`
+  - After 메소드명: `getLeafTagDetail()`
+- 요청
+  - Before 요청 DTO: @PathVariable Long tagId
+  - After 요청 DTO: @PathVariable Long tagId
+- 응답
+  - Before 응답 DTO: LeafTagDetailResponse
+  - After 응답 DTO: GetLeafTagDetailResponse
+
+### 메소드: `public ResponseEntity<LeafTagListResponse> list()`
+
+- 변동 사항: 있음
+- 메소드 명
+  - Before 메소드명: `list()`
+  - After 메소드명: `listLeafTags()`
+- 요청
+  - Before 요청 DTO: @RequestParam int page, @RequestParam int size
+  - After 요청 DTO: @ModelAttribute ListLeafTagFilterCommand
+- 응답
+  - Before 응답 DTO: LeafTagListResponse
+  - After 응답 DTO: ListLeafTagResponse
 
 ## `MainController.java`
 

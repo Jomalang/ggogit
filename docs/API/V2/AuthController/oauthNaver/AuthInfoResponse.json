@@ -1,0 +1,9 @@
+{
+  "id": 1,
+  "email": "string",
+  "name": "string",
+  "picture": "string",
+  "nickname":  "string",
+  "role": "string",
+  "accessToken": "string"
+}

@@ -1,0 +1,9 @@
+{
+  "id": 1,
+  "email": "string",
+  "nickname": "string",
+  "username": "string",
+  "introduction": "string",
+  "memberProfileImage": "string",
+  "memberBackgroundImage": "string"
+}

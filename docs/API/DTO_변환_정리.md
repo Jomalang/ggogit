@@ -21,8 +21,16 @@
   * [`BookController.java`](#bookcontrollerjava)
     * [메소드: `public ResponseEntity<BookListResponse> getList()`](#메소드-public-responseentitybooklistresponse-getlist)
     * [메소드: `public ResponseEntity<BookResponse> modify()`](#메소드-public-responseentitybookresponse-modify)
+    * [메소드: `public ResponseEntity<BookDetailResponse>  detail()`](#메소드-public-responseentitybookdetailresponse--detail)
+    * [메소드: `public ResponseEntity<BookInfoResponse>  findBookInfo()`](#메소드-public-responseentitybookinforesponse--findbookinfo)
+    * [메소드: `public ResponseEntity<BookInfoResponse>  findBookByTreeId()`](#메소드-public-responseentitybookinforesponse--findbookbytreeid)
   * [`ImageController.java`](#imagecontrollerjava)
+    * [메소드: `public byte[] getImage()`](#메소드-public-byte-getimage)
   * [`LeafBookController.java`](#leafbookcontrollerjava)
+    * [메소드: `public ResponseEntity<BookLeafResponse> createFirstBookLeaf()`](#메소드-public-responseentitybookleafresponse-createfirstbookleaf)
+    * [메소드: `public ResponseEntity<BookLeafResponse> createBookLeaf()`](#메소드-public-responseentitybookleafresponse-createbookleaf)
+    * [메소드: `public ResponseEntity<BookLeafResponse> updateBookLeaf()`](#메소드-public-responseentitybookleafresponse-updatebookleaf)
+    * [메소드: `public ResponseEntity<BookLeafResponse> deleteBookLeaf()`](#메소드-public-responseentitybookleafresponse-deletebookleaf)
   * [`LeafController.java`](#leafcontrollerjava)
   * [`LeafEtcController.java`](#leafetccontrollerjava)
   * [`LeafImageController.java`](#leafimagecontrollerjava)
@@ -159,6 +167,51 @@
     - After 응답 DTO: byte[]
 
 ## `LeafBookController.java`
+
+### 메소드: `public ResponseEntity<BookLeafResponse> createFirstBookLeaf()`
+
+- 변동 사항: 있음
+- 메소드 명
+    - Before 메소드명: `createFirstBookLeaf()`
+    - After 메소드명: `createBookLeafFirst()`
+- 요청
+    - Before 요청 DTO: @RequestBody BookLeafRequest
+    - After 요청 DTO: @RequestBody CreateBookLeafCommand
+- 응답
+    - Before 응답 DTO: BookLeafResponse
+    - After 응답 DTO: CreateBookLeafResponse
+
+### 메소드: `public ResponseEntity<BookLeafResponse> createBookLeaf()`
+
+- 변동 사항: 있음
+- 메소드 명
+    - Before 메소드명: `createBookLeaf()`
+    - After 메소드명: `createBookLeaf()`
+- 요청
+    - Before 요청 DTO: @RequestBody BookLeafRequest, @PathVariable Long parentId
+    - After 요청 DTO: @RequestBody CreateBookLeafCommand
+- 응답
+    - Before 응답 DTO: BookLeafResponse
+    - After 응답 DTO: CreateBookLeafResponse
+
+### 메소드: `public ResponseEntity<BookLeafResponse> updateBookLeaf()`
+
+- 변동 사항: 있음
+- 메소드 명
+    - Before 메소드명: `updateBookLeaf()`
+    - After 메소드명: `updateBookLeaf()`
+- 요청
+    - Before 요청 DTO: @RequestBody BookLeafRequest, @PathVariable Long leafId
+    - After 요청 DTO: @RequestBody UpdateBookLeafCommand
+- 응답
+    - Before 응답 DTO: BookLeafResponse
+    - After 응답 DTO: UpdateBookLeafResponse
+
+### 메소드: `public ResponseEntity<BookLeafResponse> deleteBookLeaf()`
+- 변동 사항: 메소드 제거 (사용하지 않는 API)
+
+### 메소드: `public ResponseEntity<BookLeafEditResponse> getEdit()`
+- 변동 사항: 메소드 제거 (중복으로 존재하는 API)
 
 ## `LeafController.java`
 

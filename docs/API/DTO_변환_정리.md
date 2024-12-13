@@ -49,6 +49,11 @@
     * [메소드: `public ResponseEntity<LeafDetailResponse> getLeafDetail()`](#메소드-public-responseentityleafdetailresponse-getleafdetail)
     * [메소드: `public ResponseEntity<MemberInfoResponse> getMemberInfo()`](#메소드-public-responseentitymemberinforesponse-getmemberinfo)
   * [`LeafEtcController.java`](#leafetccontrollerjava)
+    * [메소드: `public ResponseEntity<EtcLeafResponse> createFirstEtcLeaf()`](#메소드-public-responseentityetcleafresponse-createfirstetcleaf)
+    * [메소드: `public ResponseEntity<EtcLeafResponse> createEtcLeaf()`](#메소드-public-responseentityetcleafresponse-createetcleaf)
+    * [메소드: `public ResponseEntity<EtcLeafResponse> updateEtcLeaf()`](#메소드-public-responseentityetcleafresponse-updateetcleaf)
+    * [메소드: `public ResponseEntity<EtcLeafResponse> deleteEtcLeaf()`](#메소드-public-responseentityetcleafresponse-deleteetcleaf)
+    * [메소드: `public ResponseEntity<EtcLeafEditResponse> getEtcLeafEdit()`](#메소드-public-responseentityetcleafeditresponse-getetcleafedit)
   * [`LeafImageController.java`](#leafimagecontrollerjava)
   * [`LeafTagController.java`](#leaftagcontrollerjava)
   * [`MainController.java`](#maincontrollerjava)
@@ -430,6 +435,53 @@
     - After 응답 DTO: GetMemberInfoResponse
 
 ## `LeafEtcController.java`
+
+### 메소드: `public ResponseEntity<EtcLeafResponse> createFirstEtcLeaf()`
+
+- 변동 사항: 있음
+- 메소드 명
+    - Before 메소드명: `createFirstEtcLeaf()`
+    - After 메소드명: `createEtcLeafFirst()`
+- 요청
+    - Before 요청 DTO: @RequestBody EtcLeafRequest
+    - After 요청 DTO: @RequestBody CreateEtcLeafCommand
+- 응답
+    - Before 응답 DTO: EtcLeafResponse
+    - After 응답 DTO: CreateEtcLeafResponse
+
+### 메소드: `public ResponseEntity<EtcLeafResponse> createEtcLeaf()`
+
+- 변동 사항: 있음
+- 메소드 명
+    - Before 메소드명: `createEtcLeaf()`
+    - After 메소드명: `createEtcLeaf()`
+- 요청
+    - Before 요청 DTO: @RequestBody EtcLeafRequest, @PathVariable Long parentId
+    - After 요청 DTO: @RequestBody CreateEtcLeafCommand, @PathVariable Long parentId
+- 응답
+    - Before 응답 DTO: EtcLeafResponse
+    - After 응답 DTO: CreateEtcLeafResponse
+
+### 메소드: `public ResponseEntity<EtcLeafResponse> updateEtcLeaf()`
+
+- 변동 사항: 있음
+- 메소드 명
+    - Before 메소드명: `updateEtcLeaf()`
+    - After 메소드명: `updateEtcLeaf()`
+- 요청
+    - Before 요청 DTO: @RequestBody EtcLeafRequest, @PathVariable Long leafId
+    - After 요청 DTO: @RequestBody UpdateEtcLeafCommand, @PathVariable Long leafId
+- 응답
+    - Before 응답 DTO: EtcLeafResponse
+    - After 응답 DTO: UpdateEtcLeafResponse
+
+### 메소드: `public ResponseEntity<EtcLeafResponse> deleteEtcLeaf()`
+
+- 변동 사항: 메소드 제거 (사용하지 않는 API)
+
+### 메소드: `public ResponseEntity<EtcLeafEditResponse> getEtcLeafEdit()`
+
+- 변동 사항: 메소드 제거 (중복으로 존재하는 API)
 
 ## `LeafImageController.java`
 

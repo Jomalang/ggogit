@@ -944,6 +944,45 @@
 
 ## `SeedController.java`
 
+### 메소드: `public ResponseEntity<SeedResponse> getSeeds()`
+
+- 변동 사항: 있음
+- 메소드 명
+  - Before 메소드명: `getSeeds()`
+  - After 메소드명: `list()`
+- 요청
+  - Before 요청 DTO: null
+  - After 요청 DTO: null
+- 응답
+  - Before 응답 DTO: SeedResponse
+  - After 응답 DTO: ListSeedResponse
+
+### 메소드: `public ResponseEntity<SeedDetailResponse> getSeed()`
+
+- 변동 사항: 있음
+- 메소드 명
+  - Before 메소드명: `getSeed()`
+  - After 메소드명: `getSeedDetail()`
+- 요청
+  - Before 요청 DTO: @PathVariable Long seedId
+  - After 요청 DTO: @PathVariable Long seedId
+- 응답
+  - Before 응답 DTO: SeedDetailResponse
+  - After 응답 DTO: GetSeedDetailResponse
+
+### 메소드: `public ResponseEntity<SeedDetailResponse> getSeedByTreeId()`
+
+- 변동 사항: 있음
+- 메소드 명
+  - Before 메소드명: `getSeedByTreeId()`
+  - After 메소드명: `getSeedByTreeId()`
+- 요청
+  - Before 요청 DTO: @PathVariable Long treeId
+  - After 요청 DTO: @PathVariable Long treeId
+- 응답
+  - Before 응답 DTO: SeedDetailResponse
+  - After 응답 DTO: GetSeedByTreeIdResponse
+
 ## `TreeController.java`
 
 ## `TreeTmpController.java`

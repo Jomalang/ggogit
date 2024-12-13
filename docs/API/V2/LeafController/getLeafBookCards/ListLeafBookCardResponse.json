@@ -1,0 +1,44 @@
+{
+  "pageNumber": 1,
+  "pageSize": 10,
+  "totalPages": 1,
+  "totalElements": 1,
+  "content": [
+    {
+      "cardType": 1,
+      "leafId": 1,
+      "bookCategory": "string",
+      "bookTitle": "string",
+      "cardImage": "string",
+      "treeSeedId": 1,
+      "treeSeed": "string",
+      "treeTitle": "string",
+      "treeImage": "string",
+      "bookPublishedYear": "string",
+      "bookPublisher": "string",
+      "bookAuthor": "string",
+      "leafTitle": "string",
+      "leafContent": "string",
+      "updateTime": "string",
+      "ViewCount": 1
+    },
+    {
+      "cardType": 1,
+      "leafId": 1,
+      "bookCategory": "string",
+      "bookTitle": "string",
+      "cardImage": "string",
+      "treeSeedId": 1,
+      "treeSeed": "string",
+      "treeTitle": "string",
+      "treeImage": "string",
+      "bookPublishedYear": "string",
+      "bookPublisher": "string",
+      "bookAuthor": "string",
+      "leafTitle": "string",
+      "leafContent": "string",
+      "updateTime": "string",
+      "ViewCount": 1
+    }
+  ]
+}

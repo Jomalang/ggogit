@@ -31,7 +31,23 @@
     * [메소드: `public ResponseEntity<BookLeafResponse> createBookLeaf()`](#메소드-public-responseentitybookleafresponse-createbookleaf)
     * [메소드: `public ResponseEntity<BookLeafResponse> updateBookLeaf()`](#메소드-public-responseentitybookleafresponse-updatebookleaf)
     * [메소드: `public ResponseEntity<BookLeafResponse> deleteBookLeaf()`](#메소드-public-responseentitybookleafresponse-deletebookleaf)
+    * [메소드: `public ResponseEntity<BookLeafEditResponse> getEdit()`](#메소드-public-responseentitybookleafeditresponse-getedit)
   * [`LeafController.java`](#leafcontrollerjava)
+    * [메소드: `public Page<LeafSearchResultResponse> searchLeaves()`](#메소드-public-pageleafsearchresultresponse-searchleaves)
+    * [메소드: `public ResponseEntity<LeafBranchInfoResponse> getLeafBranch()`](#메소드-public-responseentityleafbranchinforesponse-getleafbranch)
+    * [메소드: `public ResponseEntity<LeafItemResponse> getLeafNodesRootToEnd()`](#메소드-public-responseentityleafitemresponse-getleafnodesroottoend)
+    * [메소드: `public ResponseEntity<LeafItemToEndResponse> getLeafNodesToEnd()`](#메소드-public-responseentityleafitemtoendresponse-getleafnodestoend)
+    * [메소드: `public ResponseEntity<LeafBookDetailResponse> getLeafBookDetail()`](#메소드-public-responseentityleafbookdetailresponse-getleafbookdetail)
+    * [메소드: `public ResponseEntity<LeafEtcDetailResponse> getEtcLeafDetail()`](#메소드-public-responseentityleafetcdetailresponse-getetcleafdetail)
+    * [메소드: `public ResponseEntity<LeafBreadcrumbResponse> getLeafBreadcrumb()`](#메소드-public-responseentityleafbreadcrumbresponse-getleafbreadcrumb)
+    * [메소드: `public ResponseEntity<LeafBeforeNodeInfoResponse> getLeafBefore()`](#메소드-public-responseentityleafbeforenodeinforesponse-getleafbefore)
+    * [메소드: `public ResponseEntity<LeafBookCardResponse> getLeafBookCards()`](#메소드-public-responseentityleafbookcardresponse-getleafbookcards)
+    * [메소드: `public ResponseEntity<LeafCardResponse> getLeafCards()`](#메소드-public-responseentityleafcardresponse-getleafcards)
+    * [메소드: `public ResponseEntity<LeafCardResponse> getLeafCardsByTag()`](#메소드-public-responseentityleafcardresponse-getleafcardsbytag)
+    * [메소드: `public ResponseEntity<LeafSeedResponse> getLeafSeed()`](#메소드-public-responseentityleafseedresponse-getleafseed)
+    * [메소드: `public ResponseEntity<Integer> getBookPage()`](#메소드-public-responseentityinteger-getbookpage)
+    * [메소드: `public ResponseEntity<LeafDetailResponse> getLeafDetail()`](#메소드-public-responseentityleafdetailresponse-getleafdetail)
+    * [메소드: `public ResponseEntity<MemberInfoResponse> getMemberInfo()`](#메소드-public-responseentitymemberinforesponse-getmemberinfo)
   * [`LeafEtcController.java`](#leafetccontrollerjava)
   * [`LeafImageController.java`](#leafimagecontrollerjava)
   * [`LeafTagController.java`](#leaftagcontrollerjava)
@@ -109,6 +125,7 @@
         - After 응답 내부 클래스 DTO: BookDto
 
 ### 메소드: `public ResponseEntity<BookResponse> modify()`
+
 - 변동 사항: 있음
 - 필요없는 API 이므로 삭제
 
@@ -116,40 +133,40 @@
 
 - 변동 사항: 있음
 - 메소드 명
-  - Before 메소드명: `detail()`
-  - After 메소드명: `detail()`
+    - Before 메소드명: `detail()`
+    - After 메소드명: `detail()`
 - 요청
-  - Before 요청 DTO: @PathVariable Long id
-  - After 요청 DTO: @PathVariable Long id
+    - Before 요청 DTO: @PathVariable Long id
+    - After 요청 DTO: @PathVariable Long id
 - 응답
-  - Before 응답 DTO: BookDetailResponse 
-  - After 응답 DTO: GetBookDetailResponse
+    - Before 응답 DTO: BookDetailResponse
+    - After 응답 DTO: GetBookDetailResponse
 
 ### 메소드: `public ResponseEntity<BookInfoResponse>  findBookInfo()`
 
 - 변동 사항: 있음
 - 메소드 명
-  - Before 메소드명: `findBookInfo()`
-  - After 메소드명: `getBookInfoByBookId()`
+    - Before 메소드명: `findBookInfo()`
+    - After 메소드명: `getBookInfoByBookId()`
 - 요청
-  - Before 요청 DTO: @PathVariable Long bookId
-  - After 요청 DTO: @PathVariable Long bookId
+    - Before 요청 DTO: @PathVariable Long bookId
+    - After 요청 DTO: @PathVariable Long bookId
 - 응답
-  - Before 응답 DTO: BookInfoResponse
-  - After 응답 DTO: GetBookInfoResponse
-  
+    - Before 응답 DTO: BookInfoResponse
+    - After 응답 DTO: GetBookInfoResponse
+
 ### 메소드: `public ResponseEntity<BookInfoResponse>  findBookByTreeId()`
 
 - 변동 사항: 있음
 - 메소드 명
-  - Before 메소드명: `findBookByTreeId()`
-  - After 메소드명: `getBookInfoByTreeId()`
+    - Before 메소드명: `findBookByTreeId()`
+    - After 메소드명: `getBookInfoByTreeId()`
 - 요청
-  - Before 요청 DTO: @PathVariable Long treeId
-  - After 요청 DTO: @PathVariable Long treeId
+    - Before 요청 DTO: @PathVariable Long treeId
+    - After 요청 DTO: @PathVariable Long treeId
 - 응답
-  - Before 응답 DTO: BookInfoResponse
-  - After 응답 DTO: GetBookInfoResponse
+    - Before 응답 DTO: BookInfoResponse
+    - After 응답 DTO: GetBookInfoResponse
 
 ## `ImageController.java`
 
@@ -208,12 +225,209 @@
     - After 응답 DTO: UpdateBookLeafResponse
 
 ### 메소드: `public ResponseEntity<BookLeafResponse> deleteBookLeaf()`
+
 - 변동 사항: 메소드 제거 (사용하지 않는 API)
 
 ### 메소드: `public ResponseEntity<BookLeafEditResponse> getEdit()`
+
 - 변동 사항: 메소드 제거 (중복으로 존재하는 API)
 
 ## `LeafController.java`
+
+### 메소드: `public Page<LeafSearchResultResponse> searchLeaves()`
+
+- 변동 사항: 있음
+- 메소드 명
+    - Before 메소드명: `searchLeaves()`
+    - After 메소드명: `listLeaves()`
+- 요청
+    - Before 요청 DTO: @ModelAttribute LeafSearchQuery
+    - After 요청 DTO: ListLeafFilterCommand
+- 응답
+    - Before 응답 DTO: Page<LeafSearchResultResponse>
+    - After 응답 DTO: ListLeafFilterResponse
+
+### 메소드: `public ResponseEntity<LeafBranchInfoResponse> getLeafBranch()`
+
+- 변동 사항: 있음
+- 메소드 명
+    - Before 메소드명: `getLeafBranch()`
+    - After 메소드명: `getLeafBranchInfo()`
+- 요청
+    - Before 요청 DTO: @PathVariable Long leafId
+    - After 요청 DTO: @PathVariable Long leafId
+- 응답
+    - Before 응답 DTO: LeafBranchInfoResponse
+    - After 응답 DTO: GetLeafBranchInfoResponse
+
+### 메소드: `public ResponseEntity<LeafItemResponse> getLeafNodesRootToEnd()`
+
+- 변동 사항: 있음
+- 메소드 명
+    - Before 메소드명: `getLeafNodesRootToEnd()`
+    - After 메소드명: `listLeafRootToEnd()`
+- 요청
+    - Before 요청 DTO: @PathVariable Long leafId
+    - After 요청 DTO: @PathVariable Long leafId
+- 응답
+    - Before 응답 DTO: LeafItemResponse
+    - After 응답 DTO: ListLeafRootToEndResponse
+
+### 메소드: `public ResponseEntity<LeafItemToEndResponse> getLeafNodesToEnd()`
+
+- 변동 사항: 있음
+- 메소드 명
+    - Before 메소드명: `getLeafNodesToEnd()`
+    - After 메소드명: `listLeafToEnd()`
+- 요청
+    - Before 요청 DTO: @PathVariable Long leafId
+    - After 요청 DTO: @PathVariable Long leafId
+- 응답
+    - Before 응답 DTO: LeafItemToEndResponse
+    - After 응답 DTO: ListLeafToEndResponse
+
+### 메소드: `public ResponseEntity<LeafBookDetailResponse> getLeafBookDetail()`
+
+- 변동 사항: 있음
+- 메소드 명
+    - Before 메소드명: `getLeafBookDetail()`
+    - After 메소드명: `getLeafBookDetail()`
+- 요청
+    - Before 요청 DTO: @PathVariable Long leafId
+    - After 요청 DTO: @PathVariable Long leafId
+- 응답
+    - Before 응답 DTO: LeafBookDetailResponse
+    - After 응답 DTO: GetLeafBookDetailResponse
+
+### 메소드: `public ResponseEntity<LeafEtcDetailResponse> getEtcLeafDetail()`
+
+- 변동 사항: 있음
+- 메소드 명
+    - Before 메소드명: `getEtcLeafDetail()`
+    - After 메소드명: `getLeafEtcDetail()`
+- 요청
+    - Before 요청 DTO: @PathVariable Long leafId
+    - After 요청 DTO: @PathVariable Long leafId
+- 응답
+    - Before 응답 DTO: LeafEtcDetailResponse
+    - After 응답 DTO: GetLeafEtcDetailResponse
+
+### 메소드: `public ResponseEntity<LeafBreadcrumbResponse> getLeafBreadcrumb()`
+
+- 변동 사항: 있음
+- 메소드 명
+    - Before 메소드명: `getLeafBreadcrumb()`
+    - After 메소드명: `getLeafBreadcrumb()`
+- 요청
+    - Before 요청 DTO: @PathVariable Long leafId
+    - After 요청 DTO: @PathVariable Long leafId
+- 응답
+    - Before 응답 DTO: LeafBreadcrumbResponse
+    - After 응답 DTO: GetLeafBreadcrumbResponse
+
+### 메소드: `public ResponseEntity<LeafBeforeNodeInfoResponse> getLeafBefore()`
+
+- 변동 사항: 있음
+- 메소드 명
+    - Before 메소드명: `getLeafBefore()`
+    - After 메소드명: `getLeafBeforeNodeInfo()`
+- 요청
+    - Before 요청 DTO: @PathVariable Long leafId
+    - After 요청 DTO: @PathVariable Long leafId
+- 응답
+    - Before 응답 DTO: LeafBeforeNodeInfoResponse
+    - After 응답 DTO: GetLeafBeforeNodeInfoResponse
+
+### 메소드: `public ResponseEntity<LeafBookCardResponse> getLeafBookCards()`
+
+- 변동 사항: 있음
+- 메소드 명
+    - Before 메소드명: `getLeafBookCards()`
+    - After 메소드명: `listLeafBookCards()`
+- 요청
+    - Before 요청 DTO: @PathVariable Long leafId, @RequestParam int page, @RequestParam int size
+    - After 요청 DTO: @PathVariable Long leafId
+- 응답
+    - Before 응답 DTO: LeafBookCardResponse
+    - After 응답 DTO: ListLeafBookCardResponse
+  
+### 메소드: `public ResponseEntity<LeafCardResponse> getLeafCards()`
+
+- 변동 사항: 있음
+- 메소드 명
+    - Before 메소드명: `getLeafCards()`
+    - After 메소드명: `listLeafCards()`
+- 요청
+    - Before 요청 DTO: @PathVariable Long leafId, @RequestParam int page, @RequestParam int size
+    - After 요청 DTO: @PathVariable Long leafId
+- 응답
+    - Before 응답 DTO: LeafCardResponse
+    - After 응답 DTO: ListLeafCardResponse
+  
+### 메소드: `public ResponseEntity<LeafCardResponse> getLeafCardsByTag()`
+
+- 변동 사항: 있음
+- 메소드 명
+    - Before 메소드명: `getLeafCardsByTag()`
+    - After 메소드명: `listLeafCardsByTag()`
+- 요청
+    - Before 요청 DTO: @PathVariable Long tagId, @RequestParam int page, @RequestParam int size
+    - After 요청 DTO: @PathVariable Long tagId
+- 응답
+    - Before 응답 DTO: LeafCardResponse
+    - After 응답 DTO: ListLeafCardResponse
+
+### 메소드: `public ResponseEntity<LeafSeedResponse> getLeafSeed()`
+
+- 변동 사항: 있음
+- 메소드 명
+    - Before 메소드명: `getLeafSeed()`
+    - After 메소드명: `getLeafSeed()`
+- 요청
+    - Before 요청 DTO: @PathVariable Long leafId
+    - After 요청 DTO: @PathVariable Long leafId
+- 응답
+    - Before 응답 DTO: LeafSeedResponse
+    - After 응답 DTO: GetLeafSeedResponse
+
+### 메소드: `public ResponseEntity<Integer> getBookPage()`
+
+- 변동 사항: 있음
+- 메소드 명
+    - Before 메소드명: `getBookPage()`
+    - After 메소드명: `getBookPage()`
+- 요청
+    - Before 요청 DTO: @PathVariable Long leafId
+    - After 요청 DTO: @PathVariable Long leafId
+- 응답
+    - Before 응답 DTO: Integer
+    - After 응답 DTO: GetBookPageResponse
+
+### 메소드: `public ResponseEntity<LeafDetailResponse> getLeafDetail()`
+
+- 변동 사항: 있음
+- 메소드 명
+    - Before 메소드명: `getLeafDetail()`
+    - After 메소드명: `getLeafDetail()`
+- 요청
+    - Before 요청 DTO: @PathVariable Long leafId
+    - After 요청 DTO: @PathVariable Long leafId
+- 응답
+    - Before 응답 DTO: LeafDetailResponse
+    - After 응답 DTO: GetLeafDetailResponse
+
+### 메소드: `public ResponseEntity<MemberInfoResponse> getMemberInfo()`
+
+- 변동 사항: 있음
+- 메소드 명
+    - Before 메소드명: `getMemberInfo()`
+    - After 메소드명: `getMemberInfo()`
+- 요청
+    - Before 요청 DTO: @PathVariable Long leafId
+    - After 요청 DTO: @PathVariable Long leafId
+- 응답
+    - Before 응답 DTO: MemberInfoResponse
+    - After 응답 DTO: GetMemberInfoResponse
 
 ## `LeafEtcController.java`
 

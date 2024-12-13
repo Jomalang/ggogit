@@ -1,0 +1,8 @@
+{
+  "id": 1,
+  "nickName": "string",
+  "userName": "string",
+  "email": "string",
+  "backImgName": "string",
+  "profileImgName": "string"
+}

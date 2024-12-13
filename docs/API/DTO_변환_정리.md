@@ -101,17 +101,47 @@
         - After 응답 내부 클래스 DTO: BookDto
 
 ### 메소드: `public ResponseEntity<BookResponse> modify()`
+- 변동 사항: 있음
+- 필요없는 API 이므로 삭제
+
+### 메소드: `public ResponseEntity<BookDetailResponse>  detail()`
 
 - 변동 사항: 있음
 - 메소드 명
-    - Before 메소드명: `modify()`
-    - After 메소드명: `update()`
+  - Before 메소드명: `detail()`
+  - After 메소드명: `detail()`
 - 요청
-    - Before 요청 DTO: Long id, BookRequest bookRequest, MultiPartFile image
-    - After 요청 DTO: Long id, BookUpdateCommand bookUpdateCommand, MultipartFile image
+  - Before 요청 DTO: @PathVariable Long id
+  - After 요청 DTO: @PathVariable Long id
 - 응답
-    - Before 응답 DTO: BookResponse
-    - After 응답 DTO: BookUpdateResponse
+  - Before 응답 DTO: BookDetailResponse 
+  - After 응답 DTO: GetBookDetailResponse
+
+### 메소드: `public ResponseEntity<BookInfoResponse>  findBookInfo()`
+
+- 변동 사항: 있음
+- 메소드 명
+  - Before 메소드명: `findBookInfo()`
+  - After 메소드명: `getBookInfoByBookId()`
+- 요청
+  - Before 요청 DTO: @PathVariable Long bookId
+  - After 요청 DTO: @PathVariable Long bookId
+- 응답
+  - Before 응답 DTO: BookInfoResponse
+  - After 응답 DTO: GetBookInfoResponse
+  
+### 메소드: `public ResponseEntity<BookInfoResponse>  findBookByTreeId()`
+
+- 변동 사항: 있음
+- 메소드 명
+  - Before 메소드명: `findBookByTreeId()`
+  - After 메소드명: `getBookInfoByTreeId()`
+- 요청
+  - Before 요청 DTO: @PathVariable Long treeId
+  - After 요청 DTO: @PathVariable Long treeId
+- 응답
+  - Before 응답 DTO: BookInfoResponse
+  - After 응답 DTO: GetBookInfoResponse
 
 ## `ImageController.java`
 

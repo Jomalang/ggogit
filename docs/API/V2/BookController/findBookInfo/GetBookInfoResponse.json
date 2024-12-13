@@ -1,0 +1,12 @@
+{
+  "id": 1,
+  "imageFile":  "string",
+  "title":  "string",
+  "totalPage":  1,
+  "translator":  "string",
+  "publishDate":  "string",
+  "isbn":  "string",
+  "author":  "string",
+  "publisher":  "string",
+  "createTime":  "string"
+}

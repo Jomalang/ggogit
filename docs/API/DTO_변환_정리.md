@@ -55,6 +55,8 @@
     * [메소드: `public ResponseEntity<EtcLeafResponse> deleteEtcLeaf()`](#메소드-public-responseentityetcleafresponse-deleteetcleaf)
     * [메소드: `public ResponseEntity<EtcLeafEditResponse> getEtcLeafEdit()`](#메소드-public-responseentityetcleafeditresponse-getetcleafedit)
   * [`LeafImageController.java`](#leafimagecontrollerjava)
+    * [메소드: `public String upload()`](#메소드-public-string-upload)
+    * [메소드: `public byte[] print()`](#메소드-public-byte-print)
   * [`LeafTagController.java`](#leaftagcontrollerjava)
   * [`MainController.java`](#maincontrollerjava)
   * [`AuthController.java`](#authcontrollerjava)
@@ -484,6 +486,32 @@
 - 변동 사항: 메소드 제거 (중복으로 존재하는 API)
 
 ## `LeafImageController.java`
+
+### 메소드: `public String upload()`
+
+- 변동 사항: 있음
+- 메소드 명
+    - Before 메소드명: `upload()`
+    - After 메소드명: `upload()`
+- 요청
+    - Before 요청 DTO: @RequestParam MultipartFile file
+    - After 요청 DTO: @RequestParam MultipartFile file
+- 응답
+    - Before 응답 DTO: String
+    - After 응답 DTO: CreateLeafImageResponse
+
+### 메소드: `public byte[] print()`
+
+- 변동 사항: 없음
+- 메소드 명
+    - Before 메소드명: `print()`
+    - After 메소드명: `print()`
+- 요청
+    - Before 요청 DTO: @PathVariable String domain, @PathVariable String fileName
+    - After 요청 DTO: @PathVariable String domain, @PathVariable String fileName
+- 응답
+    - Before 응답 DTO: byte[]
+    - After 응답 DTO: GetLeafImageResponse
 
 ## `LeafTagController.java`
 

@@ -1,0 +1,6 @@
+{
+  "page": 1,
+  "size": 10,
+  "query": "string",
+  "filter": "keyword"
+}

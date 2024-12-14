@@ -1,0 +1,46 @@
+{
+  "pageNumber": 1,
+  "pageSize": 10,
+  "totalPages": 1,
+  "totalElements": 1,
+  "content": [
+    {
+      "treeId": 1,
+      "leafId": 1,
+      "treeTitle": "string",
+      "seedKorName": "string",
+      "treeDescription": "string",
+      "coverImageName": "string",
+      "bookCategory": "string",
+      "bookTitle": "string",
+      "bookAuthor": "string",
+      "bookTranslator": "string",
+      "bookPublisher": "string",
+      "bookPublishedYear": "string",
+      "leafTitle": "string",
+      "leafContent": "string",
+      "leafUpdatedAt": "string",
+      "likeCount": 1,
+      "viewCount": 1
+    },
+    {
+      "treeId": 1,
+      "leafId": 1,
+      "treeTitle": "string",
+      "seedKorName": "string",
+      "treeDescription": "string",
+      "coverImageName": "string",
+      "bookCategory": "string",
+      "bookTitle": "string",
+      "bookAuthor": "string",
+      "bookTranslator": "string",
+      "bookPublisher": "string",
+      "bookPublishedYear": "string",
+      "leafTitle": "string",
+      "leafContent": "string",
+      "leafUpdatedAt": "string",
+      "likeCount": 1,
+      "viewCount": 1
+    }
+  ]
+}

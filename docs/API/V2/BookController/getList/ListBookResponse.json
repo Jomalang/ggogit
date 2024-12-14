@@ -1,0 +1,32 @@
+{
+  "pageNumber": 1,
+  "pageSize": 10,
+  "totalPages": 1,
+  "totalElements": 1,
+  "content": [
+    {
+      "id": 1,
+      "publishDate":  "string",
+      "totalPage":  100,
+      "author":  "string",
+      "isbn":  "string",
+      "publisher":  "string",
+      "title":  "string",
+      "imageFile":  "string",
+      "createTime":  "string",
+      "updateTime":  "string"
+    },
+    {
+      "id": 2,
+      "publishDate":  "string",
+      "totalPage":  100,
+      "author":  "string",
+      "isbn":  "string",
+      "publisher":  "string",
+      "title":  "string",
+      "imageFile":  "string",
+      "createTime":  "string",
+      "updateTime":  "string"
+    }
+  ]
+}

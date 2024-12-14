@@ -1,0 +1,52 @@
+{
+  "content": [
+    {
+      "id": 1,
+      "parentLeafId": 1,
+      "childLeafIds": [1, 2, 3],
+      "title": "string",
+      "tags": [
+        {
+          "id": 1,
+          "name": "string"
+        },
+        {
+          "id": 1,
+          "name": "string"
+        },
+        {
+          "id": 1,
+          "name": "string"
+        }
+      ],
+      "visibility":  true,
+      "focused":  true,
+      "direction":  1,
+      "createTime":  "string"
+    },
+    {
+      "id": 1,
+      "parentLeafId": 1,
+      "childLeafIds": [1, 2, 3],
+      "title": "string",
+      "tags": [
+        {
+          "id": 1,
+          "name": "string"
+        },
+        {
+          "id": 1,
+          "name": "string"
+        },
+        {
+          "id": 1,
+          "name": "string"
+        }
+      ],
+      "visibility":  true,
+      "focused":  true,
+      "direction":  1,
+      "createTime":  "string"
+    }
+  ]
+}

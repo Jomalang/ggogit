@@ -1,0 +1,15 @@
+{
+  "id":  1,
+  "publishDate": "string",
+  "totalPage":  1,
+  "author": "string",
+  "isbn":  "string",
+  "publisher": "string",
+  "title":  "string",
+  "imageFile": "string",
+  "createTime":  "string",
+  "updateTime": "string",
+
+  "bookCategoryId":  1,
+  "bookCategoryName": "bookCategoryName"
+}

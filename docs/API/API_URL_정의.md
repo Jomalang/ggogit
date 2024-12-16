@@ -21,6 +21,7 @@
     * [7. 본 문서에 정의되지 않은 리소스는 URL에 표현하지 않는다.](#7-본-문서에-정의되지-않은-리소스는-url에-표현하지-않는다)
     * [8. URL은 하이픈(-)을 사용하여 단어를 구분한다.](#8-url은-하이픈-을-사용하여-단어를-구분한다)
     * [9. URL 마지막에는 슬래시(/)를 붙이지 않는다.](#9-url-마지막에는-슬래시를-붙이지-않는다)
+    * [10. 쿼리 파라미터와 경로 변수 사용법](#10-쿼리-파라미터와-경로-변수-사용법)
   * [HTTP Method 정의](#http-method-정의)
     * [GET](#get)
     * [POST](#post)
@@ -31,33 +32,42 @@
     * [members](#members)
     * [trees](#trees)
     * [leaves](#leaves)
+    * [tags](#tags)
     * [memoirs](#memoirs)
+    * [books](#books)
+    * [book-categories](#book-categories)
     * [aladin-books](#aladin-books)
     * [member-books](#member-books)
     * [seeds](#seeds)
     * [oauth](#oauth)
     * [images](#images)
     * [files](#files-)
-    * [detail](#detail)
+    * [comments](#comments)
+    * [likes](#likes)
+    * [alarms](#alarms)
+    * [details](#details)
+    * [list](#list)
     * [cards](#cards)
+    * [search-results](#search-results)
+    * [test](#test)
   * [URL 정의](#url-정의)
-    * [TestController.java](#testcontrollerjava)
-    * [AladinController.java](#aladincontrollerjava)
-    * [BookCategoryController.java](#bookcategorycontrollerjava)
-    * [BookController.java](#bookcontrollerjava)
-    * [ImageController.java](#imagecontrollerjava)
-    * [LeafBookController.java](#leafbookcontrollerjava)
-    * [LeafController.java](#leafcontrollerjava)
-    * [LeafEtcController.java](#leafetccontrollerjava)
-    * [LeafImageController.java](#leafimagecontrollerjava)
-    * [LeafTagController.java](#leaftagcontrollerjava)
-    * [AuthController.java](#authcontrollerjava)
-    * [MemberController.java](#membercontrollerjava)
-    * [MemoirController.java](#memoircontrollerjava)
-    * [MemoirImageController.java](#memoirimagecontrollerjava)
-    * [SeedController.java](#seedcontrollerjava)
-    * [TreeController.java](#treecontrollerjava)
-    * [TreeTmpController.java](#treetmpcontrollerjava)
+    * [TestController](#testcontroller)
+    * [AladinController](#aladincontroller)
+    * [BookCategoryController](#bookcategorycontroller)
+    * [BookController](#bookcontroller)
+    * [ImageController](#imagecontroller)
+    * [LeafBookController](#leafbookcontroller)
+    * [LeafController](#leafcontroller)
+    * [LeafEtcController](#leafetccontroller)
+    * [LeafImageController](#leafimagecontroller)
+    * [LeafTagController](#leaftagcontroller)
+    * [AuthController](#authcontroller)
+    * [MemberController](#membercontroller)
+    * [MemoirController](#memoircontroller)
+    * [MemoirImageController](#memoirimagecontroller)
+    * [SeedController](#seedcontroller)
+    * [TreeController](#treecontroller)
+    * [TreeTmpController](#treetmpcontroller)
 <!-- TOC -->
 
 ---
@@ -145,9 +155,20 @@
     // good - URL 마지막에 슬래시가 붙어있지 않다.
     @GetMapping("/trees")
    ```
----
+
+### 10. 쿼리 파라미터와 경로 변수 사용법
+- 경로 변수는 리소스의 식별자(정적)를 나타낸다.
+- 쿼리 파라미터는 리소스의 현재 상태(동적)를 나타낸다.
+  ```java
+   // bad - 리소스를 식별하기 위해 쿼리 파라미터를 이용했다.
+   @GetMapping("/trees?treeId=1")
+   // good - 리소스를 식별하기 위해 경로 변수를 이용했다.
+   @GetMapping("/trees/{treeId})
+  ```
 
 ## HTTP Method 정의
+
+---
 ### GET
    - 리소스의 상태를 조회할때 사용한다.
    - 리소스의 상태를 변경하지 않아야 한다.
@@ -195,8 +216,15 @@
    - 도서가 주제인 트리에 대한 회원의 회고록을 나타내는 리소스
    - 회고록은 생성, 조회, 수정, 삭제할 수 있다.
 
+### books
+   - 도서 일반에 대한 리소스 
+
+### book-categories
+   - 도서의 카테고리를 나타내는 리소스
+   - 카테고리는 조회할 수 있다.
+
 ### aladin-books
-   - 도서를 나타내는 리소스
+   - 알라딘에서 조회한 도서를 나타내는 리소스
    - 조회, 저장할 수 있다.
 
 ### member-books
@@ -225,7 +253,7 @@
 ### alarms
 - 특정 리소스에 대한 알람 상태를 나타내는 하위 리소스
 
-### detail
+### details
    - 상세 정보를 나타내는 특정 리소스의 하위 리소스
    - 상세 정보는 쿼리 파라미터를 통해 선택할 수 있다.
    ```java
@@ -235,11 +263,15 @@
     @GetMapping("/trees/1/leafs/1?detail?first=true")
    ```
 
+### list
+   - 리스트 형태로 출력되는 특정 리소스의 하위 리소스
+   - 리스트 정렬 방법은 쿼리 파라미터를 통해 선택할 수 있다.
+
 ### cards
    - 카드 형태로 출력되는 특정 리소스의 하위 리소스
    - 트리, 리프, 회고록은 카드 형태로 출력될 수 있다.
 
-### search-result
+### search-results
    - 검색 결과를 나타내는 리소스
    - 검색 결과는 트리, 리프, 회고록, 도서 등이 될 수 있다.
 
@@ -252,7 +284,7 @@
 > 다음의 수정사항들은 버전 1.0.0을 확정하기 위한 **제안**입니다.\
 > <strong style="color:#BA0C0C">아직 확정된 API URL이 아님을 밝힙니다</strong>
 
-### TestController.java
+### TestController
 - 기존\
 `@GetMapping("/test")`
 <b>
@@ -261,7 +293,7 @@
 `@GetMapping("/test")`
 > 테스트용 API URL
 
-### AladinController.java
+### AladinController
 - 기존\
 `@RequestMapping("aladin")
 @PostMapping`
@@ -269,77 +301,81 @@
   <br>
 - v1.0.0\
 `@PostMapping("/aladin-books")`
-> 설명 추가
+> 검토 필요
 
 
-### BookCategoryController.java
+### BookCategoryController
 - 기존\
 `@RequestMapping("book-categories")
 @GetMapping`
   <br>
   <br>
 - v1.0.0\
-> 설명 추가
+`@GetMapping("/book-categories/{booksId}")`
+> 도서의 카테고리 조회\
+> 검토 필요
 
-
-
-### BookController.java
+### BookController
 - 기존\
   `@RequestMapping("books")`
   <br>
   <br>
 - v1.0.0\
-  `@RequestMapping("books")`
+  제거
 
-> 설명 추가
+> 도서 컨트롤러의 상위 URL\
+> 알라딘 도서와 회원 도서를 구분하기 위해 제거
 
 - 기존\
   `@GetMapping`
   <br>
   <br>
 - v1.0.0\
-  `@GetMapping`
+  `@GetMapping("books/list")`
 
-> 설명 추가
+> 쿼리 파라미터를 이용한 도서 리스트 조회 API\
+> 사용 가능한 쿼리 파라미터 목록
 
 - 기존\
   `@PutMapping("/{bookId}")`
   <br>
   <br>
 - v1.0.0\
-  `@PutMapping("/{bookId}")`
+  `@PutMapping("member-books/{bookId}")`
 
-> 설명 추가
+> 사용자 정의 도서의 수정 API
 
 - 기존\
-  `@GetMapping("/{bookId}")`
+  `@GetMapping("books/{bookId}")`
   <br>
   <br>
 - v1.0.0\
-  `@GetMapping("/{bookId}")`
+  `@GetMapping("books/{bookId}")`
 
-> 설명 추가
+> 도서 상세 정보 조회 API.
 
 - 기존\
   `@GetMapping("/{bookId}/info")`
   <br>
   <br>
 - v1.0.0\
-  `@GetMapping("/{bookId}/info")`
+  `@GetMapping("books/{bookId}/details")`
 
-> 설명 추가
+> 특정 도서 상세 정보 조회 API.\
+> 사용 가능한 쿼리 파라미터 목록
 
 - 기존\
-  `@GetMapping("/tree/{treeId}")`
+  `@GetMapping("books/tree/{treeId}")`
   <br>
   <br>
 - v1.0.0\
-  `@GetMapping("/tree/{treeId}")`
+  `@GetMapping("books/tree/{treeId}")`
 
-> 설명 추가
+> 해당 도서와 연관된 트리 조회 API\
+> 결과가 리스트로 나올텐데, 기존에 사용된 API가 적절한지 검토 필요
 
 
-### ImageController.java
+### ImageController
 - 기존\
   `@RequestMapping("images")`
   <br>
@@ -347,7 +383,7 @@
 - v1.0.0\
   `@RequestMapping("images")`
 
-> 설명 추가
+> 이미지 컨트롤러의 상위 URL
 
 - 기존\
   `@GetMapping("/{domain}/{fileName}")`
@@ -356,10 +392,10 @@
 - v1.0.0\
   `@GetMapping("/{domain}/{fileName}")`
 
-> 설명 추가
+> domain과 fileName을 이용한 이미지 조회 API
 
 
-### LeafBookController.java
+### LeafBookController
 - 기존\
   `@RequestMapping`
   <br>
@@ -367,79 +403,90 @@
 - v1.0.0\
   `@RequestMapping`
 
-> 설명 추가
+> 검토 필요\
+> books/leaves 형식으로 LeafController에 포함시킬지 검토 필요
 
 - 기존\
   `@PostMapping("/book/first/leaves")`
   <br>
   <br>
 - v1.0.0\
-  `@PostMapping("/book/first/leaves")`
+  `@PostMapping("books/leaves/details")`
 
-> 설명 추가
+> 검토 필요\
+> 사용 가능한 쿼리 파라미터 목록
+> 1. first - 첫 리프 등록 
+> 2. parentLeafId - 부모 리프 등록
 
 - 기존\
-  `@PostMapping("/book/leaves/{parentLeafId}")`
+  `@PostMapping("books/leaves/{parentLeafId}")`
   <br>
   <br>
 - v1.0.0\
-  `@PostMapping("/book/leaves/{parentLeafId}")`
+  제거
 
-> 설명 추가
+> 검토 필요
 
 - 기존\
   `@PutMapping("/book/leaves/{leafId}")`
   <br>
   <br>
 - v1.0.0\
-  `@PutMapping("/book/leaves/{leafId}")`
+`@PutMapping("books/leaves/details")`
 
-> 설명 추가
+> 검토 필요
 
 - 기존\
   `@DeleteMapping("/book/leaves/{leafId}")`
   <br>
   <br>
 - v1.0.0\
-  `@DeleteMapping("/book/leaves/{leafId}")`
+  `@DeleteMapping("books/leaves/{leafId}")`
 
-> 설명 추가
+> 검토 필요
 
 - 기존\
   `@GetMapping("/book/leaves/{leafId}/edit")`
   <br>
   <br>
 - v1.0.0\
-  `@GetMapping("/book/leaves/{leafId}/edit")`
+  `@GetMapping("books/leaves/{leafId}/edit")`
 
-> 설명 추가
+> 수정 페이지용 데이터 조회
+> 검토 필요
 
  
-### LeafController.java
+### LeafController
 - 기존\
   `@GetMapping("/leaves/search")`
   <br>
   <br>
 - v1.0.0\
-  `@GetMapping("/leaves/search")`
+  `@GetMapping("/leaves/search-results")`
 
-> 설명 추가
+> 리프 리스트 조회용 API
+> 사용 가능한 쿼리 파라미터
+> 1. keyword - 검색어
 
 - 기존\
   `@GetMapping("/leaves/{leafId}/branch")`
   <br>
   <br>
 - v1.0.0\
-  `@GetMapping("/leaves/{leafId}/branch")`
+  `@GetMapping("/leaves/{leafId}/details")`
 
-> 설명 추가
+> 리프 상세 정보 조회용 API
+> 사용 가능한 쿼리 파라미터
+> 1. branch - 브랜치 조회 
+> 2. all - 전체 조회
+> 3. end - 마지막 리프 조회
 
 - 기존\
   `@GetMapping("/leaves/{leafId}/all")`
   <br>
   <br>
 - v1.0.0\
-  `@GetMapping("/leaves/{leafId}/all")`
+  제거
 
 > 설명 추가
 
@@ -448,30 +495,33 @@
   <br>
   <br>
 - v1.0.0\
-  `@GetMapping("/leaves/{leafId}/end")`
+  제거
 
 > 설명 추가
 
 - 기존\
-  `@GetMapping("/book/leaves/{leafId}")`
+  `@GetMapping("/books/leaves/{leafId}")`
   <br>
   <br>
 - v1.0.0\
-  `@GetMapping("/book/leaves/{leafId}")`
+  `@GetMapping("/leaves/{leafId}")`
 
-> 설명 추가
+> 리프 상세 조회용 API
+> 사용 가능한 쿼리 파라미터
+> 1. book - 도서와 관련있는 리프 조회
+> 2. etc - 도서와 관련없는 리프 조회
 
 - 기존\
   `@GetMapping("/etc/leaves/{leafId}")`
   <br>
   <br>
 - v1.0.0\
-  `@GetMapping("/etc/leaves/{leafId}")`
+  제거
 
 > 설명 추가
 
  
-### LeafEtcController.java
+### LeafEtcController
 - 기존\
   `@RequestMapping`
   <br>
@@ -528,7 +578,7 @@
 
 
  
-### LeafImageController.java
+### LeafImageController
 - 기존\
   `@RequestMapping`
   <br>
@@ -557,7 +607,7 @@
 > 설명 추가
 
  
-### LeafTagController.java
+### LeafTagController
 - 기존\
   `@RequestMapping("tags")`
   <br>
@@ -614,7 +664,7 @@
 
 
  
-### AuthController.java
+### AuthController
 - 기존\
   `@RequestMapping(value = "/auth", produces = "application/json")`
   <br>
@@ -642,7 +692,7 @@
 
 
  
-### MemberController.java
+### MemberController
 - 기존\
   `@RequestMapping("/members")`
   <br>
@@ -697,7 +747,7 @@
 
 > 설명 추가
 
-### MemoirController.java
+### MemoirController
 - 기존\
   `@RequestMapping("memoirs")`
   <br>
@@ -745,7 +795,7 @@
 
 
  
-### MemoirImageController.java
+### MemoirImageController
 - 기존\
   `@RequestMapping("memoir-image")`
   <br>
@@ -783,7 +833,7 @@
 > 설명 추가
 
  
-### SeedController.java
+### SeedController
 - 기존\
   `@RequestMapping("/seeds")`
   <br>
@@ -821,7 +871,7 @@
 > 설명 추가
 
  
-### TreeController.java
+### TreeController
 - 기존\
   `@RequestMapping("/trees")`
   <br>
@@ -968,7 +1018,7 @@
 
 
  
-### TreeTmpController.java
+### TreeTmpController
 - 기존\
   `@RequestMapping("/trees")`
   <br>

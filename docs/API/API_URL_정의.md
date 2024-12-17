@@ -1,7 +1,8 @@
 # API URL 정의
 
+> 관리자 : 조현진\
 > 마지막 수정자: 조현진\
-> 마지막 수정 날짜: 2024-12-16\
+> 마지막 수정 날짜: 2024-12-17\
 > 버전: 1.0.0
 
 
@@ -207,6 +208,9 @@
    - 리프(메모)를 나타내는 리소스
    - 리프는 트리에 속해있으며, 리프는 생성, 조회, 수정할 수 있다.
    - **리프는 삭제할 수 없다.**
+
+### trees-etc
+   - 아직 별도의 리소스로 분류되지 않은 주제(seed)를 나타내는 리소스
 
 ### tags
    - 리프에 대한 태그를 나타내는 리소스
@@ -527,7 +531,7 @@
   <br>
   <br>
 - v1.0.0\
-  `@RequestMapping`
+  `@RequestMapping("etc-trees")`
 
 > 설명 추가
 
@@ -536,16 +540,20 @@
   <br>
   <br>
 - v1.0.0\
-  `@PostMapping("/etc/first/leaves")`
+  `@PostMapping("/leaves")`
 
-> 설명 추가
+> 주제가 도서가 아닌 트리의 리프 등록
+> 사용 가능한 쿼리 파라미터
+> 1. first - 첫 리프 등록
+> 2. parentLeafId - 부모 리프 등록
+> 3. leafId - 리프 수정
 
 - 기존\
   `@PostMapping("/etc/leaves/{parentLeafId}")`
   <br>
   <br>
 - v1.0.0\
-  `@PostMapping("/etc/leaves/{parentLeafId}")`
+  제거
 
 > 설명 추가
 
@@ -554,7 +562,7 @@
   <br>
   <br>
 - v1.0.0\
-  `@PutMapping("/etc/leaves/{leafId}")`
+  제거
 
 > 설명 추가
 
@@ -563,18 +571,18 @@
   <br>
   <br>
 - v1.0.0\
-  `@DeleteMapping("/etc/leaves/{leafId}")`
+  제거
 
-> 설명 추가
+> 검토 필요
 
 - 기존\
   `@GetMapping("/etc/leaves/{leafId}/edit")`
   <br>
   <br>
 - v1.0.0\
-  `@GetMapping("/etc/leaves/{leafId}/edit")`
+  `@GetMapping("/leaves/{leafId}/edit")`
 
-> 설명 추가
+> etc-trees의 리프 수정 페이지 조회용 API
 
 
  
@@ -584,27 +592,29 @@
   <br>
   <br>
 - v1.0.0\
-  `@RequestMapping`
+  `@RequestMapping("leaves")`
 
 > 설명 추가
 
 - 기존\
-  `@PostMapping("/leaf/image-upload")`
+  `@PostMapping("/image-upload")`
   <br>
   <br>
 - v1.0.0\
-  `@PostMapping("/leaf/image-upload")`
+  `@PostMapping("/image-upload")`
 
-> 설명 추가
+> 컨트롤 API URL 적용
+> 리프 작성시 이미지 업로드 용
 
 - 기존\
   `@GetMapping`
   <br>
   <br>
 - v1.0.0\
-  `@GetMapping`
+  `@GetMapping("/image-print")`
 
-> 설명 추가
+> 컨트롤 API URL 적용
+> 확인 필요
 
  
 ### LeafTagController
@@ -624,7 +634,7 @@
 - v1.0.0\
   `@PostMapping`
 
-> 설명 추가
+> 태그 등록용 API
 
 - 기존\
   `@PutMapping("/{tagId}")`
@@ -633,7 +643,7 @@
 - v1.0.0\
   `@PutMapping("/{tagId}")`
 
-> 설명 추가
+> 태그 수정용 API
 
 - 기존\
   `@DeleteMapping("/{tagId}")`
@@ -642,7 +652,7 @@
 - v1.0.0\
   `@DeleteMapping("/{tagId}")`
 
-> 설명 추가
+> 태그 삭제용 API
 
 - 기존\
   `@GetMapping("/{tagId}")`
@@ -651,7 +661,7 @@
 - v1.0.0\
   `@GetMapping("/{tagId}")`
 
-> 설명 추가
+> 태그 조회용 API
 
 - 기존\
   `@GetMapping`
@@ -660,7 +670,8 @@
 - v1.0.0\
   `@GetMapping`
 
-> 설명 추가
+> member의 모든 태그 리스트 조회용 API
+> 사용 가능한 쿼리 파라미터 목록
 
 
  

@@ -827,27 +827,28 @@
   <br>
   <br>
 - v1.0.0\
-  `@RequestMapping("memoir-image")`
+  `@RequestMapping("memoirs")`
 
-> 설명 추가
+> 회고록 이미지의 최상위 URL
 
 - 기존\
   `@PostMapping("upload-tmp")`
   <br>
   <br>
 - v1.0.0\
-  `@PostMapping("upload-tmp")`
+  `@PostMapping("/image-upload-tmp")`
 
-> 설명 추가
+> 이미지 임시 업로드 API
 
 - 기존\
   `@GetMapping(value = "return-byte", produces = {MediaType.IMAGE_GIF_VALUE, MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE})`
   <br>
   <br>
 - v1.0.0\
-  `@GetMapping(value = "return-byte", produces = {MediaType.IMAGE_GIF_VALUE, MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE})`
+  `@GetMapping(value = "print-byte", produces = {MediaType.IMAGE_GIF_VALUE, MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE})`
 
-> 설명 추가
+> 회고록 이미지 바이트 출력 API
+> 검토 필요
 
 - 기존\
   `@GetMapping(value = {"path-tmp", "path-memoir"})`
@@ -856,7 +857,8 @@
 - v1.0.0\
   `@GetMapping(value = {"path-tmp", "path-memoir"})`
 
-> 설명 추가
+> 이미지 경로 출력 API
+> 검토 필요
 
  
 ### SeedController
@@ -867,7 +869,7 @@
 - v1.0.0\
   `@RequestMapping("/seeds")`
 
-> 설명 추가
+> seed리소스의 최상위 URL
 
 - 기존\
   `@GetMapping`
@@ -876,7 +878,7 @@
 - v1.0.0\
   `@GetMapping`
 
-> 설명 추가
+> seed리스트 출력용 API
 
 - 기존\
   `@GetMapping("{seedId}")`
@@ -885,7 +887,7 @@
 - v1.0.0\
   `@GetMapping("{seedId}")`
 
-> 설명 추가
+> seedId통한  Seed 조회용 API
 
 - 기존\
   `@GetMapping("/trees/{treeId}")`
@@ -894,7 +896,7 @@
 - v1.0.0\
   `@GetMapping("/trees/{treeId}")`
 
-> 설명 추가
+> 검토 필요
 
  
 ### TreeController
@@ -905,16 +907,17 @@
 - v1.0.0\
   `@RequestMapping("/trees")`
 
-> 설명 추가
+> tree 리소스에 대한 최상위 URL
 
 - 기존\
   `@GetMapping("/search")`
   <br>
   <br>
 - v1.0.0\
-  `@GetMapping("/search")`
+  `@GetMapping("/search-results")`
 
-> 설명 추가
+> 트리 검색 결과를 조회하는 API\
+> 사용 가능한 쿼리 파라미터 목록
 
 - 기존\
   `@GetMapping("/search/result/{treeSearchText}")`
@@ -923,7 +926,7 @@
 - v1.0.0\
   `@GetMapping("/search/result/{treeSearchText}")`
 
-> 설명 추가
+> 검토 필요
 
 - 기존\
   `@PostMapping("/search/result/{treeSearchText}")`
@@ -932,106 +935,113 @@
 - v1.0.0\
   `@PostMapping("/search/result/{treeSearchText}")`
 
-> 설명 추가
+> 검토 필요
 
 - 기존\
   `@GetMapping("{id}/info")`
   <br>
   <br>
 - v1.0.0\
-  `@GetMapping("{id}/info")`
+  `@GetMapping("{treeId}/details")`
 
-> 설명 추가
+> 특정 트리 데이터 출력용 API
+> 사용 가능한 쿼리 파라미터 목록
+> 1. branches - 브랜치 목록 조회
+> 2. leaves - 리프 목록 조회
 
 - 기존\
   `@GetMapping("leaves/{leafId}/info")`
   <br>
   <br>
 - v1.0.0\
-  `@GetMapping("leaves/{leafId}/info")`
+  `@GetMapping("leaves/{leafId}/details")`
 
-> 설명 추가
+> 검토 필요
 
 - 기존\
   `@GetMapping("/{treeId}/branches")`
   <br>
   <br>
 - v1.0.0\
-  `@GetMapping("/{treeId}/branches")`
+ 제거
 
-> 설명 추가
+> 검토 필요
 
 - 기존\
   `@GetMapping("/{treeId}/leafs")`
   <br>
   <br>
 - v1.0.0\
-  `@GetMapping("/{treeId}/leafs")`
+제거
 
-> 설명 추가
+> 검토 필요
 
 - 기존\
   `@GetMapping("tree-home")`
   <br>
   <br>
 - v1.0.0\
-  `@GetMapping("tree-home")`
+  `@GetMapping("/list")`
 
-> 설명 추가
+> 트리 리스트 출력용 API
+> 사용 가능한 쿼리 파라미터
+> 1. recent - 최근 트리 순 조회
+> 2. count - 트리 조회 개수
+> 3. sort - 트리 정렬 방법
 
 - 기존\
   `@GetMapping("tree-home-sort")`
   <br>
   <br>
 - v1.0.0\
-  `@GetMapping("tree-home-sort")`
+제거
 
-> 설명 추가
+> 검토 필요
 
 - 기존\
   `@GetMapping("/members/{memberId}/trees/book/cards")`
   <br>
   <br>
 - v1.0.0\
-  `@GetMapping("/members/{memberId}/trees/book/cards")`
+  `@GetMapping("/members/{memberId}/cards")`
 
-> 설명 추가
+> 특정 회원의 트리 카드형태 조회용 API
 
 - 기존\
   `@GetMapping("members/books/{bookId}/trees/cards")`
   <br>
   <br>
 - v1.0.0\
-  `@GetMapping("members/books/{bookId}/trees/cards")`
+  `@GetMapping("/members/books/{bookId}/cards")`
 
-> 설명 추가
+> 특정 회원의 특정 도서와 연관된 트리의 카드형태 조회용 API
 
 - 기존\
   `@GetMapping("books/{bookId}/trees/cards")`
   <br>
   <br>
 - v1.0.0\
-  `@GetMapping("books/{bookId}/trees/cards")`
+  `@GetMapping("books/{bookId}/cards")`
 
-> 설명 추가
+> 특정 도서와 연관된 트리의 카드 형태 조회용 API
 
 - 기존\
   `@PutMapping("etc/edit")`
   <br>
   <br>
 - v1.0.0\
-  `@PutMapping("etc/edit")`
+  `@PutMapping("etc-trees/edit")`
 
-> 설명 추가
+> 별도 리소스가 분류되지 않은 주제의 트리 수정 데이터 조회용 API
 
 - 기존\
   `@PutMapping("book/edit")`
   <br>
   <br>
 - v1.0.0\
-  `@PutMapping("book/edit")`
+  `@PutMapping("books/trees/edit")`
 
-> 설명 추가
+> 도서와 연관된 트리 수정 데이터 조회용 API
 
 - 기존\
   `@DeleteMapping("/{treeId}")`
@@ -1040,7 +1050,7 @@
 - v1.0.0\
   `@DeleteMapping("/{treeId}")`
 
-> 설명 추가
+> 트리 삭제용 API
 
 
  

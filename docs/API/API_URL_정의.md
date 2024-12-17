@@ -82,12 +82,15 @@
 
 ---
 ### 1. URL은 소문자로 작성한다.
-    ```java
-    // bad - 대문자로 작성되어 있다.
+  **단, 경로 변수명은 카멜표기법을 따른다.**
+    
+```java
+ // bad - 대문자로 작성되어 있다.
    @GetMapping("/Trees/1")
     // good - 소문자로 작성되어 있다.
    @GetMapping("/trees/1")
-    ```
+```
+   
 ### 2. 리소스 명은 복수형으로 작성한다.
    ```java
     // bad - 단수형으로 작성되어 있다.
@@ -141,7 +144,7 @@
     @GetMapping("/trees/1/leafs/1")
    ```
 
-### 8. URL은 하이픈(-)을 사용하여 단어를 구분한다.
+### 8. 리소스는 하이픈(-)을 사용하여 단어를 구분한다.
    ```java
     // bad - 단어를 구분하는 대신 단어를 붙여서 작성하였다.
     @GetMapping("/homeTrees")
@@ -238,8 +241,11 @@
 ### seeds
    - 트리의 주제를 나타내는 리소스
 
+### auth
+  - 인증과 관련된 리소스
+
 ### oauth
-   - OAuth 인증을 위한 리소스
+   - OAuth 인증을 위한 auth의 하위 리소스
    - OAuth 인증을 위한 URL을 제공한다.
 
 ### images
@@ -690,16 +696,22 @@
   <br>
   <br>
 - v1.0.0\
-  `@PostMapping("/oauthGoogle")`
+  `@PostMapping("/oauth")`
 
-> 설명 추가
+> oauth접속을 위한 API URL\
+> 사용 가능한 쿼리 파라미터 목록
+> 1. google - 구글 로그인
+> 2. naver - 네이버 로그인
+> 3. kakao - 카카오 로그인
 
 - 기존\
   `@PostMapping("/oauthNaver")`
   <br>
   <br>
 - v1.0.0\
-  `@PostMapping
+  제거
+
+> 검토 필요
 
 
  
@@ -711,34 +723,38 @@
 - v1.0.0\
   `@RequestMapping("/members")`
 
-> 설명 추가
+> member리소스의 최상위 URL
 
 - 기존\
   `@PostMapping("/join/send-email")`
   <br>
   <br>
 - v1.0.0\
-  `@PostMapping("/join/send-email")`
+  `@PostMapping("/join/details)`
 
-> 설명 추가
+> 회원 가입과 관련된 컨트롤 API URL\
+> 사용 가능한 쿼리 파라미터 목록
+> 1. send-email - 이메일 전송
+> 2. check-email - 이메일 확인
+> 3. check-token - 토큰 확인
 
 - 기존\
   `@PostMapping("/join/check-email")`
   <br>
   <br>
 - v1.0.0\
-  `@PostMapping("/join/check-email")`
+  제거
 
-> 설명 추가
+> 검토 필요
 
 - 기존\
   `@PostMapping("/join/check-token")`
   <br>
   <br>
 - v1.0.0\
-  `@PostMapping("/join/check-token")`
+  제거
 
-> 설명 추가
+> 검토 필요
 
 - 기존\
   `@PostMapping("/password/check-email")`
@@ -747,7 +763,8 @@
 - v1.0.0\
   `@PostMapping("/password/check-email")`
 
-> 설명 추가
+> 검토 필요
+> password라는 하위 리소스 추가할 것인지 검토 
 
 - 기존\
   `@PostMapping("/join")`
@@ -756,7 +773,7 @@
 - v1.0.0\
   `@PostMapping("/join")`
 
-> 설명 추가
+> 확인 필요
 
 ### MemoirController
 - 기존\
@@ -766,46 +783,44 @@
 - v1.0.0\
   `@RequestMapping("memoirs")`
 
-> 설명 추가
+> 회고록(memoirs) 리소스의 최상위 URL
 
 - 기존\
   `@GetMapping("{id}")`
   <br>
   <br>
 - v1.0.0\
-  `@GetMapping("{id}")`
+  `@GetMapping("{memoirId}")`
 
-> 설명 추가
+> 회고록 조회 API
 
 - 기존\
   `@PostMapping("{id}")`
   <br>
   <br>
 - v1.0.0\
-  `@PostMapping("{id}")`
+  `@PostMapping("{treeId}")`
 
-> 설명 추가
+> 회고록 등록 API
 
 - 기존\
   `@PutMapping("{id}")`
   <br>
   <br>
 - v1.0.0\
-  `@PutMapping("{id}")`
+  `@PutMapping("{memoirId}")`
 
-> 설명 추가
+> 회고록 수정 API
 
 - 기존\
   `@DeleteMapping("{id}")`
   <br>
   <br>
 - v1.0.0\
-  `@DeleteMapping("{id}")`
+  `@DeleteMapping("{memoirId}")`
 
-> 설명 추가
+> 회고록 삭제 API
 
-
- 
 ### MemoirImageController
 - 기존\
   `@RequestMapping("memoir-image")`

@@ -98,6 +98,9 @@ Spring Security, JWT(0.11.2), OAuth2.0, Lombok
 - Operation System: Linux(Ubuntu 20.04), Docker
 - Tools: IntelliJ IDEA, WebStorm, Visual Studio Code, Git, GitHub, Figma, Notion, Draw.io, ERD Cloud
 
+### 시연 영상
+[![시연영상](docs/이미지/메인리드미/시연영상.png)](https://www.youtube.com/watch?v=3Q3J1v1Q2ZU)
+
 ## 버전 및 업데이트 정보
 
 - 서비스 버전: 1.0.0

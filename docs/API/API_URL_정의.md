@@ -1,7 +1,8 @@
 # API URL 정의
 
+> 관리자 : 조현진\
 > 마지막 수정자: 조현진\
-> 마지막 수정 날짜: 2024-12-16\
+> 마지막 수정 날짜: 2024-12-17\
 > 버전: 1.0.0
 
 
@@ -81,12 +82,15 @@
 
 ---
 ### 1. URL은 소문자로 작성한다.
-    ```java
-    // bad - 대문자로 작성되어 있다.
+  **단, 경로 변수명은 카멜표기법을 따른다.**
+    
+```java
+ // bad - 대문자로 작성되어 있다.
    @GetMapping("/Trees/1")
     // good - 소문자로 작성되어 있다.
    @GetMapping("/trees/1")
-    ```
+```
+   
 ### 2. 리소스 명은 복수형으로 작성한다.
    ```java
     // bad - 단수형으로 작성되어 있다.
@@ -140,7 +144,7 @@
     @GetMapping("/trees/1/leafs/1")
    ```
 
-### 8. URL은 하이픈(-)을 사용하여 단어를 구분한다.
+### 8. 리소스는 하이픈(-)을 사용하여 단어를 구분한다.
    ```java
     // bad - 단어를 구분하는 대신 단어를 붙여서 작성하였다.
     @GetMapping("/homeTrees")
@@ -208,6 +212,9 @@
    - 리프는 트리에 속해있으며, 리프는 생성, 조회, 수정할 수 있다.
    - **리프는 삭제할 수 없다.**
 
+### trees-etc
+   - 아직 별도의 리소스로 분류되지 않은 주제(seed)를 나타내는 리소스
+
 ### tags
    - 리프에 대한 태그를 나타내는 리소스
    - 태그는 생성, 조회, 수정, 삭제할 수 있다.
@@ -234,8 +241,11 @@
 ### seeds
    - 트리의 주제를 나타내는 리소스
 
+### auth
+  - 인증과 관련된 리소스
+
 ### oauth
-   - OAuth 인증을 위한 리소스
+   - OAuth 인증을 위한 auth의 하위 리소스
    - OAuth 인증을 위한 URL을 제공한다.
 
 ### images
@@ -527,7 +537,7 @@
   <br>
   <br>
 - v1.0.0\
-  `@RequestMapping`
+  `@RequestMapping("etc-trees")`
 
 > 설명 추가
 
@@ -536,16 +546,20 @@
   <br>
   <br>
 - v1.0.0\
-  `@PostMapping("/etc/first/leaves")`
+  `@PostMapping("/leaves")`
 
-> 설명 추가
+> 주제가 도서가 아닌 트리의 리프 등록
+> 사용 가능한 쿼리 파라미터
+> 1. first - 첫 리프 등록
+> 2. parentLeafId - 부모 리프 등록
+> 3. leafId - 리프 수정
 
 - 기존\
   `@PostMapping("/etc/leaves/{parentLeafId}")`
   <br>
   <br>
 - v1.0.0\
-  `@PostMapping("/etc/leaves/{parentLeafId}")`
+  제거
 
 > 설명 추가
 
@@ -554,7 +568,7 @@
   <br>
   <br>
 - v1.0.0\
-  `@PutMapping("/etc/leaves/{leafId}")`
+  제거
 
 > 설명 추가
 
@@ -563,18 +577,18 @@
   <br>
   <br>
 - v1.0.0\
-  `@DeleteMapping("/etc/leaves/{leafId}")`
+  제거
 
-> 설명 추가
+> 검토 필요
 
 - 기존\
   `@GetMapping("/etc/leaves/{leafId}/edit")`
   <br>
   <br>
 - v1.0.0\
-  `@GetMapping("/etc/leaves/{leafId}/edit")`
+  `@GetMapping("/leaves/{leafId}/edit")`
 
-> 설명 추가
+> etc-trees의 리프 수정 페이지 조회용 API
 
 
  
@@ -584,27 +598,29 @@
   <br>
   <br>
 - v1.0.0\
-  `@RequestMapping`
+  `@RequestMapping("leaves")`
 
 > 설명 추가
 
 - 기존\
-  `@PostMapping("/leaf/image-upload")`
+  `@PostMapping("/image-upload")`
   <br>
   <br>
 - v1.0.0\
-  `@PostMapping("/leaf/image-upload")`
+  `@PostMapping("/image-upload")`
 
-> 설명 추가
+> 컨트롤 API URL 적용
+> 리프 작성시 이미지 업로드 용
 
 - 기존\
   `@GetMapping`
   <br>
   <br>
 - v1.0.0\
-  `@GetMapping`
+  `@GetMapping("/image-print")`
 
-> 설명 추가
+> 컨트롤 API URL 적용
+> 확인 필요
 
  
 ### LeafTagController
@@ -624,7 +640,7 @@
 - v1.0.0\
   `@PostMapping`
 
-> 설명 추가
+> 태그 등록용 API
 
 - 기존\
   `@PutMapping("/{tagId}")`
@@ -633,7 +649,7 @@
 - v1.0.0\
   `@PutMapping("/{tagId}")`
 
-> 설명 추가
+> 태그 수정용 API
 
 - 기존\
   `@DeleteMapping("/{tagId}")`
@@ -642,7 +658,7 @@
 - v1.0.0\
   `@DeleteMapping("/{tagId}")`
 
-> 설명 추가
+> 태그 삭제용 API
 
 - 기존\
   `@GetMapping("/{tagId}")`
@@ -651,7 +667,7 @@
 - v1.0.0\
   `@GetMapping("/{tagId}")`
 
-> 설명 추가
+> 태그 조회용 API
 
 - 기존\
   `@GetMapping`
@@ -660,7 +676,8 @@
 - v1.0.0\
   `@GetMapping`
 
-> 설명 추가
+> member의 모든 태그 리스트 조회용 API
+> 사용 가능한 쿼리 파라미터 목록
 
 
  
@@ -679,16 +696,22 @@
   <br>
   <br>
 - v1.0.0\
-  `@PostMapping("/oauthGoogle")`
+  `@PostMapping("/oauth")`
 
-> 설명 추가
+> oauth접속을 위한 API URL\
+> 사용 가능한 쿼리 파라미터 목록
+> 1. google - 구글 로그인
+> 2. naver - 네이버 로그인
+> 3. kakao - 카카오 로그인
 
 - 기존\
   `@PostMapping("/oauthNaver")`
   <br>
   <br>
 - v1.0.0\
-  `@PostMapping
+  제거
+
+> 검토 필요
 
 
  
@@ -700,34 +723,38 @@
 - v1.0.0\
   `@RequestMapping("/members")`
 
-> 설명 추가
+> member리소스의 최상위 URL
 
 - 기존\
   `@PostMapping("/join/send-email")`
   <br>
   <br>
 - v1.0.0\
-  `@PostMapping("/join/send-email")`
+  `@PostMapping("/join/details)`
 
-> 설명 추가
+> 회원 가입과 관련된 컨트롤 API URL\
+> 사용 가능한 쿼리 파라미터 목록
+> 1. send-email - 이메일 전송
+> 2. check-email - 이메일 확인
+> 3. check-token - 토큰 확인
 
 - 기존\
   `@PostMapping("/join/check-email")`
   <br>
   <br>
 - v1.0.0\
-  `@PostMapping("/join/check-email")`
+  제거
 
-> 설명 추가
+> 검토 필요
 
 - 기존\
   `@PostMapping("/join/check-token")`
   <br>
   <br>
 - v1.0.0\
-  `@PostMapping("/join/check-token")`
+  제거
 
-> 설명 추가
+> 검토 필요
 
 - 기존\
   `@PostMapping("/password/check-email")`
@@ -736,7 +763,8 @@
 - v1.0.0\
   `@PostMapping("/password/check-email")`
 
-> 설명 추가
+> 검토 필요
+> password라는 하위 리소스 추가할 것인지 검토 
 
 - 기존\
   `@PostMapping("/join")`
@@ -745,7 +773,7 @@
 - v1.0.0\
   `@PostMapping("/join")`
 
-> 설명 추가
+> 확인 필요
 
 ### MemoirController
 - 기존\
@@ -755,73 +783,72 @@
 - v1.0.0\
   `@RequestMapping("memoirs")`
 
-> 설명 추가
+> 회고록(memoirs) 리소스의 최상위 URL
 
 - 기존\
   `@GetMapping("{id}")`
   <br>
   <br>
 - v1.0.0\
-  `@GetMapping("{id}")`
+  `@GetMapping("{memoirId}")`
 
-> 설명 추가
+> 회고록 조회 API
 
 - 기존\
   `@PostMapping("{id}")`
   <br>
   <br>
 - v1.0.0\
-  `@PostMapping("{id}")`
+  `@PostMapping("{treeId}")`
 
-> 설명 추가
+> 회고록 등록 API
 
 - 기존\
   `@PutMapping("{id}")`
   <br>
   <br>
 - v1.0.0\
-  `@PutMapping("{id}")`
+  `@PutMapping("{memoirId}")`
 
-> 설명 추가
+> 회고록 수정 API
 
 - 기존\
   `@DeleteMapping("{id}")`
   <br>
   <br>
 - v1.0.0\
-  `@DeleteMapping("{id}")`
+  `@DeleteMapping("{memoirId}")`
 
-> 설명 추가
+> 회고록 삭제 API
 
-
- 
 ### MemoirImageController
 - 기존\
   `@RequestMapping("memoir-image")`
   <br>
   <br>
 - v1.0.0\
-  `@RequestMapping("memoir-image")`
+  `@RequestMapping("memoirs")`
 
-> 설명 추가
+> 회고록 이미지의 최상위 URL
 
 - 기존\
   `@PostMapping("upload-tmp")`
   <br>
   <br>
 - v1.0.0\
-  `@PostMapping("upload-tmp")`
+  `@PostMapping("/image-upload-tmp")`
 
-> 설명 추가
+> 이미지 임시 업로드 API
 
 - 기존\
   `@GetMapping(value = "return-byte", produces = {MediaType.IMAGE_GIF_VALUE, MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE})`
   <br>
   <br>
 - v1.0.0\
-  `@GetMapping(value = "return-byte", produces = {MediaType.IMAGE_GIF_VALUE, MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE})`
+  `@GetMapping(value = "print-byte", produces = {MediaType.IMAGE_GIF_VALUE, MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE})`
 
-> 설명 추가
+> 회고록 이미지 바이트 출력 API
+> 검토 필요
 
 - 기존\
   `@GetMapping(value = {"path-tmp", "path-memoir"})`
@@ -830,7 +857,8 @@
 - v1.0.0\
   `@GetMapping(value = {"path-tmp", "path-memoir"})`
 
-> 설명 추가
+> 이미지 경로 출력 API
+> 검토 필요
 
  
 ### SeedController
@@ -841,7 +869,7 @@
 - v1.0.0\
   `@RequestMapping("/seeds")`
 
-> 설명 추가
+> seed리소스의 최상위 URL
 
 - 기존\
   `@GetMapping`
@@ -850,7 +878,7 @@
 - v1.0.0\
   `@GetMapping`
 
-> 설명 추가
+> seed리스트 출력용 API
 
 - 기존\
   `@GetMapping("{seedId}")`
@@ -859,7 +887,7 @@
 - v1.0.0\
   `@GetMapping("{seedId}")`
 
-> 설명 추가
+> seedId통한  Seed 조회용 API
 
 - 기존\
   `@GetMapping("/trees/{treeId}")`
@@ -868,7 +896,7 @@
 - v1.0.0\
   `@GetMapping("/trees/{treeId}")`
 
-> 설명 추가
+> 검토 필요
 
  
 ### TreeController
@@ -879,16 +907,17 @@
 - v1.0.0\
   `@RequestMapping("/trees")`
 
-> 설명 추가
+> tree 리소스에 대한 최상위 URL
 
 - 기존\
   `@GetMapping("/search")`
   <br>
   <br>
 - v1.0.0\
-  `@GetMapping("/search")`
+  `@GetMapping("/search-results")`
 
-> 설명 추가
+> 트리 검색 결과를 조회하는 API\
+> 사용 가능한 쿼리 파라미터 목록
 
 - 기존\
   `@GetMapping("/search/result/{treeSearchText}")`
@@ -897,7 +926,7 @@
 - v1.0.0\
   `@GetMapping("/search/result/{treeSearchText}")`
 
-> 설명 추가
+> 검토 필요
 
 - 기존\
   `@PostMapping("/search/result/{treeSearchText}")`
@@ -906,106 +935,113 @@
 - v1.0.0\
   `@PostMapping("/search/result/{treeSearchText}")`
 
-> 설명 추가
+> 검토 필요
 
 - 기존\
   `@GetMapping("{id}/info")`
   <br>
   <br>
 - v1.0.0\
-  `@GetMapping("{id}/info")`
+  `@GetMapping("{treeId}/details")`
 
-> 설명 추가
+> 특정 트리 데이터 출력용 API
+> 사용 가능한 쿼리 파라미터 목록
+> 1. branches - 브랜치 목록 조회
+> 2. leaves - 리프 목록 조회
 
 - 기존\
   `@GetMapping("leaves/{leafId}/info")`
   <br>
   <br>
 - v1.0.0\
-  `@GetMapping("leaves/{leafId}/info")`
+  `@GetMapping("leaves/{leafId}/details")`
 
-> 설명 추가
+> 검토 필요
 
 - 기존\
   `@GetMapping("/{treeId}/branches")`
   <br>
   <br>
 - v1.0.0\
-  `@GetMapping("/{treeId}/branches")`
+ 제거
 
-> 설명 추가
+> 검토 필요
 
 - 기존\
   `@GetMapping("/{treeId}/leafs")`
   <br>
   <br>
 - v1.0.0\
-  `@GetMapping("/{treeId}/leafs")`
+제거
 
-> 설명 추가
+> 검토 필요
 
 - 기존\
   `@GetMapping("tree-home")`
   <br>
   <br>
 - v1.0.0\
-  `@GetMapping("tree-home")`
+  `@GetMapping("/list")`
 
-> 설명 추가
+> 트리 리스트 출력용 API
+> 사용 가능한 쿼리 파라미터
+> 1. recent - 최근 트리 순 조회
+> 2. count - 트리 조회 개수
+> 3. sort - 트리 정렬 방법
 
 - 기존\
   `@GetMapping("tree-home-sort")`
   <br>
   <br>
 - v1.0.0\
-  `@GetMapping("tree-home-sort")`
+제거
 
-> 설명 추가
+> 검토 필요
 
 - 기존\
   `@GetMapping("/members/{memberId}/trees/book/cards")`
   <br>
   <br>
 - v1.0.0\
-  `@GetMapping("/members/{memberId}/trees/book/cards")`
+  `@GetMapping("/members/{memberId}/cards")`
 
-> 설명 추가
+> 특정 회원의 트리 카드형태 조회용 API
 
 - 기존\
   `@GetMapping("members/books/{bookId}/trees/cards")`
   <br>
   <br>
 - v1.0.0\
-  `@GetMapping("members/books/{bookId}/trees/cards")`
+  `@GetMapping("/members/books/{bookId}/cards")`
 
-> 설명 추가
+> 특정 회원의 특정 도서와 연관된 트리의 카드형태 조회용 API
 
 - 기존\
   `@GetMapping("books/{bookId}/trees/cards")`
   <br>
   <br>
 - v1.0.0\
-  `@GetMapping("books/{bookId}/trees/cards")`
+  `@GetMapping("books/{bookId}/cards")`
 
-> 설명 추가
+> 특정 도서와 연관된 트리의 카드 형태 조회용 API
 
 - 기존\
   `@PutMapping("etc/edit")`
   <br>
   <br>
 - v1.0.0\
-  `@PutMapping("etc/edit")`
+  `@PutMapping("etc-trees/edit")`
 
-> 설명 추가
+> 별도 리소스가 분류되지 않은 주제의 트리 수정 데이터 조회용 API
 
 - 기존\
   `@PutMapping("book/edit")`
   <br>
   <br>
 - v1.0.0\
-  `@PutMapping("book/edit")`
+  `@PutMapping("books/trees/edit")`
 
-> 설명 추가
+> 도서와 연관된 트리 수정 데이터 조회용 API
 
 - 기존\
   `@DeleteMapping("/{treeId}")`
@@ -1014,7 +1050,7 @@
 - v1.0.0\
   `@DeleteMapping("/{treeId}")`
 
-> 설명 추가
+> 트리 삭제용 API
 
 
  
@@ -1026,7 +1062,7 @@
 - v1.0.0\
   `@RequestMapping("/trees")`
 
-> 설명 추가
+> tree 리소스의 최상위 URL
 
 - 기존\
   `@PostMapping`
@@ -1035,25 +1071,25 @@
 - v1.0.0\
   `@PostMapping`
 
-> 설명 추가
+> 확인 필요
 
 - 기존\
   `@PostMapping("/etc")`
   <br>
   <br>
 - v1.0.0\
-  `@PostMapping("/etc")`
+  `@PostMapping("/trees-etc")`
 
-> 설명 추가
+> 주제가 별도 리소스로 분류되지 않은 트리의 임시 저장용 API
 
 - 기존\
   `@PostMapping("/auto")`
   <br>
   <br>
 - v1.0.0\
-  `@PostMapping("/auto")`
+  `@PostMapping("/aladin-books")`
 
-> 설명 추가
+> 알라딘 API를 통해 저장된 도서와 연관된 트리 임시 저장용 API
 
 - 기존\
   `@GetMapping("/tmp/{memberId}/total-page")`
@@ -1062,4 +1098,4 @@
 - v1.0.0\
   `@GetMapping("/tmp/{memberId}/total-page")`
 
-> 설명 추가
+> 확인 필요

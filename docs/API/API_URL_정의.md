@@ -1062,7 +1062,7 @@
 - v1.0.0\
   `@RequestMapping("/trees")`
 
-> 설명 추가
+> tree 리소스의 최상위 URL
 
 - 기존\
   `@PostMapping`
@@ -1071,25 +1071,25 @@
 - v1.0.0\
   `@PostMapping`
 
-> 설명 추가
+> 확인 필요
 
 - 기존\
   `@PostMapping("/etc")`
   <br>
   <br>
 - v1.0.0\
-  `@PostMapping("/etc")`
+  `@PostMapping("/trees-etc")`
 
-> 설명 추가
+> 주제가 별도 리소스로 분류되지 않은 트리의 임시 저장용 API
 
 - 기존\
   `@PostMapping("/auto")`
   <br>
   <br>
 - v1.0.0\
-  `@PostMapping("/auto")`
+  `@PostMapping("/aladin-books")`
 
-> 설명 추가
+> 알라딘 API를 통해 저장된 도서와 연관된 트리 임시 저장용 API
 
 - 기존\
   `@GetMapping("/tmp/{memberId}/total-page")`
@@ -1098,4 +1098,4 @@
 - v1.0.0\
   `@GetMapping("/tmp/{memberId}/total-page")`
 
-> 설명 추가
+> 확인 필요

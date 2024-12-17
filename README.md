@@ -1,33 +1,9 @@
 # ![custom emoji](docs/이미지/메인리드미/100대램.png) Project 꼬깃
 ## 프로젝트 참여 인원
-### 🎨 Designers
-<a href="https://github.com/TaegyuHan" style="display: block; margin-left: 30px; margin-bottom: 5px; font-family: 'Pretendard', sans-serif; font-weight: bold; font-size: 20px; color: #e5eddb;">
-<img src="docs/이미지/팀원깃헙프로필/김은서.png" style="width: 70px; margin-right:10px;  border-radius: 20px;" alt="김은서" width="50">
-eunseoKim
-</a>
-
-### 💻 Developers
-
-<a href="https://github.com/Jomalang" style="display: block; margin-left: 30px; margin-bottom: 5px; font-family: 'Pretendard', sans-serif; font-weight: bold; font-size: 20px; color: #e5eddb;">
-  <img src="docs/이미지/팀원깃헙프로필/Jomalang.png" style="width: 70px; margin-right:10px;  border-radius: 20px;" alt="조현진">
-  Jomalang
-</a>
-<a href="https://github.com/TaegyuHan" style="display: block; margin-left: 30px; margin-bottom: 5px; font-family: 'Pretendard', sans-serif; font-weight: bold; font-size: 20px; color: #e5eddb;">
-  <img src="docs/이미지/팀원깃헙프로필/TaegyuHan.png" style="width: 70px; margin-right:10px;  border-radius: 20px;" alt="한태규">
-  TaegyuHan
-</a>
-<a href="https://github.com/Gun-code" style="display: block; margin-left: 30px; margin-bottom: 5px; font-family: 'Pretendard', sans-serif; font-weight: bold; font-size: 20px; color: #e5eddb;">
-  <img src="docs/이미지/팀원깃헙프로필/Gun-code.png" style="width: 70px; margin-right:10px;  border-radius: 20px;" alt="이희권">
-  Gun-code
-</a>
-<a href="https://github.com/jjustcodding" style="display: block; margin-left: 30px; margin-bottom: 5px; font-family: 'Pretendard', sans-serif; font-weight: bold; font-size: 20px; color: #e5eddb;">
-  <img src="docs/이미지/팀원깃헙프로필/jjustcodding.png" style="width: 70px; margin-right:10px;  border-radius: 20px;" alt="장재영">
-  jjustcodding
-</a>
-<a href="https://github.com/pilpearl" style="display: block; margin-left: 30px; margin-bottom: 5px; font-family: 'Pretendard', sans-serif; font-weight: bold; font-size: 20px; color: #e5eddb;">
-  <img src="docs/이미지/팀원깃헙프로필/pilpearl.png" style="width: 70px; margin-right:10px;  border-radius: 20px;" alt="주진필">
-  pilpearl
-</a>
+| ![eunseoKim](docs/이미지/팀원깃헙프로필/eunseoKim.png) | ![Jomalang](docs/이미지/팀원깃헙프로필/Jomalang.png) | ![TaegyuHan](docs/이미지/팀원깃헙프로필/TaegyuHan.png) | ![Gun-code](docs/이미지/팀원깃헙프로필/Gun-code.png) | ![jjustcodding](docs/이미지/팀원깃헙프로필/jjustcodding.png) | ![pilpearl](docs/이미지/팀원깃헙프로필/pilpearl.png) |
+|-----------------------------------------------|--------------------------------------------------|--------------------------------------------------|--------------------------------------------------|-----------------------------------------------------|--------------------------------------------------|
+| **🎨 Designer**                                | **💻 Developer**                                   | **💻 Developer**                                   | **💻 Developer**                                   | **💻 Developer**                                      | **💻 Developer**                                   |
+| [eunseoKim](https://github.com/TaegyuHan)      | [Jomalang](https://github.com/Jomalang)           | [TaegyuHan](https://github.com/TaegyuHan)         | [Gun-code](https://github.com/Gun-code)          | [jjustcodding](https://github.com/jjustcodding)      | [pilpearl](https://github.com/pilpearl)           |
 
 ---
 ## 목차

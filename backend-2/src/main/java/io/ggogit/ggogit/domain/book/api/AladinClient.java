@@ -1,3 +1,4 @@
+
 package io.ggogit.ggogit.domain.book.api;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -32,11 +33,11 @@ public class AladinClient {
 
     private final BookRepository bookRepository;
 
-    private final String ALADIN_ITEM_SEARCH_URL = "https://www.aladin.co.kr/ttb/api/ItemSearch.aspx";
+    private static final String ALADIN_ITEM_SEARCH_URL = "https://www.aladin.co.kr/ttb/api/ItemSearch.aspx";
 
-    private final String ALADIN_ITEM_LOOKUP_URL = "https://www.aladin.co.kr/ttb/api/ItemLookUp.aspx";
+    private static final String ALADIN_ITEM_LOOKUP_URL = "https://www.aladin.co.kr/ttb/api/ItemLookUp.aspx";
 
-    public List<Book> fetchBooks(String keyword, String searchType) {
+    public List<Book> fetchBooks (String keyword, String searchType) {
 
         String url = getAladinItemSearchUrl(keyword, searchType);
         RestTemplate restTemplate = new RestTemplate();
@@ -63,7 +64,7 @@ public class AladinClient {
         return books;
     }
 
-    private List<Book> fetchBooksByIsbn(List<Book> books) {
+    private List<Book> fetchBooksByIsbn (List<Book> books) {
 
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
@@ -108,7 +109,7 @@ public class AladinClient {
         return books;
     }
 
-    private String getAladinItemSearchUrl(String keyword, String searchType) {
+    private String getAladinItemSearchUrl (String keyword, String searchType) {
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(ALADIN_ITEM_SEARCH_URL)
                 .queryParam("ttbkey", apiKey)
                 .queryParam("QueryType", AladinBookSearchType.of(searchType).getApiValue()) // 검색 조건(제목, 저자, 출판사)
@@ -120,7 +121,7 @@ public class AladinClient {
         return builder.build(false).toUriString();
     }
 
-    private String getAladinItemLookupUrl(String isbn) {
+    private String getAladinItemLookupUrl (String isbn) {
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(ALADIN_ITEM_LOOKUP_URL)
                 .queryParam("ttbkey", apiKey)
                 .queryParam("itemIdType", "ISBN")
@@ -131,7 +132,7 @@ public class AladinClient {
         return builder.build(false).toUriString();
     }
 
-    private String[] separateAuthorAndTranslator(String authorString) {  // 저자 데이터에서 translator 분리
+    private String[] separateAuthorAndTranslator (String authorString) {  // 저자 데이터에서 translator 분리
         StringBuilder authors = new StringBuilder(); // 데이터를 분리할 그릇 생성
         StringBuilder translators = new StringBuilder();
 

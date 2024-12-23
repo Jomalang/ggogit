@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<!DOCTYPE module PUBLIC
+        "-//Checkstyle//DTD Checkstyle Configuration 1.3//EN"
+        "https://checkstyle.org/dtds/configuration_1_3.dtd">
+<module name="Checker">
+    <property name="charset" value="UTF-8"/>
+
+    <!-- TreeWalker 모듈: 주요 검사 규칙 -->
+    <module name="TreeWalker">
+        <!-- 들여쓰기 규칙 -->
+        <module name="Indentation">
+            <property name="basicOffset" value="4"/> <!-- 기본 들여쓰기 크기 -->
+            <property name="tabWidth" value="4"/> <!-- 탭 크기 -->
+            <property name="lineWrappingIndentation" value="4"/> <!-- 줄바꿈 시 추가 들여쓰기 -->
+        </module>
+
+        <!-- 중괄호 스타일 검사 -->
+        <module name="LeftCurly">
+            <property name="option" value="nlow"/> <!-- 중괄호를 같은 줄에 배치 -->
+            <property name="tokens" value="CLASS_DEF, METHOD_DEF, LITERAL_IF, LITERAL_ELSE, LITERAL_FOR, LITERAL_WHILE, LITERAL_DO, LITERAL_SWITCH, LITERAL_TRY, LITERAL_CATCH, LITERAL_FINALLY"/>
+        </module>
+
+        <!-- RightCurly 검사 -->
+        <module name="RightCurly">
+            <property name="option" value="alone_or_singleline"/> <!-- 닫는 중괄호는 별도의 줄에 배치 -->
+            <property name="tokens" value="LITERAL_SWITCH, LITERAL_CASE"/>
+        </module>
+
+        <!-- 공백 규칙 / 중괄호 시작 전에 한 칸 공백 강제 -->
+        <module name="WhitespaceAround">
+            <property name="tokens" value="LITERAL_IF, LITERAL_WHILE, LITERAL_FOR, LITERAL_SWITCH"/>
+        </module>
+        <!-- 중괄호 뒤에 공백 강제 -->
+        <module name="WhitespaceAfter"/>
+
+        <!-- 메서드와 클래스 간 공백 검사 -->
+        <module name="EmptyLineSeparator">
+            <property name="tokens" value="CLASS_DEF, METHOD_DEF"/>
+        </module>
+        <!-- 메서드 파라미터 간 공백 검사 -->
+        <module name="MethodParamPad">
+            <property name="tokens" value="METHOD_DEF"/>
+            <property name="option" value="space"/> <!-- 공백 강제 -->
+        </module>
+
+
+        <!-- 중괄호 강제 검사 (if, while, for) -->
+        <module name="NeedBraces">
+            <property name="allowSingleLineStatement" value="true"/> <!-- 단일 줄 블록에서 중괄호 생략 허용 -->
+            <property name="tokens" value="LITERAL_IF, LITERAL_WHILE, LITERAL_DO, LITERAL_FOR, LITERAL_ELSE"/>
+        </module>
+
+        <!-- 상수 네이밍 규칙 검사 -->
+        <module name="ConstantName">
+            <property name="format" value="^[A-Z][A-Z0-9_]*$"/> <!-- 대문자와 밑줄만 허용 -->
+        </module>
+
+        <!-- 변수 네이밍 규칙 검사 -->
+        <module name="LocalVariableName">
+            <property name="format" value="[a-z][a-zA-Z0-9]*"/> <!-- 카멜 케이스 사용 -->
+        </module>
+        <module name="MemberName">
+            <property name="format" value="[a-z][a-zA-Z0-9]*"/> <!-- 카멜 케이스 사용 -->
+        </module>
+        <module name="ParameterName">
+            <property name="format" value="[a-z][a-zA-Z0-9]*"/> <!-- 카멜 케이스 사용 -->
+        </module>
+
+        <!-- 클래스 이름 네이밍 규칙 검사 -->
+        <module name="TypeName">
+            <property name="format" value="[A-Z][a-zA-Z0-9]*"/> <!-- 파스칼 케이스 사용 -->
+        </module>
+
+        <!-- Javadoc 주석 검사 -->
+        <module name="JavadocMethod"/>
+    </module>
+
+    <!-- 파일 끝에 새 줄 강제 -->
+    <module name="NewlineAtEndOfFile"/>
+
+    <!-- 파일 길이 제한 -->
+    <module name="FileLength">
+        <property name="max" value="2000"/> <!-- 최대 파일 길이 제한 -->
+    </module>
+</module>

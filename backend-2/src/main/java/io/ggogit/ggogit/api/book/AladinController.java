@@ -1,3 +1,4 @@
+
 package io.ggogit.ggogit.api.book;
 
 import io.ggogit.ggogit.api.book.dto.AladinApiSearchResponse;
@@ -24,9 +25,10 @@ public class AladinController {
 
     // API 키워드 검색
     @PostMapping
-    public ResponseEntity<AladinApiSearchResponse> search(
+    public ResponseEntity<AladinApiSearchResponse> search (
             @RequestParam String query
-    ) {
+    )
+    {
         List<Book> books = aladinService.fetchBookDataApi(query);
         int count = bookService.saveAll(books);
 

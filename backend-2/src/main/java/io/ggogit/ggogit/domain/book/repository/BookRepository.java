@@ -13,25 +13,27 @@ import java.util.List;
 import java.util.Optional;
 
 public interface BookRepository extends JpaRepository<Book, Long>, BookQueryRepository {
-    List<Book> findByMember_Id(Long memberId);
+    List<Book> findByMember_Id (Long memberId);
 
     @Query("select b from Book b"+
             " where b.title is null or b.title like concat('%', :query, '%')"
     )
 
-    List<Book> findByTitle(@Param("query") String query, Pageable pageable);
+    List<Book> findByTitle (@Param("query") String query, Pageable pageable);
+
     @Query("select b from Book b"+
             " where b.title is null or b.title like concat('%', :query, '%')"
     )
 
-    List<Book> findByAuthor(@Param("query") String query, Pageable pageable);
+    List<Book> findByAuthor (@Param("query") String query, Pageable pageable);
+
     @Query("select b from Book b"+
             " where b.publisher is null or b.publisher like concat('%', :query, '%')"
     )
-    List<Book> findByPublisher(@Param("query") String query, Pageable pageable);
+    List<Book> findByPublisher (@Param("query") String query, Pageable pageable);
 
-    boolean existsByIdAndMember(Long bookId, Member member);
+    boolean existsByIdAndMember (Long bookId, Member member);
 
-    Optional<Book> findByIsbn(String isbn);
+    Optional<Book> findByIsbn (String isbn);
 }
 

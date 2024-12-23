@@ -1,3 +1,4 @@
+
 package io.ggogit.ggogit.api.book.dto;
 
 import lombok.AllArgsConstructor;
@@ -14,7 +15,7 @@ public class AladinApiSearchResponse {
     private int count;
     private String message;
 
-    public static AladinApiSearchResponse of(int count, String message) {
+    public static AladinApiSearchResponse of (int count, String message) {
         return AladinApiSearchResponse.builder()
                 .count(count)
                 .message(message)

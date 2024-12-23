@@ -1,0 +1,23 @@
+# EditorConfig is awesome: https://EditorConfig.org
+
+# 최상위 .editorconfig 파일임을 명시
+root = true
+
+# 모든 파일에 적용되는 기본 규칙
+[*]
+charset = utf-8               # 파일 인코딩
+end_of_line = lf              # 줄바꿈 스타일
+insert_final_newline = true   # 파일 끝에 새 줄 추가
+trim_trailing_whitespace = true # 줄 끝 공백 제거
+
+# Java 파일에 적용되는 규칙
+[*.java]
+indent_style = space          # 들여쓰기 스타일: 공백 사용
+indent_size = 4               # 들여쓰기 크기: 4칸
+tab_width = 4                 # 탭 크기: 4칸
+max_line_length = 2000        # 최대 줄 길이 제한 (Checkstyle의 FileLength)
+
+# 공백 관련 규칙 (Checkstyle의 WhitespaceAround, WhitespaceAfter)
+insert_final_newline = true   # 파일 끝에 새 줄 추가
+trim_trailing_whitespace = true   # 줄 끝 공백 제거
+

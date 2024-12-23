@@ -1,3 +1,4 @@
+
 package io.ggogit.ggogit.type;
 
 import lombok.Getter;
@@ -22,8 +23,7 @@ public enum AladinBookSearchType {
 
     public static AladinBookSearchType of(String value) {
         for (AladinBookSearchType type : AladinBookSearchType.values()) {
-            if (type.value.equals(value))
-                return type;
+            if (type.value.equals(value)) return type;
         }
         throw new IllegalArgumentException("AladinBookSearchType의 value 인자를 잘못 받았습니다.");
     }
@@ -31,8 +31,7 @@ public enum AladinBookSearchType {
     // 존재 여부 확인
     public static boolean isExist(String value) {
         for (AladinBookSearchType type : AladinBookSearchType.values()) {
-            if (type.value.equals(value))
-                return true;
+            if (type.value.equals(value)) return true;
         }
         return false;
     }

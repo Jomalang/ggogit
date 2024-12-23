@@ -1,0 +1,21 @@
+{
+  "totalBookCount": 0,
+  "totalCategoryCount": 3,
+  "categoryStatics": [
+    {
+      "categoryId": 0,
+      "categoryName": "string",
+      "bookCount": 0
+    },
+    {
+      "categoryId": 0,
+      "categoryName": "string",
+      "bookCount": 0
+    },
+    {
+      "categoryId": 0,
+      "categoryName": "string",
+      "bookCount": 0
+    }
+  ]
+}

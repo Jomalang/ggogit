@@ -838,6 +838,46 @@
   - Before 응답 DTO: MemberDomainCntResponse
   - After 응답 DTO: GetMemberDomainCntResponse
 
+### 메소드: `public ApiResponse<GetMemberInfoResponse> getMemberInfo()`
+
+DTO 내용: 마이페이지 정보 조회
+
+- 메소드 명: getMemberInfo
+- 요청: @PathVariable Long memberId
+- 응답: GetMemberInfoResponse
+
+### 메소드: `public ApiResponse<GetMemberStaticsResponse> getMemberStatics()`
+
+DTO 내용: 회원 기록물 통계 정보 조회
+
+- 메소드 명: getMemberStatics
+- 요청: @PathVariable Long memberId
+- 응답: GetMemberStaticsResponse
+
+### 메소드: `public ApiResponse<GetMemberContributionResponse> getMemberContribution()`
+
+DTO 내용: 회원 기여도 정보 조회
+
+- 메소드 명: getMemberContribution
+- 요청: @PathVariable Long memberId
+- 응답: GetMemberContributionResponse
+
+### 메소드: `public ApiResponse<GetMemberBookCategoryStaticsResponse> getMemberBookCategoryStatics()`
+
+DTO 내용: 회원 도서 카테고리 통계 정보 조회
+
+- 메소드 명: getMemberBookCategoryStatics
+- 요청: @PathVariable Long memberId
+- 응답: GetMemberBookCategoryStaticsResponse
+
+### 메소드: `public ApiResponse<ListMemberMemoirResponse> listMemberMemoir()`
+
+DTO 내용: 회원 기록물 목록 조회
+
+- 메소드 명: listMemberMemoir
+- 요청: @PathVariable Long memberId
+- 응답: ListMemberMemoirResponse
+
 ## `MemoirController.java`
 
 ### 메소드: `public ResponseEntity<MemoirResponse> getMemoir()`

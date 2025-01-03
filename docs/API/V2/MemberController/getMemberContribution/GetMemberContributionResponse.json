@@ -1,0 +1,23 @@
+{
+  "userId": 0,
+  "username": "string",
+  "contribution": [
+    {
+      "id": 0,
+      "commits": 0,
+      "date": "2021-07-01T00:00:00Z"
+    },
+    {
+      "id": 0,
+      "commits": 0,
+      "date": "2021-07-01T00:00:00Z"
+    },
+    {
+      "id": 0,
+      "commits": 0,
+      "date": "2021-07-01T00:00:00Z"
+    }
+  ],
+  "totalContribution": 0,
+  "totalCommitsCount": 0
+}

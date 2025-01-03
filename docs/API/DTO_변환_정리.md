@@ -144,10 +144,10 @@
     - After 메소드명: `search()`
 - 요청
     - Before 요청 DTO: `String`
-    - After 요청 DTO: `AladinApiSearchCommand`
+    - After 요청 DTO: `GetAladinApiSearchCommand`
 - 응답
     - Before 응답 DTO: `AladinApiSearchResponse`
-    - After 응답 DTO: `AladinApiSearchResponse`
+    - After 응답 DTO: `GetAladinApiSearchResponse`
 
 ## `BookCategoryController.java`
 
@@ -159,7 +159,7 @@
     - After 메소드명: `list()`
 - 요청
     - Before 요청 DTO: String query, int page, int size
-    - After 요청 DTO: ListBookCategoryFilterCommand
+    - After 요청 DTO: ListBookCategoryCommand
 - 응답
     - Before 응답 DTO: BookCategoryResponse
         - Before 응답 내부 클래스 DTO: BookCategoryDto
@@ -176,7 +176,7 @@
     - After 메소드명: `list()`
 - 요청
     - Before 요청 DTO: String query, String filter, int page, int size
-    - After 요청 DTO: ListBookFilterCommand
+    - After 요청 DTO: ListBookCommand
 - 응답
     - Before 응답 DTO: BookListResponse
         - Before 응답 내부 클래스 DTO: BookDto
@@ -199,7 +199,7 @@
     - After 요청 DTO: @PathVariable Long id
 - 응답
     - Before 응답 DTO: BookDetailResponse
-    - After 응답 DTO: GetBookDetailResponse
+    - After 응답 DTO: GetBookResponse
 
 ### 메소드: `public ResponseEntity<BookInfoResponse>  findBookInfo()`
 
@@ -356,7 +356,7 @@
     - After 요청 DTO: @PathVariable Long leafId
 - 응답
     - Before 응답 DTO: LeafBookDetailResponse
-    - After 응답 DTO: GetLeafBookDetailResponse
+    - After 응답 DTO: GetLeafBookResponse
 
 ### 메소드: `public ResponseEntity<LeafEtcDetailResponse> getEtcLeafDetail()`
 
@@ -369,7 +369,7 @@
     - After 요청 DTO: @PathVariable Long leafId
 - 응답
     - Before 응답 DTO: LeafEtcDetailResponse
-    - After 응답 DTO: GetLeafEtcDetailResponse
+    - After 응답 DTO: GetLeafEtcResponse
 
 ### 메소드: `public ResponseEntity<LeafBreadcrumbResponse> getLeafBreadcrumb()`
 
@@ -473,7 +473,7 @@
     - After 요청 DTO: @PathVariable Long leafId
 - 응답
     - Before 응답 DTO: LeafDetailResponse
-    - After 응답 DTO: GetLeafDetailResponse
+    - After 응답 DTO: GetLeafResponse
 
 ### 메소드: `public ResponseEntity<MemberInfoResponse> getMemberInfo()`
 
@@ -617,7 +617,7 @@
   - After 요청 DTO: @PathVariable Long tagId
 - 응답
   - Before 응답 DTO: LeafTagDetailResponse
-  - After 응답 DTO: GetLeafTagDetailResponse
+  - After 응답 DTO: GetLeafTagResponse
 
 ### 메소드: `public ResponseEntity<LeafTagListResponse> list()`
 
@@ -627,7 +627,7 @@
   - After 메소드명: `listLeafTags()`
 - 요청
   - Before 요청 DTO: @RequestParam int page, @RequestParam int size
-  - After 요청 DTO: @ModelAttribute ListLeafTagFilterCommand
+  - After 요청 DTO: @ModelAttribute ListLeafTagCommand
 - 응답
   - Before 응답 DTO: LeafTagListResponse
   - After 응답 DTO: ListLeafTagResponse
@@ -838,6 +838,46 @@
   - Before 응답 DTO: MemberDomainCntResponse
   - After 응답 DTO: GetMemberDomainCntResponse
 
+### 메소드: `public ApiResponse<GetMemberInfoResponse> getMemberInfo()`
+
+DTO 내용: 마이페이지 정보 조회
+
+- 메소드 명: getMemberInfo
+- 요청: @PathVariable Long memberId
+- 응답: GetMemberInfoResponse
+
+### 메소드: `public ApiResponse<GetMemberStaticsResponse> getMemberStatics()`
+
+DTO 내용: 회원 기록물 통계 정보 조회
+
+- 메소드 명: getMemberStatics
+- 요청: @PathVariable Long memberId
+- 응답: GetMemberStaticsResponse
+
+### 메소드: `public ApiResponse<GetMemberContributionResponse> getMemberContribution()`
+
+DTO 내용: 회원 기여도 정보 조회
+
+- 메소드 명: getMemberContribution
+- 요청: @PathVariable Long memberId
+- 응답: GetMemberContributionResponse
+
+### 메소드: `public ApiResponse<GetMemberBookCategoryStaticsResponse> getMemberBookCategoryStatics()`
+
+DTO 내용: 회원 도서 카테고리 통계 정보 조회
+
+- 메소드 명: getMemberBookCategoryStatics
+- 요청: @PathVariable Long memberId
+- 응답: GetMemberBookCategoryStaticsResponse
+
+### 메소드: `public ApiResponse<ListMemberMemoirResponse> listMemberMemoir()`
+
+DTO 내용: 회원 기록물 목록 조회
+
+- 메소드 명: listMemberMemoir
+- 요청: @PathVariable Long memberId
+- 응답: ListMemberMemoirResponse
+
 ## `MemoirController.java`
 
 ### 메소드: `public ResponseEntity<MemoirResponse> getMemoir()`
@@ -900,7 +940,7 @@
   - After 메소드명: `listMemoirCards()`
 - 요청
   - Before 요청 DTO: @PathVariable Long memoirId, @RequestParam int page, @RequestParam int size
-  - After 요청 DTO: @PathVariable Long memoirId, @ModelAttribute ListMemoirCardFilterCommand
+  - After 요청 DTO: @PathVariable Long memoirId, @ModelAttribute ListMemoirCardCommand
 - 응답
   - Before 응답 DTO: MemoirBookCardDtoResponseList
   - After 응답 DTO: ListMemoirBookCardResponse
@@ -913,7 +953,7 @@
   - After 메소드명: `listMemoirCards()`
 - 요청
   - Before 요청 DTO: @PathVariable Long bookId, @RequestParam int page, @RequestParam int size
-  - After 요청 DTO: @PathVariable Long bookId, @ModelAttribute ListMemoirCardFilterCommand
+  - After 요청 DTO: @PathVariable Long bookId, @ModelAttribute ListMemoirCardCommand
 - 응답
   - Before 응답 DTO: MemoirCardDtoResponse
   - After 응답 DTO: ListMemoirCardResponse
@@ -998,7 +1038,7 @@
   - After 요청 DTO: @PathVariable Long seedId
 - 응답
   - Before 응답 DTO: SeedDetailResponse
-  - After 응답 DTO: GetSeedDetailResponse
+  - After 응답 DTO: GetSeedResponse
 
 ### 메소드: `public ResponseEntity<SeedDetailResponse> getSeedByTreeId()`
 
@@ -1130,7 +1170,7 @@
   - After 메소드명: `listTreeCards()`
 - 요청
   - Before 요청 DTO: @PathVariable Long bookId
-  - After 요청 DTO: @PathVariable Long bookId, ListTreeCardFilterCommand
+  - After 요청 DTO: @PathVariable Long bookId, ListTreeCardCommand
 - 응답
   - Before 응답 DTO: TreeCardDtoResponse
   - After 응답 DTO: ListTreeCardResponse
